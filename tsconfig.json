@@ -1,0 +1,21 @@
+{
+    "compilerOptions": {
+        /* Basic Options */
+        "target": "es6",
+        "module": "commonjs",
+        "sourceMap": true,
+        "removeComments": true,
+        "noEmitOnError": true,
+
+        /* Strict Type-Checking Options */
+        "strict": true,
+        "baseUrl": "./src/ts",
+        "paths": {
+            "@/*": ["*"]
+        },
+        "esModuleInterop": true,
+
+        /* Advanced Options */
+        "forceConsistentCasingInFileNames": true
+    }
+}
