@@ -2,7 +2,7 @@ const webpack = require('webpack')
 const mix = require('laravel-mix')
 
 mix.ts('src/ts/app.ts', 'extension/popup.js')
-    .vue({ version: 3 })
+    .vue()
     .options({
         processCssUrls: false,
         uglify: {

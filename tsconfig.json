@@ -1,34 +1,24 @@
 {
     "compilerOptions": {
-      "target": "es5",
-      "module": "esnext",
-      "strict": true,
-      "jsx": "preserve",
-      "importHelpers": true,
-      "moduleResolution": "node",
-      "skipLibCheck": true,
-      "esModuleInterop": true,
-      "allowSyntheticDefaultImports": true,
-      "sourceMap": true,
-      "baseUrl": ".",
-      "paths": {
-        "@/*": [
-          "src/ts/*"
-        ]
-      },
-      "lib": [
-        "esnext",
-        "dom",
-        "dom.iterable",
-        "scripthost"
-      ]
-    },
-    "include": [
-      "src/**/*.ts",
-      "src/**/*.vue",
-      "tests/**/*.ts"
-    ],
-    "exclude": [
-      "node_modules"
-    ]
-  }
+        "target": "es5",
+        "module": "commonjs",
+         "lib": ["es2021", "dom"],
+        "sourceMap": true,
+        "removeComments": true,
+        "noEmitOnError": true,
+
+        /* Strict Type-Checking Options */
+        "strict": true,
+        "noImplicitAny": false,
+
+        /* Module Resolution Options */
+        "baseUrl": "./src/ts",
+        "paths": {
+             "@/*": ["./*"]
+         },
+        "esModuleInterop": true,
+
+        /* Advanced Options */
+        "forceConsistentCasingInFileNames": true
+    }
+}

@@ -1,15 +1,12 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-
-const counter = ref<number>(0)
+import Hello from '@/components/Hello.vue'
 </script>
 
 <template>
-    <h1>Count: {{ counter }}</h1>
-    <button @click="counter++">Increment</button>
+    <Hello />
 </template>
 
-<style scoped lang="sass">
+<styles scoped lang="sass">
 h1
     color: red
-</style>
+</styles>
