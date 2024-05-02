@@ -1,14 +1,15 @@
 {
     "manifest_version": 3,
     "name": "Tab Guardian",
-    "version": "1.0.0",
+    "description": "Browser extension that allows you to save and restore your tabs including encrypting them with a password",
+    "permissions": ["storage"],
+    "version": "0.1.0",
     "web_accessible_resources": [
         {
-            "resources": ["main.css", "main.js", "images/*", "background.js"],
-            "matches": ["*://*"]
+            "resources": ["images/*", "background.js", "popup.js"],
+            "matches": ["<all_urls>"]
         }
     ],
-    "description": "Browser extension that allows you to save and restore your tabs including encrypting them with a password",
     "icons": {
         "48": "images/icon-48.png",
         "32": "images/icon-32.png",
@@ -17,19 +18,9 @@
     },
     "action": {
 		"default_icon": "images/icon-48.png",
-		"default_title": "Tab Guardian"
+		"default_title": "Tab Guardian",
+        "default_popup": "popup.html"
     },
-    "content_scripts": [
-        {
-            "matches": ["*://*"],
-            "css": ["main.css"],
-            "run_at": "document_start"
-        },
-        {
-            "matches": ["*://*"],
-            "js": ["main.js"]
-        }
-    ],
     "background": {
         "service_worker": "background.js"
     }
