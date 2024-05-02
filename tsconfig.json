@@ -1,24 +1,22 @@
 {
     "compilerOptions": {
-        "target": "es5",
-        "module": "commonjs",
-         "lib": ["es2021", "dom"],
-        "sourceMap": true,
-        "removeComments": true,
-        "noEmitOnError": true,
-
-        /* Strict Type-Checking Options */
-        "strict": true,
-        "noImplicitAny": false,
-
-        /* Module Resolution Options */
-        "baseUrl": "./src/ts",
-        "paths": {
-             "@/*": ["./*"]
-         },
-        "esModuleInterop": true,
-
-        /* Advanced Options */
-        "forceConsistentCasingInFileNames": true
-    }
-}
+      "target": "ESNext",
+      "useDefineForClassFields": true,
+      "module": "ESNext",
+      "moduleResolution": "Node",
+      "strict": true,
+      "jsx": "preserve",
+      "resolveJsonModule": true,
+      "isolatedModules": true,
+      "esModuleInterop": true,
+      "lib": ["ESNext", "DOM"],
+      "skipLibCheck": true,
+      "noEmit": true,
+      "baseUrl": "./src",
+      "paths": {
+          "@/*": ["./*"]
+      },
+    },
+    "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.vue"],
+    "references": [{ "path": "./tsconfig.node.json" }]
+  }

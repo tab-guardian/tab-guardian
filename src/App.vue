@@ -5,8 +5,3 @@ import Hello from '@/components/Hello.vue'
 <template>
     <Hello />
 </template>
-
-<styles scoped lang="sass">
-h1
-    color: red
-</styles>
