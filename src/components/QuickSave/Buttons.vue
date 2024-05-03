@@ -31,7 +31,7 @@ const { saveGroup } = useGroupStore()
     border-radius: 50px
 
     .btn
-        height: 40px
+        height: 37px
         border: none
         font-size: 16px
         display: flex

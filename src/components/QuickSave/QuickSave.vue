@@ -23,4 +23,5 @@ const { trans } = useTransStore()
         opacity: .7
         font-size: 12px
         font-family: 'Arial', sans-serif
+        margin-top: 2px
 </style>

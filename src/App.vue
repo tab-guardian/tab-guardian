@@ -14,5 +14,5 @@ import QuickSave from '@/components/QuickSave/QuickSave.vue'
 body
     background: #333
     color: #eee
-    max-width: 300px
+    width: 300px
 </style>
