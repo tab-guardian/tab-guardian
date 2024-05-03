@@ -43,11 +43,11 @@ const { saveGroup } = useGroupStore()
     .save
         width: 100%
         border-radius: 50px 0 0 50px
-        background-color: rgb(0 227 255 / 10%)
+        background-color: var(--transparent-blue)
         transition: background-color .2s
 
         &:hover
-            background-color: rgb(0 227 255 / 15%)
+            background-color: var(--transparent-blue-hover)
 
     .save-private
         width: 60px
