@@ -19,7 +19,8 @@
         "prettier": "^3.2.5",
         "ts-jest": "^29.1.2",
         "typescript": "^5.4.5",
-        "vite": "^5.2.11"
+        "vite": "^5.2.11",
+        "vuex": "^4.1.0"
     },
     "author": "Serhii Cho",
     "dependencies": {
