@@ -2,7 +2,16 @@
     "name": "tab-guardian",
     "version": "0.1.0",
     "description": "Browser extension that allows you to save and restore your tabs including encrypting them with a password",
-    "main": "main.js",
+    "contributors": [
+        {
+            "name": "Serhii Cho",
+            "email": "serhiicho@protonmail.com"
+        }
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/tab-guardian/tab-guardian"
+    },
     "scripts": {
         "dev": "vite",
         "build": "vite build",
