@@ -1,3 +1,9 @@
+export enum ScreenName {
+    Main = 'main',
+    Group = 'group',
+    Settings = 'settings',
+}
+
 export type Messages = {
     [key: string]: {
         [key: string]: string

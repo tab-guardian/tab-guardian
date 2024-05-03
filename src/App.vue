@@ -1,9 +1,15 @@
 <script setup lang="ts">
-import MainScreen from '@/components/MainScreen.vue'
+import { ScreenName } from '@/types'
+import MainScreen from '@/components/Screens/MainScreen.vue'
+import GroupScreen from '@/components/Screens/GroupScreen.vue'
+import { useScreenStore } from '@/stores/screenStore'
+
+const screenStore = useScreenStore()
 </script>
 
 <template>
-    <MainScreen />
+    <MainScreen v-if="screenStore.screen === ScreenName.Main" />
+    <GroupScreen v-else-if="screenStore.screen === ScreenName.Group" />
 </template>
 
 <style lang="sass">

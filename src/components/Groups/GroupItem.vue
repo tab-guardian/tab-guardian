@@ -1,39 +1,50 @@
 <script setup lang="ts">
 import type { Group } from '@/types'
+import { ScreenName } from '@/types'
 import ChevronRightIcon from '@/components/Icons/ChevronRightIcon.vue'
-import ShieldCheckIcon from '@/components/Icons/ShieldCheckIcon.vue';
+import ShieldCheckIcon from '@/components/Icons/ShieldCheckIcon.vue'
+import { useScreenStore } from '@/stores/screenStore'
 
 type Props = {
     group: Group
 }
 
 const { group } = defineProps<Props>()
+const screenStore = useScreenStore()
+
+function toGroupScreen(): void {
+    screenStore.selectedGroup = group
+    screenStore.screen = ScreenName.Group
+}
 </script>
 
 <template>
-    <div class="group">
+    <div @click="toGroupScreen" class="group">
         <div class="group__inner">
-            <ShieldCheckIcon class="shield" v-if="group.isPrivate" />
+            <ShieldCheckIcon v-if="group.isPrivate" class="shield" />
             <div v-else class="amount">{{ group.links.length }}</div>
 
             <h2>{{ group.title }}</h2>
         </div>
 
-        <div>
-            <ChevronRightIcon class="icon-right" />
-        </div>
+        <ChevronRightIcon class="icon-right" />
     </div>
 </template>
 
 <style lang="sass" scoped>
 .group
-    background: var(--transparent-blue)
+    background-color: var(--transparent-blue)
     border-radius: 8px
     padding: 10px 14px
     display: flex
     justify-content: space-between
     align-items: center
     gap: 10px
+    transition: background-color .2s
+    cursor: pointer
+
+    &:hover
+        background-color: var(--transparent-blue-hover)
 
     &__inner
         display: flex
