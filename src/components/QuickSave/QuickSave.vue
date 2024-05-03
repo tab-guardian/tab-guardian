@@ -18,11 +18,12 @@ const { trans } = useTransStore()
 <style lang="sass" scoped>
 .top
     text-align: center
+    margin: 12px
 
     .notice
         display: block
-        opacity: .7
+        opacity: .8
         font-size: 12px
         font-family: 'Arial', sans-serif
-        margin-top: 8px
+        margin-top: 9px
 </style>

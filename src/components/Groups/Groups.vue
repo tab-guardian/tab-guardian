@@ -19,6 +19,5 @@ const groupStore = useGroupStore()
 .groups
     display: flex
     flex-direction: column
-    gap: 10px
-    margin-top: 15px
+    margin: 15px 7pox
 </style>

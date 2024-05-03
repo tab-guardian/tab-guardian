@@ -33,15 +33,17 @@ function toGroupScreen(): void {
 
 <style lang="sass" scoped>
 .group
-    background-color: var(--transparent-blue)
-    border-radius: 8px
-    padding: 10px 14px
+    padding: 10px 8px 10px 10px
     display: flex
     justify-content: space-between
     align-items: center
     gap: 10px
     transition: background-color .2s
     cursor: pointer
+    border-bottom: 1px solid var(--tg-color-border-default)
+
+    &:first-child
+        border-top: 1px solid var(--tg-color-border-default)
 
     &:hover
         background-color: var(--transparent-blue-hover)
@@ -54,20 +56,20 @@ function toGroupScreen(): void {
         .shield
             width: 25px
             height: 25px
+            color: var(--tg-color-secondary)
 
     h2
         font-size: .9em
         margin: 0
 
     .amount
-        width: 25px
-        height: 25px
-        background-color: rgba(0, 0, 0, .3)
-        border-radius: 50%
+        width: 23px
+        height: 23px
+        color: var(--tg-color-primary)
         display: flex
         justify-content: center
         align-items: center
-        font-size: 14px
+        font-size: 16px
 
     .icon-right
         width: 20px

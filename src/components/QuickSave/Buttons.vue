@@ -2,6 +2,7 @@
 import { useGroupStore } from '@/stores/groupStore'
 import { useTransStore } from '@/stores/transStore'
 import ShieldCheckIcon from '@/components/Icons/ShieldCheckIcon.vue'
+import FloppyIcon from '@/components/Icons/FloppyIcon.vue'
 
 const { trans } = useTransStore()
 const { saveGroup } = useGroupStore()
@@ -10,6 +11,7 @@ const { saveGroup } = useGroupStore()
 <template>
     <div class="buttons">
         <button @click="saveGroup" class="btn save" type="button">
+            <FloppyIcon />
             {{ trans('Quick Save') }}
         </button>
 
@@ -27,43 +29,39 @@ const { saveGroup } = useGroupStore()
 .buttons
     display: flex
     align-items: center
-    border: 1px solid var(--dark-blue)
-    border-radius: 50px
+    gap: 8px
 
     .btn
         height: 37px
         border: none
         font-size: 16px
         display: flex
+        gap: 10px
         align-items: center
         justify-content: center
-        color: white
+        color: var(--tg-color-white)
         cursor: pointer
+        transition: opacity .2s
+        border-radius: 8px
+
+        &:hover
+            opacity: .9
 
     .save
         width: 100%
-        border-radius: 50px 0 0 50px
-        background-color: var(--transparent-blue)
-        transition: background-color .2s
+        background-color: var(--tg-color-primary)
+        border: 2px solid var(--dark-blue)
 
-        &:hover
-            background-color: var(--transparent-blue-hover)
+        svg
+            width: 18px
+            height: 18px
+            fill: var(--tg-color-white)
 
     .save-private
-        width: 60px
-        border-radius: 0 50px 50px 0
-        background-color: var(--dark-blue)
-        transition: background-color .2s, box-shadow .2s
-
-        &:hover
-            background-color: var(--dark-blue-hover)
-            box-shadow: 0 0 20px 6px var(--dark-blue)
-
-            svg
-                transform: scale(1.1)
+        width: 90px
+        background-color: var(--tg-color-secondary)
 
         svg
             width: 25px
             height: 25px
-            transition: transform .2s
 </style>
