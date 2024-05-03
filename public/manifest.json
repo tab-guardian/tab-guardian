@@ -2,7 +2,7 @@
     "manifest_version": 3,
     "name": "Tab Guardian",
     "description": "Browser extension that allows you to save and restore your tabs including encrypting them with a password",
-    "permissions": ["storage"],
+    "permissions": ["storage", "tabs"],
     "version": "0.1.0",
     "web_accessible_resources": [
         {

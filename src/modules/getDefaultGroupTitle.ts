@@ -1,4 +1,4 @@
-export default function getDefaultTitle(): string {
+export default (): string => {
     const date = new Date()
     const year = date.getFullYear()
     const month = addZeroWhenNeeded(date.getMonth() + 1)

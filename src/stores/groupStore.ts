@@ -2,15 +2,18 @@ import type { Group, SaveGroupParams } from '@/types'
 import { ref, onMounted } from 'vue'
 import { defineStore } from 'pinia'
 import getDefaultGroupTitle from '@/modules/getDefaultGroupTitle'
+import getFromStorage from '@/modules/getFromStorage'
+import saveToStorage from '@/modules/saveToStorage'
 
 export const useGroupStore = defineStore('groupStore', () => {
     const groups = ref<Group[]>([])
 
-    onMounted(() => getGroupsFromStorage())
+    onMounted(() => restoreGroupsFromStorage())
 
-    function getGroupsFromStorage(): Group[] {
-        // @todo: get groups from the browser storage
-        return []
+    function restoreGroupsFromStorage(): void {
+        getFromStorage<Group[]>('groups', storedGroups => {
+            groups.value = storedGroups || []
+        })
     }
 
     function saveGroup(params: SaveGroupParams): void {
@@ -21,7 +24,7 @@ export const useGroupStore = defineStore('groupStore', () => {
             isPrivate: params.isPrivate || false,
         })
 
-        // @todo: save groups to the browser storage
+        saveToStorage('groups', groups.value)
     }
 
     return {
