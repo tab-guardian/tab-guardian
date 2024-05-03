@@ -15,4 +15,10 @@ export type Group = {
     id: number
     title: string
     links: Link[]
+    isPrivate: boolean
+}
+
+export type SaveGroupParams = {
+    title?: string
+    isPrivate?: boolean
 }
