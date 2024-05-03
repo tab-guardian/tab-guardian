@@ -1,11 +1,9 @@
 <script setup lang="ts">
-import QuickSave from '@/components/QuickSave/QuickSave.vue'
-import Groups from '@/components/Groups/Groups.vue'
+import MainScreen from '@/components/MainScreen.vue'
 </script>
 
 <template>
-    <QuickSave />
-    <Groups />
+    <MainScreen />
 </template>
 
 <style lang="sass">

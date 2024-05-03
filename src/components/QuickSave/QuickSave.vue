@@ -9,9 +9,9 @@ const { trans } = useTransStore()
     <div class="top">
         <Buttons />
 
-        <span class="notice">
+        <small class="notice">
             {{ trans('Click the shield to save as a private group') }}
-        </span>
+        </small>
     </div>
 </template>
 
@@ -20,8 +20,9 @@ const { trans } = useTransStore()
     text-align: center
 
     .notice
+        display: block
         opacity: .7
         font-size: 12px
         font-family: 'Arial', sans-serif
-        margin-top: 2px
+        margin-top: 8px
 </style>

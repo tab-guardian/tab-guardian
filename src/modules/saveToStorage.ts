@@ -6,7 +6,12 @@ export default <T>(key: string, value: T | null | undefined): void => {
         return
     }
 
-    chrome.storage.sync.set({
-        [key]: JSON.stringify(value),
-    })
+    const stringValue = JSON.stringify(value)
+
+    if (import.meta.env.MODE === 'development') {
+        localStorage.setItem(key, stringValue)
+        return
+    }
+
+    chrome.storage.sync.set({ [key]: stringValue })
 }

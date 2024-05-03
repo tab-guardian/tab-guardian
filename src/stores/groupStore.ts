@@ -17,11 +17,13 @@ export const useGroupStore = defineStore('groupStore', () => {
     }
 
     function saveGroup(params: SaveGroupParams): void {
-        groups.value.push({
+        const isPrivate = params.isPrivate || false
+
+        groups.value.unshift({
             id: Date.now(),
-            title: params.title || getDefaultGroupTitle(),
+            title: params.title || getDefaultGroupTitle(isPrivate),
             links: [],
-            isPrivate: params.isPrivate || false,
+            isPrivate,
         })
 
         saveToStorage('groups', groups.value)

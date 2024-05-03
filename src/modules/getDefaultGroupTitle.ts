@@ -1,4 +1,4 @@
-export default (): string => {
+export default (isPrivate: boolean): string => {
     const date = new Date()
     const year = date.getFullYear()
     const month = addZeroWhenNeeded(date.getMonth() + 1)
@@ -7,7 +7,9 @@ export default (): string => {
     const minute = addZeroWhenNeeded(date.getMinutes())
     const second = addZeroWhenNeeded(date.getSeconds())
 
-    return `Quick save ${day}.${month}.${year} ${hour}:${minute}:${second}`
+    const prefix = isPrivate ? 'Private Group' : 'Quick save'
+
+    return `${prefix} ${day}.${month}.${year} ${hour}:${minute}:${second}`
 }
 
 function addZeroWhenNeeded(value: number): string {
