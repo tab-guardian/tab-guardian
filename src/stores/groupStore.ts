@@ -3,7 +3,7 @@ import { ref, onMounted } from 'vue'
 import { defineStore } from 'pinia'
 import getDefaultGroupTitle from '@/modules/getDefaultGroupTitle'
 
-export const useGroupStore = defineStore('group', () => {
+export const useGroupStore = defineStore('groupStore', () => {
     const groups = ref<Group[]>([])
 
     onMounted(() => getGroupsFromStorage())
@@ -13,12 +13,10 @@ export const useGroupStore = defineStore('group', () => {
         return []
     }
 
-    function addGroup(title?: string): void {
-        title = title || getDefaultGroupTitle()
-
+    function saveGroup(title?: string): void {
         groups.value.push({
             id: Date.now(),
-            title,
+            title: title || getDefaultGroupTitle(),
             links: [],
         })
 
@@ -27,6 +25,6 @@ export const useGroupStore = defineStore('group', () => {
 
     return {
         groups,
-        addGroup,
+        saveGroup,
     }
 })

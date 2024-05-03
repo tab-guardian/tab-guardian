@@ -1,15 +1,19 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { useTransStore } from '@/stores/transStore'
+import { useGroupStore } from '@/stores/groupStore'
 
-const count = ref<number>(0)
+const { trans } = useTransStore()
+const { saveGroup } = useGroupStore()
 </script>
 
 <template>
     <div>
         <div>
-            <button @click="count += 1">{{ count }}</button>
+            <button @click="saveGroup">
+                {{ trans('Quick Save') }}
+            </button>
         </div>
 
-        <span>Here</span>
+        <span>{{ trans('Click the shield to save as a private group') }}</span>
     </div>
 </template>
