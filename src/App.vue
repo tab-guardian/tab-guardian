@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import Hello from '@/components/Hello.vue'
+import QuickSave from '@/components/QuickSave.vue'
 </script>
 
 <template>
-    <Hello />
+    <QuickSave />
 </template>
