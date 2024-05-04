@@ -18,7 +18,9 @@ const { trans } = useTransStore()
 <style lang="sass" scoped>
 .top
     text-align: center
-    margin: 12px
+    padding: var(--tg-padding)
+    margin-bottom: 0
+    border-bottom: 1px solid var(--tg-color-border-default)
 
     .notice
         display: block

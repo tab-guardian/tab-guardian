@@ -19,5 +19,19 @@ const groupStore = useGroupStore()
 .groups
     display: flex
     flex-direction: column
-    margin: 15px 7pox
+    height: 410px
+    overflow-y: auto
+
+    &::-webkit-scrollbar
+        width: 7px
+
+    &::-webkit-scrollbar-track
+        background-color: var(--tg-scrollbar-bg)
+        border-radius: 50px
+        margin-top: 2px
+
+    &::-webkit-scrollbar-thumb
+        background-color: var(--tg-scrollbar-bg-thumb)
+        border-radius: 10px
+        border-radius: 50px
 </style>

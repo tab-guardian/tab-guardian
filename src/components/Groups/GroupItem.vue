@@ -42,9 +42,6 @@ function toGroupScreen(): void {
     cursor: pointer
     border-bottom: 1px solid var(--tg-color-border-default)
 
-    &:first-child
-        border-top: 1px solid var(--tg-color-border-default)
-
     &:hover
         background-color: var(--transparent-blue-hover)
 
@@ -59,7 +56,7 @@ function toGroupScreen(): void {
             color: var(--tg-color-secondary)
 
     h2
-        font-size: .9em
+        font-size: .9rem
         margin: 0
 
     .amount

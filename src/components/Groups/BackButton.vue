@@ -21,15 +21,16 @@ const { trans } = useTransStore()
     align-items: center
     justify-content: center
     gap: 5px
-    background: var(--dark-blue)
+    background-color: var(--tg-color-bg-gray)
+    transition: background-color .2s
     color: #fff
-    padding: 10px 18px
+    padding: 9px 18px
     border: none
     border-radius: 8px
     cursor: pointer
 
     &:hover
-        background: var(--dark-blue-hover)
+        opacity: .9
 
     svg
         width: 18px
