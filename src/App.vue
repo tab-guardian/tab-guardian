@@ -6,7 +6,6 @@ import Navbar from '@/components/Navbar/Navbar.vue'
 import { useScreenStore } from '@/stores/screenStore'
 
 const screenStore = useScreenStore()
-
 </script>
 
 <template>
