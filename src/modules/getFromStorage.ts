@@ -13,7 +13,6 @@ function getFromChromeStorage<T>(key: string, result: { [key: string]: any }): T
     const strValue: string = result[key]
 
     if (!strValue) {
-        console.warn(`[Tab Guardian]: ${key} not found in storage`)
         return null
     }
 
