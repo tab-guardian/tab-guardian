@@ -1,20 +1,18 @@
 <script setup lang="ts">
 import type { Group } from '@/types'
-import { ScreenName } from '@/types'
 import ChevronRightIcon from '@/components/Icons/ChevronRightIcon.vue'
 import ShieldCheckIcon from '@/components/Icons/ShieldCheckIcon.vue'
-import { useScreenStore } from '@/stores/useScreenStore'
+import { useGroupModal } from '@/stores/modals/useGroupModal'
 
 type Props = {
     group: Group
 }
 
 const { group } = defineProps<Props>()
-const screenStore = useScreenStore()
+const groupModal = useGroupModal()
 
 function toGroupScreen(): void {
-    screenStore.selectedGroup = group
-    screenStore.screen = ScreenName.Group
+    groupModal.select(group)
 }
 </script>
 

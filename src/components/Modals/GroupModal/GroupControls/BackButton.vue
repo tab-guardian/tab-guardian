@@ -1,8 +1,5 @@
 <script setup lang="ts">
-import { useTransStore } from '@/stores/useTransStore'
 import ChevronRightIcon from '@/components/Icons/ChevronRightIcon.vue'
-
-const { trans } = useTransStore()
 </script>
 
 <template>
@@ -11,7 +8,6 @@ const { trans } = useTransStore()
         type="button"
     >
         <ChevronRightIcon />
-        {{ trans('Back') }}
     </button>
 </template>
 
@@ -24,7 +20,7 @@ const { trans } = useTransStore()
     background-color: var(--tg-color-bg-gray)
     transition: background-color .2s
     color: #fff
-    padding: 9px 18px
+    padding: 9px 13px
     border: none
     border-radius: 8px
     cursor: pointer
