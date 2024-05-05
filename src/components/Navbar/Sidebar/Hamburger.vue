@@ -1,17 +1,18 @@
 <script setup lang="ts">
+import { useSidebarStore } from '@/stores/useSidebarStore'
 
+const sidebarStore = useSidebarStore()
 </script>
 
 <template>
-    <div>
-        <button
-            type="button"
-            class="hambuger"
-        >
-            <span></span>
-            <span></span>
-        </button>
-    </div>
+    <button
+        @click="sidebarStore.toggle()"
+        type="button"
+        class="hambuger"
+    >
+        <span></span>
+        <span></span>
+    </button>
 </template>
 
 <style scoped lang="sass">
