@@ -17,7 +17,7 @@ const sidebarStore = useSidebarStore()
 
 <style scoped lang="sass">
 .hambuger
-    width: 25px
+    width: 23px
     height: 20px
     background-color: transparent
     border: none
@@ -29,9 +29,10 @@ const sidebarStore = useSidebarStore()
         height: 3px
         display: block
         position: absolute
-        background-color: var(--tg-color-bg-gray)
+        background-color: var(--tg-color-text-default)
         transition: all .3s
         border-radius: 50px
+        opacity: .8
 
     span:nth-child(1)
         top: 4px
@@ -40,16 +41,5 @@ const sidebarStore = useSidebarStore()
     span:nth-child(2)
         bottom: 4px
         left: 0
-
-    &.is-active
-        width: 20px
-
-        span:nth-child(1)
-            top: 50%
-            transform: translateY(-50%) rotate(45deg)
-
-        span:nth-child(2)
-            bottom: 50%
-            transform: translateY(50%) rotate(-45deg)
 </style>
 
