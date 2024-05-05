@@ -6,18 +6,34 @@
     "version": "0.1.0",
     "web_accessible_resources": [
         "icons/*",
-        "popup.js"
+        "content.js"
     ],
     "icons": {
-        "48": "icons/icon-48.png",
-        "32": "icons/icon-32.png",
-        "64": "icons/icon-64.png",
-        "128": "icons/icon-128.png"
+        "16": "icons/icon-16-dark.png",
+        "32": "icons/icon-32-dark.png",
+        "48": "icons/icon-48-dark.png",
+        "64": "icons/icon-64-dark.png",
+        "128": "icons/icon-128-dark.png"
     },
     "browser_action": {
-		"default_icon": "icons/icon-128.png",
+		"default_icon": {
+            "32": "icons/icon-32-dark.png",
+            "16": "icons/icon-16-dark.png"
+        },
 		"default_title": "Tab Guardian",
-        "default_popup": "popup.html"
+        "default_popup": "index.html",
+        "theme_icons": [
+            {
+                "light": "icons/icon-16-white.png",
+                "dark": "icons/icon-16-dark.png",
+                "size": 16
+            },
+            {
+                "light": "icons/icon-32-white.png",
+                "dark": "icons/icon-32-dark.png",
+                "size": 32
+            }
+        ]
     },
     "background": {
         "scripts": ["background.js"]

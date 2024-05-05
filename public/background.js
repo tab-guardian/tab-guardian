@@ -5,18 +5,19 @@ chrome.runtime.onMessage.addListener(request => {
 })
 
 function setIconAccordingToTheme(theme) {
-    let iconVariant = ''
+    let iconVariant = 'dark'
 
     if (theme === 'dark') {
-        iconVariant = '-white'
+        iconVariant = 'white'
     }
 
     chrome.action.setIcon({
         path: {
-            32: `icons/icon-32${iconVariant}.png`,
-            48: `icons/icon-48${iconVariant}.png`,
-            64: `icons/icon-64${iconVariant}.png`,
-            128: `icons/icon-128${iconVariant}.png`,
+            16: `icons/icon-16-${iconVariant}.png`,
+            32: `icons/icon-32-${iconVariant}.png`,
+            48: `icons/icon-48-${iconVariant}.png`,
+            64: `icons/icon-64-${iconVariant}.png`,
+            128: `icons/icon-128-${iconVariant}.png`,
         },
     })
 }

@@ -11,10 +11,11 @@
         }
     ],
     "icons": {
-        "48": "icons/icon-48.png",
-        "32": "icons/icon-32.png",
-        "64": "icons/icon-64.png",
-        "128": "icons/icon-128.png"
+        "16": "icons/icon-16-dark.png",
+        "32": "icons/icon-32-dark.png",
+        "48": "icons/icon-48-dark.png",
+        "64": "icons/icon-64-dark.png",
+        "128": "icons/icon-128-dark.png"
     },
     "content_scripts": [
         {
@@ -25,8 +26,8 @@
     ],
     "action": {
 		"default_icon": {
-            "64": "icons/icon-64.png",
-            "32": "icons/icon-32.png"
+            "32": "icons/icon-32-dark.png",
+            "16": "icons/icon-16-dark.png"
         },
 		"default_title": "Tab Guardian",
         "default_popup": "index.html"
