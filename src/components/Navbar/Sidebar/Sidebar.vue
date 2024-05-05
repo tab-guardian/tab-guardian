@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import Hamburger from '@/components/Navbar/Sidebar/Hamburger.vue'
 import RightSlideTransition from '@/components/Transitions/RightSlideTransition.vue'
+import CloseIcon from '@/components/Icons/CloseIcon.vue'
 import { useSidebarStore } from '@/stores/useSidebarStore'
 
 const sidebarStore = useSidebarStore()
@@ -14,7 +15,9 @@ const sidebarStore = useSidebarStore()
             v-if="sidebarStore.isOpen"
             @click="sidebarStore.toggle"
             class="overlay"
-        ></div>
+        >
+            <CloseIcon />
+        </div>
 
         <RightSlideTransition>
             <div v-if="sidebarStore.isOpen" class="sidebar">
@@ -32,6 +35,22 @@ const sidebarStore = useSidebarStore()
     right: 0
     bottom: 0
     background: rgba(0, 0, 0, .5)
+    cursor: pointer
+
+    &:hover svg
+        background-color: #f42323
+
+    svg
+        width: 32px
+        height: 32px
+        position: absolute
+        right: 25px
+        top: 10px
+        color: white
+        background-color: rgba(0, 0, 0, .7)
+        border-radius: 50%
+        padding: 5px
+        transition: background-color .2s
 
 .sidebar
     position: absolute
