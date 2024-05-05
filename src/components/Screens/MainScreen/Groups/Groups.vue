@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import GroupItem from '@/components/Screens/MainScreen/Groups/GroupItem.vue'
-import { useGroupStore } from '@/stores/groupStore'
+import { useGroupStore } from '@/stores/useGroupStore'
 
 const groupStore = useGroupStore()
 </script>

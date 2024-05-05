@@ -3,7 +3,7 @@ import type { Group } from '@/types'
 import { ScreenName } from '@/types'
 import ChevronRightIcon from '@/components/Icons/ChevronRightIcon.vue'
 import ShieldCheckIcon from '@/components/Icons/ShieldCheckIcon.vue'
-import { useScreenStore } from '@/stores/screenStore'
+import { useScreenStore } from '@/stores/useScreenStore'
 
 type Props = {
     group: Group

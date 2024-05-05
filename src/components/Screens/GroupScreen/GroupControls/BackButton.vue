@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useTransStore } from '@/stores/transStore'
+import { useTransStore } from '@/stores/useTransStore'
 import ChevronRightIcon from '@/components/Icons/ChevronRightIcon.vue'
 
 const { trans } = useTransStore()

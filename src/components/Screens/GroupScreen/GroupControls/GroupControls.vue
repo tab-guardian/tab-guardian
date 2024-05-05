@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ScreenName } from '@/types'
 import BackButton from '@/components/Screens/GroupScreen/GroupControls/BackButton.vue'
-import { useScreenStore } from '@/stores/screenStore'
-import { useTransStore } from '@/stores/transStore'
+import { useScreenStore } from '@/stores/useScreenStore'
+import { useTransStore } from '@/stores/useTransStore'
 
 const screenStore = useScreenStore()
 const { trans } = useTransStore()

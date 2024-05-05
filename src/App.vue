@@ -3,7 +3,7 @@ import { ScreenName } from '@/types'
 import MainScreen from '@/components/Screens/MainScreen/MainScreen.vue'
 import GroupScreen from '@/components/Screens/GroupScreen/GroupScreen.vue'
 import Navbar from '@/components/Navbar/Navbar.vue'
-import { useScreenStore } from '@/stores/screenStore'
+import { useScreenStore } from '@/stores/useScreenStore'
 
 const screenStore = useScreenStore()
 </script>

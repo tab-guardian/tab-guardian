@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { useScreenStore } from '@/stores/screenStore'
-import { useTransStore } from '@/stores/transStore'
+import { useScreenStore } from '@/stores/useScreenStore'
+import { useTransStore } from '@/stores/useTransStore'
 import GroupControls from '@/components/Screens/GroupScreen/GroupControls/GroupControls.vue'
 
 const screenStore = useScreenStore()
