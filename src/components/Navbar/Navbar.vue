@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import NavControls from '@/components/Navbar/NavControls.vue'
+import Sidebar from '@/components/Navbar/Sidebar/Sidebar.vue'
 </script>
 
 <template>
     <nav class="navbar">
+        <Sidebar />
         <h1>Tab Guardian</h1>
-
         <NavControls />
     </nav>
 </template>
