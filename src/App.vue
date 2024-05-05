@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ScreenName } from '@/types'
-import MainScreen from '@/components/Screens/MainScreen.vue'
-import GroupScreen from '@/components/Screens/GroupScreen.vue'
+import MainScreen from '@/components/Screens/MainScreen/MainScreen.vue'
+import GroupScreen from '@/components/Screens/GroupScreen/GroupScreen.vue'
 import Navbar from '@/components/Navbar/Navbar.vue'
 import { useScreenStore } from '@/stores/screenStore'
 

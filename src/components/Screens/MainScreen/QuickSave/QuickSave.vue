@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useTransStore } from '@/stores/transStore'
-import Buttons from '@/components/QuickSave/Buttons.vue'
+import Buttons from '@/components/Screens/MainScreen/QuickSave/Buttons.vue'
 
 const { trans } = useTransStore()
 </script>
