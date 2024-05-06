@@ -1,6 +1,4 @@
-changeThemeToMatchDevicePreference()
-
-function changeThemeToMatchDevicePreference() {
+;(function changeIconThemeToMatchDevicePreference(): void {
     const darkModePreference = window.matchMedia('(prefers-color-scheme: dark)')
 
     chrome.runtime.sendMessage({
@@ -12,4 +10,4 @@ function changeThemeToMatchDevicePreference() {
             theme: e.matches ? 'dark' : 'light',
         })
     })
-}
+})()
