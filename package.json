@@ -17,7 +17,8 @@
         "build": "vite build",
         "test": "jest",
         "prettier": "prettier ./src --write",
-        "prettier-check": "prettier ./src --check"
+        "prettier-check": "prettier ./src --check",
+        "latest": "yarn upgrade-interactive --latest"
     },
     "devDependencies": {
         "@jest/globals": "^29.7.0",

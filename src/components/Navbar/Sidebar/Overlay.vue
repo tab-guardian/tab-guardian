@@ -15,7 +15,7 @@ import CloseIcon from '@/components/Icons/CloseIcon.vue'
     left: 0
     right: 0
     bottom: 0
-    background: rgba(0, 0, 0, .6)
+    background: rgb(0 0 0 / 60%)
     cursor: pointer
 
     &:hover svg
@@ -28,7 +28,7 @@ import CloseIcon from '@/components/Icons/CloseIcon.vue'
         right: 25px
         top: 10px
         color: white
-        background-color: rgba(0, 0, 0, .7)
+        background-color: rgb(0 0 0 / 70%)
         border-radius: 50%
         padding: 5px
         transition: background-color .2s

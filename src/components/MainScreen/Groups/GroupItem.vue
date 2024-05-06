@@ -17,7 +17,11 @@ function toGroupScreen(): void {
 </script>
 
 <template>
-    <div @click="toGroupScreen" class="group">
+    <div
+        @click="toGroupScreen"
+        class="group"
+        :class="{ 'group--private': group.isPrivate }"
+    >
         <div class="group__inner">
             <ShieldCheckIcon v-if="group.isPrivate" class="shield" />
             <div v-else class="amount">{{ group.links.length }}</div>
@@ -39,9 +43,16 @@ function toGroupScreen(): void {
     transition: background-color .2s
     cursor: pointer
     border-bottom: 1px solid var(--tg-color-border-default)
+    background-color: var(--tg-color-light)
 
     &:hover
-        background-color: var(--transparent-blue-hover)
+        background-color: var(--tg-color-light-hover)
+
+    &--private
+        background-color: var(--tg-color-bg-private)
+
+        &:hover
+            background-color: var(--tg-color-bg-private-hover)
 
     &__inner
         display: flex

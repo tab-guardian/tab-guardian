@@ -19,7 +19,7 @@ import Sidebar from '@/components/Navbar/Sidebar/Sidebar.vue'
     height: 40px
     padding: 3px 10px
     background-color: var(--tg-color-bg-light)
-    box-shadow: 0 0 4px 5px rgba(0, 0, 0, .07)
+    box-shadow: 0 0 4px 5px rgb(0 0 0 / 7%)
 
     h1
         font-size: 1rem

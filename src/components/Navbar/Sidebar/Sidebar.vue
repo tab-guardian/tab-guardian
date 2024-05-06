@@ -33,5 +33,5 @@ const sidebarStore = useSidebarStore()
     bottom: 0
     left: 0
     padding: 20px
-    box-shadow: 0 0 10px 3px rgba(0, 0, 0, .3)
+    box-shadow: 0 0 10px 3px rgb(0 0 0 / 30%)
 </style>
