@@ -18,7 +18,7 @@
             "16": "icons/icon-16-dark.png"
         },
 		"default_title": "Tab Guardian",
-        "default_popup": "index.html",
+        "default_popup": "popup.html",
         "theme_icons": [
             {
                 "light": "icons/icon-16-light.png",

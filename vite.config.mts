@@ -22,7 +22,7 @@ export default defineConfig({
             input: {
                 background: '/src/background/background.ts',
                 content: '/src/content/content.ts',
-                popup: '/index.html',
+                popup: '/popup.html',
             },
             output: {
                 entryFileNames: `assets/[name].js`,

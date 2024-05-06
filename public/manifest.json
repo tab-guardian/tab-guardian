@@ -30,7 +30,7 @@
             "16": "icons/icon-16-dark.png"
         },
 		"default_title": "Tab Guardian",
-        "default_popup": "index.html"
+        "default_popup": "popup.html"
     },
     "background": {
         "service_worker": "assets/background.js"
