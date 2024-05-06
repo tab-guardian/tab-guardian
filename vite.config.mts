@@ -1,5 +1,7 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
+import { writeFileSync, unlinkSync } from 'fs'
+import { join } from 'path'
 
 export default defineConfig({
     plugins: [
@@ -14,12 +16,25 @@ export default defineConfig({
     ],
 
     build: {
-        sourcemap: true,
+        sourcemap: false,
+
+        rollupOptions: {
+            input: {
+                background: '/src/background/background.ts',
+                content: '/src/content/content.ts',
+                popup: '/index.html',
+            },
+            output: {
+                entryFileNames: `assets/[name].js`,
+            },
+        },
     },
 
     resolve: {
         alias: {
-            '@': '/src',
+            '@': '/src/popup',
+            '@bg': '/src/background',
+            '@content': '/src/content',
         },
     },
 })

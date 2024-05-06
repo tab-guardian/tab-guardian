@@ -14,7 +14,9 @@
       "noEmit": true,
       "baseUrl": "./src",
       "paths": {
-          "@/*": ["./*"]
+          "@/*": ["popup/*"],
+          "@bg/*": ["background/*"],
+          "@content/*": ["content/*"]
       },
     },
     "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.vue"],

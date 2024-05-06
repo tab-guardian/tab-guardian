@@ -4,10 +4,7 @@
     "description": "Browser extension that allows you to save and restore your tabs including encrypting them with a password",
     "permissions": ["storage", "tabs"],
     "version": "0.1.0",
-    "web_accessible_resources": [
-        "icons/*",
-        "content.js"
-    ],
+    "web_accessible_resources": ["icons/*", "assets/*"],
     "icons": {
         "16": "icons/icon-16-dark.png",
         "32": "icons/icon-32-dark.png",
@@ -24,18 +21,18 @@
         "default_popup": "index.html",
         "theme_icons": [
             {
-                "light": "icons/icon-16-white.png",
+                "light": "icons/icon-16-light.png",
                 "dark": "icons/icon-16-dark.png",
                 "size": 16
             },
             {
-                "light": "icons/icon-32-white.png",
+                "light": "icons/icon-32-light.png",
                 "dark": "icons/icon-32-dark.png",
                 "size": 32
             }
         ]
     },
     "background": {
-        "scripts": ["background.js"]
+        "scripts": ["assets/background.js"]
     }
 }

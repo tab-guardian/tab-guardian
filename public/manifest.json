@@ -6,7 +6,7 @@
     "version": "0.1.0",
     "web_accessible_resources": [
         {
-            "resources": ["icons/*", "background.js", "assets/*", "content.js"],
+            "resources": ["icons/*", "assets/*"],
             "matches": ["<all_urls>"]
         }
     ],
@@ -20,7 +20,7 @@
     "content_scripts": [
         {
             "matches": ["*://*/*"],
-            "js": ["content.js"],
+            "js": ["assets/content.js"],
             "run_at": "document_start"
         }
     ],
@@ -33,6 +33,6 @@
         "default_popup": "index.html"
     },
     "background": {
-        "service_worker": "background.js"
+        "service_worker": "assets/background.js"
     }
 }
