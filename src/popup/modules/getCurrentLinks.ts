@@ -1,5 +1,6 @@
 import type { Link } from '@/types'
 import queryTabs from '@/modules/queryTabs'
+import getFakeLinks from '@/modules/getFakeLinks'
 
 type Params = {
     closeTabs: boolean
@@ -41,21 +42,4 @@ function convertTabsToLinks(tabs: chrome.tabs.Tab[], params: Params): Link[] {
     }
 
     return links
-}
-
-function getFakeLinks(): Link[] {
-    return [
-        {
-            id: 1,
-            url: 'https://duck.com/',
-            title: 'Duck Duck Go',
-            favIconUrl: 'https://duckduckgo.com/favicon.ico',
-        },
-        {
-            id: 2,
-            url: 'https://serhii.io/',
-            title: 'Serhii Blog',
-            favIconUrl: 'https://serhii.io/favicon.png',
-        },
-    ]
 }
