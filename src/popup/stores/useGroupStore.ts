@@ -4,6 +4,7 @@ import { defineStore } from 'pinia'
 import getDefaultGroupTitle from '@/modules/getDefaultGroupTitle'
 import getFromStorage from '@/modules/getFromStorage'
 import saveToStorage from '@/modules/saveToStorage'
+import getCurrentLinks from '@/modules/getCurrentLinks'
 
 export const useGroupStore = defineStore('groupStore', () => {
     const groups = ref<Group[]>([])
@@ -16,13 +17,17 @@ export const useGroupStore = defineStore('groupStore', () => {
         })
     }
 
-    function saveGroup(params: SaveGroupParams): void {
+    async function saveGroup(params: SaveGroupParams): Promise<void> {
         const isPrivate = params.isPrivate || false
+
+        const links = await getCurrentLinks({
+            closeTabs: false,
+        })
 
         groups.value.unshift({
             id: Date.now(),
             title: params.title || getDefaultGroupTitle(isPrivate),
-            links: [],
+            links,
             isPrivate,
         })
 

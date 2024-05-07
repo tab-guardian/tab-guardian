@@ -8,7 +8,7 @@ export type Link = {
     id: number
     title: string
     url: string
-    iconUrl: string
+    favIconUrl: string
 }
 
 export type Group = {

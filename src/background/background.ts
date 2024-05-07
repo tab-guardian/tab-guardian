@@ -5,3 +5,7 @@ chrome.runtime.onMessage.addListener(request => {
         setIconAccordingToTheme(request.theme)
     }
 })
+
+chrome.tabs.onUpdated.addListener((tabId, tabInfo) => {
+    chrome.tabs.query({}, function (tabs) {})
+})
