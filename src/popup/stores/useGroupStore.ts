@@ -28,7 +28,7 @@ export const useGroupStore = defineStore('groupStore', () => {
         const isPrivate = params.isPrivate || false
 
         const links = await getCurrentLinks({
-            closeTabs: false,
+            closeTabs: true,
         })
 
         groups.value.unshift({

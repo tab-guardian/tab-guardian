@@ -35,11 +35,20 @@ function convertTabsToLinks(tabs: chrome.tabs.Tab[], params: Params): Link[] {
             url: tab.url,
             favIconUrl: tab.favIconUrl || '', // @todo: use default favicon icon
         })
+    }
 
+    closeTabs(tabs, params)
+
+    return links
+}
+
+function closeTabs(tabs: chrome.tabs.Tab[], params: Params): void {
+    // create a new tab to prevent closing the browser
+    chrome.tabs.create({})
+
+    for (const tab of tabs) {
         if (tab.id && params.closeTabs) {
             chrome.tabs.remove(tab.id)
         }
     }
-
-    return links
 }
