@@ -5,20 +5,26 @@ import ShieldCheckIcon from '@/components/Icons/ShieldCheckIcon.vue'
 import FloppyIcon from '@/components/Icons/FloppyIcon.vue'
 
 const { trans } = useTransStore()
-const { saveGroup } = useGroupStore()
+const groupStore = useGroupStore()
 </script>
 
 <template>
     <div class="buttons">
-        <button @click="saveGroup" class="btn save" type="button">
+        <button
+            @click="groupStore.saveGroup"
+            :disabled="groupStore.isSaving"
+            class="btn save"
+            type="button"
+        >
             <FloppyIcon />
             {{ trans('Quick Save') }}
         </button>
 
         <button
-            @click="saveGroup({ isPrivate: true })"
+            @click="groupStore.saveGroup({ isPrivate: true })"
             class="btn save-private"
             type="button"
+            :disabled="groupStore.isSaving"
         >
             <ShieldCheckIcon />
         </button>
@@ -43,9 +49,14 @@ const { saveGroup } = useGroupStore()
         cursor: pointer
         transition: opacity .2s
         border-radius: 8px
+        transition: opacity .2s
 
         &:hover
             opacity: .9
+
+        &:disabled
+            opacity: .5
+            cursor: not-allowed
 
     .save
         width: 100%

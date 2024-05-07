@@ -1,4 +1,4 @@
-export default <T>(key: string, value: T | null | undefined): void => {
+export default async <T>(key: string, value: T | null | undefined): Promise<void> => {
     if (!value) {
         console.error(
             `[Tab Guardian]: Failed to save ${key} to storage because value is '${value}'`,
@@ -13,5 +13,5 @@ export default <T>(key: string, value: T | null | undefined): void => {
         return
     }
 
-    chrome.storage.sync.set({ [key]: stringValue })
+    await chrome.storage.sync.set({ [key]: stringValue })
 }

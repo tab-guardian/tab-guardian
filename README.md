@@ -59,4 +59,4 @@ Don't worry about the code style. We use [Prettier](https://prettier.io/) to for
 ### Notes
 
 - The extension should be supported by all major browsers: Chrome, Firefox, Edge and Brave. Since Firefox does't support manifest version 3 yet, we have to use [manifest2.json](extension/manifest2.json) for Firefox and [manifest.json](extension/manifest.json) for Chrome based browsers.
-- The program also supports running as a web page. With Vite, we can do that by running `yarn dev` or `npm run dev` and opening the browser at `http://localhost:5173/`. We support the WEB version for several reasons. One of them is that we can test the extension in the browser without installing it. The second reason is that we could expend the extension in the future to make it cross-platform.
+- The program also supports running as a web page. With Vite, we can do that by running `yarn dev` or `npm run dev` and opening the browser at `http://localhost:5173/`

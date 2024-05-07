@@ -8,6 +8,7 @@ import getCurrentLinks from '@/modules/getCurrentLinks'
 
 export const useGroupStore = defineStore('groupStore', () => {
     const groups = ref<Group[]>([])
+    const isSaving = ref<boolean>(false)
 
     onMounted(() => restoreGroupsFromStorage())
 
@@ -18,6 +19,12 @@ export const useGroupStore = defineStore('groupStore', () => {
     }
 
     async function saveGroup(params: SaveGroupParams): Promise<void> {
+        if (isSaving.value) {
+            return
+        }
+
+        isSaving.value = true
+
         const isPrivate = params.isPrivate || false
 
         const links = await getCurrentLinks({
@@ -31,11 +38,14 @@ export const useGroupStore = defineStore('groupStore', () => {
             isPrivate,
         })
 
-        saveToStorage('groups', groups.value)
+        await saveToStorage('groups', groups.value)
+
+        setTimeout(() => (isSaving.value = false), 500)
     }
 
     return {
         groups,
+        isSaving,
         saveGroup,
     }
 })
