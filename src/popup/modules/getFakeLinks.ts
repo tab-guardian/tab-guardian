@@ -5,7 +5,7 @@ export default (): Link[] => {
         {
             id: 1,
             url: 'https://duckduckgo.com/',
-            title: 'DuckDuckGo — Privacy, simplified.',
+            title: 'DuckDuckGo — Privacy, simplified. Trust me man',
             favIconUrl: 'https://duckduckgo.com/favicon.ico',
         },
         {
