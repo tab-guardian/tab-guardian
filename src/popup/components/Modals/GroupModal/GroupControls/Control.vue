@@ -5,22 +5,22 @@
 </template>
 
 <style lang="sass" scoped>
-    button
-        width: 35px
-        height: 35px
-        display: flex
-        justify-content: center
-        align-items: center
-        background: transparent
-        border: 1px solid var(--tg-color-border-default)
-        color: var(--tg-color-text-default)
-        border-radius: 5px
-        padding: 5px
-        opacity: .7
-        transition: opacity .2s, box-shadow .2s
-        cursor: pointer
+button
+    width: 35px
+    height: 35px
+    display: flex
+    justify-content: center
+    align-items: center
+    background: transparent
+    border: 1px solid transparent
+    color: var(--tg-color-text-default)
+    border-radius: 5px
+    padding: 6px
+    opacity: .8
+    transition: opacity .2s, border-color .2s
+    cursor: pointer
 
-        &:hover
-            opacity: 1
-            box-shadow: 0 0 5px rgba(0, 0, 0, .2)
+    &:hover
+        opacity: 1
+        border-color: var(--tg-color-border-default)
 </style>
