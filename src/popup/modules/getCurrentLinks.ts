@@ -1,12 +1,11 @@
 import type { Link } from '@/types'
 import queryTabs from '@/modules/queryTabs'
 import getFakeLinks from '@/modules/getFakeLinks'
+import getImageUrl from '@/modules/getImageUrl'
 
 type Params = {
     closeTabs: boolean
 }
-
-const DEFAULT_FAVICON = 'https://serhii.io/favicon.png'
 
 export default async (params: Params): Promise<Link[]> => {
     try {
@@ -35,7 +34,7 @@ function convertTabsToLinks(tabs: chrome.tabs.Tab[], params: Params): Link[] {
             id: tab.id || Date.now(),
             title: tab.title || tab.url || '<no title>',
             url: tab.url,
-            favIconUrl: tab.favIconUrl || DEFAULT_FAVICON,
+            favIconUrl: tab.favIconUrl || getImageUrl('no-image.png'),
         })
     }
 
