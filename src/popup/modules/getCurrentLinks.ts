@@ -38,17 +38,19 @@ function convertTabsToLinks(tabs: chrome.tabs.Tab[], params: Params): Link[] {
         })
     }
 
-    closeTabs(tabs, params)
+    if (params.closeTabs) {
+        closeTabs(tabs)
+    }
 
     return links
 }
 
-function closeTabs(tabs: chrome.tabs.Tab[], params: Params): void {
+function closeTabs(tabs: chrome.tabs.Tab[]): void {
     // create a new tab to prevent closing the browser
     chrome.tabs.create({})
 
     for (const tab of tabs) {
-        if (tab.id && params.closeTabs) {
+        if (tab.id) {
             chrome.tabs.remove(tab.id)
         }
     }
