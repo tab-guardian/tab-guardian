@@ -34,4 +34,5 @@ const sidebarStore = useSidebarStore()
     left: 0
     padding: 20px
     box-shadow: 0 0 10px 3px rgb(0 0 0 / 30%)
+    z-index: 2
 </style>

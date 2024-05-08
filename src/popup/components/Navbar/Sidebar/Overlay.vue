@@ -17,6 +17,7 @@ import CloseIcon from '@/components/Icons/CloseIcon.vue'
     bottom: 0
     background: rgb(0 0 0 / 60%)
     cursor: pointer
+    backdrop-filter: blur(7px)
 
     &:hover svg
         background-color: #f42323
