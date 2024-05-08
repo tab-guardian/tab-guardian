@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import BackButton from '@/components/Modals/GroupModal/GroupControls/BackButton.vue'
-import { useGroupModal } from '@/stores/modals/useGroupModal'
 import DeleteGroupButton from '@/components/Modals/GroupModal/GroupControls/DeleteGroupButton.vue'
+import { useGroupModal } from '@/stores/modals/useGroupModal'
 
 const groupModal = useGroupModal()
 
@@ -15,7 +15,7 @@ function toMainScreen(): void {
         <BackButton @click="toMainScreen" />
 
         <div>
-            <DeleteGroupButton />
+            <DeleteGroupButton @click="groupModal.askToDelete = true" />
         </div>
     </div>
 </template>

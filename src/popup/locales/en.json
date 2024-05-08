@@ -2,5 +2,7 @@
     "Quick Save": "Quick Save",
     "Click the shield to save as a private group": "Click the shield to save as a private group",
     "Something went wrong! No group selected": "Something went wrong! No group selected",
-    "Do you want to delete the group?": "Do you want to delete the group?"
+    "Do you want to delete the group?": "Do you want to delete the group?",
+    "Yes": "Yes",
+    "No": "No"
 }

@@ -5,15 +5,20 @@ type Props = {
     content: string
 }
 
-const { content } = defineProps<Props>()
+type Emits = {
+    (e: 'cancel'): void
+}
+
+const emit = defineEmits<Emits>()
+const props = defineProps<Props>()
 </script>
 
 <template>
     <div>
-        <Overlay />
+        <Overlay @click="emit('cancel')" />
 
         <div class="popup">
-            <span>{{ content }}</span>
+            <span>{{ props.content }}</span>
 
             <div class="popup__buttons">
                 <slot name="buttons" />

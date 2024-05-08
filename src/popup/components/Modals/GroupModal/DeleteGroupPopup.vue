@@ -2,14 +2,23 @@
 import Popup from '@/components/Popup.vue'
 import { useTransStore } from '@/stores/useTransStore'
 
+type Emits = {
+    (e: 'confirm'): void
+    (e: 'cancel'): void
+}
+
+const emit = defineEmits<Emits>()
 const { trans } = useTransStore()
 </script>
 
 <template>
-    <Popup :content="trans('Do you want to delete the group?')">
+    <Popup
+        :content="trans('Do you want to delete the group?')"
+        @cancel="emit('cancel')"
+    >
         <template #buttons>
-            <button type="button">Yes</button>
-            <button type="button">No</button>
+            <button @click="emit('confirm')" type="button">{{ trans('Yes') }}</button>
+            <button @click="emit('cancel')" type="button">{{ trans('No') }}</button>
         </template>
     </Popup>
 </template>

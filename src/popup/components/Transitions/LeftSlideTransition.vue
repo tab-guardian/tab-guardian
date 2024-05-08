@@ -1,7 +1,7 @@
 <template>
-    <transition name="left-slide" appear>
+    <Transition name="left-slide" appear>
         <slot></slot>
-    </transition>
+    </Transition>
 </template>
 
 <style lang="sass" scoped>

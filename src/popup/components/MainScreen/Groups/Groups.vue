@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import GroupItem from '@/components/MainScreen/Groups/GroupItem.vue'
 import { useGroupStore } from '@/stores/useGroupStore'
-import DeleteGroupPopup from '@/components/Modals/GroupModal/DeleteGroupPopup.vue'
 
 const groupStore = useGroupStore()
 </script>
@@ -14,8 +13,6 @@ const groupStore = useGroupStore()
             :group="group"
         />
     </div>
-
-    <DeleteGroupPopup />
 </template>
 
 <style lang="sass" scoped>

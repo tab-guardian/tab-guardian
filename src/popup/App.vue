@@ -2,6 +2,10 @@
 import MainScreen from '@/components/MainScreen/MainScreen.vue'
 import Navbar from '@/components/Navbar/Navbar.vue'
 import GroupModal from '@/components/Modals/GroupModal/GroupModal.vue'
+import { useGroupModal } from '@/stores/modals/useGroupModal'
+import DeleteGroupPopup from '@/components/Modals/GroupModal/DeleteGroupPopup.vue'
+
+const groupModal = useGroupModal()
 </script>
 
 <template>
@@ -11,6 +15,12 @@ import GroupModal from '@/components/Modals/GroupModal/GroupModal.vue'
         <MainScreen />
         <GroupModal />
     </main>
+
+    <DeleteGroupPopup
+        v-if="groupModal.selectedGroup && groupModal.askToDelete"
+        @confirm="groupModal.deleteGroup"
+        @cancel="groupModal.askToDelete = false"
+    />
 </template>
 
 <style lang="sass">

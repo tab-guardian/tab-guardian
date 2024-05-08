@@ -4,6 +4,7 @@ import { defineStore } from 'pinia'
 
 export const useGroupModal = defineStore('groupModal', () => {
     const selectedGroup = ref<Group | null>(null)
+    const askToDelete = ref<boolean>(false)
 
     function reset(): void {
         selectedGroup.value = null
@@ -13,9 +14,15 @@ export const useGroupModal = defineStore('groupModal', () => {
         selectedGroup.value = group
     }
 
+    function deleteGroup(): void {
+        //
+    }
+
     return {
         selectedGroup,
+        askToDelete,
         reset,
         select,
+        deleteGroup,
     }
 })

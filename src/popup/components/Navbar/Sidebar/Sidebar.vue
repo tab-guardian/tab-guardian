@@ -10,7 +10,7 @@ const sidebarStore = useSidebarStore()
 <template>
     <Hamburger />
 
-    <teleport to="body">
+    <Teleport to="body">
         <Overlay
             v-if="sidebarStore.isOpen"
             @click="sidebarStore.toggle()"
@@ -21,7 +21,7 @@ const sidebarStore = useSidebarStore()
                 Sidebar
             </div>
         </RightSlideTransition>
-    </teleport>
+    </Teleport>
 </template>
 
 <style scoped lang="sass">
