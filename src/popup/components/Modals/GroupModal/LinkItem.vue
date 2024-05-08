@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Link } from '@/types'
+import MoreButton from '@/components/Modals/GroupModal/MoreButton.vue'
 
 type Props = {
     link: Link
@@ -15,12 +16,16 @@ const props = defineProps<Props>()
             target="_blank"
             rel="noopener noreferrer"
         >
-            <img :src="props.link.favIconUrl" alt="icon" />
+            <div class="group-item--inner">
+                <img :src="props.link.favIconUrl" alt="icon" />
 
-            <span class="group-item__content">
-                <span>{{ props.link.title }}</span>
-                <small>{{ props.link.url }}</small>
-            </span>
+                <div class="group-item__content">
+                    {{ props.link.title }}
+                    <small>{{ props.link.url }}</small>
+                </div>
+            </div>
+
+            <MoreButton />
         </a>
     </li>
 </template>
@@ -30,7 +35,8 @@ const props = defineProps<Props>()
     a
         display: flex
         align-items: center
-        gap: 10px
+        justify-content: space-between
+        gap: 8px
         background-color: #fff
         transition: background-color .2s
         cursor: pointer
@@ -53,14 +59,13 @@ const props = defineProps<Props>()
     &__content
         display: flex
         flex-direction: column
-        min-width: 0
+        line-height: 1.15
 
         small
             color: var(--tg-color-text-gray)
 
-        span
-            display: block
-            white-space: nowrap
-            overflow: hidden
-            text-overflow: ellipsis
+    &--inner
+        display: flex
+        gap: 9px
+        align-items: center
 </style>

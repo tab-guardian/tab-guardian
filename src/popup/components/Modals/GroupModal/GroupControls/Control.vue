@@ -12,7 +12,7 @@
         justify-content: center
         align-items: center
         background: transparent
-        border: 1px solid var(--tg-color-text-default)
+        border: 1px solid var(--tg-color-border-default)
         color: var(--tg-color-text-default)
         border-radius: 5px
         padding: 5px
