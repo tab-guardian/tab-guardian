@@ -9,7 +9,7 @@ const props = defineProps<Props>()
 </script>
 
 <template>
-    <li>
+    <li :title="props.link.title" class="group-item">
         <a
             :href="props.link.url"
             target="_blank"
@@ -17,8 +17,8 @@ const props = defineProps<Props>()
         >
             <img :src="props.link.favIconUrl" alt="icon" />
 
-            <span>
-                {{ props.link.title }}
+            <span class="group-item__content">
+                <span>{{ props.link.title }}</span>
                 <small>{{ props.link.url }}</small>
             </span>
         </a>
@@ -26,7 +26,7 @@ const props = defineProps<Props>()
 </template>
 
 <style lang="sass" scoped>
-li
+.group-item
     a
         display: flex
         align-items: center
@@ -50,10 +50,17 @@ li
             height: 25px
             border-radius: 4px
 
-        span
-            display: flex
-            flex-direction: column
+    &__content
+        display: flex
+        flex-direction: column
+        min-width: 0
 
-            small
-                color: var(--tg-color-text-gray)
+        small
+            color: var(--tg-color-text-gray)
+
+        span
+            display: block
+            white-space: nowrap
+            overflow: hidden
+            text-overflow: ellipsis
 </style>
