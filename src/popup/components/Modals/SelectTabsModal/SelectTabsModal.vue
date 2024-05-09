@@ -18,8 +18,15 @@ const { trans } = useTransStore()
             </p>
 
             <div class="select-tabs__controls">
-                <a href="javascript:" @click="store.selectAll">{{ trans('Select All Tabs') }}</a>
-                <a href="javascript:" @click="store.deselectAll">{{ trans('Deselect All Tabs') }}</a>
+                <a href="javascript:" @click="store.selectAll">
+                    {{ trans('Select all') }}
+                </a>
+                <a href="javascript:" @click="store.deselectAll">
+                    {{ trans('Deselect all') }}
+                </a>
+                <a href="javascript:" @click="store.close">
+                    {{ trans('Cancel') }}
+                </a>
             </div>
 
             <Tabs />
