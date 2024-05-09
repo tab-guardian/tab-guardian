@@ -4,10 +4,13 @@ import { defineStore } from 'pinia'
 import getCurrentLinks from '@/modules/getCurrentLinks'
 
 export const useSelectTabsModalStore = defineStore('selectTabsModalStore', () => {
-    const isOpen = ref<boolean>(false)
+    const isOpen = ref<boolean>(true)
     const links = ref<Link[]>([])
     const selectedIds = ref<number[]>([])
     const loading = ref<boolean>(false)
+
+    // @todo: temporary
+    fetchLinks()
 
     function fetchLinks(): void {
         getCurrentLinks({ closeTabs: false })

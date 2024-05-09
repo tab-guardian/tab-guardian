@@ -17,12 +17,12 @@ const { trans } = useTransStore()
         @cancel="emit('cancel')"
     >
         <template #buttons>
-            <button @click="emit('cancel')" type="button">
-                {{ trans('No') }}
-            </button>
-
             <button @click="emit('confirm')" type="button">
                 {{ trans('Yes') }}
+            </button>
+
+            <button @click="emit('cancel')" type="button">
+                {{ trans('No') }}
             </button>
         </template>
     </Popup>

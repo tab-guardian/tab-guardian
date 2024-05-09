@@ -32,14 +32,6 @@ const { trans } = useTransStore()
     h2
         font-size: 1rem
 
-    &__links
-        list-style: none
-        padding: 0
-        margin: 0
-        display: flex
-        flex-direction: column
-        gap: 7px
-
 .warn-message
     font-size: .8rem
     padding: 10px

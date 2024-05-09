@@ -4,7 +4,7 @@ export default (): Link[] => {
     return [
         {
             id: 1,
-            url: 'https://duckduckgo.com/',
+            url: 'https://soundcloud.com/etolubov_official/mango',
             title: 'DuckDuckGo — Privacy, simplified. Trust me man',
             favIconUrl: 'https://duckduckgo.com/favicon.ico',
         },
