@@ -13,6 +13,8 @@ const store = useSelectTabsModalStore()
             v-for="link in store.links"
             :key="link.id"
             class="link"
+            :class="{ 'link--selected': store.selectedIds.includes(link.id) }"
+            @click="store.toggleSelect(link.id)"
         >
             <div class="link__inner">
                 <img :src="link.favIconUrl" alt="icon">
@@ -51,8 +53,11 @@ ul
         justify-content: space-between
         transition: background-color .2s
 
-        &:hover
+        &:hover:not(&--selected)
             background-color: var(--tg-color-bg-secondary-hover)
+
+        &--selected
+            background-color: var(--tg-color-bg-private)
 
         &__inner
             display: flex
@@ -74,7 +79,7 @@ ul
             flex-shrink: 0
             background: var(--tg-color-bg-secondary)
             border: 1px solid var(--tg-color-border)
-            border-radius: 50px
+            border-radius: 4px
             display: flex
             align-items: center
             justify-content: center
@@ -84,8 +89,8 @@ ul
                 display: none
 
             &__checkmark
-                width: 8px
-                height: 8px
+                width: 10px
+                height: 10px
                 background-color: var(--tg-color-secondary)
-                border-radius: 50px
+                border-radius: 3px
 </style>

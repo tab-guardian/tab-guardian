@@ -17,10 +17,23 @@ export const useSelectTabsModalStore = defineStore('selectTabsModalStore', () =>
             .finally(() => loading.value = false)
     }
 
+    function toggleSelect(id: number): void {
+        const index = selectedIds.value.indexOf(id)
+
+        if (index === -1) {
+            selectedIds.value.push(id)
+            return
+        }
+
+        // Remove the item from the array
+        selectedIds.value.splice(index, 1)
+    }
+
     return {
         links,
         selectedIds,
         loading,
         isOpen,
+        toggleSelect,
     }
 })
