@@ -4,7 +4,7 @@ import { defineStore } from 'pinia'
 import getCurrentLinks from '@/modules/getCurrentLinks'
 
 export const useSelectTabsModalStore = defineStore('selectTabsModalStore', () => {
-    const isOpen = ref<boolean>(true)
+    const isOpen = ref<boolean>(false)
     const links = ref<Link[]>([])
     const selectedIds = ref<number[]>([])
     const loading = ref<boolean>(false)
