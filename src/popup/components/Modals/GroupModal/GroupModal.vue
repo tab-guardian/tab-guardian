@@ -4,7 +4,7 @@ import { useTransStore } from '@/stores/useTransStore'
 import GroupControls from '@/components/Modals/GroupModal/GroupControls/GroupControls.vue'
 import Modal from '@/components/Modal.vue'
 import LeftSlideTransition from '@/components/Transitions/LeftSlideTransition.vue'
-import LinkItem from '@/components/Modals/GroupModal/LinkItem.vue'
+import Links from '@/components/Modals/GroupModal/Links.vue'
 
 const groupModalStore = useGroupModalStore()
 const { trans } = useTransStore()
@@ -17,22 +17,7 @@ const { trans } = useTransStore()
 
             <div v-if="groupModalStore.selectedGroup" class="group">
                 <h2>Group: {{ groupModalStore.selectedGroup.title }}</h2>
-
-                <p
-                    v-if="groupModalStore.selectedGroup.links.length === 0"
-                    class="warn-message"
-                >
-                    {{ trans('There are no links in this group') }}
-                </p>
-
-                <ul v-else class="group__links">
-                    <LinkItem
-                        v-for="link in groupModalStore.selectedGroup.links"
-                        :key="link.id"
-                        :link="link"
-                        :groupId="groupModalStore.selectedGroup.id"
-                    />
-                </ul>
+                <Links :group="groupModalStore.selectedGroup" />
             </div>
 
             <div v-else class="warn-message">
