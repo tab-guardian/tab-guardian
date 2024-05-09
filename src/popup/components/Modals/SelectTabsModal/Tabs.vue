@@ -37,7 +37,7 @@ const store = useSelectTabsModalStore()
 ul
     list-style: none
     padding: 0
-    margin: 10px 0 0 0
+    margin: 0
     display: flex
     flex-direction: column
     gap: 6px

@@ -7,5 +7,7 @@
     "No": "No",
     "There are no links in this group": "There are no links in this group",
     "Select Tabs": "Select Tabs",
-    "Select tabs that you want to include into the group": "Select tabs that you want to include into the group"
+    "Click on each tab to select or unselect it for saving to memory": "Click on each tab to select or unselect it for saving to memory",
+    "Select All Tabs": "Select All Tabs",
+    "Deselect All Tabs": "Deselect All Tabs"
 }

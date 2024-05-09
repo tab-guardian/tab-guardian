@@ -17,6 +17,14 @@ export const useSelectTabsModalStore = defineStore('selectTabsModalStore', () =>
             .finally(() => loading.value = false)
     }
 
+    function selectAll(): void {
+        selectedIds.value = links.value.map(link => link.id)
+    }
+
+    function deselectAll(): void {
+        selectedIds.value = []
+    }
+
     function toggleSelect(id: number): void {
         const index = selectedIds.value.indexOf(id)
 
@@ -35,5 +43,7 @@ export const useSelectTabsModalStore = defineStore('selectTabsModalStore', () =>
         loading,
         isOpen,
         toggleSelect,
+        selectAll,
+        deselectAll,
     }
 })

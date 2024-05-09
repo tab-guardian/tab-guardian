@@ -13,7 +13,14 @@ const { trans } = useTransStore()
     <LeftSlideTransition>
         <Modal v-if="store.isOpen" class="select-tabs">
             <h2>{{ trans('Select Tabs') }}</h2>
-            <p>{{ trans('Select tabs that you want to include into the group') }}</p>
+            <p>
+                {{ trans('Click on each tab to select or unselect it for saving to memory') }}.
+            </p>
+
+            <div class="select-tabs__controls">
+                <a href="javascript:" @click="store.selectAll">{{ trans('Select All Tabs') }}</a>
+                <a href="javascript:" @click="store.deselectAll">{{ trans('Deselect All Tabs') }}</a>
+            </div>
 
             <Tabs />
         </Modal>
@@ -24,9 +31,29 @@ const { trans } = useTransStore()
 .select-tabs
     h2
         margin: 0
+        font-size: 1.3rem
 
     p
         margin: 4px 0 0 0
         color: var(--tg-color-font-gray)
         font-size: .9rem
+
+    &__controls
+        display: flex
+        gap: 7px
+        margin: 8px 0
+
+        a
+            text-decoration: none
+            color: var(--tg-color-secondary)
+            font-size: .9rem
+            border-radius: 5px
+            border: 1px solid var(--tg-color-border)
+            padding: 2px 5px
+            transition: background-color .2s
+            flex: 1
+            text-align: center
+
+            &:hover
+                background-color: var(--tg-color-bg-private)
 </style>

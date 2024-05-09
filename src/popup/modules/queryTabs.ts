@@ -1,7 +1,7 @@
 export default (): Promise<chrome.tabs.Tab[]> => {
     return new Promise((resolve, reject) => {
         if (!chrome || !chrome.tabs) {
-            console.warn('[Tab Guardian]: chrome.tabs is not available')
+            console.info('[Tab Guardian]: chrome.tabs is not available')
             resolve([])
             return
         }
