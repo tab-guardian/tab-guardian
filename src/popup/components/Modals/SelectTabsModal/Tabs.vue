@@ -1,12 +1,18 @@
 <script setup lang="ts">
 import { useSelectTabsModalStore } from '@/stores/modals/useSelectTabsModalStore'
 import Spinner from '@/components/Spinner.vue'
+import { useTransStore } from '@/stores/useTransStore'
 
 const store = useSelectTabsModalStore()
+const { trans } = useTransStore()
 </script>
 
 <template>
     <Spinner v-if="store.loading" />
+
+    <h3 v-else-if="store.links.length === 0" class="no-tabs">
+        {{ trans('No tabs found') }}
+    </h3>
 
     <ul v-else>
         <li
@@ -34,6 +40,12 @@ const store = useSelectTabsModalStore()
 </template>
 
 <style lang="sass" scoped>
+.no-tabs
+    font-size: 1.2rem
+    text-align: center
+    margin-top: 20px
+    font-weight: normal
+
 ul
     list-style: none
     padding: 0

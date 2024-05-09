@@ -1,5 +1,5 @@
 import type { Link } from '@/types'
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import getCurrentLinks from '@/modules/getCurrentLinks'
 
@@ -9,11 +9,12 @@ export const useSelectTabsModalStore = defineStore('selectTabsModalStore', () =>
     const selectedIds = ref<number[]>([])
     const loading = ref<boolean>(false)
 
-    onMounted(() => fetchLinks())
-
     function fetchLinks(): void {
         getCurrentLinks({ closeTabs: false })
-            .then(items => links.value = items)
+            .then(items => {
+                links.value = items
+                console.log(items.length)
+            })
             .finally(() => loading.value = false)
     }
 
@@ -45,5 +46,6 @@ export const useSelectTabsModalStore = defineStore('selectTabsModalStore', () =>
         toggleSelect,
         selectAll,
         deselectAll,
+        fetchLinks,
     }
 })

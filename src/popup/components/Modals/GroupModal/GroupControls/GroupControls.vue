@@ -1,21 +1,16 @@
 <script setup lang="ts">
 import BackButton from '@/components/Modals/GroupModal/GroupControls/BackButton.vue'
 import DeleteGroupButton from '@/components/Modals/GroupModal/GroupControls/DeleteGroupButton.vue'
-import { useGroupModalStore } from '@/stores/modals/useGroupModalStore'
-
-const groupModalStore = useGroupModalStore()
-
-function toMainScreen(): void {
-    groupModalStore.reset()
-}
+import AddLinkButton from '@/components/Modals/GroupModal/GroupControls/AddLinkButton.vue'
 </script>
 
 <template>
     <div class="controls">
-        <BackButton @click="toMainScreen" />
+        <BackButton />
 
-        <div>
-            <DeleteGroupButton @click="groupModalStore.askToDelete = true" />
+        <div class="controls__right">
+            <AddLinkButton />
+            <DeleteGroupButton />
         </div>
     </div>
 </template>
@@ -24,4 +19,9 @@ function toMainScreen(): void {
 .controls
     display: flex
     justify-content: space-between
+    gap: 3px
+
+    &__right
+        display: flex
+        gap: 3px
 </style>
