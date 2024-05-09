@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import { useSelectTabsModalStore } from '@/stores/modals/useSelectTabsModalStore'
+import Spinner from '@/components/Spinner.vue'
 
 const store = useSelectTabsModalStore()
 </script>
 
 <template>
-    <ul>
+    <Spinner v-if="store.loading" />
+
+    <ul v-else>
         <li
             v-for="link in store.links"
             :key="link.id"
@@ -18,7 +21,11 @@ const store = useSelectTabsModalStore()
 
             <label class="link__checkbox">
                 <input type="checkbox">
-                <div class="link__checkbox__checkmark"></div>
+
+                <div
+                    v-if="store.selectedIds.includes(link.id)"
+                    class="link__checkbox__checkmark"
+                ></div>
             </label>
         </li>
     </ul>
@@ -28,7 +35,7 @@ const store = useSelectTabsModalStore()
 ul
     list-style: none
     padding: 0
-    margin: 14px 0 0 0
+    margin: 10px 0 0 0
     display: flex
     flex-direction: column
     gap: 6px
@@ -42,6 +49,10 @@ ul
         gap: 9px
         align-items: center
         justify-content: space-between
+        transition: background-color .2s
+
+        &:hover
+            background-color: var(--tg-color-bg-secondary-hover)
 
         &__inner
             display: flex
