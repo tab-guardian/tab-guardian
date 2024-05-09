@@ -2,7 +2,7 @@
     display: flex
     align-items: center
     justify-content: space-between
-    gap: 10px
+    gap: 12px
     background-color: #fff
     transition: background-color .2s
     cursor: pointer
@@ -14,7 +14,7 @@
     color: var(--tg-color-font)
     font-size: .9rem
 
-    &:hover
+    &:hover:not(&--selected)
         background-color: var(--tg-color-bg-secondary-hover)
 
     &--selected
@@ -66,5 +66,5 @@
 
     &__inner
         display: flex
-        gap: 9px
+        gap: 12px
         align-items: center
