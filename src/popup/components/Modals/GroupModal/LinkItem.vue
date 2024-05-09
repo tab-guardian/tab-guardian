@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import type { Link } from '@/types'
-import MoreButton from '@/components/Modals/GroupModal/MoreButton.vue'
+import DeleteLinkButton from '@/components/Modals/GroupModal/DeleteLinkButton.vue'
 
 type Props = {
     link: Link
+    groupId: number
 }
 
 const props = defineProps<Props>()
@@ -25,7 +26,7 @@ const props = defineProps<Props>()
                 </div>
             </div>
 
-            <MoreButton />
+            <DeleteLinkButton :linkId="link.id" :groupId />
         </a>
     </li>
 </template>

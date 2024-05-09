@@ -23,6 +23,18 @@ export const useGroupStore = defineStore('groupStore', () => {
         saveGroupsToStorage()
     }
 
+    function deleteLink(groupId: number, linkId: number): void {
+        const group = groups.value.find(group => group.id === groupId)
+
+        if (!group) {
+            return
+        }
+
+        group.links = group.links.filter(link => link.id !== linkId)
+
+        saveGroupsToStorage()
+    }
+
     async function saveGroup(params: SaveGroupParams): Promise<void> {
         if (isSaving.value) {
             return
@@ -56,5 +68,6 @@ export const useGroupStore = defineStore('groupStore', () => {
         isSaving,
         saveGroup,
         deleteGroup,
+        deleteLink,
     }
 })

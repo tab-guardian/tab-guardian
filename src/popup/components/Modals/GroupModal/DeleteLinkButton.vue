@@ -1,22 +1,28 @@
 <script setup lang="ts">
-import EllipsisIcon from '@/components/Icons/EllipsisIcon.vue'
+import CloseIcon from '@/components/Icons/CloseIcon.vue'
+import { useGroupStore } from '@/stores/useGroupStore'
 
-function openContextMenu() {
-    console.log('openContextMenu')
+type Props = {
+    linkId: number
+    groupId: number
 }
+
+const { linkId, groupId } = defineProps<Props>()
+
+const groupStore = useGroupStore()
 </script>
 
 <template>
     <div
-        @click.prevent="openContextMenu"
-        class="more-button"
+        @click.prevent="groupStore.deleteLink(groupId, linkId)"
+        class="delete-button"
     >
-        <EllipsisIcon width="22" height="22" />
+        <CloseIcon width="15" height="15" />
     </div>
 </template>
 
 <style lang="sass" scoped>
-.more-button
+.delete-button
     display: flex
     align-items: center
     color: var(--tg-color-font)

@@ -23,6 +23,7 @@ const { trans } = useTransStore()
                         v-for="link in groupModalStore.selectedGroup.links"
                         :key="link.id"
                         :link="link"
+                        :groupId="groupModalStore.selectedGroup.id"
                     />
                 </ul>
             </div>
