@@ -11,6 +11,6 @@
     bottom: 0
     right: 0
     left: 0
-    background-color: var(--tg-color-light)
+    background-color: var(--tg-color-bg-secondary)
     padding: var(--tg-padding)
 </style>

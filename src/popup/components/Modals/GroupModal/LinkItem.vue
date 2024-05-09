@@ -40,16 +40,16 @@ const props = defineProps<Props>()
         background-color: #fff
         transition: background-color .2s
         cursor: pointer
-        border: 1px solid var(--tg-color-border-default)
+        border: 1px solid var(--tg-color-border)
         border-radius: 8px
-        background-color: var(--tg-color-light)
+        background-color: var(--tg-color-bg-secondary)
         padding: 8px
         text-decoration: none
-        color: var(--tg-color-text-default)
+        color: var(--tg-color-font)
         font-size: .9rem
 
         &:hover
-            background-color: var(--tg-color-light-hover)
+            background-color: var(--tg-color-bg-secondary-hover)
 
         img
             width: 25px
@@ -62,7 +62,7 @@ const props = defineProps<Props>()
         line-height: 1.15
 
         small
-            color: var(--tg-color-text-gray)
+            color: var(--tg-color-font-gray)
 
     &--inner
         display: flex

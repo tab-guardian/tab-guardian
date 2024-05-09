@@ -30,7 +30,7 @@ const { trans } = useTransStore()
 
 <style scoped lang="sass">
 button
-    border: 1px solid var(--tg-color-border-default)
+    border: 1px solid var(--tg-color-border)
     border-radius: 4px
     padding: 7px 20px
     font-size: .9rem
@@ -38,9 +38,9 @@ button
 
     &:first-child
         background-color: var(--tg-color-secondary)
-        color: var(--tg-color-light)
+        color: var(--tg-color-bg-secondary)
 
     &:last-child
-        color: var(--tg-color-text-default)
-        background-color: var(--tg-color-bg-light)
+        color: var(--tg-color-font)
+        background-color: var(--tg-color-bg)
 </style>

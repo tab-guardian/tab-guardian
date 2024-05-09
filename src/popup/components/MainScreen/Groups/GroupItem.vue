@@ -42,11 +42,11 @@ function toGroupScreen(): void {
     gap: 10px
     transition: background-color .2s
     cursor: pointer
-    border-bottom: 1px solid var(--tg-color-border-default)
-    background-color: var(--tg-color-light)
+    border-bottom: 1px solid var(--tg-color-border)
+    background-color: var(--tg-color-bg-secondary)
 
     &:hover
-        background-color: var(--tg-color-light-hover)
+        background-color: var(--tg-color-bg-secondary-hover)
 
     &--private
         background-color: var(--tg-color-bg-private)

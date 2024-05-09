@@ -20,7 +20,7 @@ const { trans } = useTransStore()
     text-align: center
     padding: var(--tg-padding)
     margin-bottom: 0
-    border-bottom: 1px solid var(--tg-color-border-default)
+    border-bottom: 1px solid var(--tg-color-border)
 
     .notice
         display: block

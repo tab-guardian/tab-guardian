@@ -36,12 +36,12 @@ const groupModal = useGroupModal()
         width: 7px
 
     &::-webkit-scrollbar-track
-        background-color: var(--tg-scrollbar-bg)
+        background-color: var(--tg-color-bg-scrollbar)
         border-radius: 50px
         margin-top: 2px
 
     &::-webkit-scrollbar-thumb
-        background-color: var(--tg-scrollbar-bg-thumb)
+        background-color: var(--tg-color-bg-scrollbar-thumb)
         border-radius: 10px
         border-radius: 50px
 </style>

@@ -13,7 +13,7 @@ button
     align-items: center
     background: transparent
     border: 1px solid transparent
-    color: var(--tg-color-text-default)
+    color: var(--tg-color-font)
     border-radius: 5px
     padding: 6px
     opacity: .8
@@ -22,5 +22,5 @@ button
 
     &:hover
         opacity: 1
-        border-color: var(--tg-color-border-default)
+        border-color: var(--tg-color-border)
 </style>

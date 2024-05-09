@@ -29,7 +29,7 @@ const sidebarStore = useSidebarStore()
         height: 3px
         display: block
         position: absolute
-        background-color: var(--tg-color-text-default)
+        background-color: var(--tg-color-font)
         transition: all .3s
         border-radius: 50px
         opacity: .8

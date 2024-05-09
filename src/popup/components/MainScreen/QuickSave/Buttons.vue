@@ -45,7 +45,7 @@ const groupStore = useGroupStore()
         gap: 10px
         align-items: center
         justify-content: center
-        color: var(--tg-color-light)
+        color: var(--tg-color-bg-secondary)
         cursor: pointer
         transition: opacity .2s
         border-radius: 8px
@@ -66,7 +66,7 @@ const groupStore = useGroupStore()
         svg
             width: 18px
             height: 18px
-            fill: var(--tg-color-light)
+            fill: var(--tg-color-bg-secondary)
 
     .save-private
         width: 90px

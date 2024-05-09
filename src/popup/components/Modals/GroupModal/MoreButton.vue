@@ -19,13 +19,13 @@ function openContextMenu() {
 .more-button
     display: flex
     align-items: center
-    color: var(--tg-color-text-default)
+    color: var(--tg-color-font)
     padding: 3px 0
     border-radius: 4px
     transition: background-color .2s, border-color .2s
     border: 1px solid transparent
 
     &:hover
-        background-color: var(--tg-color-bg-light)
-        border-color: var(--tg-color-border-default)
+        background-color: var(--tg-color-bg)
+        border-color: var(--tg-color-border)
 </style>

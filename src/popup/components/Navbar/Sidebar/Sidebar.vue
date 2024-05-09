@@ -28,7 +28,7 @@ const sidebarStore = useSidebarStore()
 .sidebar
     position: absolute
     width: 250px
-    background: var(--tg-color-bg-light)
+    background: var(--tg-color-bg)
     top: 0
     bottom: 0
     left: 0

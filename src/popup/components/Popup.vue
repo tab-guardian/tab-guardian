@@ -33,7 +33,7 @@ const props = defineProps<Props>()
     top: 50%
     left: 20px
     right: 20px
-    background-color: var(--tg-color-bg-light)
+    background-color: var(--tg-color-bg)
     border-radius: 8px
     transform: translateY(-50%)
     padding: 20px
