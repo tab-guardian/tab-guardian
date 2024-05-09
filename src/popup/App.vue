@@ -5,6 +5,7 @@ import GroupModal from '@/components/Modals/GroupModal/GroupModal.vue'
 import { useGroupModalStore } from '@/stores/modals/useGroupModalStore'
 import { useGroupStore } from '@/stores/useGroupStore'
 import DeleteGroupPopup from '@/components/Modals/GroupModal/DeleteGroupPopup.vue'
+import SelectTabsModal from '@/components/Modals/SelectTabsModal/SelectTabsModal.vue'
 
 const groupModalStore = useGroupModalStore()
 const groupStore = useGroupStore()
@@ -27,6 +28,7 @@ function deleteGroup() {
     <main class="screen">
         <MainScreen />
         <GroupModal />
+        <SelectTabsModal />
     </main>
 
     <DeleteGroupPopup

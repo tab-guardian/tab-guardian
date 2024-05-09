@@ -17,8 +17,8 @@ const props = defineProps<Props>()
             target="_blank"
             rel="noopener noreferrer"
         >
-            <div class="group-item--inner">
-                <img :src="props.link.favIconUrl" alt="icon" />
+            <div class="group-item__inner">
+                <img :src="props.link.favIconUrl" alt="icon">
 
                 <div class="group-item__content">
                     {{ props.link.title }}
@@ -65,7 +65,7 @@ const props = defineProps<Props>()
         small
             color: var(--tg-color-font-gray)
 
-    &--inner
+    &__inner
         display: flex
         gap: 9px
         align-items: center
