@@ -18,7 +18,14 @@ const { trans } = useTransStore()
             <div v-if="groupModalStore.selectedGroup" class="group">
                 <h2>Group: {{ groupModalStore.selectedGroup.title }}</h2>
 
-                <ul class="group__links">
+                <p
+                    v-if="groupModalStore.selectedGroup.links.length === 0"
+                    class="warn-message"
+                >
+                    {{ trans('There are no links in this group') }}
+                </p>
+
+                <ul v-else class="group__links">
                     <LinkItem
                         v-for="link in groupModalStore.selectedGroup.links"
                         :key="link.id"
@@ -28,7 +35,7 @@ const { trans } = useTransStore()
                 </ul>
             </div>
 
-            <div v-else class="no-group">
+            <div v-else class="warn-message">
                 <h2>😢 {{ trans('Something went wrong! No group selected') }}</h2>
             </div>
         </Modal>
@@ -48,7 +55,7 @@ const { trans } = useTransStore()
         flex-direction: column
         gap: 7px
 
-.no-group
+.warn-message
     font-size: .8rem
     padding: 10px
     text-align: center

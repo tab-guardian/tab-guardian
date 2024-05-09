@@ -4,5 +4,6 @@
     "Something went wrong! No group selected": "Something went wrong! No group selected",
     "Do you want to delete the group?": "Do you want to delete the group?",
     "Yes": "Yes",
-    "No": "No"
+    "No": "No",
+    "There are no links in this group": "There are no links in this group"
 }
