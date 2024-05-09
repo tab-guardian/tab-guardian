@@ -18,6 +18,11 @@ export const useGroupStore = defineStore('groupStore', () => {
         })
     }
 
+    function deleteGroup(id: number): void {
+        groups.value = groups.value.filter(group => group.id !== id)
+        saveGroupsToStorage()
+    }
+
     async function saveGroup(params: SaveGroupParams): Promise<void> {
         if (isSaving.value) {
             return
@@ -38,8 +43,11 @@ export const useGroupStore = defineStore('groupStore', () => {
             isPrivate,
         })
 
-        await saveToStorage('groups', groups.value)
+        await saveGroupsToStorage()
+    }
 
+    async function saveGroupsToStorage(): Promise<void> {
+        await saveToStorage('groups', groups.value)
         setTimeout(() => (isSaving.value = false), 500)
     }
 
@@ -47,5 +55,6 @@ export const useGroupStore = defineStore('groupStore', () => {
         groups,
         isSaving,
         saveGroup,
+        deleteGroup,
     }
 })

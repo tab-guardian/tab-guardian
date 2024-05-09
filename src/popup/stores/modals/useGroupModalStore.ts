@@ -2,7 +2,7 @@ import type { Group } from '@/types'
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 
-export const useGroupModal = defineStore('groupModal', () => {
+export const useGroupModalStore = defineStore('groupModalStore', () => {
     const selectedGroup = ref<Group | null>(null)
     const askToDelete = ref<boolean>(false)
 
@@ -14,15 +14,10 @@ export const useGroupModal = defineStore('groupModal', () => {
         selectedGroup.value = group
     }
 
-    function deleteGroup(): void {
-        //
-    }
-
     return {
         selectedGroup,
         askToDelete,
         reset,
         select,
-        deleteGroup,
     }
 })

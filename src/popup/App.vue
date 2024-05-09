@@ -2,10 +2,23 @@
 import MainScreen from '@/components/MainScreen/MainScreen.vue'
 import Navbar from '@/components/Navbar/Navbar.vue'
 import GroupModal from '@/components/Modals/GroupModal/GroupModal.vue'
-import { useGroupModal } from '@/stores/modals/useGroupModal'
+import { useGroupModalStore } from '@/stores/modals/useGroupModalStore'
+import { useGroupStore } from '@/stores/useGroupStore'
 import DeleteGroupPopup from '@/components/Modals/GroupModal/DeleteGroupPopup.vue'
 
-const groupModal = useGroupModal()
+const groupModalStore = useGroupModalStore()
+const groupStore = useGroupStore()
+
+function deleteGroup() {
+    if (!groupModalStore.selectedGroup) {
+        console.warn('[Tab Guardian]: No group selected for deletion')
+        return
+    }
+
+    groupStore.deleteGroup(groupModalStore.selectedGroup.id)
+    groupModalStore.askToDelete = false
+    groupModalStore.selectedGroup = null
+}
 </script>
 
 <template>
@@ -17,9 +30,9 @@ const groupModal = useGroupModal()
     </main>
 
     <DeleteGroupPopup
-        v-if="groupModal.selectedGroup && groupModal.askToDelete"
-        @confirm="groupModal.deleteGroup"
-        @cancel="groupModal.askToDelete = false"
+        v-if="groupModalStore.selectedGroup && groupModalStore.askToDelete"
+        @confirm="deleteGroup"
+        @cancel="groupModalStore.askToDelete = false"
     />
 </template>
 
