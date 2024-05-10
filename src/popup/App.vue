@@ -1,11 +1,12 @@
 <script setup lang="ts">
+import { useGroupModalStore } from '@/stores/modals/useGroupModalStore'
+import { useGroupStore } from '@/stores/useGroupStore'
 import MainScreen from '@/components/MainScreen/MainScreen.vue'
 import Navbar from '@/components/Navbar/Navbar.vue'
 import GroupModal from '@/components/Modals/GroupModal/GroupModal.vue'
-import { useGroupModalStore } from '@/stores/modals/useGroupModalStore'
-import { useGroupStore } from '@/stores/useGroupStore'
 import DeleteGroupPopup from '@/components/Modals/GroupModal/DeleteGroupPopup.vue'
 import SelectTabsModal from '@/components/Modals/SelectTabsModal/SelectTabsModal.vue'
+import SettingsModal from '@/components/Modals/SettingsModal/SettingsModal.vue'
 
 const groupModalStore = useGroupModalStore()
 const groupStore = useGroupStore()
@@ -29,6 +30,7 @@ function deleteGroup() {
         <MainScreen />
         <GroupModal />
         <SelectTabsModal />
+        <SettingsModal />
     </main>
 
     <DeleteGroupPopup

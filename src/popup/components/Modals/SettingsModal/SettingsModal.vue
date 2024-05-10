@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { useTransStore } from '@/stores/useTransStore'
 import { useSettingsModalStore } from '@/stores/modals/useSettingsModalStore'
+import Modal from '@/components/Modal.vue'
+import LeftSlideTransition from '@/components/Transitions/LeftSlideTransition.vue'
 
 const { trans } = useTransStore()
 const store = useSettingsModalStore()
@@ -11,8 +13,9 @@ const store = useSettingsModalStore()
         <Modal
            v-if="store.isOpen"
            class="settings"
+           :title="trans('Settings')"
+           :subtitle="trans('Change the extension configurations here')"
         >
-            <span>here</span>
         </Modal>
     </LeftSlideTransition>
 </template>

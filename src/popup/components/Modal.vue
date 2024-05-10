@@ -10,7 +10,7 @@ const { title, subtitle } = defineProps<Props>()
 <template>
     <div class="modal">
         <h2 v-if="title" class="modal__title">{{ title }}</h2>
-        <p v-if="subtitle" class="modal_subtitle">{{ subtitle }}</p>
+        <p v-if="subtitle" class="modal__subtitle">{{ subtitle }}</p>
 
         <slot></slot>
     </div>
