@@ -2,6 +2,7 @@
 import { useSelectTabsModalStore } from '@/stores/modals/useSelectTabsModalStore'
 import Spinner from '@/components/Spinner.vue'
 import { useTransStore } from '@/stores/useTransStore'
+import TabItem from '@/components/Modals/SelectTabsModal/TabItem.vue'
 
 const store = useSelectTabsModalStore()
 const { trans } = useTransStore()
@@ -15,27 +16,11 @@ const { trans } = useTransStore()
     </h3>
 
     <div v-else class="tabs">
-        <div
+        <TabItem
             v-for="link in store.links"
             :key="link.id"
-            class="link-item"
-            :class="{ 'link-item--selected': store.selectedIds.includes(link.id) }"
-            @click="store.toggleSelect(link.id)"
-        >
-            <div class="link-item__inner">
-                <img :src="link.favIconUrl" alt="icon">
-                <span>{{ link.title }}</span>
-            </div>
-
-            <label class="link-item__checkbox">
-                <input type="checkbox">
-
-                <div
-                    v-if="store.selectedIds.includes(link.id)"
-                    class="link-item__checkbox__checkmark"
-                ></div>
-            </label>
-        </div>
+            :link
+        />
     </div>
 </template>
 
