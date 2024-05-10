@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Control from '@/components/Modals/GroupModal/GroupControls/Control.vue'
+import Control from '@/components/Control.vue'
 import PlusCircleIcon from '@/components/Icons/PlusCircleIcon.vue'
 import { useSelectTabsModalStore } from '@/stores/modals/useSelectTabsModalStore'
 import { useGroupModalStore } from '@/stores/modals/useGroupModalStore'

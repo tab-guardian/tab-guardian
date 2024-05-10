@@ -3,7 +3,7 @@ import { useGroupStore } from '@/stores/useGroupStore'
 import { useGroupModalStore } from '@/stores/modals/useGroupModalStore'
 import PencilSquareIcon from '@/components/Icons/PencilSquareIcon.vue'
 import CheckIcon from '@/components/Icons/CheckIcon.vue'
-import Control from '@/components/Modals/GroupModal/GroupControls/Control.vue'
+import Control from '@/components/Control.vue'
 
 const store = useGroupModalStore()
 const groupStore = useGroupStore()

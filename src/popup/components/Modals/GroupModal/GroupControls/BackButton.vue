@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import ChevronRightIcon from '@/components/Icons/ChevronRightIcon.vue'
-import Control from '@/components/Modals/GroupModal/GroupControls/Control.vue'
+import Control from '@/components/Control.vue'
 import { useGroupModalStore } from '@/stores/modals/useGroupModalStore';
 
 const store = useGroupModalStore()

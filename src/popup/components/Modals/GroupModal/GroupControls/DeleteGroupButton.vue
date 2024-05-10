@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Control from '@/components/Modals/GroupModal/GroupControls/Control.vue'
+import Control from '@/components/Control.vue'
 import TrashIcon from '@/components/Icons/TrashIcon.vue'
 import { useGroupModalStore } from '@/stores/modals/useGroupModalStore'
 
