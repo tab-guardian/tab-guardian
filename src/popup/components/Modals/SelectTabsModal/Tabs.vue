@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useSelectTabsModalStore } from '@/stores/modals/useSelectTabsModalStore'
-import Spinner from '@/components/Spinner.vue'
 import { useTransStore } from '@/stores/useTransStore'
+import Spinner from '@/components/Spinner.vue'
 import TabItem from '@/components/Modals/SelectTabsModal/TabItem.vue'
 
 const store = useSelectTabsModalStore()

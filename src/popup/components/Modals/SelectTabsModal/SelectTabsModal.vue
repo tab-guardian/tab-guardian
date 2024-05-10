@@ -1,9 +1,10 @@
 <script setup lang="ts">
+import { useSelectTabsModalStore } from '@/stores/modals/useSelectTabsModalStore'
+import { useTransStore } from '@/stores/useTransStore'
 import LeftSlideTransition from '@/components/Transitions/LeftSlideTransition.vue'
 import Modal from '@/components/Modal.vue'
 import Tabs from '@/components/Modals/SelectTabsModal/Tabs.vue'
-import { useSelectTabsModalStore } from '@/stores/modals/useSelectTabsModalStore'
-import { useTransStore } from '@/stores/useTransStore'
+import SaveButton from '@/components/Modals/SelectTabsModal/SaveButton.vue'
 
 const store = useSelectTabsModalStore()
 const { trans } = useTransStore()
@@ -30,6 +31,8 @@ const { trans } = useTransStore()
             </div>
 
             <Tabs />
+
+            <SaveButton />
         </Modal>
     </LeftSlideTransition>
 </template>
