@@ -4,7 +4,7 @@ export default (): Link[] => {
     return [
         {
             id: 1 + Date.now(),
-            url: 'https://soundcloud.com/etolubov_official/mango',
+            url: 'https://stackoverflow.com/questions/13137350/defining-typescript-callback-type',
             title: 'DuckDuckGo — Privacy, simplified. Trust me man',
             favIconUrl: 'https://duckduckgo.com/favicon.ico',
         },
