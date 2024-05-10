@@ -1,4 +1,4 @@
-import type { Group, SaveGroupParams } from '@/types'
+import type { Group, SaveGroupParams, Link } from '@/types'
 import { ref, onMounted } from 'vue'
 import { defineStore } from 'pinia'
 import getDefaultGroupTitle from '@/modules/getDefaultGroupTitle'
@@ -31,6 +31,18 @@ export const useGroupStore = defineStore('groupStore', () => {
         }
 
         group.links = group.links.filter(link => link.id !== linkId)
+
+        saveGroupsToStorage()
+    }
+
+    function prependLinksTo(groupId: number, links: Link[]): void {
+        const group = groups.value.find(group => group.id === groupId)
+
+        if (!group) {
+            return
+        }
+
+        group.links.unshift(...links)
 
         saveGroupsToStorage()
     }
@@ -69,5 +81,6 @@ export const useGroupStore = defineStore('groupStore', () => {
         saveGroup,
         deleteGroup,
         deleteLink,
+        prependLinksTo,
     }
 })

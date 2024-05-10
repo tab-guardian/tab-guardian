@@ -10,5 +10,7 @@
     "Click on each tab to select or unselect it for saving to memory": "Click on each tab to select or unselect it for saving to memory",
     "Select all": "Select all",
     "Deselect all": "Deselect all",
-    "Save": "Save"
+    "Save": "Save",
+    "Cancel": "Cancel",
+    "No tabs found": "No tabs found"
 }

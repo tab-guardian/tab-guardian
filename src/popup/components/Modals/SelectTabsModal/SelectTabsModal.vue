@@ -1,13 +1,27 @@
 <script setup lang="ts">
 import { useSelectTabsModalStore } from '@/stores/modals/useSelectTabsModalStore'
 import { useTransStore } from '@/stores/useTransStore'
+import { useGroupStore } from '@/stores/useGroupStore'
 import LeftSlideTransition from '@/components/Transitions/LeftSlideTransition.vue'
 import Modal from '@/components/Modal.vue'
 import Tabs from '@/components/Modals/SelectTabsModal/Tabs.vue'
 import SaveButton from '@/components/Modals/SelectTabsModal/SaveButton.vue'
 
 const store = useSelectTabsModalStore()
+const groupStore = useGroupStore()
 const { trans } = useTransStore()
+
+function saveTabs(): void {
+    if (!store.targetGroupId) {
+        console.error('[Tab Guardian]: targetGroupId is not set. Cannot save add links')
+        return
+    }
+
+    const selectedLinks = store.getSelectedLinks()
+
+    groupStore.prependLinksTo(store.targetGroupId, selectedLinks)
+    store.closeModal()
+}
 </script>
 
 <template>
@@ -25,14 +39,14 @@ const { trans } = useTransStore()
                 <a href="javascript:" @click="store.deselectAll">
                     {{ trans('Deselect all') }}
                 </a>
-                <a href="javascript:" @click="store.close">
+                <a href="javascript:" @click="store.closeModal">
                     {{ trans('Cancel') }}
                 </a>
             </div>
 
             <Tabs />
 
-            <SaveButton />
+            <SaveButton @click="saveTabs" />
         </Modal>
     </LeftSlideTransition>
 </template>
