@@ -22,5 +22,5 @@ import Sidebar from '@/components/Navbar/Sidebar/Sidebar.vue'
     box-shadow: 0 0 4px 5px rgb(0 0 0 / 7%)
 
     h1
-        font-size: 1rem
+        font-size: .9rem
 </style>

@@ -22,3 +22,8 @@ export type SaveGroupParams = {
     title?: string
     isPrivate?: boolean
 }
+
+
+export type Settings = {
+    password: string
+}
