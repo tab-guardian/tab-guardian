@@ -36,5 +36,5 @@ const { trans } = useTransStore()
     margin: 0
     display: flex
     flex-direction: column
-    gap: 7px
+    gap: 5px
 </style>

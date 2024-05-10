@@ -28,5 +28,5 @@ const { trans } = useTransStore()
 .tabs
     display: flex
     flex-direction: column
-    gap: 6px
+    gap: 5px
 </style>

@@ -64,7 +64,7 @@ function saveTabs(): void {
 
     &__controls
         display: flex
-        gap: 7px
+        gap: 5px
         margin: 8px 0
 
         a
