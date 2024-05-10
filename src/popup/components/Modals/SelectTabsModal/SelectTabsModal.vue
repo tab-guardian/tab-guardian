@@ -13,7 +13,9 @@ const { trans } = useTransStore()
 
 function saveTabs(): void {
     if (!store.targetGroupId) {
-        console.error('[Tab Guardian]: targetGroupId is not set. Cannot save add links')
+        console.error(
+            '[Tab Guardian]: targetGroupId is not set. Cannot save add links',
+        )
         return
     }
 
@@ -30,7 +32,11 @@ function saveTabs(): void {
             v-if="store.isOpen"
             class="select-tabs"
             :title="trans('Select Tabs')"
-            :subtitle="trans('Click on each tab to select or unselect it for saving to memory')"
+            :subtitle="
+                trans(
+                    'Click on each tab to select or unselect it for saving to memory',
+                )
+            "
         >
             <div class="select-tabs__controls">
                 <a href="javascript:" @click="store.selectAll">

@@ -20,7 +20,7 @@ const props = defineProps<Props>()
         v-model="store.newTitleField"
         autofocus
         @blur="groupStore.renameGroup"
-    >
+    />
 
     <h2 v-else>
         {{ props.group.title }}
@@ -28,19 +28,19 @@ const props = defineProps<Props>()
 </template>
 
 <style lang="sass" scoped>
-    h2, input
-        font-size: 1rem
-        margin: 4px 0
-        padding: 4px
+h2, input
+    font-size: 1rem
+    margin: 4px 0
+    padding: 4px
 
-    h2
-        border: 1px solid transparent
+h2
+    border: 1px solid transparent
 
-    input
-        border: 1px solid var(--tg-color-border)
-        border-radius: 5px
-        background: var(--tg-color-bg-private)
-        font-weight: bold
-        width: 100%
-        color: var(--tg-color-font)
+input
+    border: 1px solid var(--tg-color-border)
+    border-radius: 5px
+    background: var(--tg-color-bg-private)
+    font-weight: bold
+    width: 100%
+    color: var(--tg-color-font)
 </style>

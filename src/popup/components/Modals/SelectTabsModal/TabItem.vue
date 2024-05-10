@@ -17,15 +17,12 @@ const store = useSelectTabsModalStore()
         @click="store.toggleSelect(link.id)"
     >
         <div class="link-item__inner">
-            <img :src="link.favIconUrl" alt="icon">
+            <img :src="link.favIconUrl" alt="icon" />
             <span>{{ link.title }}</span>
         </div>
 
         <label class="link-item__checkbox">
-            <input
-                @change="store.toggleSelect(link.id)"
-                type="checkbox"
-            >
+            <input @change="store.toggleSelect(link.id)" type="checkbox" />
 
             <div
                 v-if="store.selectedIds.includes(link.id)"

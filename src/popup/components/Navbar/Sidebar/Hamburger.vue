@@ -6,11 +6,7 @@ const sidebarStore = useSidebarStore()
 </script>
 
 <template>
-    <div
-        @click="sidebarStore.toggle()"
-        type="button"
-        class="hamburger"
-    >
+    <div @click="sidebarStore.toggle()" type="button" class="hamburger">
         <MenuIcon />
     </div>
 </template>
@@ -29,4 +25,3 @@ const sidebarStore = useSidebarStore()
         stroke: var(--tg-color-font)
         width: 100%
 </style>
-

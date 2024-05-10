@@ -18,7 +18,7 @@ const props = defineProps<Props>()
         class="link-item"
     >
         <div class="link-item__inner">
-            <img :src="props.link.favIconUrl" alt="icon">
+            <img :src="props.link.favIconUrl" alt="icon" />
 
             <div class="link-item__content">
                 <span :title="props.link.title">

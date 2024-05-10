@@ -22,7 +22,9 @@ const { trans } = useTransStore()
             </div>
 
             <div v-else class="message">
-                <h2>😢 {{ trans('Something went wrong! No group selected') }}</h2>
+                <h2>
+                    😢 {{ trans('Something went wrong! No group selected') }}
+                </h2>
             </div>
         </Modal>
     </LeftSlideTransition>

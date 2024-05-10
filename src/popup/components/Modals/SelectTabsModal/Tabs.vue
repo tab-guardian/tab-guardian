@@ -16,11 +16,7 @@ const { trans } = useTransStore()
     </h3>
 
     <div v-else class="tabs">
-        <TabItem
-            v-for="link in store.links"
-            :key="link.id"
-            :link
-        />
+        <TabItem v-for="link in store.links" :key="link.id" :link />
     </div>
 </template>
 
