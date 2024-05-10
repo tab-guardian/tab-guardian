@@ -17,5 +17,6 @@
     "Settings": "Settings",
     "Private Password": "Private Password",
     "Choose a secret password for your private groups. Any time when you want to access a private group, you will need to enter this password": "Choose a secret password for your private groups. Any time when you want to access a private group, you will need to enter this password",
-    "Enter password": "Enter password"
+    "Enter password": "Enter password",
+    "Change the extension configurations here": "Change the extension configurations here"
 }

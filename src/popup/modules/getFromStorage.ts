@@ -30,7 +30,7 @@ function getFromLocalStorage<T>(key: string): T | null {
     const strValue: string | null = localStorage.getItem(key)
 
     if (!strValue) {
-        console.warn(`[Tab Guardian]: ${key} not found in local storage`)
+        console.info(`[Tab Guardian]: "${key}" key not found in local storage`)
         return null
     }
 

@@ -15,7 +15,7 @@ export const useGroupStore = defineStore('groupStore', () => {
     onMounted(() => restoreGroupsFromStorage())
 
     function restoreGroupsFromStorage(): void {
-        getFromStorage<Group[]>('groups', storedGroups => {
+        getFromStorage<Group[] | null>('groups', storedGroups => {
             groups.value = storedGroups || []
         })
     }
