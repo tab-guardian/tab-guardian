@@ -20,7 +20,7 @@ const { trans } = useTransStore()
                 <Links :group="groupModalStore.selectedGroup" />
             </div>
 
-            <div v-else class="warn-message">
+            <div v-else class="message">
                 <h2>😢 {{ trans('Something went wrong! No group selected') }}</h2>
             </div>
         </Modal>
@@ -31,9 +31,4 @@ const { trans } = useTransStore()
 .group
     h2
         font-size: 1rem
-
-.warn-message
-    font-size: .8rem
-    padding: 10px
-    text-align: center
 </style>

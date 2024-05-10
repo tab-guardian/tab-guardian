@@ -11,7 +11,7 @@ const { trans } = useTransStore()
 <template>
     <Spinner v-if="store.loading" />
 
-    <h3 v-else-if="store.links.length === 0" class="no-tabs">
+    <h3 v-else-if="store.links.length === 0" class="message">
         {{ trans('No tabs found') }}
     </h3>
 
@@ -25,12 +25,6 @@ const { trans } = useTransStore()
 </template>
 
 <style lang="sass" scoped>
-.no-tabs
-    font-size: 1.2rem
-    text-align: center
-    margin-top: 20px
-    font-weight: normal
-
 .tabs
     display: flex
     flex-direction: column

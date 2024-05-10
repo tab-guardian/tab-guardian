@@ -14,7 +14,7 @@ const { trans } = useTransStore()
 <template>
     <p
         v-if="props.group.links.length === 0"
-        class="warn-message"
+        class="message"
     >
         {{ trans('There are no links in this group') }}
     </p>
