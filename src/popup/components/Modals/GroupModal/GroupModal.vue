@@ -5,6 +5,7 @@ import GroupControls from '@/components/Modals/GroupModal/GroupControls/GroupCon
 import Modal from '@/components/Modal.vue'
 import LeftSlideTransition from '@/components/Transitions/LeftSlideTransition.vue'
 import Links from '@/components/Modals/GroupModal/Links.vue'
+import GroupTitle from '@/components/Modals/GroupModal/GroupTitle.vue'
 
 const groupModalStore = useGroupModalStore()
 const { trans } = useTransStore()
@@ -16,7 +17,7 @@ const { trans } = useTransStore()
             <GroupControls />
 
             <div v-if="groupModalStore.selectedGroup" class="group">
-                <h2>Group: {{ groupModalStore.selectedGroup.title }}</h2>
+                <GroupTitle :title="groupModalStore.selectedGroup.title" />
                 <Links :group="groupModalStore.selectedGroup" />
             </div>
 
@@ -26,9 +27,3 @@ const { trans } = useTransStore()
         </Modal>
     </LeftSlideTransition>
 </template>
-
-<style lang="sass" scoped>
-.group
-    h2
-        font-size: 1rem
-</style>
