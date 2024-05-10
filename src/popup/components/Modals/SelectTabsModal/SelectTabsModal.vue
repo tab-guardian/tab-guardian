@@ -26,12 +26,12 @@ function saveTabs(): void {
 
 <template>
     <LeftSlideTransition>
-        <Modal v-if="store.isOpen" class="select-tabs">
-            <h2>{{ trans('Select Tabs') }}</h2>
-            <p>
-                {{ trans('Click on each tab to select or unselect it for saving to memory') }}.
-            </p>
-
+        <Modal
+            v-if="store.isOpen"
+            class="select-tabs"
+            :title="trans('Select Tabs')"
+            :subtitle="trans('Click on each tab to select or unselect it for saving to memory')"
+        >
             <div class="select-tabs__controls">
                 <a href="javascript:" @click="store.selectAll">
                     {{ trans('Select all') }}
@@ -53,15 +53,6 @@ function saveTabs(): void {
 
 <style lang="sass" scoped>
 .select-tabs
-    h2
-        margin: 0
-        font-size: 1.3rem
-
-    p
-        margin: 4px 0 0 0
-        color: var(--tg-color-font-gray)
-        font-size: .9rem
-
     &__controls
         display: flex
         gap: 5px
