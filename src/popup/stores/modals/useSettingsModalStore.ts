@@ -36,6 +36,8 @@ export const useSettingsModalStore = defineStore('settingsModalStore', () => {
             ...settings.value,
             password: tempPassword.value,
         })
+
+        tempPassword.value = ''
     }
 
     return {

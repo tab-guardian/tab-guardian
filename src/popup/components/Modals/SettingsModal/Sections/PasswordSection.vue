@@ -20,6 +20,7 @@ const subtitle = trans(
             :placeholder="trans('Enter password')"
             v-model="store.tempPassword"
             @blur="store.updatePassword"
+            @keydown.enter="store.updatePassword"
         />
     </Section>
 </template>
