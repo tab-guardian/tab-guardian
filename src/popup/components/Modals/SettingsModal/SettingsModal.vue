@@ -3,7 +3,7 @@ import { useTransStore } from '@/stores/useTransStore'
 import { useSettingsModalStore } from '@/stores/modals/useSettingsModalStore'
 import Modal from '@/components/Modal.vue'
 import LeftSlideTransition from '@/components/Transitions/LeftSlideTransition.vue'
-import Inp from '@/components/Modals/SettingsModal/Fields/Inp.vue'
+import PasswordSection from '@/components/Modals/SettingsModal/Sections/PasswordSection.vue'
 
 const { trans } = useTransStore()
 const store = useSettingsModalStore()
@@ -13,12 +13,11 @@ const store = useSettingsModalStore()
     <LeftSlideTransition>
         <Modal
             v-if="store.isOpen"
-            class="settings"
             :title="trans('Settings')"
             :subtitle="trans('Change the extension configurations here')"
         >
-            <div>
-                <div>nice</div>
+            <div class="settings">
+                <PasswordSection />
             </div>
         </Modal>
     </LeftSlideTransition>
@@ -26,5 +25,5 @@ const store = useSettingsModalStore()
 
 <style lang="sass" scoped>
 .settings
-    //
+    margin-top: 8px
 </style>
