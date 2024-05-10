@@ -17,9 +17,9 @@ const sidebarStore = useSidebarStore()
         />
 
         <RightSlideTransition>
-            <div v-if="sidebarStore.isOpen" class="sidebar">
+            <aside v-if="sidebarStore.isOpen" class="sidebar">
                 Sidebar
-            </div>
+            </aside>
         </RightSlideTransition>
     </Teleport>
 </template>

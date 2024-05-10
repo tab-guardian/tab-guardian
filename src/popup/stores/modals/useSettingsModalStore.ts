@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import { defineStore } from 'pinia'
 
 export const useSettingsModalStore = defineStore('settingsModalStore', () => {
-    const isOpen = ref<boolean>(false)
+    const isOpen = ref<boolean>(true)
     const settings = ref<Settings | null>(null)
 
     function openSettings(): void {
