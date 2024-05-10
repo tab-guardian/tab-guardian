@@ -42,5 +42,5 @@ const props = defineProps<Props>()
         background: var(--tg-color-bg-private)
         font-weight: bold
         width: 100%
-        color: var(--tg-color)
+        color: var(--tg-color-font)
 </style>
