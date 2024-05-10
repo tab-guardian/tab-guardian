@@ -1,6 +1,7 @@
 import type { Group, SaveGroupParams, Link } from '@/types'
 import { ref, onMounted } from 'vue'
 import { defineStore } from 'pinia'
+import { useGroupModalStore } from '@/stores/modals/useGroupModalStore'
 import getDefaultGroupTitle from '@/modules/getDefaultGroupTitle'
 import getFromStorage from '@/modules/getFromStorage'
 import saveToStorage from '@/modules/saveToStorage'
@@ -9,6 +10,7 @@ import getCurrentLinks from '@/modules/getCurrentLinks'
 export const useGroupStore = defineStore('groupStore', () => {
     const groups = ref<Group[]>([])
     const isSaving = ref<boolean>(false)
+    const groupModalStore = useGroupModalStore()
 
     onMounted(() => restoreGroupsFromStorage())
 
@@ -16,6 +18,26 @@ export const useGroupStore = defineStore('groupStore', () => {
         getFromStorage<Group[]>('groups', storedGroups => {
             groups.value = storedGroups || []
         })
+    }
+
+    function renameGroup(): void {
+        if (!groupModalStore.selectedGroup) {
+            console.error('[Tab Guardian]: No group selected for renaming')
+            return
+        }
+
+        const id = groupModalStore.selectedGroup.id
+        const group = groups.value.find(group => group.id === id)
+
+        if (!group) {
+            console.error(`[Tab Guardian]: Group with id ${id} not found`)
+            return
+        }
+
+        group.title = groupModalStore.newTitleField
+        groupModalStore.isTitleFieldActive = false
+
+        saveGroupsToStorage()
     }
 
     function deleteGroup(id: number): void {
@@ -82,5 +104,6 @@ export const useGroupStore = defineStore('groupStore', () => {
         deleteGroup,
         deleteLink,
         prependLinksTo,
+        renameGroup,
     }
 })

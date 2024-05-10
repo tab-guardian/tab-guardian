@@ -17,7 +17,7 @@ const { trans } = useTransStore()
             <GroupControls />
 
             <div v-if="groupModalStore.selectedGroup" class="group">
-                <GroupTitle :title="groupModalStore.selectedGroup.title" />
+                <GroupTitle :group="groupModalStore.selectedGroup" />
                 <Links :group="groupModalStore.selectedGroup" />
             </div>
 

@@ -1,10 +1,13 @@
 <script setup lang="ts">
-import { useGroupModalStore } from '@/stores/modals/useGroupModalStore';
+import type { Group } from '@/types'
+import { useGroupModalStore } from '@/stores/modals/useGroupModalStore'
+import { useGroupStore } from '@/stores/useGroupStore'
 
 const store = useGroupModalStore()
+const groupStore = useGroupStore()
 
 type Props = {
-    title: string
+    group: Group
 }
 
 const props = defineProps<Props>()
@@ -16,9 +19,12 @@ const props = defineProps<Props>()
         type="text"
         v-model="store.newTitleField"
         autofocus
+        @blur="groupStore.renameGroup"
     >
 
-    <h2 v-else>{{ props.title }}</h2>
+    <h2 v-else>
+        {{ props.group.title }}
+    </h2>
 </template>
 
 <style lang="sass" scoped>
