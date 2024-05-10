@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import getFromStorage from '@/modules/getFromStorage'
 import saveToStorage from '@/modules/saveToStorage'
+import sha256 from 'crypto-js/sha256'
 
 export const useSettingsModalStore = defineStore('settingsModalStore', () => {
     const isOpen = ref<boolean>(false)
@@ -10,9 +11,6 @@ export const useSettingsModalStore = defineStore('settingsModalStore', () => {
     const settings = ref<Settings>({
         password: '',
     })
-
-    // @todo: temporary. Delete in the future
-    // openSettings()
 
     function openSettings(): void {
         loadSettingsFromStorage()
@@ -32,9 +30,10 @@ export const useSettingsModalStore = defineStore('settingsModalStore', () => {
     }
 
     function updatePassword(): void {
+        const password = sha256(tempPassword.value).toString()
+
         saveToStorage<Settings>('settings', {
-            ...settings.value,
-            password: tempPassword.value,
+            ...settings.value, password,
         })
 
         tempPassword.value = ''
