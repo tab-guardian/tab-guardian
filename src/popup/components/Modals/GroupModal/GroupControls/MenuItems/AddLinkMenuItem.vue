@@ -1,15 +1,17 @@
 <script setup lang="ts">
 import MenuItem from '@/components/MenuItem.vue'
 import PlusCircleIcon from '@/components/Icons/PlusCircleIcon.vue'
-import { useSelectTabsModalStore } from '@/stores/modals/useSelectTabsModalStore'
-import { useGroupModalStore } from '@/stores/modals/useGroupModalStore'
+import { useSelectTabsStore } from '@/stores/useSelectTabsStore'
+import { useGroupStore } from '@/stores/useGroupStore'
 import { useTransStore } from '@/stores/useTransStore'
 import { usePopupStore } from '@/stores/usePopupStore'
+import { useModalStore } from '@/stores/useModalStore'
 
 const { trans } = useTransStore()
-const { close } = usePopupStore()
-const store = useSelectTabsModalStore()
-const groupModalStore = useGroupModalStore()
+const { closePopup } = usePopupStore()
+const { openModal } = useModalStore()
+const store = useSelectTabsStore()
+const groupModalStore = useGroupStore()
 
 function addLink(): void {
     if (!groupModalStore.selectedGroup) {
@@ -20,7 +22,9 @@ function addLink(): void {
     const groupId = groupModalStore.selectedGroup.id
 
     store.selectLinksFor(groupId)
-    close('groupModalMenu')
+
+    closePopup('groupModalMenu')
+    openModal('selectTabs')
 }
 </script>
 

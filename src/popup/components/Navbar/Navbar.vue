@@ -1,12 +1,22 @@
 <script setup lang="ts">
 import NavControls from '@/components/Navbar/NavControls.vue'
 import Sidebar from '@/components/Navbar/Sidebar/Sidebar.vue'
+import { usePopupStore } from '@/stores/usePopupStore'
+import { useModalStore } from '@/stores/useModalStore'
+
+const { closeAllPopups } = usePopupStore()
+const { closeAllModals } = useModalStore()
+
+function toMainScreen(): void {
+    closeAllPopups()
+    closeAllModals()
+}
 </script>
 
 <template>
     <nav class="navbar">
         <Sidebar />
-        <h1>Tab Guardian</h1>
+        <h1 @click="toMainScreen">Tab Guardian</h1>
         <NavControls />
     </nav>
 </template>

@@ -2,13 +2,14 @@ import type { Link } from '@/types'
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import getCurrentLinks from '@/modules/getCurrentLinks'
+import { useModalStore } from '@/stores/useModalStore'
 
-export const useSelectTabsModalStore = defineStore('selectTabsModalStore', () => {
-    const isOpen = ref<boolean>(false)
+export const useSelectTabsStore = defineStore('selectTabsStore', () => {
     const links = ref<Link[]>([])
     const selectedIds = ref<number[]>([])
     const targetGroupId = ref<number | null>(null)
     const loading = ref<boolean>(false)
+    const { openModal, closeModal } = useModalStore()
 
     function fetchLinks(): void {
         getCurrentLinks({ closeTabs: false })
@@ -19,15 +20,15 @@ export const useSelectTabsModalStore = defineStore('selectTabsModalStore', () =>
     function selectLinksFor(groupId: number): void {
         targetGroupId.value = groupId
         fetchLinks()
-        isOpen.value = true
+        openModal('selectTabs')
     }
 
     function getSelectedLinks(): Link[] {
         return links.value.filter(ln => selectedIds.value.includes(ln.id))
     }
 
-    function closeModal(): void {
-        isOpen.value = false
+    function closeTabsModal(): void {
+        closeModal('selectTabs')
         links.value = []
         selectedIds.value = []
     }
@@ -56,12 +57,11 @@ export const useSelectTabsModalStore = defineStore('selectTabsModalStore', () =>
         links,
         selectedIds,
         loading,
-        isOpen,
         targetGroupId,
         toggleSelect,
         selectAll,
         deselectAll,
-        closeModal,
+        closeTabsModal,
         selectLinksFor,
         getSelectedLinks,
     }

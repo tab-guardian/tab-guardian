@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import type { Link } from '@/types'
-import { useSelectTabsModalStore } from '@/stores/modals/useSelectTabsModalStore'
+import { useSelectTabsStore } from '@/stores/useSelectTabsStore'
 
 type Props = {
     link: Link
 }
 
 const { link } = defineProps<Props>()
-const store = useSelectTabsModalStore()
+const store = useSelectTabsStore()
 </script>
 
 <template>

@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import ChevronRightIcon from '@/components/Icons/ChevronRightIcon.vue'
 import Control from '@/components/Control.vue'
-import { useGroupModalStore } from '@/stores/modals/useGroupModalStore'
+import { useGroupStore } from '@/stores/useGroupStore'
 
-const store = useGroupModalStore()
+const store = useGroupStore()
 
 function toMainScreen(): void {
     store.reset()

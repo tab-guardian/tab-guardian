@@ -6,15 +6,15 @@ import AddLinkMenuItem from '@/components/Modals/GroupModal/GroupControls/MenuIt
 import DeleteGroupMenuItem from '@/components/Modals/GroupModal/GroupControls/MenuItems/DeleteGroupMenuItem.vue'
 import RenameMenuItem from '@/components/Modals/GroupModal/GroupControls/MenuItems/RenameMenuItem.vue'
 
-const { isOpen, close } = usePopupStore()
+const { isOpenPopup, closePopup } = usePopupStore()
 const { trans } = useTransStore()
 </script>
 
 <template>
     <Popup
-        v-if="isOpen('groupModalMenu')"
+        v-if="isOpenPopup('groupModalMenu')"
         :content="trans('Additional options')"
-        @cancel="close('groupModalMenu')"
+        @cancel="closePopup('groupModalMenu')"
     >
         <div class="menu-items">
             <AddLinkMenuItem />

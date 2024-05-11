@@ -1,15 +1,21 @@
 <script setup lang="ts">
-import { useSelectTabsModalStore } from '@/stores/modals/useSelectTabsModalStore'
+import { useSelectTabsStore } from '@/stores/useSelectTabsStore'
 import { useTransStore } from '@/stores/useTransStore'
 import { useGroupStore } from '@/stores/useGroupStore'
+import { useModalStore } from '@/stores/useModalStore'
 import LeftSlideTransition from '@/components/Transitions/LeftSlideTransition.vue'
 import Modal from '@/components/Modals/Modal.vue'
 import Tabs from '@/components/Modals/SelectTabsModal/Tabs.vue'
 import SaveButton from '@/components/Modals/SelectTabsModal/SaveButton.vue'
 
-const store = useSelectTabsModalStore()
-const groupStore = useGroupStore()
 const { trans } = useTransStore()
+const { isOpenModal, closeModal } = useModalStore()
+const store = useSelectTabsStore()
+const groupStore = useGroupStore()
+
+const subtitle = trans(
+    'Click on each tab to select or unselect it for saving to memory',
+)
 
 function saveTabs(): void {
     if (!store.targetGroupId) {
@@ -22,21 +28,17 @@ function saveTabs(): void {
     const selectedLinks = store.getSelectedLinks()
 
     groupStore.prependLinksTo(store.targetGroupId, selectedLinks)
-    store.closeModal()
+    store.closeTabsModal()
 }
 </script>
 
 <template>
     <LeftSlideTransition>
         <Modal
-            v-if="store.isOpen"
+            v-if="isOpenModal('selectTabs')"
             class="select-tabs"
             :title="trans('Select Tabs')"
-            :subtitle="
-                trans(
-                    'Click on each tab to select or unselect it for saving to memory',
-                )
-            "
+            :subtitle="subtitle"
         >
             <div class="select-tabs__controls">
                 <a href="javascript:" @click="store.selectAll">
@@ -45,7 +47,7 @@ function saveTabs(): void {
                 <a href="javascript:" @click="store.deselectAll">
                     {{ trans('Deselect all') }}
                 </a>
-                <a href="javascript:" @click="store.closeModal">
+                <a href="javascript:" @click="closeModal('selectTabs')">
                     {{ trans('Cancel') }}
                 </a>
             </div>

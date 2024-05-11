@@ -5,17 +5,11 @@ import getFromStorage from '@/modules/getFromStorage'
 import saveToStorage from '@/modules/saveToStorage'
 import sha256 from 'crypto-js/sha256'
 
-export const useSettingsModalStore = defineStore('settingsModalStore', () => {
-    const isOpen = ref<boolean>(false)
+export const useSettingsStore = defineStore('settingsStore', () => {
     const tempPassword = ref<string>('')
     const settings = ref<Settings>({
         password: '',
     })
-
-    function openSettings(): void {
-        loadSettingsFromStorage()
-        isOpen.value = true
-    }
 
     function loadSettingsFromStorage(): void {
         getFromStorage<Settings | null>('settings', data => {
@@ -40,11 +34,10 @@ export const useSettingsModalStore = defineStore('settingsModalStore', () => {
     }
 
     return {
-        isOpen,
         settings,
         tempPassword,
-        openSettings,
         updateSettings,
         updatePassword,
+        loadSettingsFromStorage,
     }
 })

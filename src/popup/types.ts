@@ -31,3 +31,9 @@ export type Popups = {
     groupModalMenu: boolean
     deleteGroup: boolean
 }
+
+export type Modals = {
+    settings: boolean
+    group: boolean
+    selectTabs: boolean
+}

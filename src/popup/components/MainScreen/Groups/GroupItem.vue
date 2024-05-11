@@ -2,14 +2,14 @@
 import type { Group } from '@/types'
 import ChevronRightIcon from '@/components/Icons/ChevronRightIcon.vue'
 import ShieldCheckIcon from '@/components/Icons/ShieldCheckIcon.vue'
-import { useGroupModalStore } from '@/stores/modals/useGroupModalStore'
+import { useGroupStore } from '@/stores/useGroupStore'
 
 type Props = {
     group: Group
 }
 
 const { group } = defineProps<Props>()
-const groupModalStore = useGroupModalStore()
+const groupModalStore = useGroupStore()
 
 function toGroupScreen(): void {
     groupModalStore.select(group)

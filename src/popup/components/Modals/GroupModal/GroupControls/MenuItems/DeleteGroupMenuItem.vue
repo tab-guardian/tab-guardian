@@ -5,11 +5,11 @@ import { useTransStore } from '@/stores/useTransStore'
 import { usePopupStore } from '@/stores/usePopupStore'
 
 const { trans } = useTransStore()
-const { close, open } = usePopupStore()
+const { closePopup, openPopup } = usePopupStore()
 
 function deleteGroup(): void {
-    close('groupModalMenu')
-    open('deleteGroup')
+    closePopup('groupModalMenu')
+    openPopup('deleteGroup')
 }
 </script>
 

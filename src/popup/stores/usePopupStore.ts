@@ -8,28 +8,28 @@ export const usePopupStore = defineStore('popupStore', () => {
         deleteGroup: false,
     })
 
-    function closeAll(): void {
+    function closeAllPopups(): void {
         for (const key in popups.value) {
             popups.value[key as keyof Popups] = false
         }
     }
 
-    function open(key: keyof Popups): void {
+    function openPopup(key: keyof Popups): void {
         popups.value[key] = true
     }
 
-    function close(key: keyof Popups): void {
+    function closePopup(key: keyof Popups): void {
         popups.value[key] = false
     }
 
-    function isOpen(key: keyof Popups): boolean {
+    function isOpenPopup(key: keyof Popups): boolean {
         return popups.value[key]
     }
 
     return {
-        open,
-        close,
-        closeAll,
-        isOpen,
+        openPopup,
+        closePopup,
+        closeAllPopups,
+        isOpenPopup,
     }
 })

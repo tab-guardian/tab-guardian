@@ -1,14 +1,21 @@
 <script setup lang="ts">
 import Control from '@/components/Control.vue'
 import CogIcon from '@/components/Icons/CogIcon.vue'
-import { useSettingsModalStore } from '@/stores/modals/useSettingsModalStore'
+import { useModalStore } from '@/stores/useModalStore'
+import { useSettingsStore } from '@/stores/useSettingsStore'
 
-const settingsModalStore = useSettingsModalStore()
+const { openModal } = useModalStore()
+const { loadSettingsFromStorage } = useSettingsStore()
+
+function open(): void {
+    loadSettingsFromStorage()
+    openModal('settings')
+}
 </script>
 
 <template>
     <div class="controls">
-        <Control @click="settingsModalStore.openSettings">
+        <Control @click="open">
             <CogIcon />
         </Control>
     </div>

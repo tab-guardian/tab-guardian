@@ -1,7 +1,6 @@
 import type { Group, SaveGroupParams, Link } from '@/types'
 import { ref, onMounted } from 'vue'
 import { defineStore } from 'pinia'
-import { useGroupModalStore } from '@/stores/modals/useGroupModalStore'
 import getDefaultGroupTitle from '@/modules/getDefaultGroupTitle'
 import getFromStorage from '@/modules/getFromStorage'
 import saveToStorage from '@/modules/saveToStorage'
@@ -10,7 +9,9 @@ import getCurrentLinks from '@/modules/getCurrentLinks'
 export const useGroupStore = defineStore('groupStore', () => {
     const groups = ref<Group[]>([])
     const isSaving = ref<boolean>(false)
-    const groupModalStore = useGroupModalStore()
+    const selectedGroup = ref<Group | null>(null)
+    const newTitleField = ref<string>('')
+    const isTitleFieldActive = ref<boolean>(false)
 
     onMounted(() => restoreGroupsFromStorage())
 
@@ -20,13 +21,23 @@ export const useGroupStore = defineStore('groupStore', () => {
         })
     }
 
+    function reset(): void {
+        selectedGroup.value = null
+        newTitleField.value = ''
+    }
+
+    function select(group: Group): void {
+        selectedGroup.value = group
+        newTitleField.value = group.title
+    }
+
     function renameGroup(): void {
-        if (!groupModalStore.selectedGroup) {
+        if (!selectedGroup.value) {
             console.error('[Tab Guardian]: No group selected for renaming')
             return
         }
 
-        const id = groupModalStore.selectedGroup.id
+        const id = selectedGroup.value.id
         const group = groups.value.find(group => group.id === id)
 
         if (!group) {
@@ -34,8 +45,8 @@ export const useGroupStore = defineStore('groupStore', () => {
             return
         }
 
-        group.title = groupModalStore.newTitleField
-        groupModalStore.isTitleFieldActive = false
+        group.title = newTitleField.value
+        isTitleFieldActive.value = false
 
         saveGroupsToStorage()
     }
@@ -100,6 +111,11 @@ export const useGroupStore = defineStore('groupStore', () => {
     return {
         groups,
         isSaving,
+        selectedGroup,
+        isTitleFieldActive,
+        newTitleField,
+        reset,
+        select,
         saveGroup,
         deleteGroup,
         deleteLink,

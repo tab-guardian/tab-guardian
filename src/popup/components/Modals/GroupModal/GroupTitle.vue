@@ -1,10 +1,8 @@
 <script setup lang="ts">
 import type { Group } from '@/types'
-import { useGroupModalStore } from '@/stores/modals/useGroupModalStore'
 import { useGroupStore } from '@/stores/useGroupStore'
 
-const store = useGroupModalStore()
-const groupStore = useGroupStore()
+const store = useGroupStore()
 
 type Props = {
     group: Group
@@ -19,8 +17,8 @@ const props = defineProps<Props>()
         type="text"
         v-model="store.newTitleField"
         autofocus
-        @blur="groupStore.renameGroup"
-        @keydown.enter="groupStore.renameGroup"
+        @blur="store.renameGroup"
+        @keydown.enter="store.renameGroup"
     />
 
     <h2 v-else>

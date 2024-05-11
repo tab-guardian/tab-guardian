@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { useTransStore } from '@/stores/useTransStore'
-import { useSettingsModalStore } from '@/stores/modals/useSettingsModalStore'
+import { useSettingsStore } from '@/stores/useSettingsStore'
 import Section from '@/components/Modals/SettingsModal/Sections/Section.vue'
 
 const { trans } = useTransStore()
-const store = useSettingsModalStore()
+const settingsStore = useSettingsStore()
 
 const subtitle = trans(
     'Choose a secret password for your private groups. Any time when you want to access a private group, you will need to enter this password',
@@ -17,9 +17,9 @@ const subtitle = trans(
             type="password"
             class="input"
             :placeholder="trans('Enter password')"
-            v-model="store.tempPassword"
-            @blur="store.updatePassword"
-            @keydown.enter="store.updatePassword"
+            v-model="settingsStore.tempPassword"
+            @blur="settingsStore.updatePassword"
+            @keydown.enter="settingsStore.updatePassword"
         />
     </Section>
 </template>

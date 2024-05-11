@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useGroupModalStore } from '@/stores/modals/useGroupModalStore'
+import { useGroupStore } from '@/stores/useGroupStore'
 import { useTransStore } from '@/stores/useTransStore'
 import GroupControls from '@/components/Modals/GroupModal/GroupControls/GroupControls.vue'
 import Modal from '@/components/Modals/Modal.vue'
@@ -7,7 +7,7 @@ import LeftSlideTransition from '@/components/Transitions/LeftSlideTransition.vu
 import Links from '@/components/Modals/GroupModal/Links.vue'
 import GroupTitle from '@/components/Modals/GroupModal/GroupTitle.vue'
 
-const groupModalStore = useGroupModalStore()
+const groupModalStore = useGroupStore()
 const { trans } = useTransStore()
 </script>
 

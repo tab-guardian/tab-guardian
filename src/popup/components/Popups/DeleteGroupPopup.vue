@@ -1,34 +1,32 @@
 <script setup lang="ts">
-import { useGroupModalStore } from '@/stores/modals/useGroupModalStore'
 import { useGroupStore } from '@/stores/useGroupStore'
 import { useTransStore } from '@/stores/useTransStore'
 import { usePopupStore } from '@/stores/usePopupStore'
 import Popup from '@/components/Popups/Popup.vue'
 
 const { trans } = useTransStore()
-const { isOpen, close } = usePopupStore()
-const groupModalStore = useGroupModalStore()
-const groupStore = useGroupStore()
+const { isOpenPopup, closePopup } = usePopupStore()
+const store = useGroupStore()
 
 function deleteGroup() {
-    if (!groupModalStore.selectedGroup) {
+    if (!store.selectedGroup) {
         console.warn('[Tab Guardian]: No group selected for deletion')
         return
     }
 
-    groupStore.deleteGroup(groupModalStore.selectedGroup.id)
+    store.deleteGroup(store.selectedGroup.id)
 
-    close('deleteGroup')
+    closePopup('deleteGroup')
 
-    groupModalStore.selectedGroup = null
+    store.selectedGroup = null
 }
 </script>
 
 <template>
     <Popup
-        v-if="groupModalStore.selectedGroup && isOpen('deleteGroup')"
+        v-if="store.selectedGroup && isOpenPopup('deleteGroup')"
         @confirm="deleteGroup"
-        @cancel="close('deleteGroup')"
+        @cancel="closePopup('deleteGroup')"
         :content="trans('Do you want to delete the group?')"
     >
         <template #buttons>
@@ -36,7 +34,7 @@ function deleteGroup() {
                 {{ trans('Yes') }}
             </button>
 
-            <button @click="close('deleteGroup')" type="button">
+            <button @click="closePopup('deleteGroup')" type="button">
                 {{ trans('No') }}
             </button>
         </template>

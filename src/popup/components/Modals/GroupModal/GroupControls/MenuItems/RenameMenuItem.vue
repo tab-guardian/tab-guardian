@@ -1,17 +1,17 @@
 <script setup lang="ts">
-import { useGroupModalStore } from '@/stores/modals/useGroupModalStore'
+import { useGroupStore } from '@/stores/useGroupStore'
 import { useTransStore } from '@/stores/useTransStore'
 import PencilSquareIcon from '@/components/Icons/PencilSquareIcon.vue'
 import MenuItem from '@/components/MenuItem.vue'
 import { usePopupStore } from '@/stores/usePopupStore'
 
-const store = useGroupModalStore()
+const store = useGroupStore()
 const { trans } = useTransStore()
-const { close } = usePopupStore()
+const { closePopup } = usePopupStore()
 
 function renameGroup(): void {
     store.isTitleFieldActive = true
-    close('groupModalMenu')
+    closePopup('groupModalMenu')
 }
 </script>
 
