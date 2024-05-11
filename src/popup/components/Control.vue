@@ -15,7 +15,7 @@ button
     border: 1px solid transparent
     color: var(--tg-color-font)
     border-radius: 5px
-    padding: 6px
+    padding: 5px
     opacity: .8
     transition: opacity .2s, border-color .2s
     cursor: pointer

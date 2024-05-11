@@ -20,6 +20,7 @@ const props = defineProps<Props>()
         v-model="store.newTitleField"
         autofocus
         @blur="groupStore.renameGroup"
+        @keydown.enter="groupStore.renameGroup"
     />
 
     <h2 v-else>

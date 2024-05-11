@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import BackButton from '@/components/Modals/GroupModal/GroupControls/BackButton.vue'
-import DeleteGroupButton from '@/components/Modals/GroupModal/GroupControls/DeleteGroupButton.vue'
-import AddLinkButton from '@/components/Modals/GroupModal/GroupControls/AddLinkButton.vue'
-import RenameButton from '@/components/Modals/GroupModal/GroupControls/RenameButton.vue'
+import MenuButton from '@/components/Modals/GroupModal/GroupControls/MenuButton.vue'
 </script>
 
 <template>
@@ -10,9 +8,7 @@ import RenameButton from '@/components/Modals/GroupModal/GroupControls/RenameBut
         <BackButton />
 
         <div class="controls__right">
-            <RenameButton />
-            <AddLinkButton />
-            <DeleteGroupButton />
+            <MenuButton />
         </div>
     </div>
 </template>

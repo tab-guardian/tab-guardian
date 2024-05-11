@@ -20,6 +20,8 @@ const props = defineProps<Props>()
         <div class="popup">
             <span>{{ props.content }}</span>
 
+            <slot />
+
             <div class="popup__buttons">
                 <slot name="buttons" />
             </div>
@@ -36,7 +38,7 @@ const props = defineProps<Props>()
     background-color: var(--tg-color-bg)
     border-radius: 8px
     transform: translateY(-50%)
-    padding: 20px
+    padding: 15px
     z-index: 1
 
     span
