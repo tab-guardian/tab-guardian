@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import { useTransStore } from '@/stores/useTransStore'
 import { useSettingsModalStore } from '@/stores/modals/useSettingsModalStore'
 import Section from '@/components/Modals/SettingsModal/Sections/Section.vue'
