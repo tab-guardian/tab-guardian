@@ -4,6 +4,7 @@ import { defineStore } from 'pinia'
 import { useModalStore } from '@/stores/useModalStore'
 import getFromStorage from '@/modules/getFromStorage'
 import saveToStorage from '@/modules/saveToStorage'
+import error from '@/modules/error'
 
 export const useGroupStore = defineStore('groupStore', () => {
     const groups = ref<Group[]>([])
@@ -35,7 +36,7 @@ export const useGroupStore = defineStore('groupStore', () => {
 
     function renameGroup(): void {
         if (!selectedGroup.value) {
-            console.error('[Tab Guardian]: No group selected for renaming')
+            error.err('No group selected for renaming')
             return
         }
 
@@ -43,7 +44,7 @@ export const useGroupStore = defineStore('groupStore', () => {
         const group = groups.value.find(group => group.id === id)
 
         if (!group) {
-            console.error(`[Tab Guardian]: Group with id ${id} not found`)
+            error.err(`Group with id ${id} not found`)
             return
         }
 

@@ -1,3 +1,5 @@
+import error from '@/modules/error'
+
 export default <T>(key: string, callback: (value: T | null) => void): void => {
     if (import.meta.env.MODE === 'development') {
         callback(getFromLocalStorage<T>(key))
@@ -19,7 +21,7 @@ function getFromChromeStorage<T>(key: string, result: { [key: string]: any }): T
     const value: T | null | undefined = JSON.parse(strValue)
 
     if (!value) {
-        console.error(`[Tab Guardian]: Failed to parse ${key} from storage`)
+        error.err(`Failed to parse ${key} from storage`)
         return null
     }
 
@@ -30,14 +32,14 @@ function getFromLocalStorage<T>(key: string): T | null {
     const strValue: string | null = localStorage.getItem(key)
 
     if (!strValue) {
-        console.info(`[Tab Guardian]: "${key}" key not found in local storage`)
+        error.info(`"${key}" key not found in local storage`)
         return null
     }
 
     const value: T | null | undefined = JSON.parse(strValue)
 
     if (!value) {
-        console.error(`[Tab Guardian]: Failed to parse ${key} from local storage`)
+        error.err(`Failed to parse ${key} from local storage`)
         return null
     }
 

@@ -3,6 +3,7 @@ import { useGroupStore } from '@/stores/useGroupStore'
 import { useTransStore } from '@/stores/useTransStore'
 import { usePopupStore } from '@/stores/usePopupStore'
 import Popup from '@/components/Popups/Popup.vue'
+import error from '@/modules/error'
 
 const { trans } = useTransStore()
 const { isOpenPopup, closePopup } = usePopupStore()
@@ -10,7 +11,7 @@ const store = useGroupStore()
 
 function deleteGroup() {
     if (!store.selectedGroup) {
-        console.warn('[Tab Guardian]: No group selected for deletion')
+        error.warn('No group selected for deletion')
         return
     }
 

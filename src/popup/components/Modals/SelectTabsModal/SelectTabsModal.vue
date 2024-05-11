@@ -7,6 +7,7 @@ import LeftSlideTransition from '@/components/Transitions/LeftSlideTransition.vu
 import Modal from '@/components/Modals/Modal.vue'
 import Tabs from '@/components/Modals/SelectTabsModal/Tabs.vue'
 import SaveButton from '@/components/Modals/SelectTabsModal/SaveButton.vue'
+import error from '@/modules/error'
 
 const { trans } = useTransStore()
 const { isOpenModal, closeModal } = useModalStore()
@@ -19,9 +20,7 @@ const subtitle = trans(
 
 function saveTabs(): void {
     if (!store.targetGroupId) {
-        console.error(
-            '[Tab Guardian]: targetGroupId is not set. Cannot save add links',
-        )
+        error.err('targetGroupId is not set. Cannot save add links')
         return
     }
 

@@ -1,7 +1,9 @@
+import error from '@/modules/error'
+
 export default (): Promise<chrome.tabs.Tab[]> => {
     return new Promise((resolve, reject) => {
         if (!chrome || !chrome.tabs) {
-            console.info('[Tab Guardian]: chrome.tabs is not available')
+            error.info('chrome.tabs is not available')
             resolve([])
             return
         }

@@ -2,6 +2,7 @@ import type { Link } from '@/types'
 import queryTabs from '@/modules/queryTabs'
 import getFakeLinks from '@/modules/getFakeLinks'
 import getImageUrl from '@/modules/getImageUrl'
+import error from '@/modules/error'
 
 type Params = {
     closeTabs: boolean
@@ -17,7 +18,7 @@ export default async (params: Params): Promise<Link[]> => {
 
         return convertTabsToLinks(tabs, params)
     } catch (err) {
-        console.error('[Tab Guardian]: ' + err)
+        error.err(err as string)
         return []
     }
 }

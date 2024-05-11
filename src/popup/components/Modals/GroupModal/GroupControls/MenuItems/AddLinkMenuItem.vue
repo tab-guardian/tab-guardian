@@ -6,6 +6,7 @@ import { useGroupStore } from '@/stores/useGroupStore'
 import { useTransStore } from '@/stores/useTransStore'
 import { usePopupStore } from '@/stores/usePopupStore'
 import { useModalStore } from '@/stores/useModalStore'
+import error from '@/modules/error'
 
 const { trans } = useTransStore()
 const { closePopup } = usePopupStore()
@@ -15,7 +16,7 @@ const groupModalStore = useGroupStore()
 
 function addLink(): void {
     if (!groupModalStore.selectedGroup) {
-        console.warn('[Tab Guardian]: No group selected to add links to')
+        error.warn('No group selected to add links to')
         return
     }
 
