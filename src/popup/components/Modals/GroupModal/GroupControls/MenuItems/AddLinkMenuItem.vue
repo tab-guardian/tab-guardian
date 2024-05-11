@@ -22,7 +22,7 @@ function addLink(): void {
 
     const groupId = groupModalStore.selectedGroup.id
 
-    store.selectLinksFor(groupId)
+    store.selectLinks({ groupId })
 
     closePopup('groupModalMenu')
     openModal('selectTabs')

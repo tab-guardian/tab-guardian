@@ -4,6 +4,11 @@ import { defineStore } from 'pinia'
 import getCurrentLinks from '@/modules/getCurrentLinks'
 import { useModalStore } from '@/stores/useModalStore'
 
+type SelectLinksParams = {
+    groupId?: number,
+    selectAll?: boolean,
+}
+
 export const useSelectTabsStore = defineStore('selectTabsStore', () => {
     const links = ref<Link[]>([])
     const selectedIds = ref<number[]>([])
@@ -11,15 +16,24 @@ export const useSelectTabsStore = defineStore('selectTabsStore', () => {
     const loading = ref<boolean>(false)
     const { openModal, closeModal } = useModalStore()
 
-    function fetchLinks(): void {
+    function fetchLinks(selectAll?: boolean): void {
         getCurrentLinks({ closeTabs: false })
-            .then(items => links.value = items)
+            .then(items => {
+                links.value = items
+
+                if (selectAll) {
+                    selectedIds.value = items.map(l => l.id)
+                }
+            })
             .finally(() => loading.value = false)
     }
 
-    function selectLinksFor(groupId: number): void {
-        targetGroupId.value = groupId
-        fetchLinks()
+    function selectLinks({ groupId, selectAll }: SelectLinksParams): void {
+        if (groupId) {
+            targetGroupId.value = groupId
+        }
+
+        fetchLinks(selectAll)
         openModal('selectTabs')
     }
 
@@ -62,7 +76,7 @@ export const useSelectTabsStore = defineStore('selectTabsStore', () => {
         selectAll,
         deselectAll,
         closeTabsModal,
-        selectLinksFor,
+        selectLinks,
         getSelectedLinks,
     }
 })

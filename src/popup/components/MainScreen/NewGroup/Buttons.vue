@@ -10,6 +10,7 @@ const { openPopup } = usePopupStore()
 const groupStore = useGroupStore()
 
 function askForGroupName(isPrivate: boolean) {
+    groupStore.newGroup.isPrivate = isPrivate
     openPopup('groupName')
 }
 </script>

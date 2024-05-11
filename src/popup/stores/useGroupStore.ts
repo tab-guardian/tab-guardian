@@ -5,13 +5,19 @@ import { useModalStore } from '@/stores/useModalStore'
 import getFromStorage from '@/modules/getFromStorage'
 import saveToStorage from '@/modules/saveToStorage'
 import error from '@/modules/error'
+import getDefaultGroupTitle from '@/modules/getDefaultGroupTitle'
 
 export const useGroupStore = defineStore('groupStore', () => {
     const groups = ref<Group[]>([])
     const isSaving = ref<boolean>(false)
     const selectedGroup = ref<Group | null>(null)
-    const newTitleField = ref<string>('')
     const isTitleFieldActive = ref<boolean>(false)
+
+    const newGroup = ref({
+        title: '',
+        isPrivate: false,
+    })
+
     const { openModal, closeModal } = useModalStore()
 
     onMounted(() => restoreGroupsFromStorage())
@@ -22,15 +28,31 @@ export const useGroupStore = defineStore('groupStore', () => {
         })
     }
 
+    async function createEmptyGroup(): Promise<Group> {
+        const group = {
+            id: Date.now(),
+            title: newGroup.value.title,
+            isPrivate: newGroup.value.isPrivate,
+            links: [],
+        }
+
+        groups.value.unshift(group)
+
+        await saveGroupsToStorage()
+
+        return group
+    }
+
     function goBack(): void {
         selectedGroup.value = null
-        newTitleField.value = ''
+        resetNewGroup()
         closeModal('group')
     }
 
     function select(group: Group): void {
         selectedGroup.value = group
-        newTitleField.value = group.title
+        newGroup.value.title = group.title
+        newGroup.value.isPrivate = group.isPrivate
         openModal('group')
     }
 
@@ -48,7 +70,12 @@ export const useGroupStore = defineStore('groupStore', () => {
             return
         }
 
-        group.title = newTitleField.value
+        if (newGroup.value.title === '') {
+            group.title = getDefaultGroupTitle(newGroup.value.isPrivate)
+        } else {
+            group.title = newGroup.value.title
+        }
+
         isTitleFieldActive.value = false
 
         saveGroupsToStorage()
@@ -99,7 +126,14 @@ export const useGroupStore = defineStore('groupStore', () => {
             isPrivate,
         })
 
+        resetNewGroup()
+
         await saveGroupsToStorage()
+    }
+
+    function resetNewGroup(): void {
+        newGroup.value.title = ''
+        newGroup.value.isPrivate = false
     }
 
     async function saveGroupsToStorage(): Promise<void> {
@@ -112,7 +146,7 @@ export const useGroupStore = defineStore('groupStore', () => {
         isSaving,
         selectedGroup,
         isTitleFieldActive,
-        newTitleField,
+        newGroup,
         goBack,
         select,
         saveGroup,
@@ -120,5 +154,6 @@ export const useGroupStore = defineStore('groupStore', () => {
         deleteLink,
         prependLinksTo,
         renameGroup,
+        createEmptyGroup,
     }
 })

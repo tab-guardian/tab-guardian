@@ -8,7 +8,7 @@ const { trans } = useTransStore()
 <template>
     <div class="save-button">
         <button type="button">
-            <FloppyIcon width="18" height="18" />
+            <FloppyIcon width="16" height="16" />
             {{ trans('Save') }}
         </button>
     </div>
@@ -25,7 +25,7 @@ const { trans } = useTransStore()
         border: none
         padding: 8px 15px
         border-radius: 8px
-        font-size: 1rem
+        font-size: .9rem
         display: inline-flex
         align-items: center
         gap: 7px

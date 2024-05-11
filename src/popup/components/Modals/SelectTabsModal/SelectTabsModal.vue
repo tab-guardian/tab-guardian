@@ -7,7 +7,6 @@ import LeftSlideTransition from '@/components/Transitions/LeftSlideTransition.vu
 import Modal from '@/components/Modals/Modal.vue'
 import Tabs from '@/components/Modals/SelectTabsModal/Tabs.vue'
 import SaveButton from '@/components/Modals/SelectTabsModal/SaveButton.vue'
-import error from '@/modules/error'
 
 const { trans } = useTransStore()
 const { isOpenModal, closeModal } = useModalStore()
@@ -18,15 +17,16 @@ const subtitle = trans(
     'Click on each tab to select or unselect it for saving to memory',
 )
 
-function saveTabs(): void {
+async function saveTabs(): Promise<void> {
     if (!store.targetGroupId) {
-        error.err('targetGroupId is not set. Cannot save add links')
-        return
+        const newGroup = await groupStore.createEmptyGroup()
+        store.targetGroupId = newGroup.id
     }
 
     const selectedLinks = store.getSelectedLinks()
 
     groupStore.prependLinksTo(store.targetGroupId, selectedLinks)
+
     store.closeTabsModal()
 }
 </script>

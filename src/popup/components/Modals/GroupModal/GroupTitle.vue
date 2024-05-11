@@ -15,7 +15,7 @@ const props = defineProps<Props>()
     <input
         v-if="store.isTitleFieldActive"
         type="text"
-        v-model="store.newTitleField"
+        v-model="store.newGroup.title"
         autofocus
         @blur="store.renameGroup"
         @keydown.enter="store.renameGroup"
