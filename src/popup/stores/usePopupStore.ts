@@ -6,6 +6,7 @@ export const usePopupStore = defineStore('popupStore', () => {
     const popups = ref<Popups>({
         groupModalMenu: false,
         deleteGroup: false,
+        groupName: false,
     })
 
     function closeAllPopups(): void {

@@ -4,6 +4,7 @@ import Navbar from '@/components/Navbar/Navbar.vue'
 import GroupModal from '@/components/Modals/GroupModal/GroupModal.vue'
 import DeleteGroupPopup from '@/components/Popups/DeleteGroupPopup.vue'
 import GroupMenuPopup from '@/components/Popups/GroupMenuPopup.vue'
+import GroupNamePopup from '@/components/Popups/GroupNamePopup.vue'
 import SelectTabsModal from '@/components/Modals/SelectTabsModal/SelectTabsModal.vue'
 import SettingsModal from '@/components/Modals/SettingsModal/SettingsModal.vue'
 </script>
@@ -20,6 +21,7 @@ import SettingsModal from '@/components/Modals/SettingsModal/SettingsModal.vue'
 
     <DeleteGroupPopup />
     <GroupMenuPopup />
+    <GroupNamePopup />
 </template>
 
 <style lang="sass">

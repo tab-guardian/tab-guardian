@@ -19,7 +19,8 @@ export type Group = {
 }
 
 export type SaveGroupParams = {
-    title?: string
+    title: string
+    links: Link[]
     isPrivate?: boolean
 }
 
@@ -30,6 +31,7 @@ export type Settings = {
 export type Popups = {
     groupModalMenu: boolean
     deleteGroup: boolean
+    groupName: boolean
 }
 
 export type Modals = {

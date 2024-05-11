@@ -1,17 +1,23 @@
 <script setup lang="ts">
 import { useGroupStore } from '@/stores/useGroupStore'
 import { useTransStore } from '@/stores/useTransStore'
+import { usePopupStore } from '@/stores/usePopupStore'
 import ShieldCheckIcon from '@/components/Icons/ShieldCheckIcon.vue'
 import PlusCircleIcon from '@/components/Icons/PlusCircleIcon.vue'
 
 const { trans } = useTransStore()
+const { openPopup } = usePopupStore()
 const groupStore = useGroupStore()
+
+function askForGroupName(isPrivate: boolean) {
+    openPopup('groupName')
+}
 </script>
 
 <template>
     <div class="buttons">
         <button
-            @click="groupStore.saveGroup"
+            @click="askForGroupName(false)"
             :disabled="groupStore.isSaving"
             class="btn save"
             type="button"
@@ -21,7 +27,7 @@ const groupStore = useGroupStore()
         </button>
 
         <button
-            @click="groupStore.saveGroup({ isPrivate: true })"
+            @click="askForGroupName(true)"
             class="btn save-private"
             type="button"
             :disabled="groupStore.isSaving"
