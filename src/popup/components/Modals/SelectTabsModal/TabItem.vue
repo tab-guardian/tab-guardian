@@ -13,12 +13,19 @@ const store = useSelectTabsStore()
 <template>
     <div
         class="link-item"
-        :class="{ 'link-item--selected': store.selectedIds.includes(link.id) }"
+        :class="{
+            'link-item--selected': store.selectedIds.includes(link.id),
+        }"
         @click="store.toggleSelect(link.id)"
     >
         <div class="link-item__inner">
             <img :src="link.favIconUrl" alt="icon" />
-            <span>{{ link.title }}</span>
+
+            <div class="link-item__content">
+                <span :title="link.title">
+                    {{ link.title }}
+                </span>
+            </div>
         </div>
 
         <label class="link-item__checkbox">
