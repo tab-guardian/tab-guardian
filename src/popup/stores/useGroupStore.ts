@@ -30,7 +30,7 @@ export const useGroupStore = defineStore('groupStore', () => {
 
     async function createEmptyGroup(): Promise<Group> {
         const group = {
-            id: Date.now(),
+            id: Date.now() + Math.floor(Math.random() * 1000),
             title: newGroup.value.title,
             isPrivate: newGroup.value.isPrivate,
             links: [],

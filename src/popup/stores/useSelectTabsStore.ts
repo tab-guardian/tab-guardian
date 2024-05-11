@@ -45,6 +45,7 @@ export const useSelectTabsStore = defineStore('selectTabsStore', () => {
         closeModal('selectTabs')
         links.value = []
         selectedIds.value = []
+        targetGroupId.value = null
     }
 
     function selectAll(): void {

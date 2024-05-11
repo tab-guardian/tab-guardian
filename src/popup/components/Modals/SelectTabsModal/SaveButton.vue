@@ -3,11 +3,17 @@ import { useTransStore } from '@/stores/useTransStore'
 import FloppyIcon from '@/components/Icons/FloppyIcon.vue'
 
 const { trans } = useTransStore()
+
+type Emits = {
+    (e: 'clicked'): void
+}
+
+const emit = defineEmits<Emits>()
 </script>
 
 <template>
     <div class="save-button">
-        <button type="button">
+        <button type="button" @click="emit('clicked')">
             <FloppyIcon width="16" height="16" />
             {{ trans('Save') }}
         </button>

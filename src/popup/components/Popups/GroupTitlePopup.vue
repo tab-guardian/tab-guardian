@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref, watchEffect } from 'vue'
 import { useGroupStore } from '@/stores/useGroupStore'
 import { useTransStore } from '@/stores/useTransStore'
 import { usePopupStore } from '@/stores/usePopupStore'
@@ -11,6 +12,14 @@ const { trans } = useTransStore()
 const { isOpenPopup, closePopup } = usePopupStore()
 const store = useGroupStore()
 const selectTabsStore = useSelectTabsStore()
+const inputRef = ref<HTMLInputElement | null>(null)
+
+watchEffect(() => {
+    if (inputRef.value) {
+        inputRef.value.focus()
+        store.newGroup.title = ''
+    }
+})
 
 function selectLinks(): void {
     closePopup('groupName')
@@ -38,11 +47,11 @@ function selectLinks(): void {
 
             <input
                 v-model="store.newGroup.title"
+                ref="inputRef"
                 type="text"
                 class="input"
                 :placeholder="trans('Group name')"
                 @keydown.enter="selectLinks"
-                autofocus
             />
         </Popup>
     </AppearTransition>
