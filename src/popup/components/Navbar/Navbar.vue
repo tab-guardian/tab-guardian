@@ -35,6 +35,7 @@ function toMainScreen(): void {
         font-size: .9rem
         cursor: pointer
         padding: 6px 4px
+        transition: color .2s
 
         &:hover
             color: var(--tg-color-primary)

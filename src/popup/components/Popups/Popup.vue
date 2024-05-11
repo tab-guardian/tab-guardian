@@ -18,7 +18,7 @@ const props = defineProps<Props>()
         <Overlay @click="emit('cancel')" />
 
         <div class="popup">
-            <span>{{ props.content }}</span>
+            <span class="popup__title">{{ props.content }}</span>
 
             <slot />
 
@@ -28,26 +28,3 @@ const props = defineProps<Props>()
         </div>
     </div>
 </template>
-
-<style scoped lang="sass">
-.popup
-    position: absolute
-    top: 50%
-    left: 20px
-    right: 20px
-    background-color: var(--tg-color-bg)
-    border-radius: 8px
-    transform: translateY(-50%)
-    padding: 15px
-    z-index: 1
-
-    span
-        font-size: 1rem
-        margin: 0
-
-    &__buttons
-        display: flex
-        gap: 10px
-        justify-content: flex-end
-        margin-top: 15px
-</style>

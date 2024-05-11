@@ -1,20 +1,20 @@
 <template>
-    <Transition name="right-slide" appear>
+    <Transition>
         <slot></slot>
     </Transition>
 </template>
 
 <style lang="sass" scoped>
-.right-slide-enter-active,
-.right-slide-leave-active
+.v-enter-active,
+.v-leave-active
     transition: all .2s cubic-bezier(1, 0.5, 0.8, 1)
 
-.right-slide-enter-from,
-.right-slide-leave-to
+.v-enter-from,
+.v-leave-to
     transform: translateX(-100%)
 
-.right-slide-leave-active,
-.right-slide-enter-active
+.v-leave-active,
+.v-enter-active
     position: absolute
     top: 0
     z-index: 1
