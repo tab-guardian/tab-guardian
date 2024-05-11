@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import QuickSave from '@/components/MainScreen/QuickSave/QuickSave.vue'
+import NewGroup from '@/components/MainScreen/NewGroup/NewGroup.vue'
 import Groups from '@/components/MainScreen/Groups/Groups.vue'
 </script>
 
 <template>
-    <QuickSave />
+    <NewGroup />
     <Groups />
 </template>

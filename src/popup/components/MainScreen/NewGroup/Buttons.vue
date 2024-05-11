@@ -2,7 +2,7 @@
 import { useGroupStore } from '@/stores/useGroupStore'
 import { useTransStore } from '@/stores/useTransStore'
 import ShieldCheckIcon from '@/components/Icons/ShieldCheckIcon.vue'
-import FloppyIcon from '@/components/Icons/FloppyIcon.vue'
+import PlusCircleIcon from '@/components/Icons/PlusCircleIcon.vue'
 
 const { trans } = useTransStore()
 const groupStore = useGroupStore()
@@ -16,8 +16,8 @@ const groupStore = useGroupStore()
             class="btn save"
             type="button"
         >
-            <FloppyIcon />
-            {{ trans('Quick Save') }}
+            <PlusCircleIcon />
+            <span>{{ trans('New Group') }}</span>
         </button>
 
         <button
@@ -40,7 +40,8 @@ const groupStore = useGroupStore()
     .btn
         height: 37px
         border: none
-        font-size: 16px
+        font-size: 1rem
+        line-height: 15px
         display: flex
         gap: 10px
         align-items: center
@@ -64,9 +65,8 @@ const groupStore = useGroupStore()
         border: 2px solid var(--dark-blue)
 
         svg
-            width: 18px
-            height: 18px
-            fill: var(--tg-color-bg-secondary)
+            width: 22px
+            height: 22px
 
     .save-private
         width: 90px
