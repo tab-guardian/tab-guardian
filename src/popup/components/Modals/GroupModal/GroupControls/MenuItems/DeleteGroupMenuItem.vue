@@ -1,17 +1,15 @@
 <script setup lang="ts">
 import MenuItem from '@/components/MenuItem.vue'
 import TrashIcon from '@/components/Icons/TrashIcon.vue'
-import { useGroupModalStore } from '@/stores/modals/useGroupModalStore'
 import { useTransStore } from '@/stores/useTransStore'
-import { useGroupStore } from '@/stores/useGroupStore'
+import { usePopupStore } from '@/stores/usePopupStore'
 
 const { trans } = useTransStore()
-const store = useGroupModalStore()
-const groupStore = useGroupStore()
+const { close, open } = usePopupStore()
 
 function deleteGroup(): void {
-    store.askToDelete = true
-    groupStore.isMenuOpen = false
+    close('groupModalMenu')
+    open('deleteGroup')
 }
 </script>
 

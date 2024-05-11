@@ -23,4 +23,9 @@ import Sidebar from '@/components/Navbar/Sidebar/Sidebar.vue'
 
     h1
         font-size: .9rem
+        cursor: pointer
+        padding: 6px 4px
+
+        &:hover
+            color: var(--tg-color-primary)
 </style>

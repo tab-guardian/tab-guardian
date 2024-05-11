@@ -3,7 +3,7 @@ import { useSelectTabsModalStore } from '@/stores/modals/useSelectTabsModalStore
 import { useTransStore } from '@/stores/useTransStore'
 import { useGroupStore } from '@/stores/useGroupStore'
 import LeftSlideTransition from '@/components/Transitions/LeftSlideTransition.vue'
-import Modal from '@/components/Modal.vue'
+import Modal from '@/components/Modals/Modal.vue'
 import Tabs from '@/components/Modals/SelectTabsModal/Tabs.vue'
 import SaveButton from '@/components/Modals/SelectTabsModal/SaveButton.vue'
 

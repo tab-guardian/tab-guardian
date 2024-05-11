@@ -4,12 +4,12 @@ import PlusCircleIcon from '@/components/Icons/PlusCircleIcon.vue'
 import { useSelectTabsModalStore } from '@/stores/modals/useSelectTabsModalStore'
 import { useGroupModalStore } from '@/stores/modals/useGroupModalStore'
 import { useTransStore } from '@/stores/useTransStore'
-import { useGroupStore } from '@/stores/useGroupStore'
+import { usePopupStore } from '@/stores/usePopupStore'
 
 const { trans } = useTransStore()
+const { close } = usePopupStore()
 const store = useSelectTabsModalStore()
 const groupModalStore = useGroupModalStore()
-const groupStore = useGroupStore()
 
 function addLink(): void {
     if (!groupModalStore.selectedGroup) {
@@ -20,7 +20,7 @@ function addLink(): void {
     const groupId = groupModalStore.selectedGroup.id
 
     store.selectLinksFor(groupId)
-    groupStore.isMenuOpen = false
+    close('groupModalMenu')
 }
 </script>
 

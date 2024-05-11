@@ -23,7 +23,11 @@ export type SaveGroupParams = {
     isPrivate?: boolean
 }
 
-
 export type Settings = {
     password: string
+}
+
+export type Popups = {
+    groupModalMenu: boolean
+    deleteGroup: boolean
 }

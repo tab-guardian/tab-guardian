@@ -11,7 +11,6 @@ export const useGroupStore = defineStore('groupStore', () => {
     const groups = ref<Group[]>([])
     const isSaving = ref<boolean>(false)
     const groupModalStore = useGroupModalStore()
-    const isMenuOpen = ref<boolean>(false)
 
     onMounted(() => restoreGroupsFromStorage())
 
@@ -101,7 +100,6 @@ export const useGroupStore = defineStore('groupStore', () => {
     return {
         groups,
         isSaving,
-        isMenuOpen,
         saveGroup,
         deleteGroup,
         deleteLink,

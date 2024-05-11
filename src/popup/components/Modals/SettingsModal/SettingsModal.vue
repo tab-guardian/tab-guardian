@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useTransStore } from '@/stores/useTransStore'
 import { useSettingsModalStore } from '@/stores/modals/useSettingsModalStore'
-import Modal from '@/components/Modal.vue'
+import Modal from '@/components/Modals/Modal.vue'
 import LeftSlideTransition from '@/components/Transitions/LeftSlideTransition.vue'
 import PasswordSection from '@/components/Modals/SettingsModal/Sections/PasswordSection.vue'
 

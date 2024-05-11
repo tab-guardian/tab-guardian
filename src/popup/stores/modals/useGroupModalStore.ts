@@ -4,7 +4,6 @@ import { defineStore } from 'pinia'
 
 export const useGroupModalStore = defineStore('groupModalStore', () => {
     const selectedGroup = ref<Group | null>(null)
-    const askToDelete = ref<boolean>(false)
     const newTitleField = ref<string>('')
     const isTitleFieldActive = ref<boolean>(false)
 
@@ -20,7 +19,6 @@ export const useGroupModalStore = defineStore('groupModalStore', () => {
 
     return {
         selectedGroup,
-        askToDelete,
         isTitleFieldActive,
         newTitleField,
         reset,
