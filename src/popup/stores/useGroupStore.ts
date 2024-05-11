@@ -1,6 +1,7 @@
 import type { Group, SaveGroupParams, Link } from '@/types'
 import { ref, onMounted } from 'vue'
 import { defineStore } from 'pinia'
+import { useModalStore } from '@/stores/useModalStore'
 import getDefaultGroupTitle from '@/modules/getDefaultGroupTitle'
 import getFromStorage from '@/modules/getFromStorage'
 import saveToStorage from '@/modules/saveToStorage'
@@ -12,6 +13,7 @@ export const useGroupStore = defineStore('groupStore', () => {
     const selectedGroup = ref<Group | null>(null)
     const newTitleField = ref<string>('')
     const isTitleFieldActive = ref<boolean>(false)
+    const { openModal, closeModal } = useModalStore()
 
     onMounted(() => restoreGroupsFromStorage())
 
@@ -21,14 +23,16 @@ export const useGroupStore = defineStore('groupStore', () => {
         })
     }
 
-    function reset(): void {
+    function goBack(): void {
         selectedGroup.value = null
         newTitleField.value = ''
+        closeModal('group')
     }
 
     function select(group: Group): void {
         selectedGroup.value = group
         newTitleField.value = group.title
+        openModal('group')
     }
 
     function renameGroup(): void {
@@ -114,7 +118,7 @@ export const useGroupStore = defineStore('groupStore', () => {
         selectedGroup,
         isTitleFieldActive,
         newTitleField,
-        reset,
+        goBack,
         select,
         saveGroup,
         deleteGroup,

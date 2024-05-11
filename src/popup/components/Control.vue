@@ -6,8 +6,8 @@
 
 <style lang="sass" scoped>
 button
-    width: 35px
-    height: 35px
+    width: 30px
+    height: 30px
     display: flex
     justify-content: center
     align-items: center
@@ -15,7 +15,7 @@ button
     border: 1px solid transparent
     color: var(--tg-color-font)
     border-radius: 5px
-    padding: 5px
+    padding: 2px
     opacity: .8
     transition: opacity .2s, border-color .2s
     cursor: pointer

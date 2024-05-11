@@ -6,7 +6,7 @@ import LeftSlideTransition from '@/components/Transitions/LeftSlideTransition.vu
 import PasswordSection from '@/components/Modals/SettingsModal/Sections/PasswordSection.vue'
 
 const { trans } = useTransStore()
-const { isOpenModal } = useModalStore()
+const { isOpenModal, closeModal } = useModalStore()
 </script>
 
 <template>
@@ -15,6 +15,7 @@ const { isOpenModal } = useModalStore()
             v-if="isOpenModal('settings')"
             :title="trans('Settings')"
             :subtitle="trans('Change the extension configurations here')"
+            @goBack="closeModal('settings')"
         >
             <div class="settings">
                 <PasswordSection />

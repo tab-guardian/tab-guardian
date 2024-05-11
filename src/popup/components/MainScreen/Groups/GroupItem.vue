@@ -10,15 +10,11 @@ type Props = {
 
 const { group } = defineProps<Props>()
 const groupModalStore = useGroupStore()
-
-function toGroupScreen(): void {
-    groupModalStore.select(group)
-}
 </script>
 
 <template>
     <div
-        @click="toGroupScreen"
+        @click="groupModalStore.select(group)"
         class="group"
         :class="{ 'group--private': group.isPrivate }"
     >

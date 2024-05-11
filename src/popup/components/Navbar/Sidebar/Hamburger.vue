@@ -1,27 +1,13 @@
 <script setup lang="ts">
 import { useSidebarStore } from '@/stores/useSidebarStore'
 import MenuIcon from '@/components/Icons/MenuIcon.vue'
+import Control from '@/components/Control.vue'
 
 const sidebarStore = useSidebarStore()
 </script>
 
 <template>
-    <div @click="sidebarStore.toggle()" type="button" class="hamburger">
+    <Control @click="sidebarStore.toggle()" type="button">
         <MenuIcon />
-    </div>
+    </Control>
 </template>
-
-<style scoped lang="sass">
-.hamburger
-    width: 24px
-    height: 24px
-    cursor: pointer
-    transition: transform .2s
-
-    &:hover
-        transform: scale(1.1)
-
-    svg
-        stroke: var(--tg-color-font)
-        width: 100%
-</style>
