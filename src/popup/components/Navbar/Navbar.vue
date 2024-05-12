@@ -1,22 +1,16 @@
 <script setup lang="ts">
 import NavControls from '@/components/Navbar/NavControls.vue'
 import Sidebar from '@/components/Navbar/Sidebar/Sidebar.vue'
-import { usePopupStore } from '@/stores/usePopupStore'
-import { useModalStore } from '@/stores/useModalStore'
-
-const { closeAllPopups } = usePopupStore()
-const { closeAllModals } = useModalStore()
-
-function toMainScreen(): void {
-    closeAllPopups()
-    closeAllModals()
-}
 </script>
 
 <template>
     <nav class="navbar">
         <Sidebar />
-        <h1 @click="toMainScreen">Tab Guardian</h1>
+
+        <RouterLink :to="{ name: 'main' }">
+            <h1>Tab Guardian</h1>
+        </RouterLink>
+
         <NavControls />
     </nav>
 </template>
@@ -30,6 +24,10 @@ function toMainScreen(): void {
     padding: 3px 10px
     background-color: var(--tg-color-bg)
     box-shadow: 0 0 4px 5px rgb(0 0 0 / 7%)
+
+    a
+        text-decoration: none
+        color: var(--tg-color-font)
 
     h1
         font-size: .9rem

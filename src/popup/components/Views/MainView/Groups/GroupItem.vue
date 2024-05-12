@@ -2,21 +2,19 @@
 import type { Group } from '@/types'
 import ChevronRightIcon from '@/components/Icons/ChevronRightIcon.vue'
 import ShieldCheckIcon from '@/components/Icons/ShieldCheckIcon.vue'
-import { useGroupStore } from '@/stores/useGroupStore'
 
 type Props = {
     group: Group
 }
 
 const { group } = defineProps<Props>()
-const groupModalStore = useGroupStore()
 </script>
 
 <template>
-    <div
-        @click="groupModalStore.select(group)"
-        class="group"
+    <RouterLink
+        :to="{ name: 'group', params: { id: group.id } }"
         :class="{ 'group--private': group.isPrivate }"
+        class="group"
     >
         <div class="group__inner">
             <ShieldCheckIcon v-if="group.isPrivate" class="shield" />
@@ -26,7 +24,7 @@ const groupModalStore = useGroupStore()
         </div>
 
         <ChevronRightIcon class="icon-right" />
-    </div>
+    </RouterLink>
 </template>
 
 <style lang="sass" scoped>
@@ -37,6 +35,8 @@ const groupModalStore = useGroupStore()
     align-items: center
     gap: 10px
     transition: background-color .2s
+    text-decoration: none
+    color: var(--tg-color)
     cursor: pointer
     border-bottom: 1px solid var(--tg-color-border)
     background-color: var(--tg-color-bg-secondary)

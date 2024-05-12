@@ -37,6 +37,7 @@
         "@types/crypto-js": "^4.2.2",
         "crypto-js": "^4.2.0",
         "pinia": "^2.1.7",
-        "vue": "^3.4.26"
+        "vue": "^3.4.26",
+        "vue-router": "4"
     }
 }

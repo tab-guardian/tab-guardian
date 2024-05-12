@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Link } from '@/types'
-import DeleteLinkButton from '@/components/Modals/GroupModal/DeleteLinkButton.vue'
+import DeleteLinkButton from '@/components/Views/GroupView/DeleteLinkButton.vue'
 
 type Props = {
     link: Link

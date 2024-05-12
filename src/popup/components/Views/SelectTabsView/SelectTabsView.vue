@@ -3,13 +3,12 @@ import { useSelectTabsStore } from '@/stores/useSelectTabsStore'
 import { useTransStore } from '@/stores/useTransStore'
 import { useGroupStore } from '@/stores/useGroupStore'
 import { useModalStore } from '@/stores/useModalStore'
-import LeftSlideTransition from '@/components/Transitions/LeftSlideTransition.vue'
-import Modal from '@/components/Modals/Modal.vue'
-import Tabs from '@/components/Modals/SelectTabsModal/Tabs.vue'
-import SaveButton from '@/components/Modals/SelectTabsModal/SaveButton.vue'
+import View from '@/components/Views/View.vue'
+import Tabs from '@/components/Views/SelectTabsView/Tabs.vue'
+import SaveButton from '@/components/Views/SelectTabsView/SaveButton.vue'
 
 const { trans } = useTransStore()
-const { isOpenModal, closeModal } = useModalStore()
+const { closeModal } = useModalStore()
 const store = useSelectTabsStore()
 const groupStore = useGroupStore()
 const subtitle = trans(
@@ -34,31 +33,28 @@ async function saveTabs(): Promise<void> {
 </script>
 
 <template>
-    <LeftSlideTransition>
-        <Modal
-            v-if="isOpenModal('selectTabs')"
-            class="select-tabs"
-            :title="trans('Select Tabs')"
-            :subtitle="subtitle"
-            @goBack="closeModal('selectTabs')"
-        >
-            <div class="select-tabs__controls">
-                <a href="javascript:" @click="store.selectAll">
-                    {{ trans('Select all') }}
-                </a>
-                <a href="javascript:" @click="store.deselectAll">
-                    {{ trans('Deselect all') }}
-                </a>
-                <a href="javascript:" @click="closeModal('selectTabs')">
-                    {{ trans('Cancel') }}
-                </a>
-            </div>
+    <View
+        class="select-tabs"
+        :title="trans('Select Tabs')"
+        :subtitle="subtitle"
+        @goBack="closeModal('selectTabs')"
+    >
+        <div class="select-tabs__controls">
+            <a href="javascript:" @click="store.selectAll">
+                {{ trans('Select all') }}
+            </a>
+            <a href="javascript:" @click="store.deselectAll">
+                {{ trans('Deselect all') }}
+            </a>
+            <a href="javascript:" @click="closeModal('selectTabs')">
+                {{ trans('Cancel') }}
+            </a>
+        </div>
 
-            <Tabs />
+        <Tabs />
 
-            <SaveButton @clicked="saveTabs" />
-        </Modal>
-    </LeftSlideTransition>
+        <SaveButton @clicked="saveTabs" />
+    </View>
 </template>
 
 <style lang="sass" scoped>

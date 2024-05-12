@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import GroupItem from '@/components/MainScreen/Groups/GroupItem.vue'
+import GroupItem from '@/components/Views/MainView/Groups/GroupItem.vue'
 import { useGroupStore } from '@/stores/useGroupStore'
 import { useTransStore } from '@/stores/useTransStore'
 

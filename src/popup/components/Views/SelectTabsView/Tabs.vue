@@ -2,7 +2,7 @@
 import { useSelectTabsStore } from '@/stores/useSelectTabsStore'
 import { useTransStore } from '@/stores/useTransStore'
 import Spinner from '@/components/Spinner.vue'
-import TabItem from '@/components/Modals/SelectTabsModal/TabItem.vue'
+import TabItem from '@/components/Views/SelectTabsView/TabItem.vue'
 
 const store = useSelectTabsStore()
 const { trans } = useTransStore()

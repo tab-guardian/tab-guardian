@@ -2,9 +2,9 @@
 import { useTransStore } from '@/stores/useTransStore'
 import { usePopupStore } from '@/stores/usePopupStore'
 import Popup from '@/components/Popups/Popup.vue'
-import AddLinkMenuItem from '@/components/Modals/GroupModal/GroupControls/MenuItems/AddLinkMenuItem.vue'
-import DeleteGroupMenuItem from '@/components/Modals/GroupModal/GroupControls/MenuItems/DeleteGroupMenuItem.vue'
-import RenameMenuItem from '@/components/Modals/GroupModal/GroupControls/MenuItems/RenameMenuItem.vue'
+import AddLinkMenuItem from '@/components/Views/GroupView/GroupControls/MenuItems/AddLinkMenuItem.vue'
+import DeleteGroupMenuItem from '@/components/Views/GroupView/GroupControls/MenuItems/DeleteGroupMenuItem.vue'
+import RenameMenuItem from '@/components/Views/GroupView/GroupControls/MenuItems/RenameMenuItem.vue'
 import AppearTransition from '@/components/Transitions/AppearTransition.vue'
 
 const { isOpenPopup, closePopup } = usePopupStore()

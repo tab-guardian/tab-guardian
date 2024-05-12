@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Group } from '@/types'
-import LinkItem from '@/components/Modals/GroupModal/LinkItem.vue'
+import LinkItem from '@/components/Views/GroupView/LinkItem.vue'
 import { useTransStore } from '@/stores/useTransStore'
 
 type Props = {

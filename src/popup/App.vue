@@ -1,22 +1,19 @@
 <script setup lang="ts">
-import MainScreen from '@/components/MainScreen/MainScreen.vue'
 import Navbar from '@/components/Navbar/Navbar.vue'
-import GroupModal from '@/components/Modals/GroupModal/GroupModal.vue'
 import DeleteGroupPopup from '@/components/Popups/DeleteGroupPopup.vue'
 import GroupMenuPopup from '@/components/Popups/GroupMenuPopup.vue'
 import GroupTitlePopup from '@/components/Popups/GroupTitlePopup.vue'
-import SelectTabsModal from '@/components/Modals/SelectTabsModal/SelectTabsModal.vue'
-import SettingsModal from '@/components/Modals/SettingsModal/SettingsModal.vue'
 </script>
 
 <template>
     <Navbar />
 
     <main class="screen">
-        <MainScreen />
-        <GroupModal />
-        <SelectTabsModal />
-        <SettingsModal />
+        <RouterView v-slot="{ Component, route }">
+            <Transition name="screen">
+                <component :is="Component" :key="route.path" />
+            </Transition>
+        </RouterView>
     </main>
 
     <DeleteGroupPopup />
@@ -26,6 +23,14 @@ import SettingsModal from '@/components/Modals/SettingsModal/SettingsModal.vue'
 
 <style lang="sass">
 @import '@/assets/sass/main'
+
+.screen-enter-active,
+.screen-leave-active
+    transition: all .1s cubic-bezier(1, 0.5, 0.8, 1)
+
+.screen-enter-from,
+.screen-leave-to
+    transform: translateX(100%)
 
 .screen
     height: 495px

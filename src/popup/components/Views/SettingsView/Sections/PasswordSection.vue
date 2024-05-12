@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useTransStore } from '@/stores/useTransStore'
 import { useSettingsStore } from '@/stores/useSettingsStore'
-import Section from '@/components/Modals/SettingsModal/Sections/Section.vue'
+import Section from '@/components/Views/SettingsView/Sections/Section.vue'
 
 const { trans } = useTransStore()
 const settingsStore = useSettingsStore()

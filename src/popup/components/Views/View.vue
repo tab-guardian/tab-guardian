@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import BackButton from '@/components/Modals/GroupModal/GroupControls/BackButton.vue'
+import BackButton from '@/components/Views/GroupView/GroupControls/BackButton.vue'
 
 type Props = {
     title?: string

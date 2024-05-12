@@ -22,6 +22,10 @@ export const useGroupStore = defineStore('groupStore', () => {
 
     onMounted(() => restoreGroupsFromStorage())
 
+    function getGroupById(id: number): Group | null {
+        return groups.value.find(g => g.id === id) || null
+    }
+
     function restoreGroupsFromStorage(): void {
         getFromStorage<Group[] | null>('groups', storedGroups => {
             groups.value = storedGroups || []
@@ -155,5 +159,6 @@ export const useGroupStore = defineStore('groupStore', () => {
         prependLinksTo,
         renameGroup,
         createEmptyGroup,
+        getGroupById,
     }
 })
