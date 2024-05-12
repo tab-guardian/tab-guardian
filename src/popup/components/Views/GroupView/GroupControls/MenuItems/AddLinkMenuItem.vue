@@ -2,16 +2,23 @@
 import MenuItem from '@/components/MenuItem.vue'
 import PlusCircleIcon from '@/components/Icons/PlusCircleIcon.vue'
 import { useTransStore } from '@/stores/useTransStore'
-import { usePopupStore } from '@/stores/usePopupStore'
-import { useRouter } from 'vue-router'
+import { useSelectTabsStore } from '@/stores/useSelectTabsStore'
+import { useGroupStore } from '@/stores/useGroupStore'
+import error from '@/modules/error'
 
 const { trans } = useTransStore()
-const { closePopup } = usePopupStore()
-const router = useRouter()
+const store = useSelectTabsStore()
+const groupStore = useGroupStore()
 
 function addLink(): void {
-    closePopup('groupView')
-    router.push({ name: 'select-tabs' })
+    if (!groupStore.selectedGroup) {
+        error.warn('No group selected to add links to')
+        return
+    }
+
+    store.showView({
+        groupId: groupStore.selectedGroup.id,
+    })
 }
 </script>
 

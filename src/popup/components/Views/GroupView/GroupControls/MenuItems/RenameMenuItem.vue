@@ -18,7 +18,7 @@ function renameGroup(): void {
 
     store.isTitleFieldActive = true
     store.selectedGroup = store.selectedGroup
-    store.newGroup.title = store.selectedGroup.title
+    store.newGroup.name = store.selectedGroup.name
 
     closePopup('groupView')
 }

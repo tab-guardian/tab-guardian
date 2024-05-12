@@ -20,7 +20,7 @@ const { group } = defineProps<Props>()
             <ShieldCheckIcon v-if="group.isPrivate" class="shield" />
             <div v-else class="amount">{{ group.links.length }}</div>
 
-            <h2>{{ group.title }}</h2>
+            <h2>{{ group.name }}</h2>
         </div>
 
         <ChevronRightIcon class="icon-right" />

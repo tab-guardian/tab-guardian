@@ -5,7 +5,7 @@ import { defineStore } from 'pinia'
 import getFromStorage from '@/modules/getFromStorage'
 import saveToStorage from '@/modules/saveToStorage'
 import error from '@/modules/error'
-import getDefaultGroupTitle from '@/modules/getDefaultGroupTitle'
+import getDefaultGroupName from '@/modules/getDefaultGroupName'
 
 export const useGroupStore = defineStore('groupStore', () => {
     const groups = ref<Group[]>([])
@@ -15,7 +15,7 @@ export const useGroupStore = defineStore('groupStore', () => {
     const router = useRouter()
 
     const newGroup = ref({
-        title: '',
+        name: '',
         isPrivate: false,
     })
 
@@ -34,7 +34,7 @@ export const useGroupStore = defineStore('groupStore', () => {
     async function createEmptyGroup(): Promise<Group> {
         const group = {
             id: Date.now() + Math.floor(Math.random() * 1000),
-            title: newGroup.value.title,
+            name: newGroup.value.name,
             isPrivate: newGroup.value.isPrivate,
             links: [],
         }
@@ -54,7 +54,7 @@ export const useGroupStore = defineStore('groupStore', () => {
 
     function select(group: Group): void {
         selectedGroup.value = group
-        newGroup.value.title = group.title
+        newGroup.value.name = group.name
         newGroup.value.isPrivate = group.isPrivate
         router.push({ name: 'group', params: { id: group.id } })
     }
@@ -73,10 +73,10 @@ export const useGroupStore = defineStore('groupStore', () => {
             return
         }
 
-        if (newGroup.value.title === '') {
-            group.title = getDefaultGroupTitle(newGroup.value.isPrivate)
+        if (newGroup.value.name === '') {
+            group.name = getDefaultGroupName(newGroup.value.isPrivate)
         } else {
-            group.title = newGroup.value.title
+            group.name = newGroup.value.name
         }
 
         isTitleFieldActive.value = false
@@ -124,7 +124,7 @@ export const useGroupStore = defineStore('groupStore', () => {
 
         groups.value.unshift({
             id: Date.now(),
-            title: params.title,
+            name: params.name,
             links: params.links,
             isPrivate,
         })
@@ -135,7 +135,7 @@ export const useGroupStore = defineStore('groupStore', () => {
     }
 
     function resetNewGroup(): void {
-        newGroup.value.title = ''
+        newGroup.value.name = ''
         newGroup.value.isPrivate = false
     }
 

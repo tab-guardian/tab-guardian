@@ -6,7 +6,7 @@ import { useTransStore } from '@/stores/useTransStore'
 import { useRoute } from 'vue-router'
 import View from '@/components/Views/View.vue'
 import Links from '@/components/Views/GroupView/Links.vue'
-import GroupTitle from '@/components/Views/GroupView/GroupTitle.vue'
+import GroupName from '@/components/Views/GroupView/GroupName.vue'
 import MenuButton from '@/components/Views/GroupView/GroupControls/MenuButton.vue'
 
 const { trans } = useTransStore()
@@ -35,7 +35,7 @@ watchEffect(() => {
         </template>
 
         <div v-if="group" class="group">
-            <GroupTitle :group="group" />
+            <GroupName :group="group" />
             <Links :group="group" />
         </div>
 

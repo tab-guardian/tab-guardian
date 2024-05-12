@@ -2,6 +2,7 @@ import type { Link } from '@/types'
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import { useRouter } from 'vue-router'
+import { usePopupStore } from '@/stores/usePopupStore'
 import getCurrentLinks from '@/modules/getCurrentLinks'
 
 type SelectLinksParams = {
@@ -15,6 +16,7 @@ export const useSelectTabsStore = defineStore('selectTabsStore', () => {
     const targetGroupId = ref<number | null>(null)
     const loading = ref<boolean>(false)
     const router = useRouter()
+    const { closeAllPopups } = usePopupStore()
 
     function fetchLinks(selectAll?: boolean): void {
         getCurrentLinks({ closeTabs: false })
@@ -28,10 +30,12 @@ export const useSelectTabsStore = defineStore('selectTabsStore', () => {
             .finally(() => loading.value = false)
     }
 
-    function selectLinks({ groupId, selectAll }: SelectLinksParams): void {
+    function showView({ groupId, selectAll }: SelectLinksParams): void {
         if (groupId) {
             targetGroupId.value = groupId
         }
+
+        closeAllPopups()
 
         fetchLinks(selectAll)
         router.push({ name: 'select-tabs' })
@@ -77,7 +81,7 @@ export const useSelectTabsStore = defineStore('selectTabsStore', () => {
         selectAll,
         deselectAll,
         closeTabsModal,
-        selectLinks,
+        showView,
         getSelectedLinks,
     }
 })

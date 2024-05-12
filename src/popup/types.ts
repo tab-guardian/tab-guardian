@@ -13,13 +13,13 @@ export type Link = {
 
 export type Group = {
     id: number
-    title: string
+    name: string
     links: Link[]
     isPrivate: boolean
 }
 
 export type SaveGroupParams = {
-    title: string
+    name: string
     links: Link[]
     isPrivate?: boolean
 }

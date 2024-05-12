@@ -9,7 +9,7 @@ import AppearTransition from '@/components/Transitions/AppearTransition.vue'
 import ChevronRightIcon from '@/components/Icons/ChevronRightIcon.vue'
 
 const { trans } = useTransStore()
-const { isOpenPopup, closePopup } = usePopupStore()
+const { isOpenPopup, closePopup, closeAllPopups } = usePopupStore()
 const store = useGroupStore()
 const selectTabsStore = useSelectTabsStore()
 const inputRef = ref<HTMLInputElement | null>(null)
@@ -17,14 +17,14 @@ const inputRef = ref<HTMLInputElement | null>(null)
 watchEffect(() => {
     if (inputRef.value) {
         inputRef.value.focus()
-        store.newGroup.title = ''
+        store.newGroup.name = ''
     }
 })
 
 function selectLinks(): void {
-    closePopup('groupName')
+    closeAllPopups()
 
-    selectTabsStore.selectLinks({
+    selectTabsStore.showView({
         selectAll: true,
     })
 }
@@ -46,7 +46,7 @@ function selectLinks(): void {
             </template>
 
             <input
-                v-model="store.newGroup.title"
+                v-model="store.newGroup.name"
                 ref="inputRef"
                 type="text"
                 class="input"

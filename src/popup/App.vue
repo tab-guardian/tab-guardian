@@ -2,7 +2,7 @@
 import Navbar from '@/components/Navbar/Navbar.vue'
 import DeleteGroupPopup from '@/components/Popups/DeleteGroupPopup.vue'
 import GroupMenuPopup from '@/components/Popups/GroupMenuPopup.vue'
-import GroupTitlePopup from '@/components/Popups/GroupTitlePopup.vue'
+import GroupNamePopup from '@/components/Popups/GroupNamePopup.vue'
 </script>
 
 <template>
@@ -18,7 +18,7 @@ import GroupTitlePopup from '@/components/Popups/GroupTitlePopup.vue'
 
     <DeleteGroupPopup />
     <GroupMenuPopup />
-    <GroupTitlePopup />
+    <GroupNamePopup />
 </template>
 
 <style lang="sass">

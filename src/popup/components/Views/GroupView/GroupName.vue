@@ -15,14 +15,14 @@ const props = defineProps<Props>()
     <input
         v-if="store.isTitleFieldActive"
         type="text"
-        v-model="store.newGroup.title"
+        v-model="store.newGroup.name"
         autofocus
         @blur="store.renameGroup"
         @keydown.enter="store.renameGroup"
     />
 
     <h2 v-else>
-        {{ props.group.title }}
+        {{ props.group.name }}
     </h2>
 </template>
 
