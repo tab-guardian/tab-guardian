@@ -16,6 +16,7 @@ export type Group = {
     name: string
     links: Link[]
     isPrivate: boolean
+    isEncrypted: boolean
 }
 
 export type SaveGroupParams = {

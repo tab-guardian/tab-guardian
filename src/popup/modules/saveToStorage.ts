@@ -2,9 +2,8 @@ import error from '@/modules/error'
 
 export default async <T>(key: string, value: T | null | undefined): Promise<void> => {
     if (!value) {
-        error.err(
-            `Failed to save ${key} to storage because value is '${value}'`,
-        )
+        const msg = `Failed to save ${key} to storage because value is '${value}'`
+        error.err(msg)
         return
     }
 

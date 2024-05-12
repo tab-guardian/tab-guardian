@@ -19,13 +19,13 @@ export const useGroupStore = defineStore('groupStore', () => {
         isPrivate: false,
     })
 
-    onMounted(() => restoreGroupsFromStorage())
+    onMounted(() => loadGroupsFromStorage())
 
     function getGroupById(id: number): Group | null {
         return groups.value.find(g => g.id === id) || null
     }
 
-    function restoreGroupsFromStorage(): void {
+    function loadGroupsFromStorage(): void {
         getFromStorage<Group[] | null>('groups', storedGroups => {
             groups.value = storedGroups || []
         })
@@ -36,6 +36,7 @@ export const useGroupStore = defineStore('groupStore', () => {
             id: Date.now() + Math.floor(Math.random() * 1000),
             name: newGroup.value.name,
             isPrivate: newGroup.value.isPrivate,
+            isEncrypted: false,
             links: [],
         }
 
@@ -113,27 +114,6 @@ export const useGroupStore = defineStore('groupStore', () => {
         saveGroupsToStorage()
     }
 
-    async function saveGroup(params: SaveGroupParams): Promise<void> {
-        if (isSaving.value) {
-            return
-        }
-
-        isSaving.value = true
-
-        const isPrivate = params.isPrivate || false
-
-        groups.value.unshift({
-            id: Date.now(),
-            name: params.name,
-            links: params.links,
-            isPrivate,
-        })
-
-        resetNewGroup()
-
-        await saveGroupsToStorage()
-    }
-
     function resetNewGroup(): void {
         newGroup.value.name = ''
         newGroup.value.isPrivate = false
@@ -152,7 +132,6 @@ export const useGroupStore = defineStore('groupStore', () => {
         newGroup,
         goBack,
         select,
-        saveGroup,
         deleteGroup,
         deleteLink,
         prependLinksTo,
