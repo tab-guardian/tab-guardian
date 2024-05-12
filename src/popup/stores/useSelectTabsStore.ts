@@ -1,8 +1,8 @@
 import type { Link } from '@/types'
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
+import { useRouter } from 'vue-router'
 import getCurrentLinks from '@/modules/getCurrentLinks'
-import { useModalStore } from '@/stores/useModalStore'
 
 type SelectLinksParams = {
     groupId?: number,
@@ -14,7 +14,7 @@ export const useSelectTabsStore = defineStore('selectTabsStore', () => {
     const selectedIds = ref<number[]>([])
     const targetGroupId = ref<number | null>(null)
     const loading = ref<boolean>(false)
-    const { openModal, closeModal } = useModalStore()
+    const router = useRouter()
 
     function fetchLinks(selectAll?: boolean): void {
         getCurrentLinks({ closeTabs: false })
@@ -34,7 +34,7 @@ export const useSelectTabsStore = defineStore('selectTabsStore', () => {
         }
 
         fetchLinks(selectAll)
-        openModal('selectTabs')
+        router.push({ name: 'select-tabs' })
     }
 
     function getSelectedLinks(): Link[] {
@@ -42,7 +42,7 @@ export const useSelectTabsStore = defineStore('selectTabsStore', () => {
     }
 
     function closeTabsModal(): void {
-        closeModal('selectTabs')
+        router.go(-1)
         links.value = []
         selectedIds.value = []
         targetGroupId.value = null

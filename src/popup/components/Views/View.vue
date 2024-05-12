@@ -12,29 +12,29 @@ const { title, subtitle } = defineProps<Props>()
 </script>
 
 <template>
-    <div class="modal">
-        <div v-if="!title" class="modal__controls">
+    <div class="view">
+        <div v-if="!title" class="view__controls">
             <BackButton @click="router.go(-1)" />
 
-            <div class="modal__controls__right">
+            <div class="view__controls__right">
                 <slot name="controls" />
             </div>
         </div>
 
-        <h2 v-if="title" class="modal__title">
+        <h2 v-if="title" class="view__title">
             <BackButton @click="router.go(-1)" />
 
             {{ title }}
         </h2>
 
-        <p v-if="subtitle" class="modal__subtitle">{{ subtitle }}</p>
+        <p v-if="subtitle" class="view__subtitle">{{ subtitle }}</p>
 
         <slot></slot>
     </div>
 </template>
 
 <style lang="sass" scoped>
-.modal
+.view
     position: absolute
     top: 0
     bottom: 0

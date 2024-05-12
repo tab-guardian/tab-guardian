@@ -7,5 +7,5 @@ export default [
     { path: '/', name: 'main', component: MainView },
     { path: '/settings', name: 'settings', component: SettingsView },
     { path: '/group/:id', name: 'group', component: GroupView },
-    { path: '/select-tabs', name: 'selectTabs', component: SelectTabsView },
+    { path: '/select-tabs', name: 'select-tabs', component: SelectTabsView },
 ]

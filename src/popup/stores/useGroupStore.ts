@@ -1,7 +1,7 @@
 import type { Group, SaveGroupParams, Link } from '@/types'
 import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 import { defineStore } from 'pinia'
-import { useModalStore } from '@/stores/useModalStore'
 import getFromStorage from '@/modules/getFromStorage'
 import saveToStorage from '@/modules/saveToStorage'
 import error from '@/modules/error'
@@ -12,13 +12,12 @@ export const useGroupStore = defineStore('groupStore', () => {
     const isSaving = ref<boolean>(false)
     const selectedGroup = ref<Group | null>(null)
     const isTitleFieldActive = ref<boolean>(false)
+    const router = useRouter()
 
     const newGroup = ref({
         title: '',
         isPrivate: false,
     })
-
-    const { openModal, closeModal } = useModalStore()
 
     onMounted(() => restoreGroupsFromStorage())
 
@@ -50,14 +49,14 @@ export const useGroupStore = defineStore('groupStore', () => {
     function goBack(): void {
         selectedGroup.value = null
         resetNewGroup()
-        closeModal('group')
+        router.go(-1)
     }
 
     function select(group: Group): void {
         selectedGroup.value = group
         newGroup.value.title = group.title
         newGroup.value.isPrivate = group.isPrivate
-        openModal('group')
+        router.push({ name: 'group', params: { id: group.id } })
     }
 
     function renameGroup(): void {

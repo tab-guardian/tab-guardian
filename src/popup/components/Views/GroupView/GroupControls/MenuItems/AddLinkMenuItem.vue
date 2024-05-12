@@ -11,7 +11,7 @@ const router = useRouter()
 
 function addLink(): void {
     closePopup('groupModalMenu')
-    router.push({ name: 'selectTabs' })
+    router.push({ name: 'select-tabs' })
 }
 </script>
 

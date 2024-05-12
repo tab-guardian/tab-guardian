@@ -1,15 +1,15 @@
 <script setup lang="ts">
+import { useRouter } from 'vue-router'
 import { useSelectTabsStore } from '@/stores/useSelectTabsStore'
 import { useTransStore } from '@/stores/useTransStore'
 import { useGroupStore } from '@/stores/useGroupStore'
-import { useModalStore } from '@/stores/useModalStore'
 import View from '@/components/Views/View.vue'
 import Tabs from '@/components/Views/SelectTabsView/Tabs.vue'
 import SaveButton from '@/components/Views/SelectTabsView/SaveButton.vue'
 
 const { trans } = useTransStore()
-const { closeModal } = useModalStore()
 const store = useSelectTabsStore()
+const router = useRouter()
 const groupStore = useGroupStore()
 const subtitle = trans(
     'Click on each tab to select or unselect it for saving to memory',
@@ -45,7 +45,7 @@ async function saveTabs(): Promise<void> {
             <a href="javascript:" @click="store.deselectAll">
                 {{ trans('Deselect all') }}
             </a>
-            <a href="javascript:" @click="closeModal('selectTabs')">
+            <a href="javascript:" @click="router.go(-1)">
                 {{ trans('Cancel') }}
             </a>
         </div>
