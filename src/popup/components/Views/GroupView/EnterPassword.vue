@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Group } from '@/types'
-import { ref, watchEffect } from 'vue'
+import { ref } from 'vue'
 import { useTransStore } from '@/stores/useTransStore'
 import { useSettingsStore } from '@/stores/useSettingsStore'
 import ShieldCheckIcon from '@/components/Icons/ShieldCheckIcon.vue'
@@ -14,14 +14,7 @@ const { group } = defineProps<Props>()
 const { trans } = useTransStore()
 const { passwordMatches } = useSettingsStore()
 
-const inputRef = ref<HTMLInputElement | null>(null)
 const password = ref<string>('')
-
-watchEffect(() => {
-    if (inputRef.value) {
-        inputRef.value.focus()
-    }
-})
 
 function submitPass(): void {
     if (!password.value) {
@@ -50,6 +43,7 @@ function submitPass(): void {
 
         <InputField
             @submit="submitPass"
+            @loaded="inp => inp.focus()"
             v-model="password"
             :placeholder="trans('Enter a password')"
             type="password"
