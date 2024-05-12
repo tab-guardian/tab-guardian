@@ -29,7 +29,7 @@ export type Settings = {
 }
 
 export type Popups = {
-    groupModalMenu: boolean
+    groupView: boolean
     deleteGroup: boolean
     groupName: boolean
 }

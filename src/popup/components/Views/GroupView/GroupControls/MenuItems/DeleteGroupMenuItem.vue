@@ -3,13 +3,16 @@ import MenuItem from '@/components/MenuItem.vue'
 import TrashIcon from '@/components/Icons/TrashIcon.vue'
 import { useTransStore } from '@/stores/useTransStore'
 import { usePopupStore } from '@/stores/usePopupStore'
+import { useRouter } from 'vue-router'
 
 const { trans } = useTransStore()
 const { closePopup, openPopup } = usePopupStore()
+const router = useRouter()
 
 function deleteGroup(): void {
-    closePopup('groupModalMenu')
+    closePopup('groupView')
     openPopup('deleteGroup')
+    router.push({ name: 'main' })
 }
 </script>
 

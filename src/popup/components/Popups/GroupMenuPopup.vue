@@ -14,9 +14,9 @@ const { trans } = useTransStore()
 <template>
     <AppearTransition>
         <Popup
-            v-if="isOpenPopup('groupModalMenu')"
+            v-if="isOpenPopup('groupView')"
             :content="trans('Additional options')"
-            @cancel="closePopup('groupModalMenu')"
+            @cancel="closePopup('groupView')"
         >
             <div class="menu-items">
                 <AddLinkMenuItem />

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Group } from '@/types'
-import { computed } from 'vue'
+import { computed, watchEffect } from 'vue'
 import { useGroupStore } from '@/stores/useGroupStore'
 import { useTransStore } from '@/stores/useTransStore'
 import { useRoute } from 'vue-router'
@@ -21,6 +21,10 @@ const group = computed<Group | null>(() => {
     }
 
     return store.getGroupById(Number(id))
+})
+
+watchEffect(() => {
+    store.selectedGroup = group.value
 })
 </script>
 

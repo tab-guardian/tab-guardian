@@ -4,7 +4,7 @@ import { ref } from 'vue'
 
 export const usePopupStore = defineStore('popupStore', () => {
     const popups = ref<Popups>({
-        groupModalMenu: false,
+        groupView: false,
         deleteGroup: false,
         groupName: false,
     })
