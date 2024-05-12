@@ -1,4 +1,4 @@
-import type { Group, SaveGroupParams, Link } from '@/types'
+import type { Group, Link } from '@/types'
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { defineStore } from 'pinia'
@@ -120,6 +120,7 @@ export const useGroupStore = defineStore('groupStore', () => {
     }
 
     async function saveGroupsToStorage(): Promise<void> {
+        // todo: here
         await saveToStorage('groups', groups.value)
         setTimeout(() => (isSaving.value = false), 500)
     }
