@@ -37,7 +37,6 @@ async function saveTabs(): Promise<void> {
         class="select-tabs"
         :title="trans('Select Tabs')"
         :subtitle="subtitle"
-        @goBack="closeModal('selectTabs')"
     >
         <div class="select-tabs__controls">
             <a href="javascript:" @click="store.selectAll">

@@ -26,11 +26,15 @@ import GroupTitlePopup from '@/components/Popups/GroupTitlePopup.vue'
 
 .screen-enter-active,
 .screen-leave-active
-    transition: all .1s cubic-bezier(1, 0.5, 0.8, 1)
+    transition: opacity .1s cubic-bezier(1, 0.5, 0.8, 1)
+
+.screen-enter-to,
+.screen-leave-from
+    opacity: 1
 
 .screen-enter-from,
 .screen-leave-to
-    transform: translateX(100%)
+    opacity: 0
 
 .screen
     height: 495px

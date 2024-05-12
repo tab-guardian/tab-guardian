@@ -1,13 +1,11 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import { useTransStore } from '@/stores/useTransStore'
-import { useModalStore } from '@/stores/useModalStore'
 import { useSettingsStore } from '@/stores/useSettingsStore'
 import View from '@/components/Views/View.vue'
 import PasswordSection from '@/components/Views/SettingsView/Sections/PasswordSection.vue'
 
 const { trans } = useTransStore()
-const { closeModal } = useModalStore()
 const { loadSettingsFromStorage } = useSettingsStore()
 
 onMounted(() => loadSettingsFromStorage())
@@ -17,7 +15,6 @@ onMounted(() => loadSettingsFromStorage())
     <View
         :title="trans('Settings')"
         :subtitle="trans('Change the extension configurations here')"
-        @goBack="closeModal('settings')"
     >
         <div class="settings">
             <PasswordSection />

@@ -1,23 +1,20 @@
 <script setup lang="ts">
 import BackButton from '@/components/Views/GroupView/GroupControls/BackButton.vue'
+import { useRouter } from 'vue-router'
 
 type Props = {
     title?: string
     subtitle?: string
 }
 
-type Emits = {
-    (e: 'goBack'): void
-}
-
-const emit = defineEmits<Emits>()
+const router = useRouter()
 const { title, subtitle } = defineProps<Props>()
 </script>
 
 <template>
     <div class="modal">
         <div v-if="!title" class="modal__controls">
-            <BackButton @click="emit('goBack')" />
+            <BackButton @click="router.go(-1)" />
 
             <div class="modal__controls__right">
                 <slot name="controls" />
@@ -25,7 +22,7 @@ const { title, subtitle } = defineProps<Props>()
         </div>
 
         <h2 v-if="title" class="modal__title">
-            <BackButton @click="emit('goBack')" />
+            <BackButton @click="router.go(-1)" />
 
             {{ title }}
         </h2>

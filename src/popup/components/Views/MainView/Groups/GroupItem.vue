@@ -36,7 +36,7 @@ const { group } = defineProps<Props>()
     gap: 10px
     transition: background-color .2s
     text-decoration: none
-    color: var(--tg-color)
+    color: var(--tg-color-font)
     cursor: pointer
     border-bottom: 1px solid var(--tg-color-border)
     background-color: var(--tg-color-bg-secondary)

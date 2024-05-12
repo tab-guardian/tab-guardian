@@ -25,7 +25,7 @@ const group = computed<Group | null>(() => {
 </script>
 
 <template>
-    <View @goBack="store.goBack">
+    <View>
         <template #controls>
             <MenuButton />
         </template>
