@@ -2,8 +2,9 @@ import type { Group, Link } from '@/types'
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { defineStore } from 'pinia'
+import { useSettingsStore } from '@/stores/useSettingsStore'
 import getFromStorage from '@/modules/getFromStorage'
-import saveToStorage from '@/modules/saveToStorage'
+import saveGroupsToStorage from '@/modules/saveGroupsToStorage'
 import error from '@/modules/error'
 import getDefaultGroupName from '@/modules/getDefaultGroupName'
 
@@ -12,7 +13,9 @@ export const useGroupStore = defineStore('groupStore', () => {
     const isSaving = ref<boolean>(false)
     const selectedGroup = ref<Group | null>(null)
     const isTitleFieldActive = ref<boolean>(false)
+
     const router = useRouter()
+    const settingsStore = useSettingsStore()
 
     const newGroup = ref({
         name: '',
@@ -31,7 +34,7 @@ export const useGroupStore = defineStore('groupStore', () => {
         })
     }
 
-    async function createEmptyGroup(): Promise<Group> {
+    function createEmptyGroup(): Group {
         const group = {
             id: Date.now() + Math.floor(Math.random() * 1000),
             name: newGroup.value.name,
@@ -41,8 +44,6 @@ export const useGroupStore = defineStore('groupStore', () => {
         }
 
         groups.value.unshift(group)
-
-        await saveGroupsToStorage()
 
         return group
     }
@@ -82,12 +83,12 @@ export const useGroupStore = defineStore('groupStore', () => {
 
         isTitleFieldActive.value = false
 
-        saveGroupsToStorage()
+        saveToStorage()
     }
 
     function deleteGroup(id: number): void {
         groups.value = groups.value.filter(group => group.id !== id)
-        saveGroupsToStorage()
+        saveToStorage()
     }
 
     function deleteLink(groupId: number, linkId: number): void {
@@ -99,19 +100,19 @@ export const useGroupStore = defineStore('groupStore', () => {
 
         group.links = group.links.filter(link => link.id !== linkId)
 
-        saveGroupsToStorage()
+        saveToStorage()
     }
 
     function prependLinksTo(groupId: number, links: Link[]): void {
-        const group = groups.value.find(group => group.id === groupId)
+        groups.value = groups.value.map(group => {
+            if (group.id === groupId) {
+                group.links.unshift(...links)
+            }
 
-        if (!group) {
-            return
-        }
+            return group
+        })
 
-        group.links.unshift(...links)
-
-        saveGroupsToStorage()
+        saveToStorage()
     }
 
     function resetNewGroup(): void {
@@ -119,9 +120,16 @@ export const useGroupStore = defineStore('groupStore', () => {
         newGroup.value.isPrivate = false
     }
 
-    async function saveGroupsToStorage(): Promise<void> {
-        // todo: here
-        await saveToStorage('groups', groups.value)
+    function saveToStorage(): void {
+        const pass = settingsStore.settings.password
+
+        try {
+            saveGroupsToStorage(groups.value, pass)
+        } catch (e) {
+            // @todo: Show error message with toast
+            error.err(e as string)
+        }
+
         setTimeout(() => (isSaving.value = false), 500)
     }
 

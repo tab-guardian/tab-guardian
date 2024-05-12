@@ -3,6 +3,12 @@ import Navbar from '@/components/Navbar/Navbar.vue'
 import DeleteGroupPopup from '@/components/Popups/DeleteGroupPopup.vue'
 import GroupMenuPopup from '@/components/Popups/GroupMenuPopup.vue'
 import GroupNamePopup from '@/components/Popups/GroupNamePopup.vue'
+import { onMounted } from 'vue'
+import { useSettingsStore } from '@/stores/useSettingsStore'
+
+const { loadSettingsFromStorage } = useSettingsStore()
+
+onMounted(() => loadSettingsFromStorage())
 </script>
 
 <template>

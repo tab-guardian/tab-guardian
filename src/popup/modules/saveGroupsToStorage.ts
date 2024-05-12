@@ -2,7 +2,7 @@ import type { Group, Link } from '@/types'
 import saveToStorage from '@/modules/saveToStorage'
 import hmacSHA512 from 'crypto-js/hmac-sha512'
 
-export default (groups: Group[], pass: string): void => {
+export default async (groups: Group[], pass: string): Promise<void> => {
     let saveGroups: Group[] = []
 
     for (const group of groups) {
@@ -11,10 +11,14 @@ export default (groups: Group[], pass: string): void => {
             continue
         }
 
+        if (pass === '') {
+            throw new Error('Password is empty')
+        }
+
         saveGroups.push(encryptGroup(group, pass))
     }
 
-    saveToStorage('groups', saveGroups)
+    await saveToStorage('groups', saveGroups)
 }
 
 function encryptGroup(group: Group, pass: string): Group {
@@ -32,7 +36,7 @@ function encryptGroup(group: Group, pass: string): Group {
 
 function encryptLink(link: Link, pass: string): Link {
     return {
-        ...link,
+        id: link.id,
         url: hmacSHA512(link.url, pass).toString(),
         title: hmacSHA512(link.title, pass).toString(),
         favIconUrl: hmacSHA512(link.favIconUrl, pass).toString(),
