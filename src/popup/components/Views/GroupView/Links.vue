@@ -7,12 +7,12 @@ type Props = {
     group: Group
 }
 
-const props = defineProps<Props>()
+const { group } = defineProps<Props>()
 const { trans } = useTransStore()
 </script>
 
 <template>
-    <p v-if="props.group.links.length === 0" class="message">
+    <p v-if="group.links.length === 0" class="message">
         {{ trans('There are no links in this group') }}
     </p>
 
