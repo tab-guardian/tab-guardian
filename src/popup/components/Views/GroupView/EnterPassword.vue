@@ -50,8 +50,9 @@ function submitPass(): void {
 
         <InputField
             @submit="submitPass"
-            :placeholder="trans('Enter a password')"
             v-model="password"
+            :placeholder="trans('Enter a password')"
+            type="password"
         />
     </div>
 </template>

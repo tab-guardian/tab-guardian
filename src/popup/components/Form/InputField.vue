@@ -7,6 +7,7 @@ type Emits = {
 
 type Props = {
     placeholder?: string
+    type: 'password' | 'text' | 'email' | 'number'
 }
 
 const emit = defineEmits<Emits>()
@@ -17,8 +18,8 @@ const modelValue = defineModel()
 <template>
     <form @submit.prevent="emit('submit')" class="form">
         <input
-            type="password"
             class="input"
+            :type="props.type"
             :placeholder="props.placeholder"
             v-model="modelValue"
         />
@@ -36,7 +37,7 @@ const modelValue = defineModel()
     gap: 5px
 
     button
-        background-color: var(--tg-color-primary)
+        background-color: var(--tg-color-secondary)
         border: none
         transition: background-color .2s
         height: 30px
@@ -49,5 +50,5 @@ const modelValue = defineModel()
         color: var(--tg-color-bg)
 
         &:hover
-            background-color: var(--tg-color-primary-hover)
+            background-color: var(--tg-color-secondary-hover)
 </style>

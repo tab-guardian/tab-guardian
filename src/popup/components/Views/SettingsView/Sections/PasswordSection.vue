@@ -2,6 +2,7 @@
 import { useTransStore } from '@/stores/useTransStore'
 import { useSettingsStore } from '@/stores/useSettingsStore'
 import Section from '@/components/Views/SettingsView/Sections/Section.vue'
+import InputField from '@/components/Form/InputField.vue'
 
 const { trans } = useTransStore()
 const settingsStore = useSettingsStore()
@@ -13,14 +14,11 @@ const subtitle = trans(
 
 <template>
     <Section :title="trans('Private Password')" :subtitle>
-        <input
+        <InputField
             type="password"
-            class="input"
             :placeholder="trans('Enter password')"
             v-model="settingsStore.tempPassword"
-            @blur="settingsStore.updatePassword"
+            @submit="settingsStore.updatePassword"
         />
     </Section>
 </template>
-
-<style lang="sass" scoped></style>
