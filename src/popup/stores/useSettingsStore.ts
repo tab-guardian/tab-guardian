@@ -23,8 +23,16 @@ export const useSettingsStore = defineStore('settingsStore', () => {
         saveToStorage<Settings>('settings', settings.value)
     }
 
+    function passwordMatches(pass: string): boolean {
+        const hashedPass = sha256(pass).toString()
+
+        return hashedPass === settings.value.password
+    }
+
     function updatePassword(): void {
         const password = sha256(tempPassword.value).toString()
+
+        settings.value.password = password
 
         saveToStorage<Settings>('settings', {
             ...settings.value, password,
@@ -37,6 +45,7 @@ export const useSettingsStore = defineStore('settingsStore', () => {
         settings,
         tempPassword,
         updateSettings,
+        passwordMatches,
         updatePassword,
         loadSettingsFromStorage,
     }

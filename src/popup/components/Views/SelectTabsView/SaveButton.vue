@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useTransStore } from '@/stores/useTransStore'
-import FloppyIcon from '@/components/Icons/FloppyIcon.vue'
+import CheckIcon from '@/components/Icons/CheckIcon.vue'
 
 const { trans } = useTransStore()
 
@@ -14,7 +14,7 @@ const emit = defineEmits<Emits>()
 <template>
     <div class="save-button">
         <button type="button" @click="emit('clicked')">
-            <FloppyIcon width="16" height="16" />
+            <CheckIcon width="17" height="17" />
             {{ trans('Save') }}
         </button>
     </div>
@@ -40,7 +40,4 @@ const emit = defineEmits<Emits>()
 
         &:hover
             background-color: var(--tg-color-primary-hover)
-
-        svg
-            fill: var(--tg-color-bg)
 </style>
