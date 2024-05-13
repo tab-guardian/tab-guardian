@@ -5,10 +5,12 @@ import GroupMenuPopup from '@/components/Popups/GroupMenuPopup.vue'
 import GroupNamePopup from '@/components/Popups/GroupNamePopup.vue'
 import { onMounted } from 'vue'
 import { useSettingsStore } from '@/stores/settings'
+import showToast from '@/modules/showToast'
 
 const { loadSettingsFromStorage } = useSettingsStore()
 
 onMounted(() => loadSettingsFromStorage())
+showToast('Welcome to the new TabGroups!')
 </script>
 
 <template>
