@@ -26,5 +26,5 @@
     "Enter a group name": "Enter a group name",
     "Group name": "Group name",
     "Enter a password": "Enter a password",
-    "Enter a password to decrypt the content of this group": "Enter a password to decrypt the content of this group"
+    "Enter a password to temporarily decrypt the content of this group": "Enter a password to temporarily decrypt the content of this group"
 }

@@ -39,7 +39,8 @@ function submitPass(): void {
     <div class="enter-pass">
         <p class="enter-pass__heading">
             <ShieldCheckIcon width="40" height="40" />
-            {{ trans('Enter a password to decrypt the content of this group') }}
+            <!-- prettier-ignore -->
+            {{ trans('Enter a password to temporarily decrypt the content of this group') }}
         </p>
 
         <InputField
