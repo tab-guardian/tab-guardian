@@ -3,6 +3,7 @@ import type { Group } from '@/types'
 import { ref } from 'vue'
 import { useTransStore } from '@/stores/useTransStore'
 import { useSettingsStore } from '@/stores/useSettingsStore'
+import { useGroupStore } from '@/stores/useGroupStore'
 import ShieldCheckIcon from '@/components/Icons/ShieldCheckIcon.vue'
 import InputField from '@/components/Form/InputField.vue'
 
@@ -10,9 +11,10 @@ type Props = {
     group: Group
 }
 
-const { group } = defineProps<Props>()
+const props = defineProps<Props>()
 const { trans } = useTransStore()
-const { passwordMatches } = useSettingsStore()
+const settingsStore = useSettingsStore()
+const { decryptGroup } = useGroupStore()
 
 const password = ref<string>('')
 
@@ -22,9 +24,8 @@ function submitPass(): void {
         return
     }
 
-    if (passwordMatches(password.value)) {
-        console.log('Password matches')
-        // @todo: do something here
+    if (settingsStore.passwordMatches(password.value)) {
+        decryptGroup(props.group, settingsStore.settings.password)
         password.value = ''
         return
     }

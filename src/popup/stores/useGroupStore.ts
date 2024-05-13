@@ -7,6 +7,7 @@ import getFromStorage from '@/modules/getFromStorage'
 import saveGroupsToStorage from '@/modules/saveGroupsToStorage'
 import error from '@/modules/error'
 import getDefaultGroupName from '@/modules/getDefaultGroupName'
+import decrypt from '@/modules/encrypt/decryptGroup'
 
 export const useGroupStore = defineStore('groupStore', () => {
     const groups = ref<Group[]>([])
@@ -115,6 +116,16 @@ export const useGroupStore = defineStore('groupStore', () => {
         saveToStorage()
     }
 
+    function decryptGroup(group: Group, pass: string): void {
+        groups.value = groups.value.map(g => {
+            if (g.id === group.id) {
+                return decrypt(group, pass)
+            }
+
+            return g
+        })
+    }
+
     function resetNewGroup(): void {
         newGroup.value.name = ''
         newGroup.value.isPrivate = false
@@ -144,6 +155,7 @@ export const useGroupStore = defineStore('groupStore', () => {
         deleteGroup,
         deleteLink,
         prependLinksTo,
+        decryptGroup,
         renameGroup,
         createEmptyGroup,
         getGroupById,
