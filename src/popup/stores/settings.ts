@@ -9,12 +9,18 @@ export const useSettingsStore = defineStore('settings', () => {
     const tempPassword = ref<string>('')
     const settings = ref<Settings>({
         password: '',
+        showNotices: {
+            temporaryEncrypted: true,
+        },
     })
 
     function loadSettingsFromStorage(): void {
         getFromStorage<Settings | null>('settings', data => {
             if (data) {
-                settings.value = data
+                settings.value = {
+                    ...settings.value,
+                    ...data,
+                }
             }
         })
     }

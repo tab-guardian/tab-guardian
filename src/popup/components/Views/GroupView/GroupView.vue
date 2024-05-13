@@ -9,6 +9,7 @@ import Links from '@/components/Views/GroupView/Links.vue'
 import GroupName from '@/components/Views/GroupView/GroupName.vue'
 import MenuButton from '@/components/Views/GroupView/GroupControls/MenuButton.vue'
 import EnterPassword from '@/components/Views/GroupView/EnterPassword.vue'
+import EncryptedTemporaryNotice from '@/components/Notices/EncryptedTemporaryNotice.vue'
 
 const { trans } = useTransStore()
 const { params } = useRoute()
@@ -38,15 +39,16 @@ watchEffect(() => {
         <div v-if="group" class="group">
             <GroupName :group />
 
+            <EncryptedTemporaryNotice
+                v-if="group.isPrivate && !group.isEncrypted"
+            />
+
             <EnterPassword v-if="group.isEncrypted" :group />
             <Links v-else :group />
         </div>
 
         <div v-else class="message">
-            <h2>
-                😢
-                {{ trans('Something went wrong! No group selected') }}
-            </h2>
+            <h2>😢 {{ trans('Something went wrong! No group selected') }}</h2>
         </div>
     </View>
 </template>
