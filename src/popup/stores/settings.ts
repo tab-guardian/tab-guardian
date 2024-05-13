@@ -5,7 +5,7 @@ import getFromStorage from '@/modules/getFromStorage'
 import saveToStorage from '@/modules/saveToStorage'
 import sha256 from 'crypto-js/sha256'
 
-export const useSettingsStore = defineStore('settingsStore', () => {
+export const useSettingsStore = defineStore('settings', () => {
     const tempPassword = ref<string>('')
     const settings = ref<Settings>({
         password: '',

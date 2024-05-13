@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { useTransStore } from '@/stores/useTransStore'
-import { useSettingsStore } from '@/stores/useSettingsStore'
+import { useTransStore } from '@/stores/trans'
+import { useSettingsStore } from '@/stores/settings'
 import Section from '@/components/Views/SettingsView/Sections/Section.vue'
 import InputField from '@/components/Form/InputField.vue'
 

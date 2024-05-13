@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useTransStore } from '@/stores/useTransStore'
+import { useTransStore } from '@/stores/trans'
 import CheckIcon from '@/components/Icons/CheckIcon.vue'
 
 const { trans } = useTransStore()

@@ -2,14 +2,14 @@ import type { Group, Link } from '@/types'
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { defineStore } from 'pinia'
-import { useSettingsStore } from '@/stores/useSettingsStore'
+import { useSettingsStore } from '@/stores/settings'
 import getFromStorage from '@/modules/getFromStorage'
 import saveGroupsToStorage from '@/modules/saveGroupsToStorage'
 import error from '@/modules/error'
 import getDefaultGroupName from '@/modules/getDefaultGroupName'
 import decrypt from '@/modules/encrypt/decryptGroup'
 
-export const useGroupStore = defineStore('groupStore', () => {
+export const useGroupStore = defineStore('group', () => {
     const groups = ref<Group[]>([])
     const isSaving = ref<boolean>(false)
     const selectedGroup = ref<Group | null>(null)

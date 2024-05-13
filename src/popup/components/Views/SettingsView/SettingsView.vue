@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useTransStore } from '@/stores/useTransStore'
+import { useTransStore } from '@/stores/trans'
 import View from '@/components/Views/View.vue'
 import PasswordSection from '@/components/Views/SettingsView/Sections/PasswordSection.vue'
 

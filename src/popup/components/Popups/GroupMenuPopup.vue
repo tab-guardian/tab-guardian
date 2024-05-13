@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { useTransStore } from '@/stores/useTransStore'
-import { usePopupStore } from '@/stores/usePopupStore'
+import { useTransStore } from '@/stores/trans'
+import { usePopupStore } from '@/stores/popup'
 import Popup from '@/components/Popups/Popup.vue'
 import AddLinkMenuItem from '@/components/Views/GroupView/GroupControls/MenuItems/AddLinkMenuItem.vue'
 import DeleteGroupMenuItem from '@/components/Views/GroupView/GroupControls/MenuItems/DeleteGroupMenuItem.vue'

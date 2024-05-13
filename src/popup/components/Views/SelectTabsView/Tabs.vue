@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { useSelectTabsStore } from '@/stores/useSelectTabsStore'
-import { useTransStore } from '@/stores/useTransStore'
+import { useSelectTabsStore } from '@/stores/selectTabs'
+import { useTransStore } from '@/stores/trans'
 import Spinner from '@/components/Spinner.vue'
 import TabItem from '@/components/Views/SelectTabsView/TabItem.vue'
 

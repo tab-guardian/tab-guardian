@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import GroupItem from '@/components/Views/MainView/Groups/GroupItem.vue'
-import { useGroupStore } from '@/stores/useGroupStore'
-import { useTransStore } from '@/stores/useTransStore'
+import { useGroupStore } from '@/stores/group'
+import { useTransStore } from '@/stores/trans'
 
 const store = useGroupStore()
 const { trans } = useTransStore()

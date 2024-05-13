@@ -2,7 +2,7 @@ import type { Link } from '@/types'
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import { useRouter } from 'vue-router'
-import { usePopupStore } from '@/stores/usePopupStore'
+import { usePopupStore } from '@/stores/popup'
 import getCurrentLinks from '@/modules/getCurrentLinks'
 
 type SelectLinksParams = {
@@ -10,7 +10,7 @@ type SelectLinksParams = {
     selectAll?: boolean,
 }
 
-export const useSelectTabsStore = defineStore('selectTabsStore', () => {
+export const useSelectTabsStore = defineStore('selectTabs', () => {
     const links = ref<Link[]>([])
     const selectedIds = ref<number[]>([])
     const targetGroupId = ref<number | null>(null)

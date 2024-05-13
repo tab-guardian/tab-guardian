@@ -2,7 +2,7 @@ import type { Popups } from '@/types'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
-export const usePopupStore = defineStore('popupStore', () => {
+export const usePopupStore = defineStore('popup', () => {
     const popups = ref<Popups>({
         groupView: false,
         deleteGroup: false,

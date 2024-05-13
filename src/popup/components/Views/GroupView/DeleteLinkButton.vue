@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import CloseIcon from '@/components/Icons/CloseIcon.vue'
-import { useGroupStore } from '@/stores/useGroupStore'
+import { useGroupStore } from '@/stores/group'
 
 type Props = {
     linkId: number

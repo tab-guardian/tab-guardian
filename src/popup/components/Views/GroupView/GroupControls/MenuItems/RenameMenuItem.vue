@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { useGroupStore } from '@/stores/useGroupStore'
-import { useTransStore } from '@/stores/useTransStore'
+import { useGroupStore } from '@/stores/group'
+import { useTransStore } from '@/stores/trans'
 import PencilSquareIcon from '@/components/Icons/PencilSquareIcon.vue'
 import MenuItem from '@/components/MenuItem.vue'
-import { usePopupStore } from '@/stores/usePopupStore'
+import { usePopupStore } from '@/stores/popup'
 import error from '@/modules/error'
 
 const store = useGroupStore()
@@ -25,10 +25,7 @@ function renameGroup(): void {
 </script>
 
 <template>
-    <MenuItem
-        @click="renameGroup"
-        :title="trans('Rename this group')"
-    >
+    <MenuItem @click="renameGroup" :title="trans('Rename this group')">
         <PencilSquareIcon width="22" height="22" />
     </MenuItem>
 </template>

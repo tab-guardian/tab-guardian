@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { useGroupStore } from '@/stores/useGroupStore'
-import { useTransStore } from '@/stores/useTransStore'
-import { usePopupStore } from '@/stores/usePopupStore'
+import { useGroupStore } from '@/stores/group'
+import { useTransStore } from '@/stores/trans'
+import { usePopupStore } from '@/stores/popup'
 import error from '@/modules/error'
 import Popup from '@/components/Popups/Popup.vue'
 import AppearTransition from '@/components/Transitions/AppearTransition.vue'

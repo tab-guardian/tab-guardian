@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import MenuItem from '@/components/MenuItem.vue'
 import TrashIcon from '@/components/Icons/TrashIcon.vue'
-import { useTransStore } from '@/stores/useTransStore'
-import { usePopupStore } from '@/stores/usePopupStore'
+import { useTransStore } from '@/stores/trans'
+import { usePopupStore } from '@/stores/popup'
 import { useRouter } from 'vue-router'
 
 const { trans } = useTransStore()

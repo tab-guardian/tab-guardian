@@ -5,7 +5,7 @@ import en from '@/locales/en.json'
 import ru from '@/locales/ru.json'
 import error from '@/modules/error'
 
-export const useTransStore = defineStore('transStore', () => {
+export const useTransStore = defineStore('trans', () => {
     const lang = ref<string>('en')
     const messages = ref<Messages>({ en, ru })
 

@@ -2,7 +2,7 @@
 import Hamburger from '@/components/Navbar/Sidebar/Hamburger.vue'
 import RightSlideTransition from '@/components/Transitions/RightSlideTransition.vue'
 import Overlay from '@/components/Navbar/Sidebar/Overlay.vue'
-import { useSidebarStore } from '@/stores/useSidebarStore'
+import { useSidebarStore } from '@/stores/sidebar'
 
 const sidebarStore = useSidebarStore()
 </script>
@@ -11,15 +11,10 @@ const sidebarStore = useSidebarStore()
     <Hamburger />
 
     <Teleport to="body">
-        <Overlay
-            v-if="sidebarStore.isOpen"
-            @click="sidebarStore.toggle()"
-        />
+        <Overlay v-if="sidebarStore.isOpen" @click="sidebarStore.toggle()" />
 
         <RightSlideTransition>
-            <aside v-if="sidebarStore.isOpen" class="sidebar">
-                Sidebar
-            </aside>
+            <aside v-if="sidebarStore.isOpen" class="sidebar">Sidebar</aside>
         </RightSlideTransition>
     </Teleport>
 </template>

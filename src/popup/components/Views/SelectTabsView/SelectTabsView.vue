@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
-import { useSelectTabsStore } from '@/stores/useSelectTabsStore'
-import { useTransStore } from '@/stores/useTransStore'
-import { useGroupStore } from '@/stores/useGroupStore'
+import { useSelectTabsStore } from '@/stores/selectTabs'
+import { useTransStore } from '@/stores/trans'
+import { useGroupStore } from '@/stores/group'
 import View from '@/components/Views/View.vue'
 import Tabs from '@/components/Views/SelectTabsView/Tabs.vue'
 import SaveButton from '@/components/Views/SelectTabsView/SaveButton.vue'

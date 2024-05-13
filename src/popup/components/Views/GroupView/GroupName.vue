@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Group } from '@/types'
-import { useGroupStore } from '@/stores/useGroupStore'
+import { useGroupStore } from '@/stores/group'
 
 const store = useGroupStore()
 

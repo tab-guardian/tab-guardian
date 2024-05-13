@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import type { Group } from '@/types'
 import { ref } from 'vue'
-import { useTransStore } from '@/stores/useTransStore'
-import { useSettingsStore } from '@/stores/useSettingsStore'
-import { useGroupStore } from '@/stores/useGroupStore'
+import { useTransStore } from '@/stores/trans'
+import { useSettingsStore } from '@/stores/settings'
+import { useGroupStore } from '@/stores/group'
 import ShieldCheckIcon from '@/components/Icons/ShieldCheckIcon.vue'
 import InputField from '@/components/Form/InputField.vue'
 

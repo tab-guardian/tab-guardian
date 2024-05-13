@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import EllipsisVerticalIcon from '@/components/Icons/EllipsisVerticalIcon.vue'
 import Control from '@/components/Control.vue'
-import { usePopupStore } from '@/stores/usePopupStore'
+import { usePopupStore } from '@/stores/popup'
 
 const { openPopup } = usePopupStore()
 

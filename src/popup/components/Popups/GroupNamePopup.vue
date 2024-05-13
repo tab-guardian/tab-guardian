@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { ref, watchEffect } from 'vue'
-import { useGroupStore } from '@/stores/useGroupStore'
-import { useTransStore } from '@/stores/useTransStore'
-import { usePopupStore } from '@/stores/usePopupStore'
-import { useSelectTabsStore } from '@/stores/useSelectTabsStore'
+import { useGroupStore } from '@/stores/group'
+import { useTransStore } from '@/stores/trans'
+import { usePopupStore } from '@/stores/popup'
+import { useSelectTabsStore } from '@/stores/selectTabs'
 import Popup from '@/components/Popups/Popup.vue'
 import AppearTransition from '@/components/Transitions/AppearTransition.vue'
 import ChevronRightIcon from '@/components/Icons/ChevronRightIcon.vue'

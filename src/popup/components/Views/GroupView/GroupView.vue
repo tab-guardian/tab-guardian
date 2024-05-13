@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import type { Group } from '@/types'
 import { computed, watchEffect } from 'vue'
-import { useGroupStore } from '@/stores/useGroupStore'
-import { useTransStore } from '@/stores/useTransStore'
+import { useGroupStore } from '@/stores/group'
+import { useTransStore } from '@/stores/trans'
 import { useRoute } from 'vue-router'
 import View from '@/components/Views/View.vue'
 import Links from '@/components/Views/GroupView/Links.vue'

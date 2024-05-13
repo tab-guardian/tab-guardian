@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Link } from '@/types'
-import { useSelectTabsStore } from '@/stores/useSelectTabsStore'
+import { useSelectTabsStore } from '@/stores/selectTabs'
 
 type Props = {
     link: Link
