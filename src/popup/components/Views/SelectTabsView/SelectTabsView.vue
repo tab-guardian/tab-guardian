@@ -15,11 +15,11 @@ const subtitle = trans(
     'Click on each tab to select or unselect it for saving to memory',
 )
 
-async function saveTabs(): Promise<void> {
+function saveTabs(): void {
     let groupId = store.targetGroupId
 
     if (!groupId) {
-        const newGroup = await groupStore.createEmptyGroup()
+        const newGroup = groupStore.createEmptyGroup()
         groupId = newGroup.id
         store.targetGroupId = newGroup.id
     }
@@ -27,6 +27,7 @@ async function saveTabs(): Promise<void> {
     const selectedLinks = store.getSelectedLinks()
 
     groupStore.prependLinksTo(groupId, selectedLinks)
+    groupStore.encryptGroupById(groupId)
 
     store.closeTabsModal()
 }

@@ -10,6 +10,7 @@ import error from '@/modules/error'
 import getDefaultGroupName from '@/modules/getDefaultGroupName'
 import decrypt from '@/modules/encrypt/decryptGroup'
 import saveToStorage from '@/modules/saveToStorage'
+import encryptGroup from '@/modules/encrypt/encryptGroup'
 
 export const useGroupStore = defineStore('group', () => {
     const groups = ref<Group[]>([])
@@ -36,6 +37,44 @@ export const useGroupStore = defineStore('group', () => {
         getFromStorage<Group[] | null>('groups', storedGroups => {
             groups.value = storedGroups || []
         })
+    }
+
+    function encryptGroupById(groupId: number): void {
+        const group = groups.value.find(group => group.id === groupId)
+
+        if (!group) {
+            showToast(trans('Group has not been found'), 'error')
+            error.err(`Group with id ${groupId} not found`)
+            return
+        }
+
+        if (group.isEncrypted) {
+            showToast(trans('Group is already encrypted'), 'error')
+            error.warn('Group is already encrypted')
+            return
+        }
+
+        if (settingsStore.settings.password === '') {
+            const msg = trans(
+                'Password is empty. Make sure to set a password in the settings',
+            )
+
+            showToast(msg, 'error')
+            return
+        }
+
+        groups.value = groups.value.map(g => {
+            if (g.id !== groupId) {
+                return g
+            }
+
+            const encrypted = encryptGroup(g, settingsStore.settings.password)
+            encrypted.isEncrypted = true
+
+            return encrypted
+        })
+
+        saveGroups()
     }
 
     function createEmptyGroup(): Group {
@@ -156,6 +195,7 @@ export const useGroupStore = defineStore('group', () => {
         decryptGroup,
         renameGroup,
         createEmptyGroup,
+        encryptGroupById,
         getGroupById,
     }
 })
