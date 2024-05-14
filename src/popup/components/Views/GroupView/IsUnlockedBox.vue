@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import type { Group } from '@/types'
-import ShieldExclamationIcon from '@/components/Icons/ShieldExclamationIcon.vue'
 import { useTransStore } from '@/stores/trans'
+import { useGroupStore } from '@/stores/group'
+import showToast from '@/modules/showToast'
+import ShieldExclamationIcon from '@/components/Icons/ShieldExclamationIcon.vue'
 
 type Props = {
     group: Group
@@ -9,9 +11,11 @@ type Props = {
 
 const { group } = defineProps<Props>()
 const { trans } = useTransStore()
+const groupStore = useGroupStore()
 
 function lockGroup(): void {
-    console.log('Lock group')
+    groupStore.encryptGroupById(group.id)
+    showToast(trans('Group is locked'))
 }
 </script>
 

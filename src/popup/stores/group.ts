@@ -161,7 +161,7 @@ export const useGroupStore = defineStore('group', () => {
         saveGroups()
     }
 
-    function unlockGroup(group: Group, pass: string): void {
+    function decryptGroup(group: Group, pass: string): void {
         groups.value = groups.value.map(g => {
             if (g.id === group.id) {
                 return unlock(group, pass)
@@ -194,7 +194,7 @@ export const useGroupStore = defineStore('group', () => {
         deleteGroup,
         deleteLink,
         prependLinksTo,
-        unlockGroup,
+        decryptGroup,
         renameGroup,
         createEmptyGroup,
         encryptGroupById,

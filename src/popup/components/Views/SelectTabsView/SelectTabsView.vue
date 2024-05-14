@@ -17,17 +17,22 @@ const subtitle = trans(
 
 function saveTabs(): void {
     let groupId = store.targetGroupId
+    let encrypt = false
 
     if (!groupId) {
         const newGroup = groupStore.createEmptyGroup()
         groupId = newGroup.id
         store.targetGroupId = newGroup.id
+        encrypt = true
     }
 
     const selectedLinks = store.getSelectedLinks()
 
     groupStore.prependLinksTo(groupId, selectedLinks)
-    groupStore.encryptGroupById(groupId)
+
+    if (encrypt) {
+        groupStore.encryptGroupById(groupId)
+    }
 
     store.closeTabsModal()
 }

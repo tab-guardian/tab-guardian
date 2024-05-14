@@ -33,7 +33,7 @@ function submitPass(): void {
     decryptGroup(props.group, settingsStore.settings.password)
     password.value = ''
 
-    showToast(trans('Group is locked'))
+    showToast(trans('Group is unlocked'))
 }
 </script>
 
