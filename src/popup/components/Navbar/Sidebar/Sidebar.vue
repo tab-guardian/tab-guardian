@@ -11,15 +11,10 @@ const sidebarStore = useSidebarStore()
     <Hamburger />
 
     <Teleport to="body">
-        <Overlay
-            v-if="sidebarStore.isOpen"
-            @click="sidebarStore.toggle()"
-        />
+        <Overlay v-if="sidebarStore.isOpen" @click="sidebarStore.toggle()" />
 
         <RightSlideTransition>
-            <aside v-if="sidebarStore.isOpen" class="sidebar">
-                Sidebar
-            </aside>
+            <aside v-if="sidebarStore.isOpen" class="sidebar">Sidebar</aside>
         </RightSlideTransition>
     </Teleport>
 </template>

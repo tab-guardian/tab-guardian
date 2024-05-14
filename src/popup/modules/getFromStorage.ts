@@ -1,9 +1,6 @@
 import error from '@/modules/error'
 
-export default <T>(
-    key: string,
-    callback: (value: T | null) => void,
-): void => {
+export default <T>(key: string, callback: (value: T | null) => void): void => {
     if (import.meta.env.MODE === 'development') {
         callback(getFromLocalStorage<T>(key))
         return

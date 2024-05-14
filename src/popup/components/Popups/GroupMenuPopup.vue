@@ -15,9 +15,7 @@ const { trans } = useTransStore()
 const groupStore = useGroupStore()
 
 const isEncrypted = computed<boolean>(() => {
-    return (
-        !!groupStore.selectedGroup && groupStore.selectedGroup.isEncrypted
-    )
+    return !!groupStore.selectedGroup && groupStore.selectedGroup.isEncrypted
 })
 </script>
 

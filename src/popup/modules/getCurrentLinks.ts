@@ -23,10 +23,7 @@ export default async (params: Params): Promise<Link[]> => {
     }
 }
 
-function convertTabsToLinks(
-    tabs: chrome.tabs.Tab[],
-    params: Params,
-): Link[] {
+function convertTabsToLinks(tabs: chrome.tabs.Tab[], params: Params): Link[] {
     const links: Link[] = []
 
     for (const tab of tabs) {
