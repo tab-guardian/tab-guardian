@@ -25,14 +25,15 @@ function submitPass(): void {
         return
     }
 
-    if (settingsStore.passwordMatches(password.value)) {
-        decryptGroup(props.group, settingsStore.settings.password)
-        password.value = ''
-        showToast(trans('Group is decrypted'))
+    if (!settingsStore.passwordMatches(password.value)) {
+        showToast(trans('Incorrect password'), 'error')
         return
     }
 
-    showToast(trans('Incorrect password'), 'error')
+    decryptGroup(props.group, settingsStore.settings.password)
+    password.value = ''
+
+    showToast(trans('Group is locked'))
 }
 </script>
 
@@ -40,7 +41,7 @@ function submitPass(): void {
     <div class="enter-pass">
         <p class="enter-pass__heading">
             <ShieldCheckIcon width="40" height="40" />
-            {{ trans('Enter a password to decrypt the content of this group') }}
+            {{ trans('Enter a password to unlock the content of this group') }}
         </p>
 
         <InputField

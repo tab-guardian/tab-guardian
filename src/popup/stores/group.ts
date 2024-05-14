@@ -49,8 +49,8 @@ export const useGroupStore = defineStore('group', () => {
         }
 
         if (group.isEncrypted) {
-            showToast(trans('Group is already encrypted'), 'error')
-            error.warn('Group is already encrypted')
+            showToast(trans('Group is already locked'), 'error')
+            error.warn('Group is already locked')
             return
         }
 
@@ -169,6 +169,8 @@ export const useGroupStore = defineStore('group', () => {
 
             return g
         })
+
+        saveGroups()
     }
 
     function resetNewGroup(): void {
