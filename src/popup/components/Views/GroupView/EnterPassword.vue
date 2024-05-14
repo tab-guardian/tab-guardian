@@ -28,7 +28,7 @@ function submitPass(): void {
     if (settingsStore.passwordMatches(password.value)) {
         decryptGroup(props.group, settingsStore.settings.password)
         password.value = ''
-        showToast(trans('Group decrypted'))
+        showToast(trans('Group is decrypted'))
         return
     }
 
