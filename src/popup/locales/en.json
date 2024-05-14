@@ -37,5 +37,7 @@
     "This group is private. You need to unlock it to see the links": "This group is private. You need to unlock it to see the links",
     "Group has not been found": "Group has not been found",
     "Group is already locked": "Group is already locked",
-    "Password is empty. Make sure to set a password in the settings": "Password is empty. Make sure to set a password in the settings"
+    "Password is empty. Make sure to set a password in the settings": "Password is empty. Make sure to set a password in the settings",
+    "This private group is unlocked": "This private group is unlocked",
+    "Lock": "Lock"
 }

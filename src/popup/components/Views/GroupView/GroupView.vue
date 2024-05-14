@@ -10,6 +10,7 @@ import GroupName from '@/components/Views/GroupView/GroupName.vue'
 import MenuButton from '@/components/Views/GroupView/GroupControls/MenuButton.vue'
 import EnterPassword from '@/components/Views/GroupView/EnterPassword.vue'
 import Actions from '@/components/Views/GroupView/GroupControls/Actions/Actions.vue'
+import IsUnlockedBox from '@/components/Views/GroupView/IsUnlockedBox.vue'
 
 const { trans } = useTransStore()
 const { params } = useRoute()
@@ -39,6 +40,12 @@ watchEffect(() => {
 
         <div v-if="group" class="group">
             <GroupName :group />
+
+            <IsUnlockedBox
+                v-if="group.isPrivate && !group.isEncrypted"
+                :group
+            />
+
             <EnterPassword v-if="group.isEncrypted" :group />
             <Links v-else :group />
         </div>
