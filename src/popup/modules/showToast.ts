@@ -4,7 +4,7 @@ export default (text: string, type: 'error' | 'info' = 'info'): void => {
     Toastify({
         text,
         duration: 2000,
-        close: true,
+        close: false,
         gravity: 'top', // `top` or `bottom`
         position: 'center', // `left`, `center` or `right`
         stopOnFocus: false, // Prevents dismissing of toast on hover
