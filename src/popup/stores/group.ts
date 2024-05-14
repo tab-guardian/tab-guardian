@@ -3,6 +3,8 @@ import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { defineStore } from 'pinia'
 import { useSettingsStore } from '@/stores/settings'
+import { useTransStore } from '@/stores/trans'
+import showToast from '@/modules/showToast'
 import getFromStorage from '@/modules/getFromStorage'
 import saveGroupsToStorage from '@/modules/saveGroupsToStorage'
 import error from '@/modules/error'
@@ -17,6 +19,7 @@ export const useGroupStore = defineStore('group', () => {
 
     const router = useRouter()
     const settingsStore = useSettingsStore()
+    const { trans } = useTransStore()
 
     const newGroup = ref({
         name: '',
@@ -137,7 +140,11 @@ export const useGroupStore = defineStore('group', () => {
         try {
             saveGroupsToStorage(groups.value, pass)
         } catch (e) {
-            // @todo: Show error message with toast
+            const message = trans(
+                'Error saving groups. Check if you password is set in the settings',
+            )
+
+            showToast(message, 'error')
             error.err(e as string)
         }
 

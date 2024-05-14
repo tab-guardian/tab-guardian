@@ -4,6 +4,7 @@ import { ref } from 'vue'
 import { useTransStore } from '@/stores/trans'
 import { useSettingsStore } from '@/stores/settings'
 import { useGroupStore } from '@/stores/group'
+import showToast from '@/modules/showToast'
 import ShieldCheckIcon from '@/components/Icons/ShieldCheckIcon.vue'
 import InputField from '@/components/Form/InputField.vue'
 
@@ -20,18 +21,18 @@ const password = ref<string>('')
 
 function submitPass(): void {
     if (!password.value) {
-        // @todo: show error message like a toast or something
+        showToast(trans('Please enter a password'), 'error')
         return
     }
 
     if (settingsStore.passwordMatches(password.value)) {
         decryptGroup(props.group, settingsStore.settings.password)
         password.value = ''
+        showToast(trans('Group temporarily decrypted'))
         return
     }
 
-    console.log('Password does not match')
-    // @todo: show error message that password is incorrect
+    showToast(trans('Incorrect password'), 'error')
 }
 </script>
 
