@@ -3,12 +3,11 @@ import Toastify from 'toastify-js'
 export default (text: string, type: 'error' | 'info' = 'info'): void => {
     Toastify({
         text,
-        duration: 3000,
-        newWindow: true,
+        duration: 2000,
         close: true,
-        gravity: 'bottom', // `top` or `bottom`
+        gravity: 'top', // `top` or `bottom`
         position: 'center', // `left`, `center` or `right`
-        stopOnFocus: true, // Prevents dismissing of toast on hover
+        stopOnFocus: false, // Prevents dismissing of toast on hover
         style: {
             background:
                 type === 'info'
