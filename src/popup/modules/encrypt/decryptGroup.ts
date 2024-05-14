@@ -17,8 +17,12 @@ export default (group: Group, pass: string): Group => {
 function decryptLink(link: Link, pass: string): Link {
     return {
         id: link.id,
-        url: CryptoJS.AES.decrypt(link.url, pass).toString(CryptoJS.enc.Utf8),
-        title: CryptoJS.AES.decrypt(link.title, pass).toString(CryptoJS.enc.Utf8),
-        favIconUrl: CryptoJS.AES.decrypt(link.favIconUrl, pass).toString(CryptoJS.enc.Utf8),
+        url: decrypt(link.url, pass),
+        title: decrypt(link.title, pass),
+        favIconUrl: decrypt(link.favIconUrl, pass),
     }
+}
+
+function decrypt(text: string, pass: string): string {
+    return CryptoJS.AES.decrypt(text, pass).toString(CryptoJS.enc.Utf8)
 }

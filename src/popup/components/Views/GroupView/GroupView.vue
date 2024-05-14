@@ -48,6 +48,7 @@ watchEffect(() => {
         </div>
 
         <div v-else class="message">
+            <!-- prettier-ignore -->
             <h2>😢 {{ trans('Something went wrong! No group selected') }}</h2>
         </div>
     </View>

@@ -1,6 +1,9 @@
 import error from '@/modules/error'
 
-export default <T>(key: string, callback: (value: T | null) => void): void => {
+export default <T>(
+    key: string,
+    callback: (value: T | null) => void,
+): void => {
     if (import.meta.env.MODE === 'development') {
         callback(getFromLocalStorage<T>(key))
         return
@@ -11,7 +14,10 @@ export default <T>(key: string, callback: (value: T | null) => void): void => {
     })
 }
 
-function getFromChromeStorage<T>(key: string, result: { [key: string]: any }): T | null {
+function getFromChromeStorage<T>(
+    key: string,
+    result: { [key: string]: any },
+): T | null {
     const strValue: string = result[key]
 
     if (!strValue) {

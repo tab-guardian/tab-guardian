@@ -6,8 +6,8 @@ import { usePopupStore } from '@/stores/popup'
 import getCurrentLinks from '@/modules/getCurrentLinks'
 
 type SelectLinksParams = {
-    groupId?: number,
-    selectAll?: boolean,
+    groupId?: number
+    selectAll?: boolean
 }
 
 export const useSelectTabsStore = defineStore('selectTabs', () => {
@@ -27,7 +27,7 @@ export const useSelectTabsStore = defineStore('selectTabs', () => {
                     selectedIds.value = items.map(l => l.id)
                 }
             })
-            .finally(() => loading.value = false)
+            .finally(() => (loading.value = false))
     }
 
     function showView({ groupId, selectAll }: SelectLinksParams): void {

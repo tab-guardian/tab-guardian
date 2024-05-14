@@ -20,7 +20,8 @@ export const useTransStore = defineStore('trans', () => {
         const result = message[key]
 
         if (!result) {
-            error.warn(`Key "${key}" not found in ${lang.value} language`)
+            const m = `Key "${key}" not found in ${lang.value} language`
+            error.warn(m)
             return key
         }
 

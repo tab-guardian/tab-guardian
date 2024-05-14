@@ -41,7 +41,8 @@ export const useSettingsStore = defineStore('settings', () => {
         settings.value.password = password
 
         saveToStorage<Settings>('settings', {
-            ...settings.value, password,
+            ...settings.value,
+            password,
         })
 
         tempPassword.value = ''

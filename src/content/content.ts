@@ -1,5 +1,7 @@
 ;(function changeIconThemeToMatchDevicePreference(): void {
-    const darkModePreference = window.matchMedia('(prefers-color-scheme: dark)')
+    const darkModePreference = window.matchMedia(
+        '(prefers-color-scheme: dark)',
+    )
 
     chrome.runtime.sendMessage({
         theme: darkModePreference.matches ? 'dark' : 'light',
