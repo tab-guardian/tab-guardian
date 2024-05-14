@@ -1,7 +1,5 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import { writeFileSync, unlinkSync } from 'fs'
-import { join } from 'path'
 
 export default defineConfig({
     plugins: [

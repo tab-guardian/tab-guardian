@@ -21,9 +21,6 @@ export type Group = {
 
 export type Settings = {
     password: string
-    showNotices: {
-        temporaryEncrypted: boolean
-    }
 }
 
 export type Popups = {

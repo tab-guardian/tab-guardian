@@ -1,10 +1,10 @@
 <script setup lang="ts">
+import { onMounted } from 'vue'
+import { useSettingsStore } from '@/stores/settings'
 import Navbar from '@/components/Navbar/Navbar.vue'
 import DeleteGroupPopup from '@/components/Popups/DeleteGroupPopup.vue'
 import GroupMenuPopup from '@/components/Popups/GroupMenuPopup.vue'
 import GroupNamePopup from '@/components/Popups/GroupNamePopup.vue'
-import { onMounted } from 'vue'
-import { useSettingsStore } from '@/stores/settings'
 
 const { loadSettingsFromStorage } = useSettingsStore()
 

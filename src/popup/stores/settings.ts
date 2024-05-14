@@ -8,9 +8,6 @@ import sha256 from 'crypto-js/sha256'
 export const useSettingsStore = defineStore('settings', () => {
     const settings = ref<Settings>({
         password: '',
-        showNotices: {
-            temporaryEncrypted: true,
-        },
     })
 
     function loadSettingsFromStorage(): void {
