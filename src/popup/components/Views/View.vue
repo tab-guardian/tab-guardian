@@ -16,9 +16,7 @@ const { title, subtitle } = defineProps<Props>()
         <div v-if="!title" class="view__controls">
             <BackButton @click="router.go(-1)" />
 
-            <div class="view__controls__right">
-                <slot name="controls" />
-            </div>
+            <slot name="controls" />
         </div>
 
         <h2 v-if="title" class="view__title">
@@ -47,9 +45,6 @@ const { title, subtitle } = defineProps<Props>()
         display: flex
         justify-content: space-between
         gap: 2px
-
-        &__right
-            display: flex
 
     &__title
         display: flex

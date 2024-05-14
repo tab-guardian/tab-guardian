@@ -10,6 +10,7 @@ import GroupName from '@/components/Views/GroupView/GroupName.vue'
 import MenuButton from '@/components/Views/GroupView/GroupControls/MenuButton.vue'
 import EnterPassword from '@/components/Views/GroupView/EnterPassword.vue'
 import EncryptedTemporaryNotice from '@/components/Notices/EncryptedTemporaryNotice.vue'
+import Actions from '@/components/Views/GroupView/GroupControls/Actions/Actions.vue'
 
 const { trans } = useTransStore()
 const { params } = useRoute()
@@ -33,6 +34,7 @@ watchEffect(() => {
 <template>
     <View>
         <template #controls>
+            <Actions v-if="group && !group.isEncrypted" />
             <MenuButton v-if="group && !group.isEncrypted" />
         </template>
 

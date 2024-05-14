@@ -10,7 +10,12 @@
         <path
             stroke-linecap="round"
             stroke-linejoin="round"
-            d="m8.25 4.5 7.5 7.5-7.5 7.5"
+            d="m4.5 18.75 7.5-7.5 7.5 7.5"
+        ></path>
+        <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="m4.5 12.75 7.5-7.5 7.5 7.5"
         ></path>
     </svg>
 </template>

@@ -30,7 +30,7 @@ button, a
     color: var(--tg-color-font)
     border-radius: 5px
     padding: 2px
-    opacity: .8
+    opacity: .9
     transition: opacity .2s, border-color .2s
     cursor: pointer
 
