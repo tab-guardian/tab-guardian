@@ -32,5 +32,6 @@
     "Please enter a password": "Please enter a password",
     "Incorrect password": "Incorrect password",
     "Group temporarily decrypted": "Group temporarily decrypted",
-    "Error saving groups. Check if you password is set in the settings": "Error saving groups. Check if you password is set in the settings"
+    "Error saving groups. Check if you password is set in the settings": "Error saving groups. Check if you password is set in the settings",
+    "Password has been set": "Password has been set"
 }
