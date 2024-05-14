@@ -7,7 +7,7 @@ import { useRoute } from 'vue-router'
 import View from '@/components/Views/View.vue'
 import Links from '@/components/Views/GroupView/Links.vue'
 import GroupName from '@/components/Views/GroupView/GroupName.vue'
-import MenuItems from '@/components/Views/GroupView/GroupControls/MenuItems/MenuItems.vue'
+import MenuButton from '@/components/Views/GroupView/GroupControls/MenuButton.vue'
 import EnterPassword from '@/components/Views/GroupView/EnterPassword.vue'
 import Actions from '@/components/Views/GroupView/GroupControls/Actions/Actions.vue'
 
@@ -34,7 +34,7 @@ watchEffect(() => {
     <View>
         <template #controls>
             <Actions />
-            <MenuItems />
+            <MenuButton />
         </template>
 
         <div v-if="group" class="group">
