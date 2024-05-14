@@ -16,9 +16,8 @@ const props = defineProps<Props>()
         v-if="store.isTitleFieldActive"
         type="text"
         v-model="store.newGroup.name"
-        autofocus
         @blur="store.renameGroup"
-        @keydown.enter="store.renameGroup"
+        autofocus
     />
 
     <h2 v-else>

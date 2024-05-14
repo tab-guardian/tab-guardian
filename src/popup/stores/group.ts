@@ -68,6 +68,7 @@ export const useGroupStore = defineStore('group', () => {
     function renameGroup(): void {
         if (!selectedGroup.value) {
             error.err('No group selected for renaming')
+            showToast(trans('Error ocurred'), 'error')
             return
         }
 
@@ -76,6 +77,7 @@ export const useGroupStore = defineStore('group', () => {
 
         if (!group) {
             error.err(`Group with id ${id} not found`)
+            showToast(trans('Error ocurred'), 'error')
             return
         }
 
@@ -88,6 +90,7 @@ export const useGroupStore = defineStore('group', () => {
         isTitleFieldActive.value = false
 
         saveToStorage()
+        showToast(trans('The new name has been saved'))
     }
 
     function deleteGroup(id: number): void {
