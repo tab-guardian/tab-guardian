@@ -2,6 +2,7 @@
 import type { Group } from '@/types'
 import ChevronRightIcon from '@/components/Icons/ChevronRightIcon.vue'
 import ShieldCheckIcon from '@/components/Icons/ShieldCheckIcon.vue'
+import ShieldExclamationIcon from '@/components/Icons/ShieldExclamationIcon.vue'
 
 type Props = {
     group: Group
@@ -13,11 +14,18 @@ const { group } = defineProps<Props>()
 <template>
     <RouterLink
         :to="{ name: 'group', params: { id: group.id } }"
-        :class="{ 'group--private': group.isPrivate }"
+        :class="{
+            'group--private': group.isPrivate && group.isEncrypted,
+            'group--unsecure': group.isPrivate && !group.isEncrypted,
+        }"
         class="group"
     >
         <div class="group__inner">
-            <ShieldCheckIcon v-if="group.isPrivate" class="shield" />
+            <div v-if="group.isPrivate">
+                <ShieldCheckIcon v-if="group.isEncrypted" class="shield" />
+                <ShieldExclamationIcon v-else class="shield shield--unsecure" />
+            </div>
+
             <div v-else class="amount">{{ group.links.length }}</div>
 
             <h2>{{ group.name }}</h2>
@@ -50,6 +58,12 @@ const { group } = defineProps<Props>()
         &:hover
             background-color: var(--tg-color-bg-private-hover)
 
+    &--unsecure
+        background-color: var(--tg-color-bg-unsecure)
+
+        &:hover
+            background-color: var(--tg-color-bg-unsecure-hover)
+
     &__inner
         display: flex
         align-items: center
@@ -59,6 +73,9 @@ const { group } = defineProps<Props>()
             width: 25px
             height: 25px
             color: var(--tg-color-secondary)
+
+            &--unsecure
+                color: var(--tg-color-font)
 
     h2
         font-size: .9rem

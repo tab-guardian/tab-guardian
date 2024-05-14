@@ -8,7 +8,7 @@ import showToast from '@/modules/showToast'
 import getFromStorage from '@/modules/getFromStorage'
 import error from '@/modules/error'
 import getDefaultGroupName from '@/modules/getDefaultGroupName'
-import decrypt from '@/modules/encrypt/decryptGroup'
+import unlock from '@/modules/encrypt/decryptGroup'
 import saveToStorage from '@/modules/saveToStorage'
 import encryptGroup from '@/modules/encrypt/encryptGroup'
 
@@ -161,10 +161,10 @@ export const useGroupStore = defineStore('group', () => {
         saveGroups()
     }
 
-    function decryptGroup(group: Group, pass: string): void {
+    function unlockGroup(group: Group, pass: string): void {
         groups.value = groups.value.map(g => {
             if (g.id === group.id) {
-                return decrypt(group, pass)
+                return unlock(group, pass)
             }
 
             return g
@@ -194,7 +194,7 @@ export const useGroupStore = defineStore('group', () => {
         deleteGroup,
         deleteLink,
         prependLinksTo,
-        decryptGroup,
+        unlockGroup,
         renameGroup,
         createEmptyGroup,
         encryptGroupById,
