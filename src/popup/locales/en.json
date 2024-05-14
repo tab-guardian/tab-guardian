@@ -34,5 +34,6 @@
     "Error saving groups. Check if you password is set in the settings": "Error saving groups. Check if you password is set in the settings",
     "Password has been set": "Password has been set",
     "Error ocurred": "Error ocurred",
-    "The new name has been saved": "The new name has been saved"
+    "The new name has been saved": "The new name has been saved",
+    "This group is private. You need to unlock it to see the links": "This group is private. You need to unlock it to see the links"
 }
