@@ -6,10 +6,10 @@ import { useSettingsStore } from '@/stores/settings'
 import { useTransStore } from '@/stores/trans'
 import showToast from '@/modules/showToast'
 import getFromStorage from '@/modules/getFromStorage'
-import saveGroupsToStorage from '@/modules/saveGroupsToStorage'
 import error from '@/modules/error'
 import getDefaultGroupName from '@/modules/getDefaultGroupName'
 import decrypt from '@/modules/encrypt/decryptGroup'
+import saveToStorage from '@/modules/saveToStorage'
 
 export const useGroupStore = defineStore('group', () => {
     const groups = ref<Group[]>([])
@@ -89,13 +89,13 @@ export const useGroupStore = defineStore('group', () => {
 
         isTitleFieldActive.value = false
 
-        saveToStorage()
+        saveGroups()
         showToast(trans('The new name has been saved'))
     }
 
     function deleteGroup(id: number): void {
         groups.value = groups.value.filter(group => group.id !== id)
-        saveToStorage()
+        saveGroups()
     }
 
     function deleteLink(groupId: number, linkId: number): void {
@@ -107,7 +107,7 @@ export const useGroupStore = defineStore('group', () => {
 
         group.links = group.links.filter(link => link.id !== linkId)
 
-        saveToStorage()
+        saveGroups()
     }
 
     function prependLinksTo(groupId: number, links: Link[]): void {
@@ -119,7 +119,7 @@ export const useGroupStore = defineStore('group', () => {
             return group
         })
 
-        saveToStorage()
+        saveGroups()
     }
 
     function decryptGroup(group: Group, pass: string): void {
@@ -137,20 +137,8 @@ export const useGroupStore = defineStore('group', () => {
         newGroup.value.isPrivate = false
     }
 
-    function saveToStorage(): void {
-        const pass = settingsStore.settings.password
-
-        try {
-            saveGroupsToStorage(groups.value, pass)
-        } catch (e) {
-            const message = trans(
-                'Error saving groups. Check if you password is set in the settings',
-            )
-
-            showToast(message, 'error')
-            error.err(e as string)
-        }
-
+    function saveGroups(): void {
+        saveToStorage('groups', groups.value)
         setTimeout(() => (isSaving.value = false), 500)
     }
 
