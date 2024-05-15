@@ -1,7 +1,7 @@
 const prefix = '[Tab Guardian]: '
 
 export default {
-    warn: (msg: string): void => console.warn(prefix + msg),
-    err: (msg: string): void => console.error(prefix + msg),
-    info: (msg: string): void => console.info(prefix + msg),
+    warn: (msg: string | unknown): void => console.warn(prefix + msg),
+    err: (msg: string | unknown): void => console.error(prefix + msg),
+    info: (msg: string | unknown): void => console.info(prefix + msg),
 }

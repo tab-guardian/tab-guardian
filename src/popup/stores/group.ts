@@ -63,16 +63,22 @@ export const useGroupStore = defineStore('group', () => {
             return false
         }
 
-        groups.value = groups.value.map(g => {
-            if (g.id !== groupId) {
-                return g
-            }
+        try {
+            groups.value = groups.value.map(g => {
+                if (g.id !== groupId) {
+                    return g
+                }
 
-            const encrypted = encryptGroup(g, settingsStore.settings.password)
-            encrypted.isEncrypted = true
+                const pwd = settingsStore.settings.password
+                const encrypted = encryptGroup(g, pwd)
+                encrypted.isEncrypted = true
 
-            return encrypted
-        })
+                return encrypted
+            })
+        } catch (err) {
+            showToast(trans('Error ocurred'), 'error')
+            error.err(err)
+        }
 
         saveGroups()
 

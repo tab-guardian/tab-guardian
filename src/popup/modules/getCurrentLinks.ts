@@ -18,7 +18,7 @@ export default async (params: Params): Promise<Link[]> => {
 
         return convertTabsToLinks(tabs, params)
     } catch (err) {
-        error.err(err as string)
+        error.err(err)
         return []
     }
 }
