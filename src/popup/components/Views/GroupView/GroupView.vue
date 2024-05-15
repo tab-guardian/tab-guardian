@@ -26,6 +26,10 @@ const group = computed<Group | null>(() => {
     return store.getGroupById(Number(id))
 })
 
+const showButtons = computed<boolean>(() => {
+    return group.value !== null && !group.value.isEncrypted
+})
+
 watchEffect(() => {
     store.selectedGroup = group.value
 })
@@ -34,7 +38,7 @@ watchEffect(() => {
 <template>
     <View>
         <template #controls>
-            <Actions v-if="group" :group />
+            <Actions v-if="group && showButtons" :group />
             <MenuButton />
         </template>
 
