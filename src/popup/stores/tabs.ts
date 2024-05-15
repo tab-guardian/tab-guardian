@@ -51,10 +51,8 @@ export const useTabsStore = defineStore('tabs', () => {
         showToast(trans('Tabs opened and group deleted'))
     }
 
-    async function stashTabs(group: Group): Promise<void> {
-        const links = await getCurrentLinks({
-            closeTabs: false,
-        })
+    async function stashTabs(group: Group, closeTabs: boolean): Promise<void> {
+        const links = await getCurrentLinks({ closeTabs })
 
         if (!links.length) {
             showToast(trans('No tabs to save'), 'error')
@@ -63,7 +61,7 @@ export const useTabsStore = defineStore('tabs', () => {
 
         groupStore.prependLinksTo(group.id, links)
 
-        showToast(trans('Tabs saved'))
+        showToast(trans('Tabs have been saved'))
     }
 
     return {

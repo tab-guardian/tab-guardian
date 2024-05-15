@@ -13,7 +13,7 @@ const props = defineProps<Props>()
 const tabsStore = useTabsStore()
 
 function stashTabs(): void {
-    tabsStore.stashTabs(props.group)
+    tabsStore.stashTabs(props.group, false)
 }
 </script>
 
