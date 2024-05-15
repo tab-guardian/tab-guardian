@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Group } from '@/types'
 import Control from '@/components/Control.vue'
-import ChevronRightIcon from '@/components/Icons/ChevronRightIcon.vue'
+import upImage from '@/assets/images/up.png'
 import { useTabsStore } from '@/stores/tabs'
 
 type Props = {
@@ -18,12 +18,15 @@ function openTabs(): void {
 
 <template>
     <Control @click="openTabs" class="control">
-        <ChevronRightIcon />
+        <img :src="upImage" alt="Open tabs" />
     </Control>
 </template>
 
 <style lang="sass" scoped>
 .control
-    transform: rotate(-90deg)
     background-color: var(--tg-color-green)
+
+    img
+        width: 100%
+        filter: var(--tg-filter-invert)
 </style>

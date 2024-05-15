@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Group } from '@/types'
 import Control from '@/components/Control.vue'
-import DoubleChevronUpIcon from '@/components/Icons/DoubleChevronUpIcon.vue'
+import downRemoveImage from '@/assets/images/down-remove.png'
 import { useTabsStore } from '@/stores/tabs'
 
 type Props = {
@@ -19,12 +19,15 @@ function stashTabs(): void {
 
 <template>
     <Control @click="stashTabs" class="control">
-        <DoubleChevronUpIcon />
+        <img :src="downRemoveImage" alt="Stash and close tabs" />
     </Control>
 </template>
 
 <style lang="sass" scoped>
 .control
     background-color: var(--tg-color-blue)
-    transform: rotate(-180deg)
+
+    img
+        width: 100%
+        filter: var(--tg-filter-invert)
 </style>

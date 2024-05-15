@@ -31,7 +31,9 @@ const { group } = defineProps<Props>()
             <h2>{{ group.name }}</h2>
         </div>
 
-        <ChevronRightIcon class="icon-right" />
+        <div class="group__buttons">
+            <ChevronRightIcon class="icon-right" />
+        </div>
     </RouterLink>
 </template>
 
@@ -63,6 +65,11 @@ const { group } = defineProps<Props>()
 
         &:hover
             background-color: var(--tg-color-bg-unsecure-hover)
+
+    &__buttons
+        display: flex
+        align-items: center
+        gap: 4px
 
     &__inner
         display: flex
