@@ -34,7 +34,7 @@ watchEffect(() => {
 <template>
     <View>
         <template #controls>
-            <Actions />
+            <Actions v-if="group" :group />
             <MenuButton />
         </template>
 

@@ -34,6 +34,8 @@ function saveTabs(): void {
         groupStore.encryptGroupById(groupId)
     }
 
+    console.log(encrypt)
+
     store.closeTabsModal()
 }
 </script>
