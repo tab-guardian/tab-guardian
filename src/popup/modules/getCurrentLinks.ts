@@ -1,7 +1,7 @@
 import type { Link } from '@/types'
 import queryTabs from '@/modules/queryTabs'
 import getFakeLinks from '@/modules/getFakeLinks'
-import getImageUrl from '@/modules/getImageUrl'
+import convertTabsToLinks from '@/modules/convertTabsToLinks'
 import error from '@/modules/error'
 
 type Params = {
@@ -16,34 +16,17 @@ export default async (params: Params): Promise<Link[]> => {
             return getFakeLinks()
         }
 
-        return convertTabsToLinks(tabs, params)
+        const links = convertTabsToLinks(tabs)
+
+        if (params.closeTabs) {
+            closeTabs(tabs)
+        }
+
+        return links
     } catch (err) {
         error.err(err)
         return []
     }
-}
-
-function convertTabsToLinks(tabs: chrome.tabs.Tab[], params: Params): Link[] {
-    const links: Link[] = []
-
-    for (const tab of tabs) {
-        if (!tab.url) {
-            continue
-        }
-
-        links.push({
-            id: tab.id || Date.now(),
-            title: tab.title || tab.url || '<no title>',
-            url: tab.url,
-            favIconUrl: tab.favIconUrl || getImageUrl('no-image.png'),
-        })
-    }
-
-    if (params.closeTabs) {
-        closeTabs(tabs)
-    }
-
-    return links
 }
 
 function closeTabs(tabs: chrome.tabs.Tab[]): void {
