@@ -59,6 +59,7 @@ export const useTabsStore = defineStore('tabs', () => {
             return
         }
 
+        groupStore.deleteAllLinks(group.id)
         groupStore.prependLinksTo(group.id, links)
 
         showToast(trans('Tabs have been saved'))
