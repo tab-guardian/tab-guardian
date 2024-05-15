@@ -40,5 +40,8 @@
     "Group is already locked": "Group is already locked",
     "Password is empty. Make sure to set a password in the settings": "Password is empty. Make sure to set a password in the settings",
     "This private group is unlocked": "This private group is unlocked",
-    "Lock": "Lock"
+    "Lock": "Lock",
+    "No tabs to save": "No tabs to save",
+    "Tabs saved": "Tabs saved",
+    "Tabs opened and group deleted": "Tabs opened and group deleted"
 }
