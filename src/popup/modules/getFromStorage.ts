@@ -1,7 +1,8 @@
 import error from '@/modules/error'
+import isDevelopment from '@/modules/isDevelopment'
 
 export default <T>(key: string, callback: (value: T | null) => void): void => {
-    if (import.meta.env.MODE === 'development') {
+    if (isDevelopment()) {
         callback(getFromLocalStorage<T>(key))
         return
     }

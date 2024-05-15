@@ -1,4 +1,5 @@
 import error from '@/modules/error'
+import isDevelopment from '@/modules/isDevelopment'
 
 export default async <T>(
     key: string,
@@ -12,7 +13,7 @@ export default async <T>(
 
     const stringValue = JSON.stringify(value)
 
-    if (import.meta.env.MODE === 'development') {
+    if (isDevelopment()) {
         localStorage.setItem(key, stringValue)
         return
     }

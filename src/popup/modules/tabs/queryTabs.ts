@@ -1,9 +1,13 @@
 import error from '@/modules/error'
+import isDevelopment from '@/modules/isDevelopment'
 
 export default (): Promise<chrome.tabs.Tab[]> => {
     return new Promise((resolve, reject) => {
-        if (!chrome || !chrome.tabs) {
-            error.info('chrome.tabs is not available')
+        if (isDevelopment()) {
+            error.info(
+                'Cannot query tabs because chrome.tabs.query is not available in development mode',
+            )
+
             resolve([])
             return
         }
