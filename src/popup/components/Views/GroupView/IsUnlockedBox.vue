@@ -14,8 +14,11 @@ const { trans } = useTransStore()
 const groupStore = useGroupStore()
 
 function lockGroup(): void {
-    groupStore.encryptGroupById(group.id)
-    showToast(trans('Group is locked'))
+    const completed = groupStore.encryptGroupById(group.id)
+
+    if (completed) {
+        showToast(trans('Group is locked'))
+    }
 }
 </script>
 

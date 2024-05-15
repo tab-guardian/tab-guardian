@@ -1,10 +1,23 @@
 <script setup lang="ts">
+import type { Group } from '@/types'
 import Control from '@/components/Control.vue'
 import DoubleChevronUpIcon from '@/components/Icons/DoubleChevronUpIcon.vue'
+import { useTabsStore } from '@/stores/tabs'
+
+type Props = {
+    group: Group
+}
+
+const props = defineProps<Props>()
+const tabsStore = useTabsStore()
+
+function openAndDeleteTabs(): void {
+    tabsStore.openAndDeleteTabs(props.group)
+}
 </script>
 
 <template>
-    <Control class="control">
+    <Control @click="openAndDeleteTabs" class="control">
         <DoubleChevronUpIcon />
     </Control>
 </template>

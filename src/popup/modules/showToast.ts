@@ -3,7 +3,7 @@ import Toastify from 'toastify-js'
 export default (text: string, type: 'error' | 'info' = 'info'): void => {
     Toastify({
         text,
-        duration: 1000,
+        duration: 2000,
         close: false,
         gravity: 'top', // `top` or `bottom`
         position: 'center', // `left`, `center` or `right`

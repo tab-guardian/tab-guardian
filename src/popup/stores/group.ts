@@ -39,19 +39,19 @@ export const useGroupStore = defineStore('group', () => {
         })
     }
 
-    function encryptGroupById(groupId: number): void {
+    function encryptGroupById(groupId: number): boolean {
         const group = groups.value.find(group => group.id === groupId)
 
         if (!group) {
             showToast(trans('Group has not been found'), 'error')
             error.err(`Group with id ${groupId} not found`)
-            return
+            return false
         }
 
         if (group.isEncrypted) {
             showToast(trans('Group is already locked'), 'error')
             error.warn('Group is already locked')
-            return
+            return false
         }
 
         if (settingsStore.settings.password === '') {
@@ -60,7 +60,7 @@ export const useGroupStore = defineStore('group', () => {
             )
 
             showToast(msg, 'error')
-            return
+            return false
         }
 
         groups.value = groups.value.map(g => {
@@ -75,6 +75,8 @@ export const useGroupStore = defineStore('group', () => {
         })
 
         saveGroups()
+
+        return true
     }
 
     function createEmptyGroup(): Group {
@@ -135,6 +137,7 @@ export const useGroupStore = defineStore('group', () => {
     function deleteGroup(id: number): void {
         groups.value = groups.value.filter(group => group.id !== id)
         saveGroups()
+        router.push({ name: 'main' })
     }
 
     function deleteLink(groupId: number, linkId: number): void {
