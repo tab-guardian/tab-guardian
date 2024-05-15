@@ -3,6 +3,7 @@ import type { Group } from '@/types'
 import ChevronRightIcon from '@/components/Icons/ChevronRightIcon.vue'
 import ShieldCheckIcon from '@/components/Icons/ShieldCheckIcon.vue'
 import ShieldExclamationIcon from '@/components/Icons/ShieldExclamationIcon.vue'
+import OpenTabsButton from '@/components/Views/MainView/Groups/OpenTabsButton.vue'
 
 type Props = {
     group: Group
@@ -32,6 +33,7 @@ const { group } = defineProps<Props>()
         </div>
 
         <div class="group__buttons">
+            <OpenTabsButton v-if="!group.isEncrypted" :group />
             <ChevronRightIcon class="icon-right" />
         </div>
     </RouterLink>
@@ -69,7 +71,7 @@ const { group } = defineProps<Props>()
     &__buttons
         display: flex
         align-items: center
-        gap: 4px
+        gap: 12px
 
     &__inner
         display: flex
