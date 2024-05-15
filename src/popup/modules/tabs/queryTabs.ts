@@ -2,7 +2,7 @@ import error from '@/modules/error'
 import isDevelopment from '@/modules/isDevelopment'
 
 export default (): Promise<chrome.tabs.Tab[]> => {
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
         if (isDevelopment()) {
             error.info(
                 'Cannot query tabs because chrome.tabs.query is not available in development mode',
@@ -12,11 +12,13 @@ export default (): Promise<chrome.tabs.Tab[]> => {
             return
         }
 
+        const window = await chrome.windows.getCurrent()
+
         chrome.tabs.query({}, (tabs: chrome.tabs.Tab[]) => {
             if (chrome.runtime.lastError) {
                 reject(chrome.runtime.lastError)
             } else {
-                resolve(tabs)
+                resolve(tabs.filter(t => t.windowId === window.id))
             }
         })
     })
