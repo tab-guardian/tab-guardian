@@ -1,11 +1,15 @@
 import type { Settings } from '@/types'
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
+import { useTransStore } from '@settings/stores/trans'
 import getFromStorage from '@/modules/getFromStorage'
 import saveToStorage from '@/modules/saveToStorage'
 import sha256 from 'crypto-js/sha256'
+import showToast from '@/modules/showToast'
 
 export const useMainStore = defineStore('main', () => {
+    const { trans } = useTransStore()
+
     const settings = ref<Settings>({
         password: '',
     })
@@ -42,11 +46,21 @@ export const useMainStore = defineStore('main', () => {
         })
     }
 
+    function changePassword(oldPass: string, newPass: string): boolean {
+        if (passwordMatches(oldPass)) {
+            updatePassword(newPass)
+            return true
+        }
+
+        return false
+    }
+
     return {
         settings,
         updateSettings,
         passwordMatches,
         updatePassword,
+        changePassword,
         loadSettingsFromStorage,
     }
 })

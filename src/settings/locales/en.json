@@ -9,5 +9,8 @@
     "Change Password": "Change Password",
     "Enter the old and new password to change it": "Enter the old and new password to change it",
     "Enter your current password": "Enter your current password",
-    "Enter a new password": "Enter a new password"
+    "Enter a new password": "Enter a new password",
+    "You entered the wrong password": "You entered the wrong password",
+    "Password changed successfully": "Password changed successfully",
+    "Update password": "Update password"
 }

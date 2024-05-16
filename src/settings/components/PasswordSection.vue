@@ -23,7 +23,22 @@ function submitPass(): void {
 }
 
 function changePass(): void {
-    //
+    if (password.value === '' || newPassword.value === '') {
+        showToast(trans('Password cannot be empty'), 'error')
+        return
+    }
+
+    const changed = store.changePassword(password.value, newPassword.value)
+
+    if (!changed) {
+        showToast(trans('You entered the wrong password'), 'error')
+        return
+    }
+
+    password.value = ''
+    newPassword.value = ''
+
+    showToast(trans('Password changed successfully'))
 }
 </script>
 
@@ -58,7 +73,7 @@ function changePass(): void {
         :title="trans('Change Password')"
         :subtitle="trans('Enter the old and new password to change it')"
     >
-        <form @submit="changePass" class="form">
+        <form @submit.prevent="changePass">
             <div class="field">
                 <label for="old-pass" class="label">
                     {{ trans('Enter your current password') }}
@@ -85,6 +100,14 @@ function changePass(): void {
                     v-model="newPassword"
                     :placeholder="trans('Enter a new password')"
                 />
+            </div>
+
+            <div class="field is-grouped is-grouped-right">
+                <div class="control">
+                    <button type="submit" class="button is-link">
+                        {{ trans('Update password') }}
+                    </button>
+                </div>
             </div>
         </form>
     </Section>
