@@ -5,8 +5,8 @@ import { useTransStore } from '@/stores/trans'
 import { usePopupStore } from '@/stores/popup'
 import { useSelectTabsStore } from '@/stores/selectTabs'
 import Popup from '@/components/Popups/Popup.vue'
-import AppearTransition from '@/components/Transitions/AppearTransition.vue'
-import ChevronRightIcon from '@/components/Icons/ChevronRightIcon.vue'
+import AppearTransition from '@common/components/Transitions/AppearTransition.vue'
+import ChevronRightIcon from '@common/components/Icons/ChevronRightIcon.vue'
 
 const { trans } = useTransStore()
 const { isOpenPopup, closePopup, closeAllPopups } = usePopupStore()

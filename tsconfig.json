@@ -16,7 +16,9 @@
       "paths": {
           "@/*": ["popup/*"],
           "@bg/*": ["background/*"],
-          "@content/*": ["content/*"]
+          "@content/*": ["content/*"],
+          "@settings/*": ["settings/*"],
+          "@common/*": ["common/*"]
       },
     },
     "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.vue"],

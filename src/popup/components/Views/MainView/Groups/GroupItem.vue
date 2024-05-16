@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import type { Group } from '@/types'
-import ChevronRightIcon from '@/components/Icons/ChevronRightIcon.vue'
-import ShieldCheckIcon from '@/components/Icons/ShieldCheckIcon.vue'
-import ShieldExclamationIcon from '@/components/Icons/ShieldExclamationIcon.vue'
+import ChevronRightIcon from '@common/components/Icons/ChevronRightIcon.vue'
+import ShieldCheckIcon from '@common/components/Icons/ShieldCheckIcon.vue'
+import ShieldExclamationIcon from '@common/components/Icons/ShieldExclamationIcon.vue'
 import OpenTabsButton from '@/components/Views/MainView/Groups/OpenTabsButton.vue'
 
 type Props = {

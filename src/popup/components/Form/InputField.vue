@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, watchEffect } from 'vue'
-import CheckIcon from '@/components/Icons/CheckIcon.vue'
+import CheckIcon from '@common/components/Icons/CheckIcon.vue'
 
 type Emits = {
     (e: 'submit'): void

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useSidebarStore } from '@/stores/sidebar'
-import MenuIcon from '@/components/Icons/MenuIcon.vue'
+import MenuIcon from '@common/components/Icons/MenuIcon.vue'
 import Control from '@/components/Control.vue'
 
 const sidebarStore = useSidebarStore()

@@ -2,9 +2,9 @@
 import { useGroupStore } from '@/stores/group'
 import { useTransStore } from '@/stores/trans'
 import { usePopupStore } from '@/stores/popup'
-import error from '@/modules/error'
+import error from '@common/modules/error'
 import Popup from '@/components/Popups/Popup.vue'
-import AppearTransition from '@/components/Transitions/AppearTransition.vue'
+import AppearTransition from '@common/components/Transitions/AppearTransition.vue'
 
 const { trans } = useTransStore()
 const { isOpenPopup, closePopup } = usePopupStore()

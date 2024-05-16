@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import MenuItem from '@/components/MenuItem.vue'
-import TrashIcon from '@/components/Icons/TrashIcon.vue'
+import TrashIcon from '@common/components/Icons/TrashIcon.vue'
 import { useTransStore } from '@/stores/trans'
 import { usePopupStore } from '@/stores/popup'
 

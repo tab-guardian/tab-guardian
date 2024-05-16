@@ -1,11 +1,21 @@
 <script setup lang="ts">
 import Control from '@/components/Control.vue'
-import CogIcon from '@/components/Icons/CogIcon.vue'
+import CogIcon from '@common/components/Icons/CogIcon.vue'
+import isDevelopment from '@common/modules/isDevelopment'
+
+function openSettings(): void {
+    if (isDevelopment()) {
+        window.open('settings.html')
+        return
+    }
+
+    chrome.tabs.create({ url: chrome.runtime.getURL('settings.html') })
+}
 </script>
 
 <template>
     <div class="controls">
-        <Control :to="{ name: 'settings' }">
+        <Control @click="openSettings">
             <CogIcon />
         </Control>
     </div>

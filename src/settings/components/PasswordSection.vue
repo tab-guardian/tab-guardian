@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useTransStore } from '@/stores/trans'
-import { useSettingsStore } from '@/stores/settings'
-import Section from '@/components/Views/SettingsView/Sections/Section.vue'
+import { useMainStore } from '@settings/stores/main'
+import Section from '@settings/components/Section.vue'
 import InputField from '@/components/Form/InputField.vue'
-import showToast from '@/modules/showToast'
+import showToast from '@common/modules/showToast'
 
 const { trans } = useTransStore()
-const { updatePassword } = useSettingsStore()
+const { updatePassword } = useMainStore()
 const password = ref<string>('')
 
 const subtitle = trans(

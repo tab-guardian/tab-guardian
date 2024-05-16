@@ -7,7 +7,7 @@ import Popup from '@/components/Popups/Popup.vue'
 import AddLinkMenuItem from '@/components/Views/GroupView/GroupControls/MenuItems/AddLinkMenuItem.vue'
 import DeleteGroupMenuItem from '@/components/Views/GroupView/GroupControls/MenuItems/DeleteGroupMenuItem.vue'
 import RenameMenuItem from '@/components/Views/GroupView/GroupControls/MenuItems/RenameMenuItem.vue'
-import AppearTransition from '@/components/Transitions/AppearTransition.vue'
+import AppearTransition from '@common/components/Transitions/AppearTransition.vue'
 import EnterPassword from '@/components/Views/GroupView/EnterPassword.vue'
 
 const { isOpenPopup, closePopup } = usePopupStore()

@@ -2,8 +2,8 @@
 import { useGroupStore } from '@/stores/group'
 import { useTransStore } from '@/stores/trans'
 import { usePopupStore } from '@/stores/popup'
-import error from '@/modules/error'
-import PencilSquareIcon from '@/components/Icons/PencilSquareIcon.vue'
+import error from '@common/modules/error'
+import PencilSquareIcon from '@common/components/Icons/PencilSquareIcon.vue'
 import MenuItem from '@/components/MenuItem.vue'
 
 const store = useGroupStore()

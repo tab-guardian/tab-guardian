@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import EllipsisVerticalIcon from '@/components/Icons/EllipsisVerticalIcon.vue'
+import EllipsisVerticalIcon from '@common/components/Icons/EllipsisVerticalIcon.vue'
 import Control from '@/components/Control.vue'
 import { usePopupStore } from '@/stores/popup'
 

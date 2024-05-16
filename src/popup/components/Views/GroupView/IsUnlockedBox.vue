@@ -2,8 +2,8 @@
 import type { Group } from '@/types'
 import { useTransStore } from '@/stores/trans'
 import { useGroupStore } from '@/stores/group'
-import showToast from '@/modules/showToast'
-import ShieldExclamationIcon from '@/components/Icons/ShieldExclamationIcon.vue'
+import showToast from '@common/modules/showToast'
+import ShieldExclamationIcon from '@common/components/Icons/ShieldExclamationIcon.vue'
 
 type Props = {
     group: Group

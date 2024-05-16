@@ -1,5 +1,5 @@
-import error from '@/modules/error'
-import isDevelopment from '@/modules/isDevelopment'
+import error from '@common/modules/error'
+import isDevelopment from '@common/modules/isDevelopment'
 
 export default async <T>(
     key: string,

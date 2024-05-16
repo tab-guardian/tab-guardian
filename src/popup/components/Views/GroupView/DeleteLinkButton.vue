@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import CloseIcon from '@/components/Icons/CloseIcon.vue'
+import CloseIcon from '@common/components/Icons/CloseIcon.vue'
 import { useGroupStore } from '@/stores/group'
 
 type Props = {

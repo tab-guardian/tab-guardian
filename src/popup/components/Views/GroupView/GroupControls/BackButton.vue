@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import ChevronRightIcon from '@/components/Icons/ChevronRightIcon.vue'
+import ChevronRightIcon from '@common/components/Icons/ChevronRightIcon.vue'
 import Control from '@/components/Control.vue'
 </script>
 

@@ -2,8 +2,8 @@
 import { useGroupStore } from '@/stores/group'
 import { useTransStore } from '@/stores/trans'
 import { usePopupStore } from '@/stores/popup'
-import ShieldCheckIcon from '@/components/Icons/ShieldCheckIcon.vue'
-import PlusCircleIcon from '@/components/Icons/PlusCircleIcon.vue'
+import ShieldCheckIcon from '@common/components/Icons/ShieldCheckIcon.vue'
+import PlusCircleIcon from '@common/components/Icons/PlusCircleIcon.vue'
 
 const { trans } = useTransStore()
 const { openPopup } = usePopupStore()

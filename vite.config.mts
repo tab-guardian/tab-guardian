@@ -36,6 +36,8 @@ export default defineConfig({
             '@': '/src/popup',
             '@bg': '/src/background',
             '@content': '/src/content',
+            '@settings': '/src/settings',
+            '@common': '/src/common',
         },
     },
 })

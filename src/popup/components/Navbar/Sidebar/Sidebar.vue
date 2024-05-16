@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Hamburger from '@/components/Navbar/Sidebar/Hamburger.vue'
-import RightSlideTransition from '@/components/Transitions/RightSlideTransition.vue'
+import RightSlideTransition from '@common/components/Transitions/RightSlideTransition.vue'
 import Overlay from '@/components/Navbar/Sidebar/Overlay.vue'
 import { useSidebarStore } from '@/stores/sidebar'
 
