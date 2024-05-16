@@ -12,5 +12,6 @@
     "Enter a new password": "Enter a new password",
     "You entered the wrong password": "You entered the wrong password",
     "Password changed successfully": "Password changed successfully",
-    "Update password": "Update password"
+    "Update password": "Update password",
+    "Save password": "Save password"
 }

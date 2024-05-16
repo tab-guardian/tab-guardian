@@ -3,8 +3,8 @@ import { ref } from 'vue'
 import { useTransStore } from '@settings/stores/trans'
 import { useMainStore } from '@settings/stores/main'
 import Section from '@settings/components/Section.vue'
-import CheckIcon from '@common/components/Icons/CheckIcon.vue'
 import showToast from '@/modules/showToast'
+import SubmitButton from './SubmitButton.vue'
 
 const { trans } = useTransStore()
 const store = useMainStore()
@@ -53,18 +53,16 @@ function changePass(): void {
         "
     >
         <form @submit.prevent="submitPass" class="form">
-            <div class="form__inline">
+            <div class="field">
                 <input
                     class="input"
                     type="password"
                     :placeholder="trans('Enter password')"
                     v-model="password"
                 />
-
-                <button type="submit">
-                    <CheckIcon width="20" height="20" />
-                </button>
             </div>
+
+            <SubmitButton :title="trans('Save password')" />
         </form>
     </Section>
 
@@ -102,13 +100,7 @@ function changePass(): void {
                 />
             </div>
 
-            <div class="field is-grouped is-grouped-right">
-                <div class="control">
-                    <button type="submit" class="button is-link">
-                        {{ trans('Update password') }}
-                    </button>
-                </div>
-            </div>
+            <SubmitButton :title="trans('Update password')" />
         </form>
     </Section>
 </template>
