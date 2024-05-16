@@ -21,6 +21,7 @@ export default defineConfig({
                 background: '/src/background/background.ts',
                 content: '/src/content/content.ts',
                 popup: '/index.html',
+                settings: 'settings.html',
             },
             output: {
                 entryFileNames: `assets/[name].js`,
