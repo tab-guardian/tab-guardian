@@ -4,7 +4,7 @@ import getFakeLinks from '@/modules/getFakeLinks'
 import convertTabsToLinks from '@/modules/tabs/convertTabsToLinks'
 import closeTabs from '@/modules/tabs/closeTabs'
 import error from '@common/modules/error'
-import isDevelopment from '@/modules/isDevelopment'
+import isDevelopment from '@common/modules/isDevelopment'
 
 type Params = {
     closeTabs: boolean

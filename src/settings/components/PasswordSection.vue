@@ -3,8 +3,8 @@ import { ref } from 'vue'
 import { useTransStore } from '@settings/stores/trans'
 import { useMainStore } from '@settings/stores/main'
 import Section from '@settings/components/Section.vue'
-import showToast from '@/modules/showToast'
-import SubmitButton from './SubmitButton.vue'
+import showToast from '@common/modules/showToast'
+import SubmitButton from '@settings/components/SubmitButton.vue'
 
 const { trans } = useTransStore()
 const store = useMainStore()
@@ -66,11 +66,7 @@ function changePass(): void {
         </form>
     </Section>
 
-    <Section
-        v-else
-        :title="trans('Change Password')"
-        :subtitle="trans('Enter the old and new password to change it')"
-    >
+    <Section v-else :title="trans('Change Password')">
         <form @submit.prevent="changePass">
             <div class="field">
                 <label for="old-pass" class="label">

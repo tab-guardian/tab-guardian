@@ -2,10 +2,10 @@ import type { Settings } from '@/types'
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import { useTransStore } from '@settings/stores/trans'
-import getFromStorage from '@/modules/getFromStorage'
-import saveToStorage from '@/modules/saveToStorage'
+import getFromStorage from '@common/modules/storage/getFromStorage'
+import saveToStorage from '@common/modules/storage/saveToStorage'
 import sha256 from 'crypto-js/sha256'
-import showToast from '@/modules/showToast'
+import showToast from '@common/modules/showToast'
 
 export const useMainStore = defineStore('main', () => {
     const { trans } = useTransStore()
