@@ -32,6 +32,7 @@
     "author": "Serhii Cho",
     "dependencies": {
         "@types/crypto-js": "^4.2.2",
+        "bulma": "^1.0.0",
         "crypto-js": "^4.2.0",
         "pinia": "^2.1.7",
         "toastify-js": "^1.12.0",

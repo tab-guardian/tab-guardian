@@ -4,5 +4,10 @@
     "Choose a secret password for your private groups. Any time when you want to access a private group, you will need to enter this password": "Choose a secret password for your private groups. Any time when you want to access a private group, you will need to enter this password",
     "Enter password": "Enter password",
     "Private Password": "Private Password",
-    "Password has been set": "Password has been set"
+    "Password has been set": "Password has been set",
+    "Password cannot be empty": "Password cannot be empty",
+    "Change Password": "Change Password",
+    "Enter the old and new password to change it": "Enter the old and new password to change it",
+    "Enter your current password": "Enter your current password",
+    "Enter a new password": "Enter a new password"
 }

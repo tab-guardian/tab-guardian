@@ -15,8 +15,10 @@ onMounted(() => {
 
 <template>
     <div class="settings">
-        <h1>{{ trans('Settings') }}</h1>
-        <p>{{ trans('Change the extension configurations here') }}</p>
+        <h1 class="title">{{ trans('Settings') }}</h1>
+        <p class="subtitle">
+            {{ trans('Change the extension configurations here') }}
+        </p>
 
         <div>
             <PasswordSection />
@@ -26,10 +28,4 @@ onMounted(() => {
 
 <style lang="sass">
 @import '@settings/assets/sass/main'
-
-h1
-    margin: 0 0 3px 0
-
-p
-    margin: 0 0 12px 0
 </style>

@@ -361,6 +361,13 @@ braces@~3.0.2:
   dependencies:
     fill-range "^7.0.1"
 
+bulma@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/bulma/-/bulma-1.0.0.tgz#95e8ffa4feb8d64aa1c54a4f0ac6da08e0260672"
+  integrity sha512-7n49v/gdHXaHcU9fVobqGXO2OguiCoMh6CLbeX7jq00XrZ5vOSE4LNS0S/0Q6rlBbckY6kk6W7LwqxS0nu4bug==
+  dependencies:
+    sass "^1.71.1"
+
 "chokidar@>=3.0.0 <4.0.0":
   version "3.6.0"
   resolved "https://registry.yarnpkg.com/chokidar/-/chokidar-3.6.0.tgz#197c6cc669ef2a8dc5e7b4d97ee4e092c3eb0d5b"
@@ -553,6 +560,15 @@ rollup@^4.13.0:
     "@rollup/rollup-win32-ia32-msvc" "4.17.2"
     "@rollup/rollup-win32-x64-msvc" "4.17.2"
     fsevents "~2.3.2"
+
+sass@^1.71.1:
+  version "1.77.1"
+  resolved "https://registry.yarnpkg.com/sass/-/sass-1.77.1.tgz#018cdfb206afd14724030c02e9fefd8f30a76cd0"
+  integrity sha512-OMEyfirt9XEfyvocduUIOlUSkWOXS/LAt6oblR/ISXCTukyavjex+zQNm51pPCOiFKY1QpWvEH1EeCkgyV3I6w==
+  dependencies:
+    chokidar ">=3.0.0 <4.0.0"
+    immutable "^4.0.0"
+    source-map-js ">=0.6.2 <2.0.0"
 
 sass@^1.76.0:
   version "1.76.0"
