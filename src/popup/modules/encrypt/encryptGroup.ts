@@ -17,8 +17,13 @@ export default (group: Group, pass: string): Group => {
 function encryptLink(link: Link, pass: string): Link {
     return {
         id: link.id,
-        url: CryptoJS.AES.encrypt(link.url, pass).toString(),
-        title: CryptoJS.AES.encrypt(link.title, pass).toString(),
-        favIconUrl: CryptoJS.AES.encrypt(link.favIconUrl, pass).toString(),
+        url: encrypt(link.url, pass),
+        title: encrypt(link.title, pass),
+        favIconUrl: encrypt(link.favIconUrl, pass),
     }
+}
+
+function encrypt(text: string, pass: string): string {
+    text = encodeURIComponent(text)
+    return CryptoJS.AES.encrypt(text, pass).toString()
 }
