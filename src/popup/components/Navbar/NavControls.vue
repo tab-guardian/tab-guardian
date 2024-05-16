@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import Control from '@/components/Control.vue'
 import CogIcon from '@common/components/Icons/CogIcon.vue'
-import isDevelopment from '@common/modules/isDevelopment'
+import isDevelopment from '@/modules/isDevelopment'
 
 function openSettings(): void {
     if (isDevelopment()) {

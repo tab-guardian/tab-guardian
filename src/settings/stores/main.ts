@@ -1,8 +1,8 @@
 import type { Settings } from '@/types'
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import getFromStorage from '@common/modules/storage/getFromStorage'
-import saveToStorage from '@common/modules/storage/saveToStorage'
+import getFromStorage from '@/modules/getFromStorage'
+import saveToStorage from '@/modules/saveToStorage'
 import sha256 from 'crypto-js/sha256'
 
 export const useMainStore = defineStore('main', () => {

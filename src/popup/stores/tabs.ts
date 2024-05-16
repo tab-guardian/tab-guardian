@@ -3,9 +3,9 @@ import type { Link, Group } from '@/types'
 import { defineStore } from 'pinia'
 import { useGroupStore } from '@/stores/group'
 import { useTransStore } from '@/stores/trans'
-import showToast from '@common/modules/showToast'
+import showToast from '@/modules/showToast'
 import getCurrentLinks from '@/modules/tabs/getCurrentLinks'
-import isDevelopment from '@common/modules/isDevelopment'
+import isDevelopment from '@/modules/isDevelopment'
 
 export const useTabsStore = defineStore('tabs', () => {
     const groupStore = useGroupStore()

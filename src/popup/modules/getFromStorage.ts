@@ -1,5 +1,5 @@
 import error from '@common/modules/error'
-import isDevelopment from '@common/modules/isDevelopment'
+import isDevelopment from '@/modules/isDevelopment'
 
 export default <T>(key: string, callback: (value: T | null) => void): void => {
     if (isDevelopment()) {

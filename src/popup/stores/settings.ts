@@ -1,7 +1,7 @@
 import type { Settings } from '@/types'
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import getFromStorage from '@common/modules/storage/getFromStorage'
+import getFromStorage from '@/modules/getFromStorage'
 import sha256 from 'crypto-js/sha256'
 
 export const useSettingsStore = defineStore('settings', () => {

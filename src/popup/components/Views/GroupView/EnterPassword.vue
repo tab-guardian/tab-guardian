@@ -4,7 +4,7 @@ import { ref } from 'vue'
 import { useTransStore } from '@/stores/trans'
 import { useSettingsStore } from '@/stores/settings'
 import { useGroupStore } from '@/stores/group'
-import showToast from '@common/modules/showToast'
+import showToast from '@/modules/showToast'
 import ShieldCheckIcon from '@common/components/Icons/ShieldCheckIcon.vue'
 import InputField from '@/components/Form/InputField.vue'
 
