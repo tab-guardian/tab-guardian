@@ -9,10 +9,15 @@ async function openSettings(): Promise<void> {
         return
     }
 
-    chrome.tabs.create({
+    const tab = await chrome.tabs.create({
         url: chrome.runtime.getURL('settings.html'),
         active: true,
     })
+
+    // focus on the window
+    if (tab.id) {
+        chrome.windows.update(tab.windowId, { focused: true })
+    }
 }
 </script>
 
