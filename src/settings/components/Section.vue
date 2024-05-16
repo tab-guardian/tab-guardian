@@ -1,18 +1,20 @@
 <script setup lang="ts">
 type Props = {
     title: string
-    subtitle: string
+    subtitle?: string
 }
 
 const { title, subtitle } = defineProps<Props>()
 </script>
 
 <template>
-    <section class="settings-section">
-        <h2>{{ title }}</h2>
-        <p>{{ subtitle }}</p>
+    <section class="bg-main p-6 rounded-lg border border-border">
+        <h2 class="text-xl">{{ title }}</h2>
+        <p class="text-lg" v-if="subtitle">{{ subtitle }}</p>
 
-        <slot />
+        <div class="mt-4">
+            <slot />
+        </div>
     </section>
 </template>
 

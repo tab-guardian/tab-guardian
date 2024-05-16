@@ -2,9 +2,10 @@
 import { ref } from 'vue'
 import { useTransStore } from '@settings/stores/trans'
 import { useMainStore } from '@settings/stores/main'
-import Section from '@settings/components/Section.vue'
 import showToast from '@common/modules/showToast'
-import SubmitButton from '@settings/components/SubmitButton.vue'
+import Section from '@settings/components/Section.vue'
+import Button from '@settings/components/Form/Button.vue'
+import Input from '@settings/components/Form/Input.vue'
 
 const { trans } = useTransStore()
 const store = useMainStore()
@@ -62,41 +63,33 @@ function changePass(): void {
                 />
             </div>
 
-            <SubmitButton :title="trans('Save password')" />
+            <Button :label="trans('Save password')" />
         </form>
     </Section>
 
     <Section v-else :title="trans('Change Password')">
-        <form @submit.prevent="changePass">
-            <div class="field">
-                <label for="old-pass" class="label">
-                    {{ trans('Enter your current password') }}
-                </label>
-
-                <input
+        <form @submit.prevent="changePass" class="flex flex-col gap-3">
+            <div>
+                <Input
                     id="old-pass"
                     v-model="password"
                     class="input"
                     type="password"
-                    :placeholder="trans('Enter your current password')"
+                    :label="trans('Enter your current password')"
                 />
             </div>
 
-            <div class="field">
-                <div id="new-pass" class="label">
-                    {{ trans('Enter a new password') }}
-                </div>
-
-                <input
+            <div>
+                <Input
                     id="new-pass"
                     class="input"
                     type="password"
                     v-model="newPassword"
-                    :placeholder="trans('Enter a new password')"
+                    :label="trans('Enter a new password')"
                 />
             </div>
 
-            <SubmitButton :title="trans('Update password')" />
+            <Button :label="trans('Update password')" />
         </form>
     </Section>
 </template>
