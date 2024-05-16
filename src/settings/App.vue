@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import { useMainStore } from '@settings/stores/main'
-import { useTransStore } from '@/stores/trans'
+import { useTransStore } from '@settings/stores/trans'
 import PasswordSection from '@settings/components/PasswordSection.vue'
 
 const { trans } = useTransStore()
@@ -24,4 +24,12 @@ onMounted(() => {
     </div>
 </template>
 
-<style lang="sass"></style>
+<style lang="sass">
+@import '@settings/assets/sass/main'
+
+h1
+    margin: 0 0 3px 0
+
+p
+    margin: 0 0 12px 0
+</style>

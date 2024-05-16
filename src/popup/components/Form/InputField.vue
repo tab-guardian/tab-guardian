@@ -47,6 +47,19 @@ watchEffect(() => {
     align-items: center
     gap: 5px
 
+    .input
+        background-color: var(--tg-color-bg-secondary)
+        border: 1px solid var(--tg-color-border)
+        border-radius: 5px
+        font-size: .9rem
+        padding: 7px 8px
+        width: 100%
+        max-width: 260px
+        color: var(--tg-color-font)
+
+        &:focus
+            outline: 1px solid var(--tg-color-primary)
+
     button
         background-color: var(--tg-color-secondary)
         border: none

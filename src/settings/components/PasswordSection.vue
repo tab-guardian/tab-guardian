@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import { useTransStore } from '@/stores/trans'
 import { useMainStore } from '@settings/stores/main'
 import Section from '@settings/components/Section.vue'
-import InputField from '@/components/Form/InputField.vue'
+import InputField from '@settings/components/Form/InputField.vue'
 import showToast from '@/modules/showToast'
 
 const { trans } = useTransStore()
