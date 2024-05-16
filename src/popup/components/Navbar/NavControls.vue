@@ -3,13 +3,16 @@ import Control from '@/components/Control.vue'
 import CogIcon from '@common/components/Icons/CogIcon.vue'
 import isDevelopment from '@/modules/isDevelopment'
 
-function openSettings(): void {
+async function openSettings(): Promise<void> {
     if (isDevelopment()) {
         window.open('settings.html')
         return
     }
 
-    chrome.tabs.create({ url: chrome.runtime.getURL('settings.html') })
+    chrome.tabs.create({
+        url: chrome.runtime.getURL('settings.html'),
+        active: true,
+    })
 }
 </script>
 

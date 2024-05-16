@@ -1,4 +1,3 @@
-import type { OpenTabMessage } from '@/types/messages'
 import type { Link, Group } from '@/types'
 import { defineStore } from 'pinia'
 import { useGroupStore } from '@/stores/group'
@@ -18,11 +17,9 @@ export const useTabsStore = defineStore('tabs', () => {
         }
 
         links.forEach(link => {
-            chrome.runtime.sendMessage<OpenTabMessage>({
-                openTab: {
-                    url: link.url,
-                    active: false,
-                },
+            chrome.tabs.create({
+                url: link.url,
+                active: false,
             })
         })
 
