@@ -4,6 +4,7 @@ import { useTransStore } from '@/stores/trans'
 import { usePopupStore } from '@/stores/popup'
 import ShieldCheckIcon from '@common/components/Icons/ShieldCheckIcon.vue'
 import PlusCircleIcon from '@common/components/Icons/PlusCircleIcon.vue'
+import NewGroupButton from '@/components/Views/MainView/NewGroup/NewGroupButton.vue'
 
 const { trans } = useTransStore()
 const { openPopup } = usePopupStore()
@@ -16,70 +17,22 @@ function askForGroupName(isPrivate: boolean) {
 </script>
 
 <template>
-    <div class="buttons">
-        <button
+    <div class="flex items-center gap-2">
+        <NewGroupButton
             @click="askForGroupName(false)"
             :disabled="groupStore.isSaving"
-            class="btn save"
-            type="button"
+            class="w-full bg-primary"
         >
-            <PlusCircleIcon />
+            <PlusCircleIcon class="w-6 h-6" />
             <span>{{ trans('New Group') }}</span>
-        </button>
+        </NewGroupButton>
 
-        <button
+        <NewGroupButton
             @click="askForGroupName(true)"
-            class="btn save-private"
-            type="button"
+            class="w-24 bg-secondary"
             :disabled="groupStore.isSaving"
         >
-            <ShieldCheckIcon />
-        </button>
+            <ShieldCheckIcon class="w-8 h-8" />
+        </NewGroupButton>
     </div>
 </template>
-
-<style lang="sass" scoped>
-.buttons
-    display: flex
-    align-items: center
-    gap: 8px
-
-    .btn
-        height: 37px
-        border: none
-        font-size: 1rem
-        line-height: 15px
-        display: flex
-        gap: 10px
-        align-items: center
-        justify-content: center
-        color: var(--tg-page)
-        cursor: pointer
-        transition: opacity .2s
-        border-radius: 8px
-        transition: opacity .2s
-
-        &:hover
-            opacity: .9
-
-        &:disabled
-            opacity: .5
-            cursor: not-allowed
-
-    .save
-        width: 100%
-        background-color: var(--tg-color-primary)
-        border: 2px solid var(--dark-blue)
-
-        svg
-            width: 22px
-            height: 22px
-
-    .save-private
-        width: 90px
-        background-color: var(--tg-color-secondary)
-
-        svg
-            width: 25px
-            height: 25px
-</style>

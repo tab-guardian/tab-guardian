@@ -6,26 +6,11 @@ const { trans } = useTransStore()
 </script>
 
 <template>
-    <div class="top">
+    <div class="text-center p-2 border-b border-border">
         <Buttons />
 
-        <small class="notice">
+        <small class="opacity-80 text-xs mt-1.5 block">
             {{ trans('Click the shield to save as a private group') }}
         </small>
     </div>
 </template>
-
-<style lang="sass" scoped>
-.top
-    text-align: center
-    padding: 12px
-    margin-bottom: 0
-    border-bottom: 1px solid var(--tg-color-border)
-
-    .notice
-        display: block
-        opacity: .8
-        font-size: 12px
-        font-family: 'Arial', sans-serif
-        margin-top: 9px
-</style>
