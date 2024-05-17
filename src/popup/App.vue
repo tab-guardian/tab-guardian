@@ -14,9 +14,15 @@ onMounted(() => loadSettingsFromStorage())
 <template>
     <Navbar />
 
-    <main class="screen">
+    <main class="h-[495px] overflow-y-auto overflow-x-hidden relative">
         <RouterView v-slot="{ Component, route }">
-            <Transition name="screen">
+            <Transition
+                enter-active-class="transition-opacity ease-in-out duration-300"
+                enter-to-class="opacity-100"
+                leave-from-class="opacity-100"
+                enter-from-class="opacity-0"
+                leave-to-class="opacity-0"
+            >
                 <component :is="Component" :key="route.path" />
             </Transition>
         </RouterView>
@@ -27,37 +33,22 @@ onMounted(() => loadSettingsFromStorage())
     <GroupNamePopup />
 </template>
 
-<style lang="sass">
-@import '@/assets/sass/main'
+<style>
+@import '@/assets/sass/main.sass';
 
-.screen-enter-active,
-.screen-leave-active
-    transition: opacity .1s cubic-bezier(1, 0.5, 0.8, 1)
+main::-webkit-scrollbar {
+    width: 7px;
+}
 
-.screen-enter-to,
-.screen-leave-from
-    opacity: 1
+main::-webkit-scrollbar-track {
+    background-color: var(--tg-color-bg-scrollbar);
+    border-radius: 50px;
+    margin-top: 2px;
+}
 
-.screen-enter-from,
-.screen-leave-to
-    opacity: 0
-
-.screen
-    height: 495px
-    overflow-y: auto
-    overflow-x: hidden
-    position: relative
-
-    &::-webkit-scrollbar
-        width: 7px
-
-    &::-webkit-scrollbar-track
-        background-color: var(--tg-color-bg-scrollbar)
-        border-radius: 50px
-        margin-top: 2px
-
-    &::-webkit-scrollbar-thumb
-        background-color: var(--tg-color-bg-scrollbar-thumb)
-        border-radius: 10px
-        border-radius: 50px
+main::-webkit-scrollbar-thumb {
+    background-color: var(--tg-color-bg-scrollbar-thumb);
+    border-radius: 10px;
+    border-radius: 50px;
+}
 </style>

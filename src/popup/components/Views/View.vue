@@ -38,8 +38,8 @@ const { title, subtitle } = defineProps<Props>()
     bottom: 0
     right: 0
     left: 0
-    background-color: var(--tg-color-bg-secondary)
-    padding: var(--tg-padding)
+    background-color: var(--tg-page)
+    padding: 12px
 
     &__controls
         display: flex

@@ -53,7 +53,7 @@ function askForGroupName(isPrivate: boolean) {
         gap: 10px
         align-items: center
         justify-content: center
-        color: var(--tg-color-bg-secondary)
+        color: var(--tg-page)
         cursor: pointer
         transition: opacity .2s
         border-radius: 8px

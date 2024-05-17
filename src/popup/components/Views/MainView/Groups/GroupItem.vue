@@ -51,10 +51,10 @@ const { group } = defineProps<Props>()
     color: var(--tg-color-font)
     cursor: pointer
     border-bottom: 1px solid var(--tg-color-border)
-    background-color: var(--tg-color-bg-secondary)
+    background-color: var(--tg-page)
 
     &:hover
-        background-color: var(--tg-color-bg-secondary-hover)
+        background-color: var(--tg-page-hover)
 
     &--private
         background-color: var(--tg-color-bg-private)

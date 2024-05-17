@@ -15,7 +15,7 @@ const modelValue = defineModel()
 
     <input
         :id="id"
-        class="rounded-lg px-3 py-2 w-full bg-main-secondary border border-border"
+        class="rounded-lg px-3 py-2 w-full bg-page border border-border"
         v-model="modelValue"
         :placeholder="label"
     />

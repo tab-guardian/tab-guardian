@@ -1,10 +1,8 @@
 :root {
-    --tg-padding: 12px;
-
     /* Light theme */
     --tg-color-bg: #f8f9fc;
-    --tg-color-bg-secondary: #fff;
-    --tg-color-bg-secondary-hover: #f8f8f8;
+    --tg-page: #fff;
+    --tg-page-hover: #f8f8f8;
     --tg-color-border: #dee3ed;
     --tg-color-font: #2f3237;
     --tg-color-font-gray: #858585;
@@ -29,8 +27,8 @@
     :root {
         /* Dark theme */
         --tg-color-bg: #2e3239;
-        --tg-color-bg-secondary: #181a1c;
-        --tg-color-bg-secondary-hover: #191b1d;
+        --tg-page: #181a1c;
+        --tg-page-hover: #191b1d;
         --tg-color-border: #29303d;
         --tg-color-font: #dbdbdb;
         --tg-color-font-gray: #919191;

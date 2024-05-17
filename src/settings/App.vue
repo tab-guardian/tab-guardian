@@ -4,6 +4,7 @@ import { useMainStore } from '@settings/stores/main'
 import { useTransStore } from '@settings/stores/trans'
 import PasswordSection from '@settings/components/PasswordSection.vue'
 import OptionsSection from '@settings/components/OptionsSection.vue'
+import '@settings/style.css'
 
 const { trans } = useTransStore()
 
@@ -32,7 +33,3 @@ onMounted(() => {
         </div>
     </div>
 </template>
-
-<style lang="sass">
-@import '@settings/assets/sass/main'
-</style>

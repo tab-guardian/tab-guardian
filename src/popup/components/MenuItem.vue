@@ -16,7 +16,7 @@ const { title } = defineProps<Props>()
 <style lang="sass" scoped>
 .menu-item
     padding: 6px 10px
-    background-color: var(--tg-color-bg-secondary)
+    background-color: var(--tg-page)
     border-radius: 7px
     border: 1px solid var(--tg-color-border)
     display: flex

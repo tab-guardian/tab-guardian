@@ -8,10 +8,7 @@ const { label } = defineProps<Props>()
 
 <template>
     <div class="text-right">
-        <button
-            type="submit"
-            class="bg-primary text-main-secondary px-6 py-2 rounded-lg"
-        >
+        <button type="submit" class="bg-primary text-page px-6 py-2 rounded-lg">
             {{ label }}
         </button>
     </div>

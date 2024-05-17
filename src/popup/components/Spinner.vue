@@ -1,12 +1,12 @@
 <template>
-    <div class="spinner--wrapper">
-        <div class="spinner">
+    <div class="text-center mt-5">
+        <div class="inline-flex content-center items-center h-14 w-14">
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="44"
                 height="44"
                 viewBox="0 0 44 44"
-                class="spinner__svg"
+                class="animate-spin"
             >
                 <circle
                     cx="22"
@@ -16,44 +16,30 @@
                     stroke-width="4"
                     stroke-linecap="round"
                     stroke-dasharray="31.41592653589793 31.41592653589793"
-                    class="spinner__circle"
+                    class="stroke-primary"
                 ></circle>
             </svg>
         </div>
     </div>
 </template>
 
-<style lang="sass" scoped>
-.spinner
-    display: inline-flex
-    justify-content: center
-    align-items: center
-    height: 35px
-    width: 35px
+<style scoped>
+circle {
+    animation: dash 1.5s ease-in-out infinite;
+}
 
-    &--wrapper
-        text-align: center
-        margin-top: 20px
-
-    &__svg
-        animation: rotate 1s linear infinite
-
-    &__circle
-        stroke: var(--tg-color-primary)
-        animation: dash 1.5s ease-in-out infinite
-
-@keyframes rotate
-    100%
-        transform: rotate(360deg)
-
-@keyframes dash
-    0%
-        stroke-dasharray: 1, 200
-        stroke-dashoffset: 0
-    50%
-        stroke-dasharray: 89, 200
-        stroke-dashoffset: -35
-    100%
-        stroke-dasharray: 89, 200
-        stroke-dashoffset: -124
+@keyframes dash {
+    0% {
+        stroke-dasharray: 1, 200;
+        stroke-dashoffset: 0;
+    }
+    50% {
+        stroke-dasharray: 89, 200;
+        stroke-dashoffset: -35;
+    }
+    100% {
+        stroke-dasharray: 89, 200;
+        stroke-dashoffset: -124;
+    }
+}
 </style>

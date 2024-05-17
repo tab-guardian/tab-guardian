@@ -48,7 +48,7 @@ watchEffect(() => {
     gap: 5px
 
     .input
-        background-color: var(--tg-color-bg-secondary)
+        background-color: var(--tg-page)
         border: 1px solid var(--tg-color-border)
         border-radius: 5px
         font-size: .9rem

@@ -1,8 +1,11 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-    purge: ['./settings.html', './src/settings/**/*.{vue,ts}'],
-    content: [],
-    darkMode: 'class',
+    content: [
+        './settings.html',
+        './src/settings/**/*.{vue,ts}',
+        './index.html',
+        './src/popup/**/*.{vue,ts}',
+    ],
     theme: {
         container: {
             center: true,
@@ -11,8 +14,8 @@ module.exports = {
         extend: {
             colors: {
                 main: 'var(--tg-color-bg)',
-                'main-secondary': 'var(--tg-color-bg-secondary)',
-                'main-secondary-hover': 'var(--tg-color-bg-secondary-hover)',
+                page: 'var(--tg-page)',
+                'page-hover': 'var(--tg-page-hover)',
                 border: 'var(--tg-color-border)',
                 font: 'var(--tg-color-font)',
                 'font-gray': 'var(--tg-color-font-gray)',
