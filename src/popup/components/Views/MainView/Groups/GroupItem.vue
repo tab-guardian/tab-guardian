@@ -17,7 +17,9 @@ const { group } = defineProps<Props>()
         :to="{ name: 'group', params: { id: group.id } }"
         :class="[
             group.isPrivate && group.isEncrypted ? 'group-private' : '',
-            group.isPrivate && !group.isEncrypted ? 'group-unsecure' : '',
+            group.isPrivate && !group.isEncrypted
+                ? 'bg-secondary hover:bg-secondary-hover'
+                : '',
             'p-2 flex justify-between items-center gap-3',
             'transition-colors border-b border-border bg-page hover:bg-page-hover',
         ]"
@@ -30,7 +32,7 @@ const { group } = defineProps<Props>()
                     class="w-6 h-6 text-private"
                 />
 
-                <ShieldExclamationIcon v-else class="w-6 h-6 text-font" />
+                <ShieldExclamationIcon v-else class="w-6 h-6 text-red-400" />
             </div>
 
             <div
@@ -57,13 +59,5 @@ const { group } = defineProps<Props>()
 
 .group-private:hover {
     background-color: var(--tg-color-secondary-private-hover);
-}
-
-.group-unsecure {
-    background-color: var(--tg-color-secondary-unsecure);
-}
-
-.group-unsecure:hover {
-    background-color: var(--tg-color-secondary-unsecure-hover);
 }
 </style>

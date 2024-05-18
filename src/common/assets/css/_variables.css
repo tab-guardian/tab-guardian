@@ -15,16 +15,15 @@
     --tg-color-secondary-scrollbar-thumb: #afafaf;
     --tg-color-secondary-private: rgb(78 220 208 / 15%);
     --tg-color-secondary-private-hover: rgb(78 220 208 / 25%);
-    --tg-color-secondary-unsecure: rgb(208 78 16 / 20%);
-    --tg-color-secondary-unsecure-hover: rgb(208 78 16 / 25%);
 }
 
 @media (prefers-color-scheme: dark) {
     :root {
         /* Dark theme */
-        --tg-color-secondary: theme('colors.gray.800');
-        --tg-color-page: theme('colors.gray.900');
-        --tg-color-page-hover: theme('colors.gray.800');
+        --tg-color-secondary: theme('colors.zinc.800');
+        --tg-color-secondary-hover: #232326;
+        --tg-color-page: theme('colors.zinc.900');
+        --tg-color-page-hover: #151518;
         --tg-color-border: theme('colors.gray.800');
         --tg-color-border-hover: theme('colors.gray.700');
         --tg-color-font: theme('colors.gray.50');
@@ -37,8 +36,6 @@
         --tg-color-secondary-scrollbar-thumb: #555;
         --tg-color-secondary-private: rgb(46 225 209 / 10%);
         --tg-color-secondary-private-hover: rgb(46 225 209 / 15%);
-        --tg-color-secondary-unsecure: rgb(250 44 2 / 20%);
-        --tg-color-secondary-unsecure-hover: rgb(250 44 2 / 25%);
     }
 }
 

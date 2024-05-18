@@ -10,6 +10,7 @@ module.exports = {
             colors: {
                 page: 'var(--tg-color-page)',
                 secondary: 'var(--tg-color-secondary)',
+                'secondary-hover': 'var(--tg-color-secondary-hover)',
                 'page-hover': 'var(--tg-color-page-hover)',
                 border: 'var(--tg-color-border)',
                 'border-hover': 'var(--tg-color-border-hover)',

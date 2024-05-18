@@ -23,42 +23,23 @@ function lockGroup(): void {
 </script>
 
 <template>
-    <div class="unsecure">
-        <ShieldExclamationIcon />
-        <span>{{ trans('This private group is unlocked') }}</span>
+    <div
+        class="flex items-center justify-between mb-4 bg-secondary p-3 rounded-lg gap-4"
+    >
+        <ShieldExclamationIcon class="w-8 h-8 text-red-400" />
 
-        <button @click="lockGroup">
+        <span class="text-sm">
+            {{ trans('This private group is unlocked') }}
+        </span>
+
+        <button
+            @click="lockGroup"
+            :class="[
+                'bg-green-300 dark:bg-green-800 px-3 py-2 rounded-md',
+                'text-sm hover:bg-black/50 text-bg font-semibold',
+            ]"
+        >
             {{ trans('Lock') }}
         </button>
     </div>
 </template>
-
-<style lang="sass" scoped>
-.unsecure
-    display: flex
-    align-items: center
-    justify-content: space-between
-    margin-bottom: 10px
-    background-color: rgb(184 32 32 / 16%)
-    padding: 8px 10px
-    border-radius: 7px
-
-    svg
-        width: 25px
-        height: 25px
-
-    span
-        font-size: .85rem
-
-    button
-        border: none
-        padding: 7px 15px
-        border-radius: 5px
-        background-color: var(--tg-color-secondary-unsecure)
-        transition: background-color .2s
-        color: var(--tg-color-font)
-        cursor: pointer
-
-        &:hover
-            background-color: var(--tg-color-secondary-unsecure-hover)
-</style>
