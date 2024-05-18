@@ -88,7 +88,7 @@ export const useGroupStore = defineStore('group', () => {
     function createEmptyGroup(): Group {
         const group = {
             id: Date.now() + Math.floor(Math.random() * 1000),
-            name: newGroup.value.name,
+            name: newGroup.value.name || getDefaultGroupName(newGroup.value.isPrivate),
             isPrivate: newGroup.value.isPrivate,
             isEncrypted: false,
             links: [],
