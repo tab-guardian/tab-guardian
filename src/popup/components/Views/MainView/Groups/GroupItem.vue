@@ -51,22 +51,22 @@ const { group } = defineProps<Props>()
     color: var(--tg-color-font)
     cursor: pointer
     border-bottom: 1px solid var(--tg-color-border)
-    background-color: var(--tg-page)
+    background-color: var(--tg-color-page)
 
     &:hover
-        background-color: var(--tg-page-hover)
+        background-color: var(--tg-color-page-hover)
 
     &--private
-        background-color: var(--tg-color-bg-private)
+        background-color: var(--tg-color-secondary-private)
 
         &:hover
-            background-color: var(--tg-color-bg-private-hover)
+            background-color: var(--tg-color-secondary-private-hover)
 
     &--unsecure
-        background-color: var(--tg-color-bg-unsecure)
+        background-color: var(--tg-color-secondary-unsecure)
 
         &:hover
-            background-color: var(--tg-color-bg-unsecure-hover)
+            background-color: var(--tg-color-secondary-unsecure-hover)
 
     &__buttons
         display: flex
@@ -81,7 +81,7 @@ const { group } = defineProps<Props>()
         .shield
             width: 25px
             height: 25px
-            color: var(--tg-color-secondary)
+            color: var(--tg-color-private)
 
             &--unsecure
                 color: var(--tg-color-font)

@@ -69,7 +69,7 @@ function saveTabs(): void {
 
         a
             text-decoration: none
-            color: var(--tg-color-secondary)
+            color: var(--tg-color-private)
             font-size: .9rem
             border-radius: 5px
             border: 1px solid var(--tg-color-border)
@@ -79,5 +79,5 @@ function saveTabs(): void {
             text-align: center
 
             &:hover
-                background-color: var(--tg-color-bg-private)
+                background-color: var(--tg-color-secondary-private)
 </style>

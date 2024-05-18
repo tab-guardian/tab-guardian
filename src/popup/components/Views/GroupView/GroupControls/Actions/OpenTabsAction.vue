@@ -17,16 +17,7 @@ function openTabs(): void {
 </script>
 
 <template>
-    <Control @click="openTabs" class="control">
-        <img :src="upImage" alt="Open tabs" />
+    <Control @click="openTabs" class="bg-green-300 dark:bg-green-700">
+        <img :src="upImage" alt="Open tabs" class="dark:invert" />
     </Control>
 </template>
-
-<style lang="sass" scoped>
-.control
-    background-color: var(--tg-color-green)
-
-    img
-        width: 100%
-        filter: var(--tg-filter-invert)
-</style>

@@ -27,7 +27,7 @@ const emit = defineEmits<Emits>()
 
     button
         background-color: var(--tg-color-primary)
-        color: var(--tg-color-bg)
+        color: var(--tg-color-secondary)
         border: none
         padding: 8px 15px
         border-radius: 8px

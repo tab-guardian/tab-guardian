@@ -29,7 +29,7 @@ function askForGroupName(isPrivate: boolean) {
 
         <NewGroupButton
             @click="askForGroupName(true)"
-            class="w-24 bg-secondary"
+            class="w-24 bg-private"
             :disabled="groupStore.isSaving"
         >
             <ShieldCheckIcon class="w-8 h-8" />

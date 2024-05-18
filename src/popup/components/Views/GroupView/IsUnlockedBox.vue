@@ -54,11 +54,11 @@ function lockGroup(): void {
         border: none
         padding: 7px 15px
         border-radius: 5px
-        background-color: var(--tg-color-bg-unsecure)
+        background-color: var(--tg-color-secondary-unsecure)
         transition: background-color .2s
         color: var(--tg-color-font)
         cursor: pointer
 
         &:hover
-            background-color: var(--tg-color-bg-unsecure-hover)
+            background-color: var(--tg-color-secondary-unsecure-hover)
 </style>

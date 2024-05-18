@@ -26,53 +26,27 @@ watchEffect(() => {
 </script>
 
 <template>
-    <form @submit.prevent="emit('submit')" class="form">
+    <form @submit.prevent="emit('submit')" class="flex items-center gap-2">
         <input
-            class="input"
+            :class="[
+                'bg-page border border-border rounded-md text-sm h-9 px-2 w-full',
+                'text-font focus:outline focus:outline-primary',
+            ]"
             :type="props.type"
             :placeholder="props.placeholder"
             v-model="modelValue"
             ref="inputRef"
         />
 
-        <button type="submit">
+        <button
+            type="submit"
+            :class="[
+                'bg-private transition-colors w-14 h-9 rounded-md',
+                'flex items-center justify-center cursor-pointer text-secondary',
+                'hover:bg-private-hover',
+            ]"
+        >
             <CheckIcon width="20" height="20" />
         </button>
     </form>
 </template>
-
-<style lang="sass" scoped>
-.form
-    display: flex
-    align-items: center
-    gap: 5px
-
-    .input
-        background-color: var(--tg-page)
-        border: 1px solid var(--tg-color-border)
-        border-radius: 5px
-        font-size: .9rem
-        padding: 7px 8px
-        width: 100%
-        max-width: 260px
-        color: var(--tg-color-font)
-
-        &:focus
-            outline: 1px solid var(--tg-color-primary)
-
-    button
-        background-color: var(--tg-color-secondary)
-        border: none
-        transition: background-color .2s
-        height: 30px
-        border-radius: 4px
-        flex: 1
-        display: flex
-        align-items: center
-        justify-content: center
-        cursor: pointer
-        color: var(--tg-color-bg)
-
-        &:hover
-            background-color: var(--tg-color-secondary-hover)
-</style>

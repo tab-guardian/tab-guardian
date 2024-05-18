@@ -18,16 +18,11 @@ function stashTabs(): void {
 </script>
 
 <template>
-    <Control @click="stashTabs" class="control">
-        <img :src="downRemoveImage" alt="Stash and close tabs" />
+    <Control @click="stashTabs" class="bg-slate-300 dark:bg-slate-700">
+        <img
+            :src="downRemoveImage"
+            alt="Stash and close tabs"
+            class="dark:invert"
+        />
     </Control>
 </template>
-
-<style lang="sass" scoped>
-.control
-    background-color: var(--tg-color-blue)
-
-    img
-        width: 100%
-        filter: var(--tg-filter-invert)
-</style>

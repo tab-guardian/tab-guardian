@@ -13,17 +13,10 @@ const props = defineProps<Props>()
 </script>
 
 <template>
-    <div class="actions">
+    <div class="flex items-center gap-2">
         <StashAndCloseTabsAction :group="props.group" />
         <StashTabsAction :group="props.group" />
         <OpenTabsAction :group="props.group" />
         <OpenAndDeleteAction :group="props.group" />
     </div>
 </template>
-
-<style lang="sass" scoped>
-.actions
-    display: flex
-    align-items: center
-    gap: 8px
-</style>

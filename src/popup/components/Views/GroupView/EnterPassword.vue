@@ -56,7 +56,7 @@ function submitPass(): void {
 
 <style lang="sass" scoped>
 .enter-pass
-    background-color: var(--tg-color-bg)
+    background-color: var(--tg-color-secondary)
     padding: 12px
     border-radius: 7px
     box-shadow: 4px 4px 7px rgba(0, 0, 0, .1)

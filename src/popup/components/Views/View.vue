@@ -38,7 +38,7 @@ const { title, subtitle } = defineProps<Props>()
     bottom: 0
     right: 0
     left: 0
-    background-color: var(--tg-page)
+    background-color: var(--tg-color-page)
     padding: 12px
 
     &__controls
@@ -66,6 +66,6 @@ const { title, subtitle } = defineProps<Props>()
         padding: 2px
 
         &:hover
-            background-color: var(--tg-color-bg-private)
+            background-color: var(--tg-color-secondary-private)
             border-color: var(--tg-color-border)
 </style>

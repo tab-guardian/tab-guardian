@@ -8,7 +8,7 @@ const { title, subtitle } = defineProps<Props>()
 </script>
 
 <template>
-    <section class="bg-main p-6 rounded-lg border border-border">
+    <section class="bg-secondary p-6 rounded-lg border border-border">
         <h2 class="text-xl">{{ title }}</h2>
         <p class="text-lg" v-if="subtitle">{{ subtitle }}</p>
 
@@ -20,7 +20,7 @@ const { title, subtitle } = defineProps<Props>()
 
 <style lang="sass" scoped>
 .settings-section
-    background-color: var(--tg-color-bg)
+    background-color: var(--tg-color-secondary)
     padding: 20px
     border: 1px solid var(--tg-color-border)
     border-radius: 8px

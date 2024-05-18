@@ -8,7 +8,13 @@ import GroupNamePopup from '@/components/Popups/GroupNamePopup.vue'
 
 const { loadSettingsFromStorage } = useSettingsStore()
 
-onMounted(() => loadSettingsFromStorage())
+onMounted(() => {
+    loadSettingsFromStorage()
+
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark')
+    }
+})
 </script>
 
 <template>
@@ -41,13 +47,13 @@ main::-webkit-scrollbar {
 }
 
 main::-webkit-scrollbar-track {
-    background-color: var(--tg-color-bg-scrollbar);
+    background-color: var(--tg-color-secondary-scrollbar);
     border-radius: 50px;
     margin-top: 2px;
 }
 
 main::-webkit-scrollbar-thumb {
-    background-color: var(--tg-color-bg-scrollbar-thumb);
+    background-color: var(--tg-color-secondary-scrollbar-thumb);
     border-radius: 10px;
     border-radius: 50px;
 }

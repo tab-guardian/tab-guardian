@@ -22,7 +22,7 @@ import Sidebar from '@/components/Navbar/Sidebar/Sidebar.vue'
     align-items: center
     height: 40px
     padding: 3px 10px
-    background-color: var(--tg-color-bg)
+    background-color: var(--tg-color-secondary)
     box-shadow: 0 0 4px 5px rgb(0 0 0 / 7%)
 
     a

@@ -32,6 +32,6 @@ const groupStore = useGroupStore()
     border: 1px solid transparent
 
     &:hover
-        background-color: var(--tg-color-bg)
+        background-color: var(--tg-color-secondary)
         border-color: var(--tg-color-border)
 </style>

@@ -57,5 +57,5 @@ function deleteGroup(): void {
 button
     &:last-child
         color: var(--tg-color-font)
-        background-color: var(--tg-color-bg)
+        background-color: var(--tg-color-secondary)
 </style>

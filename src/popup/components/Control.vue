@@ -25,7 +25,6 @@ button, a
     display: flex
     justify-content: center
     align-items: center
-    background: transparent
     border: 1px solid transparent
     color: var(--tg-color-font)
     border-radius: 5px

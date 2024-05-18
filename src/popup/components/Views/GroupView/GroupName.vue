@@ -37,7 +37,7 @@ h2
 input
     border: 1px solid var(--tg-color-border)
     border-radius: 5px
-    background: var(--tg-color-bg-private)
+    background: var(--tg-color-secondary-private)
     font-weight: bold
     width: 100%
     color: var(--tg-color-font)

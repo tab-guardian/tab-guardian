@@ -6,7 +6,7 @@ import { usePopupStore } from '@/stores/popup'
 import { useSelectTabsStore } from '@/stores/selectTabs'
 import Popup from '@/components/Popups/Popup.vue'
 import AppearTransition from '@common/components/Transitions/AppearTransition.vue'
-import ChevronRightIcon from '@common/components/Icons/ChevronRightIcon.vue'
+import InputField from '@/components/Form/InputField.vue'
 
 const { trans } = useTransStore()
 const { isOpenPopup, closePopup, closeAllPopups } = usePopupStore()
@@ -38,20 +38,13 @@ function selectLinks(): void {
             @cancel="closePopup('groupName')"
             :content="trans('Enter a group name')"
         >
-            <template #buttons>
-                <button @click="selectLinks" class="popup__button">
-                    {{ trans('Select Tabs') }}
-                    <ChevronRightIcon width="16" height="16" />
-                </button>
-            </template>
-
-            <input
+            <InputField
                 v-model="store.newGroup.name"
                 ref="inputRef"
                 type="text"
-                class="input"
+                class="mt-2"
                 :placeholder="trans('Group name')"
-                @keydown.enter="selectLinks"
+                @submit="selectLinks"
             />
         </Popup>
     </AppearTransition>

@@ -17,16 +17,14 @@ function openAndDeleteTabs(): void {
 </script>
 
 <template>
-    <Control @click="openAndDeleteTabs" class="control">
-        <img :src="upRemoveImage" alt="Open and delete tabs" />
+    <Control
+        @click="openAndDeleteTabs"
+        class="bg-orange-300 dark:bg-orange-700"
+    >
+        <img
+            :src="upRemoveImage"
+            alt="Open and delete tabs"
+            class="dark:invert"
+        />
     </Control>
 </template>
-
-<style lang="sass" scoped>
-.control
-    background-color: var(--tg-color-orange)
-
-    img
-        width: 100%
-        filter: var(--tg-filter-invert)
-</style>
