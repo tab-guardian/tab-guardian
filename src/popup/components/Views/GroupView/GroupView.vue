@@ -11,6 +11,7 @@ import MenuButton from '@/components/Views/GroupView/GroupControls/MenuButton.vu
 import EnterPassword from '@/components/Views/GroupView/EnterPassword.vue'
 import Actions from '@/components/Views/GroupView/GroupControls/Actions/Actions.vue'
 import IsUnlockedBox from '@/components/Views/GroupView/IsUnlockedBox.vue'
+import Message from '@common/components/Message.vue'
 
 const { trans } = useTransStore()
 const { params } = useRoute()
@@ -54,8 +55,8 @@ watchEffect(() => {
             <Links v-else :group />
         </div>
 
-        <div v-else class="message">
-            <h2>😢 {{ trans('Something went wrong! No group selected') }}</h2>
-        </div>
+        <Message v-else>
+            😢 {{ trans('Something went wrong! No group selected') }}
+        </Message>
     </View>
 </template>

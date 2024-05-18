@@ -1,18 +1,19 @@
 <script setup lang="ts">
-import GroupItem from '@/components/Views/MainView/Groups/GroupItem.vue'
 import { useGroupStore } from '@/stores/group'
 import { useTransStore } from '@/stores/trans'
+import GroupItem from '@/components/Views/MainView/Groups/GroupItem.vue'
+import Message from '@common/components/Message.vue'
 
 const store = useGroupStore()
 const { trans } = useTransStore()
 </script>
 
 <template>
-    <h3 v-if="store.groups.length === 0" class="message">
+    <Message v-if="store.groups.length === 0">
         {{ trans('There are no groups yet') }}
-    </h3>
+    </Message>
 
-    <div v-else class="groups">
+    <div v-else class="flex flex-col">
         <GroupItem
             v-for="group in store.groups"
             :key="group.id"
@@ -20,9 +21,3 @@ const { trans } = useTransStore()
         />
     </div>
 </template>
-
-<style lang="sass" scoped>
-.groups
-    display: flex
-    flex-direction: column
-</style>

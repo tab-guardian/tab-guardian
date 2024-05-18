@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import type { Group } from '@/types'
-import LinkItem from '@/components/Views/GroupView/LinkItem.vue'
 import { useTransStore } from '@/stores/trans'
+import LinkItem from '@/components/Views/GroupView/LinkItem.vue'
+import Message from '@common/components/Message.vue'
 
 type Props = {
     group: Group
@@ -12,9 +13,9 @@ const { trans } = useTransStore()
 </script>
 
 <template>
-    <p v-if="group.links.length === 0" class="message">
+    <Message v-if="group.links.length === 0">
         {{ trans('There are no links in this group') }}
-    </p>
+    </Message>
 
     <div v-else class="group__links">
         <LinkItem

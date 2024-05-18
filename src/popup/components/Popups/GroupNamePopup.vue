@@ -41,8 +41,3 @@ function selectLinks(): void {
         </Popup>
     </AppearTransition>
 </template>
-
-<style scoped lang="sass">
-input
-    margin-top: 8px
-</style>

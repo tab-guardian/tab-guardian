@@ -3,6 +3,7 @@ import { useSelectTabsStore } from '@/stores/selectTabs'
 import { useTransStore } from '@/stores/trans'
 import Spinner from '@/components/Spinner.vue'
 import TabItem from '@/components/Views/SelectTabsView/TabItem.vue'
+import Message from '@common/components/Message.vue'
 
 const store = useSelectTabsStore()
 const { trans } = useTransStore()
@@ -11,18 +12,11 @@ const { trans } = useTransStore()
 <template>
     <Spinner v-if="store.loading" />
 
-    <h3 v-else-if="store.links.length === 0" class="message">
+    <Message v-else-if="store.links.length === 0">
         {{ trans('No tabs found') }}
-    </h3>
+    </Message>
 
-    <div v-else class="tabs">
+    <div v-else class="flex flex-col gap-2">
         <TabItem v-for="link in store.links" :key="link.id" :link />
     </div>
 </template>
-
-<style lang="sass" scoped>
-.tabs
-    display: flex
-    flex-direction: column
-    gap: 5px
-</style>

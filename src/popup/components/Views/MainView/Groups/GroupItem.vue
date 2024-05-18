@@ -15,91 +15,55 @@ const { group } = defineProps<Props>()
 <template>
     <RouterLink
         :to="{ name: 'group', params: { id: group.id } }"
-        :class="{
-            'group--private': group.isPrivate && group.isEncrypted,
-            'group--unsecure': group.isPrivate && !group.isEncrypted,
-        }"
+        :class="[
+            group.isPrivate && group.isEncrypted ? 'group-private' : '',
+            group.isPrivate && !group.isEncrypted ? 'group-unsecure' : '',
+            'p-2 flex justify-between items-center gap-3',
+            'transition-colors border-b border-border bg-page hover:bg-page-hover',
+        ]"
         class="group"
     >
-        <div class="group__inner">
+        <div class="flex items-center gap-3">
             <div v-if="group.isPrivate">
-                <ShieldCheckIcon v-if="group.isEncrypted" class="shield" />
-                <ShieldExclamationIcon v-else class="shield shield--unsecure" />
+                <ShieldCheckIcon
+                    v-if="group.isEncrypted"
+                    class="w-6 h-6 text-private"
+                />
+
+                <ShieldExclamationIcon v-else class="w-6 h-6 text-font" />
             </div>
 
-            <div v-else class="amount">{{ group.links.length }}</div>
+            <div
+                v-else
+                class="flex items-center justify-center w-6 h-6 text-primary text-sm"
+            >
+                {{ group.links.length }}
+            </div>
 
-            <h2>{{ group.name }}</h2>
+            <h2 class="text-xs">{{ group.name }}</h2>
         </div>
 
-        <div class="group__buttons">
+        <div class="flex items-center gap-3">
             <OpenTabsButton v-if="!group.isEncrypted" :group />
-            <ChevronRightIcon class="icon-right" />
+            <ChevronRightIcon class="w-4 h-4" />
         </div>
     </RouterLink>
 </template>
 
-<style lang="sass" scoped>
-.group
-    padding: 10px 8px 10px 10px
-    display: flex
-    justify-content: space-between
-    align-items: center
-    gap: 10px
-    transition: background-color .2s
-    text-decoration: none
-    color: var(--tg-color-font)
-    cursor: pointer
-    border-bottom: 1px solid var(--tg-color-border)
-    background-color: var(--tg-color-page)
+<style scoped>
+.group-private {
+    background-color: var(--tg-color-secondary-private);
+}
 
-    &:hover
-        background-color: var(--tg-color-page-hover)
+.group-private:hover {
+    background-color: var(--tg-color-secondary-private-hover);
+}
 
-    &--private
-        background-color: var(--tg-color-secondary-private)
+.group-unsecure {
+    background-color: var(--tg-color-secondary-unsecure);
+}
 
-        &:hover
-            background-color: var(--tg-color-secondary-private-hover)
-
-    &--unsecure
-        background-color: var(--tg-color-secondary-unsecure)
-
-        &:hover
-            background-color: var(--tg-color-secondary-unsecure-hover)
-
-    &__buttons
-        display: flex
-        align-items: center
-        gap: 12px
-
-    &__inner
-        display: flex
-        align-items: center
-        gap: 12px
-
-        .shield
-            width: 25px
-            height: 25px
-            color: var(--tg-color-private)
-
-            &--unsecure
-                color: var(--tg-color-font)
-
-    h2
-        font-size: .9rem
-        margin: 0
-
-    .amount
-        width: 23px
-        height: 23px
-        color: var(--tg-color-primary)
-        display: flex
-        justify-content: center
-        align-items: center
-        font-size: 16px
-
-    .icon-right
-        width: 20px
-        height: 20px
+.group-unsecure:hover {
+    background-color: var(--tg-color-secondary-unsecure-hover);
+}
 </style>
