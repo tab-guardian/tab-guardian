@@ -5,6 +5,7 @@ import { usePopupStore } from '@/stores/popup'
 import error from '@common/modules/error'
 import Popup from '@/components/Popups/Popup.vue'
 import AppearTransition from '@common/components/Transitions/AppearTransition.vue'
+import PopupButton from '@/components/Popups/PopupButton.vue'
 
 const { trans } = useTransStore()
 const { isOpenPopup, closePopup } = usePopupStore()
@@ -33,29 +34,22 @@ function deleteGroup(): void {
             :content="trans('Do you want to delete the group?')"
         >
             <template #buttons>
-                <button
+                <PopupButton
                     @click="deleteGroup"
                     type="button"
                     class="popup__button"
                 >
                     {{ trans('Yes') }}
-                </button>
+                </PopupButton>
 
-                <button
+                <PopupButton
                     @click="closePopup('deleteGroup')"
                     type="button"
-                    class="popup__button"
+                    class="bg-private"
                 >
                     {{ trans('No') }}
-                </button>
+                </PopupButton>
             </template>
         </Popup>
     </AppearTransition>
 </template>
-
-<style scoped lang="sass">
-button
-    &:last-child
-        color: var(--tg-color-font)
-        background-color: var(--tg-color-secondary)
-</style>

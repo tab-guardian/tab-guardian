@@ -4,6 +4,7 @@
     --tg-color-page: #fff;
     --tg-color-page-hover: theme('colors.gray.50');
     --tg-color-border: theme('colors.gray.200');
+    --tg-color-border-hover: theme('colors.gray.300');
     --tg-color-font: theme('colors.gray.900');
     --tg-color-font-gray: theme('colors.gray.400');
     --tg-color-primary: theme('colors.cyan.700');
@@ -24,7 +25,8 @@
         --tg-color-secondary: theme('colors.gray.800');
         --tg-color-page: theme('colors.gray.950');
         --tg-color-page-hover: #01030a;
-        --tg-color-border: theme('colors.gray.800');
+        --tg-color-border: theme('colors.gray.900');
+        --tg-color-border-hover: theme('colors.gray.950');
         --tg-color-font: theme('colors.gray.50');
         --tg-color-font-gray: theme('colors.gray.400');
         --tg-color-primary: theme('colors.cyan.400');

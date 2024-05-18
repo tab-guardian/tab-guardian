@@ -12,6 +12,7 @@ module.exports = {
                 secondary: 'var(--tg-color-secondary)',
                 'page-hover': 'var(--tg-color-page-hover)',
                 border: 'var(--tg-color-border)',
+                'border-hover': 'var(--tg-color-border-hover)',
                 font: 'var(--tg-color-font)',
                 'font-gray': 'var(--tg-color-font-gray)',
                 primary: 'var(--tg-color-primary)',

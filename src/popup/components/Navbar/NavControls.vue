@@ -22,15 +22,9 @@ async function openSettings(): Promise<void> {
 </script>
 
 <template>
-    <div class="controls">
+    <div class="flex items-center">
         <Control @click="openSettings">
             <CogIcon />
         </Control>
     </div>
 </template>
-
-<style scoped lang="sass">
-.controls
-    display: flex
-    align-items: center
-</style>

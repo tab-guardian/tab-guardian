@@ -17,12 +17,14 @@ const props = defineProps<Props>()
     <div>
         <Overlay @click="emit('cancel')" />
 
-        <div class="popup">
-            <span class="popup__title">{{ props.content }}</span>
+        <div
+            class="absolute top-1/2 left-4 right-4 bg-secondary rounded-md -translate-y-1/2 p-5 z-20"
+        >
+            <span class="text-lg">{{ props.content }}</span>
 
             <slot />
 
-            <div class="popup__buttons">
+            <div class="flex gap-2 justify-end mt-3">
                 <slot name="buttons" />
             </div>
         </div>
