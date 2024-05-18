@@ -21,7 +21,7 @@ function askForGroupName(isPrivate: boolean) {
         <NewGroupButton
             @click="askForGroupName(false)"
             :disabled="groupStore.isSaving"
-            class="w-full bg-primary"
+            class="w-full bg-primary hover:bg-primary-hover"
         >
             <PlusCircleIcon class="w-6 h-6" />
             <span>{{ trans('New Group') }}</span>
@@ -29,7 +29,7 @@ function askForGroupName(isPrivate: boolean) {
 
         <NewGroupButton
             @click="askForGroupName(true)"
-            class="w-24 bg-private"
+            class="w-24 bg-private hover:bg-private-hover"
             :disabled="groupStore.isSaving"
         >
             <ShieldCheckIcon class="w-8 h-8" />

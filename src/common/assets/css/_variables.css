@@ -1,13 +1,13 @@
 :root {
     /* Light theme */
-    --tg-color-secondary: #f8f9fc;
+    --tg-color-secondary: theme('colors.gray.100');
     --tg-color-page: #fff;
-    --tg-color-page-hover: #f8f8f8;
-    --tg-color-border: #dee3ed;
-    --tg-color-font: #2f3237;
-    --tg-color-font-gray: #858585;
-    --tg-color-primary: #427db3;
-    --tg-color-primary-hover: #3b72a6;
+    --tg-color-page-hover: theme('colors.gray.50');
+    --tg-color-border: theme('colors.gray.200');
+    --tg-color-font: theme('colors.gray.900');
+    --tg-color-font-gray: theme('colors.gray.400');
+    --tg-color-primary: theme('colors.cyan.700');
+    --tg-color-primary-hover: theme('colors.cyan.800');
     --tg-color-private: #377f7c;
     --tg-color-private-hover: #2d6e6b;
     --tg-color-secondary-scrollbar: #dcdcdc;
@@ -16,7 +16,6 @@
     --tg-color-secondary-private-hover: rgb(78 220 208 / 25%);
     --tg-color-secondary-unsecure: rgb(208 78 16 / 20%);
     --tg-color-secondary-unsecure-hover: rgb(208 78 16 / 25%);
-    --tg-filter-invert: invert(0);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -28,8 +27,8 @@
         --tg-color-border: theme('colors.gray.800');
         --tg-color-font: theme('colors.gray.50');
         --tg-color-font-gray: theme('colors.gray.400');
-        --tg-color-primary: theme('colors.blue.400');
-        --tg-color-primary-hover: theme('colors.blue.500');
+        --tg-color-primary: theme('colors.cyan.400');
+        --tg-color-primary-hover: theme('colors.cyan.500');
         --tg-color-private: theme('colors.emerald.400');
         --tg-color-private-hover: theme('colors.emerald.500');
         --tg-color-secondary-scrollbar: #222;
@@ -38,7 +37,6 @@
         --tg-color-secondary-private-hover: rgb(46 225 209 / 15%);
         --tg-color-secondary-unsecure: rgb(250 44 2 / 20%);
         --tg-color-secondary-unsecure-hover: rgb(250 44 2 / 25%);
-        --tg-filter-invert: invert(1);
     }
 }
 

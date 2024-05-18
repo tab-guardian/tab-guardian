@@ -20,6 +20,6 @@ function openTabs(): void {
         :src="upImage"
         alt="Open tabs"
         @click.prevent="openTabs"
-        class="w-4 h-4 transition-transform hover:scale-110 filter invert"
+        class="w-4 h-4 transition-transform hover:scale-110 dark:invert"
     />
 </template>
