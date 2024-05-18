@@ -12,14 +12,6 @@ const { trans } = useTransStore()
 const { isOpenPopup, closePopup, closeAllPopups } = usePopupStore()
 const store = useGroupStore()
 const selectTabsStore = useSelectTabsStore()
-const inputRef = ref<HTMLInputElement | null>(null)
-
-watchEffect(() => {
-    if (inputRef.value) {
-        inputRef.value.focus()
-        store.newGroup.name = ''
-    }
-})
 
 function selectLinks(): void {
     closeAllPopups()
@@ -40,10 +32,10 @@ function selectLinks(): void {
         >
             <InputField
                 v-model="store.newGroup.name"
-                ref="inputRef"
                 type="text"
                 class="mt-2"
                 :placeholder="trans('Group name')"
+                @loaded="inp => inp.focus()"
                 @submit="selectLinks"
             />
         </Popup>
