@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Group } from '@/types'
 import { useTabsStore } from '@/stores/tabs'
-import upImage from '@/assets/images/up.png'
+import upImage from '@/assets/images/tab-icons/up.png'
 
 type Props = {
     group: Group
