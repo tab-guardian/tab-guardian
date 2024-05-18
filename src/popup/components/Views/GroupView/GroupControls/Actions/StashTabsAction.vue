@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Group } from '@/types'
 import Control from '@/components/Control.vue'
-import downImage from '@/assets/images/down.png'
+import downImage from '@/assets/images/tab-icons/down.png'
 import { useTabsStore } from '@/stores/tabs'
 
 type Props = {
