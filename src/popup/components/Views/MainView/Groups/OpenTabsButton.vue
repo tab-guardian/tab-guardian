@@ -16,16 +16,10 @@ function openTabs(): void {
 </script>
 
 <template>
-    <img :src="upImage" alt="Open tabs" @click.prevent="openTabs" />
+    <img
+        :src="upImage"
+        alt="Open tabs"
+        @click.prevent="openTabs"
+        class="w-4 h-4 transition-transform hover:scale-110 filter invert"
+    />
 </template>
-
-<style lang="sass" scoped>
-img
-    width: 18px
-    height: 18px
-    filter: var(--tg-filter-invert)
-    transition: transform .2s
-
-    &:hover
-        transform: scale(1.1)
-</style>

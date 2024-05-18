@@ -1,11 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-    content: [
-        './settings.html',
-        './src/settings/**/*.{vue,ts}',
-        './index.html',
-        './src/popup/**/*.{vue,ts}',
-    ],
+    content: ['./src/**/*.{vue,ts}'],
     theme: {
         container: {
             center: true,
