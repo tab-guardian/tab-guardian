@@ -6,34 +6,20 @@ type Props = {
 }
 
 const { to } = defineProps<Props>()
+
+const classes = [
+    'w-7 h-7 flex items-center justify-center border border-transparent',
+    'rounded-md color-font p-0.5 transition-all opacity-90',
+    'hover:opacity-100 hover:border-border',
+]
 </script>
 
 <template>
-    <RouterLink v-if="to" :to>
+    <RouterLink v-if="to" :to :class="classes">
         <slot />
     </RouterLink>
 
-    <button type="button" v-else>
+    <button type="button" v-else :class="classes">
         <slot />
     </button>
 </template>
-
-<style lang="sass" scoped>
-button, a
-    width: 30px
-    height: 30px
-    display: flex
-    justify-content: center
-    align-items: center
-    border: 1px solid transparent
-    color: var(--tg-color-font)
-    border-radius: 5px
-    padding: 2px
-    opacity: .9
-    transition: opacity .2s, border-color .2s
-    cursor: pointer
-
-    &:hover
-        opacity: 1
-        border-color: var(--tg-color-border)
-</style>
