@@ -55,15 +55,15 @@ function changePass(): void {
     >
         <form @submit.prevent="submitPass" class="form">
             <div class="field">
-                <input
-                    class="input"
+                <Input
+                    id="password"
                     type="password"
-                    :placeholder="trans('Enter password')"
+                    :label="trans('Enter password')"
                     v-model="password"
                 />
             </div>
 
-            <Button :label="trans('Save password')" />
+            <Button class="mt-3" :label="trans('Save password')" />
         </form>
     </Section>
 
@@ -73,7 +73,6 @@ function changePass(): void {
                 <Input
                     id="old-pass"
                     v-model="password"
-                    class="input"
                     type="password"
                     :label="trans('Enter your current password')"
                 />
@@ -82,7 +81,6 @@ function changePass(): void {
             <div>
                 <Input
                     id="new-pass"
-                    class="input"
                     type="password"
                     v-model="newPassword"
                     :label="trans('Enter a new password')"

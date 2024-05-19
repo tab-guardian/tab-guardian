@@ -1,29 +1,12 @@
 <script setup lang="ts">
 import Control from '@/components/Control.vue'
 import CogIcon from '@common/components/Icons/CogIcon.vue'
-import isDevelopment from '@common/modules/isDevelopment'
-
-async function openSettings(): Promise<void> {
-    if (isDevelopment()) {
-        window.open('settings.html')
-        return
-    }
-
-    const tab = await chrome.tabs.create({
-        url: chrome.runtime.getURL('settings.html'),
-        active: true,
-    })
-
-    // focus on the window
-    if (tab.id) {
-        chrome.windows.update(tab.windowId, { focused: true })
-    }
-}
+import openSettingsPage from '@/modules/openSettingsPage'
 </script>
 
 <template>
     <div class="flex items-center">
-        <Control @click="openSettings">
+        <Control @click="openSettingsPage(true)">
             <CogIcon />
         </Control>
     </div>

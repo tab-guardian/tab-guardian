@@ -2,21 +2,23 @@
 type Props = {
     label: string
     id: string
+    type: 'text' | 'password'
 }
 
-const { label, id } = defineProps<Props>()
+const props = defineProps<Props>()
 const modelValue = defineModel()
 </script>
 
 <template>
-    <label :for="id" class="block mb-0.5 mx-1">
-        {{ label }}
+    <label :for="props.id" class="block mb-0.5 mx-1">
+        {{ props.label }}
     </label>
 
     <input
-        :id="id"
-        class="rounded-lg px-3 py-2 w-full bg-page border border-border"
+        :id="props.id"
+        :type="props.type"
+        class="rounded-lg px-3 py-2 w-full bg-page border border-border focus:outline outline-2 outline-primary"
         v-model="modelValue"
-        :placeholder="label"
+        :placeholder="props.label"
     />
 </template>
