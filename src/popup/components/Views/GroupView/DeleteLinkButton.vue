@@ -15,23 +15,12 @@ const groupStore = useGroupStore()
 <template>
     <div
         @click.prevent="groupStore.deleteLink(groupId, linkId)"
-        class="delete-button"
+        :class="[
+            'flex items-center py-1 rounded-sm transition-all',
+            'border border-transparent hover:border-border',
+            'hover:bg-secondary',
+        ]"
     >
         <CloseIcon width="15" height="15" />
     </div>
 </template>
-
-<style lang="sass" scoped>
-.delete-button
-    display: flex
-    align-items: center
-    color: var(--tg-color-font)
-    padding: 3px 0
-    border-radius: 4px
-    transition: background-color .2s, border-color .2s
-    border: 1px solid transparent
-
-    &:hover
-        background-color: var(--tg-color-secondary)
-        border-color: var(--tg-color-border)
-</style>

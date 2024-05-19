@@ -12,60 +12,23 @@ const { title, subtitle } = defineProps<Props>()
 </script>
 
 <template>
-    <div class="view">
-        <div v-if="!title" class="view__controls">
+    <div class="absolute inset-0 bg-page p-2">
+        <div v-if="!title" class="flex justify-between gap-1">
             <BackButton @click="router.go(-1)" />
 
             <slot name="controls" />
         </div>
 
-        <h2 v-if="title" class="view__title">
+        <h2 v-if="title" class="flex items-center gap-2 text-lg">
             <BackButton @click="router.go(-1)" />
 
             {{ title }}
         </h2>
 
-        <p v-if="subtitle" class="view__subtitle">{{ subtitle }}</p>
+        <p v-if="subtitle" class="mt-1 text-sm text-font-gray leading-4">
+            {{ subtitle }}
+        </p>
 
         <slot></slot>
     </div>
 </template>
-
-<style lang="sass" scoped>
-.view
-    position: absolute
-    top: 0
-    bottom: 0
-    right: 0
-    left: 0
-    background-color: var(--tg-color-page)
-    padding: 12px
-
-    &__controls
-        display: flex
-        justify-content: space-between
-        gap: 2px
-
-    &__title
-        display: flex
-        align-items: center
-        gap: 6px
-        margin: 0
-        font-size: 1.2rem
-
-    &__subtitle
-        margin: 3px 0 0 0
-        color: var(--tg-color-font-gray)
-        font-size: .9rem
-
-    &__btn
-        background: none
-        border: 1px solid transparent
-        border-radius: 5px
-        cursor: pointer
-        padding: 2px
-
-        &:hover
-            background-color: var(--tg-color-secondary-private)
-            border-color: var(--tg-color-border)
-</style>

@@ -6,6 +6,7 @@ import { useGroupStore } from '@/stores/group'
 import View from '@/components/Views/View.vue'
 import Tabs from '@/components/Views/SelectTabsView/Tabs.vue'
 import SaveButton from '@/components/Views/SelectTabsView/SaveButton.vue'
+import ControlButton from '@/components/Views/SelectTabsView/ControlButton.vue'
 
 const { trans } = useTransStore()
 const store = useSelectTabsStore()
@@ -42,16 +43,16 @@ function saveTabs(): void {
         :title="trans('Select Tabs')"
         :subtitle="subtitle"
     >
-        <div class="select-tabs__controls">
-            <a href="javascript:" @click="store.selectAll">
+        <div class="flex gap-1 my-2">
+            <ControlButton @click="store.selectAll">
                 {{ trans('Select all') }}
-            </a>
-            <a href="javascript:" @click="store.deselectAll">
+            </ControlButton>
+            <ControlButton @click="store.deselectAll">
                 {{ trans('Deselect all') }}
-            </a>
-            <a href="javascript:" @click="router.go(-1)">
+            </ControlButton>
+            <ControlButton @click="router.go(-1)">
                 {{ trans('Cancel') }}
-            </a>
+            </ControlButton>
         </div>
 
         <Tabs />
@@ -59,25 +60,3 @@ function saveTabs(): void {
         <SaveButton @clicked="saveTabs" />
     </View>
 </template>
-
-<style lang="sass" scoped>
-.select-tabs
-    &__controls
-        display: flex
-        gap: 5px
-        margin: 8px 0
-
-        a
-            text-decoration: none
-            color: var(--tg-color-private)
-            font-size: .9rem
-            border-radius: 5px
-            border: 1px solid var(--tg-color-border)
-            padding: 2px 5px
-            transition: background-color .2s
-            flex: 1
-            text-align: center
-
-            &:hover
-                background-color: var(--tg-color-secondary-private)
-</style>

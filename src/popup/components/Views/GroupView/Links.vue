@@ -17,7 +17,7 @@ const { trans } = useTransStore()
         {{ trans('There are no links in this group') }}
     </Message>
 
-    <div v-else class="group__links">
+    <div v-else class="flex flex-col gap-1.5">
         <LinkItem
             v-for="link in group.links"
             :key="link.id"
@@ -26,13 +26,3 @@ const { trans } = useTransStore()
         />
     </div>
 </template>
-
-<style lang="sass" scoped>
-.group__links
-    list-style: none
-    padding: 0
-    margin: 0
-    display: flex
-    flex-direction: column
-    gap: 5px
-</style>
