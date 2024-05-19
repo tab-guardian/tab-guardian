@@ -6,7 +6,7 @@
     --tg-color-border: theme('colors.gray.200');
     --tg-color-border-hover: theme('colors.gray.300');
     --tg-color-font: theme('colors.gray.900');
-    --tg-color-font-gray: theme('colors.gray.400');
+    --tg-color-font-gray: theme('colors.gray.500');
     --tg-color-primary: theme('colors.cyan.700');
     --tg-color-primary-hover: theme('colors.cyan.800');
     --tg-color-private: #377f7c;

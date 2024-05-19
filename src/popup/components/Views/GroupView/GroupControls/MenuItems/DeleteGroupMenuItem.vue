@@ -17,18 +17,11 @@ function deleteGroup(): void {
     <MenuItem
         @click="deleteGroup"
         :title="trans('Delete this group')"
-        class="delete-menu-item"
+        :class="[
+            'text-red-500 !border-red-500',
+            'hover:!text-red-700 hover:border-red-700',
+        ]"
     >
         <TrashIcon width="22" height="22" />
     </MenuItem>
 </template>
-
-<style lang="sass" scoped>
-.delete-menu-item
-    color: #d02258
-    border-color: #d02258
-
-    &:hover
-        color: brown
-        border-color: brown
-</style>

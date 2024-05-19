@@ -26,12 +26,15 @@ const isEncrypted = computed<boolean>(() => {
             :content="trans('Additional options')"
             @cancel="closePopup('groupView')"
         >
-            <span v-if="isEncrypted" class="warning">
+            <p
+                v-if="isEncrypted"
+                class="mt-2 pt-2 text-font-gray border-t border-border"
+            >
                 <!-- prettier-ignore -->
                 {{ trans('This group is private. You need to unlock it to see the links') }}
-            </span>
+            </p>
 
-            <div v-else class="menu-items">
+            <div v-else class="flex flex-col gap-1 mt-3">
                 <AddLinkMenuItem />
                 <RenameMenuItem />
                 <DeleteGroupMenuItem />
@@ -39,15 +42,3 @@ const isEncrypted = computed<boolean>(() => {
         </Popup>
     </AppearTransition>
 </template>
-
-<style lang="sass" scoped>
-.menu-items
-    margin-top: 12px
-    display: flex
-    flex-direction: column
-    gap: 7px
-
-.warning
-    display: block
-    margin-top: 16px
-</style>
