@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref, watchEffect } from 'vue'
 import { useGroupStore } from '@/stores/group'
 import { useTransStore } from '@/stores/trans'
 import { usePopupStore } from '@/stores/popup'

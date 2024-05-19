@@ -7,6 +7,7 @@ const modelValue = defineModel()
         <input
             type="checkbox"
             class="absolute left-1/2 -translate-x-1/2 w-full h-full peer appearance-none rounded-md"
+            v-model="modelValue"
         />
 
         <small class="text-sm text-font-gray mr-3"><slot /></small>

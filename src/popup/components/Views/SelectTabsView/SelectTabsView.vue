@@ -5,11 +5,12 @@ import { useRouter } from 'vue-router'
 import { useSelectTabsStore } from '@/stores/selectTabs'
 import { useTransStore } from '@/stores/trans'
 import { useGroupStore } from '@/stores/group'
+import showToast from '@common/modules/showToast'
 import View from '@/components/Views/View.vue'
 import Tabs from '@/components/Views/SelectTabsView/Tabs.vue'
 import SaveButton from '@/components/Views/SelectTabsView/SaveButton.vue'
 import ControlButton from '@/components/Views/SelectTabsView/ControlButton.vue'
-import showToast from '@common/modules/showToast'
+import Switch from '@/components/Form/Switch.vue'
 
 const { trans } = useTransStore()
 const store = useSelectTabsStore()
@@ -82,11 +83,19 @@ function showToastMessage(operation: SelectTabsOperation, links: Link[]): void {
 
         <Tabs />
 
-        <SaveButton @clicked="saveTabs">
-            <span v-if="store.operation === 'adding'">
-                {{ trans('Add tabs') }}
-            </span>
-            <span v-else>{{ trans('Create the group') }}</span>
-        </SaveButton>
+        <div class="flex flex-col justify-between gap-3">
+            <SaveButton @clicked="saveTabs">
+                <span v-if="store.operation === 'adding'">
+                    {{ trans('Add tabs') }}
+                </span>
+                <span v-else>{{ trans('Create the group') }}</span>
+            </SaveButton>
+
+            <div class="text-right mt-1">
+                <Switch v-model="groupStore.closeSelectedTabs">
+                    {{ trans('Close selected tabs') }}
+                </Switch>
+            </div>
+        </div>
     </View>
 </template>

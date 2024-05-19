@@ -11,12 +11,14 @@ import getDefaultGroupName from '@/modules/getDefaultGroupName'
 import unlock from '@common/modules/encrypt/decryptGroup'
 import saveToStorage from '@common/modules/storage/saveToStorage'
 import encryptGroup from '@common/modules/encrypt/encryptGroup'
+import closeTabsByIds from '@/modules/tabs/closeTabsByIds'
 
 export const useGroupStore = defineStore('group', () => {
     const groups = ref<Group[]>([])
     const isSaving = ref<boolean>(false)
     const selectedGroup = ref<Group | null>(null)
     const isTitleFieldActive = ref<boolean>(false)
+    const closeSelectedTabs = ref<boolean>(false)
 
     const router = useRouter()
     const settingsStore = useSettingsStore()
@@ -179,6 +181,10 @@ export const useGroupStore = defineStore('group', () => {
             return group
         })
 
+        if (closeSelectedTabs.value) {
+            closeTabsByIds(links.map(link => link.id))
+        }
+
         resetNewGroup()
         saveGroups()
     }
@@ -210,6 +216,7 @@ export const useGroupStore = defineStore('group', () => {
         isSaving,
         selectedGroup,
         isTitleFieldActive,
+        closeSelectedTabs,
         newGroup,
         goBack,
         select,

@@ -11,13 +11,12 @@ type Params = {
 }
 
 export default async (params: Params): Promise<Link[]> => {
+    if (isDevelopment()) {
+        return getFakeLinks()
+    }
+
     try {
         const tabs = await queryTabs()
-
-        if (isDevelopment()) {
-            return getFakeLinks()
-        }
-
         const links = convertTabsToLinks(tabs)
 
         if (params.closeTabs) {
