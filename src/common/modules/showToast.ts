@@ -15,7 +15,6 @@ export default (text: string, type: 'error' | 'info' = 'info', duration = 2000):
                     : 'linear-gradient(135deg, #7e3d3d, #7e1919)',
             borderRadius: '8px',
             position: 'absolute',
-            margin: '0 10px',
             boxShadow:
                 type === 'info'
                     ? ''
