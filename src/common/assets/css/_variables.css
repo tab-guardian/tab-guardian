@@ -13,8 +13,10 @@
     --tg-color-private-hover: #2d6e6b;
     --tg-color-secondary-scrollbar: #dcdcdc;
     --tg-color-secondary-scrollbar-thumb: #afafaf;
-    --tg-color-active: rgb(78 220 208 / 15%);
-    --tg-color-active-hover: rgb(78 220 208 / 25%);
+    --tg-color-safe: rgb(78 220 208 / 15%);
+    --tg-color-safe-hover: rgb(78 220 208 / 25%);
+    --tg-color-unsafe: rgba(220, 78, 78, .15);
+    --tg-color-unsafe-hover: rgba(220, 78, 78, .25);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -34,8 +36,10 @@
         --tg-color-private-hover: theme('colors.emerald.500');
         --tg-color-secondary-scrollbar: #222;
         --tg-color-secondary-scrollbar-thumb: #555;
-        --tg-color-active: rgb(46 225 209 / 10%);
-        --tg-color-active-hover: rgb(46 225 209 / 15%);
+        --tg-color-safe: rgb(46 225 209 / 10%);
+        --tg-color-safe-hover: rgb(46 225 209 / 15%);
+        --tg-color-unsafe: rgba(225, 46, 46, .2);
+        --tg-color-unsafe-hover: rgba(225, 46, 46, .3);
     }
 }
 

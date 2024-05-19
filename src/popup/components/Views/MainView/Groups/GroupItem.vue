@@ -22,13 +22,17 @@ const groupClasses = computed(() => {
         'transition-colors',
         'border-b',
         'border-border',
+        'bg-page hover:bg-page-hover',
     ]
 
-    const additionalClasses = group.isPrivate
-        ? 'bg-active hover:bg-active-hover'
-        : 'bg-page hover:bg-page-hover'
+    const privateGroup = group.isPrivate ? '!bg-safe hover:!bg-safe-hover' : ''
 
-    return [additionalClasses, ...commonClasses]
+    const unsafeGroup =
+        group.isPrivate && !group.isEncrypted
+            ? '!bg-unsafe hover:!bg-unsafe-hover'
+            : ''
+
+    return [privateGroup, unsafeGroup, ...commonClasses]
 })
 </script>
 

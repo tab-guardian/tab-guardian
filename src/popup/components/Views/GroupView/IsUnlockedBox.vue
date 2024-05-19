@@ -4,6 +4,7 @@ import { useTransStore } from '@/stores/trans'
 import { useGroupStore } from '@/stores/group'
 import showToast from '@common/modules/showToast'
 import ShieldExclamationIcon from '@common/components/Icons/ShieldExclamationIcon.vue'
+import LockClosedIcon from '@common/components/Icons/LockClosedIcon.vue'
 
 type Props = {
     group: Group
@@ -24,7 +25,7 @@ function lockGroup(): void {
 
 <template>
     <div
-        class="flex items-center justify-between mb-4 bg-secondary p-3 rounded-lg gap-4"
+        class="flex items-center justify-between mb-4 bg-unsafe p-3 rounded-lg gap-4"
     >
         <ShieldExclamationIcon class="w-8 h-8 text-red-400" />
 
@@ -35,10 +36,12 @@ function lockGroup(): void {
         <button
             @click="lockGroup"
             :class="[
-                'bg-green-300 dark:bg-green-800 px-3 py-2 rounded-md',
-                'text-sm hover:bg-black/50 text-bg font-semibold',
+                'bg-unsafe px-3 py-2 rounded-md',
+                'text-sm hover:bg-unsafe-hover text-bg font-semibold',
+                'flex items-center gap-2',
             ]"
         >
+            <LockClosedIcon width="18" height="18" />
             {{ trans('Lock') }}
         </button>
     </div>

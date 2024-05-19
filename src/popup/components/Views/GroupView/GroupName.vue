@@ -29,7 +29,7 @@ watchEffect(() => {
         autofocus
         :class="classes"
         ref="inputRef"
-        class="border border-border bg-active text-font w-full rounded-md"
+        class="border border-border bg-safe text-font w-full rounded-md"
     />
 
     <h2 v-else :class="classes" class="border border-transparent">

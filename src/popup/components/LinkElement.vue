@@ -19,7 +19,7 @@ const classes = computed(() => {
     ]
 
     if (props.isSelected) {
-        result.push('bg-active hover:bg-active-hover')
+        result.push('bg-safe hover:bg-safe-hover')
     }
 
     return result
