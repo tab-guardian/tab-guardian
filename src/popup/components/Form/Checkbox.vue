@@ -1,0 +1,23 @@
+<script setup lang="ts">
+const modelValue = defineModel()
+</script>
+
+<template>
+    <label class="relative inline-flex items-center p-1">
+        <input
+            type="checkbox"
+            class="absolute left-1/2 -translate-x-1/2 w-full h-full peer appearance-none rounded-md"
+        />
+
+        <small class="text-sm text-font-gray mr-3"><slot /></small>
+
+        <span
+            :class="[
+                'w-10 h-6 flex items-center flex-shrink-0 p-1 dark:bg-zinc-600 cursor-pointer',
+                'duration-300 ease-in-out peer-checked:bg-private after:w-4 after:h-4',
+                'after:bg-white after:rounded-full after:shadow-sm after:duration-300',
+                'peer-checked:after:translate-x-4 border border-border bg-zinc-200 rounded-full',
+            ]"
+        ></span>
+    </label>
+</template>
