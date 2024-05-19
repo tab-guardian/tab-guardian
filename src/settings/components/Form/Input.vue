@@ -10,7 +10,7 @@ const modelValue = defineModel()
 </script>
 
 <template>
-    <label :for="props.id" class="block mb-0.5 mx-1">
+    <label :for="props.id" class="block mb-0.5 mx-1 text-sm">
         {{ props.label }}
     </label>
 
