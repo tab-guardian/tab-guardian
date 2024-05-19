@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useSelectTabsStore } from '@/stores/selectTabs'
 import { useTransStore } from '@/stores/trans'
@@ -15,6 +16,15 @@ const groupStore = useGroupStore()
 const subtitle = trans(
     'Click on each tab to select or unselect it for saving to memory',
 )
+
+onMounted(() => addEventListener('keydown', saveTabsAfterEnter))
+onUnmounted(() => removeEventListener('keydown', saveTabsAfterEnter))
+
+function saveTabsAfterEnter(e: Event): void {
+    if (e instanceof KeyboardEvent && e.key === 'Enter') {
+        saveTabs()
+    }
+}
 
 function saveTabs(): void {
     let groupId = store.targetGroupId
