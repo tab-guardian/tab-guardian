@@ -4,7 +4,6 @@ import { useMainStore } from '@settings/stores/main'
 import { useTransStore } from '@settings/stores/trans'
 import PasswordSection from '@settings/components/PasswordSection.vue'
 import OptionsSection from '@settings/components/OptionsSection.vue'
-import '@settings/style.css'
 
 const { trans } = useTransStore()
 

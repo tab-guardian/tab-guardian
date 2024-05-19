@@ -16,7 +16,7 @@ const props = defineProps<Props>()
             class="w-7 h-7 rounded-md"
         />
 
-        <div class="flex flex-col w-64 min-w-0">
+        <div class="flex flex-col w-72 min-w-0">
             <h2
                 :title="props.link.title"
                 class="text-sm leading-4 overflow-hidden text-ellipsis text-nowrap"

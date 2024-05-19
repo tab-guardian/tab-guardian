@@ -42,7 +42,7 @@ const groupClasses = computed(() => {
         :class="groupClasses"
         class="group"
     >
-        <div class="flex items-center gap-3">
+        <div class="flex items-center gap-2">
             <div v-if="group.isPrivate">
                 <ShieldCheckIcon
                     v-if="group.isEncrypted"
@@ -59,7 +59,7 @@ const groupClasses = computed(() => {
                 {{ group.links.length }}
             </div>
 
-            <h2 class="text-xs">{{ group.name }}</h2>
+            <h2 class="text-sm">{{ group.name }}</h2>
         </div>
 
         <div class="flex items-center gap-3">
