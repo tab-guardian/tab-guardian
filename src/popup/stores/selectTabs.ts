@@ -1,4 +1,4 @@
-import type { Link } from '@/types'
+import type { Link, SelectTabsOperation } from '@/types'
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import { useRouter } from 'vue-router'
@@ -6,6 +6,7 @@ import { usePopupStore } from '@/stores/popup'
 import getCurrentLinks from '@/modules/tabs/getCurrentLinks'
 
 type SelectLinksParams = {
+    operation: SelectTabsOperation
     groupId?: number
     selectAll?: boolean
 }
@@ -17,6 +18,9 @@ export const useSelectTabsStore = defineStore('selectTabs', () => {
     const loading = ref<boolean>(false)
     const router = useRouter()
     const { closeAllPopups } = usePopupStore()
+
+    // It indicates whether we are adding tabs or creating a new group
+    const operation = ref<SelectTabsOperation>('creating')
 
     function fetchLinks(selectAll?: boolean): void {
         getCurrentLinks({ closeTabs: false })
@@ -30,14 +34,16 @@ export const useSelectTabsStore = defineStore('selectTabs', () => {
             .finally(() => (loading.value = false))
     }
 
-    function showView({ groupId, selectAll }: SelectLinksParams): void {
-        if (groupId) {
-            targetGroupId.value = groupId
+    function showView(param: SelectLinksParams): void {
+        if (param.groupId) {
+            targetGroupId.value = param.groupId
         }
+
+        operation.value = param.operation
 
         closeAllPopups()
 
-        fetchLinks(selectAll)
+        fetchLinks(param.selectAll)
         router.push({ name: 'select-tabs' })
     }
 
@@ -77,6 +83,7 @@ export const useSelectTabsStore = defineStore('selectTabs', () => {
         selectedIds,
         loading,
         targetGroupId,
+        operation,
         toggleSelect,
         selectAll,
         deselectAll,

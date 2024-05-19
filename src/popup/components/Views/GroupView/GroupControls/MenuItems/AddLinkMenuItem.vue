@@ -18,6 +18,7 @@ function addLink(): void {
 
     store.showView({
         groupId: groupStore.selectedGroup.id,
+        operation: 'adding',
     })
 }
 </script>

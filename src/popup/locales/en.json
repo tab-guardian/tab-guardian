@@ -10,7 +10,7 @@
     "Click on each tab to select or unselect it for saving to memory": "Click on each tab to select or unselect it for saving to memory",
     "Select all": "Select all",
     "Deselect all": "Deselect all",
-    "Save": "Save",
+    "Add tabs": "Add tabs",
     "Cancel": "Cancel",
     "No tabs found": "No tabs found",
     "There are no groups yet": "There are no groups yet",
@@ -39,5 +39,10 @@
     "No tabs to save": "No tabs to save",
     "Tabs have been saved": "Tabs have been saved",
     "Tabs opened and group deleted": "Tabs opened and group deleted",
-    "To create a private group, you need to set a password in settings": "To create a private group, you need to set a password in settings"
+    "To create a private group, you need to set a password in settings": "To create a private group, you need to set a password in settings",
+    "Create the group": "Create the group",
+    "You haven't selected any tabs": "You haven't selected any tabs",
+    "Tabs added to the group": "Tabs added to the group",
+    "Group created without any tabs selected": "Group created without any tabs selected",
+    "Group created with tabs": "Group created with tabs"
 }

@@ -23,7 +23,7 @@ const emit = defineEmits<Emits>()
             ]"
         >
             <CheckIcon width="17" height="17" />
-            {{ trans('Save') }}
+            <slot />
         </button>
     </div>
 </template>

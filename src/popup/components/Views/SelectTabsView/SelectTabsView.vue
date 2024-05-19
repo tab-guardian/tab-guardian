@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { SelectTabsOperation, Link } from '@/types'
 import { onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useSelectTabsStore } from '@/stores/selectTabs'
@@ -8,6 +9,7 @@ import View from '@/components/Views/View.vue'
 import Tabs from '@/components/Views/SelectTabsView/Tabs.vue'
 import SaveButton from '@/components/Views/SelectTabsView/SaveButton.vue'
 import ControlButton from '@/components/Views/SelectTabsView/ControlButton.vue'
+import showToast from '@common/modules/showToast'
 
 const { trans } = useTransStore()
 const store = useSelectTabsStore()
@@ -44,6 +46,19 @@ function saveTabs(): void {
     }
 
     store.closeTabsModal()
+    showToastMessage(store.operation, selectedLinks)
+}
+
+function showToastMessage(operation: SelectTabsOperation, links: Link[]): void {
+    if (operation === 'adding' && links.length === 0) {
+        showToast(trans("You haven't selected any tabs"))
+    } else if (operation === 'adding') {
+        showToast(trans('Tabs added to the group'))
+    } else if (operation === 'creating' && links.length === 0) {
+        showToast(trans('Group created without any tabs selected'))
+    } else {
+        showToast(trans('Group created with tabs'))
+    }
 }
 </script>
 
@@ -67,6 +82,11 @@ function saveTabs(): void {
 
         <Tabs />
 
-        <SaveButton @clicked="saveTabs" />
+        <SaveButton @clicked="saveTabs">
+            <span v-if="store.operation === 'adding'">
+                {{ trans('Add tabs') }}
+            </span>
+            <span v-else>{{ trans('Create the group') }}</span>
+        </SaveButton>
     </View>
 </template>

@@ -34,3 +34,5 @@ export type Modals = {
     group: boolean
     selectTabs: boolean
 }
+
+export type SelectTabsOperation = 'adding' | 'creating'

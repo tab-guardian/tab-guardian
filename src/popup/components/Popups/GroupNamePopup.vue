@@ -18,6 +18,7 @@ function selectLinks(): void {
 
     selectTabsStore.showView({
         selectAll: true,
+        operation: 'creating',
     })
 }
 </script>
