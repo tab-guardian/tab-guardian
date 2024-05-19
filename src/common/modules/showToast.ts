@@ -1,13 +1,13 @@
 import Toastify from 'toastify-js'
 
-export default (text: string, type: 'error' | 'info' = 'info'): void => {
+export default (text: string, type: 'error' | 'info' = 'info', duration = 2000): void => {
     Toastify({
         text,
-        duration: 2000,
+        duration,
         close: false,
-        gravity: 'top', // `top` or `bottom`
+        gravity: 'bottom', // `top` or `bottom`
         position: 'center', // `left`, `center` or `right`
-        stopOnFocus: false, // Prevents dismissing of toast on hover
+        stopOnFocus: true,
         style: {
             background:
                 type === 'info'
@@ -15,6 +15,7 @@ export default (text: string, type: 'error' | 'info' = 'info'): void => {
                     : 'linear-gradient(135deg, #7e3d3d, #7e1919)',
             borderRadius: '8px',
             position: 'absolute',
+            margin: '0 10px',
             boxShadow:
                 type === 'info'
                     ? ''

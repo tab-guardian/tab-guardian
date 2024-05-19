@@ -7,7 +7,6 @@ import ShieldCheckIcon from '@common/components/Icons/ShieldCheckIcon.vue'
 import PlusCircleIcon from '@common/components/Icons/PlusCircleIcon.vue'
 import NewGroupButton from '@/components/Views/MainView/NewGroup/NewGroupButton.vue'
 import showToast from '@common/modules/showToast'
-import openSettingsPage from '@/modules/openSettingsPage'
 
 const { trans } = useTransStore()
 const { openPopup } = usePopupStore()
@@ -21,8 +20,7 @@ function askForGroupName(isPrivate: boolean) {
         const msg = trans(
             'To create a private group, you need to set a password in settings',
         )
-        showToast(msg, 'error')
-        openSettingsPage(true)
+        showToast(msg, 'error', 4000)
         return
     }
 

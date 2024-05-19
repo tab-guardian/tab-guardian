@@ -6,7 +6,7 @@ import openSettingsPage from '@/modules/openSettingsPage'
 
 <template>
     <div class="flex items-center">
-        <Control @click="openSettingsPage(true)">
+        <Control @click="openSettingsPage">
             <CogIcon />
         </Control>
     </div>

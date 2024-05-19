@@ -1,6 +1,6 @@
 import isDevelopment from '@common/modules/isDevelopment'
 
-export default async (focusOnTab: boolean): Promise<chrome.tabs.Tab | null> => {
+export default async (): Promise<chrome.tabs.Tab | null> => {
     if (isDevelopment()) {
         window.open('settings.html')
         return null
@@ -11,7 +11,7 @@ export default async (focusOnTab: boolean): Promise<chrome.tabs.Tab | null> => {
         active: true,
     })
 
-    if (focusOnTab && tab.id) {
+    if (tab.id) {
         chrome.windows.update(tab.windowId, { focused: true })
     }
 
