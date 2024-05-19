@@ -38,9 +38,9 @@ function submitPass(): void {
 </script>
 
 <template>
-    <div class="enter-pass">
-        <p class="enter-pass__heading">
-            <ShieldCheckIcon width="40" height="40" />
+    <div class="bg-secondary p-3 rounded-md shadow-md mt-2">
+        <p class="flex items-center gap-3 mb-2 text-sm leading-4">
+            <ShieldCheckIcon width="45" height="45" />
             {{ trans('Enter a password to unlock the content of this group') }}
         </p>
 
@@ -53,19 +53,3 @@ function submitPass(): void {
         />
     </div>
 </template>
-
-<style lang="sass" scoped>
-.enter-pass
-    background-color: var(--tg-color-secondary)
-    padding: 12px
-    border-radius: 7px
-    box-shadow: 4px 4px 7px rgba(0, 0, 0, .1)
-    margin-top: 10px
-
-    &__heading
-        font-size: .9rem
-        display: flex
-        align-items: center
-        gap: 10px
-        margin: 0 0 7px 0
-</style>

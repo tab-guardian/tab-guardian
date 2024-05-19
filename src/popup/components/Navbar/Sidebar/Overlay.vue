@@ -4,7 +4,7 @@ import CloseIcon from '@common/components/Icons/CloseIcon.vue'
 
 <template>
     <div
-        class="absolute inset-0 bg-black/80 cursor-pointer z-10 group/close-icon"
+        class="absolute inset-0 bg-black/80 cursor-pointer z-20 group/close-icon"
     >
         <CloseIcon
             :class="[

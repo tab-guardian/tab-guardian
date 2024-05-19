@@ -1,18 +1,10 @@
 <template>
-    <Transition>
+    <Transition
+        enter-active-class="top-0 transition-all duration-200 ease-in-out"
+        leave-active-class="top-0 transition-all duration-200 ease-in-out"
+        enter-from-class="-translate-x-full"
+        leave-to-class="-translate-x-full"
+    >
         <slot></slot>
     </Transition>
 </template>
-
-<style lang="sass" scoped>
-.v-enter-active,
-.v-leave-active
-    transition: all .2s cubic-bezier(1, 0.5, 0.8, 1)
-    position: absolute
-    top: 0
-    z-index: 1
-
-.v-enter-from,
-.v-leave-to
-    transform: translateX(-100%)
-</style>

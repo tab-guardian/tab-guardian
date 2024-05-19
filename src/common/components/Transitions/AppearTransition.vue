@@ -1,19 +1,10 @@
 <template>
-    <Transition>
+    <Transition
+        enter-active-class="transition-opacity duration-200 ease"
+        leave-active-class="transition-opacity duration-200 ease"
+        enter-from-class="opacity-0"
+        leave-to-class="opacity-0"
+    >
         <slot />
     </Transition>
 </template>
-
-<style lang="sass" scoped>
-.v-enter-active,
-.v-leave-active
-    transition: opacity .2s ease
-
-.v-enter-from,
-.v-leave-to
-    opacity: 0
-
-.v-enter-to,
-.v-leave-from
-    opacity: 1
-</style>

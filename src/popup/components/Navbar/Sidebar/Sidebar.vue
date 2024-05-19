@@ -16,7 +16,7 @@ const sidebarStore = useSidebarStore()
         <RightSlideTransition>
             <aside
                 v-if="sidebarStore.isOpen"
-                class="z-20 absolute w-64 bg-secondary inset-y-0 left-0 p-10 shadow-md"
+                class="z-30 absolute w-64 bg-secondary inset-y-0 left-0 p-10 shadow-md"
             >
                 Sidebar
             </aside>
