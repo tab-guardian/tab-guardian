@@ -4,7 +4,7 @@ import { useSettingsStore } from '@/stores/settings'
 import Navbar from '@/components/Navbar/Navbar.vue'
 import DeleteGroupPopup from '@/components/Popups/DeleteGroupPopup.vue'
 import GroupMenuPopup from '@/components/Popups/GroupMenuPopup.vue'
-import GroupNamePopup from '@/components/Popups/GroupNamePopup.vue'
+import NewGroupNamePopup from '@/components/Popups/NewGroupNamePopup.vue'
 import AppearTransition from '@common/components/Transitions/AppearTransition.vue'
 
 const { loadSettingsFromStorage } = useSettingsStore()
@@ -31,7 +31,7 @@ onMounted(() => {
 
     <DeleteGroupPopup />
     <GroupMenuPopup />
-    <GroupNamePopup />
+    <NewGroupNamePopup />
 </template>
 
 <style>
