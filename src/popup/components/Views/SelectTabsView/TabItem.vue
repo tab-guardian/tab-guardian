@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { Link } from '@/types'
 import { useSelectTabsStore } from '@/stores/selectTabs'
+import LinkElement from '@/components/LinkElement.vue'
 
 type Props = {
     link: Link
@@ -11,30 +12,28 @@ const store = useSelectTabsStore()
 </script>
 
 <template>
-    <div
-        class="link-item"
-        :class="{
-            'link-item--selected': store.selectedIds.includes(link.id),
-        }"
+    <LinkElement
+        :isLink="false"
+        :isSelected="store.selectedIds.includes(link.id)"
+        :link
         @click="store.toggleSelect(link.id)"
     >
-        <div class="link-item__inner">
-            <img :src="link.favIconUrl" alt="icon" />
-
-            <div class="link-item__content">
-                <span :title="link.title">
-                    {{ link.title }}
-                </span>
-            </div>
-        </div>
-
-        <label class="link-item__checkbox">
-            <input @change="store.toggleSelect(link.id)" type="checkbox" />
+        <label
+            :class="[
+                'w-4 h-4 shrink-0 border border-border flex items-center justify-center',
+                'cursor-pointer rounded-full',
+            ]"
+        >
+            <input
+                @change="store.toggleSelect(link.id)"
+                type="checkbox"
+                class="hidden"
+            />
 
             <div
                 v-if="store.selectedIds.includes(link.id)"
-                class="link-item__checkbox__checkmark"
+                class="w-3 h-3 bg-private rounded-full"
             ></div>
         </label>
-    </div>
+    </LinkElement>
 </template>

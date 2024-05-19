@@ -13,8 +13,8 @@
     --tg-color-private-hover: #2d6e6b;
     --tg-color-secondary-scrollbar: #dcdcdc;
     --tg-color-secondary-scrollbar-thumb: #afafaf;
-    --tg-color-secondary-private: rgb(78 220 208 / 15%);
-    --tg-color-secondary-private-hover: rgb(78 220 208 / 25%);
+    --tg-color-active: rgb(78 220 208 / 15%);
+    --tg-color-active-hover: rgb(78 220 208 / 25%);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -34,8 +34,8 @@
         --tg-color-private-hover: theme('colors.emerald.500');
         --tg-color-secondary-scrollbar: #222;
         --tg-color-secondary-scrollbar-thumb: #555;
-        --tg-color-secondary-private: rgb(46 225 209 / 10%);
-        --tg-color-secondary-private-hover: rgb(46 225 209 / 15%);
+        --tg-color-active: rgb(46 225 209 / 10%);
+        --tg-color-active-hover: rgb(46 225 209 / 15%);
     }
 }
 

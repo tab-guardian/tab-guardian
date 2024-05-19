@@ -1,0 +1,10 @@
+@import 'toastify-js/src/toastify.css';
+@import '../common/assets/css/style.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.toast-close {
+    margin-left: 8px;
+}

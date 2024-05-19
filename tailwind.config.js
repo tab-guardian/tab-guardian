@@ -23,6 +23,8 @@ module.exports = {
                 'blue-1000': 'var(--tg-color-blue)',
                 'orange-1000': 'var(--tg-color-orange)',
                 'green-1000': 'var(--tg-color-green)',
+                active: 'var(--tg-color-active)',
+                'active-hover': 'var(--tg-color-active-hover)',
             },
         },
     },

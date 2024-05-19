@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Group } from '@/types'
+import { computed } from 'vue'
 import ChevronRightIcon from '@common/components/Icons/ChevronRightIcon.vue'
 import ShieldCheckIcon from '@common/components/Icons/ShieldCheckIcon.vue'
 import ShieldExclamationIcon from '@common/components/Icons/ShieldExclamationIcon.vue'
@@ -10,19 +11,31 @@ type Props = {
 }
 
 const { group } = defineProps<Props>()
+
+const groupClasses = computed(() => {
+    const commonClasses = [
+        'p-2',
+        'flex',
+        'justify-between',
+        'items-center',
+        'gap-3',
+        'transition-colors',
+        'border-b',
+        'border-border',
+    ]
+
+    const additionalClasses = group.isPrivate
+        ? 'bg-active hover:bg-active-hover'
+        : 'bg-page hover:bg-page-hover'
+
+    return [additionalClasses, ...commonClasses]
+})
 </script>
 
 <template>
     <RouterLink
         :to="{ name: 'group', params: { id: group.id } }"
-        :class="[
-            group.isPrivate && group.isEncrypted ? 'group-private' : '',
-            group.isPrivate && !group.isEncrypted
-                ? 'bg-secondary hover:bg-secondary-hover'
-                : '',
-            'p-2 flex justify-between items-center gap-3',
-            'transition-colors border-b border-border bg-page hover:bg-page-hover',
-        ]"
+        :class="groupClasses"
         class="group"
     >
         <div class="flex items-center gap-3">
@@ -51,13 +64,3 @@ const { group } = defineProps<Props>()
         </div>
     </RouterLink>
 </template>
-
-<style scoped>
-.group-private {
-    background-color: var(--tg-color-secondary-private);
-}
-
-.group-private:hover {
-    background-color: var(--tg-color-secondary-private-hover);
-}
-</style>
