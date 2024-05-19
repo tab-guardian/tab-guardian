@@ -13,9 +13,27 @@ export default (tabs: chrome.tabs.Tab[]): Link[] => {
             id: tab.id || Date.now(),
             title: tab.title || tab.url || '<no title>',
             url: tab.url,
-            favIconUrl: tab.favIconUrl || getImageUrl('no-image.png'),
+            favIconUrl: getFaviconIconUrl(tab),
         })
     }
 
     return links
+}
+
+const icons = [
+    ['http://localhost', 'localhost.png'],
+    ['chrome://', 'chrome.png'],
+    ['brave://', 'brave.png'],
+]
+
+function getFaviconIconUrl(tab: chrome.tabs.Tab): string {
+    if (tab.url) {
+        for (const [prefix, icon] of icons) {
+            if (tab.url.startsWith(prefix)) {
+                return getImageUrl(icon)
+            }
+        }
+    }
+
+    return tab.favIconUrl || getImageUrl('no-image.png')
 }
