@@ -83,19 +83,19 @@ function showToastMessage(operation: SelectTabsOperation, links: Link[]): void {
 
         <Tabs />
 
-        <div class="flex flex-col justify-between gap-3">
+        <div class="flex items-center justify-between gap-3 mt-3">
+            <div class="text-right">
+                <Switch v-model="groupStore.closeSelectedTabs">
+                    {{ trans('Close selected tabs') }}
+                </Switch>
+            </div>
+
             <SaveButton @clicked="saveTabs">
                 <span v-if="store.operation === 'adding'">
                     {{ trans('Add tabs') }}
                 </span>
                 <span v-else>{{ trans('Create the group') }}</span>
             </SaveButton>
-
-            <div class="text-right mt-1">
-                <Switch v-model="groupStore.closeSelectedTabs">
-                    {{ trans('Close selected tabs') }}
-                </Switch>
-            </div>
         </div>
     </View>
 </template>

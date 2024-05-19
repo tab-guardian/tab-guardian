@@ -10,8 +10,6 @@ const modelValue = defineModel()
             v-model="modelValue"
         />
 
-        <small class="text-sm text-font-gray mr-3"><slot /></small>
-
         <span
             :class="[
                 'w-10 h-6 flex items-center flex-shrink-0 p-1 dark:bg-zinc-600 cursor-pointer',
@@ -20,5 +18,7 @@ const modelValue = defineModel()
                 'peer-checked:after:translate-x-4 border border-border bg-zinc-200 rounded-full',
             ]"
         ></span>
+
+        <small class="text-sm text-font-gray ml-3"><slot /></small>
     </label>
 </template>

@@ -12,7 +12,7 @@ const emit = defineEmits<Emits>()
 </script>
 
 <template>
-    <div class="text-right mt-3">
+    <div class="text-right">
         <button
             type="button"
             @click="emit('clicked')"

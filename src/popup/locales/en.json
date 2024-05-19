@@ -44,5 +44,6 @@
     "You haven't selected any tabs": "You haven't selected any tabs",
     "Tabs added to the group": "Tabs added to the group",
     "Group created without any tabs selected": "Group created without any tabs selected",
-    "Group created with tabs": "Group created with tabs"
+    "Group created with tabs": "Group created with tabs",
+    "Close selected tabs": "Close selected tabs"
 }
