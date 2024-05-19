@@ -179,6 +179,7 @@ export const useGroupStore = defineStore('group', () => {
             return group
         })
 
+        resetNewGroup()
         saveGroups()
     }
 
