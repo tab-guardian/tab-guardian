@@ -6,6 +6,7 @@ import { useSettingsStore } from '@/stores/settings'
 import showToast from '@common/modules/showToast'
 import getCurrentLinks from '@/modules/tabs/getCurrentLinks'
 import isDevelopment from '@common/modules/isDevelopment'
+import restoreTabs from '@/modules/tabs/restoreTabs'
 
 export const useTabsStore = defineStore('tabs', () => {
     const groupStore = useGroupStore()
@@ -18,13 +19,7 @@ export const useTabsStore = defineStore('tabs', () => {
             return false
         }
 
-        group.links.forEach(link => {
-            chrome.tabs.create({
-                url: link.url,
-                active: false,
-                pinned: link.isPinned,
-            })
-        })
+        restoreTabs(group.links)
 
         if (settingsStore.settings.encryptAfterRestore) {
             groupStore.encryptGroupById(group.id)
