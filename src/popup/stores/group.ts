@@ -185,8 +185,7 @@ export const useGroupStore = defineStore('group', () => {
             closeTabsByIds(links.map(link => link.id))
         }
 
-        resetNewGroup()
-        saveGroups()
+        saveGroups(() => resetNewGroup())
     }
 
     function decryptGroup(group: Group, pass: string): void {
@@ -206,9 +205,13 @@ export const useGroupStore = defineStore('group', () => {
         newGroup.value.isPrivate = false
     }
 
-    function saveGroups(): void {
+    function saveGroups(callback?: () => void): void {
         saveToStorage('groups', groups.value)
-        setTimeout(() => (isSaving.value = false), 500)
+
+        setTimeout(() => {
+            isSaving.value = false
+            callback ? callback() : null
+        }, 500)
     }
 
     return {
