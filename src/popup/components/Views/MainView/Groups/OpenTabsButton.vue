@@ -7,11 +7,11 @@ type Props = {
     group: Group
 }
 
-const { group } = defineProps<Props>()
+const props = defineProps<Props>()
 const tabsStore = useTabsStore()
 
 function openTabs(): void {
-    tabsStore.openTabs(group.links)
+    tabsStore.openTabs(props.group)
 }
 </script>
 

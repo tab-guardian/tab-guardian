@@ -12,7 +12,7 @@ const props = defineProps<Props>()
 const tabsStore = useTabsStore()
 
 function openTabs(): void {
-    tabsStore.openTabs(props.group.links)
+    tabsStore.openTabs(props.group)
 }
 </script>
 
