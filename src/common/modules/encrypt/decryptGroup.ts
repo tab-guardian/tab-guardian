@@ -24,6 +24,5 @@ function decryptLink(link: Link, pass: string): Link {
 }
 
 function decrypt(text: string, pass: string): string {
-    const result = CryptoJS.AES.decrypt(text, pass).toString(CryptoJS.enc.Utf8)
-    return decodeURIComponent(result)
+    return CryptoJS.AES.decrypt(text, pass).toString(CryptoJS.enc.Utf8)
 }

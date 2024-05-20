@@ -5,11 +5,11 @@ import { defineStore } from 'pinia'
 import { useSettingsStore } from '@/stores/settings'
 import { useTransStore } from '@/stores/trans'
 import showToast from '@common/modules/showToast'
-import getFromStorage from '@common/modules/storage/getFromStorage'
+import getGroupsFromStorage from '@common/modules/storage/getGroupsFromStorage'
 import error from '@common/modules/error'
 import getDefaultGroupName from '@/modules/getDefaultGroupName'
 import unlock from '@common/modules/encrypt/decryptGroup'
-import saveToStorage from '@common/modules/storage/saveToStorage'
+import saveGroupsToStorage from '@common/modules/storage/saveGroupsToStorage'
 import encryptGroup from '@common/modules/encrypt/encryptGroup'
 import closeTabsByIds from '@/modules/tabs/closeTabsByIds'
 
@@ -35,10 +35,8 @@ export const useGroupStore = defineStore('group', () => {
         return groups.value.find(g => g.id === id) || null
     }
 
-    function loadGroupsFromStorage(): void {
-        getFromStorage<Group[] | null>('groups', storedGroups => {
-            groups.value = storedGroups || []
-        })
+    async function loadGroupsFromStorage(): Promise<void> {
+        groups.value = await getGroupsFromStorage()
     }
 
     function encryptGroupById(groupId: number): boolean {
@@ -206,7 +204,7 @@ export const useGroupStore = defineStore('group', () => {
     }
 
     function saveGroups(callback?: () => void): void {
-        saveToStorage('groups', groups.value)
+        saveGroupsToStorage(groups.value)
 
         setTimeout(() => {
             isSaving.value = false

@@ -13,17 +13,15 @@ export const useMainStore = defineStore('main', () => {
     const settings = ref<Settings>(getDefaultSettings())
     const loading = ref<boolean>(true)
 
-    function loadSettingsFromStorage(): void {
-        getFromStorage<Settings | null>('settings', data => {
-            if (data) {
-                settings.value = {
-                    ...settings.value,
-                    ...data,
-                }
-            }
+    async function loadSettingsFromStorage(): Promise<void> {
+        const data = await getFromStorage<Settings | null>('settings')
 
-            loading.value = false
-        })
+        if (data) {
+            settings.value = {
+                ...settings.value,
+                ...data,
+            }
+        }
     }
 
     function updateSettings(): void {

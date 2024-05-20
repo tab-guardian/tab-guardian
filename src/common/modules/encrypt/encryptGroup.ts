@@ -25,6 +25,5 @@ function encryptLink(link: Link, pass: string): Link {
 }
 
 function encrypt(text: string, pass: string): string {
-    text = encodeURIComponent(text)
     return CryptoJS.AES.encrypt(text, pass).toString()
 }

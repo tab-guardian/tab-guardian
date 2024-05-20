@@ -8,15 +8,15 @@ import getDefaultSettings from '@common/modules/getDefaultSettings'
 export const useSettingsStore = defineStore('settings', () => {
     const settings = ref<Settings>(getDefaultSettings())
 
-    function loadSettingsFromStorage(): void {
-        getFromStorage<Settings | null>('settings', data => {
-            if (data) {
-                settings.value = {
-                    ...settings.value,
-                    ...data,
-                }
+    async function loadSettingsFromStorage(): Promise<void> {
+        const data = await getFromStorage<Settings | null>('settings')
+
+        if (data) {
+            settings.value = {
+                ...settings.value,
+                ...data,
             }
-        })
+        }
     }
 
     function passwordMatches(pass: string): boolean {
