@@ -17,13 +17,6 @@
         "64": "icons/icon-64-dark.png",
         "128": "icons/icon-128-dark.png"
     },
-    "content_scripts": [
-        {
-            "matches": ["*://*/*"],
-            "js": ["assets/content.js"],
-            "run_at": "document_start"
-        }
-    ],
     "action": {
 		"default_icon": {
             "32": "icons/icon-32-dark.png",

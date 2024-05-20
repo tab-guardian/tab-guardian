@@ -19,7 +19,6 @@ export default defineConfig({
         rollupOptions: {
             input: {
                 background: '/src/background/background.ts',
-                content: '/src/content/content.ts',
                 popup: '/index.html',
                 settings: 'settings.html',
             },
@@ -35,7 +34,6 @@ export default defineConfig({
         alias: {
             '@': '/src/popup',
             '@bg': '/src/background',
-            '@content': '/src/content',
             '@settings': '/src/settings',
             '@common': '/src/common',
         },

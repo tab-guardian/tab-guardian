@@ -16,7 +16,6 @@
       "paths": {
           "@/*": ["popup/*"],
           "@bg/*": ["background/*"],
-          "@content/*": ["content/*"],
           "@settings/*": ["settings/*"],
           "@common/*": ["common/*"]
       },
