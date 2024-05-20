@@ -3,6 +3,19 @@
 
 Browser extension that allows you to
 
+## Features
+Here is what makes Tab Guardian a great tool for managing your tabs:
+
+- [x] You can save tabs and restore them later
+- [x] You can edit a group including adding and removing tabs from it
+- [x] You can create encrypted (locked) groups that require password to unlock
+- [x] All the pinned tabs are saved and restored as pinned tabs
+- [x] Tabs restored in the same order as they were saved
+- [x] Supports all the modern browsers: Brave, Edge, Firefox and Chrome
+- [x] Tab Guardian is very configurable to suit your needs
+- [ ] You can set an icon for each group to make it easier to recognize
+- [ ] You can set a "Double Security" in settings. It will not only require a password to unlock a group, but also you must be on a specific domain to unlock it. For example, you can set a domain to be `serhii.io` and you will be able to unlock the group only when you are on `serhii.io` domain
+
 ## Links
 
 - [Firefox extension](https://addons.mozilla.org/en-US/firefox/addon/tab-guardian)
