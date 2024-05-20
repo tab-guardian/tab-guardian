@@ -37,6 +37,7 @@ export const useGroupStore = defineStore('group', () => {
 
     async function loadGroupsFromStorage(): Promise<void> {
         groups.value = await getGroupsFromStorage()
+        console.log(groups.value)
     }
 
     function encryptGroupById(groupId: number): boolean {
@@ -71,7 +72,9 @@ export const useGroupStore = defineStore('group', () => {
 
                 const pwd = settingsStore.settings.password
                 const encrypted = encryptGroup(g, pwd)
+
                 encrypted.isEncrypted = true
+                encrypted.isPrivate = true
 
                 return encrypted
             })
@@ -203,8 +206,8 @@ export const useGroupStore = defineStore('group', () => {
         newGroup.value.isPrivate = false
     }
 
-    function saveGroups(callback?: () => void): void {
-        saveGroupsToStorage(groups.value)
+    async function saveGroups(callback?: () => void): Promise<void> {
+        await saveGroupsToStorage(groups.value)
 
         setTimeout(() => {
             isSaving.value = false
