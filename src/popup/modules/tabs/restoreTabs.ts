@@ -1,7 +1,14 @@
 import type { Link } from '@/types'
+import isDevelopment from '@common/modules/isDevelopment'
 
 export default async (links: Link[]): Promise<void> => {
-    const currWindow = await chrome.windows.getCurrent()
+    if (isDevelopment()) {
+        links.forEach(link => {
+            window.open(link.url, '_blank')
+        })
+
+        return
+    }
 
     links.forEach(link => {
         chrome.tabs.create({
@@ -10,12 +17,4 @@ export default async (links: Link[]): Promise<void> => {
             pinned: link.isPinned,
         })
     })
-
-    if (!currWindow.id) {
-        return
-    }
-
-    // we need to update the window to focus it because after
-    // creating tabs, the window changes focus to the other window
-    chrome.windows.update(currWindow.id, { focused: true })
 }

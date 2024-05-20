@@ -5,7 +5,6 @@ import { useTransStore } from '@/stores/trans'
 import { useSettingsStore } from '@/stores/settings'
 import showToast from '@common/modules/showToast'
 import getCurrentLinks from '@/modules/tabs/getCurrentLinks'
-import isDevelopment from '@common/modules/isDevelopment'
 import restoreTabs from '@/modules/tabs/restoreTabs'
 
 export const useTabsStore = defineStore('tabs', () => {
@@ -14,11 +13,6 @@ export const useTabsStore = defineStore('tabs', () => {
     const { trans } = useTransStore()
 
     function openAll(group: Group): boolean {
-        if (isDevelopment()) {
-            showToast('Cannot open tabs in development', 'error')
-            return false
-        }
-
         restoreTabs(group.links)
 
         if (settingsStore.settings.encryptAfterRestore) {
@@ -42,8 +36,6 @@ export const useTabsStore = defineStore('tabs', () => {
         }
 
         groupStore.deleteGroup(group.id)
-
-        showToast(trans('Tabs opened and group deleted'))
     }
 
     async function stashTabs(group: Group, closeTabs: boolean): Promise<void> {
