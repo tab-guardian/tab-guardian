@@ -22,6 +22,8 @@ export const useMainStore = defineStore('main', () => {
                 ...data,
             }
         }
+
+        loading.value = false
     }
 
     function updateSettings(): void {
