@@ -54,6 +54,7 @@ function splitString(str: string, bytesLimit: number): string[] {
     return result
 }
 
+// Each chunk should be something around 7786 bytes
 function getBytesPerItem(key: string): number {
     const extraBytes = key.length + 400
 
