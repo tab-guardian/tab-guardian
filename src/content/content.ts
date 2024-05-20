@@ -1,4 +1,8 @@
-;(function changeIconThemeToMatchDevicePreference(): void {
+; (function changeIconThemeToMatchDevicePreference(): void {
+    if (!chrome.runtime || !chrome.runtime.id) {
+        return
+    }
+
     const darkModePreference = window.matchMedia('(prefers-color-scheme: dark)')
 
     chrome.runtime.sendMessage({
