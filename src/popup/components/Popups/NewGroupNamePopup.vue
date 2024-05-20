@@ -37,7 +37,9 @@ function selectLinks(): void {
                 :placeholder="trans('Group name')"
                 @loaded="inp => inp.focus()"
                 @submit="selectLinks"
-            />
+            >
+                <span aria-hidden="true" aria-describedby="Enter">⏎</span>
+            </InputField>
         </Popup>
     </AppearTransition>
 </template>

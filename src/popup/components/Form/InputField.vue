@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref, watchEffect } from 'vue'
-import CheckIcon from '@common/components/Icons/CheckIcon.vue'
 
 type Emits = {
     (e: 'submit'): void
@@ -46,7 +45,7 @@ watchEffect(() => {
                 'hover:bg-private-hover',
             ]"
         >
-            <CheckIcon width="20" height="20" />
+            <slot />
         </button>
     </form>
 </template>

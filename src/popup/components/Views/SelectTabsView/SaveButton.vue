@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { useTransStore } from '@/stores/trans'
-import CheckIcon from '@common/components/Icons/CheckIcon.vue'
 
 const { trans } = useTransStore()
 
@@ -22,7 +21,7 @@ const emit = defineEmits<Emits>()
                 'hover:bg-primary-hover',
             ]"
         >
-            <CheckIcon width="17" height="17" />
+            <span aria-hidden="true" aria-describedby="Enter">⏎</span>
             <slot />
         </button>
     </div>

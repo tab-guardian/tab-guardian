@@ -50,6 +50,8 @@ function submitPass(): void {
             v-model="password"
             :placeholder="trans('Enter a password')"
             type="password"
-        />
+        >
+            <span aria-hidden="true" aria-describedby="Enter">⏎</span>
+        </InputField>
     </div>
 </template>
