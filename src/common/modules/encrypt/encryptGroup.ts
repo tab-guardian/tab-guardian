@@ -16,7 +16,7 @@ export default (group: Group, pass: string): Group => {
 
 function encryptLink(link: Link, pass: string): Link {
     return {
-        id: link.id,
+        ...link,
         url: encrypt(link.url, pass),
         title: encrypt(link.title, pass),
         favIconUrl: encrypt(link.favIconUrl, pass),

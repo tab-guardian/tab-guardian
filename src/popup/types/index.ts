@@ -9,6 +9,7 @@ export type Link = {
     title: string
     url: string
     favIconUrl: string
+    isPinned: boolean
 }
 
 export type Group = {

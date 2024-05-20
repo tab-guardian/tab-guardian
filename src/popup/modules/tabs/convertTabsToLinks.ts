@@ -14,6 +14,7 @@ export default (tabs: chrome.tabs.Tab[]): Link[] => {
             title: tab.title || tab.url || '<no title>',
             url: tab.url,
             favIconUrl: getFaviconIconUrl(tab),
+            isPinned: tab.pinned,
         })
     }
 

@@ -20,6 +20,7 @@ export const useTabsStore = defineStore('tabs', () => {
             chrome.tabs.create({
                 url: link.url,
                 active: false,
+                pinned: link.isPinned,
             })
         })
 
