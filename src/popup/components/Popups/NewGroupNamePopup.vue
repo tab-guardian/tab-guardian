@@ -5,7 +5,7 @@ import { usePopupStore } from '@/stores/popup'
 import { useSelectTabsStore } from '@/stores/selectTabs'
 import Popup from '@/components/Popups/Popup.vue'
 import AppearTransition from '@common/components/Transitions/AppearTransition.vue'
-import InputField from '@/components/Form/InputField.vue'
+import InputField from '@common/components/Form/InputField.vue'
 
 const { trans } = useTransStore()
 const { isOpenPopup, closePopup, closeAllPopups } = usePopupStore()

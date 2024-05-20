@@ -10,7 +10,7 @@ import View from '@/components/Views/View.vue'
 import Tabs from '@/components/Views/SelectTabsView/Tabs.vue'
 import SaveButton from '@/components/Views/SelectTabsView/SaveButton.vue'
 import ControlButton from '@/components/Views/SelectTabsView/ControlButton.vue'
-import Switch from '@/components/Form/Switch.vue'
+import Switch from '@common/components/Form/Switch.vue'
 
 const { trans } = useTransStore()
 const store = useSelectTabsStore()

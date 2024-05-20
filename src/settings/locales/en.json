@@ -13,5 +13,7 @@
     "Password changed successfully": "Password changed successfully",
     "Update password": "Update password",
     "Save password": "Save password",
-    "Additional Options": "Additional Options"
+    "Additional Options": "Additional Options",
+    "Lock the group back after restoring the links": "Lock the group back after restoring the links",
+    "Settings have been updated": "Settings have been updated"
 }

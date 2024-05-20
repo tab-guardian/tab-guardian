@@ -6,13 +6,12 @@ import getFromStorage from '@common/modules/storage/getFromStorage'
 import saveToStorage from '@common/modules/storage/saveToStorage'
 import sha256 from 'crypto-js/sha256'
 import showToast from '@common/modules/showToast'
+import getDefaultSettings from '@common/modules/getDefaultSettings'
 
 export const useMainStore = defineStore('main', () => {
     const { trans } = useTransStore()
-
-    const settings = ref<Settings>({
-        password: '',
-    })
+    const settings = ref<Settings>(getDefaultSettings())
+    const loading = ref<boolean>(true)
 
     function loadSettingsFromStorage(): void {
         getFromStorage<Settings | null>('settings', data => {
@@ -22,11 +21,14 @@ export const useMainStore = defineStore('main', () => {
                     ...data,
                 }
             }
+
+            loading.value = false
         })
     }
 
     function updateSettings(): void {
         saveToStorage<Settings>('settings', settings.value)
+        showToast(trans('Settings have been updated'))
     }
 
     function passwordMatches(pass: string): boolean {
@@ -57,6 +59,7 @@ export const useMainStore = defineStore('main', () => {
 
     return {
         settings,
+        loading,
         updateSettings,
         passwordMatches,
         updatePassword,
