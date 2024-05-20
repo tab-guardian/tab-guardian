@@ -1,4 +1,4 @@
-import type { Link, Group } from '@/types'
+import type { Group } from '@/types'
 import { defineStore } from 'pinia'
 import { useGroupStore } from '@/stores/group'
 import { useTransStore } from '@/stores/trans'
