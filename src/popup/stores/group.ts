@@ -1,7 +1,6 @@
 import type { Group, Link } from '@/types'
 import { ref, onMounted } from 'vue'
 import { defineStore } from 'pinia'
-import { useSettingsStore } from '@/stores/settings'
 import { useTransStore } from '@/stores/trans'
 import showToast from '@common/modules/showToast'
 import getGroupsFromStorage from '@common/modules/storage/getGroupsFromStorage'
@@ -19,7 +18,6 @@ export const useGroupStore = defineStore('group', () => {
     const isTitleFieldActive = ref<boolean>(false)
     const closeSelectedTabs = ref<boolean>(false)
 
-    const settingsStore = useSettingsStore()
     const { trans } = useTransStore()
 
     const newGroup = ref({
@@ -38,7 +36,7 @@ export const useGroupStore = defineStore('group', () => {
         groups.value = await getGroupsFromStorage()
     }
 
-    function encryptGroupById(groupId: number): boolean {
+    function encryptGroupById(groupId: number, pass: string): boolean {
         const group = groups.value.find(group => group.id === groupId)
 
         if (!group) {
@@ -53,12 +51,8 @@ export const useGroupStore = defineStore('group', () => {
             return false
         }
 
-        if (settingsStore.settings.password === '') {
-            const msg = trans(
-                'Password is empty. Make sure to set a password in the settings',
-            )
-
-            showToast(msg, 'error')
+        if (pass === '') {
+            showToast(trans('Password is empty'), 'error')
             return false
         }
 
@@ -68,8 +62,7 @@ export const useGroupStore = defineStore('group', () => {
                     return g
                 }
 
-                const pwd = settingsStore.settings.password
-                const encrypted = encryptGroup(g, pwd)
+                const encrypted = encryptGroup(g, pass)
 
                 encrypted.isEncrypted = true
                 encrypted.isPrivate = true

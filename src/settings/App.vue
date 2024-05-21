@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
-import { useMainStore } from '@settings/stores/main'
+import { useSettingsStore } from '@/stores/settings'
 import { useTransStore } from '@settings/stores/trans'
 import Spinner from '@/components/Spinner.vue'
 import OptionsSection from '@settings/components/OptionsSection.vue'
@@ -8,7 +8,7 @@ import EraseSection from '@settings/components/EraseSection.vue'
 
 const { trans } = useTransStore()
 
-const store = useMainStore()
+const store = useSettingsStore()
 
 onMounted(() => {
     store.loadSettingsFromStorage()

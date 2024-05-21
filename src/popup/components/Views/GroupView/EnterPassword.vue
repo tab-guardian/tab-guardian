@@ -2,7 +2,6 @@
 import type { Group } from '@/types'
 import { ref } from 'vue'
 import { useTransStore } from '@/stores/trans'
-import { useSettingsStore } from '@/stores/settings'
 import { useGroupStore } from '@/stores/group'
 import showToast from '@common/modules/showToast'
 import ShieldCheckIcon from '@common/components/Icons/ShieldCheckIcon.vue'
@@ -14,23 +13,23 @@ type Props = {
 
 const props = defineProps<Props>()
 const { trans } = useTransStore()
-const settingsStore = useSettingsStore()
 const { decryptGroup } = useGroupStore()
 
 const password = ref<string>('')
 
 function submitPass(): void {
     if (!password.value) {
-        showToast(trans('Please enter a password'), 'error')
+        showToast(trans('Enter a password'), 'error')
         return
     }
 
-    if (!settingsStore.passwordMatches(password.value)) {
-        showToast(trans('Incorrect password'), 'error')
-        return
-    }
+    // @todo: check if password matches
+    // if (!settingsStore.passwordMatches(password.value)) {
+    //     showToast(trans('Incorrect password'), 'error')
+    //     return
+    // }
 
-    decryptGroup(props.group, settingsStore.settings.password)
+    decryptGroup(props.group, password.value)
     password.value = ''
 
     showToast(trans('Group is unlocked'))

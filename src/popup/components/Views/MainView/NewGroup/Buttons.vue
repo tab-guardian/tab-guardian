@@ -2,28 +2,16 @@
 import { useGroupStore } from '@/stores/group'
 import { useTransStore } from '@/stores/trans'
 import { usePopupStore } from '@/stores/popup'
-import { useSettingsStore } from '@/stores/settings'
 import ShieldCheckIcon from '@common/components/Icons/ShieldCheckIcon.vue'
 import PlusCircleIcon from '@common/components/Icons/PlusCircleIcon.vue'
 import NewGroupButton from '@/components/Views/MainView/NewGroup/NewGroupButton.vue'
-import showToast from '@common/modules/showToast'
 
 const { trans } = useTransStore()
 const { openPopup } = usePopupStore()
 const groupStore = useGroupStore()
-const settingsStore = useSettingsStore()
 
 function askForGroupName(isPrivate: boolean) {
     groupStore.newGroup.isPrivate = isPrivate
-
-    if (isPrivate && !settingsStore.settings.password) {
-        const msg = trans(
-            'To create a private group, you need to set a password in settings',
-        )
-        showToast(msg, 'error', 4000)
-        return
-    }
-
     openPopup('groupName')
 }
 </script>

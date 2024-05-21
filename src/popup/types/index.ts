@@ -21,7 +21,6 @@ export type Group = {
 }
 
 export type Settings = {
-    password: string
     encryptAfterRestore: boolean
 }
 

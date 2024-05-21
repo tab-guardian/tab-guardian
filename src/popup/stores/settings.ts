@@ -2,13 +2,15 @@ import type { Settings } from '@/types'
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import getFromStorage from '@common/modules/storage/getFromStorage'
-import sha256 from 'crypto-js/sha256'
 import getDefaultSettings from '@common/modules/getDefaultSettings'
 
 export const useSettingsStore = defineStore('settings', () => {
     const settings = ref<Settings>(getDefaultSettings())
+    const loading = ref<boolean>(false)
 
     async function loadSettingsFromStorage(): Promise<void> {
+        loading.value = true
+
         const data = await getFromStorage<Settings | null>('settings')
 
         if (data) {
@@ -17,16 +19,13 @@ export const useSettingsStore = defineStore('settings', () => {
                 ...data,
             }
         }
-    }
 
-    function passwordMatches(pass: string): boolean {
-        const hashedPass = sha256(pass).toString()
-        return hashedPass === settings.value.password
+        loading.value = false
     }
 
     return {
         settings,
-        passwordMatches,
+        loading,
         loadSettingsFromStorage,
     }
 })
