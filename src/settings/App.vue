@@ -2,15 +2,17 @@
 import { onMounted } from 'vue'
 import { useMainStore } from '@settings/stores/main'
 import { useTransStore } from '@settings/stores/trans'
+import Spinner from '@/components/Spinner.vue'
 import PasswordSection from '@settings/components/PasswordSection.vue'
 import OptionsSection from '@settings/components/OptionsSection.vue'
+import EraseSection from '@settings/components/EraseSection.vue'
 
 const { trans } = useTransStore()
 
-const { loadSettingsFromStorage } = useMainStore()
+const store = useMainStore()
 
 onMounted(() => {
-    loadSettingsFromStorage()
+    store.loadSettingsFromStorage()
 })
 </script>
 
@@ -21,14 +23,12 @@ onMounted(() => {
             {{ trans('Change the extension configurations here') }}
         </p>
 
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-5 mt-4">
-            <div>
-                <PasswordSection />
-            </div>
+        <Spinner v-if="store.loading" />
 
-            <div>
-                <OptionsSection />
-            </div>
+        <div v-else class="grid grid-cols-1 lg:grid-cols-2 gap-5 mt-4">
+            <PasswordSection />
+            <OptionsSection />
+            <EraseSection />
         </div>
     </div>
 </template>

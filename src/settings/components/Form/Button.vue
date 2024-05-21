@@ -1,21 +1,19 @@
 <script setup lang="ts">
-import CheckIcon from '@common/components/Icons/CheckIcon.vue'
-
 type Props = {
-    label: string
+    additionalClasses?: string
 }
 
-const { label } = defineProps<Props>()
+const { additionalClasses } = defineProps<Props>()
 </script>
 
 <template>
     <div class="text-right">
         <button
             type="submit"
-            class="bg-primary text-page px-6 py-2 rounded-lg text-md inline-flex items-center gap-2"
+            class="bg-primary text-page px-5 py-2 rounded-lg text-md inline-flex items-center gap-3"
+            :class="additionalClasses"
         >
-            <CheckIcon class="w-5 h-5" />
-            {{ label }}
+            <slot />
         </button>
     </div>
 </template>

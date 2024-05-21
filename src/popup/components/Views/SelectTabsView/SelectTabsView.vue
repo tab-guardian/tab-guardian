@@ -10,7 +10,7 @@ import View from '@/components/Views/View.vue'
 import Tabs from '@/components/Views/SelectTabsView/Tabs.vue'
 import SaveButton from '@/components/Views/SelectTabsView/SaveButton.vue'
 import ControlButton from '@/components/Views/SelectTabsView/ControlButton.vue'
-import Switch from '@common/components/Form/Switch.vue'
+import SlideSwitch from '@common/components/Form/SlideSwitch.vue'
 
 const { trans } = useTransStore()
 const store = useSelectTabsStore()
@@ -85,9 +85,9 @@ function showToastMessage(operation: SelectTabsOperation, links: Link[]): void {
 
         <div class="flex items-center justify-between gap-3 mt-3">
             <div class="text-right">
-                <Switch v-model="groupStore.closeSelectedTabs">
+                <SlideSwitch v-model="groupStore.closeSelectedTabs">
                     {{ trans('Close selected tabs') }}
-                </Switch>
+                </SlideSwitch>
             </div>
 
             <SaveButton @clicked="saveTabs">
