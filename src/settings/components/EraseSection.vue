@@ -5,7 +5,7 @@ import { useGroupStore } from '@/stores/group'
 import { useSettingsStore } from '@/stores/settings'
 import showToast from '@common/modules/showToast'
 import Section from '@settings/components/Section.vue'
-import Button from '@settings/components/Form/Button.vue'
+import Button from '@common/components/Form/Button.vue'
 import SlideSwitch from '@common/components/Form/SlideSwitch.vue'
 import TrashIcon from '@common/components/Icons/TrashIcon.vue'
 

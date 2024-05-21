@@ -1,17 +1,18 @@
 <script setup lang="ts">
 type Props = {
     additionalClasses?: string
+    type?: 'button' | 'submit' | 'reset'
 }
 
-const { additionalClasses } = defineProps<Props>()
+const props = defineProps<Props>()
 </script>
 
 <template>
     <div class="text-right">
         <button
-            type="submit"
+            :type="props.type || 'button'"
             class="bg-primary text-page px-5 py-2 rounded-lg text-md inline-flex items-center gap-3"
-            :class="additionalClasses"
+            :class="props.additionalClasses"
         >
             <slot />
         </button>

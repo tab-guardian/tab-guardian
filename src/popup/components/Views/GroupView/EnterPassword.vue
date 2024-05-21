@@ -5,7 +5,7 @@ import { useTransStore } from '@/stores/trans'
 import { useGroupStore } from '@/stores/group'
 import showToast from '@common/modules/showToast'
 import ShieldCheckIcon from '@common/components/Icons/ShieldCheckIcon.vue'
-import InputField from '@common/components/Form/InputField.vue'
+import Input from '@common/components/Form/Input.vue'
 
 type Props = {
     group: Group
@@ -43,14 +43,25 @@ function submitPass(): void {
             {{ trans('Enter a password to unlock the content of this group') }}
         </p>
 
-        <InputField
-            @submit="submitPass"
-            @loaded="inp => inp.focus()"
-            v-model="password"
-            :placeholder="trans('Enter a password')"
-            type="password"
-        >
-            <span aria-hidden="true" aria-describedby="Enter">⏎</span>
-        </InputField>
+        <form @submit.prevent="submitPass" class="flex">
+            <Input
+                @loaded="inp => inp.focus()"
+                v-model="password"
+                :label="trans('Enter a password')"
+                type="password"
+                id="enter-password"
+            />
+
+            <button
+                type="submit"
+                :class="[
+                    'bg-private transition-colors w-14 h-9 rounded-md',
+                    'flex items-center justify-center cursor-pointer text-secondary',
+                    'hover:bg-private-hover',
+                ]"
+            >
+                <span aria-hidden="true" aria-describedby="Enter">⏎</span>
+            </button>
+        </form>
     </div>
 </template>

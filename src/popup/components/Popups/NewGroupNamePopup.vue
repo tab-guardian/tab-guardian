@@ -5,7 +5,10 @@ import { usePopupStore } from '@/stores/popup'
 import { useSelectTabsStore } from '@/stores/selectTabs'
 import Popup from '@/components/Popups/Popup.vue'
 import AppearTransition from '@common/components/Transitions/AppearTransition.vue'
-import InputField from '@common/components/Form/InputField.vue'
+import Input from '@common/components/Form/Input.vue'
+import Button from '@common/components/Form/Button.vue'
+import ChevronRightIcon from '@common/components/Icons/ChevronRightIcon.vue'
+import showToast from '@common/modules/showToast'
 
 const { trans } = useTransStore()
 const { isOpenPopup, closePopup, closeAllPopups } = usePopupStore()
@@ -13,6 +16,11 @@ const store = useGroupStore()
 const selectTabsStore = useSelectTabsStore()
 
 function selectLinks(): void {
+    if (!store.newGroup.password) {
+        showToast(trans('Password is empty'), 'error')
+        return
+    }
+
     closeAllPopups()
 
     selectTabsStore.showView({
@@ -30,16 +38,30 @@ function selectLinks(): void {
             @cancel="closePopup('groupName')"
             :content="trans('Enter a group name')"
         >
-            <InputField
-                v-model="store.newGroup.name"
-                type="text"
-                class="mt-2"
-                :placeholder="trans('Group name')"
-                @loaded="inp => inp.focus()"
-                @submit="selectLinks"
-            >
-                <span aria-hidden="true" aria-describedby="Enter">⏎</span>
-            </InputField>
+            <form @submit.prevent="selectLinks" class="flex flex-col gap-3">
+                <Input
+                    v-model="store.newGroup.name"
+                    type="text"
+                    id="new-group-name"
+                    :label="trans('Group name')"
+                    @loaded="inp => inp.focus()"
+                />
+
+                <Input
+                    v-if="store.newGroup.isPrivate"
+                    v-model="store.newGroup.password"
+                    type="password"
+                    id="group-password"
+                    :label="trans('Group password')"
+                />
+
+                <div>
+                    <Button type="submit">
+                        {{ trans('Select Tabs') }}
+                        <ChevronRightIcon width="20" height="20" />
+                    </Button>
+                </div>
+            </form>
         </Popup>
     </AppearTransition>
 </template>

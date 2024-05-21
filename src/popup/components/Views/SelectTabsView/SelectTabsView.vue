@@ -43,7 +43,7 @@ function saveTabs(): void {
     groupStore.prependLinksTo(groupId, selectedLinks)
 
     if (groupStore.newGroup.isPrivate) {
-        groupStore.encryptGroupById(groupId)
+        groupStore.encryptGroupById(groupId, groupStore.newGroup.password)
     }
 
     store.closeTabsModal()

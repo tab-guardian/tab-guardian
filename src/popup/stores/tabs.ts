@@ -15,9 +15,10 @@ export const useTabsStore = defineStore('tabs', () => {
     function openAll(group: Group): boolean {
         restoreTabs(group.links)
 
-        if (settingsStore.settings.encryptAfterRestore) {
-            groupStore.encryptGroupById(group.id)
-        }
+        // @todo: think about how to encrypt after restoring tabs
+        // if (settingsStore.settings.encryptAfterRestore) {
+        //     groupStore.encryptGroupById(group.id)
+        // }
 
         return true
     }
