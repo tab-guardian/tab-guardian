@@ -149,6 +149,11 @@ export const useGroupStore = defineStore('group', () => {
         router.push({ name: 'main' })
     }
 
+    function deleteAllGroups(): void {
+        groups.value = []
+        saveGroups()
+    }
+
     function deleteAllLinks(groupId: number): void {
         groups.value = groups.value.map(group => {
             if (group.id === groupId) {
@@ -233,5 +238,6 @@ export const useGroupStore = defineStore('group', () => {
         encryptGroupById,
         getGroupById,
         deleteAllLinks,
+        deleteAllGroups,
     }
 })

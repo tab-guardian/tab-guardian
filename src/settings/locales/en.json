@@ -17,5 +17,7 @@
     "Lock the group back after restoring the links": "Lock the group back after restoring the links",
     "Settings have been updated": "Settings have been updated",
     "Erase all groups": "Erase all groups",
-    "I confirm that I want to delete all groups": "I confirm that I want to delete all groups"
+    "I confirm that I want to delete all groups": "I confirm that I want to delete all groups",
+    "Confirm that you want to delete all groups": "Confirm that you want to delete all groups",
+    "All groups have been deleted": "All groups have been deleted"
 }

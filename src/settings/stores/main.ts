@@ -10,6 +10,7 @@ import getDefaultSettings from '@common/modules/getDefaultSettings'
 
 export const useMainStore = defineStore('main', () => {
     const { trans } = useTransStore()
+
     const settings = ref<Settings>(getDefaultSettings())
     const loading = ref<boolean>(true)
 
