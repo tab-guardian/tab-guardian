@@ -3,7 +3,6 @@ import { onMounted } from 'vue'
 import { useMainStore } from '@settings/stores/main'
 import { useTransStore } from '@settings/stores/trans'
 import Spinner from '@/components/Spinner.vue'
-import PasswordSection from '@settings/components/PasswordSection.vue'
 import OptionsSection from '@settings/components/OptionsSection.vue'
 import EraseSection from '@settings/components/EraseSection.vue'
 
@@ -26,7 +25,6 @@ onMounted(() => {
         <Spinner v-if="store.loading" />
 
         <div v-else class="grid grid-cols-1 lg:grid-cols-2 gap-5 mt-4">
-            <PasswordSection />
             <OptionsSection />
             <EraseSection />
         </div>

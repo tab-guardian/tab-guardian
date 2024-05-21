@@ -25,6 +25,7 @@ export const useGroupStore = defineStore('group', () => {
     const newGroup = ref({
         name: '',
         isPrivate: false,
+        password: '',
     })
 
     onMounted(() => loadGroupsFromStorage())
