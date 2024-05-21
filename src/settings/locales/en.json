@@ -19,5 +19,8 @@
     "Erase all groups": "Erase all groups",
     "I confirm that I want to delete all groups": "I confirm that I want to delete all groups",
     "Confirm that you want to delete all groups": "Confirm that you want to delete all groups",
-    "All groups have been deleted": "All groups have been deleted"
+    "All groups have been deleted": "All groups have been deleted",
+    "You have private groups, please enter password to delete all groups": "You have private groups, please enter password to delete all groups",
+    "Enter password to delete all groups": "Enter password to delete all groups",
+    "Password is incorrect": "Password is incorrect"
 }

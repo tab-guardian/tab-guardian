@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import type { Group } from '@/types'
-import Control from '@/components/Control.vue'
-import upRemoveImage from '@/assets/images/tab-icons/up-remove.png'
 import { useTabsStore } from '@/stores/tabs'
+import upRemoveImage from '@/assets/images/tab-icons/up-remove.png'
+import Control from '@/components/Control.vue'
 
 type Props = {
     group: Group

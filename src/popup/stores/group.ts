@@ -1,6 +1,5 @@
 import type { Group, Link } from '@/types'
 import { ref, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
 import { defineStore } from 'pinia'
 import { useSettingsStore } from '@/stores/settings'
 import { useTransStore } from '@/stores/trans'
@@ -20,7 +19,6 @@ export const useGroupStore = defineStore('group', () => {
     const isTitleFieldActive = ref<boolean>(false)
     const closeSelectedTabs = ref<boolean>(false)
 
-    const router = useRouter()
     const settingsStore = useSettingsStore()
     const { trans } = useTransStore()
 
@@ -37,7 +35,6 @@ export const useGroupStore = defineStore('group', () => {
 
     async function loadGroupsFromStorage(): Promise<void> {
         groups.value = await getGroupsFromStorage()
-        console.log(groups.value)
     }
 
     function encryptGroupById(groupId: number): boolean {
@@ -102,19 +99,6 @@ export const useGroupStore = defineStore('group', () => {
         return group
     }
 
-    function goBack(): void {
-        selectedGroup.value = null
-        resetNewGroup()
-        router.go(-1)
-    }
-
-    function select(group: Group): void {
-        selectedGroup.value = group
-        newGroup.value.name = group.name
-        newGroup.value.isPrivate = group.isPrivate
-        router.push({ name: 'group', params: { id: group.id } })
-    }
-
     function renameGroup(): void {
         if (!selectedGroup.value) {
             error.err('No group selected for renaming')
@@ -146,7 +130,6 @@ export const useGroupStore = defineStore('group', () => {
     function deleteGroup(id: number): void {
         groups.value = groups.value.filter(group => group.id !== id)
         saveGroups()
-        router.push({ name: 'main' })
     }
 
     function deleteAllGroups(): void {
@@ -227,8 +210,6 @@ export const useGroupStore = defineStore('group', () => {
         isTitleFieldActive,
         closeSelectedTabs,
         newGroup,
-        goBack,
-        select,
         deleteGroup,
         deleteLink,
         prependLinksTo,

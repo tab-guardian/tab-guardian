@@ -34,7 +34,6 @@ export const useMainStore = defineStore('main', () => {
 
     function passwordMatches(pass: string): boolean {
         const hashedPass = sha256(pass).toString()
-
         return hashedPass === settings.value.password
     }
 

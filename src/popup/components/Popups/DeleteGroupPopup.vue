@@ -2,6 +2,7 @@
 import { useGroupStore } from '@/stores/group'
 import { useTransStore } from '@/stores/trans'
 import { usePopupStore } from '@/stores/popup'
+import { useRouter } from 'vue-router'
 import error from '@common/modules/error'
 import Popup from '@/components/Popups/Popup.vue'
 import AppearTransition from '@common/components/Transitions/AppearTransition.vue'
@@ -10,6 +11,7 @@ import PopupButton from '@/components/Popups/PopupButton.vue'
 const { trans } = useTransStore()
 const { isOpenPopup, closePopup } = usePopupStore()
 const store = useGroupStore()
+const router = useRouter()
 
 function deleteGroup(): void {
     if (!store.selectedGroup) {
@@ -22,6 +24,8 @@ function deleteGroup(): void {
     closePopup('deleteGroup')
 
     store.selectedGroup = null
+
+    router.push({ name: 'main' })
 }
 </script>
 
