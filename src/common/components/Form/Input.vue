@@ -6,6 +6,7 @@ type Props = {
     id: string
     type: 'text' | 'password'
     class?: string
+    withButton?: boolean
 }
 
 type Emits = {
@@ -31,14 +32,28 @@ watchEffect(() => {
             {{ props.label }}
         </label>
 
-        <input
-            :id="props.id"
-            :type="props.type"
-            class="rounded-lg px-2.5 py-1.5 w-full bg-page border border-border focus:outline outline-2 outline-primary"
-            :class="props.class"
-            v-model="modelValue"
-            ref="inputRef"
-            :placeholder="props.label"
-        />
+        <div class="flex items-center gap-3">
+            <input
+                :id="props.id"
+                :type="props.type"
+                class="rounded-lg px-2.5 py-1.5 w-full bg-page border border-border focus:outline outline-2 outline-primary"
+                :class="props.class"
+                v-model="modelValue"
+                ref="inputRef"
+                :placeholder="props.label"
+            />
+
+            <button
+                v-if="props.withButton"
+                type="submit"
+                :class="[
+                    'bg-private transition-colors w-14 h-9 rounded-md',
+                    'flex items-center justify-center cursor-pointer text-secondary',
+                    'hover:bg-private-hover',
+                ]"
+            >
+                <span aria-hidden="true" aria-describedby="Enter">⏎</span>
+            </button>
+        </div>
     </div>
 </template>

@@ -43,25 +43,15 @@ function submitPass(): void {
             {{ trans('Enter a password to unlock the content of this group') }}
         </p>
 
-        <form @submit.prevent="submitPass" class="flex">
+        <form @submit.prevent="submitPass">
             <Input
                 @loaded="inp => inp.focus()"
                 v-model="password"
                 :label="trans('Enter a password')"
                 type="password"
                 id="enter-password"
+                :withButton="true"
             />
-
-            <button
-                type="submit"
-                :class="[
-                    'bg-private transition-colors w-14 h-9 rounded-md',
-                    'flex items-center justify-center cursor-pointer text-secondary',
-                    'hover:bg-private-hover',
-                ]"
-            >
-                <span aria-hidden="true" aria-describedby="Enter">⏎</span>
-            </button>
         </form>
     </div>
 </template>
