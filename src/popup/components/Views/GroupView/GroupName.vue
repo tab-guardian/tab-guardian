@@ -18,6 +18,10 @@ watchEffect(() => {
         inputRef.value?.focus()
     }
 })
+
+watchEffect(() => {
+    store.newGroup.name = store.newGroup.name.trim()
+})
 </script>
 
 <template>
