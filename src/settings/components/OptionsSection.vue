@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useTransStore } from '@settings/stores/trans'
+import { useTransStore } from '@/stores/trans'
 import { useSettingsStore } from '@/stores/settings'
 import Section from '@settings/components/Section.vue'
 import SlideSwitch from '@common/components/Form/SlideSwitch.vue'
