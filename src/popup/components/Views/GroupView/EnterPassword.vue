@@ -3,6 +3,7 @@ import type { Group } from '@/types'
 import { ref } from 'vue'
 import { useTransStore } from '@/stores/trans'
 import { useGroupStore } from '@/stores/group'
+import { usePopupStore } from '@/stores/popup'
 import showToast from '@common/modules/showToast'
 import ShieldCheckIcon from '@common/components/Icons/ShieldCheckIcon.vue'
 import Input from '@common/components/Form/Input.vue'
@@ -13,7 +14,8 @@ type Props = {
 
 const props = defineProps<Props>()
 const { trans } = useTransStore()
-const { decryptGroup } = useGroupStore()
+const groupStore = useGroupStore()
+const popupStore = usePopupStore()
 
 const password = ref<string>('')
 
@@ -29,10 +31,14 @@ function submitPass(): void {
     //     return
     // }
 
-    decryptGroup(props.group, password.value)
-    password.value = ''
+    // With this, we don't need to type password to lock the
+    // group after just unlocking it
+    popupStore.popups.enterPassword.password = password.value
 
+    groupStore.decryptGroup(props.group, password.value)
     showToast(trans('Group is unlocked'))
+
+    password.value = ''
 }
 </script>
 
