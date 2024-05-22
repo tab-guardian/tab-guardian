@@ -26,18 +26,17 @@ export type Settings = {
 
 export type Popups = {
     groupView: {
-        open: boolean,
+        open: boolean
     }
     deleteGroup: {
-        open: boolean,
+        open: boolean
     }
     groupName: {
-        open: boolean,
-
+        open: boolean
     }
     enterPassword: {
-        open: boolean,
-        password: string,
+        open: boolean
+        password: string
     }
 }
 
