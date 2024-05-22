@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useTransStore } from '@settings/stores/trans'
+import { useTransStore } from '@/stores/trans'
 import { useGroupStore } from '@/stores/group'
 import { useSettingsStore } from '@/stores/settings'
 import showToast from '@common/modules/showToast'
