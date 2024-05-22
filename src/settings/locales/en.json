@@ -8,5 +8,6 @@
     "I confirm that I want to delete all groups": "I confirm that I want to delete all groups",
     "Confirm that you want to delete all non-private groups": "Confirm that you want to delete all non-private groups",
     "All the non-private groups have been deleted": "All the non-private groups have been deleted",
-    "Password is incorrect": "Password is incorrect"
+    "Show private groups only in browser incognito mode": "Show private groups only in browser incognito mode",
+    "Settings have been saved": "Settings have been saved"
 }
