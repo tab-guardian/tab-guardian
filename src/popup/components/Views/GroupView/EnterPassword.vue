@@ -4,6 +4,7 @@ import { ref } from 'vue'
 import { useTransStore } from '@/stores/trans'
 import { useGroupStore } from '@/stores/group'
 import { usePopupStore } from '@/stores/popup'
+import error from '@common/modules/error'
 import showToast from '@common/modules/showToast'
 import ShieldCheckIcon from '@common/components/Icons/ShieldCheckIcon.vue'
 import Input from '@common/components/Form/Input.vue'
@@ -25,18 +26,22 @@ function submitPass(): void {
         return
     }
 
-    // @todo: check if password matches
-    // if (!settingsStore.passwordMatches(password.value)) {
-    //     showToast(trans('Incorrect password'), 'error')
-    //     return
-    // }
-
     // With this, we don't need to type password to lock the
     // group after just unlocking it
     popupStore.popups.enterPassword.password = password.value
 
-    groupStore.decryptGroup(props.group, password.value)
-    showToast(trans('Group is unlocked'))
+    try {
+        groupStore.decryptGroup(props.group, password.value)
+        showToast(trans('Group is unlocked'))
+    } catch (e: any) {
+        error.warn('Caught and handled error: ', e)
+
+        if (e instanceof Error && e.message === 'Malformed UTF-8 data') {
+            showToast(trans('Incorrect password'), 'error')
+        } else {
+            showToast(trans('Error ocurred'), 'error')
+        }
+    }
 
     password.value = ''
 }

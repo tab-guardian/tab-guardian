@@ -15,12 +15,15 @@ export default (group: Group, pass: string): Group => {
 }
 
 function decryptLink(link: Link, pass: string): Link {
-    return {
-        ...link,
-        url: decrypt(link.url, pass),
-        title: decrypt(link.title, pass),
-        favIconUrl: decrypt(link.favIconUrl, pass),
+    const url = decrypt(link.url, pass)
+    const title = decrypt(link.title, pass)
+    const favIconUrl = decrypt(link.favIconUrl, pass)
+
+    if (url + title + favIconUrl === '') {
+        throw new Error('Malformed UTF-8 data')
     }
+
+    return { ...link, url, title, favIconUrl }
 }
 
 function decrypt(text: string, pass: string): string {

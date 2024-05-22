@@ -172,13 +172,15 @@ export const useGroupStore = defineStore('group', () => {
     }
 
     function decryptGroup(group: Group, pass: string): void {
-        groups.value = groups.value.map(g => {
+        const newGroups = groups.value.map(g => {
             if (g.id === group.id) {
                 return unlock(group, pass)
             }
 
             return g
         })
+
+        groups.value = newGroups
 
         saveGroups()
     }
