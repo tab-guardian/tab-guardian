@@ -2,6 +2,7 @@ import type { Group, Link } from '@/types'
 import { ref, onMounted } from 'vue'
 import { defineStore } from 'pinia'
 import { useTransStore } from '@/stores/trans'
+import { useSettingsStore } from '@/stores/settings'
 import showToast from '@common/modules/showToast'
 import getGroupsFromStorage from '@common/modules/storage/getGroupsFromStorage'
 import error from '@common/modules/error'
@@ -10,6 +11,7 @@ import unlock from '@common/modules/encrypt/decryptGroup'
 import saveGroupsToStorage from '@common/modules/storage/saveGroupsToStorage'
 import encryptGroup from '@common/modules/encrypt/encryptGroup'
 import closeTabsByIds from '@/modules/tabs/closeTabsByIds'
+import isDevelopment from '@common/modules/isDevelopment'
 
 export const useGroupStore = defineStore('group', () => {
     const groups = ref<Group[]>([])
@@ -18,6 +20,7 @@ export const useGroupStore = defineStore('group', () => {
     const isTitleFieldActive = ref<boolean>(false)
     const closeSelectedTabs = ref<boolean>(false)
 
+    const settingsStore = useSettingsStore()
     const { trans } = useTransStore()
 
     const newGroup = ref({
@@ -33,7 +36,15 @@ export const useGroupStore = defineStore('group', () => {
     }
 
     async function loadGroupsFromStorage(): Promise<void> {
-        groups.value = await getGroupsFromStorage()
+        if (!settingsStore.settings.showPrivateGroupsOnlyInIncognito) {
+            groups.value = await getGroupsFromStorage()
+            return
+        }
+
+        if (isDevelopment()) {
+            groups.value = await getGroupsFromStorage()
+            return
+        }
     }
 
     function encryptGroupById(groupId: number, pass: string): boolean {

@@ -9,5 +9,6 @@
     "Confirm that you want to delete all non-private groups": "Confirm that you want to delete all non-private groups",
     "All the non-private groups have been deleted": "All the non-private groups have been deleted",
     "Show private groups only in browser incognito mode": "Show private groups only in browser incognito mode",
-    "Settings have been saved": "Settings have been saved"
+    "Settings have been saved": "Settings have been saved",
+    "Go to the extension settings and enable the option 'Allow in incognito' or 'Allow in Private'": "Go to the extension settings and enable the option 'Allow in incognito' or 'Allow in Private'"
 }
