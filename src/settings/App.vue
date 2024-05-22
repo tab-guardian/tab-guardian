@@ -1,16 +1,18 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import { useSettingsStore } from '@/stores/settings'
-import { useTransStore } from '@settings/stores/trans'
+import { useTransStore } from '@/stores/trans'
+import en from '@settings/locales/en.json'
+import ru from '@settings/locales/ru.json'
 import Spinner from '@/components/Spinner.vue'
 import OptionsSection from '@settings/components/OptionsSection.vue'
 import EraseSection from '@settings/components/EraseSection.vue'
 
-const { trans } = useTransStore()
-
 const store = useSettingsStore()
+const { trans, loadMessages } = useTransStore()
 
 onMounted(() => {
+    loadMessages({ en, ru })
     store.loadSettingsFromStorage()
 })
 </script>

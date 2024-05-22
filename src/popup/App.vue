@@ -2,6 +2,9 @@
 import { onMounted } from 'vue'
 import { useSettingsStore } from '@/stores/settings'
 import { usePopupStore } from '@/stores/popup'
+import { useTransStore } from '@/stores/trans'
+import en from '@/locales/en.json'
+import ru from '@/locales/ru.json'
 import Navbar from '@/components/Navbar/Navbar.vue'
 import DeleteGroupPopup from '@/components/Popups/DeleteGroupPopup.vue'
 import GroupMenuPopup from '@/components/Popups/GroupMenuPopup.vue'
@@ -10,10 +13,12 @@ import EnterPasswordPopup from '@/components/Popups/EnterPasswordPopup.vue'
 import AppearTransition from '@common/components/Transitions/AppearTransition.vue'
 
 const { loadSettingsFromStorage } = useSettingsStore()
-const { isOpenPopup, closePopup, closeAllPopups } = usePopupStore()
+const { isOpenPopup } = usePopupStore()
+const { loadMessages } = useTransStore()
 
 onMounted(() => {
     loadSettingsFromStorage()
+    loadMessages({ en, ru })
 
     if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
         document.body.classList.add('dark')
