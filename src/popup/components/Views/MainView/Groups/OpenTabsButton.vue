@@ -9,17 +9,13 @@ type Props = {
 
 const props = defineProps<Props>()
 const tabsStore = useTabsStore()
-
-function openTabs(): void {
-    tabsStore.openTabs(props.group)
-}
 </script>
 
 <template>
     <img
         :src="upImage"
         alt="Open tabs"
-        @click.prevent="openTabs"
+        @click.prevent="tabsStore.openTabs(props.group)"
         class="w-4 h-4 transition-transform hover:scale-110 dark:invert"
     />
 </template>

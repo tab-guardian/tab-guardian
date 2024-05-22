@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { Group } from '@/types'
 import { useTabsStore } from '@/stores/tabs'
+import { useRouter } from 'vue-router'
 import upRemoveImage from '@/assets/images/tab-icons/up-remove.png'
 import Control from '@/components/Control.vue'
 
@@ -9,10 +10,12 @@ type Props = {
 }
 
 const props = defineProps<Props>()
+const router = useRouter()
 const tabsStore = useTabsStore()
 
-function openAndDeleteTabs(): void {
-    tabsStore.openAndDeleteTabs(props.group)
+async function openAndDeleteTabs(): Promise<void> {
+    await tabsStore.openAndDeleteTabs(props.group)
+    router.push({ name: 'main' })
 }
 </script>
 

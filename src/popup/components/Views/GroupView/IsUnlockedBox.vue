@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Group } from '@/types'
-import { onUnmounted, watch } from 'vue'
+import { onUnmounted } from 'vue'
 import { useTransStore } from '@/stores/trans'
 import { useGroupStore } from '@/stores/group'
 import { usePopupStore } from '@/stores/popup'
@@ -21,19 +21,17 @@ onUnmounted(() => {
     popupStore.popups.enterPassword.password = ''
 })
 
-watch(popupStore.popups.enterPassword, newObj => {
-    if (newObj.open === false) {
-        lockGroup()
-    }
-})
-
 function promptEnterPassword(): void {
     if (popupStore.popups.enterPassword.password) {
         lockGroup()
         return
     }
 
-    popupStore.openPopup('enterPassword')
+    popupStore.openPopup('enterPassword', popups => {
+        if (popups.enterPassword.password) {
+            lockGroup()
+        }
+    })
 }
 
 function lockGroup(): void {

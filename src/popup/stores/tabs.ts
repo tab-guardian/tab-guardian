@@ -2,6 +2,7 @@ import type { Group } from '@/types'
 import { defineStore } from 'pinia'
 import { useGroupStore } from '@/stores/group'
 import { useTransStore } from '@/stores/trans'
+import { usePopupStore } from '@/stores/popup'
 import { useSettingsStore } from '@/stores/settings'
 import showToast from '@common/modules/showToast'
 import getCurrentLinks from '@/modules/tabs/getCurrentLinks'
@@ -9,33 +10,41 @@ import restoreTabs from '@/modules/tabs/restoreTabs'
 
 export const useTabsStore = defineStore('tabs', () => {
     const groupStore = useGroupStore()
+    const popupStore = usePopupStore()
     const settingsStore = useSettingsStore()
     const { trans } = useTransStore()
 
-    function openAll(group: Group): boolean {
-        restoreTabs(group.links)
-
-        // @todo: think about how to encrypt after restoring tabs
-        // if (settingsStore.settings.encryptAfterRestore) {
-        //     groupStore.encryptGroupById(group.id)
-        // }
-
-        return true
-    }
-
-    function openTabs(group: Group): void {
-        if (openAll(group)) {
-            showToast(trans('Tabs opened'))
-        }
-    }
-
-    function openAndDeleteTabs(group: Group): void {
-        const opened = openAll(group)
-
-        if (!opened) {
-            return
+    function openTabs(group: Group): boolean {
+        if (!settingsStore.settings.encryptAfterRestore) {
+            restoreTabs(group.links)
+            return true
         }
 
+        if (popupStore.popups.enterPassword.password) {
+            groupStore.encryptGroupById(
+                group.id,
+                popupStore.popups.enterPassword.password,
+            )
+            restoreTabs(group.links)
+            return true
+        }
+
+        popupStore.openPopup('enterPassword', popups => {
+            const pass = popups.enterPassword.password
+
+            if (!pass) {
+                return
+            }
+
+            groupStore.encryptGroupById(group.id, pass)
+            restoreTabs(group.links)
+        })
+
+        return false
+    }
+
+    async function openAndDeleteTabs(group: Group): Promise<void> {
+        await restoreTabs(group.links)
         groupStore.deleteGroup(group.id)
     }
 

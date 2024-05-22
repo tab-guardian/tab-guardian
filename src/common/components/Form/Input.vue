@@ -33,11 +33,11 @@ watchEffect(() => {
             {{ props.label }}
         </label>
 
-        <div class="flex items-center gap-3">
+        <div class="flex items-center gap-2">
             <input
                 :id="props.id"
                 :type="props.type"
-                class="rounded-lg px-2.5 py-1.5 w-full bg-page border border-border focus:outline outline-2 outline-primary"
+                class="rounded-md px-2.5 py-1.5 w-full bg-page border border-border focus:outline outline-2 outline-primary"
                 :class="props.class"
                 v-model="modelValue"
                 ref="inputRef"

@@ -10,14 +10,13 @@ type Props = {
 
 const props = defineProps<Props>()
 const tabsStore = useTabsStore()
-
-function openTabs(): void {
-    tabsStore.openTabs(props.group)
-}
 </script>
 
 <template>
-    <Control @click="openTabs" class="bg-green-300 dark:bg-green-700">
+    <Control
+        @click="tabsStore.openTabs(props.group)"
+        class="bg-green-300 dark:bg-green-700"
+    >
         <img :src="upImage" alt="Open tabs" class="dark:invert" />
     </Control>
 </template>
