@@ -82,7 +82,9 @@ export const useGroupStore = defineStore('group', () => {
     function createEmptyGroup(): Group {
         const group = {
             id: Date.now() + Math.floor(Math.random() * 1000),
-            name: newGroup.value.name || getDefaultGroupName(newGroup.value.isPrivate),
+            name:
+                newGroup.value.name ||
+                getDefaultGroupName(newGroup.value.isPrivate),
             isPrivate: newGroup.value.isPrivate,
             isEncrypted: false,
             links: [],
@@ -186,8 +188,11 @@ export const useGroupStore = defineStore('group', () => {
     }
 
     function resetNewGroup(): void {
-        newGroup.value.name = ''
-        newGroup.value.isPrivate = false
+        newGroup.value = {
+            name: '',
+            isPrivate: false,
+            password: '',
+        }
     }
 
     async function saveGroups(callback?: () => void): Promise<void> {

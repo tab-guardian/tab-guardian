@@ -9,12 +9,17 @@ import Input from '@common/components/Form/Input.vue'
 const { trans } = useTransStore()
 const store = usePopupStore()
 
-function closeCurrentPopup(): void {
+function submitPopup(): void {
     if (!store.popups.enterPassword.password) {
         showToast(trans('Password is empty'), 'error')
         return
     }
 
+    store.submitPopup('enterPassword')
+}
+
+function closePopup(): void {
+    store.resetGroups()
     store.closePopup('enterPassword')
 }
 </script>
@@ -23,10 +28,10 @@ function closeCurrentPopup(): void {
     <AppearTransition>
         <Popup
             v-if="store.isOpenPopup('enterPassword')"
-            @cancel="store.closePopup('enterPassword')"
+            @cancel="closePopup"
             :content="trans('Enter a password')"
         >
-            <form @submit.prevent="closeCurrentPopup">
+            <form @submit.prevent="submitPopup">
                 <Input
                     v-model="store.popups.enterPassword.password"
                     :placeholder="trans('Enter a password')"

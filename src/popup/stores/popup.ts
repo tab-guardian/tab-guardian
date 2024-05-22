@@ -4,18 +4,19 @@ import { defineStore } from 'pinia'
 
 type OnCloseCallback = (popups: Popups) => void
 
-export const usePopupStore = defineStore('popup', () => {
-    const popups = ref<Popups>({
-        groupView: { open: false },
-        deleteGroup: { open: false },
-        groupName: { open: false },
-        enterPassword: {
-            open: false,
-            password: '',
-        },
-    })
+const defaultPopups: Popups = {
+    groupView: { open: false },
+    deleteGroup: { open: false },
+    groupName: { open: false },
+    enterPassword: {
+        open: false,
+        password: '',
+    },
+}
 
-    const onClose = ref<OnCloseCallback | null>(null)
+export const usePopupStore = defineStore('popup', () => {
+    const popups = ref<Popups>(structuredClone(defaultPopups))
+    const onSubmit = ref<OnCloseCallback | null>(null)
 
     function closeAllPopups(): void {
         for (const key in popups.value) {
@@ -27,16 +28,24 @@ export const usePopupStore = defineStore('popup', () => {
         popups.value[key].open = true
 
         if (callback) {
-            onClose.value = callback
+            onSubmit.value = callback
         }
+    }
+
+    function resetGroups(): void {
+        popups.value = structuredClone(defaultPopups)
     }
 
     function closePopup(key: keyof Popups): void {
         popups.value[key].open = false
+    }
 
-        if (onClose.value) {
-            onClose.value(popups.value)
-            onClose.value = null
+    function submitPopup(key: keyof Popups): void {
+        closePopup(key)
+
+        if (onSubmit.value) {
+            onSubmit.value(popups.value)
+            onSubmit.value = null
         }
     }
 
@@ -50,5 +59,7 @@ export const usePopupStore = defineStore('popup', () => {
         closePopup,
         closeAllPopups,
         isOpenPopup,
+        submitPopup,
+        resetGroups,
     }
 })
