@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import { useSettingsStore } from '@/stores/settings'
+import { usePopupStore } from '@/stores/popup'
 import Navbar from '@/components/Navbar/Navbar.vue'
 import DeleteGroupPopup from '@/components/Popups/DeleteGroupPopup.vue'
 import GroupMenuPopup from '@/components/Popups/GroupMenuPopup.vue'
@@ -9,6 +10,7 @@ import EnterPasswordPopup from '@/components/Popups/EnterPasswordPopup.vue'
 import AppearTransition from '@common/components/Transitions/AppearTransition.vue'
 
 const { loadSettingsFromStorage } = useSettingsStore()
+const { isOpenPopup, closePopup, closeAllPopups } = usePopupStore()
 
 onMounted(() => {
     loadSettingsFromStorage()
@@ -30,10 +32,21 @@ onMounted(() => {
         </RouterView>
     </main>
 
-    <DeleteGroupPopup />
-    <GroupMenuPopup />
-    <NewGroupNamePopup />
-    <EnterPasswordPopup />
+    <AppearTransition>
+        <DeleteGroupPopup v-if="isOpenPopup('deleteGroup')" />
+    </AppearTransition>
+
+    <AppearTransition>
+        <GroupMenuPopup v-if="isOpenPopup('groupView')" />
+    </AppearTransition>
+
+    <AppearTransition>
+        <NewGroupNamePopup v-if="isOpenPopup('groupName')" />
+    </AppearTransition>
+
+    <AppearTransition>
+        <EnterPasswordPopup v-if="isOpenPopup('enterPassword')" />
+    </AppearTransition>
 </template>
 
 <style>

@@ -221,5 +221,6 @@ export const useGroupStore = defineStore('group', () => {
         getGroupById,
         deleteAllLinks,
         deleteAllGroups,
+        resetNewGroup,
     }
 })
