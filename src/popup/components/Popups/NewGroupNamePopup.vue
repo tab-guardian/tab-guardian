@@ -3,7 +3,7 @@ import { useGroupStore } from '@/stores/group'
 import { useTransStore } from '@/stores/trans'
 import { usePopupStore } from '@/stores/popup'
 import { useSelectTabsStore } from '@/stores/selectTabs'
-import { onMounted, onUnmounted } from 'vue'
+import { onMounted } from 'vue'
 import Popup from '@/components/Popups/Popup.vue'
 import Input from '@common/components/Form/Input.vue'
 import Button from '@common/components/Form/Button.vue'
@@ -16,15 +16,12 @@ const store = useGroupStore()
 const selectTabsStore = useSelectTabsStore()
 
 onMounted(() => {
-    console.log('mount')
-})
-
-onUnmounted(() => {
-    console.log('unmount')
+    store.newGroup.name = ''
+    store.newGroup.password = ''
 })
 
 function selectLinks(): void {
-    if (!store.newGroup.password) {
+    if (store.newGroup.isPrivate && !store.newGroup.password) {
         showToast(trans('Password is empty'), 'error')
         return
     }
