@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import { onMounted, onBeforeMount } from 'vue'
 import { useSettingsStore } from '@/stores/settings'
 import { useTransStore } from '@/stores/trans'
 import en from '@settings/locales/en.json'
@@ -11,8 +11,11 @@ import EraseSection from '@settings/components/EraseSection.vue'
 const store = useSettingsStore()
 const { trans, loadMessages } = useTransStore()
 
-onMounted(() => {
+onBeforeMount(() => {
     loadMessages({ en, ru })
+})
+
+onMounted(() => {
     store.loadSettingsFromStorage()
 })
 </script>

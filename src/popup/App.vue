@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import { onMounted, onBeforeMount } from 'vue'
 import { useSettingsStore } from '@/stores/settings'
 import { usePopupStore } from '@/stores/popup'
 import { useTransStore } from '@/stores/trans'
@@ -16,9 +16,12 @@ const { loadSettingsFromStorage } = useSettingsStore()
 const { isOpenPopup } = usePopupStore()
 const { loadMessages } = useTransStore()
 
+onBeforeMount(() => {
+    loadMessages({ en, ru })
+})
+
 onMounted(() => {
     loadSettingsFromStorage()
-    loadMessages({ en, ru })
 
     if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
         document.body.classList.add('dark')
