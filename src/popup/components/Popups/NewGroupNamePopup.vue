@@ -34,7 +34,6 @@ function selectLinks(): void {
     <AppearTransition>
         <Popup
             v-if="isOpenPopup('groupName')"
-            @confirm="selectLinks"
             @cancel="closePopup('groupName')"
             :content="trans('Enter a group name')"
         >

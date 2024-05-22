@@ -17,7 +17,6 @@ export const useGroupStore = defineStore('group', () => {
     const selectedGroup = ref<Group | null>(null)
     const isTitleFieldActive = ref<boolean>(false)
     const closeSelectedTabs = ref<boolean>(false)
-    const userPassword = ref<string | null>(null)
 
     const { trans } = useTransStore()
 
@@ -205,7 +204,6 @@ export const useGroupStore = defineStore('group', () => {
         isTitleFieldActive,
         closeSelectedTabs,
         newGroup,
-        userPassword,
         deleteGroup,
         deleteLink,
         prependLinksTo,

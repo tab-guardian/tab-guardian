@@ -2,11 +2,12 @@
 import { ref, watchEffect } from 'vue'
 
 type Props = {
-    label: string
     id: string
     type: 'text' | 'password'
     class?: string
+    label?: string
     withButton?: boolean
+    placeholder?: string
 }
 
 type Emits = {
@@ -28,7 +29,7 @@ watchEffect(() => {
 
 <template>
     <div>
-        <label :for="props.id" class="block mb-0.5 mx-1 text-sm">
+        <label v-if="label" :for="props.id" class="block mb-0.5 mx-1 text-sm">
             {{ props.label }}
         </label>
 
@@ -40,7 +41,7 @@ watchEffect(() => {
                 :class="props.class"
                 v-model="modelValue"
                 ref="inputRef"
-                :placeholder="props.label"
+                :placeholder="props.placeholder || props.label || ''"
             />
 
             <button

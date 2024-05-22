@@ -10,20 +10,20 @@ import PopupButton from '@/components/Popups/PopupButton.vue'
 
 const { trans } = useTransStore()
 const { isOpenPopup, closePopup } = usePopupStore()
-const store = useGroupStore()
+const groupStore = useGroupStore()
 const router = useRouter()
 
 function deleteGroup(): void {
-    if (!store.selectedGroup) {
+    if (!groupStore.selectedGroup) {
         error.warn('No group selected for deletion')
         return
     }
 
-    store.deleteGroup(store.selectedGroup.id)
+    groupStore.deleteGroup(groupStore.selectedGroup.id)
 
     closePopup('deleteGroup')
 
-    store.selectedGroup = null
+    groupStore.selectedGroup = null
 
     router.push({ name: 'main' })
 }
@@ -32,8 +32,7 @@ function deleteGroup(): void {
 <template>
     <AppearTransition>
         <Popup
-            v-if="store.selectedGroup && isOpenPopup('deleteGroup')"
-            @confirm="deleteGroup"
+            v-if="groupStore.selectedGroup && isOpenPopup('deleteGroup')"
             @cancel="closePopup('deleteGroup')"
             :content="trans('Do you want to delete the group?')"
         >

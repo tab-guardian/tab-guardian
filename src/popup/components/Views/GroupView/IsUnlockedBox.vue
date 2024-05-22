@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import type { Group } from '@/types'
+import { onUnmounted, watch } from 'vue'
 import { useTransStore } from '@/stores/trans'
 import { useGroupStore } from '@/stores/group'
+import { usePopupStore } from '@/stores/popup'
 import showToast from '@common/modules/showToast'
 import ShieldExclamationIcon from '@common/components/Icons/ShieldExclamationIcon.vue'
 import LockClosedIcon from '@common/components/Icons/LockClosedIcon.vue'
@@ -13,9 +15,30 @@ type Props = {
 const { group } = defineProps<Props>()
 const { trans } = useTransStore()
 const groupStore = useGroupStore()
+const popupStore = usePopupStore()
+
+onUnmounted(() => {
+    popupStore.popups.enterPassword.password = ''
+})
+
+watch(popupStore.popups.enterPassword, newObj => {
+    if (newObj.open === false) {
+        lockGroup()
+    }
+})
+
+function promptEnterPassword(): void {
+    if (popupStore.popups.enterPassword.password) {
+        lockGroup()
+        return
+    }
+
+    popupStore.openPopup('enterPassword')
+}
 
 function lockGroup(): void {
-    const completed = groupStore.encryptGroupById(group.id)
+    const password = popupStore.popups.enterPassword.password
+    const completed = groupStore.encryptGroupById(group.id, password)
 
     if (completed) {
         showToast(trans('Group is locked'))
@@ -34,7 +57,7 @@ function lockGroup(): void {
         </span>
 
         <button
-            @click="lockGroup"
+            @click="promptEnterPassword"
             :class="[
                 'bg-unsafe px-3 py-2 rounded-md',
                 'text-sm hover:bg-unsafe-hover text-bg font-semibold',
