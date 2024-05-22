@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { useTransStore } from '@settings/stores/trans'
-import { useMainStore } from '@settings/stores/main'
+import { useSettingsStore } from '@/stores/settings'
 import Section from '@settings/components/Section.vue'
 import SlideSwitch from '@common/components/Form/SlideSwitch.vue'
 
 const { trans } = useTransStore()
-const store = useMainStore()
+const store = useSettingsStore()
 </script>
 
 <template>
