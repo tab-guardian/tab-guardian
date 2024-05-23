@@ -14,24 +14,20 @@ const store = useSettingsStore()
 const groupStore = useGroupStore()
 const isConfirmed = ref<boolean>(false)
 
-function saveSettings(): void {
+function deleteGroups(): void {
     if (store.loading) {
         return
     }
 
     if (!isConfirmed.value) {
-        showToast(
-            trans('Confirm that you want to delete all non-private groups'),
-            'error',
-        )
-
+        showToast(trans('Confirm that you want to delete all groups'), 'error')
         return
     }
 
     store.loading = true
     groupStore.deleteAllGroups()
 
-    showToast(trans('All the non-private groups have been deleted'))
+    showToast(trans('All the groups have been deleted'))
 
     isConfirmed.value = false
     store.loading = false
@@ -39,7 +35,7 @@ function saveSettings(): void {
 </script>
 
 <template>
-    <form @submit.prevent="saveSettings">
+    <form @submit.prevent="deleteGroups">
         <Section :title="trans('Erase all groups')">
             <div class="flex items-center justify-between gap-3">
                 <SlideSwitch v-model="isConfirmed">
@@ -47,6 +43,7 @@ function saveSettings(): void {
                 </SlideSwitch>
 
                 <Button
+                    @clicked="deleteGroups"
                     additionalClasses="bg-red-600 dark:bg-red-400 min-w-[200px]"
                 >
                     <TrashIcon class="w-5 h-5" />

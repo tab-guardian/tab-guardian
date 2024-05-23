@@ -4,6 +4,11 @@ type Props = {
     type?: 'button' | 'submit' | 'reset'
 }
 
+type Emits = {
+    (e: 'clicked'): void
+}
+
+const emit = defineEmits<Emits>()
 const props = defineProps<Props>()
 </script>
 
@@ -13,6 +18,7 @@ const props = defineProps<Props>()
             :type="props.type || 'button'"
             class="bg-primary text-page px-5 py-2 rounded-lg text-md inline-flex items-center gap-3"
             :class="props.additionalClasses"
+            @click="emit('clicked')"
         >
             <slot />
         </button>

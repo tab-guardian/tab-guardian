@@ -6,8 +6,8 @@
     "Settings have been updated": "Settings have been updated",
     "Erase all groups": "Erase all groups",
     "I confirm that I want to delete all groups": "I confirm that I want to delete all groups",
-    "Confirm that you want to delete all non-private groups": "Confirm that you want to delete all non-private groups",
-    "All the non-private groups have been deleted": "All the non-private groups have been deleted",
+    "Confirm that you want to delete all groups": "Confirm that you want to delete all groups",
+    "All the groups have been deleted": "All the groups have been deleted",
     "Show private groups only in browser incognito mode": "Show private groups only in browser incognito mode",
     "Settings have been saved": "Settings have been saved",
     "Go to the extension settings and enable the option 'Allow in incognito' or 'Allow in Private'": "Go to the extension settings and enable the option 'Allow in incognito' or 'Allow in Private'"
