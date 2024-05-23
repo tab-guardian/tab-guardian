@@ -9,7 +9,7 @@ import Navbar from '@/components/Navbar/Navbar.vue'
 import DeleteGroupPopup from '@/components/Popups/DeleteGroupPopup.vue'
 import GroupMenuPopup from '@/components/Popups/GroupMenuPopup.vue'
 import NewGroupNamePopup from '@/components/Popups/NewGroupNamePopup.vue'
-import EnterPasswordPopup from '@/components/Popups/EnterPasswordPopup.vue'
+import EnterNewPasswordPopup from '@/components/Popups/EnterNewPasswordPopup.vue'
 import AppearTransition from '@common/components/Transitions/AppearTransition.vue'
 
 const { loadSettingsFromStorage } = useSettingsStore()
@@ -53,7 +53,7 @@ onMounted(() => {
     </AppearTransition>
 
     <AppearTransition>
-        <EnterPasswordPopup v-if="isOpenPopup('enterPassword')" />
+        <EnterNewPasswordPopup v-if="isOpenPopup('enterPassword')" />
     </AppearTransition>
 </template>
 
