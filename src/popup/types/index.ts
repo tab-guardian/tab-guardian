@@ -50,3 +50,8 @@ export type Modals = {
 }
 
 export type SelectTabsOperation = 'adding' | 'creating'
+
+export type Attempts = {
+    value: number
+    lastTryDate: number
+}
