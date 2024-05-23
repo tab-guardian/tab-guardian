@@ -24,6 +24,7 @@ export type Group = {
 export type Settings = {
     encryptAfterRestore: boolean
     showPrivateGroupsOnlyInIncognito: boolean
+    overrideWithSameName: boolean
 }
 
 export type Popups = {

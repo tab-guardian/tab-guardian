@@ -52,6 +52,14 @@ function updateSettings(): void {
                     <!-- prettier-ignore -->
                     {{ trans('Show private groups only in browser incognito mode') }}
                 </SlideSwitch>
+
+                <SlideSwitch
+                    @changed="updateSettings"
+                    v-model="store.settings.overrideWithSameName"
+                >
+                    <!-- prettier-ignore -->
+                    {{ trans( 'If the new group name matches an existing one, override it') }}
+                </SlideSwitch>
             </div>
         </Section>
     </div>

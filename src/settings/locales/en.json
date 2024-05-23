@@ -10,5 +10,6 @@
     "All the groups have been deleted": "All the groups have been deleted",
     "Show private groups only in browser incognito mode": "Show private groups only in browser incognito mode",
     "Settings have been saved": "Settings have been saved",
-    "Go to the extension settings and enable the option 'Allow in incognito' or 'Allow in Private'": "Go to the extension settings and enable the option 'Allow in incognito' or 'Allow in Private'"
+    "Go to the extension settings and enable the option 'Allow in incognito' or 'Allow in Private'": "Go to the extension settings and enable the option 'Allow in incognito' or 'Allow in Private'",
+    "If the new group name matches an existing one, override it": "If the new group name matches an existing one, override it"
 }
