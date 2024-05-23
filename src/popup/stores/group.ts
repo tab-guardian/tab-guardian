@@ -30,7 +30,7 @@ export const useGroupStore = defineStore('group', () => {
         password: '',
     })
 
-    onMounted(() => loadGroupsFromStorage())
+    onMounted(loadGroupsFromStorage)
 
     function getGroupById(id: number): Group | null {
         return groups.value.find(g => g.id === id) || null
