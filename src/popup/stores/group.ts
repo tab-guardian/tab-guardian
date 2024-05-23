@@ -12,6 +12,7 @@ import saveGroupsToStorage from '@common/modules/storage/saveGroupsToStorage'
 import encryptGroup from '@common/modules/encrypt/encryptGroup'
 import closeTabsByIds from '@/modules/tabs/closeTabsByIds'
 import isDevelopment from '@common/modules/isDevelopment'
+import isIncognitoWindow from '@/modules/isIncognitoWindow'
 
 export const useGroupStore = defineStore('group', () => {
     const groups = ref<Group[]>([])
@@ -46,11 +47,10 @@ export const useGroupStore = defineStore('group', () => {
         const showInIncognitoEnabled =
             settingsStore.settings.showPrivateGroupsOnlyInIncognito
 
-        const currWindow = await chrome.windows.getCurrent()
+        const incognito = await isIncognitoWindow()
 
         groups.value = items.map(g => {
-            g.hide =
-                g.isPrivate && !currWindow.incognito && showInIncognitoEnabled
+            g.hide = g.isPrivate && !incognito && showInIncognitoEnabled
 
             return g
         })
@@ -103,12 +103,10 @@ export const useGroupStore = defineStore('group', () => {
         const showInIncognitoEnabled =
             settingsStore.settings.showPrivateGroupsOnlyInIncognito
 
-        const currWindow = await chrome.windows.getCurrent()
+        const incognito = await isIncognitoWindow()
 
         const hide =
-            !currWindow.incognito &&
-            showInIncognitoEnabled &&
-            newGroup.value.isPrivate
+            !incognito && showInIncognitoEnabled && newGroup.value.isPrivate
 
         const group = {
             id: Date.now() + Math.floor(Math.random() * 1000),
@@ -121,9 +119,23 @@ export const useGroupStore = defineStore('group', () => {
             hide,
         }
 
-        groups.value.unshift(group)
+        prependGroup(group)
 
         return group
+    }
+
+    function prependGroup(group: Group): void {
+        if (settingsStore.settings.overrideWithSameName) {
+            const sameNameGroup = groups.value.find(g => g.name === group.name)
+
+            if (sameNameGroup) {
+                groups.value = groups.value.filter(
+                    g => g.id !== sameNameGroup.id,
+                )
+            }
+        }
+
+        groups.value.unshift(group)
     }
 
     function renameGroup(): void {
