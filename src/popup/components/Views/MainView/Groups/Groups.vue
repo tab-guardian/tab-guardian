@@ -14,10 +14,8 @@ const { trans } = useTransStore()
     </Message>
 
     <div v-else class="flex flex-col">
-        <GroupItem
-            v-for="group in store.groups"
-            :key="group.id"
-            :group="group"
-        />
+        <div v-for="group in store.groups" :key="group.id">
+            <GroupItem :group="group" v-if="!group.hide" />
+        </div>
     </div>
 </template>

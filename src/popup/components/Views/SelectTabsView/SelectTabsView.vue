@@ -29,11 +29,11 @@ function saveTabsAfterEnter(e: Event): void {
     }
 }
 
-function saveTabs(): void {
+async function saveTabs(): Promise<void> {
     let groupId = store.targetGroupId
 
     if (!groupId) {
-        const newGroup = groupStore.createEmptyGroup()
+        const newGroup = await groupStore.createEmptyGroup()
         groupId = newGroup.id
         store.targetGroupId = newGroup.id
     }

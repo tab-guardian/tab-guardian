@@ -20,8 +20,8 @@ export const useGroupStore = defineStore('group', () => {
     const isTitleFieldActive = ref<boolean>(false)
     const closeSelectedTabs = ref<boolean>(false)
 
-    const settingsStore = useSettingsStore()
     const { trans } = useTransStore()
+    const settingsStore = useSettingsStore()
 
     const newGroup = ref({
         name: '',
@@ -36,15 +36,24 @@ export const useGroupStore = defineStore('group', () => {
     }
 
     async function loadGroupsFromStorage(): Promise<void> {
-        if (!settingsStore.settings.showPrivateGroupsOnlyInIncognito) {
-            groups.value = await getGroupsFromStorage()
+        const items = await getGroupsFromStorage()
+
+        if (isDevelopment()) {
+            groups.value = items
             return
         }
 
-        if (isDevelopment()) {
-            groups.value = await getGroupsFromStorage()
-            return
-        }
+        const showInIncognitoEnabled =
+            settingsStore.settings.showPrivateGroupsOnlyInIncognito
+
+        const currWindow = await chrome.windows.getCurrent()
+
+        groups.value = items.map(g => {
+            g.hide =
+                g.isPrivate && !currWindow.incognito && showInIncognitoEnabled
+
+            return g
+        })
     }
 
     function encryptGroupById(groupId: number, pass: string): boolean {
@@ -90,7 +99,17 @@ export const useGroupStore = defineStore('group', () => {
         return true
     }
 
-    function createEmptyGroup(): Group {
+    async function createEmptyGroup(): Promise<Group> {
+        const showInIncognitoEnabled =
+            settingsStore.settings.showPrivateGroupsOnlyInIncognito
+
+        const currWindow = await chrome.windows.getCurrent()
+
+        const hide =
+            !currWindow.incognito &&
+            showInIncognitoEnabled &&
+            newGroup.value.isPrivate
+
         const group = {
             id: Date.now() + Math.floor(Math.random() * 1000),
             name:
@@ -99,6 +118,7 @@ export const useGroupStore = defineStore('group', () => {
             isPrivate: newGroup.value.isPrivate,
             isEncrypted: false,
             links: [],
+            hide,
         }
 
         groups.value.unshift(group)

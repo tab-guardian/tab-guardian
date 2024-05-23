@@ -7,7 +7,7 @@ type Emits = {
 
 type Props = {
     disabled?: boolean
-    warning?: string
+    warning?: string | null
 }
 
 const emit = defineEmits<Emits>()

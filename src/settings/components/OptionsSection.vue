@@ -44,7 +44,8 @@ function updateSettings(): void {
                 </SlideSwitch>
 
                 <SlideSwitch
-                    @inputChange="updateSettings"
+                    @changed="updateSettings"
+                    v-model="store.settings.showPrivateGroupsOnlyInIncognito"
                     :disabled="!incognitoModeAllowed"
                     :warning="incognitoWarningMessage"
                 >

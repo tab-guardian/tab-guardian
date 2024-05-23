@@ -2,11 +2,14 @@ import type { Settings } from '@/types'
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import getFromStorage from '@common/modules/storage/getFromStorage'
-import getDefaultSettings from '@common/modules/getDefaultSettings'
 import saveToStorage from '@common/modules/storage/saveToStorage'
 
 export const useSettingsStore = defineStore('settings', () => {
-    const settings = ref<Settings>(getDefaultSettings())
+    const settings = ref<Settings>({
+        encryptAfterRestore: true,
+        showPrivateGroupsOnlyInIncognito: false,
+    })
+
     const loading = ref<boolean>(false)
 
     async function loadSettingsFromStorage(): Promise<void> {
