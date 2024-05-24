@@ -1,4 +1,4 @@
-import type { Group, Link } from '@/types'
+import type { Group, Link, NewGroup } from '@/types'
 import { ref, onMounted } from 'vue'
 import { defineStore } from 'pinia'
 import { useTransStore } from '@/stores/trans'
@@ -24,10 +24,11 @@ export const useGroupStore = defineStore('group', () => {
     const { trans } = useTransStore()
     const settingsStore = useSettingsStore()
 
-    const newGroup = ref({
+    const newGroup = ref<NewGroup>({
         name: '',
         isPrivate: false,
         password: '',
+        bindURL: null,
     })
 
     onMounted(loadGroupsFromStorage)
@@ -250,6 +251,7 @@ export const useGroupStore = defineStore('group', () => {
             name: '',
             isPrivate: false,
             password: '',
+            bindURL: '',
         }
     }
 

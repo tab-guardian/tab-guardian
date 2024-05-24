@@ -19,7 +19,14 @@ export type Group = {
     isPrivate: boolean
     isEncrypted: boolean
     hide?: boolean
-    bind?: boolean
+    bindURL?: string
+}
+
+export type NewGroup = {
+    name: string
+    isPrivate: boolean
+    password: string
+    bindURL: string | null
 }
 
 export type Settings = {

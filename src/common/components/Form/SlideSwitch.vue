@@ -2,7 +2,7 @@
 import { watch } from 'vue'
 
 type Emits = {
-    (e: 'changed'): void
+    (e: 'changed', checked: boolean): void
 }
 
 type Props = {
@@ -15,7 +15,7 @@ const props = defineProps<Props>()
 const modelValue = defineModel()
 
 watch(modelValue, () => {
-    emit('changed')
+    emit('changed', modelValue.value as boolean)
 })
 </script>
 
