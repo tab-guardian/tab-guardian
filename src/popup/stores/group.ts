@@ -62,11 +62,6 @@ export const useGroupStore = defineStore('group', () => {
                 delete group.hide
             }
         }
-
-        groups.value = items.map(g => {
-            g.hide = g.isPrivate && !incognito && showInIncognitoEnabled
-            return g
-        })
     }
 
     function encryptGroupById(groupId: number, pass: string): boolean {
