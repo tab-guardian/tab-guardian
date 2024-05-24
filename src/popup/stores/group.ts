@@ -45,6 +45,8 @@ export const useGroupStore = defineStore('group', () => {
             return
         }
 
+        const filteredGroups: Group[] = []
+
         for (const group of items) {
             const hide = await shouldHideGroup(group)
 
@@ -52,8 +54,10 @@ export const useGroupStore = defineStore('group', () => {
                 group.hide = true
             }
 
-            groups.value.push(group)
+            filteredGroups.push(group)
         }
+
+        groups.value = filteredGroups
     }
 
     async function shouldHideGroup(group: Group): Promise<boolean> {
