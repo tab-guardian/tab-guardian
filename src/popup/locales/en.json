@@ -27,6 +27,7 @@
     "Incorrect password": "Incorrect password",
     "Group is unlocked": "Group is unlocked",
     "Group is locked": "Group is locked",
+    "Group is locked with the same password": "Group is locked with the same password",
     "Error ocurred": "Error ocurred",
     "The new name has been saved": "The new name has been saved",
     "This group is private. You need to unlock it to see the links": "This group is private. You need to unlock it to see the links",

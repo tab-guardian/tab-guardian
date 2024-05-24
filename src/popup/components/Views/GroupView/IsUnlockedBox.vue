@@ -24,23 +24,21 @@ onUnmounted(() => {
 function promptEnterPassword(): void {
     if (popupStore.popups.enterPassword.password) {
         lockGroup()
+        showToast(trans('Group is locked with the same password'))
         return
     }
 
     popupStore.openPopup('enterPassword', popups => {
         if (popups.enterPassword.password) {
             lockGroup()
+            showToast(trans('Group is locked'))
         }
     })
 }
 
 function lockGroup(): void {
     const password = popupStore.popups.enterPassword.password
-    const completed = groupStore.encryptGroupById(group.id, password)
-
-    if (completed) {
-        showToast(trans('Group is locked'))
-    }
+    groupStore.encryptGroupById(group.id, password)
 }
 </script>
 
