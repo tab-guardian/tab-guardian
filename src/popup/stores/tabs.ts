@@ -29,6 +29,11 @@ export const useTabsStore = defineStore('tabs', () => {
             return true
         }
 
+        if (!group.isPrivate) {
+            restoreTabs(group.links)
+            return true
+        }
+
         popupStore.openPopup('enterPassword', popups => {
             const pass = popups.enterPassword.password
 
