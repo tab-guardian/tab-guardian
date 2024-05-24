@@ -21,11 +21,11 @@ export const useTabsStore = defineStore('tabs', () => {
         }
 
         if (popupStore.popups.enterPassword.password) {
+            restoreTabs(group.links)
             groupStore.encryptGroupById(
                 group.id,
                 popupStore.popups.enterPassword.password,
             )
-            restoreTabs(group.links)
             return true
         }
 
@@ -36,8 +36,8 @@ export const useTabsStore = defineStore('tabs', () => {
                 return
             }
 
-            groupStore.encryptGroupById(group.id, pass)
             restoreTabs(group.links)
+            groupStore.encryptGroupById(group.id, pass)
         })
 
         return false
