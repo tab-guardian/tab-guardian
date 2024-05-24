@@ -38,6 +38,7 @@
         "pinia": "^2.1.7",
         "toastify-js": "^1.12.0",
         "vue": "^3.4.26",
-        "vue-router": "4"
+        "vue-router": "4",
+        "vue-tippy": "v6"
     }
 }

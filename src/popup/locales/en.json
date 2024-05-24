@@ -48,5 +48,7 @@
     "Group password": "Group password",
     "Wait before trying again": "Wait before trying again",
     "Too many attempts. Locked for :n minutes": "Too many attempts. Locked for :n minutes",
-    "Too many attempts. Next attempt in :n minutes": "Too many attempts. Next attempt in :n minutes"
+    "Too many attempts. Next attempt in :n minutes": "Too many attempts. Next attempt in :n minutes",
+    "Bind to this host": "Bind to this host",
+    "Private groups are secure and use encryption. Only users with the password can access them": "Private groups are secure and use encryption. Only users with the password can access them"
 }
