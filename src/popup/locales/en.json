@@ -44,5 +44,8 @@
     "Group created with tabs": "Group created with tabs",
     "Close selected tabs": "Close selected tabs",
     "Tabs opened": "Tabs opened",
-    "Group password": "Group password"
+    "Group password": "Group password",
+    "Wait before trying again": "Wait before trying again",
+    "Too many attempts. Locked for :n minutes": "Too many attempts. Locked for :n minutes",
+    "Too many attempts. Next attempt in :n minutes": "Too many attempts. Next attempt in :n minutes"
 }

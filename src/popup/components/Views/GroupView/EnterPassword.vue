@@ -4,6 +4,7 @@ import { ref } from 'vue'
 import { useTransStore } from '@/stores/trans'
 import { useGroupStore } from '@/stores/group'
 import { usePopupStore } from '@/stores/popup'
+import { useAttemptsStore } from '@/stores/attempts'
 import error from '@common/modules/error'
 import showToast from '@common/modules/showToast'
 import ShieldCheckIcon from '@common/components/Icons/ShieldCheckIcon.vue'
@@ -17,6 +18,7 @@ const props = defineProps<Props>()
 const { trans } = useTransStore()
 const groupStore = useGroupStore()
 const popupStore = usePopupStore()
+const attemptsStore = useAttemptsStore()
 
 const password = ref<string>('')
 
@@ -26,12 +28,18 @@ function submitPass(): void {
         return
     }
 
+    if (!attemptsStore.isAllowedToTry()) {
+        password.value = ''
+        return
+    }
+
     // With this, we don't need to type password to lock the
     // group after just unlocking it
     popupStore.popups.enterPassword.password = password.value
 
     try {
         groupStore.decryptGroup(props.group, password.value)
+        attemptsStore.resetAttempts()
         showToast(trans('Group is unlocked'))
     } catch (e: any) {
         error.warn('Caught and handled error: ', e)

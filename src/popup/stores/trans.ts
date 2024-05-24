@@ -11,7 +11,7 @@ export const useTransStore = defineStore('trans', () => {
         messages.value = msgs
     }
 
-    function trans(key: string): string {
+    function trans(key: string, ...args: string[]): string {
         const message = messages.value[lang.value]
 
         if (!message) {
@@ -19,12 +19,16 @@ export const useTransStore = defineStore('trans', () => {
             return key
         }
 
-        const result = message[key]
+        let result = message[key]
 
         if (!result) {
             const m = `Key "${key}" not found in ${lang} language`
             error.warn(m)
             return key
+        }
+
+        for (let i = 0; i < args.length; i++) {
+            result = result.replaceAll(':n', args[i])
         }
 
         return result || key
