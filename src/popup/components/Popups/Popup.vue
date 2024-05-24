@@ -18,7 +18,7 @@ const props = defineProps<Props>()
         <Overlay @click="emit('cancel')" />
 
         <div
-            class="absolute top-1/2 left-7 right-7 bg-secondary rounded-md -translate-y-1/2 p-4 z-20"
+            class="absolute top-1/2 left-4 right-4 bg-secondary rounded-md -translate-y-1/2 p-4 z-20"
         >
             <span class="text-md mb-3 block">{{ props.content }}</span>
 

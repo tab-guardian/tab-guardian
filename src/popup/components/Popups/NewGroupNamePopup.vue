@@ -4,11 +4,12 @@ import { useTransStore } from '@/stores/trans'
 import { usePopupStore } from '@/stores/popup'
 import { useSelectTabsStore } from '@/stores/selectTabs'
 import { onMounted } from 'vue'
+import showToast from '@common/modules/showToast'
 import Popup from '@/components/Popups/Popup.vue'
 import Input from '@common/components/Form/Input.vue'
 import Button from '@common/components/Form/Button.vue'
 import ChevronRightIcon from '@common/components/Icons/ChevronRightIcon.vue'
-import showToast from '@common/modules/showToast'
+import SlideSwitch from '@common/components/Form/SlideSwitch.vue'
 
 const { trans } = useTransStore()
 const { closePopup, closeAllPopups } = usePopupStore()
@@ -57,7 +58,13 @@ function selectLinks(): void {
                 :label="trans('Group password')"
             />
 
-            <div>
+            <div class="flex items-end gap-3 justify-between">
+                <SlideSwitch v-if="store.newGroup.isPrivate">
+                    <div class="flex items-center gap-1">
+                        {{ trans('Bind to this host') }}
+                    </div>
+                </SlideSwitch>
+
                 <Button type="submit">
                     {{ trans('Select Tabs') }}
                     <ChevronRightIcon width="20" height="20" />
