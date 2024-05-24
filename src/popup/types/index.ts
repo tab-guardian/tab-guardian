@@ -18,7 +18,8 @@ export type Group = {
     links: Link[]
     isPrivate: boolean
     isEncrypted: boolean
-    hide: boolean
+    hide?: boolean
+    bind?: boolean
 }
 
 export type Settings = {

@@ -49,9 +49,21 @@ export const useGroupStore = defineStore('group', () => {
 
         const incognito = await isIncognitoWindow()
 
+        for (const group of items) {
+            const hide = group.isPrivate && !incognito && showInIncognitoEnabled
+
+            if (hide) {
+                group.hide = true
+                continue
+            }
+
+            if (group.hasOwnProperty('hide')) {
+                delete group.hide
+            }
+        }
+
         groups.value = items.map(g => {
             g.hide = g.isPrivate && !incognito && showInIncognitoEnabled
-
             return g
         })
     }
@@ -108,7 +120,7 @@ export const useGroupStore = defineStore('group', () => {
         const hide =
             !incognito && showInIncognitoEnabled && newGroup.value.isPrivate
 
-        const group = {
+        const group: Group = {
             id: Date.now() + Math.floor(Math.random() * 1000),
             name:
                 newGroup.value.name ||
@@ -116,7 +128,10 @@ export const useGroupStore = defineStore('group', () => {
             isPrivate: newGroup.value.isPrivate,
             isEncrypted: false,
             links: [],
-            hide,
+        }
+
+        if (hide) {
+            group.hide = true
         }
 
         prependGroup(group)
