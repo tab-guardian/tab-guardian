@@ -56,7 +56,7 @@ function submitPass(): void {
 </script>
 
 <template>
-    <div class="bg-secondary p-3 rounded-md shadow-md mt-2">
+    <div class="px-2 mt-3">
         <p class="flex items-center gap-3 mb-2 text-sm leading-4">
             <ShieldCheckIcon width="45" height="45" />
             {{ trans('Enter a password to unlock the content of this group') }}
