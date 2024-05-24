@@ -45,23 +45,24 @@ export const useGroupStore = defineStore('group', () => {
             return
         }
 
-        const showInIncognitoEnabled =
-            settingsStore.settings.showPrivateGroupsOnlyInIncognito
-
-        const incognito = await isIncognitoWindow()
-
         for (const group of items) {
-            const hide = group.isPrivate && !incognito && showInIncognitoEnabled
+            const hide = await shouldHideGroup(group)
 
             if (hide) {
                 group.hide = true
-                continue
             }
 
-            if (group.hasOwnProperty('hide')) {
-                delete group.hide
-            }
+            groups.value.push(group)
         }
+    }
+
+    async function shouldHideGroup(group: Group): Promise<boolean> {
+        const optionEnabled =
+            settingsStore.settings.showPrivateGroupsOnlyInIncognito
+
+        const isIncognito = await isIncognitoWindow()
+
+        return group.isPrivate && !isIncognito && optionEnabled
     }
 
     function encryptGroupById(groupId: number, pass: string): boolean {
@@ -108,14 +109,6 @@ export const useGroupStore = defineStore('group', () => {
     }
 
     async function createEmptyGroup(): Promise<Group> {
-        const showInIncognitoEnabled =
-            settingsStore.settings.showPrivateGroupsOnlyInIncognito
-
-        const incognito = await isIncognitoWindow()
-
-        const hide =
-            !incognito && showInIncognitoEnabled && newGroup.value.isPrivate
-
         const group: Group = {
             id: Date.now() + Math.floor(Math.random() * 1000),
             name:
@@ -124,10 +117,6 @@ export const useGroupStore = defineStore('group', () => {
             isPrivate: newGroup.value.isPrivate,
             isEncrypted: false,
             links: [],
-        }
-
-        if (hide) {
-            group.hide = true
         }
 
         prependGroup(group)
@@ -224,7 +213,10 @@ export const useGroupStore = defineStore('group', () => {
             closeTabsByIds(links.map(link => link.id))
         }
 
-        saveGroups(() => resetNewGroup())
+        saveGroups(() => {
+            resetNewGroup()
+            loadGroupsFromStorage()
+        })
     }
 
     function decryptGroup(group: Group, pass: string): void {
