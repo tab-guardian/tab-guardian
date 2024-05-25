@@ -1,14 +1,15 @@
 import isDevelopment from '@common/modules/isDevelopment'
 import error from '@common/modules/error'
 
-export default <T>(key: string, callback: (value: T | null) => void): void => {
-    if (isDevelopment()) {
-        callback(getFromLocalStorage<T>(key))
-        return
-    }
+export default <T>(key: string): Promise<T | null> => {
+    return new Promise(resolve => {
+        if (isDevelopment()) {
+            return resolve(getFromLocalStorage<T>(key))
+        }
 
-    chrome.storage.sync.get(key, result => {
-        callback(getFromChromeStorage<T>(key, result))
+        chrome.storage.sync.get(key, result => {
+            resolve(getFromChromeStorage<T>(key, result))
+        })
     })
 }
 

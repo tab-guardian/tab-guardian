@@ -1,29 +1,38 @@
 import type { Group } from '@/types'
 import getFromStorage from '@common/modules/storage/getFromStorage'
+import getStorageItemsLimit from '@common/modules/storage/getStorageItemsLimit'
 
 export default async (): Promise<Group[]> => {
-    const groups = await getFromStorage<Group[]>('groups')
+    const groups: Group[] = []
 
-    if (!groups) {
+    for (let i = 0; i < getStorageItemsLimit(); i++) {
+        const group = await getFromStorage<Group>(`group_${i}`)
+
+        if (!group) {
+            break
+        }
+
+        groups.push(group)
+    }
+
+    if (groups.length === 0) {
         return []
     }
 
-    const decodedGroups: Group[] = []
+    return groups.map(group => decodeGroup(group))
+}
 
-    for (let group of groups) {
-        const links = group.links.map(link => {
-            return {
-                ...link,
-                favIconUrl: decodeURIComponent(link.favIconUrl),
-                url: decodeURIComponent(link.url),
-            }
-        })
+function decodeGroup(group: Group): Group {
+    const links = group.links.map(link => {
+        return {
+            ...link,
+            favIconUrl: decodeURIComponent(link.favIconUrl),
+            url: decodeURIComponent(link.url),
+        }
+    })
 
-        decodedGroups.push({
-            ...group,
-            links,
-        })
+    return {
+        ...group,
+        links,
     }
-
-    return decodedGroups
 }

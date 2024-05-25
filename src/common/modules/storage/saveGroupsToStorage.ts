@@ -19,5 +19,7 @@ export default async (groups: Group[]): Promise<void> => {
         })
     }
 
-    await saveToStorage<Group[]>('groups', encodedGroups)
+    for (let i = 0; i < encodedGroups.length; i++) {
+        await saveToStorage<Group>(`group_${i}`, encodedGroups[i])
+    }
 }
