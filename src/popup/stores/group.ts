@@ -13,6 +13,7 @@ import encryptGroup from '@common/modules/encrypt/encryptGroup'
 import closeTabsByIds from '@/modules/tabs/closeTabsByIds'
 import isDevelopment from '@common/modules/isDevelopment'
 import isIncognitoWindow from '@/modules/isIncognitoWindow'
+import getCurrentURL from '@/modules/getCurrentURL'
 
 export const useGroupStore = defineStore('group', () => {
     const groups = ref<Group[]>([])
@@ -65,6 +66,14 @@ export const useGroupStore = defineStore('group', () => {
             settingsStore.settings.showPrivateGroupsOnlyInIncognito
 
         const isIncognito = await isIncognitoWindow()
+
+        if (group.bindURL) {
+            const hashedURL = await getCurrentURL(true)
+
+            if (hashedURL !== group.bindURL) {
+                return true
+            }
+        }
 
         return group.isPrivate && !isIncognito && optionEnabled
     }
@@ -121,6 +130,10 @@ export const useGroupStore = defineStore('group', () => {
             isPrivate: newGroup.value.isPrivate,
             isEncrypted: false,
             links: [],
+        }
+
+        if (newGroup.value.bindURL) {
+            group.bindURL = newGroup.value.bindURL
         }
 
         prependGroup(group)
