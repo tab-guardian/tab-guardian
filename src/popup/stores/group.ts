@@ -14,6 +14,8 @@ import closeTabsByIds from '@/modules/tabs/closeTabsByIds'
 import isDevelopment from '@common/modules/isDevelopment'
 import isIncognitoWindow from '@/modules/isIncognitoWindow'
 import getCurrentURL from '@/modules/getCurrentURL'
+import deleteGroupFromStorage from '@common/modules/storage/deleteGroupFromStorage'
+import deleteAllGroupsFromStorage from '@common/modules/storage/deleteAllGroupsFromStorage'
 
 export const useGroupStore = defineStore('group', () => {
     const groups = ref<Group[]>([])
@@ -180,12 +182,12 @@ export const useGroupStore = defineStore('group', () => {
         showToast(trans('The new name has been saved'))
     }
 
-    function deleteGroup(groupId: number): void {
-        // todo: implement
+    async function deleteGroup(groupId: number): Promise<void> {
+        await deleteGroupFromStorage(groupId)
     }
 
-    function deleteAllGroups(): void {
-        // todo: implement
+    async function deleteAllGroups(): Promise<void> {
+        await deleteAllGroupsFromStorage()
     }
 
     function deleteAllLinks(groupId: number): void {
