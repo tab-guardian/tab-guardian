@@ -16,7 +16,7 @@ export default async <T>(
     const jsonBytes = new TextEncoder().encode(jsonStr).length
 
     if (jsonBytes > bytesLimit) {
-        const msg = `Failed to save "${key}" to storage because it exceeds the limit of ${bytesLimit} bytes`
+        const msg = `Failed to save "${key}" to storage because it exceeds the limit of ${bytesLimit} bytes. It has ${jsonBytes} bytes.`
         error.err(msg)
         return
     }

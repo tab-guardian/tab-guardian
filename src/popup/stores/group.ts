@@ -190,7 +190,7 @@ export const useGroupStore = defineStore('group', () => {
     }
 
     function deleteGroup(id: number): void {
-        groups.value = groups.value.filter(group => group.id !== id)
+        groups.value = groups.value.filter(g => g.id !== id)
         saveGroups()
     }
 
