@@ -46,19 +46,25 @@ export const useGroupStore = defineStore('group', () => {
             return
         }
 
-        const filteredGroups: Group[] = []
+        groups.value = await filterGroups(items)
+    }
 
-        for (const group of items) {
+    async function filterGroups(groups: Group[]): Promise<Group[]> {
+        const result: Group[] = []
+
+        for (const group of groups) {
             const hide = await shouldHideGroup(group)
 
             if (hide) {
                 group.hide = true
+            } else {
+                delete group.hide
             }
 
-            filteredGroups.push(group)
+            result.push(group)
         }
 
-        groups.value = filteredGroups
+        return result
     }
 
     async function shouldHideGroup(group: Group): Promise<boolean> {
@@ -230,9 +236,9 @@ export const useGroupStore = defineStore('group', () => {
             closeTabsByIds(links.map(link => link.id))
         }
 
-        saveGroups(() => {
+        saveGroups(async () => {
             resetNewGroup()
-            loadGroupsFromStorage()
+            groups.value = await filterGroups(groups.value)
         })
     }
 
