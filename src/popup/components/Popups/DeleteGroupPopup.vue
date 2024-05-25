@@ -36,19 +36,19 @@ function deleteGroup(): void {
     >
         <template #buttons>
             <PopupButton
-                @click="deleteGroup"
-                type="button"
-                class="popup__button"
-            >
-                {{ trans('Yes') }}
-            </PopupButton>
-
-            <PopupButton
                 @click="closePopup('deleteGroup')"
                 type="button"
                 class="bg-private"
             >
                 {{ trans('No') }}
+            </PopupButton>
+
+            <PopupButton
+                @click="deleteGroup"
+                type="button"
+                class="popup__button"
+            >
+                {{ trans('Yes') }}
             </PopupButton>
         </template>
     </Popup>
