@@ -14,7 +14,7 @@ const store = useSettingsStore()
 const groupStore = useGroupStore()
 const isConfirmed = ref<boolean>(false)
 
-function deleteGroups(): void {
+async function deleteGroups(): Promise<void> {
     if (store.loading) {
         return
     }
@@ -25,7 +25,7 @@ function deleteGroups(): void {
     }
 
     store.loading = true
-    groupStore.deleteAllGroups()
+    await groupStore.deleteAllGroups()
 
     showToast(trans('All the groups have been deleted'))
 

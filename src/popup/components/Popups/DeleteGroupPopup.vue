@@ -12,13 +12,13 @@ const { closePopup } = usePopupStore()
 const groupStore = useGroupStore()
 const router = useRouter()
 
-function deleteGroup(): void {
+async function deleteGroup(): Promise<void> {
     if (!groupStore.selectedGroup) {
         error.warn('No group selected for deletion')
         return
     }
 
-    groupStore.deleteGroup(groupStore.selectedGroup.id)
+    await groupStore.deleteGroup(groupStore.selectedGroup.id)
 
     closePopup('deleteGroup')
 
@@ -43,11 +43,7 @@ function deleteGroup(): void {
                 {{ trans('No') }}
             </PopupButton>
 
-            <PopupButton
-                @click="deleteGroup"
-                type="button"
-                class="popup__button"
-            >
+            <PopupButton @click="deleteGroup" type="button" class="popup__button">
                 {{ trans('Yes') }}
             </PopupButton>
         </template>

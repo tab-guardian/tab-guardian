@@ -183,10 +183,12 @@ export const useGroupStore = defineStore('group', () => {
     }
 
     async function deleteGroup(groupId: number): Promise<void> {
+        groups.value = groups.value.filter(g => g.id !== groupId)
         await deleteGroupFromStorage(groupId)
     }
 
     async function deleteAllGroups(): Promise<void> {
+        groups.value = []
         await deleteAllGroupsFromStorage()
     }
 
