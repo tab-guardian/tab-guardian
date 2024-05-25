@@ -15,7 +15,7 @@ export default async (): Promise<Group[]> => {
             continue
         }
 
-        groups.push(group)
+        groups.unshift(group)
     }
 
     return groups.map(group => decodeGroup(group))
