@@ -8,7 +8,7 @@ import getGroupsFromStorage from '@common/modules/storage/getGroupsFromStorage'
 import error from '@common/modules/error'
 import getDefaultGroupName from '@/modules/getDefaultGroupName'
 import unlock from '@common/modules/encrypt/decryptGroup'
-import saveGroupsToStorage from '@common/modules/storage/saveGroupsToStorage'
+import saveGroupToStorage from '@common/modules/storage/saveGroupToStorage'
 import encryptGroup from '@common/modules/encrypt/encryptGroup'
 import closeTabsByIds from '@/modules/tabs/closeTabsByIds'
 import isDevelopment from '@common/modules/isDevelopment'
@@ -34,8 +34,15 @@ export const useGroupStore = defineStore('group', () => {
 
     onMounted(loadGroupsFromStorage)
 
-    function getGroupById(id: number): Group | null {
-        return groups.value.find(g => g.id === id) || null
+    function getGroupById(groupId: number): Group | null {
+        const group = groups.value.find(group => group.id === groupId)
+
+        if (!group) {
+            error.err(`Group with id ${groupId} not found`)
+            return null
+        }
+
+        return group
     }
 
     async function loadGroupsFromStorage(): Promise<void> {
@@ -68,8 +75,7 @@ export const useGroupStore = defineStore('group', () => {
     }
 
     async function shouldHideGroup(group: Group): Promise<boolean> {
-        const optionEnabled =
-            settingsStore.settings.showPrivateGroupsOnlyInIncognito
+        const optionEnabled = settingsStore.settings.showPrivateGroupsOnlyInIncognito
 
         const isIncognito = await isIncognitoWindow()
 
@@ -85,17 +91,15 @@ export const useGroupStore = defineStore('group', () => {
     }
 
     function encryptGroupById(groupId: number, pass: string): boolean {
-        const group = groups.value.find(group => group.id === groupId)
+        const group = getGroupById(groupId)
 
         if (!group) {
             showToast(trans('Group has not been found'), 'error')
-            error.err(`Group with id ${groupId} not found`)
             return false
         }
 
         if (group.isEncrypted) {
             showToast(trans('Group is already locked'), 'error')
-            error.warn('Group is already locked')
             return false
         }
 
@@ -105,24 +109,16 @@ export const useGroupStore = defineStore('group', () => {
         }
 
         try {
-            groups.value = groups.value.map(g => {
-                if (g.id !== groupId) {
-                    return g
-                }
+            const encrypted = encryptGroup(group, pass)
 
-                const encrypted = encryptGroup(g, pass)
+            encrypted.isEncrypted = true
+            encrypted.isPrivate = true
 
-                encrypted.isEncrypted = true
-                encrypted.isPrivate = true
-
-                return encrypted
-            })
+            saveGroup(encrypted)
         } catch (err) {
             showToast(trans('Error ocurred'), 'error')
             error.err(err)
         }
-
-        saveGroups()
 
         return true
     }
@@ -131,8 +127,7 @@ export const useGroupStore = defineStore('group', () => {
         const group: Group = {
             id: Date.now() + Math.floor(Math.random() * 1000),
             name:
-                newGroup.value.name ||
-                getDefaultGroupName(newGroup.value.isPrivate),
+                newGroup.value.name || getDefaultGroupName(newGroup.value.isPrivate),
             isPrivate: newGroup.value.isPrivate,
             isEncrypted: false,
             links: [],
@@ -152,27 +147,23 @@ export const useGroupStore = defineStore('group', () => {
             const sameNameGroup = groups.value.find(g => g.name === group.name)
 
             if (sameNameGroup) {
-                groups.value = groups.value.filter(
-                    g => g.id !== sameNameGroup.id,
-                )
+                groups.value = groups.value.filter(g => g.id !== sameNameGroup.id)
             }
         }
 
         groups.value.unshift(group)
     }
 
-    function renameGroup(): void {
+    async function renameGroup(): Promise<void> {
         if (!selectedGroup.value) {
             error.err('No group selected for renaming')
             showToast(trans('Error ocurred'), 'error')
             return
         }
 
-        const id = selectedGroup.value.id
-        const group = groups.value.find(group => group.id === id)
+        const group = getGroupById(selectedGroup.value.id)
 
         if (!group) {
-            error.err(`Group with id ${id} not found`)
             showToast(trans('Error ocurred'), 'error')
             return
         }
@@ -185,34 +176,32 @@ export const useGroupStore = defineStore('group', () => {
 
         isTitleFieldActive.value = false
 
-        saveGroups()
+        await saveGroup(group)
         showToast(trans('The new name has been saved'))
     }
 
-    function deleteGroup(id: number): void {
-        groups.value = groups.value.filter(g => g.id !== id)
-        saveGroups()
+    function deleteGroup(groupId: number): void {
+        // todo: implement
     }
 
     function deleteAllGroups(): void {
-        groups.value = []
-        saveGroups()
+        // todo: implement
     }
 
     function deleteAllLinks(groupId: number): void {
-        groups.value = groups.value.map(group => {
-            if (group.id === groupId) {
-                group.links = []
-            }
+        const group = getGroupById(groupId)
 
-            return group
-        })
+        if (!group) {
+            return
+        }
 
-        saveGroups()
+        group.links = []
+
+        saveGroup(group)
     }
 
     function deleteLink(groupId: number, linkId: number): void {
-        const group = groups.value.find(group => group.id === groupId)
+        const group = getGroupById(groupId)
 
         if (!group) {
             return
@@ -220,40 +209,29 @@ export const useGroupStore = defineStore('group', () => {
 
         group.links = group.links.filter(link => link.id !== linkId)
 
-        saveGroups()
+        saveGroup(group)
     }
 
-    function prependLinksTo(groupId: number, links: Link[]): void {
-        groups.value = groups.value.map(group => {
-            if (group.id === groupId) {
-                group.links.unshift(...links)
-            }
+    async function prependLinksTo(groupId: number, links: Link[]): Promise<void> {
+        const group = getGroupById(groupId)
 
-            return group
-        })
+        if (!group) {
+            return
+        }
+
+        group.links.unshift(...links)
+
+        await saveGroup(group)
+        resetNewGroup()
 
         if (closeSelectedTabs.value) {
             closeTabsByIds(links.map(link => link.id))
         }
-
-        saveGroups(async () => {
-            resetNewGroup()
-            groups.value = await filterGroups(groups.value)
-        })
     }
 
-    function decryptGroup(group: Group, pass: string): void {
-        const newGroups = groups.value.map(g => {
-            if (g.id === group.id) {
-                return unlock(group, pass)
-            }
-
-            return g
-        })
-
-        groups.value = newGroups
-
-        saveGroups()
+    async function decryptGroup(group: Group, pass: string): Promise<void> {
+        const unlockedGroup = unlock(group, pass)
+        await saveGroup(unlockedGroup)
     }
 
     function resetNewGroup(): void {
@@ -265,13 +243,13 @@ export const useGroupStore = defineStore('group', () => {
         }
     }
 
-    async function saveGroups(callback?: () => void): Promise<void> {
-        await saveGroupsToStorage(groups.value)
+    async function saveGroup(group: Group): Promise<void> {
+        await saveGroupToStorage(group)
 
-        setTimeout(() => {
-            isSaving.value = false
-            callback ? callback() : null
-        }, 500)
+        groups.value = groups.value.map(g => (g.id === group.id ? group : g))
+        groups.value = await filterGroups(groups.value)
+
+        setTimeout(() => (isSaving.value = false), 500)
     }
 
     return {

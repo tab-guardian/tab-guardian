@@ -1,22 +1,21 @@
 import type { Group } from '@/types'
 import getFromStorage from '@common/modules/storage/getFromStorage'
-import getStorageItemsLimit from '@common/modules/storage/getStorageItemsLimit'
+import getGroupIdsFromStorage from '@common/modules/storage/getGroupIdsFromStorage'
+import error from '@common/modules/error'
 
 export default async (): Promise<Group[]> => {
+    const ids = await getGroupIdsFromStorage()
     const groups: Group[] = []
 
-    for (let i = 0; i < getStorageItemsLimit(); i++) {
-        const group = await getFromStorage<Group>(`group_${i}`)
+    for (let groupId of ids) {
+        const group = await getFromStorage<Group>(groupId.toString())
 
         if (!group) {
-            break
+            error.err(`Group with id ${groupId} not found in storage`)
+            continue
         }
 
         groups.push(group)
-    }
-
-    if (groups.length === 0) {
-        return []
     }
 
     return groups.map(group => decodeGroup(group))
