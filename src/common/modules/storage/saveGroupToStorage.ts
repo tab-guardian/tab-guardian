@@ -1,6 +1,6 @@
 import type { Group, Link } from '@/types'
 import saveToStorage from '@common/modules/storage/saveToStorage'
-import removeFromStorage from '@common/modules/storage/removeFromStorage'
+import deleteFromStorage from '@common/modules/storage/deleteFromStorage'
 import saveGroupIdsToStorage from '@common/modules/storage/saveGroupIdsToStorage'
 import getGroupIdsFromStorage from '@common/modules/storage/getGroupIdsFromStorage'
 
@@ -16,7 +16,7 @@ export default async (group: Group): Promise<void> => {
     const ids = await getGroupIdsFromStorage()
 
     if (ids.includes(group.id)) {
-        await removeFromStorage(group.id.toString()) // remove old group
+        await deleteFromStorage(group.id.toString()) // delete old group
         await saveToStorage<Group>(group.id.toString(), group) // save new group
         return
     }
