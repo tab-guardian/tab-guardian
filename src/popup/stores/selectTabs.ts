@@ -23,7 +23,7 @@ export const useSelectTabsStore = defineStore('selectTabs', () => {
     const operation = ref<SelectTabsOperation>('creating')
 
     function fetchLinks(selectAll?: boolean): void {
-        getCurrentLinks({ closeTabs: false })
+        getCurrentLinks()
             .then(items => {
                 links.value = items
 

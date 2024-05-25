@@ -7,6 +7,7 @@ import { useSettingsStore } from '@/stores/settings'
 import showToast from '@common/modules/showToast'
 import getCurrentLinks from '@/modules/tabs/getCurrentLinks'
 import restoreTabs from '@/modules/tabs/restoreTabs'
+import closeTabs from '@/modules/tabs/closeTabs'
 
 export const useTabsStore = defineStore('tabs', () => {
     const groupStore = useGroupStore()
@@ -53,16 +54,25 @@ export const useTabsStore = defineStore('tabs', () => {
         groupStore.deleteGroup(group.id)
     }
 
-    async function stashTabs(group: Group, closeTabs: boolean): Promise<void> {
-        const links = await getCurrentLinks({ closeTabs })
+    async function stashTabs(
+        group: Group,
+        closeAllTabs: boolean,
+    ): Promise<void> {
+        const links = await getCurrentLinks()
 
         if (!links.length) {
             showToast(trans('No tabs to save'), 'error')
             return
         }
 
-        groupStore.deleteAllLinks(group.id)
-        groupStore.prependLinksTo(group.id, links)
+        if (links.length > 0) {
+            groupStore.deleteAllLinks(group.id)
+            groupStore.prependLinksTo(group.id, links)
+        }
+
+        if (closeAllTabs) {
+            closeTabs(links.map(l => l.id))
+        }
 
         showToast(trans('Tabs have been saved'))
     }

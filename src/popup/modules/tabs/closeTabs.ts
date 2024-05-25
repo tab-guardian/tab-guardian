@@ -1,10 +1,8 @@
-export default (tabs: chrome.tabs.Tab[]): void => {
+export default (ids: number[]): void => {
     // create a new tab to prevent closing the browser
     chrome.tabs.create({})
 
-    for (const tab of tabs) {
-        if (tab.id) {
-            chrome.tabs.remove(tab.id)
-        }
+    for (const id of ids) {
+        chrome.tabs.remove(id)
     }
 }
