@@ -9,7 +9,7 @@ onMounted(setCurrentBytesUsage)
 
 const { trans } = useTransStore()
 const currentBytesUsage = ref<number | null>(null)
-const maxBytes = isDevelopment() ? 102400 : chrome.storage.sync.QUOTA_BYTES
+const maxBytes = isDevelopment() ? 102400 : chrome.storage.local.QUOTA_BYTES
 
 const storageUsage = computed(() => {
     if (currentBytesUsage.value === null) {
@@ -25,7 +25,7 @@ async function setCurrentBytesUsage(): Promise<void> {
         return
     }
 
-    currentBytesUsage.value = await chrome.storage.sync.getBytesInUse()
+    currentBytesUsage.value = await chrome.storage.local.getBytesInUse()
 }
 </script>
 
