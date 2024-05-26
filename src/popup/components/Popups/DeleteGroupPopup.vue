@@ -37,7 +37,7 @@ async function deleteGroup(): Promise<void> {
             <PopupButton
                 @click="closePopup('deleteGroup')"
                 type="button"
-                class="bg-private"
+                class="bg-transparent !text-font border-slate-400 dark:border-slate-600"
             >
                 {{ trans('No') }}
             </PopupButton>
