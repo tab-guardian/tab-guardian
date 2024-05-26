@@ -1,5 +1,6 @@
 import isDevelopment from '@common/modules/isDevelopment'
 import hashURL from '@/modules/hashURL'
+import queryTabs from './tabs/queryTabs'
 
 export default async (hash = false): Promise<string | null> => {
     if (isDevelopment()) {
