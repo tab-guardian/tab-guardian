@@ -26,6 +26,7 @@ onUnmounted(() => removeEventListener('keydown', saveTabsAfterEnter))
 function saveTabsAfterEnter(e: Event): void {
     if (e instanceof KeyboardEvent && e.key === 'Enter') {
         saveTabs()
+        removeEventListener('keydown', saveTabsAfterEnter)
     }
 }
 
@@ -64,11 +65,7 @@ function showToastMessage(operation: SelectTabsOperation, links: Link[]): void {
 </script>
 
 <template>
-    <View
-        class="select-tabs"
-        :title="trans('Select Tabs')"
-        :subtitle="subtitle"
-    >
+    <View class="select-tabs" :title="trans('Select Tabs')" :subtitle="subtitle">
         <div class="flex gap-1 my-2">
             <ControlButton @click="store.selectAll">
                 {{ trans('Select all') }}
