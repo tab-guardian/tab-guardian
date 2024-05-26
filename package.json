@@ -25,6 +25,8 @@
         "@types/toastify-js": "^1.12.3",
         "@vitejs/plugin-vue": "^5.0.4",
         "autoprefixer": "^10.4.19",
+        "fs": "^0.0.1-security",
+        "path": "^0.12.7",
         "postcss": "^8.4.38",
         "prettier": "^3.2.5",
         "tailwindcss": "^3.4.3",

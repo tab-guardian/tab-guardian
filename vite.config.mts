@@ -1,5 +1,11 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
+import { readFileSync } from 'fs'
+import { resolve } from 'path'
+
+const packageJson = JSON.parse(
+    readFileSync(resolve(__dirname, 'package.json'), 'utf-8'),
+)
 
 export default defineConfig({
     plugins: [
@@ -37,5 +43,9 @@ export default defineConfig({
             '@settings': '/src/settings',
             '@common': '/src/common',
         },
+    },
+
+    define: {
+        APP_VERSION: JSON.stringify(packageJson.version),
     },
 })

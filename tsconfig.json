@@ -13,6 +13,10 @@
       "skipLibCheck": true,
       "noEmit": true,
       "baseUrl": "./src",
+      "typeRoots": [
+        "./node_modules/@types",
+        "./src/popup/globals.d.ts",
+      ],
       "paths": {
           "@/*": ["popup/*"],
           "@bg/*": ["background/*"],
