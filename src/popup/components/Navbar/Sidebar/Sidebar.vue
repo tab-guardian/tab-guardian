@@ -11,10 +11,34 @@ import StarIcon from '@common/components/Icons/StarIcon.vue'
 import SidebarLink from '@/components/Navbar/Sidebar/SidebarLink.vue'
 import Heading from '@/components/Navbar/Sidebar/Heading.vue'
 import GitHubIcon from '@common/components/Icons/GitHubIcon.vue'
+import DocumentIcon from '@common/components/Icons/DocumentIcon.vue'
 
 const sidebarStore = useSidebarStore()
 const { trans } = useTransStore()
 const rateUsLink = isFirefox() ? 'todo:' : 'todo:'
+
+const links = [
+    {
+        href: 'https://serhii.io/about-me',
+        label: trans('Extension Author'),
+        icon: UserCircleIcon,
+    },
+    {
+        href: 'https://github.com/tab-guardian/tab-guardian',
+        label: trans('Contribute'),
+        icon: GitHubIcon,
+    },
+    {
+        href: 'https://github.com/textwire/textwire/blob/main/CHANGELOG.md',
+        label: trans('Release Notes'),
+        icon: DocumentIcon,
+    },
+    {
+        href: rateUsLink,
+        label: trans('Rate Us'),
+        icon: StarIcon,
+    },
+]
 </script>
 
 <template>
@@ -35,21 +59,11 @@ const rateUsLink = isFirefox() ? 'todo:' : 'todo:'
                     <Heading />
 
                     <SidebarLink
-                        href="https://serhii.io/about-me"
-                        :label="trans('Extension Author')"
-                        :icon="UserCircleIcon"
-                    />
-
-                    <SidebarLink
-                        :href="rateUsLink"
-                        :label="trans('Rate Us')"
-                        :icon="StarIcon"
-                    />
-
-                    <SidebarLink
-                        href="https://github.com/tab-guardian/tab-guardian"
-                        :label="trans('Contribute')"
-                        :icon="GitHubIcon"
+                        v-for="link in links"
+                        :key="link.href"
+                        :href="link.href"
+                        :label="link.label"
+                        :icon="link.icon"
                     />
                 </div>
 
