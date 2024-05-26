@@ -22,7 +22,7 @@ const attemptsStore = useAttemptsStore()
 
 const password = ref<string>('')
 
-function submitPass(): void {
+async function submitPass(): Promise<void> {
     if (!password.value) {
         showToast(trans('Enter a password'), 'error')
         return
@@ -38,7 +38,7 @@ function submitPass(): void {
     popupStore.popups.enterPassword.passwords[props.group.id] = password.value
 
     try {
-        groupStore.decryptGroup(props.group, password.value)
+        await groupStore.decryptGroup(props.group, password.value)
         attemptsStore.resetAttempts()
         showToast(trans('Group is unlocked'))
     } catch (e: any) {
