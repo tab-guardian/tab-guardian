@@ -17,5 +17,5 @@ export default async <T>(
         return
     }
 
-    await chrome.storage.local.set({ [key]: jsonStr })
+    await chrome.storage.sync.set({ [key]: jsonStr })
 }

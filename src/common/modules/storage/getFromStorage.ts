@@ -7,7 +7,7 @@ export default <T>(key: string): Promise<T | null> => {
             return resolve(getFromLocalStorage<T>(key))
         }
 
-        chrome.storage.local.get(key, result => {
+        chrome.storage.sync.get(key, result => {
             resolve(getFromChromeStorage<T>(key, result))
         })
     })
