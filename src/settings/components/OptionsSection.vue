@@ -45,20 +45,28 @@ function updateSettings(): void {
 
                 <SlideSwitch
                     @changed="updateSettings"
+                    v-model="store.settings.overrideWithSameName"
+                >
+                    <!-- prettier-ignore -->
+                    {{ trans( 'If the new group name matches an existing one, override it') }}
+                </SlideSwitch>
+
+                <SlideSwitch
+                    @changed="updateSettings"
                     v-model="store.settings.showPrivateGroupsOnlyInIncognito"
                     :disabled="!incognitoModeAllowed"
                     :warning="incognitoWarningMessage"
                 >
-                    <!-- prettier-ignore -->
                     {{ trans('Show private groups only in browser incognito mode') }}
                 </SlideSwitch>
 
                 <SlideSwitch
                     @changed="updateSettings"
-                    v-model="store.settings.overrideWithSameName"
+                    v-model="store.settings.showOnlyPrivateGroupsInIncognito"
+                    :disabled="!incognitoModeAllowed"
+                    :warning="incognitoWarningMessage"
                 >
-                    <!-- prettier-ignore -->
-                    {{ trans( 'If the new group name matches an existing one, override it') }}
+                    {{ trans('Show only private groups in browser incognito mode') }}
                 </SlideSwitch>
             </div>
         </Section>
