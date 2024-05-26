@@ -18,25 +18,31 @@ watchEffect(() => {
         inputRef.value?.focus()
     }
 })
-
-watchEffect(() => {
-    store.newGroup.name = store.newGroup.name.trim()
-})
 </script>
 
 <template>
-    <input
-        v-if="store.isTitleFieldActive"
-        type="text"
-        v-model="store.newGroup.name"
-        @blur="store.renameGroup"
-        autofocus
-        :class="classes"
-        ref="inputRef"
-        class="border border-border bg-safe text-font w-full rounded-md"
-    />
+    <div class="relative">
+        <input
+            v-if="store.isTitleFieldActive"
+            v-model="store.newGroup.name"
+            @blur="store.renameGroup"
+            :class="classes"
+            :maxlength="store.groupNameMaxLength"
+            ref="inputRef"
+            type="text"
+            class="border border-border bg-safe text-font w-full rounded-md pr-16"
+            autofocus
+        />
 
-    <h2 v-else :class="classes" class="border border-transparent">
-        {{ props.group.name }}
-    </h2>
+        <h2 v-else :class="classes" class="border border-transparent">
+            {{ props.group.name }}
+        </h2>
+
+        <small
+            v-if="store.isTitleFieldActive"
+            class="absolute top-2.5 bottom-2.5 right-2 flex items-center bg-black/10 dark:bg-black/40 rounded-md px-1.5"
+        >
+            {{ `${store.groupNameLength} / ${store.groupNameMaxLength}` }}
+        </small>
+    </div>
 </template>

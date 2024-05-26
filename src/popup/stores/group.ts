@@ -1,5 +1,5 @@
 import type { Group, Link, NewGroup } from '@/types'
-import { ref, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { defineStore } from 'pinia'
 import { useTransStore } from '@/stores/trans'
 import { useSettingsStore } from '@/stores/settings'
@@ -18,6 +18,11 @@ import deleteGroupFromStorage from '@common/modules/storage/deleteGroupFromStora
 import deleteAllGroupsFromStorage from '@common/modules/storage/deleteAllGroupsFromStorage'
 
 export const useGroupStore = defineStore('group', () => {
+    const groupNameMaxLength = 45
+    const groupNameLength = computed<number>(() => {
+        return newGroup.value.name.length
+    })
+
     const groups = ref<Group[]>([])
     const isSaving = ref<boolean>(false)
     const selectedGroup = ref<Group | null>(null)
@@ -163,6 +168,11 @@ export const useGroupStore = defineStore('group', () => {
             return
         }
 
+        if (groupNameLength.value > groupNameMaxLength) {
+            showToast(trans('Group name is too long'), 'error')
+            return
+        }
+
         const group = getGroupById(selectedGroup.value.id)
 
         if (!group) {
@@ -263,6 +273,8 @@ export const useGroupStore = defineStore('group', () => {
         isTitleFieldActive,
         closeSelectedTabs,
         newGroup,
+        groupNameMaxLength,
+        groupNameLength,
         deleteGroup,
         deleteLink,
         prependLinksTo,

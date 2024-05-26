@@ -64,6 +64,11 @@ function selectLinks(): void {
         return
     }
 
+    if (store.groupNameLength > store.groupNameMaxLength) {
+        showToast(trans('Group name is too long'), 'error')
+        return
+    }
+
     closeAllPopups()
 
     selectTabsStore.showView({
@@ -74,17 +79,16 @@ function selectLinks(): void {
 </script>
 
 <template>
-    <Popup
-        @cancel="closePopup('groupName')"
-        :content="trans('Enter a group name')"
-    >
+    <Popup @cancel="closePopup('groupName')" :content="trans('Enter a group name')">
         <form @submit.prevent="selectLinks" class="flex flex-col gap-3">
             <Input
                 v-model="store.newGroup.name"
-                type="text"
-                id="new-group-name"
                 :label="trans('Group name')"
                 @loaded="inp => inp.focus()"
+                :meta="`${store.groupNameLength} / ${store.groupNameMaxLength}`"
+                :maxlength="store.groupNameMaxLength"
+                type="text"
+                id="new-group-name"
             />
 
             <Input
@@ -106,6 +110,8 @@ function selectLinks(): void {
                         {{ trans('Bind to this URL') }}
                     </div>
                 </SlideSwitch>
+
+                <div v-else></div>
 
                 <Button type="submit">
                     {{ trans('Select Tabs') }}

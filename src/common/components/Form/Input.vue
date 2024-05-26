@@ -4,10 +4,12 @@ import { ref, watchEffect } from 'vue'
 type Props = {
     id: string
     type: 'text' | 'password'
+    meta?: string
     class?: string
     label?: string
     withButton?: boolean
     placeholder?: string
+    maxlength?: number
 }
 
 type Emits = {
@@ -29,9 +31,15 @@ watchEffect(() => {
 
 <template>
     <div>
-        <label v-if="label" :for="props.id" class="block mb-0.5 mx-1 text-sm">
-            {{ props.label }}
-        </label>
+        <div class="flex justify-between gap-2 items-center">
+            <label v-if="label" :for="props.id" class="block mb-0.5 mx-1 text-sm">
+                {{ props.label }}
+            </label>
+
+            <small v-if="props.meta" class="text-font-gray">
+                {{ props.meta }}
+            </small>
+        </div>
 
         <div class="flex items-center gap-2">
             <input
@@ -42,6 +50,7 @@ watchEffect(() => {
                 v-model="modelValue"
                 ref="inputRef"
                 :placeholder="props.placeholder || props.label || ''"
+                :maxlength="props.maxlength"
             />
 
             <button
