@@ -3,8 +3,6 @@ import { ref, watchEffect } from 'vue'
 import type { Group } from '@/types'
 import { useGroupStore } from '@/stores/group'
 
-const store = useGroupStore()
-
 type Props = {
     group: Group
 }
@@ -12,6 +10,8 @@ type Props = {
 const props = defineProps<Props>()
 const classes = 'text-lg my-1 px-2 py-0.5'
 const inputRef = ref<HTMLInputElement | null>(null)
+
+const store = useGroupStore()
 
 watchEffect(() => {
     if (store.isTitleFieldActive) {
