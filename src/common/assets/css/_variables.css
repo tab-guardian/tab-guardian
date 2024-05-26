@@ -26,7 +26,7 @@
         --tg-color-secondary-hover: #232326;
         --tg-color-page: theme('colors.zinc.900');
         --tg-color-page-hover: #151518;
-        --tg-color-border: theme('colors.zinc.800');
+        --tg-color-border: theme('colors.zinc.700');
         --tg-color-border-hover: theme('colors.zinc.700');
         --tg-color-font: theme('colors.gray.50');
         --tg-color-font-gray: theme('colors.gray.400');

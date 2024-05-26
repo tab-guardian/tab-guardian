@@ -8,9 +8,9 @@
     "I confirm that I want to delete all groups": "I confirm that I want to delete all groups",
     "Confirm that you want to delete all groups": "Confirm that you want to delete all groups",
     "All the groups have been deleted": "All the groups have been deleted",
-    "Show private groups only in browser incognito mode": "Show private groups only in browser incognito mode",
+    "Show private groups only in browser incognito mode. In regular browser mode, they will be hidden": "Show private groups only in browser incognito mode. In regular browser mode, they will be hidden",
     "Settings have been saved": "Settings have been saved",
     "Go to the extension settings and enable the option 'Allow in incognito' or 'Allow in Private'": "Go to the extension settings and enable the option 'Allow in incognito' or 'Allow in Private'",
     "If the new group name matches an existing one, override it": "If the new group name matches an existing one, override it",
-    "Show only private groups in browser incognito mode": "Show only private groups in browser incognito mode"
+    "Show only private groups in browser incognito mode. It means that public groups will be hidden in incognito mode": "Show only private groups in browser incognito mode. It means that public groups will be hidden in incognito mode"
 }

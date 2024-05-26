@@ -35,7 +35,7 @@ function updateSettings(): void {
 <template>
     <div>
         <Section :title="trans('Additional Options')">
-            <div class="flex flex-col gap-2">
+            <div class="flex flex-col gap-3">
                 <SlideSwitch
                     @changed="updateSettings"
                     v-model="store.settings.encryptAfterRestore"
@@ -57,7 +57,8 @@ function updateSettings(): void {
                     :disabled="!incognitoModeAllowed"
                     :warning="incognitoWarningMessage"
                 >
-                    {{ trans('Show private groups only in browser incognito mode') }}
+                    <!-- prettier-ignore -->
+                    {{ trans('Show private groups only in browser incognito mode. In regular browser mode, they will be hidden') }}
                 </SlideSwitch>
 
                 <SlideSwitch
@@ -66,7 +67,8 @@ function updateSettings(): void {
                     :disabled="!incognitoModeAllowed"
                     :warning="incognitoWarningMessage"
                 >
-                    {{ trans('Show only private groups in browser incognito mode') }}
+                    <!-- prettier-ignore -->
+                    {{ trans('Show only private groups in browser incognito mode. It means that public groups will be hidden in incognito mode') }}
                 </SlideSwitch>
             </div>
         </Section>

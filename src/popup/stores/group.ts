@@ -82,8 +82,6 @@ export const useGroupStore = defineStore('group', () => {
     }
 
     async function shouldHideGroup(group: Group): Promise<boolean> {
-        const optionEnabled = settingsStore.settings.showPrivateGroupsOnlyInIncognito
-
         const isIncognito = await isIncognitoWindow()
 
         if (group.bindURL) {
@@ -94,7 +92,21 @@ export const useGroupStore = defineStore('group', () => {
             }
         }
 
-        return group.isPrivate && !isIncognito && optionEnabled
+        const showOnlyPrivateGroupsInIncognito =
+            settingsStore.settings.showOnlyPrivateGroupsInIncognito
+
+        if (!group.isPrivate && isIncognito && showOnlyPrivateGroupsInIncognito) {
+            return true
+        }
+
+        const showPrivateGroupsOnlyInIncognito =
+            settingsStore.settings.showPrivateGroupsOnlyInIncognito
+
+        if (group.isPrivate && !isIncognito && showPrivateGroupsOnlyInIncognito) {
+            return true
+        }
+
+        return false
     }
 
     function encryptGroupById(groupId: number, pass: string): boolean {
