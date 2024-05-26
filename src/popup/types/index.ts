@@ -20,6 +20,7 @@ export type Group = {
     isEncrypted: boolean
     hide?: boolean
     bindURL?: string
+    iconName?: string
 }
 
 export type NewGroup = {

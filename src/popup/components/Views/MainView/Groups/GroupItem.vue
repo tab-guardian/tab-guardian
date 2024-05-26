@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { Group } from '@/types'
 import { computed } from 'vue'
+import getIcons from '@/modules/getIcons'
 import ChevronRightIcon from '@common/components/Icons/ChevronRightIcon.vue'
 import ShieldCheckIcon from '@common/components/Icons/ShieldCheckIcon.vue'
 import ShieldExclamationIcon from '@common/components/Icons/ShieldExclamationIcon.vue'
@@ -43,13 +44,17 @@ const groupClasses = computed(() => {
         class="group"
     >
         <div class="flex items-center gap-2">
-            <div v-if="group.isPrivate">
+            <div v-if="group.isPrivate" class="w-6 h-6">
                 <ShieldCheckIcon
                     v-if="group.isEncrypted"
                     class="w-6 h-6 text-private"
                 />
 
                 <ShieldExclamationIcon v-else class="w-6 h-6 text-red-400" />
+            </div>
+
+            <div v-else-if="group.iconName" class="w-6 h-6">
+                <component :is="getIcons(group.iconName)" class="w-5 h-5" />
             </div>
 
             <div
