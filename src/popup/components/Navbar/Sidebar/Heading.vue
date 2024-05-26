@@ -41,11 +41,9 @@ async function setCurrentBytesUsage(): Promise<void> {
         <ul v-if="currentBytesUsage !== null" class="ml-3 w-36">
             <h2 class="mb-1">{{ trans('Storage usage') }}:</h2>
 
-            <div
-                class="w-full rounded-full h-2 bg-slate-300 dark:bg-slate-700 overflow-hidden"
-            >
+            <div class="w-full rounded-full h-1 bg-slate-300 dark:bg-slate-700">
                 <div
-                    class="bg-primary h-2 rounded-l-full"
+                    class="bg-primary h-1 rounded-full bar"
                     :style="{ width: storageUsage + '%' }"
                 ></div>
             </div>
@@ -58,3 +56,20 @@ async function setCurrentBytesUsage(): Promise<void> {
         </ul>
     </div>
 </template>
+
+<style scoped>
+.bar {
+    box-shadow: 0 0 10px 2px rgba(59, 130, 246, 1);
+    animation: glow 1.5s infinite;
+}
+
+@keyframes glow {
+    0%,
+    100% {
+        box-shadow: 0 0 10px 2px rgba(59, 130, 246, 1);
+    }
+    50% {
+        box-shadow: 0 0 10px 4px rgba(59, 130, 246, 0.6);
+    }
+}
+</style>
