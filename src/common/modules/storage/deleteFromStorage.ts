@@ -6,5 +6,5 @@ export default async (key: string): Promise<void> => {
         return
     }
 
-    await chrome.storage.sync.remove(key)
+    await chrome.storage.local.remove(key)
 }
