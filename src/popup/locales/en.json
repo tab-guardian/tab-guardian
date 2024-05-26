@@ -56,5 +56,7 @@
     "Bind to this URL": "Bind to this URL",
     "Private groups are secure and use encryption. Only users with the password can access them": "Private groups are secure and use encryption. Only users with the password can access them",
     "Bind this group to the (:n) URL. This will hide the group from everywhere else except this URL. It adds an extra layer of security": "Bind this group to the (:n) URL. This will hide the group from everywhere else except this URL. It adds an extra layer of security",
+    "Extension Author": "Extension Author",
+    "Rate Us": "Rate Us",
     "This feature doesn't work for this current URL": "This feature doesn't work for this current URL"
 }

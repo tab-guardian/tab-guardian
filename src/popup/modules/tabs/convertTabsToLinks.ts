@@ -1,5 +1,5 @@
 import type { Link } from '@/types'
-import getImageUrl from '@common/modules/getImageUrl'
+import getImageURL from '@common/modules/getImageURL'
 
 export default (tabs: chrome.tabs.Tab[]): Link[] => {
     const links: Link[] = []
@@ -31,10 +31,10 @@ function getFaviconIconUrl(tab: chrome.tabs.Tab): string {
     if (tab.url) {
         for (const [prefix, icon] of icons) {
             if (tab.url.startsWith(prefix)) {
-                return getImageUrl(icon)
+                return getImageURL('images/' + icon)
             }
         }
     }
 
-    return tab.favIconUrl || getImageUrl('no-image.png')
+    return tab.favIconUrl || getImageURL('images/no-image.png')
 }
