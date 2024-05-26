@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Group } from '@/types'
+import { useRouter } from 'vue-router'
 import { onUnmounted } from 'vue'
 import { useTransStore } from '@/stores/trans'
 import { useGroupStore } from '@/stores/group'
@@ -16,6 +17,7 @@ const { group } = defineProps<Props>()
 const { trans } = useTransStore()
 const groupStore = useGroupStore()
 const popupStore = usePopupStore()
+const router = useRouter()
 
 onUnmounted(() => {
     popupStore.popups.enterPassword.password = ''
@@ -32,6 +34,7 @@ function promptEnterPassword(): void {
         if (popups.enterPassword.password) {
             lockGroup()
             showToast(trans('Group is locked'))
+            router.push({ name: 'main' })
         }
     })
 }
