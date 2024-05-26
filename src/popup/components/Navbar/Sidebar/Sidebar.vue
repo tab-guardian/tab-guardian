@@ -9,6 +9,7 @@ import UserCircleIcon from '@common/components/Icons/UserCircleIcon.vue'
 import StarIcon from '@common/components/Icons/StarIcon.vue'
 import SidebarLink from '@/components/Navbar/Sidebar/SidebarLink.vue'
 import Heading from '@/components/Navbar/Sidebar/Heading.vue'
+import GitHubIcon from '@common/components/Icons/GitHubIcon.vue'
 
 const sidebarStore = useSidebarStore()
 const { trans } = useTransStore()
@@ -38,6 +39,12 @@ const rateUsLink = isFirefox() ? 'todo:' : 'todo:'
                     :href="rateUsLink"
                     :label="trans('Rate Us')"
                     :icon="StarIcon"
+                />
+
+                <SidebarLink
+                    href="https://github.com/tab-guardian/tab-guardian"
+                    :label="trans('Contribute')"
+                    :icon="GitHubIcon"
                 />
             </aside>
         </RightSlideTransition>
