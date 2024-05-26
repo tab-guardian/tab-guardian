@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { Group } from '@/types'
 import { useRouter } from 'vue-router'
-import { onUnmounted } from 'vue'
 import { useTransStore } from '@/stores/trans'
 import { useGroupStore } from '@/stores/group'
 import { usePopupStore } from '@/stores/popup'
@@ -19,19 +18,15 @@ const groupStore = useGroupStore()
 const popupStore = usePopupStore()
 const router = useRouter()
 
-onUnmounted(() => {
-    popupStore.popups.enterPassword.password = ''
-})
-
 function promptEnterPassword(): void {
-    if (popupStore.popups.enterPassword.password) {
+    if (popupStore.popups.enterPassword.passwords[group.id]) {
         lockGroup()
         showToast(trans('Group is locked with the same password'))
         return
     }
 
     popupStore.openPopup('enterPassword', popups => {
-        if (popups.enterPassword.password) {
+        if (popups.enterPassword.passwords[group.id]) {
             lockGroup()
             showToast(trans('Group is locked'))
             router.push({ name: 'main' })
@@ -40,7 +35,7 @@ function promptEnterPassword(): void {
 }
 
 function lockGroup(): void {
-    const password = popupStore.popups.enterPassword.password
+    const password = popupStore.popups.enterPassword.passwords[group.id]
     groupStore.encryptGroupById(group.id, password)
 }
 </script>

@@ -47,7 +47,7 @@ export type Popups = {
     }
     enterPassword: {
         open: boolean
-        password: string
+        passwords: { [key: number]: string }
     }
 }
 

@@ -21,12 +21,13 @@ export const useTabsStore = defineStore('tabs', () => {
             return true
         }
 
-        if (popupStore.popups.enterPassword.password) {
+        const pass = popupStore.popups.enterPassword.passwords[group.id]
+
+        if (pass) {
             restoreTabs(group.links)
-            groupStore.encryptGroupById(
-                group.id,
-                popupStore.popups.enterPassword.password,
-            )
+
+            groupStore.encryptGroupById(group.id, pass)
+
             return true
         }
 
@@ -36,7 +37,7 @@ export const useTabsStore = defineStore('tabs', () => {
         }
 
         popupStore.openPopup('enterPassword', popups => {
-            const pass = popups.enterPassword.password
+            const pass = popups.enterPassword.passwords[group.id]
 
             if (!pass) {
                 return
@@ -54,10 +55,7 @@ export const useTabsStore = defineStore('tabs', () => {
         groupStore.deleteGroup(group.id)
     }
 
-    async function stashTabs(
-        group: Group,
-        closeAllTabs: boolean,
-    ): Promise<void> {
+    async function stashTabs(group: Group, closeAllTabs: boolean): Promise<void> {
         const links = await getCurrentLinks()
 
         if (!links.length) {

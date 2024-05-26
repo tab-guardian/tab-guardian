@@ -10,7 +10,7 @@ const defaultPopups: Popups = {
     groupName: { open: false },
     enterPassword: {
         open: false,
-        password: '',
+        passwords: {},
     },
 }
 

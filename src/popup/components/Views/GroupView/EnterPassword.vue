@@ -35,7 +35,7 @@ function submitPass(): void {
 
     // With this, we don't need to type password to lock the
     // group after just unlocking it
-    popupStore.popups.enterPassword.password = password.value
+    popupStore.popups.enterPassword.passwords[props.group.id] = password.value
 
     try {
         groupStore.decryptGroup(props.group, password.value)
