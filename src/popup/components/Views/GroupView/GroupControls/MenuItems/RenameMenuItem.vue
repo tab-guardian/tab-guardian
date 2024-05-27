@@ -25,7 +25,9 @@ function renameGroup(): void {
 </script>
 
 <template>
-    <MenuItem @click="renameGroup" :title="trans('Rename this group')">
-        <PencilSquareIcon width="22" height="22" />
-    </MenuItem>
+    <MenuItem
+        @click="renameGroup"
+        :label="trans('Rename this group')"
+        :icon="PencilSquareIcon"
+    />
 </template>

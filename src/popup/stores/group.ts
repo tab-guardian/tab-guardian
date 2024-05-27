@@ -41,7 +41,12 @@ export const useGroupStore = defineStore('group', () => {
 
     onMounted(loadGroupsFromStorage)
 
-    function getGroupById(groupId: number): Group | null {
+    function getGroupById(groupId: number | undefined): Group | null {
+        if (!groupId) {
+            error.warn('No group id provided when trying to get group by id')
+            return null
+        }
+
         const group = groups.value.find(group => group.id === groupId)
 
         if (!group) {

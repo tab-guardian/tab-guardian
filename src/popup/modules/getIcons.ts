@@ -1,3 +1,4 @@
+import type { Component } from 'vue'
 import ArrowLeftEndIcon from '@common/components/Icons/ArrowLeftEndIcon.vue'
 import ArrowLeftStartIcon from '@common/components/Icons/ArrowLeftStartIcon.vue'
 import ArrowRightIcon from '@common/components/Icons/ArrowRightIcon.vue'
@@ -17,8 +18,9 @@ import PlusCircleIcon from '@common/components/Icons/PlusCircleIcon.vue'
 import StarIcon from '@common/components/Icons/StarIcon.vue'
 import TrashIcon from '@common/components/Icons/TrashIcon.vue'
 import UserCircleIcon from '@common/components/Icons/UserCircleIcon.vue'
+import PhotoIcon from '@common/components/Icons/PhotoIcon.vue'
 
-export default (name: string) => {
+export default (): { [key: string]: Component } => {
     return {
         ArrowLeftEndIcon,
         ArrowLeftStartIcon,
@@ -39,5 +41,6 @@ export default (name: string) => {
         StarIcon,
         TrashIcon,
         UserCircleIcon,
-    }[name]
+        PhotoIcon,
+    }
 }

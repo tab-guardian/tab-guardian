@@ -24,6 +24,6 @@
           "@common/*": ["common/*"]
       },
     },
-    "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.vue"],
+    "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.vue", "src/popup/components/Views/SetIconView/GroupIconView"],
     "references": [{ "path": "./tsconfig.node.json" }]
   }

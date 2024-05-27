@@ -1,9 +1,12 @@
 <script setup lang="ts">
+import type { Component } from 'vue'
+
 type Props = {
-    title: string
+    label: string
+    icon: Component
 }
 
-const { title } = defineProps<Props>()
+const { label } = defineProps<Props>()
 </script>
 
 <template>
@@ -14,7 +17,7 @@ const { title } = defineProps<Props>()
             'hover:border-primary hover:text-primary',
         ]"
     >
-        <slot />
-        <span>{{ title }}</span>
+        <component :is="icon" width="22" height="22" />
+        <span>{{ label }}</span>
     </div>
 </template>

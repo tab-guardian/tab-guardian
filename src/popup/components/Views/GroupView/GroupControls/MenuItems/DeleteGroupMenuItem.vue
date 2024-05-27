@@ -16,12 +16,11 @@ function deleteGroup(): void {
 <template>
     <MenuItem
         @click="deleteGroup"
-        :title="trans('Delete this group')"
+        :label="trans('Delete this group')"
+        :icon="TrashIcon"
         :class="[
             'text-red-500 !border-red-500',
             'hover:!text-red-700 hover:border-red-700',
         ]"
-    >
-        <TrashIcon width="22" height="22" />
-    </MenuItem>
+    />
 </template>

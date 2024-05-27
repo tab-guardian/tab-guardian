@@ -24,7 +24,9 @@ function addLink(): void {
 </script>
 
 <template>
-    <MenuItem @click="addLink" :title="trans('Add more links')">
-        <PlusCircleIcon width="22" height="22" />
-    </MenuItem>
+    <MenuItem
+        @click="addLink"
+        :label="trans('Add more links')"
+        :icon="PlusCircleIcon"
+    />
 </template>
