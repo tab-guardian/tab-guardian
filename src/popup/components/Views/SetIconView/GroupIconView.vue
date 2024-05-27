@@ -8,6 +8,7 @@ import { useRouter } from 'vue-router'
 import getIcons from '@/modules/getIcons'
 import View from '@/components/Views/View.vue'
 import IconItem from '@/components/Views/SetIconView/IconItem.vue'
+import showToast from '@common/modules/showToast'
 
 const store = useGroupStore()
 const router = useRouter()
@@ -19,8 +20,16 @@ const group = computed<Group | null>(() => store.getGroupById(groupId))
 
 onMounted(closeAllPopups)
 
-function selectIcon(icon: string) {
-    console.log(icon)
+async function selectIcon(icon: string): Promise<void> {
+    if (!group.value) {
+        return
+    }
+
+    await store.setIcon(group.value.id, icon)
+
+    showToast(trans('Icon has been set'))
+
+    router.push({ name: 'group', params: { id: group.value.id.toString() } })
 }
 </script>
 

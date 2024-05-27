@@ -178,6 +178,18 @@ export const useGroupStore = defineStore('group', () => {
         groups.value.unshift(group)
     }
 
+    async function setIcon(groupId: number, icon: string): Promise<void> {
+        const group = getGroupById(groupId)
+
+        if (!group) {
+            return
+        }
+
+        group.iconName = icon
+
+        await saveGroup(group)
+    }
+
     async function renameGroup(): Promise<void> {
         if (!selectedGroup.value) {
             error.err('No group selected for renaming')
@@ -302,5 +314,6 @@ export const useGroupStore = defineStore('group', () => {
         getGroupById,
         deleteAllLinks,
         deleteAllGroups,
+        setIcon,
     }
 })

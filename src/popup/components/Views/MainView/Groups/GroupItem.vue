@@ -54,7 +54,12 @@ const groupClasses = computed(() => {
             </div>
 
             <div v-else-if="group.iconName" class="w-6 h-6">
-                <component :is="getIcons()[group.iconName]" class="w-5 h-5" />
+                <img
+                    v-if="group.iconName.startsWith('http')"
+                    :src="group.iconName"
+                    class="w-5 h-5"
+                />
+                <component v-else :is="getIcons()[group.iconName]" class="w-5 h-5" />
             </div>
 
             <div
