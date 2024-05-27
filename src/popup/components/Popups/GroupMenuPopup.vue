@@ -36,7 +36,7 @@ const isEncrypted = computed<boolean>(() => {
             <RenameMenuItem />
 
             <RouterLink
-                v-if="group"
+                v-if="group && !group.isPrivate"
                 :to="{ name: 'groupIcon', params: { id: group.id } }"
             >
                 <MenuItem :label="trans('Change Icon')" :icon="PhotoIcon" />
