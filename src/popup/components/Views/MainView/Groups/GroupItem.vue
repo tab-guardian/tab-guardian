@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import type { Group } from '@/types'
 import { computed } from 'vue'
-import getIcons from '@/modules/getIcons'
 import ChevronRightIcon from '@common/components/Icons/ChevronRightIcon.vue'
 import ShieldCheckIcon from '@common/components/Icons/ShieldCheckIcon.vue'
 import ShieldExclamationIcon from '@common/components/Icons/ShieldExclamationIcon.vue'
 import OpenTabsButton from '@/components/Views/MainView/Groups/OpenTabsButton.vue'
+import GroupIcon from '@/components/Views/MainView/Groups/GroupIcon.vue'
 
 type Props = {
     group: Group
@@ -53,14 +53,7 @@ const groupClasses = computed(() => {
                 <ShieldExclamationIcon v-else class="w-6 h-6 text-red-400" />
             </div>
 
-            <div v-else-if="group.iconName" class="w-6 h-6">
-                <img
-                    v-if="group.iconName.startsWith('http')"
-                    :src="group.iconName"
-                    class="w-5 h-5"
-                />
-                <component v-else :is="getIcons()[group.iconName]" class="w-5 h-5" />
-            </div>
+            <GroupIcon v-else-if="group.icon" :group />
 
             <div
                 v-else

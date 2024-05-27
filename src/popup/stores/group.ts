@@ -185,7 +185,7 @@ export const useGroupStore = defineStore('group', () => {
             return
         }
 
-        group.iconName = icon
+        group.icon = icon
 
         await saveGroup(group)
     }
