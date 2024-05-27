@@ -40,6 +40,7 @@ async function selectIcon(icon: string): Promise<void> {
                 v-for="[name, icon] in Object.entries(getIcons())"
                 :key="name"
                 @click="selectIcon(name)"
+                :selected="group!.icon === name"
             >
                 <component :is="icon" class="w-8 h-8" />
             </IconItem>
@@ -49,6 +50,7 @@ async function selectIcon(icon: string): Promise<void> {
                 v-for="link in group.links"
                 :key="link.id"
                 @click="selectIcon(link.favIconUrl)"
+                :selected="group!.icon === link.favIconUrl"
             >
                 <img :src="link.favIconUrl" class="w-8 h-8" />
             </IconItem>
