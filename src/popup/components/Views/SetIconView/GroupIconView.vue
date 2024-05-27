@@ -18,6 +18,16 @@ const groupId = Number(router.currentRoute.value.params.id)
 
 const group = computed<Group | null>(() => store.getGroupById(groupId))
 
+const favIcons = computed<string[]>(() => {
+    if (!group.value) {
+        return []
+    }
+
+    const icons = group.value.links.map(link => link.favIconUrl)
+
+    return Array.from(new Set(icons))
+})
+
 onMounted(closeAllPopups)
 
 async function selectIcon(icon: string): Promise<void> {
@@ -46,13 +56,12 @@ async function selectIcon(icon: string): Promise<void> {
             </IconItem>
 
             <IconItem
-                v-if="group"
-                v-for="link in group.links"
-                :key="link.id"
-                @click="selectIcon(link.favIconUrl)"
-                :selected="group!.icon === link.favIconUrl"
+                v-for="icon in favIcons"
+                :key="icon"
+                @click="selectIcon(icon)"
+                :selected="group!.icon === icon"
             >
-                <img :src="link.favIconUrl" class="w-8 h-8" />
+                <img :src="icon" class="w-8 h-8" />
             </IconItem>
         </ul>
     </View>

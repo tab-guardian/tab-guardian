@@ -12,7 +12,10 @@ const { group } = defineProps<Props>()
 <template>
     <div class="w-6 h-6 flex items-center justify-center">
         <img
-            v-if="group.icon!.startsWith('http')"
+            v-if="
+                group.icon!.startsWith('http') ||
+                group.icon!.startsWith('chrome-extension')
+            "
             :src="group.icon"
             class="w-5 h-5"
         />
