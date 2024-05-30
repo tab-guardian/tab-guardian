@@ -161,17 +161,17 @@ export const useGroupStore = defineStore('group', () => {
             group.bindURL = newGroup.value.bindURL
         }
 
-        prependGroup(group)
+        await prependGroup(group)
 
         return group
     }
 
-    function prependGroup(group: Group): void {
+    async function prependGroup(group: Group): Promise<void> {
         if (settingsStore.settings.overrideWithSameName) {
             const sameNameGroup = groups.value.find(g => g.name === group.name)
 
             if (sameNameGroup) {
-                groups.value = groups.value.filter(g => g.id !== sameNameGroup.id)
+                await deleteGroup(sameNameGroup.id)
             }
         }
 
@@ -231,7 +231,7 @@ export const useGroupStore = defineStore('group', () => {
         await deleteAllGroupsFromStorage()
     }
 
-    function deleteAllLinks(groupId: number): void {
+    async function deleteAllLinks(groupId: number): Promise<void> {
         const group = getGroupById(groupId)
 
         if (!group) {
@@ -240,10 +240,10 @@ export const useGroupStore = defineStore('group', () => {
 
         group.links = []
 
-        saveGroup(group)
+        await saveGroup(group)
     }
 
-    function deleteLink(groupId: number, linkId: number): void {
+    async function deleteLink(groupId: number, linkId: number): Promise<void> {
         const group = getGroupById(groupId)
 
         if (!group) {
@@ -252,7 +252,7 @@ export const useGroupStore = defineStore('group', () => {
 
         group.links = group.links.filter(link => link.id !== linkId)
 
-        saveGroup(group)
+        await saveGroup(group)
     }
 
     async function prependLinksTo(groupId: number, links: Link[]): Promise<void> {
@@ -265,10 +265,11 @@ export const useGroupStore = defineStore('group', () => {
         group.links.unshift(...links)
 
         await saveGroup(group)
+
         resetNewGroup()
 
         if (closeSelectedTabs.value) {
-            closeTabsByIds(links.map(link => link.id))
+            await closeTabsByIds(links.map(link => link.id))
         }
     }
 

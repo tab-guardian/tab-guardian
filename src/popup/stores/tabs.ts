@@ -64,12 +64,12 @@ export const useTabsStore = defineStore('tabs', () => {
         }
 
         if (links.length > 0) {
-            groupStore.deleteAllLinks(group.id)
-            groupStore.prependLinksTo(group.id, links)
+            await groupStore.deleteAllLinks(group.id)
+            await groupStore.prependLinksTo(group.id, links)
         }
 
         if (closeAllTabs) {
-            closeTabs(links.map(l => l.id))
+            await closeTabs(links.map(l => l.id))
         }
 
         showToast(trans('Tabs have been saved'))

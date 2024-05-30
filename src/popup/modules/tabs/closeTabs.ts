@@ -1,8 +1,3 @@
-export default (ids: number[]): void => {
-    // create a new tab to prevent closing the browser
-    chrome.tabs.create({})
-
-    for (const id of ids) {
-        chrome.tabs.remove(id)
-    }
+export default async (ids: number[]): Promise<void> => {
+    await chrome.runtime.sendMessage({ type: 'closeTabs', payload: ids })
 }

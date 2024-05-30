@@ -47,7 +47,7 @@ async function saveTabs(): Promise<void> {
         groupStore.encryptGroupById(groupId, groupStore.newGroup.password)
     }
 
-    store.closeTabsModal()
+    await store.closeTabsModal()
     showToastMessage(store.operation, selectedLinks)
 }
 
