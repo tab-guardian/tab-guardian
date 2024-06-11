@@ -52,7 +52,7 @@ export const useTabsStore = defineStore('tabs', () => {
 
     async function openAndDeleteTabs(group: Group): Promise<void> {
         await restoreTabs(group.links)
-        groupStore.deleteGroup(group.id)
+        await groupStore.deleteGroup(group.id)
     }
 
     async function stashTabs(group: Group, closeAllTabs: boolean): Promise<void> {
