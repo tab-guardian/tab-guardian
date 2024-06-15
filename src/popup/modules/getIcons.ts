@@ -19,6 +19,7 @@ import StarIcon from '@common/components/Icons/StarIcon.vue'
 import TrashIcon from '@common/components/Icons/TrashIcon.vue'
 import UserCircleIcon from '@common/components/Icons/UserCircleIcon.vue'
 import PhotoIcon from '@common/components/Icons/PhotoIcon.vue'
+import ArrowDownTrayIcon from '@common/components/Icons/ArrowDownTrayIcon.vue'
 
 export default (): { [key: string]: Component } => {
     return {
@@ -42,5 +43,6 @@ export default (): { [key: string]: Component } => {
         TrashIcon,
         UserCircleIcon,
         PhotoIcon,
+        ArrowDownTrayIcon,
     }
 }

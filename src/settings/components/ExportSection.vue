@@ -6,15 +6,14 @@ import { useSettingsStore } from '@/stores/settings'
 import showToast from '@common/modules/showToast'
 import Section from '@settings/components/Section.vue'
 import Button from '@common/components/Form/Button.vue'
-import SlideSwitch from '@common/components/Form/SlideSwitch.vue'
-import TrashIcon from '@common/components/Icons/TrashIcon.vue'
+import ArrowDownTrayIcon from '@common/components/Icons/ArrowDownTrayIcon.vue'
 
 const { trans } = useTransStore()
 const store = useSettingsStore()
 const groupStore = useGroupStore()
 const isConfirmed = ref<boolean>(false)
 
-async function deleteGroups(): Promise<void> {
+async function exportEverything(): Promise<void> {
     if (store.loading) {
         return
     }
@@ -35,19 +34,12 @@ async function deleteGroups(): Promise<void> {
 </script>
 
 <template>
-    <form @submit.prevent="deleteGroups">
-        <Section :title="trans('Erase all groups')">
+    <form @submit.prevent="exportEverything">
+        <Section :title="trans('Export all the Data')">
             <div class="flex items-center justify-between gap-3">
-                <SlideSwitch v-model="isConfirmed">
-                    {{ trans('I confirm that I want to delete all groups') }}
-                </SlideSwitch>
-
-                <Button
-                    @clicked="deleteGroups"
-                    additionalClasses="bg-red-600 dark:bg-red-400"
-                >
-                    <TrashIcon class="w-5 h-5" />
-                    {{ trans('Erase all groups') }}
+                <Button @clicked="exportEverything">
+                    <ArrowDownTrayIcon class="w-5 h-5" />
+                    {{ trans('Export everything') }}
                 </Button>
             </div>
         </Section>
