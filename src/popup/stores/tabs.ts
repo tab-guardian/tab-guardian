@@ -15,39 +15,43 @@ export const useTabsStore = defineStore('tabs', () => {
     const settingsStore = useSettingsStore()
     const { trans } = useTransStore()
 
-    function openTabs(group: Group): boolean {
+    async function openTabs(group: Group): Promise<boolean> {
         if (!settingsStore.settings.encryptAfterRestore) {
-            restoreTabs(group.links)
+            await restore(group)
             return true
         }
 
         const pass = popupStore.popups.enterPassword.passwords[group.id]
 
         if (pass) {
-            restoreTabs(group.links)
-
+            await restore(group)
             groupStore.encryptGroupById(group.id, pass)
 
             return true
         }
 
         if (!group.isPrivate) {
-            restoreTabs(group.links)
+            await restore(group)
             return true
         }
 
-        popupStore.openPopup('enterPassword', popups => {
+        popupStore.openPopup('enterPassword', async popups => {
             const pass = popups.enterPassword.passwords[group.id]
 
             if (!pass) {
                 return
             }
 
-            restoreTabs(group.links)
+            await restore(group)
             groupStore.encryptGroupById(group.id, pass)
         })
 
         return false
+    }
+
+    async function restore(group: Group): Promise<void> {
+        await restoreTabs(group.links)
+        await groupStore.updateUpdatedAt(group.id)
     }
 
     async function openAndDeleteTabs(group: Group): Promise<void> {

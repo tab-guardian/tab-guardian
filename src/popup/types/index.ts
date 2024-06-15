@@ -18,6 +18,7 @@ export type Group = {
     links: Link[]
     isPrivate: boolean
     isEncrypted: boolean
+    updatedAt: number
     hide?: boolean
     bindURL?: string
     icon?: string

@@ -62,6 +62,7 @@ export const useGroupStore = defineStore('group', () => {
 
         if (isDevelopment()) {
             groups.value = items
+            groups.value.sort((a, b) => b.updatedAt - a.updatedAt)
             return
         }
 
@@ -148,12 +149,15 @@ export const useGroupStore = defineStore('group', () => {
     }
 
     async function createEmptyGroup(): Promise<Group> {
+        const now = Date.now()
+
         const group: Group = {
-            id: Date.now() + Math.floor(Math.random() * 1000),
+            id: now + Math.floor(Math.random() * 1000),
             name:
                 newGroup.value.name || getDefaultGroupName(newGroup.value.isPrivate),
             isPrivate: newGroup.value.isPrivate,
             isEncrypted: false,
+            updatedAt: now,
             links: [],
         }
 
@@ -164,6 +168,18 @@ export const useGroupStore = defineStore('group', () => {
         await prependGroup(group)
 
         return group
+    }
+
+    async function updateUpdatedAt(groupId: number): Promise<void> {
+        const group = getGroupById(groupId)
+
+        if (!group) {
+            return
+        }
+
+        group.updatedAt = Date.now()
+
+        await saveGroup(group)
     }
 
     async function prependGroup(group: Group): Promise<void> {
@@ -288,10 +304,13 @@ export const useGroupStore = defineStore('group', () => {
     }
 
     async function saveGroup(group: Group): Promise<void> {
+        group.updatedAt = Date.now()
+
         await saveGroupToStorage(group)
 
         groups.value = groups.value.map(g => (g.id === group.id ? group : g))
         groups.value = await filterGroups(groups.value)
+        groups.value.sort((a, b) => b.updatedAt - a.updatedAt)
 
         setTimeout(() => (isSaving.value = false), 500)
     }
@@ -315,6 +334,7 @@ export const useGroupStore = defineStore('group', () => {
         getGroupById,
         deleteAllLinks,
         deleteAllGroups,
+        updateUpdatedAt,
         setIcon,
     }
 })
