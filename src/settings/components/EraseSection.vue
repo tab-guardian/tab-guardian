@@ -35,21 +35,19 @@ async function deleteGroups(): Promise<void> {
 </script>
 
 <template>
-    <form @submit.prevent="deleteGroups">
-        <Section :title="trans('Erase all groups')">
-            <div class="flex items-center justify-between gap-3">
-                <SlideSwitch v-model="isConfirmed">
-                    {{ trans('I confirm that I want to delete all groups') }}
-                </SlideSwitch>
+    <Section :title="trans('Erase all groups')">
+        <div class="flex items-center justify-between gap-3">
+            <SlideSwitch v-model="isConfirmed">
+                {{ trans('I confirm that I want to delete all groups') }}
+            </SlideSwitch>
 
-                <Button
-                    @clicked="deleteGroups"
-                    additionalClasses="bg-red-600 dark:bg-red-400"
-                >
-                    <TrashIcon class="w-5 h-5" />
-                    {{ trans('Erase all groups') }}
-                </Button>
-            </div>
-        </Section>
-    </form>
+            <Button
+                @clicked="deleteGroups"
+                additionalClasses="bg-red-600 dark:bg-red-400"
+            >
+                <TrashIcon class="w-5 h-5" />
+                {{ trans('Erase all groups') }}
+            </Button>
+        </div>
+    </Section>
 </template>

@@ -2,46 +2,66 @@
 import { ref } from 'vue'
 import { useTransStore } from '@/stores/trans'
 import { useGroupStore } from '@/stores/group'
-import { useSettingsStore } from '@/stores/settings'
 import showToast from '@common/modules/showToast'
+import CryptoJS from 'crypto-js'
 import Section from '@settings/components/Section.vue'
 import Button from '@common/components/Form/Button.vue'
+import Input from '@common/components/Form/Input.vue'
 import ArrowDownTrayIcon from '@common/components/Icons/ArrowDownTrayIcon.vue'
 
 const { trans } = useTransStore()
-const store = useSettingsStore()
+const password = ref<string>('')
 const groupStore = useGroupStore()
-const isConfirmed = ref<boolean>(false)
 
-async function exportEverything(): Promise<void> {
-    if (store.loading) {
+async function exportGroups(): Promise<void> {
+    if (!password.value) {
+        showToast(trans('Please enter a password to encrypt groups'), 'error')
         return
     }
 
-    if (!isConfirmed.value) {
-        showToast(trans('Confirm that you want to delete all groups'), 'error')
+    const groups = groupStore.groups
+
+    if (groups.length === 0) {
+        showToast(trans('No groups to export'), 'error')
         return
     }
 
-    store.loading = true
-    await groupStore.deleteAllGroups()
+    const json = JSON.stringify(groups)
+    const data = CryptoJS.AES.encrypt(json, password.value).toString()
+    const blob = new Blob([data])
+    const url = URL.createObjectURL(blob)
 
-    showToast(trans('All the groups have been deleted'))
+    const a = document.createElement('a')
+    a.href = url
+    a.download = 'tab-groups-export'
+    a.click()
 
-    isConfirmed.value = false
-    store.loading = false
+    password.value = ''
+
+    URL.revokeObjectURL(url)
 }
 </script>
 
 <template>
-    <form @submit.prevent="exportEverything">
-        <Section :title="trans('Export all the Data')">
-            <div class="flex items-center justify-between gap-3">
-                <Button @clicked="exportEverything">
-                    <ArrowDownTrayIcon class="w-5 h-5" />
-                    {{ trans('Export everything') }}
-                </Button>
-            </div>
-        </Section>
-    </form>
+    <Section
+        :title="trans('Export Tab Groups')"
+        :subtitle="
+            trans(
+                'Securely export all of your tab groups and encrypt them with a password',
+            )
+        "
+    >
+        <Input
+            v-model="password"
+            type="password"
+            :label="trans('One time password')"
+            :tip="trans('It will be used to encrypt the exported data')"
+            id="export-password"
+        />
+
+        <Button @clicked="exportGroups" class="mt-4">
+            <ArrowDownTrayIcon class="w-5 h-5" />
+            {{ trans('Export everything') }}
+        </Button>
+    </Section>
 </template>

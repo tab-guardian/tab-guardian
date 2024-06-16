@@ -10,7 +10,7 @@ const { title, subtitle } = defineProps<Props>()
 <template>
     <section class="bg-secondary p-6 rounded-lg border border-border">
         <h2 class="text-xl font-bold">{{ title }}</h2>
-        <p class="text-lg mt-3" v-if="subtitle">{{ subtitle }}</p>
+        <p class="text-md text-font-gray" v-if="subtitle">{{ subtitle }}</p>
 
         <div class="mt-4">
             <slot />

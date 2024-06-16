@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { ref, watchEffect } from 'vue'
+import Tip from '@common/components/Tip.vue'
 
 type Props = {
     id: string
     type: 'text' | 'password'
     meta?: string
     class?: string
+    tip?: string
     label?: string
     withButton?: boolean
     placeholder?: string
@@ -32,9 +34,17 @@ watchEffect(() => {
 <template>
     <div>
         <div class="flex justify-between gap-2 items-center">
-            <label v-if="label" :for="props.id" class="block mb-0.5 mx-1 text-sm">
-                {{ props.label }}
-            </label>
+            <div class="flex gap-1">
+                <label
+                    v-if="label"
+                    :for="props.id"
+                    class="block mb-0.5 mx-1 text-sm"
+                >
+                    {{ props.label }}
+                </label>
+
+                <Tip v-if="props.tip" :tip="props.tip" />
+            </div>
 
             <small v-if="props.meta" class="text-font-gray">
                 {{ props.meta }}
