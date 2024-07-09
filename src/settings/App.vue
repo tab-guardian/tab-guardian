@@ -8,6 +8,7 @@ import Spinner from '@/components/Spinner.vue'
 import OptionsSection from '@settings/components/OptionsSection.vue'
 import EraseSection from '@settings/components/EraseSection.vue'
 import ExportSection from '@settings/components/ExportSection.vue'
+import ImportSection from '@settings/components/ImportSection.vue'
 
 const store = useSettingsStore()
 const { trans, loadMessages } = useTransStore()
@@ -36,6 +37,7 @@ onMounted(() => {
             <div class="flex flex-col gap-4">
                 <EraseSection />
                 <ExportSection />
+                <ImportSection />
             </div>
         </div>
     </div>

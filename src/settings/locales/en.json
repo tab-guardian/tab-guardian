@@ -23,9 +23,10 @@
     "Import private or public tab groups": "Import private or public tab groups",
     "Import": "Import",
     "It is used to decrypt the exported data from a file": "It is used to decrypt the exported data from a file",
-    "Choose the export file": "Choose the export file",
+    "Choose the exported file": "Choose the exported file",
     "Please enter a password to decrypt groups": "Please enter a password to decrypt groups",
     "Please choose a file to import": "Please choose a file to import",
     "Failed to decrypt the file": "Failed to decrypt the file",
-    "Error reading file": "Error reading file"
+    "Error reading file": "Error reading file",
+    "I want to replace all my groups with new ones": "I want to replace all my groups with new ones"
 }
