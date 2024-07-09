@@ -13,6 +13,8 @@ Here is what makes Tab Guardian a great tool for managing your tabs:
 - [x] Tabs restored in the same order as they were saved
 - [x] Supports all the modern browsers: Brave, Edge, Firefox and Chrome
 - [x] Tab Guardian is very configurable to suit your needs
+- [x] You can privately export individual private tab group into an encrypted file and import it later or on another device or browser
+- [x] You can export all of your public tab groups into a file and import them later or on another device or browser
 - [ ] You can set an icon for each group to make it easier to recognize
 - [ ] You can set a "Double Security" in settings. It will not only require a password to unlock a group, but also you must be on a specific domain to unlock it. For example, you can set a domain to be `serhii.io` and you will be able to unlock the group only when you are on `serhii.io` domain
 

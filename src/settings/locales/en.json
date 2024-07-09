@@ -14,9 +14,19 @@
     "If the new group name matches an existing one, override it": "If the new group name matches an existing one, override it",
     "Show only private groups in browser incognito mode. It means that public groups will be hidden in incognito mode": "Show only private groups in browser incognito mode. It means that public groups will be hidden in incognito mode",
     "Export Tab Groups": "Export Tab Groups",
-    "Export everything": "Export everything",
-    "Securely export all of your tab groups and encrypt them with a password": "Securely export all of your tab groups and encrypt them with a password",
+    "Export": "Export",
+    "Export all of your tab groups. Keep in mind that private groups are not going to be exported. If you want to export them, you need to do it for each private group separately": "Export all of your tab groups. Keep in mind that private groups are not going to be exported. If you want to export them, you need to do it for each private group separately",
     "No groups to export": "No groups to export",
     "One time password": "One time password",
-    "It will be used to encrypt the exported data": "It will be used to encrypt the exported data"
+    "It will be used to encrypt the exported data": "It will be used to encrypt the exported data",
+    "Import Tab Groups": "Import Tab Groups",
+    "Securely import tab groups from an encrypted export file": "Securely import tab groups from an encrypted export file",
+    "Import": "Import",
+    "It is used to decrypt the exported data from a file": "It is used to decrypt the exported data from a file",
+    "Choose the export file": "Choose the export file",
+    "Please enter a password to decrypt groups": "Please enter a password to decrypt groups",
+    "Please enter a password to encrypt groups": "Please enter a password to encrypt groups",
+    "Please choose a file to import": "Please choose a file to import",
+    "Failed to decrypt the file": "Failed to decrypt the file",
+    "Error reading file": "Error reading file"
 }

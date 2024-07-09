@@ -3,7 +3,6 @@ import { ref } from 'vue'
 import { useTransStore } from '@/stores/trans'
 import { useGroupStore } from '@/stores/group'
 import showToast from '@common/modules/showToast'
-import CryptoJS from 'crypto-js'
 import Section from '@settings/components/Section.vue'
 import Button from '@common/components/Form/Button.vue'
 import Input from '@common/components/Form/Input.vue'
@@ -19,7 +18,7 @@ async function exportGroups(): Promise<void> {
         return
     }
 
-    const groups = groupStore.groups
+    const groups = groupStore.groups.filter(group => !group.isPrivate)
 
     if (groups.length === 0) {
         showToast(trans('No groups to export'), 'error')
@@ -27,13 +26,13 @@ async function exportGroups(): Promise<void> {
     }
 
     const json = JSON.stringify(groups)
-    const data = CryptoJS.AES.encrypt(json, password.value).toString()
-    const blob = new Blob([data])
+
+    const blob = new Blob([json], { type: 'application/json' })
     const url = URL.createObjectURL(blob)
 
     const a = document.createElement('a')
     a.href = url
-    a.download = 'tab-groups-export'
+    a.download = 'tab-groups-export.json'
     a.click()
 
     password.value = ''
@@ -47,7 +46,7 @@ async function exportGroups(): Promise<void> {
         :title="trans('Export Tab Groups')"
         :subtitle="
             trans(
-                'Securely export all of your tab groups and encrypt them with a password',
+                'Export all of your tab groups. Keep in mind that private groups are not going to be exported. If you want to export them, you need to do it for each private group separately',
             )
         "
     >
@@ -61,7 +60,7 @@ async function exportGroups(): Promise<void> {
 
         <Button @clicked="exportGroups" class="mt-4">
             <ArrowDownTrayIcon class="w-5 h-5" />
-            {{ trans('Export everything') }}
+            {{ trans('Export') }}
         </Button>
     </Section>
 </template>
