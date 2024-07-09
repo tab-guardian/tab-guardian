@@ -20,12 +20,11 @@
     "One time password": "One time password",
     "It will be used to encrypt the exported data": "It will be used to encrypt the exported data",
     "Import Tab Groups": "Import Tab Groups",
-    "Securely import tab groups from an encrypted export file": "Securely import tab groups from an encrypted export file",
+    "Import private or public tab groups": "Import private or public tab groups",
     "Import": "Import",
     "It is used to decrypt the exported data from a file": "It is used to decrypt the exported data from a file",
     "Choose the export file": "Choose the export file",
     "Please enter a password to decrypt groups": "Please enter a password to decrypt groups",
-    "Please enter a password to encrypt groups": "Please enter a password to encrypt groups",
     "Please choose a file to import": "Please choose a file to import",
     "Failed to decrypt the file": "Failed to decrypt the file",
     "Error reading file": "Error reading file"
