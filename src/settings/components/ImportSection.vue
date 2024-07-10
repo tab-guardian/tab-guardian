@@ -78,9 +78,9 @@ function decrypt(data: string): string {
                 id="choose-file"
             />
 
-            <SlideSwitch v-model="replaceGroups">
+            <!-- <SlideSwitch v-model="replaceGroups">
                 {{ trans('I want to replace all my groups with new ones') }}
-            </SlideSwitch>
+            </SlideSwitch> -->
 
             <Input
                 v-if="isPrivate"
