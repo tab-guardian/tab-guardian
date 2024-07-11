@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import type { Group, Link } from '@/types'
+import type { Group } from '@/types'
 import { ref } from 'vue'
 import { useTransStore } from '@/stores/trans'
 import { useGroupStore } from '@/stores/group'
 import showToast from '@common/modules/showToast'
-import decryptGroup from '@common/modules/encrypt/decryptGroup'
-import CryptoJS, { enc } from 'crypto-js'
+import Swal from 'sweetalert2'
 import Section from '@settings/components/Section.vue'
 import Button from '@common/components/Form/Button.vue'
 import Input from '@common/components/Form/Input.vue'
@@ -31,7 +30,7 @@ async function importGroups(): Promise<void> {
     reader.onload = async e => {
         try {
             const rawData = e.target?.result as string
-            const json = JSON.parse(rawData)
+            const json = JSON.parse(rawData) as Group[] | Group
 
             isPrivate.value = typeof json === 'object' && !Array.isArray(json)
 
@@ -43,7 +42,9 @@ async function importGroups(): Promise<void> {
             //     return
             // }
 
-            console.log(json)
+            if (Array.isArray(json)) {
+                await prependGroups(json)
+            }
         } catch (err) {
             console.error(err)
             showToast(trans('Failed to decrypt the file'), 'error')
@@ -59,9 +60,29 @@ async function importGroups(): Promise<void> {
     password.value = ''
 }
 
-function decrypt(data: string): string {
-    const bytes = CryptoJS.AES.decrypt(data, password.value)
-    return decodeURIComponent(bytes.toString(enc.Utf8))
+async function prependGroups(groups: Group[]): Promise<void> {
+    const currentGroups = groupStore.groups
+    const groupsWithSameName = groups.reduce((acc, group) => {
+        return acc + currentGroups.filter(g => g.name === group.name).length
+    }, 0)
+
+    if (groupsWithSameName > 0 && !replaceGroups.value) {
+        const answer = await Swal.fire({
+            title: trans('Replace groups?'),
+            text: trans(
+                'Some groups that you want to import already exist with the same name. Do you want to replace them?',
+            ),
+            showDenyButton: true,
+            confirmButtonText: trans('Yes'),
+            denyButtonText: trans('No'),
+        })
+
+        console.log(answer.isConfirmed)
+    }
+
+    // groups.forEach(group => {
+    //     groupStore.prependGroup(group)
+    // })
 }
 </script>
 
