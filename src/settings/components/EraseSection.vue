@@ -1,26 +1,31 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import { useTransStore } from '@/stores/trans'
 import { useGroupStore } from '@/stores/group'
 import { useSettingsStore } from '@/stores/settings'
 import showToast from '@common/modules/showToast'
+import Swal from 'sweetalert2'
 import Section from '@settings/components/Section.vue'
 import Button from '@common/components/Form/Button.vue'
-import SlideSwitch from '@common/components/Form/SlideSwitch.vue'
 import TrashIcon from '@common/components/Icons/TrashIcon.vue'
 
 const { trans } = useTransStore()
 const store = useSettingsStore()
 const groupStore = useGroupStore()
-const isConfirmed = ref<boolean>(false)
 
 async function deleteGroups(): Promise<void> {
     if (store.loading) {
         return
     }
 
-    if (!isConfirmed.value) {
-        showToast(trans('Confirm that you want to delete all groups'), 'error')
+    const answer = await Swal.fire({
+        title: trans('Erase all groups'),
+        text: trans('I confirm that I want to delete all groups'),
+        showDenyButton: true,
+        confirmButtonText: trans('Yes'),
+        denyButtonText: trans('No'),
+    })
+
+    if (!answer.isConfirmed) {
         return
     }
 
@@ -29,7 +34,6 @@ async function deleteGroups(): Promise<void> {
 
     showToast(trans('All the groups have been deleted'))
 
-    isConfirmed.value = false
     store.loading = false
 }
 </script>
@@ -37,10 +41,6 @@ async function deleteGroups(): Promise<void> {
 <template>
     <Section :title="trans('Erase all groups')">
         <div class="flex items-center justify-between gap-3">
-            <SlideSwitch v-model="isConfirmed">
-                {{ trans('I confirm that I want to delete all groups') }}
-            </SlideSwitch>
-
             <Button
                 @clicked="deleteGroups"
                 additionalClasses="bg-red-600 dark:bg-red-400"
