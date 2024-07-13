@@ -21,8 +21,8 @@ function onFileChange(e: Event): void {
     }
 }
 
-async function dropImage(e: DragEvent): Promise<void> {
-    e.preventDefault()
+async function dropFile(e: DragEvent): Promise<void> {
+    console.log(e.dataTransfer)
 
     if (!e.dataTransfer) {
         return
@@ -37,22 +37,21 @@ async function dropImage(e: DragEvent): Promise<void> {
 </script>
 
 <template>
-    <div
+    <label
         @dragover.prevent="drag = true"
-        @drag.leave.self="drag = false"
-        @drop.self.prevent="dropImage"
+        @dragleave.self="drag = false"
+        @drop.self.prevent="dropFile"
         :class="drag ? 'border-green-500' : 'border-gray-500'"
-        class="border-4 border-dotted rounded-lg w-96"
+        class="border-4 border-dotted rounded-lg h-20 p-4 flex items-center justify-center"
     >
-        <label :for="id" class="p-4 w-full block text-center">
-            <span class="text-xl text-font-gray">{{ label }}</span>
-            <input
-                class="hidden"
-                @change="onFileChange"
-                type="file"
-                name="file"
-                :id
-            />
-        </label>
-    </div>
+        <span class="text-xl text-font-gray pointer-events-none">{{ label }}</span>
+
+        <input
+            class="hidden pointer-events-none"
+            @change="onFileChange"
+            type="file"
+            name="file"
+            :id
+        />
+    </label>
 </template>
