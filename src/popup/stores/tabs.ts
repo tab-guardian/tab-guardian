@@ -25,7 +25,7 @@ export const useTabsStore = defineStore('tabs', () => {
 
         if (pass) {
             await restore(group)
-            groupStore.encryptGroupById(group.id, pass)
+            groupStore.encryptGroupById(group.id, pass, pass)
 
             return true
         }
@@ -43,7 +43,7 @@ export const useTabsStore = defineStore('tabs', () => {
             }
 
             await restore(group)
-            groupStore.encryptGroupById(group.id, pass)
+            groupStore.encryptGroupById(group.id, pass, pass)
         })
 
         return false

@@ -33,7 +33,9 @@ const passwordErr = computed<string>(() => {
 
 const preventSubmit = computed<boolean>(
     () =>
-        !!passwordErr || !store.newGroup.password || !store.newGroup.confirmPassword,
+        !!passwordErr.value ||
+        !store.newGroup.password ||
+        !store.newGroup.confirmPassword,
 )
 
 onMounted(async () => {
@@ -71,7 +73,7 @@ function attachBindURL(checked: boolean): void {
 }
 
 function selectLinks(): void {
-    if (preventSubmit) {
+    if (preventSubmit.value) {
         return
     }
 
@@ -112,7 +114,7 @@ function selectLinks(): void {
                 v-model="store.newGroup.password"
                 type="password"
                 id="group-password"
-                :label="trans('Group password')"
+                :label="trans('Enter a password')"
             />
 
             <Input

@@ -128,7 +128,11 @@ export const useGroupStore = defineStore('group', () => {
         return false
     }
 
-    function encryptGroupById(groupId: number, pass: string): boolean {
+    function encryptGroupById(
+        groupId: number,
+        pass: string,
+        pass2: string,
+    ): boolean {
         const group = getGroupById(groupId)
 
         if (!group) {
@@ -146,7 +150,7 @@ export const useGroupStore = defineStore('group', () => {
             return false
         }
 
-        if (pass !== newGroup.value.confirmPassword) {
+        if (pass !== pass2) {
             showToast(trans('Passwords do not match'), 'error')
             return false
         }

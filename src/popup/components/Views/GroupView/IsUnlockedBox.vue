@@ -36,7 +36,7 @@ function promptEnterPassword(): void {
 
 function lockGroup(): void {
     const password = popupStore.popups.enterPassword.passwords[group.id]
-    groupStore.encryptGroupById(group.id, password)
+    groupStore.encryptGroupById(group.id, password, password)
 }
 </script>
 

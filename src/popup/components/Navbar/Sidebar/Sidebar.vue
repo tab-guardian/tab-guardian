@@ -29,15 +29,15 @@ const links = [
         icon: GitHubIcon,
     },
     {
-        href: 'https://github.com/textwire/textwire/blob/main/CHANGELOG.md',
+        href: 'https://github.com/tab-guardian/tab-guardian/blob/main/CHANGELOG.md',
         label: trans('Release Notes'),
         icon: DocumentIcon,
     },
-    {
-        href: rateUsLink,
-        label: trans('Rate Us'),
-        icon: StarIcon,
-    },
+    // {
+    //     href: rateUsLink,
+    //     label: trans('Rate Us'),
+    //     icon: StarIcon,
+    // },
 ]
 </script>
 
