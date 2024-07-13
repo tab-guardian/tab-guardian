@@ -5,7 +5,7 @@ type Props = {
 }
 
 type Emits = {
-    (e: 'chosen', f: File): void
+    (e: 'chosen', f: File, elem: HTMLInputElement): void
 }
 
 const props = defineProps<Props>()
@@ -16,7 +16,7 @@ function onFileChange(e: Event): void {
     const file = target.files?.[0]
 
     if (file) {
-        emit('chosen', file)
+        emit('chosen', file, e.target as HTMLInputElement)
     }
 }
 </script>

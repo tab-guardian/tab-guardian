@@ -28,9 +28,10 @@
     "Please choose a file to import": "Please choose a file to import",
     "Failed to decrypt the file": "Failed to decrypt the file",
     "Error reading file": "Error reading file",
-    "I want to replace all my groups with new ones": "I want to replace all my groups with new ones",
     "Some groups that you want to import already exist with the same name. Do you want to replace them?": "Some groups that you want to import already exist with the same name. Do you want to replace them?",
     "Replace groups?": "Replace groups?",
     "Yes": "Yes",
-    "No": "No"
+    "No": "No",
+    ":n groups imported successfully": ":n groups imported successfully",
+    "File chosen": "File chosen"
 }

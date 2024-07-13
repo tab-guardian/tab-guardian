@@ -10,14 +10,13 @@ import Button from '@common/components/Form/Button.vue'
 import Input from '@common/components/Form/Input.vue'
 import FileInput from '@common/components/Form/FileInput.vue'
 import ArrowDownTrayIcon from '@common/components/Icons/ArrowDownTrayIcon.vue'
-import SlideSwitch from '@common/components/Form/SlideSwitch.vue'
 
 const { trans } = useTransStore()
 const password = ref<string>('')
 const file = ref<File | null>(null)
+const fileInput = ref<HTMLInputElement | null>(null)
 const groupStore = useGroupStore()
 const isPrivate = ref<boolean>(false)
-const replaceGroups = ref<boolean>(false)
 
 async function importGroups(): Promise<void> {
     if (!file.value) {
@@ -58,31 +57,50 @@ async function importGroups(): Promise<void> {
 
     reader.readAsText(file.value)
     password.value = ''
+    file.value = null
+
+    if (fileInput.value) {
+        fileInput.value.value = ''
+    }
 }
 
 async function prependGroups(groups: Group[]): Promise<void> {
-    const currentGroups = groupStore.groups
     const groupsWithSameName = groups.reduce((acc, group) => {
-        return acc + currentGroups.filter(g => g.name === group.name).length
+        return acc + groupStore.groups.filter(g => g.name === group.name).length
     }, 0)
 
-    if (groupsWithSameName > 0 && !replaceGroups.value) {
-        const answer = await Swal.fire({
-            title: trans('Replace groups?'),
-            text: trans(
-                'Some groups that you want to import already exist with the same name. Do you want to replace them?',
-            ),
-            showDenyButton: true,
-            confirmButtonText: trans('Yes'),
-            denyButtonText: trans('No'),
-        })
+    console.log(groupsWithSameName, groupStore.groups.length)
 
-        console.log(answer.isConfirmed)
+    if (groupsWithSameName === 0) {
+        groupStore.addGroups(groups, false)
+        showSuccessMessage(groups)
+        return
     }
 
-    // groups.forEach(group => {
-    //     groupStore.prependGroup(group)
-    // })
+    const answer = await Swal.fire({
+        title: trans('Replace groups?'),
+        text: trans(
+            'Some groups that you want to import already exist with the same name. Do you want to replace them?',
+        ),
+        showDenyButton: true,
+        confirmButtonText: trans('Yes'),
+        denyButtonText: trans('No'),
+    })
+
+    if (answer.isConfirmed) {
+        await groupStore.addGroups(groups, true)
+        showSuccessMessage(groups)
+    }
+}
+
+function showSuccessMessage(groups: Group[]): void {
+    const msg = trans(':n groups imported successfully', groups.length.toString())
+    showToast(msg)
+}
+
+function fileChosen(f: File, elem: HTMLInputElement): void {
+    file.value = f
+    fileInput.value = elem
 }
 </script>
 
@@ -93,15 +111,11 @@ async function prependGroups(groups: Group[]): Promise<void> {
     >
         <div class="space-y-4">
             <FileInput
-                @chosen="(f: File) => (file = f)"
+                @chosen="fileChosen"
                 type="file"
-                :label="trans('Choose the exported file')"
+                :label="trans(file ? 'File chosen' : 'Choose the exported file')"
                 id="choose-file"
             />
-
-            <SlideSwitch v-model="replaceGroups">
-                {{ trans('I want to replace all my groups with new ones') }}
-            </SlideSwitch>
 
             <Input
                 v-if="isPrivate"

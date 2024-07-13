@@ -16,6 +16,7 @@ import isIncognitoWindow from '@/modules/isIncognitoWindow'
 import getCurrentURL from '@/modules/getCurrentURL'
 import deleteGroupFromStorage from '@common/modules/storage/deleteGroupFromStorage'
 import deleteAllGroupsFromStorage from '@common/modules/storage/deleteAllGroupsFromStorage'
+import generateGroupId from '@common/modules/generateGroupId'
 
 export const useGroupStore = defineStore('group', () => {
     const groupNameMaxLength = 45
@@ -51,6 +52,17 @@ export const useGroupStore = defineStore('group', () => {
 
         if (!group) {
             error.err(`Group with id ${groupId} not found`)
+            return null
+        }
+
+        return group
+    }
+
+    function getGroupByName(name: string): Group | null {
+        const group = groups.value.find(group => group.name === name)
+
+        if (!group) {
+            error.err(`Group with name ${name} not found`)
             return null
         }
 
@@ -149,15 +161,13 @@ export const useGroupStore = defineStore('group', () => {
     }
 
     async function createEmptyGroup(): Promise<Group> {
-        const now = Date.now()
-
         const group: Group = {
-            id: now + Math.floor(Math.random() * 1000),
+            id: generateGroupId(),
             name:
                 newGroup.value.name || getDefaultGroupName(newGroup.value.isPrivate),
             isPrivate: newGroup.value.isPrivate,
             isEncrypted: false,
-            updatedAt: now,
+            updatedAt: Date.now(),
             links: [],
         }
 
@@ -192,6 +202,24 @@ export const useGroupStore = defineStore('group', () => {
         }
 
         groups.value.unshift(group)
+    }
+
+    async function addGroups(groups: Group[], replace: boolean): Promise<void> {
+        for (const group of groups) {
+            group.id = generateGroupId()
+
+            if (replace) {
+                const existingGroup = getGroupByName(group.name)
+
+                if (existingGroup) {
+                    await deleteGroup(existingGroup.id)
+                }
+            }
+
+            await saveGroup(group)
+        }
+
+        await loadGroupsFromStorage()
     }
 
     async function setIcon(groupId: number, icon: string): Promise<void> {
@@ -335,7 +363,7 @@ export const useGroupStore = defineStore('group', () => {
         deleteAllLinks,
         deleteAllGroups,
         updateUpdatedAt,
-        prependGroup,
         setIcon,
+        addGroups,
     }
 })
