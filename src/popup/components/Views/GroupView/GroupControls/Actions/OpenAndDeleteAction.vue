@@ -6,11 +6,10 @@ import { useTransStore } from '@/stores/trans'
 import upRemoveImage from '@/assets/images/tab-icons/up-remove.png'
 import Control from '@/components/Control.vue'
 
-type Props = {
+const props = defineProps<{
     group: Group
-}
+}>()
 
-const props = defineProps<Props>()
 const router = useRouter()
 const tabsStore = useTabsStore()
 const { trans } = useTransStore()

@@ -5,18 +5,16 @@ import OpenAndDeleteAction from '@/components/Views/GroupView/GroupControls/Acti
 import StashAndCloseTabsAction from '@/components/Views/GroupView/GroupControls/Actions/StashAndCloseTabsAction.vue'
 import StashTabsAction from '@/components/Views/GroupView/GroupControls/Actions/StashTabsAction.vue'
 
-type Props = {
+defineProps<{
     group: Group
-}
-
-const props = defineProps<Props>()
+}>()
 </script>
 
 <template>
     <div class="flex items-center gap-2">
-        <StashAndCloseTabsAction :group="props.group" />
-        <StashTabsAction :group="props.group" />
-        <OpenTabsAction :group="props.group" />
-        <OpenAndDeleteAction :group="props.group" />
+        <StashAndCloseTabsAction :group />
+        <StashTabsAction :group />
+        <OpenTabsAction :group />
+        <OpenAndDeleteAction :group />
     </div>
 </template>

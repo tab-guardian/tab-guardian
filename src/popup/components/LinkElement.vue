@@ -3,13 +3,11 @@ import type { Link } from '@/types'
 import { computed } from 'vue'
 import LinkElementInner from '@/components/LinkElementInner.vue'
 
-type Props = {
+const props = defineProps<{
     isLink: boolean
     link: Link
     isSelected?: boolean
-}
-
-const props = defineProps<Props>()
+}>()
 
 const classes = computed(() => {
     const result = [
@@ -27,13 +25,13 @@ const classes = computed(() => {
 </script>
 
 <template>
-    <a v-if="props.isLink" :href="props.link.url" :class="classes">
-        <LinkElementInner :link="props.link" />
+    <a v-if="isLink" :href="link.url" :class="classes">
+        <LinkElementInner :link="link" />
         <slot />
     </a>
 
     <div v-else :class="classes">
-        <LinkElementInner :link="props.link" />
+        <LinkElementInner :link />
         <slot />
     </div>
 </template>

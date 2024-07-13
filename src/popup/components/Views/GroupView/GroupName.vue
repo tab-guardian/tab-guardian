@@ -3,11 +3,10 @@ import { ref, watchEffect } from 'vue'
 import type { Group } from '@/types'
 import { useGroupStore } from '@/stores/group'
 
-type Props = {
+defineProps<{
     group: Group
-}
+}>()
 
-const props = defineProps<Props>()
 const classes = 'text-lg my-1 px-2 py-0.5'
 const inputRef = ref<HTMLInputElement | null>(null)
 
@@ -35,7 +34,7 @@ watchEffect(() => {
         />
 
         <h2 v-else :class="classes" class="border border-transparent">
-            {{ props.group.name }}
+            {{ group.name }}
         </h2>
 
         <small

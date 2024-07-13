@@ -5,11 +5,10 @@ import upImage from '@/assets/images/tab-icons/up.png'
 import { useTabsStore } from '@/stores/tabs'
 import { useTransStore } from '@/stores/trans'
 
-type Props = {
+defineProps<{
     group: Group
-}
+}>()
 
-const props = defineProps<Props>()
 const tabsStore = useTabsStore()
 const { trans } = useTransStore()
 </script>
@@ -17,7 +16,7 @@ const { trans } = useTransStore()
 <template>
     <Control
         v-tippy="trans('Open tabs')"
-        @click="tabsStore.openTabs(props.group)"
+        @click="tabsStore.openTabs(group)"
         class="bg-green-300 dark:bg-green-700"
     >
         <img :src="upImage" alt="Open tabs" class="dark:invert" />

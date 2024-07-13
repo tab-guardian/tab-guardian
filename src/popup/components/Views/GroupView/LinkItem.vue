@@ -3,18 +3,16 @@ import type { Link } from '@/types'
 import DeleteLinkButton from '@/components/Views/GroupView/DeleteLinkButton.vue'
 import LinkElement from '@/components/LinkElement.vue'
 
-type Props = {
+defineProps<{
     link: Link
     groupId: number
-}
-
-const props = defineProps<Props>()
+}>()
 </script>
 
 <template>
     <LinkElement
         :isLink="true"
-        :link="props.link"
+        :link="link"
         target="_blank"
         rel="noopener noreferrer"
     >

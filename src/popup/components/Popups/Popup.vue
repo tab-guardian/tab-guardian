@@ -1,16 +1,13 @@
 <script setup lang="ts">
 import Overlay from '@/components/Navbar/Sidebar/Overlay.vue'
 
-type Props = {
-    content: string
-}
-
-type Emits = {
+const emit = defineEmits<{
     (e: 'cancel'): void
-}
+}>()
 
-const emit = defineEmits<Emits>()
-const props = defineProps<Props>()
+defineProps<{
+    content: string
+}>()
 </script>
 
 <template>
@@ -20,7 +17,7 @@ const props = defineProps<Props>()
         <div
             class="absolute top-1/2 left-4 right-4 bg-secondary rounded-md -translate-y-1/2 p-4 z-20"
         >
-            <span class="text-md mb-3 block">{{ props.content }}</span>
+            <span class="text-md mb-3 block">{{ content }}</span>
 
             <slot />
 

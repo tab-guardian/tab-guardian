@@ -5,11 +5,9 @@ import downImage from '@/assets/images/tab-icons/down.png'
 import { useTabsStore } from '@/stores/tabs'
 import { useTransStore } from '@/stores/trans'
 
-type Props = {
+const props = defineProps<{
     group: Group
-}
-
-const props = defineProps<Props>()
+}>()
 
 const tabsStore = useTabsStore()
 const { trans } = useTransStore()
