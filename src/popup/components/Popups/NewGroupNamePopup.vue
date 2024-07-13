@@ -27,7 +27,7 @@ const bindTip = ref<string>(
 const passwordErr = computed<string>(() => {
     return store.newGroup.confirmPassword.length > 0 &&
         store.newGroup.password !== store.newGroup.confirmPassword
-        ? 'Passwords do not match'
+        ? trans('Passwords do not match')
         : ''
 })
 
@@ -71,6 +71,10 @@ function attachBindURL(checked: boolean): void {
 }
 
 function selectLinks(): void {
+    if (preventSubmit) {
+        return
+    }
+
     if (store.newGroup.isPrivate && !store.newGroup.password) {
         showToast(trans('Password is empty'), 'error')
         return

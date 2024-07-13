@@ -146,6 +146,11 @@ export const useGroupStore = defineStore('group', () => {
             return false
         }
 
+        if (pass !== newGroup.value.confirmPassword) {
+            showToast(trans('Passwords do not match'), 'error')
+            return false
+        }
+
         try {
             const encrypted = encryptGroup(group, pass)
 
