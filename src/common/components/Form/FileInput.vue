@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-const props = defineProps<{
+defineProps<{
     id: string
     label?: string
 }>()
@@ -37,14 +37,6 @@ async function dropImage(e: DragEvent): Promise<void> {
 </script>
 
 <template>
-    <input
-        class="hidden"
-        @change="onFileChange"
-        type="file"
-        name="file"
-        id="file-input"
-    />
-
     <div
         @dragover.prevent="drag = true"
         @drag.leave.self="drag = false"
@@ -52,8 +44,15 @@ async function dropImage(e: DragEvent): Promise<void> {
         :class="drag ? 'border-green-500' : 'border-gray-500'"
         class="border-4 border-dotted rounded-lg w-96"
     >
-        <label for="file-input" class="p-4 w-full block text-center">
+        <label :for="id" class="p-4 w-full block text-center">
             <span class="text-xl text-font-gray">{{ label }}</span>
+            <input
+                class="hidden"
+                @change="onFileChange"
+                type="file"
+                name="file"
+                :id
+            />
         </label>
     </div>
 </template>
