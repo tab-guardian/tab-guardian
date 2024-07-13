@@ -28,6 +28,7 @@ export type NewGroup = {
     name: string
     isPrivate: boolean
     password: string
+    confirmPassword: string
     bindURL: string | null
 }
 

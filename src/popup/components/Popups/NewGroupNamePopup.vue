@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useGroupStore } from '@/stores/group'
 import { useTransStore } from '@/stores/trans'
 import { usePopupStore } from '@/stores/popup'
@@ -22,6 +22,18 @@ const selectTabsStore = useSelectTabsStore()
 const currURL = ref<string | null>(null)
 const bindTip = ref<string>(
     'Bind this group to the (:n) URL. This will hide the group from everywhere else except this URL. It adds an extra layer of security',
+)
+
+const passwordErr = computed<string>(() => {
+    return store.newGroup.confirmPassword.length > 0 &&
+        store.newGroup.password !== store.newGroup.confirmPassword
+        ? 'Passwords do not match'
+        : ''
+})
+
+const preventSubmit = computed<boolean>(
+    () =>
+        !!passwordErr || !store.newGroup.password || !store.newGroup.confirmPassword,
 )
 
 onMounted(async () => {
@@ -99,6 +111,15 @@ function selectLinks(): void {
                 :label="trans('Group password')"
             />
 
+            <Input
+                v-if="store.newGroup.isPrivate"
+                v-model="store.newGroup.confirmPassword"
+                type="password"
+                id="group-confirm-password"
+                :label="trans('Repeat password')"
+                :error="passwordErr"
+            />
+
             <div class="flex items-end gap-3 justify-between">
                 <SlideSwitch
                     v-if="store.newGroup.isPrivate"
@@ -113,7 +134,7 @@ function selectLinks(): void {
 
                 <div v-else></div>
 
-                <Button type="submit">
+                <Button type="submit" :disabled="preventSubmit">
                     {{ trans('Select Tabs') }}
                     <ChevronRightIcon width="20" height="20" />
                 </Button>

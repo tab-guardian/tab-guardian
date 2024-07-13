@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watchEffect } from 'vue'
+import { ref, computed, watchEffect } from 'vue'
 import Tip from '@common/components/Tip.vue'
 
 const emit = defineEmits<{
@@ -8,7 +8,7 @@ const emit = defineEmits<{
 
 const inputRef = ref<HTMLInputElement | null>(null)
 
-defineProps<{
+const props = defineProps<{
     id: string
     type: 'text' | 'password'
     meta?: string
@@ -18,9 +18,20 @@ defineProps<{
     withButton?: boolean
     placeholder?: string
     maxlength?: number
+    error?: string
 }>()
 
 const modelValue = defineModel()
+
+const className = computed(() => {
+    return [
+        'rounded-md px-2.5 py-1.5 w-full bg-page border focus:outline',
+        props.class,
+        props.error
+            ? 'border-red-600 outline-red-600'
+            : 'border-border outline-primary outline-2',
+    ]
+})
 
 watchEffect(() => {
     if (inputRef.value) {
@@ -46,16 +57,21 @@ watchEffect(() => {
         </div>
 
         <div class="flex items-center gap-2">
-            <input
-                :id="id"
-                :type="type"
-                class="rounded-md px-2.5 py-1.5 w-full bg-page border border-border focus:outline outline-2 outline-primary"
-                :class="class"
-                v-model="modelValue"
-                ref="inputRef"
-                :placeholder="placeholder || label || ''"
-                :maxlength="maxlength"
-            />
+            <div class="w-full">
+                <input
+                    :id="id"
+                    :type="type"
+                    :class="className"
+                    v-model="modelValue"
+                    ref="inputRef"
+                    :placeholder="placeholder || label || ''"
+                    :maxlength
+                />
+
+                <small v-if="error" class="text-red-600 block mt-0.5">
+                    {{ error }}
+                </small>
+            </div>
 
             <button
                 v-if="withButton"

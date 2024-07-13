@@ -37,6 +37,7 @@ export const useGroupStore = defineStore('group', () => {
         name: '',
         isPrivate: false,
         password: '',
+        confirmPassword: '',
         bindURL: null,
     })
 
@@ -327,6 +328,7 @@ export const useGroupStore = defineStore('group', () => {
             name: '',
             isPrivate: false,
             password: '',
+            confirmPassword: '',
             bindURL: '',
         }
     }
