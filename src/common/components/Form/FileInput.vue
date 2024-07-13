@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
+const inputRef = ref<HTMLInputElement | null>(null)
+
 defineProps<{
     id: string
     label?: string
@@ -22,8 +24,6 @@ function onFileChange(e: Event): void {
 }
 
 async function dropFile(e: DragEvent): Promise<void> {
-    console.log(e.dataTransfer)
-
     if (!e.dataTransfer) {
         return
     }
@@ -32,7 +32,12 @@ async function dropFile(e: DragEvent): Promise<void> {
 
     const files = e.dataTransfer.files
 
-    console.log(files)
+    if (!files.length || !inputRef.value) {
+        return
+    }
+
+    inputRef.value!.files = files
+    emit('chosen', files[0], inputRef.value)
 }
 </script>
 
@@ -44,13 +49,18 @@ async function dropFile(e: DragEvent): Promise<void> {
         :class="drag ? 'border-green-500' : 'border-gray-500'"
         class="border-4 border-dotted rounded-lg h-20 p-4 flex items-center justify-center"
     >
-        <span class="text-xl text-font-gray pointer-events-none">{{ label }}</span>
+        <span
+            class="text-xl pointer-events-none"
+            :class="drag ? 'text-green-500' : 'text-gray-500'"
+            >{{ label }}</span
+        >
 
         <input
             class="hidden pointer-events-none"
             @change="onFileChange"
             type="file"
             name="file"
+            ref="inputRef"
             :id
         />
     </label>

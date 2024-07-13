@@ -126,7 +126,7 @@ function fileChosen(f: File, elem: HTMLInputElement): void {
                 id="import-password"
             />
 
-            <Button @clicked="importGroups" class="mt-4">
+            <Button @clicked="importGroups" class="mt-4" :disabled="!file">
                 <ArrowDownTrayIcon class="w-5 h-5 rotate-180" />
                 {{ trans('Import') }}
             </Button>
