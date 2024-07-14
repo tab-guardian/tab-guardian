@@ -4,7 +4,6 @@ import { computed } from 'vue'
 import LinkElementInner from '@/components/LinkElementInner.vue'
 
 const props = defineProps<{
-    isLink: boolean
     link: Link
     isSelected?: boolean
 }>()
@@ -25,12 +24,7 @@ const classes = computed(() => {
 </script>
 
 <template>
-    <a v-if="isLink" :href="link.url" :class="classes">
-        <LinkElementInner :link="link" />
-        <slot />
-    </a>
-
-    <div v-else :class="classes">
+    <div :class="classes">
         <LinkElementInner :link />
         <slot />
     </div>

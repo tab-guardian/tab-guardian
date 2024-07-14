@@ -10,12 +10,7 @@ defineProps<{
 </script>
 
 <template>
-    <LinkElement
-        :isLink="true"
-        :link="link"
-        target="_blank"
-        rel="noopener noreferrer"
-    >
+    <LinkElement :link target="_blank" rel="noopener noreferrer">
         <DeleteLinkButton :linkId="link.id" :groupId />
     </LinkElement>
 </template>

@@ -13,7 +13,6 @@ const store = useSelectTabsStore()
 
 <template>
     <LinkElement
-        :isLink="false"
         :isSelected="store.selectedIds.includes(link.id)"
         :link
         @click="store.toggleSelect(link.id)"
