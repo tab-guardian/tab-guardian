@@ -1,16 +1,21 @@
 <script setup lang="ts">
 import type { Link } from '@/types'
+import restoreTabs from '@/modules/tabs/restoreTabs'
 import DeleteLinkButton from '@/components/Views/GroupView/DeleteLinkButton.vue'
 import LinkElement from '@/components/LinkElement.vue'
 
-defineProps<{
+const props = defineProps<{
     link: Link
     groupId: number
 }>()
+
+async function openTab(): Promise<void> {
+    await restoreTabs([props.link])
+}
 </script>
 
 <template>
-    <LinkElement :link target="_blank" rel="noopener noreferrer">
+    <LinkElement @click="openTab" :link>
         <DeleteLinkButton :linkId="link.id" :groupId />
     </LinkElement>
 </template>
