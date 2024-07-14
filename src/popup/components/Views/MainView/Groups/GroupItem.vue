@@ -66,7 +66,7 @@ const groupClasses = computed(() => {
         </div>
 
         <div class="flex items-center gap-3">
-            <OpenTabsButton v-if="!group.isEncrypted" :group />
+            <OpenTabsButton :group />
             <ChevronRightIcon class="w-4 h-4" />
         </div>
     </RouterLink>
