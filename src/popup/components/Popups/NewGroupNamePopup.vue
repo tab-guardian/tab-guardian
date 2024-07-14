@@ -1,28 +1,20 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted } from 'vue'
 import { useGroupStore } from '@/stores/group'
 import { useTransStore } from '@/stores/trans'
 import { usePopupStore } from '@/stores/popup'
 import { useSelectTabsStore } from '@/stores/selectTabs'
 import showToast from '@common/modules/showToast'
-import getCurrentURL from '@/modules/getCurrentURL'
-import error from '@common/modules/error'
-import hashURL from '@/modules/hashURL'
 import Popup from '@/components/Popups/Popup.vue'
 import Input from '@common/components/Form/Input.vue'
 import Button from '@common/components/Form/Button.vue'
 import ChevronRightIcon from '@common/components/Icons/ChevronRightIcon.vue'
-import SlideSwitch from '@common/components/Form/SlideSwitch.vue'
+import BindToUrlSlider from '@/components/Popups/BindToUrlSlider.vue'
 
 const { trans } = useTransStore()
 const { closePopup, closeAllPopups } = usePopupStore()
 const store = useGroupStore()
 const selectTabsStore = useSelectTabsStore()
-
-const currURL = ref<string | null>(null)
-const bindTip = ref<string>(
-    'Bind this group to the (:n) URL. This will hide the group from everywhere else except this URL. It adds an extra layer of security',
-)
 
 const passwordErr = computed<string>(() => {
     return store.newGroup.confirmPassword.length > 0 &&
@@ -41,36 +33,7 @@ const preventSubmit = computed<boolean>(
 onMounted(async () => {
     store.newGroup.name = ''
     store.newGroup.password = ''
-
-    await setBindTip()
 })
-
-async function setBindTip(): Promise<void> {
-    const url = await getCurrentURL()
-
-    if (url) {
-        currURL.value = url
-        return
-    }
-
-    currURL.value = null
-    bindTip.value = `This feature doesn't work for this current URL`
-}
-
-function attachBindURL(checked: boolean): void {
-    if (!checked) {
-        store.newGroup.bindURL = null
-        return
-    }
-
-    if (!currURL.value) {
-        error.err('No current URL found')
-        showToast(trans('Error ocurred'), 'error')
-        return
-    }
-
-    store.newGroup.bindURL = hashURL(currURL.value)
-}
 
 function selectLinks(): void {
     if (preventSubmit.value) {
@@ -127,17 +90,7 @@ function selectLinks(): void {
             />
 
             <div class="flex items-end gap-3 justify-between">
-                <SlideSwitch
-                    v-if="store.newGroup.isPrivate"
-                    v-tippy="currURL ? trans(bindTip, currURL) : trans(bindTip)"
-                    :disabled="!currURL"
-                    @changed="attachBindURL"
-                >
-                    <div class="flex items-center gap-1">
-                        {{ trans('Bind to this URL') }}
-                    </div>
-                </SlideSwitch>
-
+                <BindToUrlSlider v-if="store.newGroup.isPrivate" />
                 <div v-else></div>
 
                 <Button type="submit" :disabled="preventSubmit">
