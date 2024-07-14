@@ -8,8 +8,8 @@ import error from '@common/modules/error'
 import showToast from '@common/modules/showToast'
 
 export const useAttemptsStore = defineStore('attempts', () => {
-    const maxAttempts = 5
-    const lockDuration = 10
+    const maxAttempts = 2
+    const lockDuration = 2
 
     const attempts = ref<Attempts>({
         amount: 0,
@@ -40,8 +40,7 @@ export const useAttemptsStore = defineStore('attempts', () => {
 
     function isAllowedToTry(): boolean {
         if (attempts.value.isLocked) {
-            const isLockExpired =
-                Date.now() >= (attempts.value.lockEndTime || 0)
+            const isLockExpired = Date.now() >= (attempts.value.lockEndTime || 0)
 
             if (isLockExpired) {
                 resetAttempts()
@@ -53,7 +52,7 @@ export const useAttemptsStore = defineStore('attempts', () => {
                 (attempts.value.lockEndTime! - Date.now()) / 1000 / 60,
             )
 
-            showToast(trans(msg, durationLeft.toString()), 'error', 3000)
+            showToast(trans(msg, durationLeft.toString()), 'error', 5000)
 
             return false
         }
