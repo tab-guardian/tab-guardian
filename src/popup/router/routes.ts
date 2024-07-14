@@ -5,7 +5,7 @@ import GroupIconView from '@/components/Views/SetIconView/GroupIconView.vue'
 
 export default [
     { path: '/', name: 'main', component: MainView },
-    { path: '/group/:id', name: 'group', component: GroupView },
+    { path: '/group/:id/:openTabs?', name: 'group', component: GroupView },
     { path: '/group-icon/:id', name: 'groupIcon', component: GroupIconView },
     {
         path: '/select-tabs',

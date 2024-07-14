@@ -46,10 +46,7 @@ watchEffect(() => {
         <div v-if="group" class="group">
             <GroupName :group />
 
-            <IsUnlockedBox
-                v-if="group.isPrivate && !group.isEncrypted"
-                :group
-            />
+            <IsUnlockedBox v-if="group.isPrivate && !group.isEncrypted" :group />
 
             <EnterPassword v-if="group.isEncrypted" :group />
             <Links v-else :group />
