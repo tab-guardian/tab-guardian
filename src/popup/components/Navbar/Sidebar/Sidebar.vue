@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { useSidebarStore } from '@/stores/sidebar'
 import { useTransStore } from '@/stores/trans'
+import isFirefox from '@common/modules/isFirefox'
 import getImageURL from '@common/modules/getImageURL'
 import Hamburger from '@/components/Navbar/Sidebar/Hamburger.vue'
 import RightSlideTransition from '@common/components/Transitions/RightSlideTransition.vue'
 import Overlay from '@/components/Navbar/Sidebar/Overlay.vue'
 import UserCircleIcon from '@common/components/Icons/UserCircleIcon.vue'
+import StarIcon from '@common/components/Icons/StarIcon.vue'
 import SidebarLink from '@/components/Navbar/Sidebar/SidebarLink.vue'
 import Heading from '@/components/Navbar/Sidebar/Heading.vue'
 import GitHubIcon from '@common/components/Icons/GitHubIcon.vue'
@@ -13,6 +15,7 @@ import DocumentIcon from '@common/components/Icons/DocumentIcon.vue'
 
 const sidebarStore = useSidebarStore()
 const { trans } = useTransStore()
+const rateUsLink = isFirefox() ? 'todo:' : 'todo:'
 
 const links = [
     {
