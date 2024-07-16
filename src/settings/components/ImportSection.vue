@@ -33,14 +33,6 @@ async function importGroups(): Promise<void> {
 
             isPrivate.value = typeof json === 'object' && !Array.isArray(json)
 
-            // if (!password.value) {
-            //     showToast(
-            //         trans('Please enter a password to decrypt groups'),
-            //         'error',
-            //     )
-            //     return
-            // }
-
             if (Array.isArray(json)) {
                 await prependGroups(json)
             }
