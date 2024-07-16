@@ -69,5 +69,6 @@
     "Icon has been set": "Icon has been set",
     "This feature doesn't work for this current URL": "This feature doesn't work for this current URL",
     "Repeat password": "Repeat password",
-    "Passwords do not match": "Passwords do not match"
+    "Passwords do not match": "Passwords do not match",
+    "Export this group": "Export this group"
 }

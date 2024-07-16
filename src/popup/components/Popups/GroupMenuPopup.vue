@@ -8,6 +8,7 @@ import Popup from '@/components/Popups/Popup.vue'
 import AddLinkMenuItem from '@/components/Views/GroupView/GroupControls/MenuItems/AddLinkMenuItem.vue'
 import DeleteGroupMenuItem from '@/components/Views/GroupView/GroupControls/MenuItems/DeleteGroupMenuItem.vue'
 import RenameMenuItem from '@/components/Views/GroupView/GroupControls/MenuItems/RenameMenuItem.vue'
+import ExportGroupMenuItem from '@/components/Views/GroupView/GroupControls/MenuItems/ExportGroupMenuItem.vue'
 import MenuItem from '@/components/MenuItem.vue'
 import PhotoIcon from '@common/components/Icons/PhotoIcon.vue'
 
@@ -34,6 +35,7 @@ const isEncrypted = computed<boolean>(() => {
         <div v-else class="flex flex-col gap-1 mt-3">
             <AddLinkMenuItem />
             <RenameMenuItem />
+            <ExportGroupMenuItem />
 
             <RouterLink
                 v-if="group && !group.isPrivate"
