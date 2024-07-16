@@ -7,7 +7,6 @@ import showToast from '@common/modules/showToast'
 import Swal from 'sweetalert2'
 import Section from '@settings/components/Section.vue'
 import Button from '@common/components/Form/Button.vue'
-import Input from '@common/components/Form/Input.vue'
 import FileInput from '@common/components/Form/FileInput.vue'
 import ArrowDownTrayIcon from '@common/components/Icons/ArrowDownTrayIcon.vue'
 
@@ -16,7 +15,6 @@ const password = ref<string>('')
 const file = ref<File | null>(null)
 const fileInput = ref<HTMLInputElement | null>(null)
 const groupStore = useGroupStore()
-const isPrivate = ref<boolean>(false)
 
 async function importGroups(): Promise<void> {
     if (!file.value) {
@@ -31,11 +29,7 @@ async function importGroups(): Promise<void> {
             const rawData = e.target?.result as string
             const json = JSON.parse(rawData) as Group[] | Group
 
-            isPrivate.value = typeof json === 'object' && !Array.isArray(json)
-
-            if (Array.isArray(json)) {
-                await prependGroups(json)
-            }
+            await prependGroups(Array.isArray(json) ? json : [json])
         } catch (err) {
             console.error(err)
             showToast(trans('Failed to decrypt the file'), 'error')
@@ -60,8 +54,6 @@ async function prependGroups(groups: Group[]): Promise<void> {
     const groupsWithSameName = groups.reduce((acc, group) => {
         return acc + groupStore.groups.filter(g => g.name === group.name).length
     }, 0)
-
-    console.log(groupsWithSameName, groupStore.groups.length)
 
     if (groupsWithSameName === 0) {
         groupStore.addGroups(groups, false)
@@ -107,15 +99,6 @@ function fileChosen(f: File, elem: HTMLInputElement): void {
                 type="file"
                 :label="trans(file ? 'File chosen' : 'Choose the exported file')"
                 id="choose-file"
-            />
-
-            <Input
-                v-if="isPrivate"
-                v-model="password"
-                type="password"
-                :label="trans('One time password')"
-                :tip="trans('It is used to decrypt the exported data from a file')"
-                id="import-password"
             />
 
             <Button @clicked="importGroups" class="mt-4" :disabled="!file">
