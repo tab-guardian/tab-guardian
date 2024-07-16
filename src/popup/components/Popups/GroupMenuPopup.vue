@@ -29,7 +29,7 @@ const isEncrypted = computed<boolean>(() => {
             class="mt-2 pt-2 text-font-gray border-t border-border"
         >
             <!-- prettier-ignore -->
-            {{ trans('This group is private. You need to unlock it to see the links') }}
+            {{ trans('This group is private. You need to unlock it to see the options') }}
         </p>
 
         <div v-else class="flex flex-col gap-1 mt-3">

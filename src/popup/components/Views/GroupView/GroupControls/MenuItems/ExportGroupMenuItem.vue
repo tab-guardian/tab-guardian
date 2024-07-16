@@ -1,15 +1,16 @@
 <script setup lang="ts">
+import type { Group } from '@/types'
 import { useGroupStore } from '@/stores/group'
 import { useTransStore } from '@/stores/trans'
 import { usePopupStore } from '@/stores/popup'
 import error from '@common/modules/error'
-import showToast from '@common/modules/showToast'
+import encryptGroup from '@common/modules/encrypt/encryptGroup'
 import ArrowDownTrayIcon from '@common/components/Icons/ArrowDownTrayIcon.vue'
 import MenuItem from '@/components/MenuItem.vue'
 
 const store = useGroupStore()
 const { trans } = useTransStore()
-const { closePopup } = usePopupStore()
+const popupsStore = usePopupStore()
 
 function exportGroup(): void {
     if (!store.selectedGroup) {
@@ -17,7 +18,13 @@ function exportGroup(): void {
         return
     }
 
-    const json = JSON.stringify(store.selectedGroup)
+    let group = Object.assign({}, store.selectedGroup)
+
+    if (group.isPrivate) {
+        group = encryptPrivateGroup(group)
+    }
+
+    const json = JSON.stringify(group)
 
     const blob = new Blob([json], { type: 'application/json' })
     const url = URL.createObjectURL(blob)
@@ -29,7 +36,17 @@ function exportGroup(): void {
 
     URL.revokeObjectURL(url)
 
-    closePopup('groupView')
+    popupsStore.closePopup('groupView')
+}
+
+function encryptPrivateGroup(group: Group): Group {
+    const pass = popupsStore.popups.enterPassword.passwords[group.id]
+
+    if (!pass) {
+        throw new Error('No password found for group')
+    }
+
+    return encryptGroup(group, pass)
 }
 </script>
 
