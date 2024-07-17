@@ -2,30 +2,24 @@ import type { Popups } from '@/types'
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 
-type OnCloseCallback = (popups: Popups) => void
-
 const defaultPopups: Popups = {
-    groupView: { open: false },
-    deleteGroup: { open: false },
-    groupName: { open: false },
-    enterPassword: {
-        open: false,
-        passwords: {},
-    },
+    groupView: false,
+    deleteGroup: false,
+    groupName: false,
 }
 
 export const usePopupStore = defineStore('popup', () => {
     const popups = ref<Popups>(structuredClone(defaultPopups))
-    const onSubmit = ref<OnCloseCallback | null>(null)
+    const onSubmit = ref<(() => void) | null>(null)
 
     function closeAllPopups(): void {
         for (const key in popups.value) {
-            popups.value[key as keyof Popups].open = false
+            popups.value[key as keyof Popups] = false
         }
     }
 
-    function openPopup(key: keyof Popups, callback?: OnCloseCallback): void {
-        popups.value[key].open = true
+    function openPopup(key: keyof Popups, callback?: () => void): void {
+        popups.value[key] = true
 
         if (callback) {
             onSubmit.value = callback
@@ -37,20 +31,20 @@ export const usePopupStore = defineStore('popup', () => {
     }
 
     function closePopup(key: keyof Popups): void {
-        popups.value[key].open = false
+        popups.value[key] = false
     }
 
     function submitPopup(key: keyof Popups): void {
         closePopup(key)
 
         if (onSubmit.value) {
-            onSubmit.value(popups.value)
+            onSubmit.value()
             onSubmit.value = null
         }
     }
 
     function isOpenPopup(key: keyof Popups): boolean {
-        return popups.value[key].open
+        return popups.value[key]
     }
 
     return {

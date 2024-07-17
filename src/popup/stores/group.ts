@@ -128,11 +128,11 @@ export const useGroupStore = defineStore('group', () => {
         return false
     }
 
-    function encryptGroupById(
+    async function encryptGroupById(
         groupId: number,
         pass: string,
         pass2: string,
-    ): boolean {
+    ): Promise<boolean> {
         const group = getGroupById(groupId)
 
         if (!group) {
@@ -161,7 +161,7 @@ export const useGroupStore = defineStore('group', () => {
             encrypted.isEncrypted = true
             encrypted.isPrivate = true
 
-            saveGroup(encrypted)
+            await saveGroup(encrypted)
         } catch (err) {
             showToast(trans('Error ocurred'), 'error')
             error.err(err)

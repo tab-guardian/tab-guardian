@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import type { Group } from '@/types'
-import { useRouter } from 'vue-router'
 import { useTransStore } from '@/stores/trans'
 import { useGroupStore } from '@/stores/group'
-import { usePopupStore } from '@/stores/popup'
 import showToast from '@common/modules/showToast'
 import ShieldExclamationIcon from '@common/components/Icons/ShieldExclamationIcon.vue'
 import LockClosedIcon from '@common/components/Icons/LockClosedIcon.vue'
+import getPasswordFromStorage from '@common/modules/storage/getPasswordFromStorage'
+import deletePasswordFromStorage from '@common/modules/storage/deletePasswordFromStorage'
 
 type Props = {
     group: Group
@@ -15,28 +15,19 @@ type Props = {
 const { group } = defineProps<Props>()
 const { trans } = useTransStore()
 const groupStore = useGroupStore()
-const popupStore = usePopupStore()
-const router = useRouter()
 
-function promptEnterPassword(): void {
-    if (popupStore.popups.enterPassword.passwords[group.id]) {
-        lockGroup()
-        showToast(trans('Group is locked with the same password'))
+async function promptEnterPassword(): Promise<void> {
+    const pass = await getPasswordFromStorage(group.id)
+
+    if (!pass) {
+        showToast(trans('Something went wrong! Cannot remember your password'))
         return
     }
 
-    popupStore.openPopup('enterPassword', popups => {
-        if (popups.enterPassword.passwords[group.id]) {
-            lockGroup()
-            showToast(trans('Group is locked'))
-            router.push({ name: 'main' })
-        }
-    })
-}
+    await groupStore.encryptGroupById(group.id, pass, pass)
+    await deletePasswordFromStorage(group.id)
 
-function lockGroup(): void {
-    const password = popupStore.popups.enterPassword.passwords[group.id]
-    groupStore.encryptGroupById(group.id, password, password)
+    showToast(trans('Group is locked'))
 }
 </script>
 

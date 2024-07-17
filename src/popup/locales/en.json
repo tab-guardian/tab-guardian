@@ -27,7 +27,7 @@
     "Incorrect password": "Incorrect password",
     "Group is unlocked": "Group is unlocked",
     "Group is locked": "Group is locked",
-    "Group is locked with the same password": "Group is locked with the same password",
+    "Something went wrong! Cannot remember your password": "Something went wrong! Cannot remember your password",
     "Error ocurred": "Error ocurred",
     "Open tabs": "Open tabs",
     "Open tabs and delete this group": "Open tabs and delete this group",

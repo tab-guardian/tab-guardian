@@ -40,19 +40,9 @@ export type Settings = {
 }
 
 export type Popups = {
-    groupView: {
-        open: boolean
-    }
-    deleteGroup: {
-        open: boolean
-    }
-    groupName: {
-        open: boolean
-    }
-    enterPassword: {
-        open: boolean
-        passwords: { [key: number]: string }
-    }
+    groupView: boolean
+    deleteGroup: boolean
+    groupName: boolean
 }
 
 export type Modals = {

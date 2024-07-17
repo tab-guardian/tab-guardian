@@ -7,12 +7,14 @@ import error from '@common/modules/error'
 import encryptGroup from '@common/modules/encrypt/encryptGroup'
 import ArrowDownTrayIcon from '@common/components/Icons/ArrowDownTrayIcon.vue'
 import MenuItem from '@/components/MenuItem.vue'
+import getPasswordFromStorage from '@common/modules/storage/getPasswordFromStorage'
+import showToast from '@common/modules/showToast'
 
 const store = useGroupStore()
 const { trans } = useTransStore()
 const popupsStore = usePopupStore()
 
-function exportGroup(): void {
+async function exportGroup(): Promise<void> {
     if (!store.selectedGroup) {
         error.err('No group selected to export')
         return
@@ -21,7 +23,11 @@ function exportGroup(): void {
     let group = Object.assign({}, store.selectedGroup)
 
     if (group.isPrivate) {
-        group = encryptPrivateGroup(group)
+        const encrypted = await encryptPrivateGroup(group)
+
+        if (encrypted) {
+            group = encrypted
+        }
     }
 
     const json = JSON.stringify(group)
@@ -39,11 +45,15 @@ function exportGroup(): void {
     popupsStore.closePopup('groupView')
 }
 
-function encryptPrivateGroup(group: Group): Group {
-    const pass = popupsStore.popups.enterPassword.passwords[group.id]
+async function encryptPrivateGroup(group: Group): Promise<Group | null> {
+    const pass = await getPasswordFromStorage(group.id)
 
     if (!pass) {
-        throw new Error('No password found for group')
+        showToast(
+            trans('Something went wrong! Cannot remember your password'),
+            'error',
+        )
+        return null
     }
 
     return encryptGroup(group, pass)

@@ -4,13 +4,13 @@ import { ref } from 'vue'
 import { useTransStore } from '@/stores/trans'
 import { useGroupStore } from '@/stores/group'
 import { useTabsStore } from '@/stores/tabs'
-import { usePopupStore } from '@/stores/popup'
 import { useAttemptsStore } from '@/stores/attempts'
 import { useRoute, useRouter } from 'vue-router'
 import error from '@common/modules/error'
 import showToast from '@common/modules/showToast'
 import ShieldCheckIcon from '@common/components/Icons/ShieldCheckIcon.vue'
 import Input from '@common/components/Form/Input.vue'
+import savePasswordToStorage from '@common/modules/storage/savePasswordToStorage'
 
 type Props = {
     group: Group
@@ -19,10 +19,9 @@ type Props = {
 const props = defineProps<Props>()
 
 const { params } = useRoute()
-const router = useRouter()
 const { trans } = useTransStore()
+const router = useRouter()
 const groupStore = useGroupStore()
-const popupStore = usePopupStore()
 const tabsStore = useTabsStore()
 const attemptsStore = useAttemptsStore()
 
@@ -41,7 +40,7 @@ async function submitPass(): Promise<void> {
 
     // With this, we don't need to type password to lock the
     // group after just unlocking it
-    popupStore.popups.enterPassword.passwords[props.group.id] = password.value
+    savePasswordToStorage(props.group.id, password.value)
 
     try {
         await groupStore.decryptGroup(props.group, password.value)
@@ -65,8 +64,7 @@ async function submitPass(): Promise<void> {
 
 async function openTabsAndEncryptGroup(): Promise<void> {
     await tabsStore.openTabs(props.group)
-
-    groupStore.encryptGroupById(props.group.id, password.value, password.value)
+    await groupStore.encryptGroupById(props.group.id, password.value, password.value)
 
     router.push({ name: 'main' })
 }

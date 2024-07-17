@@ -44,14 +44,15 @@ async function saveTabs(): Promise<void> {
     groupStore.prependLinksTo(groupId, selectedLinks)
 
     if (groupStore.newGroup.isPrivate) {
-        groupStore.encryptGroupById(
+        await groupStore.encryptGroupById(
             groupId,
             groupStore.newGroup.password,
             groupStore.newGroup.confirmPassword,
         )
     }
 
-    await store.closeTabsModal()
+    store.closeTabsModal()
+
     showToastMessage(store.operation, selectedLinks)
 }
 

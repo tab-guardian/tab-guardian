@@ -8,6 +8,7 @@ import showToast from '@common/modules/showToast'
 import getCurrentLinks from '@/modules/tabs/getCurrentLinks'
 import restoreTabs from '@/modules/tabs/restoreTabs'
 import closeTabs from '@/modules/tabs/closeTabs'
+import getPasswordFromStorage from '@common/modules/storage/getPasswordFromStorage'
 
 export const useTabsStore = defineStore('tabs', () => {
     const groupStore = useGroupStore()
@@ -21,13 +22,10 @@ export const useTabsStore = defineStore('tabs', () => {
             return true
         }
 
-        const pass = popupStore.popups.enterPassword.passwords[group.id]
+        const pass = await getPasswordFromStorage(group.id)
 
-        if (pass) {
-            await restore(group)
-            groupStore.encryptGroupById(group.id, pass, pass)
-
-            return true
+        if (!pass) {
+            return false
         }
 
         if (!group.isPrivate) {
@@ -35,18 +33,10 @@ export const useTabsStore = defineStore('tabs', () => {
             return true
         }
 
-        popupStore.openPopup('enterPassword', async popups => {
-            const pass = popups.enterPassword.passwords[group.id]
+        await restore(group)
+        await groupStore.encryptGroupById(group.id, pass, pass)
 
-            if (!pass) {
-                return
-            }
-
-            await restore(group)
-            groupStore.encryptGroupById(group.id, pass, pass)
-        })
-
-        return false
+        return true
     }
 
     async function restore(group: Group): Promise<void> {
