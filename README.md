@@ -11,18 +11,17 @@ Here is what makes Tab Guardian a great tool for managing your tabs:
 - [x] You can create encrypted (locked) groups that require password to unlock
 - [x] All the pinned tabs are saved and restored as pinned tabs
 - [x] Tabs restored in the same order as they were saved
-- [x] Supports all the modern browsers: Brave, Edge, Firefox and Chrome
+- [x] Supports all the modern browsers: Brave, Edge, and Chrome
 - [x] Tab Guardian is very configurable to suit your needs
 - [x] You can privately export individual private tab group into an encrypted file and import it later or on another device or browser
 - [x] You can export all of your public tab groups into a file and import them later or on another device or browser
-- [ ] You can set an icon for each group to make it easier to recognize
-- [ ] You can set a "Double Security" in settings. It will not only require a password to unlock a group, but also you must be on a specific domain to unlock it. For example, you can set a domain to be `serhii.io` and you will be able to unlock the group only when you are on `serhii.io` domain
+- [x] You can set an icon for each group to make it easier to recognize
+- [x] You can bind a Tab Group to a specific URL so that it visible in the group list only when you are on that URL. This is useful if you want to hide a group and access it only when you are on a specific web page
 
 ## Links
 
-- [Firefox extension](https://addons.mozilla.org/en-US/firefox/addon/tab-guardian)
-- [Brave extension](https://addons.mozilla.org/en-US/firefox/addon/tab-guardian)
-- [Edge extension](https://addons.mozilla.org/en-US/firefox/addon/tab-guardian)
+- [Brave extension](https://chrome.google.com/webstore/detail/tab-guardian/fceclmihdanbepiogjoeiolnpkalcjpe)
+- [Edge extension](https://chrome.google.com/webstore/detail/tab-guardian/fceclmihdanbepiogjoeiolnpkalcjpe)
 - [Chrome extension](https://chrome.google.com/webstore/detail/tab-guardian/fceclmihdanbepiogjoeiolnpkalcjpe)
 
 ## Start working on the source code
@@ -70,8 +69,3 @@ To change the plugin version you need to modify 3 files:
 ### Code style
 
 Don't worry about the code style. We use [Prettier](https://prettier.io/) to format the code. You can run it manually by executing `yarn prettier` or `npm run prettier` to format the code, or `yarn prettier-check` or `npm run prettier-check` to check if the code is formatted correctly.
-
-### Notes
-
-- The extension should be supported by all major browsers: Chrome, Firefox, Edge and Brave. Since Firefox does't support manifest version 3 yet, we have to use [manifest2.json](extension/manifest2.json) for Firefox and [manifest.json](extension/manifest.json) for Chrome based browsers.
-- The program also supports running as a web page. With Vite, we can do that by running `yarn dev` or `npm run dev` and opening the browser at `http://localhost:5173/`
