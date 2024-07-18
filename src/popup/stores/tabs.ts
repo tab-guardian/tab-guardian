@@ -22,15 +22,15 @@ export const useTabsStore = defineStore('tabs', () => {
             return true
         }
 
+        if (!group.isPrivate) {
+            await restore(group)
+            return true
+        }
+
         const pass = await getPasswordFromStorage(group.id)
 
         if (!pass) {
             return false
-        }
-
-        if (!group.isPrivate) {
-            await restore(group)
-            return true
         }
 
         await restore(group)

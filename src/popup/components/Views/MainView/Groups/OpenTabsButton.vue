@@ -15,19 +15,19 @@ const tabsStore = useTabsStore()
 const groupStore = useGroupStore()
 const { trans } = useTransStore()
 
-function openTabs(): void {
+async function openTabs(): Promise<void> {
     if (!props.group.isPrivate) {
-        tabsStore.openTabs(props.group)
+        await tabsStore.openTabs(props.group)
         return
     }
 
     if (!props.group.isEncrypted) {
         groupStore.selectedGroup = props.group
-        tabsStore.openTabs(props.group)
+        await tabsStore.openTabs(props.group)
         return
     }
 
-    router.push({
+    await router.push({
         name: 'group',
         params: {
             id: props.group.id,
