@@ -16,6 +16,6 @@ async function openTab(): Promise<void> {
 
 <template>
     <LinkElement @click="openTab" :link>
-        <DeleteLinkButton :linkId="link.id" :groupId />
+        <DeleteLinkButton @click.stop :linkId="link.id" :groupId />
     </LinkElement>
 </template>
