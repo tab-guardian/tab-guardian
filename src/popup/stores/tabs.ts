@@ -2,7 +2,6 @@ import type { Group } from '@/types'
 import { defineStore } from 'pinia'
 import { useGroupStore } from '@/stores/group'
 import { useTransStore } from '@/stores/trans'
-import { usePopupStore } from '@/stores/popup'
 import { useSettingsStore } from '@/stores/settings'
 import showToast from '@common/modules/showToast'
 import getCurrentLinks from '@/modules/tabs/getCurrentLinks'
@@ -12,7 +11,6 @@ import getPasswordFromStorage from '@common/modules/storage/getPasswordFromStora
 
 export const useTabsStore = defineStore('tabs', () => {
     const groupStore = useGroupStore()
-    const popupStore = usePopupStore()
     const settingsStore = useSettingsStore()
     const { trans } = useTransStore()
 

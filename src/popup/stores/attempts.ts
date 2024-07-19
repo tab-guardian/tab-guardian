@@ -59,7 +59,7 @@ export const useAttemptsStore = defineStore('attempts', () => {
 
         attempts.value.amount++
 
-        if (attempts.value.amount >= maxAttempts) {
+        if (attempts.value.amount > maxAttempts) {
             attempts.value.isLocked = true
             attempts.value.lockEndTime = Date.now() + lockDuration * 60 * 1000
 
