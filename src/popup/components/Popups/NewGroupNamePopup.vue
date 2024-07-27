@@ -23,12 +23,17 @@ const passwordErr = computed<string>(() => {
         : ''
 })
 
-const preventSubmit = computed<boolean>(
-    () =>
+const preventSubmit = computed<boolean>(() => {
+    if (!store.newGroup.isPrivate) {
+        return !store.newGroup.name
+    }
+
+    return (
         !!passwordErr.value ||
         !store.newGroup.password ||
-        !store.newGroup.confirmPassword,
-)
+        !store.newGroup.confirmPassword
+    )
+})
 
 onMounted(async () => {
     store.newGroup.name = ''
