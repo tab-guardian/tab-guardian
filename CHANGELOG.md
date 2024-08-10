@@ -2,6 +2,7 @@
 
 ## v1.0.0 (2024-08-10)
 - Update `README.md` with the latest information
+- Add `Rate Us` link to the extension sidebar menu
 
 ## v0.1.0 (2024-08-08)
 - You can save tabs and restore them later

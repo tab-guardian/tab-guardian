@@ -15,7 +15,9 @@ import DocumentIcon from '@common/components/Icons/DocumentIcon.vue'
 
 const sidebarStore = useSidebarStore()
 const { trans } = useTransStore()
-const rateUsLink = isFirefox() ? 'todo:' : 'todo:'
+const rateUsLink = isFirefox()
+    ? 'todo:'
+    : 'https://chromewebstore.google.com/detail/tab-guardian/kjdklkfpliphcbnphmfhalllclfieojp'
 
 const links = [
     {
@@ -33,11 +35,11 @@ const links = [
         label: trans('Release Notes'),
         icon: DocumentIcon,
     },
-    // {
-    //     href: rateUsLink,
-    //     label: trans('Rate Us'),
-    //     icon: StarIcon,
-    // },
+    {
+        href: rateUsLink,
+        label: trans('Rate Us'),
+        icon: StarIcon,
+    },
 ]
 </script>
 
