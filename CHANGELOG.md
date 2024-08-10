@@ -1,6 +1,9 @@
 # Release Notes
 
-## v0.1.0 (2024-07-18)
+## v1.0.0 (2024-08-10)
+- Update `README.md` with the latest information
+
+## v0.1.0 (2024-08-08)
 - You can save tabs and restore them later
 - You can edit a group including adding and removing tabs from it
 - You can create encrypted (locked) groups that require password to unlock
