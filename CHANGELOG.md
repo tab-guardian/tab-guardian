@@ -1,6 +1,6 @@
 # Release Notes
 
-## v1.0.0 (2024-08-10)
+## v1.0.0 (2024-08-20)
 - Update `README.md` with the latest information
 - Add `Rate Us` link to the extension sidebar menu
 
