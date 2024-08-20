@@ -363,6 +363,7 @@ export const useGroupStore = defineStore('group', () => {
         newGroup,
         groupNameMaxLength,
         groupNameLength,
+        saveGroup,
         deleteGroup,
         deleteLink,
         prependLinksTo,

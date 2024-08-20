@@ -4,6 +4,7 @@
 - Updated `README.md` with the latest information
 - Added `Rate Us` link to the extension sidebar menu
 - Added the ability to sort tabs when you are creating a new group
+- Added the ability to sort tabs on the group screen where you can delete or add more tabs
 
 ## v0.1.0 (2024-08-08)
 - You can save tabs and restore them later
