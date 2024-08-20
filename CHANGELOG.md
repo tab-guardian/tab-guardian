@@ -1,8 +1,9 @@
 # Release Notes
 
 ## v1.0.0 (2024-08-20)
-- Update `README.md` with the latest information
-- Add `Rate Us` link to the extension sidebar menu
+- Updated `README.md` with the latest information
+- Added `Rate Us` link to the extension sidebar menu
+- Added the ability to sort tabs when you are creating a new group
 
 ## v0.1.0 (2024-08-08)
 - You can save tabs and restore them later
