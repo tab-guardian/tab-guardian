@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useSelectTabsStore } from '@/stores/selectTabs'
 import { useTransStore } from '@/stores/trans'
+import { VueDraggableNext } from 'vue-draggable-next'
 import Spinner from '@/components/Spinner.vue'
 import TabItem from '@/components/Views/SelectTabsView/TabItem.vue'
 import Message from '@common/components/Message.vue'
@@ -16,7 +17,9 @@ const { trans } = useTransStore()
         {{ trans('No tabs found') }}
     </Message>
 
-    <div v-else class="flex flex-col gap-2">
-        <TabItem v-for="link in store.links" :key="link.id" :link />
+    <div v-else>
+        <VueDraggableNext v-model="store.links" class="space-y-2">
+            <TabItem v-for="link in store.links" :key="link.id" :link />
+        </VueDraggableNext>
     </div>
 </template>
