@@ -66,6 +66,8 @@ watchEffect(() => {
                     ref="inputRef"
                     :placeholder="placeholder || label || ''"
                     :maxlength
+                    autocomplete="off"
+                    autocapitalize="off"
                 />
 
                 <small v-if="error" class="text-red-600 block mt-0.5">
