@@ -1,6 +1,6 @@
 {
     "name": "tab-guardian",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "description": "Browser extension that allows you to save and restore your tabs including encrypting them with a password",
     "contributors": [
         {
