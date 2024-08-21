@@ -1,5 +1,8 @@
 # Release Notes
 
+## v1.1.0 (2024-08-22)
+- Removed showing error toast when restoring tabs from the main screen if the group is private. The error was "Group is already locked". It was happening because it was trying to encrypt the group twice. Now it will just encrypt once
+
 ## v1.0.0 (2024-08-20)
 - Updated `README.md` with the latest information
 - Added `Rate Us` link to the extension sidebar menu
