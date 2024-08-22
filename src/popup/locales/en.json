@@ -72,7 +72,7 @@
     "Passwords do not match": "Passwords do not match",
     "Export this group": "Export this group",
     "Rebind to other URL": "Rebind to other URL",
-    "Enter a new URL to bind your private group to this new URL. This group will be only visible in the list of groups only when you visit this specific URL": "Enter a new URL to bind your private group to this new URL. This group will be only visible in the list of groups only when you visit this specific URL",
+    "Enter a new URL to bind your private group to this new URL. This group will be only visible in the list of groups only when you visit this specific URL. Do not forget to lock the group": "Enter a new URL to bind your private group to this new URL. This group will be only visible in the list of groups only when you visit this specific URL. Do not forget to lock the group",
     "Enter a new URL to bind to": "Enter a new URL to bind to",
     "Rebind": "Rebind",
     "Group rebind successful": "Group rebind successful",
