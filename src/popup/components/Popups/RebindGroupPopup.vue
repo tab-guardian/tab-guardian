@@ -66,7 +66,7 @@ async function rebindGroup(): Promise<void> {
         :content="trans('Enter a new URL to bind to')"
         :description="
             trans(
-                'Enter a new URL to bind your private group to this new URL. This group will be only visible in the list of groups only when you visit this specific URL',
+                'Enter a new URL to bind your private group to this new URL. This group will be only visible in the list of groups only when you visit this specific URL. Do not forget to lock the group',
             )
         "
     >
