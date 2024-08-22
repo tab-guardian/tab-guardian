@@ -4,6 +4,7 @@ import { useGroupStore } from '@/stores/group'
 import { useTransStore } from '@/stores/trans'
 import { usePopupStore } from '@/stores/popup'
 import { useRouter } from 'vue-router'
+import hashURL from '@/modules/hashURL'
 import error from '@common/modules/error'
 import showToast from '@common/modules/showToast'
 import Popup from '@/components/Popups/Popup.vue'
@@ -11,13 +12,26 @@ import Button from '@common/components/Form/Button.vue'
 import Input from '@common/components/Form/Input.vue'
 import CheckIcon from '@common/components/Icons/CheckIcon.vue'
 
+const MIN_LENGTH = 11
 const { trans } = useTransStore()
 const { closePopup } = usePopupStore()
 const groupStore = useGroupStore()
 const router = useRouter()
 const newUrl = ref<string>('')
 
-const preventSubmit = computed<boolean>(() => newUrl.value.length < 11)
+const errorMessage = computed<string | null>(() => {
+    // check if url starts with http:// or https://
+    if (
+        newUrl.value.length >= MIN_LENGTH &&
+        !newUrl.value.match(/^(http|https):\/\//)
+    ) {
+        return trans('URL must start with http:// or https://')
+    }
+
+    return null
+})
+
+const preventSubmit = computed<boolean>(() => newUrl.value.length < MIN_LENGTH)
 
 async function rebindGroup(): Promise<void> {
     if (preventSubmit.value) {
@@ -38,7 +52,8 @@ async function rebindGroup(): Promise<void> {
         },
     })
 
-    // todo: here
+    groupStore.selectedGroup.bindURL = hashURL(newUrl.value)
+    groupStore.saveGroup(groupStore.selectedGroup)
 
     showToast(trans('Group rebind successful'))
 }
@@ -63,6 +78,7 @@ async function rebindGroup(): Promise<void> {
                 type="text"
                 id="new-bind-url"
                 placeholder="https://example.com"
+                :error="errorMessage"
             />
 
             <Button type="submit" :disabled="preventSubmit" class="mt-3">

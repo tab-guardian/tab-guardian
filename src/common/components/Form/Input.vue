@@ -18,7 +18,7 @@ const props = defineProps<{
     withButton?: boolean
     placeholder?: string
     maxlength?: number
-    error?: string
+    error?: string | null
 }>()
 
 const modelValue = defineModel()
