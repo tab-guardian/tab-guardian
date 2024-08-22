@@ -2,6 +2,7 @@
 
 ## v1.1.0 (2024-08-22)
 - 🐛 Removed showing error toast when restoring tabs from the main screen if the group is private. The error was "Group is already locked". It was happening because it was trying to encrypt the group twice. Now it will just encrypt once
+- ✨ Added the ability to rebind a private group to a different URL in the dropdown menu. You can enter a new URL and click `Rebind` to bind the group to the new URL
 
 ## v1.0.0 (2024-08-20)
 - Updated `README.md` with the latest information

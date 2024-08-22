@@ -6,6 +6,7 @@ const defaultPopups: Popups = {
     groupView: false,
     deleteGroup: false,
     groupName: false,
+    rebindGroup: false,
 }
 
 export const usePopupStore = defineStore('popup', () => {

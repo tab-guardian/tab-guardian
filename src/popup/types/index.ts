@@ -43,6 +43,7 @@ export type Popups = {
     groupView: boolean
     deleteGroup: boolean
     groupName: boolean
+    rebindGroup: boolean
 }
 
 export type Modals = {
