@@ -14,7 +14,7 @@ export const useTabsStore = defineStore('tabs', () => {
     const settingsStore = useSettingsStore()
     const { trans } = useTransStore()
 
-    async function openTabs(group: Group): Promise<boolean> {
+    async function openTabs(group: Group, userPass?: string): Promise<boolean> {
         if (!settingsStore.settings.encryptAfterRestore) {
             await restore(group)
             return true
@@ -32,7 +32,7 @@ export const useTabsStore = defineStore('tabs', () => {
         }
 
         await restore(group)
-        await groupStore.encryptGroupById(group.id, pass, pass)
+        await groupStore.encryptGroupById(group.id, userPass || pass)
 
         return true
     }

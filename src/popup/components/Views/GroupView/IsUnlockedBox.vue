@@ -24,7 +24,7 @@ async function promptEnterPassword(): Promise<void> {
         return
     }
 
-    await groupStore.encryptGroupById(group.id, pass, pass)
+    await groupStore.encryptGroupById(group.id, pass)
     await deletePasswordFromStorage(group.id)
 
     showToast(trans('Group is locked'))

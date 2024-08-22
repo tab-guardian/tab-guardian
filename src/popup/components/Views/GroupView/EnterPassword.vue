@@ -63,8 +63,7 @@ async function submitPass(): Promise<void> {
 }
 
 async function openTabsAndEncryptGroup(): Promise<void> {
-    await tabsStore.openTabs(props.group)
-    await groupStore.encryptGroupById(props.group.id, password.value, password.value)
+    await tabsStore.openTabs(props.group, password.value)
 
     router.push({ name: 'main' })
 }

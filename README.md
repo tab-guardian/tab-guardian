@@ -19,6 +19,7 @@ Here is what makes Tab Guardian a great tool for managing your tabs:
 - [x] You can export all of your public tab groups into a file and import them later or on another device or browser
 - [x] You can set an icon for each group to make it easier to recognize
 - [x] You can bind a Tab Group to a specific URL so that it visible in the group list only when you are on that URL. This is useful if you want to hide a group and access it only when you are on a specific web page
+- [x] You can sort tabs by dragging and dropping them
 
 ## Links
 
