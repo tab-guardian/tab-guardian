@@ -6,9 +6,9 @@ import { useTransStore } from '@/stores/trans'
 import { useGroupStore } from '@/stores/group'
 import { useRouter } from 'vue-router'
 import getIcons from '@/modules/getIcons'
-import View from '@/components/Views/View.vue'
-import IconItem from '@/components/Views/SetIconView/IconItem.vue'
 import showToast from '@common/modules/showToast'
+import IconItem from '@/components/Views/SetIconView/IconItem.vue'
+import View from '@/components/Views/View.vue'
 
 const store = useGroupStore()
 const router = useRouter()
