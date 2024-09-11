@@ -32,6 +32,9 @@ import MusicalNoteIcon from '@common/components/Icons/MusicalNoteIcon.vue'
 import HeartIcon from '@common/components/Icons/HeartIcon.vue'
 import CurrencyDollarIcon from '@common/components/Icons/CurrencyDollarIcon.vue'
 import BookOpenIcon from '@common/components/Icons/BookOpenIcon.vue'
+import HomeModernIcon from '@common/components/Icons/HomeModernIcon.vue'
+import RectangleStackIcon from '@common/components/Icons/RectangleStackIcon.vue'
+import VideoCameraIcon from '@common/components/Icons/VideoCameraIcon.vue'
 
 export default (): { [key: string]: Component } => {
     return {
@@ -53,11 +56,14 @@ export default (): { [key: string]: Component } => {
         HeartIcon,
         CurrencyDollarIcon,
         BookOpenIcon,
+        HomeModernIcon,
+        RectangleStackIcon,
+        VideoCameraIcon,
         DocumentIcon,
         CogIcon,
-        CheckIcon,
         PencilSquareIcon,
         ArrowLeftStartIcon,
+        CheckIcon,
         ChevronRightIcon,
         ArrowRightIcon,
         ArrowUpAndDownIcon,
