@@ -35,6 +35,16 @@ import BookOpenIcon from '@common/components/Icons/BookOpenIcon.vue'
 import HomeModernIcon from '@common/components/Icons/HomeModernIcon.vue'
 import RectangleStackIcon from '@common/components/Icons/RectangleStackIcon.vue'
 import VideoCameraIcon from '@common/components/Icons/VideoCameraIcon.vue'
+import BanknotesIcon from '@common/components/Icons/BanknotesIcon.vue'
+import BellIcon from '@common/components/Icons/BellIcon.vue'
+import BoltIcon from '@common/components/Icons/BoltIcon.vue'
+import ChartBarIcon from '@common/components/Icons/ChartBarIcon.vue'
+import CreditCardIcon from '@common/components/Icons/CreditCardIcon.vue'
+import CpuChipIcon from '@common/components/Icons/CpuChipIcon.vue'
+import FireIcon from '@common/components/Icons/FireIcon.vue'
+import MicrophoneIcon from '@common/components/Icons/MicrophoneIcon.vue'
+import PaintBrushIcon from '@common/components/Icons/PaintBrushIcon.vue'
+import PlayIcon from '@common/components/Icons/PlayIcon.vue'
 
 export default (): { [key: string]: Component } => {
     return {
@@ -54,11 +64,21 @@ export default (): { [key: string]: Component } => {
         ShoppingBagIcon,
         MusicalNoteIcon,
         HeartIcon,
+        BanknotesIcon,
         CurrencyDollarIcon,
         BookOpenIcon,
         HomeModernIcon,
+        BellIcon,
         RectangleStackIcon,
         VideoCameraIcon,
+        BoltIcon,
+        ChartBarIcon,
+        CreditCardIcon,
+        CpuChipIcon,
+        FireIcon,
+        MicrophoneIcon,
+        PaintBrushIcon,
+        PlayIcon,
         DocumentIcon,
         CogIcon,
         PencilSquareIcon,
