@@ -13,7 +13,7 @@ const { label } = defineProps<Props>()
     <div
         :class="[
             'px-2 py-1.5 bg-page border border-border rounded-lg',
-            'flex items-center gap-2 cursor-pointer transition-colors',
+            'flex items-center gap-2 cursor-pointer',
             'hover:border-primary hover:text-primary',
         ]"
     >
