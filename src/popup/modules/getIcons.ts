@@ -20,29 +20,53 @@ import TrashIcon from '@common/components/Icons/TrashIcon.vue'
 import UserCircleIcon from '@common/components/Icons/UserCircleIcon.vue'
 import PhotoIcon from '@common/components/Icons/PhotoIcon.vue'
 import ArrowDownTrayIcon from '@common/components/Icons/ArrowDownTrayIcon.vue'
+import HomeIcon from '@common/components/Icons/HomeIcon.vue'
+import BriefcaseIcon from '@common/components/Icons/BriefcaseIcon.vue'
+import LanguageIcon from '@common/components/Icons/LanguageIcon.vue'
+import BuildingOfficeIcon from '@common/components/Icons/BuildingOfficeIcon.vue'
+import AcademicCapIcon from '@common/components/Icons/AcademicCapIcon.vue'
+import WalletIcon from '@common/components/Icons/WalletIcon.vue'
+import TruckIcon from '@common/components/Icons/TruckIcon.vue'
+import ShoppingBagIcon from '@common/components/Icons/ShoppingBagIcon.vue'
+import MusicalNoteIcon from '@common/components/Icons/MusicalNoteIcon.vue'
+import HeartIcon from '@common/components/Icons/HeartIcon.vue'
+import CurrencyDollarIcon from '@common/components/Icons/CurrencyDollarIcon.vue'
+import BookOpenIcon from '@common/components/Icons/BookOpenIcon.vue'
 
 export default (): { [key: string]: Component } => {
     return {
-        ArrowLeftEndIcon,
-        ArrowLeftStartIcon,
-        ArrowRightIcon,
-        ArrowUpAndDownIcon,
-        CheckIcon,
-        ChevronRightIcon,
-        CloseIcon,
-        CogIcon,
-        DocumentIcon,
-        DoubleChevronUpIcon,
-        EllipsisVerticalIcon,
-        GitHubIcon,
-        LockClosedIcon,
-        MenuIcon,
-        PencilSquareIcon,
-        PlusCircleIcon,
+        HomeIcon,
+        BriefcaseIcon,
+        UserCircleIcon,
         StarIcon,
         TrashIcon,
-        UserCircleIcon,
+        LockClosedIcon,
+        ArrowLeftEndIcon,
         PhotoIcon,
+        WalletIcon,
+        LanguageIcon,
+        BuildingOfficeIcon,
+        AcademicCapIcon,
+        TruckIcon,
+        ShoppingBagIcon,
+        MusicalNoteIcon,
+        HeartIcon,
+        CurrencyDollarIcon,
+        BookOpenIcon,
+        DocumentIcon,
+        CogIcon,
+        CheckIcon,
+        PencilSquareIcon,
+        ArrowLeftStartIcon,
+        ChevronRightIcon,
+        ArrowRightIcon,
+        ArrowUpAndDownIcon,
+        CloseIcon,
+        DoubleChevronUpIcon,
+        EllipsisVerticalIcon,
+        MenuIcon,
+        PlusCircleIcon,
         ArrowDownTrayIcon,
+        GitHubIcon,
     }
 }

@@ -1,6 +1,7 @@
 # Release Notes
 
 ## v1.2.0 (2024-09-11)
+- ✨ Added 12 more icons that you can use for your groups
 - 🐛 Fixed resorting groups when you open it. Recently opened group should be the first in the list
 
 ## v1.1.0 (2024-08-22)
