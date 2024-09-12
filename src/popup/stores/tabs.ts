@@ -38,8 +38,8 @@ export const useTabsStore = defineStore('tabs', () => {
     }
 
     async function restore(group: Group): Promise<void> {
-        await restoreTabs(group.links)
         await groupStore.updateUpdatedAt(group.id)
+        await restoreTabs(group.links)
     }
 
     async function openAndDeleteTabs(group: Group): Promise<void> {

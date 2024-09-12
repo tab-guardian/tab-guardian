@@ -44,6 +44,7 @@ export type Popups = {
     deleteGroup: boolean
     groupName: boolean
     rebindGroup: boolean
+    chooseEmoji: boolean
 }
 
 export type Modals = {

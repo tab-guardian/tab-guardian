@@ -7,11 +7,12 @@ const defaultPopups: Popups = {
     deleteGroup: false,
     groupName: false,
     rebindGroup: false,
+    chooseEmoji: false,
 }
 
 export const usePopupStore = defineStore('popup', () => {
     const popups = ref<Popups>(structuredClone(defaultPopups))
-    const onSubmit = ref<(() => void) | null>(null)
+    const onSubmit = ref<((data?: any) => void) | null>(null)
 
     function closeAllPopups(): void {
         for (const key in popups.value) {
@@ -19,7 +20,7 @@ export const usePopupStore = defineStore('popup', () => {
         }
     }
 
-    function openPopup(key: keyof Popups, callback?: () => void): void {
+    function openPopup(key: keyof Popups, callback?: (data?: any) => void): void {
         popups.value[key] = true
 
         if (callback) {
@@ -35,11 +36,11 @@ export const usePopupStore = defineStore('popup', () => {
         popups.value[key] = false
     }
 
-    function submitPopup(key: keyof Popups): void {
+    function submitPopup(key: keyof Popups, data?: any): void {
         closePopup(key)
 
         if (onSubmit.value) {
-            onSubmit.value()
+            onSubmit.value(data)
             onSubmit.value = null
         }
     }

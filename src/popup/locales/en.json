@@ -66,6 +66,7 @@
     "Release Notes": "Release Notes",
     "Change Icon": "Change Icon",
     "Choose a group icon": "Choose a group icon",
+    "Select": "Select",
     "Icon has been set": "Icon has been set",
     "This feature doesn't work for this current URL": "This feature doesn't work for this current URL",
     "Repeat password": "Repeat password",
@@ -76,5 +77,10 @@
     "Enter a new URL to bind to": "Enter a new URL to bind to",
     "Rebind": "Rebind",
     "Group rebind successful": "Group rebind successful",
-    "URL must start with http:// or https://": "URL must start with http:// or https://"
+    "URL must start with http:// or https://": "URL must start with http:// or https://",
+    "Select emoji as icon": "Select emoji as icon",
+    "The input must contain exactly one emoji": "The input must contain exactly one emoji",
+    "Enter any emoji": "Enter any emoji",
+    "Type any emoji to set it as a group icon": "Type any emoji to set it as a group icon",
+    "Emoji": "Emoji"
 }

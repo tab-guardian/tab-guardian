@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { Group as GroupType } from '@/types'
 import getIcons from '@/modules/getIcons'
+import isSingleEmoji from '@common/modules/emoji/isSingleEmoji'
 
 type Props = {
     group: GroupType
@@ -19,6 +20,10 @@ const { group } = defineProps<Props>()
             :src="group.icon"
             class="w-5 h-5"
         />
+
+        <span v-else-if="group.icon && isSingleEmoji(group.icon)">
+            {{ group.icon }}
+        </span>
 
         <component v-else :is="getIcons()[group.icon!]" class="w-5 h-5" />
     </div>

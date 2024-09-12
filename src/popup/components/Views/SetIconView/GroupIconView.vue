@@ -6,13 +6,13 @@ import { useTransStore } from '@/stores/trans'
 import { useGroupStore } from '@/stores/group'
 import { useRouter } from 'vue-router'
 import getIcons from '@/modules/getIcons'
-import View from '@/components/Views/View.vue'
-import IconItem from '@/components/Views/SetIconView/IconItem.vue'
 import showToast from '@common/modules/showToast'
+import IconItem from '@/components/Views/SetIconView/IconItem.vue'
+import View from '@/components/Views/View.vue'
 
 const store = useGroupStore()
 const router = useRouter()
-const { closeAllPopups } = usePopupStore()
+const { closeAllPopups, openPopup } = usePopupStore()
 const { trans } = useTransStore()
 const groupId = Number(router.currentRoute.value.params.id)
 
@@ -41,6 +41,10 @@ async function selectIcon(icon: string): Promise<void> {
 
     router.push({ name: 'group', params: { id: group.value.id.toString() } })
 }
+
+function openEmojiPopup(): void {
+    openPopup('chooseEmoji', (emo: string) => selectIcon(emo))
+}
 </script>
 
 <template>
@@ -64,5 +68,15 @@ async function selectIcon(icon: string): Promise<void> {
                 <img :src="icon" class="w-8 h-8" />
             </IconItem>
         </ul>
+
+        <div class="flex justify-end pb-2 mt-3">
+            <button
+                @click="openEmojiPopup"
+                type="button"
+                class="bg-secondary hover:bg-secondary-hover px-4 py-2 rounded-lg"
+            >
+                <span class="mr-2">🤪</span> {{ trans('Select emoji as icon') }}
+            </button>
+        </div>
     </View>
 </template>

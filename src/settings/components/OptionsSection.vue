@@ -40,7 +40,7 @@ function updateSettings(): void {
                     @changed="updateSettings"
                     v-model="store.settings.encryptAfterRestore"
                 >
-                    {{ trans('Lock the group back after restoring the links') }}
+                    {{ trans('Lock the group back after restoring the tabs') }}
                 </SlideSwitch>
 
                 <SlideSwitch
