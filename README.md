@@ -20,6 +20,7 @@ Here is what makes Tab Guardian a great tool for managing your tabs:
 - [x] You can set an icon for each group to make it easier to recognize
 - [x] You can bind a Tab Group to a specific URL so that it visible in the group list only when you are on that URL. This is useful if you want to hide a group and access it only when you are on a specific web page
 - [x] You can sort tabs by dragging and dropping them
+- [x] You can set emoji as an icon for your group
 
 ## Links
 
@@ -29,9 +30,7 @@ Here is what makes Tab Guardian a great tool for managing your tabs:
 
 ## Start working on the source code
 
-All necessary scripts are in package.json file. I'm using the wrapper around a webpack that's called [Laravel mix](https://laravel-mix.com/). You need to have [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/lang/en/) JavaScript package managers.
-
-Configuration file for __Laravel mix__ is called __webpack.mix.js__, it is in the root of the project.
+All necessary scripts are in package.json file. You need to have [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/lang/en/) JavaScript package managers.
 
 ### Installation
 
