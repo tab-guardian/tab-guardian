@@ -61,14 +61,6 @@ yarn prod
 npm run prod
 ```
 
-### How to change the plugin version
-
-To change the plugin version you need to modify 3 files:
-
-1. [manifest.json](extension/manifest.json) - change the `version` field in JSON
-2. [manifest2.json](extension/manifest2.json) - change the `version` field in JSON
-3. [package.json](package.json) - change the `version` field in JSON
-
 ### Code style
 
 Don't worry about the code style. We use [Prettier](https://prettier.io/) to format the code. You can run it manually by executing `yarn prettier` or `npm run prettier` to format the code, or `yarn prettier-check` or `npm run prettier-check` to check if the code is formatted correctly.
