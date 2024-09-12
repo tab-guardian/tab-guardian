@@ -37,6 +37,7 @@
     "dependencies": {
         "@types/crypto-js": "^4.2.2",
         "crypto-js": "^4.2.0",
+        "emoji-regex": "^10.4.0",
         "pinia": "^2.1.7",
         "sweetalert2": "^11.12.2",
         "toastify-js": "^1.12.0",
