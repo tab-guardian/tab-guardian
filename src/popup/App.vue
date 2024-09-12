@@ -10,6 +10,7 @@ import DeleteGroupPopup from '@/components/Popups/DeleteGroupPopup.vue'
 import GroupMenuPopup from '@/components/Popups/GroupMenuPopup.vue'
 import NewGroupNamePopup from '@/components/Popups/NewGroupNamePopup.vue'
 import RebindGroupPopup from '@/components/Popups/RebindGroupPopup.vue'
+import ChooseEmojiPopup from '@/components/Popups/ChooseEmojiPopup.vue'
 import AppearTransition from '@common/components/Transitions/AppearTransition.vue'
 
 const { loadSettingsFromStorage } = useSettingsStore()
@@ -54,6 +55,10 @@ onMounted(() => {
 
     <AppearTransition>
         <RebindGroupPopup v-if="isOpenPopup('rebindGroup')" />
+    </AppearTransition>
+
+    <AppearTransition>
+        <ChooseEmojiPopup v-if="isOpenPopup('chooseEmoji')" />
     </AppearTransition>
 </template>
 

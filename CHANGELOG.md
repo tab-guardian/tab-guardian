@@ -1,8 +1,9 @@
 # Release Notes
 
-## v1.2.0 (2024-09-11)
+## v1.2.0 (2024-09-12)
 - ✨ Added 25 more icons that you can use for your groups
 - 🐛 Fixed resorting groups when you open it. Recently opened group should be the first in the list
+- ✨ Added the ability to set a custom emoji icon for your groups. You can use any emoji you like
 
 ## v1.1.0 (2024-08-22)
 - 🐛 Removed showing error toast when restoring tabs from the main screen if the group is private. The error was "Group is already locked". It was happening because it was trying to encrypt the group twice. Now it will just encrypt once
