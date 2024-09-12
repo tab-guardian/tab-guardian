@@ -67,7 +67,7 @@ async function chooseEmoji(): Promise<void> {
 
             <Button type="submit" :disabled="preventSubmit" class="mt-3">
                 <CheckIcon width="20" height="20" />
-                {{ trans('Choose') }}
+                {{ trans('Select') }}
             </Button>
         </form>
     </Popup>
