@@ -45,6 +45,7 @@ import FireIcon from '@common/components/Icons/FireIcon.vue'
 import MicrophoneIcon from '@common/components/Icons/MicrophoneIcon.vue'
 import PaintBrushIcon from '@common/components/Icons/PaintBrushIcon.vue'
 import PlayIcon from '@common/components/Icons/PlayIcon.vue'
+import FaceSmileIcon from '@common/components/Icons/FaceSmileIcon.vue'
 
 export default (): { [key: string]: Component } => {
     return {
@@ -65,6 +66,7 @@ export default (): { [key: string]: Component } => {
         MusicalNoteIcon,
         HeartIcon,
         BanknotesIcon,
+        FaceSmileIcon,
         CurrencyDollarIcon,
         BookOpenIcon,
         HomeModernIcon,
