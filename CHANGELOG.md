@@ -1,5 +1,8 @@
 # Release Notes
 
+## v1.3.0 (2024-09-13)
+- ✨ Added the ability to set a custom group icon by providing a URL to an image. You can use any image you like
+
 ## v1.2.0 (2024-09-12)
 - ✨ Added 25 more icons that you can use for your groups
 - 🐛 Fixed resorting groups when you open it. Recently opened group should be the first in the list
