@@ -4,6 +4,7 @@ import { useGroupStore } from '@/stores/group'
 import { useTransStore } from '@/stores/trans'
 import { usePopupStore } from '@/stores/popup'
 import { useRouter } from 'vue-router'
+import useUrlHelper from '@common/composables/useUrlHelper'
 import hashURL from '@/modules/hashURL'
 import error from '@common/modules/error'
 import showToast from '@common/modules/showToast'
@@ -12,26 +13,15 @@ import Button from '@common/components/Form/Button.vue'
 import Input from '@common/components/Form/Input.vue'
 import CheckIcon from '@common/components/Icons/CheckIcon.vue'
 
-const MIN_LENGTH = 11
 const { trans } = useTransStore()
 const { closePopup } = usePopupStore()
+const { urlError } = useUrlHelper()
 const groupStore = useGroupStore()
 const router = useRouter()
-const newUrl = ref<string>('')
+const url = ref<string>('')
 
-const errorMessage = computed<string | null>(() => {
-    // check if url starts with http:// or https://
-    if (
-        newUrl.value.length >= MIN_LENGTH &&
-        !newUrl.value.match(/^(http|https):\/\//)
-    ) {
-        return trans('URL must start with http:// or https://')
-    }
-
-    return null
-})
-
-const preventSubmit = computed<boolean>(() => newUrl.value.length < MIN_LENGTH)
+const errorMessage = computed<string | null>(() => urlError(url.value))
+const preventSubmit = computed<boolean>(() => urlError(url.value) !== null)
 
 async function rebindGroup(): Promise<void> {
     if (preventSubmit.value) {
@@ -52,7 +42,7 @@ async function rebindGroup(): Promise<void> {
         },
     })
 
-    groupStore.selectedGroup.bindURL = hashURL(newUrl.value)
+    groupStore.selectedGroup.bindURL = hashURL(url.value)
     groupStore.saveGroup(groupStore.selectedGroup)
 
     showToast(trans('Group rebind successful'))
@@ -72,7 +62,7 @@ async function rebindGroup(): Promise<void> {
     >
         <form @submit.prevent="rebindGroup">
             <Input
-                v-model="newUrl"
+                v-model="url"
                 label="URL"
                 @loaded="inp => inp.focus()"
                 type="text"
