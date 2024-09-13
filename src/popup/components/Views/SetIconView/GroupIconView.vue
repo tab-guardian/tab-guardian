@@ -9,6 +9,9 @@ import getIcons from '@/modules/getIcons'
 import showToast from '@common/modules/showToast'
 import IconItem from '@/components/Views/SetIconView/IconItem.vue'
 import View from '@/components/Views/View.vue'
+import Btn from '@/components/Views/SetIconView/Btn.vue'
+import FaceSmileIcon from '@common/components/Icons/FaceSmileIcon.vue'
+import PhotoIcon from '@common/components/Icons/PhotoIcon.vue'
 
 const store = useGroupStore()
 const router = useRouter()
@@ -45,10 +48,24 @@ async function selectIcon(icon: string): Promise<void> {
 function openEmojiPopup(): void {
     openPopup('chooseEmoji', (emo: string) => selectIcon(emo))
 }
+
+function openImageIconPopup(): void {
+    openPopup('chooseImageIcon', (url: string) => selectIcon(url))
+}
 </script>
 
 <template>
     <View :title="trans('Choose a group icon')">
+        <div class="flex gap-2 mt-2">
+            <Btn @click="openImageIconPopup">
+                <PhotoIcon class="size-5" /> {{ trans('Select image') }}
+            </Btn>
+
+            <Btn @click="openEmojiPopup">
+                <FaceSmileIcon class="size-5" /> {{ trans('Select emoji') }}
+            </Btn>
+        </div>
+
         <ul class="grid grid-cols-6 gap-2 mt-3">
             <IconItem
                 v-for="[name, icon] in Object.entries(getIcons())"
@@ -68,15 +85,5 @@ function openEmojiPopup(): void {
                 <img :src="icon" class="w-8 h-8" />
             </IconItem>
         </ul>
-
-        <div class="flex justify-end pb-2 mt-3">
-            <button
-                @click="openEmojiPopup"
-                type="button"
-                class="bg-secondary hover:bg-secondary-hover px-4 py-2 rounded-lg"
-            >
-                <span class="mr-2">🤪</span> {{ trans('Select emoji as icon') }}
-            </button>
-        </div>
     </View>
 </template>

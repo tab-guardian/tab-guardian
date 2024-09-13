@@ -14,7 +14,7 @@ import Sidebar from '@/components/Navbar/Sidebar/Sidebar.vue'
 
         <RouterLink
             :to="{ name: 'main' }"
-            class="flex items-center transition-colors hover:bg-black/10 px-3 rounded-md text-md"
+            class="flex items-center transition-colors hover:bg-secondary-hover px-3 rounded-md text-md"
         >
             Tab Guardian
         </RouterLink>

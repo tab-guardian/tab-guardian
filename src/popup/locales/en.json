@@ -78,9 +78,14 @@
     "Rebind": "Rebind",
     "Group rebind successful": "Group rebind successful",
     "URL must start with http:// or https://": "URL must start with http:// or https://",
-    "Select emoji as icon": "Select emoji as icon",
+    "Select emoji": "Select emoji",
+    "Select image": "Select image",
     "The input must contain exactly one emoji": "The input must contain exactly one emoji",
     "Enter any emoji": "Enter any emoji",
     "Type any emoji to set it as a group icon": "Type any emoji to set it as a group icon",
-    "Emoji": "Emoji"
+    "Emoji": "Emoji",
+    "URL must be less than :n character": "URL must be less than :n character",
+    "URL must be at least :n characters": "URL must be at least :n characters",
+    "Enter image URL": "Enter image URL",
+    "Type any image URL to set it as a group icon": "Type any image URL to set it as a group icon"
 }

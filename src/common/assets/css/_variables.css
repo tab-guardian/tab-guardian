@@ -1,6 +1,7 @@
 :root {
     /* Light theme */
     --tg-color-secondary: theme('colors.gray.100');
+    --tg-color-secondary-hover: theme('colors.slate.200');
     --tg-color-page: #fff;
     --tg-color-page-hover: theme('colors.gray.50');
     --tg-color-border: theme('colors.zinc.200');

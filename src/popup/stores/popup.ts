@@ -8,6 +8,7 @@ const defaultPopups: Popups = {
     groupName: false,
     rebindGroup: false,
     chooseEmoji: false,
+    chooseImageIcon: false,
 }
 
 export const usePopupStore = defineStore('popup', () => {
