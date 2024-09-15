@@ -1,13 +1,14 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue'
 import { useTransStore } from '@/stores/trans'
+import { useSearchStore } from '@/stores/search'
+import { ref, onMounted, onUnmounted } from 'vue'
 import Buttons from '@/components/Views/MainView/NewGroup/Buttons.vue'
 import MagnifyingGlassIcon from '@common/components/Icons/MagnifyingGlassIcon.vue'
 
 const { trans } = useTransStore()
-const displaySearch = ref<boolean>(false)
-const query = ref<string>('')
 const inpElem = ref<HTMLInputElement | null>(null)
+const searchStore = useSearchStore()
+const displaySearch = ref<boolean>(false)
 
 onMounted(() => {
     document.addEventListener('keydown', handleSearch)
@@ -33,22 +34,17 @@ function handleSearch(e: KeyboardEvent): void {
     inpElem.value.focus()
 
     if (inpElem.value.value === '') {
-        query.value = e.key
+        searchStore.query = e.key
     }
 }
 
 function hideInput(): void {
-    if (!inpElem.value) {
-        console.warn('Input element is not defined')
-        return
-    }
-
-    if (query.value !== '') {
+    if (searchStore.query !== '') {
         return
     }
 
     displaySearch.value = false
-    query.value = ''
+    searchStore.query = ''
 }
 </script>
 
@@ -60,7 +56,7 @@ function hideInput(): void {
             <MagnifyingGlassIcon class="size-6" />
 
             <input
-                v-model="query"
+                v-model="searchStore.query"
                 ref="inpElem"
                 type="search"
                 class="w-full py-1 px-2 border border-border rounded-lg text-sm ring-0 focus:ring-2 focus:outline-none bg-transparent"
