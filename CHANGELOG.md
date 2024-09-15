@@ -1,6 +1,7 @@
 # Release Notes
 
 ## v1.4.0 (2024-09-16)
+- 🐛 Fixed not working sorting of groups. When you change the group icon, the group should be first in the list since it's last edited group
 
 ## v1.3.0 (2024-09-15)
 - ✨ Added the ability to set a custom group icon by providing a URL to an image. You can use any image you like
