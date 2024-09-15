@@ -46,6 +46,7 @@ import MicrophoneIcon from '@common/components/Icons/MicrophoneIcon.vue'
 import PaintBrushIcon from '@common/components/Icons/PaintBrushIcon.vue'
 import PlayIcon from '@common/components/Icons/PlayIcon.vue'
 import FaceSmileIcon from '@common/components/Icons/FaceSmileIcon.vue'
+import MagnifyingGlassIcon from '@common/components/Icons/MagnifyingGlassIcon.vue'
 
 export default (): { [key: string]: Component } => {
     return {
@@ -83,6 +84,7 @@ export default (): { [key: string]: Component } => {
         PlayIcon,
         DocumentIcon,
         CogIcon,
+        MagnifyingGlassIcon,
         PencilSquareIcon,
         ArrowLeftStartIcon,
         CheckIcon,
