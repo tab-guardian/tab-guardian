@@ -1,6 +1,6 @@
 # Release Notes
 
-## v1.3.0 (2024-09-14)
+## v1.3.0 (2024-09-15)
 - ✨ Added the ability to set a custom group icon by providing a URL to an image. You can use any image you like
 - ✨ Added a new icon for groups Face Smile
 - 🧑‍💻 Added showing group icon on the group screen on the left side of the group name
