@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { ref, watchEffect } from 'vue'
+import { ref, watchEffect, computed } from 'vue'
 import type { Group } from '@/types'
 import { useGroupStore } from '@/stores/group'
+import GroupIcon from '@/components/Views/MainView/Groups/GroupIcon.vue'
 
 defineProps<{
     group: Group
@@ -20,7 +21,9 @@ watchEffect(() => {
 </script>
 
 <template>
-    <div class="relative">
+    <div class="flex items-center gap-1 relative">
+        <GroupIcon v-if="group.icon" :group />
+
         <input
             v-if="store.isTitleFieldActive"
             v-model="store.newGroup.name"

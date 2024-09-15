@@ -4,3 +4,7 @@
 .toast-close {
     margin-left: 8px;
 }
+
+[data-tippy-root] {
+    overflow-wrap: break-word;
+}
