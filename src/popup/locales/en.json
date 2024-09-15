@@ -87,5 +87,6 @@
     "URL must be less than :n character": "URL must be less than :n character",
     "URL must be at least :n characters": "URL must be at least :n characters",
     "Enter image URL": "Enter image URL",
-    "Type any image URL to set it as a group icon": "Type any image URL to set it as a group icon"
+    "Type any image URL to set it as a group icon": "Type any image URL to set it as a group icon",
+    "Group name or tab title to search...": "Group name or tab title to search..."
 }
