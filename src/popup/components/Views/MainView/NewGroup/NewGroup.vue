@@ -1,14 +1,18 @@
 <script setup lang="ts">
+import type { Group } from '@/types'
 import { useTransStore } from '@/stores/trans'
-import { useSearchStore } from '@/stores/search'
+import { useGroupStore } from '@/stores/group'
 import { ref, onMounted, onUnmounted } from 'vue'
 import Buttons from '@/components/Views/MainView/NewGroup/Buttons.vue'
 import MagnifyingGlassIcon from '@common/components/Icons/MagnifyingGlassIcon.vue'
 
 const { trans } = useTransStore()
+const groupStore = useGroupStore()
+
+const initialGroups = ref<Group[]>([])
 const inpElem = ref<HTMLInputElement | null>(null)
-const searchStore = useSearchStore()
 const displaySearch = ref<boolean>(false)
+const query = ref<string>('')
 
 onMounted(() => {
     document.addEventListener('keydown', handleSearch)
@@ -19,6 +23,8 @@ onUnmounted(() => {
 })
 
 function handleSearch(e: KeyboardEvent): void {
+    console.log(query.value)
+
     if (!inpElem.value) {
         console.warn('Input element is not defined')
         return
@@ -29,22 +35,54 @@ function handleSearch(e: KeyboardEvent): void {
         return
     }
 
+    if (inpElem.value.value === '' && !displaySearch.value) {
+        inpElem.value.value = e.key
+    }
+
     displaySearch.value = true
 
     inpElem.value.focus()
+}
 
-    if (inpElem.value.value === '') {
-        searchStore.query = e.key
+function filterGroups(): void {
+    if (!inpElem.value) {
+        console.warn('Input element is not defined')
+        return
     }
+
+    query.value = inpElem.value.value
+
+    if (initialGroups.value.length === 0) {
+        initialGroups.value = groupStore.groups
+    }
+
+    if (query.value === '') {
+        groupStore.groups = initialGroups.value
+        return
+    }
+
+    groupStore.groups = initialGroups.value.filter(group => {
+        const nameMatch = group.name
+            .toLowerCase()
+            .includes(query.value.toLowerCase())
+
+        if (nameMatch) {
+            return true
+        }
+
+        return group.links.some(link =>
+            link.title.toLowerCase().includes(query.value.toLowerCase()),
+        )
+    })
 }
 
 function hideInput(): void {
-    if (searchStore.query !== '') {
+    if (query.value !== '') {
         return
     }
 
     displaySearch.value = false
-    searchStore.query = ''
+    query.value = ''
 }
 </script>
 
@@ -56,12 +94,11 @@ function hideInput(): void {
             <MagnifyingGlassIcon class="size-6" />
 
             <input
-                v-model="searchStore.query"
                 ref="inpElem"
                 type="search"
                 class="w-full py-1 px-2 border border-border rounded-lg text-sm ring-0 focus:ring-2 focus:outline-none bg-transparent"
                 :placeholder="trans('Group name or tab title to search...')"
-                @blur="hideInput"
+                @input="filterGroups"
             />
         </div>
 
