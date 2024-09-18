@@ -1,6 +1,6 @@
 # Release Notes
 
-## v1.4.0 (2024-09-16)
+## v1.4.0 (2024-09-18)
 - 🐛 Fixed not working sorting of groups. When you change the group icon, the group should be first in the list since it's last edited group
 - ✨ Added a new icon for groups Magnifying Glass
 - ✨ Added the ability to search for a group on the main screen by typing the group name or tab title in the search box
