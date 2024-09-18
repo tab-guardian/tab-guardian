@@ -80,6 +80,7 @@ export const useGroupStore = defineStore('group', () => {
         }
 
         groups.value = await filterGroups(items)
+        groups.value.sort((a, b) => b.updatedAt - a.updatedAt)
     }
 
     async function filterGroups(groups: Group[]): Promise<Group[]> {
