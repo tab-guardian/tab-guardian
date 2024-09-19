@@ -11,35 +11,31 @@ const groupStore = useGroupStore()
 
 const initialGroups = ref<Group[]>([])
 const inpElem = ref<HTMLInputElement | null>(null)
-const displaySearch = ref<boolean>(false)
 const query = ref<string>('')
+const placeholder = navigator.userAgent.indexOf('Mac OS X') != -1 ? '⌘+k' : 'ctrl+k'
 
-// onMounted(() => {
-//     document.addEventListener('keydown', handleSearch)
-// })
+onMounted(() => {
+    document.addEventListener('keydown', focusOnSearch)
+})
 
-// onUnmounted(() => {
-//     document.removeEventListener('keydown', handleSearch)
-// })
+onUnmounted(() => {
+    document.removeEventListener('keydown', focusOnSearch)
+})
 
-function handleSearch(e: KeyboardEvent): void {
+function focusOnSearch(e: KeyboardEvent): void {
     if (!inpElem.value) {
         console.warn('Input element is not defined')
         return
     }
 
-    // if keys are shift, ctrl, alt, meta, etc. then return
-    if (e.key.length > 1) {
-        return
+    if (e.key === 'Escape') {
+        inpElem.value.blur()
     }
 
-    if (inpElem.value.value === '' && !displaySearch.value) {
-        inpElem.value.value = e.key
+    // Toggle search when pressing cmd + k or ctrl + k
+    if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
+        inpElem.value.focus()
     }
-
-    displaySearch.value = true
-
-    inpElem.value.focus()
 }
 
 function filterGroups(): void {
@@ -79,7 +75,6 @@ function hideInput(): void {
         return
     }
 
-    displaySearch.value = false
     query.value = ''
 }
 </script>
@@ -88,8 +83,8 @@ function hideInput(): void {
     <div class="text-center p-2 border-b border-border">
         <Buttons />
 
-        <div v-show="displaySearch" class="flex items-center gap-2 mt-2">
-            <MagnifyingGlassIcon class="size-6" />
+        <div class="flex items-center gap-2 mt-2 relative">
+            <MagnifyingGlassIcon class="size-5" />
 
             <input
                 ref="inpElem"
@@ -99,10 +94,12 @@ function hideInput(): void {
                 @input="filterGroups"
                 @blur="hideInput"
             />
-        </div>
 
-        <small v-if="!displaySearch" class="opacity-80 text-xs mt-1.5 block">
-            {{ trans('Click the shield to save as a private group') }}
-        </small>
+            <div
+                class="absolute right-1 text-xs font-mono bg-gray-600/10 dark:bg-gray-600/50 px-2 py-0.5 rounded-md tracking-widest opacity-80"
+            >
+                {{ placeholder }}
+            </div>
+        </div>
     </div>
 </template>

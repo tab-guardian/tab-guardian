@@ -1,5 +1,8 @@
 # Release Notes
 
+## v1.4.2 (2024-09-19)
+- 🐛 Additional group search fix following changes in the previous patch
+
 ## v1.4.1 (2024-09-19)
 - 🐛 Bug fix. When you try to give a name to a group, it's not letting you to do that
 
