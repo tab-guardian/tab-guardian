@@ -1,5 +1,8 @@
 # Release Notes
 
+## v1.4.1 (2024-09-19)
+- 🐛 Bug fix. When you try to give a name to a group, it's not letting you to do that
+
 ## v1.4.0 (2024-09-18)
 - 🐛 Fixed not working sorting of groups. When you change the group icon, the group should be first in the list since it's last edited group
 - ✨ Added a new icon for groups Magnifying Glass

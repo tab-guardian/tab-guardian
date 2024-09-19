@@ -14,17 +14,15 @@ const inpElem = ref<HTMLInputElement | null>(null)
 const displaySearch = ref<boolean>(false)
 const query = ref<string>('')
 
-onMounted(() => {
-    document.addEventListener('keydown', handleSearch)
-})
+// onMounted(() => {
+//     document.addEventListener('keydown', handleSearch)
+// })
 
-onUnmounted(() => {
-    document.removeEventListener('keydown', handleSearch)
-})
+// onUnmounted(() => {
+//     document.removeEventListener('keydown', handleSearch)
+// })
 
 function handleSearch(e: KeyboardEvent): void {
-    console.log(query.value)
-
     if (!inpElem.value) {
         console.warn('Input element is not defined')
         return
