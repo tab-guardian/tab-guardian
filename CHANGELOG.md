@@ -1,5 +1,8 @@
 # Release Notes
 
+## v1.4.3 (2024-10-05)
+- 🐛 Fixed bug where you couldn't delete a group
+
 ## v1.4.2 (2024-09-19)
 - 🐛 Additional group search fix following changes in the previous patch
 

@@ -18,10 +18,10 @@ async function deleteGroup(): Promise<void> {
         return
     }
 
-    closePopup('deleteGroup')
-
-    await router.push({ name: 'main' })
     await groupStore.deleteGroup(groupStore.selectedGroup.id)
+    await router.push({ name: 'main' })
+
+    closePopup('deleteGroup')
 
     groupStore.selectedGroup = null
 }
