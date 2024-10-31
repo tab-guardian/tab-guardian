@@ -20,6 +20,12 @@ onMounted(() => {
 
 onUnmounted(() => {
     document.removeEventListener('keydown', focusOnSearch)
+
+    if (initialGroups.value.length === 0) {
+        initialGroups.value = groupStore.groups
+    }
+
+    groupStore.groups = initialGroups.value
 })
 
 function focusOnSearch(e: KeyboardEvent): void {
