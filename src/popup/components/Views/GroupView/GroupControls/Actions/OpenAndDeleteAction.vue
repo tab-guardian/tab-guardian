@@ -6,15 +6,17 @@ import { useTransStore } from '@/stores/trans'
 import upRemoveImage from '@/assets/images/tab-icons/up-remove.png'
 import Control from '@/components/Control.vue'
 
-const props = defineProps<{
-    group: Group
-}>()
+const props = defineProps<{ group: Group }>()
 
 const router = useRouter()
 const tabsStore = useTabsStore()
 const { trans } = useTransStore()
 
 async function openAndDeleteTabs(): Promise<void> {
+    if (props.group.links.length === 0) {
+        return
+    }
+
     await tabsStore.openAndDeleteTabs(props.group)
     router.push({ name: 'main' })
 }
@@ -25,6 +27,9 @@ async function openAndDeleteTabs(): Promise<void> {
         v-tippy="trans('Open tabs and delete this group')"
         @click="openAndDeleteTabs"
         class="bg-orange-300 dark:bg-orange-700"
+        :class="{
+            'cursor-not-allowed !opacity-40': group.links.length === 0,
+        }"
     >
         <img :src="upRemoveImage" alt="Open and delete tabs" class="dark:invert" />
     </Control>
