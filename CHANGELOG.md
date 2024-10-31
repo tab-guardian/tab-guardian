@@ -1,8 +1,8 @@
 # Release Notes
 
 ## v1.4.4 (2024-10-31)
-- 🐛 Bug fix. If you restore tabs from an empty group, it would error out
 - ✨ Restore tabs button is now disabled if the group is empty
+- 🐛 Bug fix. If you restore tabs from an empty group, it would error out
 
 ## v1.4.3 (2024-10-05)
 - 🐛 Bug fix where you couldn't delete a group
