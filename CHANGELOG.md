@@ -1,7 +1,12 @@
 # Release Notes
 
+## v1.4.4 (2024-10-31)
+- ✨ Restore tabs button is now disabled if the group is empty
+- 🐛 Bug fix [#7](https://github.com/tab-guardian/tab-guardian/issues/7). If you restore tabs from an empty group, it would error out
+- 🐛 Bug fix [#8](https://github.com/tab-guardian/tab-guardian/issues/8). Reproduce by filtering groups, entering one, go back to main screen and you see only those groups that were visible when filtering. Other groups would not be visible
+
 ## v1.4.3 (2024-10-05)
-- 🐛 Fixed bug where you couldn't delete a group
+- 🐛 Bug fix where you couldn't delete a group
 
 ## v1.4.2 (2024-09-19)
 - 🐛 Additional group search fix following changes in the previous patch

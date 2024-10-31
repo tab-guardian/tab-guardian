@@ -15,6 +15,10 @@ export const useTabsStore = defineStore('tabs', () => {
     const { trans } = useTransStore()
 
     async function openTabs(group: Group, userPass?: string): Promise<boolean> {
+        if (group.links.length === 0) {
+            return false
+        }
+
         if (!settingsStore.settings.encryptAfterRestore) {
             await restore(group)
             return true
