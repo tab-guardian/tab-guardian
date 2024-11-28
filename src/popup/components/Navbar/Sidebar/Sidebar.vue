@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useSidebarStore } from '@/stores/sidebar'
 import { useTransStore } from '@/stores/trans'
+import openSettingsPage from '@/modules/openSettingsPage'
 import isFirefox from '@common/modules/isFirefox'
 import getImageURL from '@common/modules/getImageURL'
 import Hamburger from '@/components/Navbar/Sidebar/Hamburger.vue'
@@ -8,6 +9,7 @@ import RightSlideTransition from '@common/components/Transitions/RightSlideTrans
 import Overlay from '@/components/Navbar/Sidebar/Overlay.vue'
 import UserCircleIcon from '@common/components/Icons/UserCircleIcon.vue'
 import StarIcon from '@common/components/Icons/StarIcon.vue'
+import CogIcon from '@common/components/Icons/CogIcon.vue'
 import SidebarLink from '@/components/Navbar/Sidebar/SidebarLink.vue'
 import Heading from '@/components/Navbar/Sidebar/Heading.vue'
 import GitHubIcon from '@common/components/Icons/GitHubIcon.vue'
@@ -40,6 +42,12 @@ const links = [
         label: trans('Rate Us'),
         icon: StarIcon,
     },
+    {
+        href: 'javascript:',
+        label: trans('Settings'),
+        icon: CogIcon,
+        callback: openSettingsPage,
+    },
 ]
 </script>
 
@@ -66,6 +74,7 @@ const links = [
                         :href="link.href"
                         :label="link.label"
                         :icon="link.icon"
+                        @click="link.callback"
                     />
                 </div>
 

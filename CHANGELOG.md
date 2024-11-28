@@ -1,5 +1,8 @@
 # Release Notes
 
+## v1.5.0 (2024-11-28)
+- 🧑‍💻 Added `Settings` button to the sidebar
+
 ## v1.4.4 (2024-10-31)
 - ✨ Restore tabs button is now disabled if the group is empty
 - 🐛 Bug fix [#7](https://github.com/tab-guardian/tab-guardian/issues/7). If you restore tabs from an empty group, it would error out
