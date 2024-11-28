@@ -4,7 +4,7 @@ import { defineStore } from 'pinia'
 import error from '@common/modules/error'
 
 export const useTransStore = defineStore('trans', () => {
-    const lang = ref<string>('en')
+    const lang = ref<string>('ru')
     const messages = ref<Messages>({})
 
     function loadMessages(msgs: Messages): void {

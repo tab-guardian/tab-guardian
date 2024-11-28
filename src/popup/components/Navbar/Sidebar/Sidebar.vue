@@ -7,7 +7,6 @@ import getImageURL from '@common/modules/getImageURL'
 import Hamburger from '@/components/Navbar/Sidebar/Hamburger.vue'
 import RightSlideTransition from '@common/components/Transitions/RightSlideTransition.vue'
 import Overlay from '@/components/Navbar/Sidebar/Overlay.vue'
-import UserCircleIcon from '@common/components/Icons/UserCircleIcon.vue'
 import StarIcon from '@common/components/Icons/StarIcon.vue'
 import CogIcon from '@common/components/Icons/CogIcon.vue'
 import SidebarLink from '@/components/Navbar/Sidebar/SidebarLink.vue'
@@ -22,11 +21,6 @@ const rateUsLink = isFirefox()
     : 'https://chromewebstore.google.com/detail/tab-guardian/kjdklkfpliphcbnphmfhalllclfieojp'
 
 const links = [
-    {
-        href: 'https://serhii.io/about-me',
-        label: trans('Extension Author'),
-        icon: UserCircleIcon,
-    },
     {
         href: 'https://github.com/tab-guardian/tab-guardian',
         label: trans('Contribute'),
