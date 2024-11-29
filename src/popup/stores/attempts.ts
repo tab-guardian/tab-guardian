@@ -1,7 +1,7 @@
 import type { Attempts } from '@/types'
 import { onMounted, ref } from 'vue'
 import { defineStore } from 'pinia'
-import { useTransStore } from './trans'
+import trans from '@common/modules/trans'
 import getFromStorage from '@common/modules/storage/getFromStorage'
 import saveToStorage from '@common/modules/storage/saveToStorage'
 import error from '@common/modules/error'
