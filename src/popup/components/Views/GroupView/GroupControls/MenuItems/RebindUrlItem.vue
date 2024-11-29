@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import MenuItem from '@/components/MenuItem.vue'
 import LinkIcon from '@common/components/Icons/LinkIcon.vue'
-import { useTransStore } from '@/stores/trans'
+import trans from '@common/modules/trans'
 import { usePopupStore } from '@/stores/popup'
 
-const { trans } = useTransStore()
 const { closePopup, openPopup } = usePopupStore()
 
 function rebind(): void {

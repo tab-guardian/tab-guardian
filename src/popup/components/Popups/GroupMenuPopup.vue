@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Group } from '@/types'
 import { computed } from 'vue'
-import { useTransStore } from '@/stores/trans'
+import trans from '@common/modules/trans'
 import { usePopupStore } from '@/stores/popup'
 import { useGroupStore } from '@/stores/group'
 import Popup from '@/components/Popups/Popup.vue'
@@ -14,7 +14,6 @@ import MenuItem from '@/components/MenuItem.vue'
 import PhotoIcon from '@common/components/Icons/PhotoIcon.vue'
 
 const { closePopup } = usePopupStore()
-const { trans } = useTransStore()
 const groupStore = useGroupStore()
 const group = computed<Group | null>(() => groupStore.selectedGroup)
 

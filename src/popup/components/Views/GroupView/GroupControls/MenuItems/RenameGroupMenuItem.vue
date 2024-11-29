@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import { useGroupStore } from '@/stores/group'
-import { useTransStore } from '@/stores/trans'
+import trans from '@common/modules/trans'
 import PencilSquareIcon from '@common/components/Icons/PencilSquareIcon.vue'
 import MenuItem from '@/components/MenuItem.vue'
 
 const store = useGroupStore()
-const { trans } = useTransStore()
 </script>
 
 <template>

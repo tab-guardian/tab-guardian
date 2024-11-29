@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted } from 'vue'
 import { useGroupStore } from '@/stores/group'
-import { useTransStore } from '@/stores/trans'
+import trans from '@common/modules/trans'
 import { usePopupStore } from '@/stores/popup'
 import { useSelectTabsStore } from '@/stores/selectTabs'
 import showToast from '@common/modules/showToast'
@@ -11,7 +11,6 @@ import Button from '@common/components/Form/Button.vue'
 import ChevronRightIcon from '@common/components/Icons/ChevronRightIcon.vue'
 import BindToUrlSlider from '@/components/Popups/BindToUrlSlider.vue'
 
-const { trans } = useTransStore()
 const { closePopup, closeAllPopups } = usePopupStore()
 const store = useGroupStore()
 const selectTabsStore = useSelectTabsStore()

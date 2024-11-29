@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Group } from '@/types'
 import { ref } from 'vue'
-import { useTransStore } from '@/stores/trans'
+import trans from '@common/modules/trans'
 import { useGroupStore } from '@/stores/group'
 import { useTabsStore } from '@/stores/tabs'
 import { useAttemptsStore } from '@/stores/attempts'
@@ -19,7 +19,6 @@ type Props = {
 const props = defineProps<Props>()
 
 const { params } = useRoute()
-const { trans } = useTransStore()
 const router = useRouter()
 const groupStore = useGroupStore()
 const tabsStore = useTabsStore()

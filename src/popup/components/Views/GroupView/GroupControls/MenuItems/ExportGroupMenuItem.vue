@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Group } from '@/types'
 import { useGroupStore } from '@/stores/group'
-import { useTransStore } from '@/stores/trans'
+import trans from '@common/modules/trans'
 import { usePopupStore } from '@/stores/popup'
 import error from '@common/modules/error'
 import encryptGroup from '@common/modules/encrypt/encryptGroup'
@@ -11,7 +11,6 @@ import getPasswordFromStorage from '@common/modules/storage/getPasswordFromStora
 import showToast from '@common/modules/showToast'
 
 const store = useGroupStore()
-const { trans } = useTransStore()
 const popupsStore = usePopupStore()
 
 async function exportGroup(): Promise<void> {

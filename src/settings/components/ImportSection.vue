@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Group } from '@/types'
 import { ref } from 'vue'
-import { useTransStore } from '@/stores/trans'
+import trans from '@common/modules/trans'
 import { useGroupStore } from '@/stores/group'
 import showToast from '@common/modules/showToast'
 import Swal from 'sweetalert2'
@@ -10,7 +10,6 @@ import Button from '@common/components/Form/Button.vue'
 import FileInput from '@common/components/Form/FileInput.vue'
 import ArrowDownTrayIcon from '@common/components/Icons/ArrowDownTrayIcon.vue'
 
-const { trans } = useTransStore()
 const password = ref<string>('')
 const file = ref<File | null>(null)
 const fileInput = ref<HTMLInputElement | null>(null)

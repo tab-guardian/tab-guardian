@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { useGroupStore } from '@/stores/group'
-import { useTransStore } from '@/stores/trans'
+import trans from '@common/modules/trans'
 import { usePopupStore } from '@/stores/popup'
 import error from '@common/modules/error'
 import containsEmoji from '@common/modules/emoji/containsEmoji'
@@ -11,7 +11,6 @@ import Button from '@common/components/Form/Button.vue'
 import Input from '@common/components/Form/Input.vue'
 import CheckIcon from '@common/components/Icons/CheckIcon.vue'
 
-const { trans } = useTransStore()
 const { submitPopup, closePopup } = usePopupStore()
 const groupStore = useGroupStore()
 const emoji = ref<string>('')

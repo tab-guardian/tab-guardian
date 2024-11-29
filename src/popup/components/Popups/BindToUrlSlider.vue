@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { useTransStore } from '@/stores/trans'
+import trans from '@common/modules/trans'
 import { useGroupStore } from '@/stores/group'
 import getCurrentURL from '@/modules/getCurrentURL'
 import error from '@common/modules/error'
@@ -8,7 +8,6 @@ import showToast from '@common/modules/showToast'
 import hashURL from '@/modules/hashURL'
 import SlideSwitch from '@common/components/Form/SlideSwitch.vue'
 
-const { trans } = useTransStore()
 const store = useGroupStore()
 
 const currURL = ref<string | null>(null)

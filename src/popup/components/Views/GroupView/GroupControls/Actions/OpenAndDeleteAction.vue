@@ -2,7 +2,7 @@
 import type { Group } from '@/types'
 import { useTabsStore } from '@/stores/tabs'
 import { useRouter } from 'vue-router'
-import { useTransStore } from '@/stores/trans'
+import trans from '@common/modules/trans'
 import upRemoveImage from '@/assets/images/tab-icons/up-remove.png'
 import Control from '@/components/Control.vue'
 
@@ -10,7 +10,6 @@ const props = defineProps<{ group: Group }>()
 
 const router = useRouter()
 const tabsStore = useTabsStore()
-const { trans } = useTransStore()
 
 async function openAndDeleteTabs(): Promise<void> {
     if (props.group.links.length === 0) {

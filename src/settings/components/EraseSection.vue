@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useTransStore } from '@/stores/trans'
+import trans from '@common/modules/trans'
 import { useGroupStore } from '@/stores/group'
 import { useSettingsStore } from '@/stores/settings'
 import showToast from '@common/modules/showToast'
@@ -8,7 +8,6 @@ import Section from '@settings/components/Section.vue'
 import Button from '@common/components/Form/Button.vue'
 import TrashIcon from '@common/components/Icons/TrashIcon.vue'
 
-const { trans } = useTransStore()
 const store = useSettingsStore()
 const groupStore = useGroupStore()
 

@@ -1,13 +1,12 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue'
-import { useTransStore } from '@/stores/trans'
+import trans from '@common/modules/trans'
 import getImageURL from '@common/modules/getImageURL'
 import isDevelopment from '@common/modules/isDevelopment'
 import getLocalStorageUsage from '@common/modules/storage/getLocalStorageUsage'
 
 onMounted(setCurrentBytesUsage)
 
-const { trans } = useTransStore()
 const currentBytesUsage = ref<number | null>(null)
 const maxBytes = isDevelopment() ? 102400 : chrome.storage.local.QUOTA_BYTES
 

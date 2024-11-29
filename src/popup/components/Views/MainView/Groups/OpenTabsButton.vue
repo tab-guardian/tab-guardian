@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Group } from '@/types'
-import { useTransStore } from '@/stores/trans'
+import trans from '@common/modules/trans'
 import { useTabsStore } from '@/stores/tabs'
 import { useGroupStore } from '@/stores/group'
 import { useRouter } from 'vue-router'
@@ -11,7 +11,6 @@ const props = defineProps<{ group: Group }>()
 const router = useRouter()
 const tabsStore = useTabsStore()
 const groupStore = useGroupStore()
-const { trans } = useTransStore()
 
 async function openTabs(): Promise<void> {
     if (props.group.links.length === 0) {

@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import { useTransStore } from '@/stores/trans'
-
-const { trans } = useTransStore()
+import trans from '@common/modules/trans'
 
 type Emits = {
     (e: 'clicked'): void

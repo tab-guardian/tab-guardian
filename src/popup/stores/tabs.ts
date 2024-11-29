@@ -1,7 +1,7 @@
 import type { Group } from '@/types'
 import { defineStore } from 'pinia'
 import { useGroupStore } from '@/stores/group'
-import { useTransStore } from '@/stores/trans'
+import trans from '@common/modules/trans'
 import { useSettingsStore } from '@/stores/settings'
 import showToast from '@common/modules/showToast'
 import getCurrentLinks from '@/modules/tabs/getCurrentLinks'
@@ -12,7 +12,6 @@ import getPasswordFromStorage from '@common/modules/storage/getPasswordFromStora
 export const useTabsStore = defineStore('tabs', () => {
     const groupStore = useGroupStore()
     const settingsStore = useSettingsStore()
-    const { trans } = useTransStore()
 
     async function openTabs(group: Group, userPass?: string): Promise<boolean> {
         if (group.links.length === 0) {

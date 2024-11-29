@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import { useTransStore } from '@/stores/trans'
+import trans from '@common/modules/trans'
 import { useGroupStore } from '@/stores/group'
 import showToast from '@common/modules/showToast'
 import Section from '@settings/components/Section.vue'
 import Button from '@common/components/Form/Button.vue'
 import ArrowDownTrayIcon from '@common/components/Icons/ArrowDownTrayIcon.vue'
 
-const { trans } = useTransStore()
 const groupStore = useGroupStore()
 
 async function exportGroups(): Promise<void> {

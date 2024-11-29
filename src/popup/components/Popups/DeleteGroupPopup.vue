@@ -1,13 +1,12 @@
 <script setup lang="ts">
 import { useGroupStore } from '@/stores/group'
-import { useTransStore } from '@/stores/trans'
+import trans from '@common/modules/trans'
 import { usePopupStore } from '@/stores/popup'
 import { useRouter } from 'vue-router'
 import error from '@common/modules/error'
 import Popup from '@/components/Popups/Popup.vue'
 import PopupButton from '@/components/Popups/PopupButton.vue'
 
-const { trans } = useTransStore()
 const { closePopup } = usePopupStore()
 const groupStore = useGroupStore()
 const router = useRouter()

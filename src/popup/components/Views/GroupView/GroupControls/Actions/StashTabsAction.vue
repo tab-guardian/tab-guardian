@@ -3,14 +3,13 @@ import type { Group } from '@/types'
 import Control from '@/components/Control.vue'
 import downImage from '@/assets/images/tab-icons/down.png'
 import { useTabsStore } from '@/stores/tabs'
-import { useTransStore } from '@/stores/trans'
+import trans from '@common/modules/trans'
 
 const props = defineProps<{
     group: Group
 }>()
 
 const tabsStore = useTabsStore()
-const { trans } = useTransStore()
 
 function stashTabs(): void {
     tabsStore.stashTabs(props.group, false)

@@ -2,7 +2,7 @@
 import type { Group } from '@/types'
 import { onMounted, computed } from 'vue'
 import { usePopupStore } from '@/stores/popup'
-import { useTransStore } from '@/stores/trans'
+import trans from '@common/modules/trans'
 import { useGroupStore } from '@/stores/group'
 import { useRouter } from 'vue-router'
 import getIcons from '@/modules/getIcons'
@@ -16,7 +16,6 @@ import PhotoIcon from '@common/components/Icons/PhotoIcon.vue'
 const store = useGroupStore()
 const router = useRouter()
 const { closeAllPopups, openPopup } = usePopupStore()
-const { trans } = useTransStore()
 const groupId = Number(router.currentRoute.value.params.id)
 
 const group = computed<Group | null>(() => store.getGroupById(groupId))

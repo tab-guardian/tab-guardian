@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useTransStore } from '@/stores/trans'
+import trans from '@common/modules/trans'
 import showToast from '@common/modules/showToast'
 import Section from '@settings/components/Section.vue'
 import { languages } from '@/stores/trans'

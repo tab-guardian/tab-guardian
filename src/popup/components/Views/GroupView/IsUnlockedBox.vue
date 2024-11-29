@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Group } from '@/types'
-import { useTransStore } from '@/stores/trans'
+import trans from '@common/modules/trans'
 import { useGroupStore } from '@/stores/group'
 import showToast from '@common/modules/showToast'
 import ShieldExclamationIcon from '@common/components/Icons/ShieldExclamationIcon.vue'
@@ -13,7 +13,6 @@ type Props = {
 }
 
 const { group } = defineProps<Props>()
-const { trans } = useTransStore()
 const groupStore = useGroupStore()
 
 async function promptEnterPassword(): Promise<void> {

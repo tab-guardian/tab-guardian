@@ -1,9 +1,8 @@
-import { useTransStore } from '@/stores/trans'
+import trans from '@common/modules/trans'
 
 export default () => {
     const MIN_URL_LENGTH = 11
     const MAX_URL_LENGTH = 1000
-    const { trans } = useTransStore()
 
     function urlError(url: string): string | null {
         if (!url.match(/^(http|https):\/\//)) {

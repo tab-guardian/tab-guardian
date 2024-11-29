@@ -17,8 +17,6 @@ export const useAttemptsStore = defineStore('attempts', () => {
         isLocked: false,
     })
 
-    const { trans } = useTransStore()
-
     onMounted(loadAttemptsFromStorage)
 
     async function loadAttemptsFromStorage(): Promise<void> {

@@ -3,12 +3,11 @@ import type { Group } from '@/types'
 import Control from '@/components/Control.vue'
 import upImage from '@/assets/images/tab-icons/up.png'
 import { useTabsStore } from '@/stores/tabs'
-import { useTransStore } from '@/stores/trans'
+import trans from '@common/modules/trans'
 
 defineProps<{ group: Group }>()
 
 const tabsStore = useTabsStore()
-const { trans } = useTransStore()
 </script>
 
 <template>

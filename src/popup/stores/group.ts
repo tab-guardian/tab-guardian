@@ -1,7 +1,7 @@
 import type { Group, Link, NewGroup } from '@/types'
 import { ref, computed, onMounted } from 'vue'
 import { defineStore } from 'pinia'
-import { useTransStore } from '@/stores/trans'
+import trans from '@common/modules/trans'
 import { useSettingsStore } from '@/stores/settings'
 import { usePopupStore } from '@/stores/popup'
 import showToast from '@common/modules/showToast'
@@ -33,7 +33,6 @@ export const useGroupStore = defineStore('group', () => {
     const isTitleFieldActive = ref<boolean>(false)
     const closeSelectedTabs = ref<boolean>(false)
 
-    const { trans } = useTransStore()
     const settingsStore = useSettingsStore()
 
     const newGroup = ref<NewGroup>({

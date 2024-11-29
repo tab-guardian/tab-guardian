@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import type { Group } from '@/types'
-import { useTransStore } from '@/stores/trans'
+import trans from '@common/modules/trans'
 import { useGroupStore } from '@/stores/group'
 import { ref, onMounted, onUnmounted } from 'vue'
 import Buttons from '@/components/Views/MainView/NewGroup/Buttons.vue'
 import MagnifyingGlassIcon from '@common/components/Icons/MagnifyingGlassIcon.vue'
 
-const { trans } = useTransStore()
 const groupStore = useGroupStore()
 
 const initialGroups = ref<Group[]>([])

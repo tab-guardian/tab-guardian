@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useSidebarStore } from '@/stores/sidebar'
-import { useTransStore } from '@/stores/trans'
+import trans from '@common/modules/trans'
 import openSettingsPage from '@/modules/openSettingsPage'
 import isFirefox from '@common/modules/isFirefox'
 import getImageURL from '@common/modules/getImageURL'
@@ -15,7 +15,6 @@ import GitHubIcon from '@common/components/Icons/GitHubIcon.vue'
 import DocumentIcon from '@common/components/Icons/DocumentIcon.vue'
 
 const sidebarStore = useSidebarStore()
-const { trans } = useTransStore()
 const rateUsLink = isFirefox()
     ? 'todo:'
     : 'https://chromewebstore.google.com/detail/tab-guardian/kjdklkfpliphcbnphmfhalllclfieojp'
