@@ -15,7 +15,6 @@
     "error_no_group_selected": {"message": "Something went wrong! No group selected"},
     "want_delete_group": {"message": "Do you want to delete the group?"},
     "no_links_this_group": {"message": "There are no links in this group"},
-    "select_tabs": {"message": "Select Tabs"},
     "click_on_each_tab": {"message": "Click on each tab to select or unselect it for saving to memory"},
     "select_all": {"message": "Select all"},
     "deselect_all": {"message": "Deselect all"},

@@ -15,7 +15,6 @@
     "error_no_group_selected": {"message": "出现问题！未选择任何组"},
     "want_delete_group": {"message": "您确定要删除该组吗？"},
     "no_links_this_group": {"message": "该组中没有链接"},
-    "select_tabs": {"message": "选择标签页"},
     "click_on_each_tab": {"message": "点击每个标签页以选择或取消选择以保存"},
     "select_all": {"message": "全选"},
     "deselect_all": {"message": "取消全选"},
