@@ -1,6 +1,6 @@
 # Release Notes
 
-## v1.5.0 (2024-11-28)
+## v1.5.0 (2024-11-29)
 - 🧑‍💻 Added `Settings` button to the sidebar
 - ✨ Added support for the Russian language 🇷🇺
 - ✨ Added the ability to choose the language of the extension on the settings page
