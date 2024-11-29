@@ -1,5 +1,8 @@
 # Release Notes
 
+## v1.5.1 (2024-11-29)
+- 🧑‍💻 Change internalization to match [Chrome i18n API](https://developer.chrome.com/docs/extensions/reference/api/i18n#concepts_and_usage)
+
 ## v1.5.0 (2024-11-29)
 - 🧑‍💻 Added `Settings` button to the sidebar
 - ✨ Added support for the Russian language 🇷🇺
