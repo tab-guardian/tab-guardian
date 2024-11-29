@@ -98,7 +98,7 @@ function selectLinks(): void {
                 <div v-else></div>
 
                 <Button type="submit" :disabled="preventSubmit">
-                    {{ trans('select_tabs') }}
+                    {{ trans('select') }}
                     <ChevronRightIcon width="20" height="20" />
                 </Button>
             </div>

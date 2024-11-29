@@ -67,7 +67,7 @@ function showToastMessage(operation: SelectTabsOperation, links: Link[]): void {
 </script>
 
 <template>
-    <View class="select-tabs" :title="trans('select_tabs')" :subtitle="subtitle">
+    <View class="select-tabs" :title="trans('select')" :subtitle="subtitle">
         <div class="flex gap-1 my-2">
             <ControlButton @click="store.selectAll">
                 {{ trans('select_all') }}

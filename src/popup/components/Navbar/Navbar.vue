@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import trans from '@common/modules/trans'
 import NavControls from '@/components/Navbar/NavControls.vue'
 import Sidebar from '@/components/Navbar/Sidebar/Sidebar.vue'
 </script>
@@ -16,7 +17,7 @@ import Sidebar from '@/components/Navbar/Sidebar/Sidebar.vue'
             :to="{ name: 'main' }"
             class="flex items-center transition-colors hover:bg-secondary-hover px-3 rounded-md text-md"
         >
-            Tab Guardian
+            {{ trans('ext_name') }}
         </RouterLink>
 
         <NavControls />
