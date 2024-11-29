@@ -11,9 +11,7 @@ import SlideSwitch from '@common/components/Form/SlideSwitch.vue'
 const store = useGroupStore()
 
 const currURL = ref<string | null>(null)
-const bindTip = ref<string>(
-    'Bind this group to the (:n) URL. This will hide the group from everywhere else except this URL. It adds an extra layer of security',
-)
+const bindTip = ref<string>(trans('bind_group_url', currURL.value || ''))
 
 onMounted(async () => {
     await setBindTip()
@@ -28,7 +26,7 @@ async function setBindTip(): Promise<void> {
     }
 
     currURL.value = null
-    bindTip.value = `This feature doesn't work for this current URL`
+    bindTip.value = trans('feature_does_not_work_this_url')
 }
 
 function attachBindURL(checked: boolean): void {
@@ -49,7 +47,7 @@ function attachBindURL(checked: boolean): void {
 
 <template>
     <SlideSwitch
-        v-tippy="currURL ? trans(bindTip, currURL) : trans(bindTip)"
+        v-tippy="currURL ? bindTip : bindTip"
         :disabled="!currURL"
         @changed="attachBindURL"
     >

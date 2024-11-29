@@ -20,8 +20,8 @@ async function deleteGroups(): Promise<void> {
         title: trans('Erase all groups'),
         text: trans('I confirm that I want to delete all groups'),
         showDenyButton: true,
-        confirmButtonText: trans('Yes'),
-        denyButtonText: trans('No'),
+        confirmButtonText: trans('yes'),
+        denyButtonText: trans('no'),
     })
 
     if (!answer.isConfirmed) {

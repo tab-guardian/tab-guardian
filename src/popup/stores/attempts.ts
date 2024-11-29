@@ -45,10 +45,11 @@ export const useAttemptsStore = defineStore('attempts', () => {
                 return true
             }
 
-            const msg = 'Too many attempts. Next attempt in :n minutes'
             const durationLeft = Math.ceil(
                 (attempts.value.lockEndTime! - Date.now()) / 1000 / 60,
             )
+
+            const msg = 'many_attempts_next_attempt_in'
 
             showToast(trans(msg, durationLeft.toString()), 'error', 5000)
 
@@ -61,7 +62,7 @@ export const useAttemptsStore = defineStore('attempts', () => {
             attempts.value.isLocked = true
             attempts.value.lockEndTime = Date.now() + lockDuration * 60 * 1000
 
-            const msg = 'Too many attempts. Locked for :n minutes'
+            const msg = 'many_attempts_locked_for'
             showToast(trans(msg, lockDuration.toString()), 'error', 3000)
 
             saveAttemptsToStorage()

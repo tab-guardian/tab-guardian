@@ -15,9 +15,7 @@ import SlideSwitch from '@common/components/Form/SlideSwitch.vue'
 const store = useSelectTabsStore()
 const router = useRouter()
 const groupStore = useGroupStore()
-const subtitle = trans(
-    'Click on each tab to select or unselect it for saving to memory',
-)
+const subtitle = trans('click_on_each_tab')
 
 onMounted(() => addEventListener('keydown', saveTabsAfterEnter))
 onUnmounted(() => removeEventListener('keydown', saveTabsAfterEnter))
@@ -69,16 +67,16 @@ function showToastMessage(operation: SelectTabsOperation, links: Link[]): void {
 </script>
 
 <template>
-    <View class="select-tabs" :title="trans('Select Tabs')" :subtitle="subtitle">
+    <View class="select-tabs" :title="trans('select_tabs')" :subtitle="subtitle">
         <div class="flex gap-1 my-2">
             <ControlButton @click="store.selectAll">
-                {{ trans('Select all') }}
+                {{ trans('select_all') }}
             </ControlButton>
             <ControlButton @click="store.deselectAll">
-                {{ trans('Deselect all') }}
+                {{ trans('deselect_all') }}
             </ControlButton>
             <ControlButton @click="router.go(-1)">
-                {{ trans('Cancel') }}
+                {{ trans('cancel') }}
             </ControlButton>
         </div>
 
@@ -93,7 +91,7 @@ function showToastMessage(operation: SelectTabsOperation, links: Link[]): void {
 
             <SaveButton @clicked="saveTabs">
                 <span v-if="store.operation === 'adding'">
-                    {{ trans('Add tabs') }}
+                    {{ trans('add_tabs') }}
                 </span>
                 <span v-else>{{ trans('Create the group') }}</span>
             </SaveButton>

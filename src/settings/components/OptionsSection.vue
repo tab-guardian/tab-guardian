@@ -33,7 +33,7 @@ function updateSettings(): void {
 
 <template>
     <div>
-        <Section :title="trans('Additional Options')">
+        <Section :title="trans('additional_options')">
             <div class="flex flex-col gap-3">
                 <SlideSwitch
                     @changed="updateSettings"

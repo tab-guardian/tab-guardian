@@ -7,7 +7,6 @@ import OptionsSection from '@settings/components/OptionsSection.vue'
 import EraseSection from '@settings/components/EraseSection.vue'
 import ExportSection from '@settings/components/ExportSection.vue'
 import ImportSection from '@settings/components/ImportSection.vue'
-import LocaleSection from '@settings/components/LocaleSection.vue'
 
 const store = useSettingsStore()
 
@@ -27,7 +26,6 @@ onMounted(() => {
 
         <div v-else class="grid grid-cols-1 lg:grid-cols-2 gap-5 mt-4">
             <div class="flex flex-col gap-4">
-                <LocaleSection />
                 <OptionsSection />
             </div>
 

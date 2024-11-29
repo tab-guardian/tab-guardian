@@ -16,7 +16,7 @@ const store = useGroupStore()
 
 <template>
     <Message v-if="group.links.length === 0">
-        {{ trans('There are no links in this group') }}
+        {{ trans('no_links_this_group') }}
     </Message>
 
     <div v-else>

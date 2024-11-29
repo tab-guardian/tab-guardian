@@ -26,7 +26,7 @@ const privateTip =
             class="w-full bg-primary hover:bg-primary-hover"
         >
             <PlusCircleIcon class="w-6 h-6" />
-            <span>{{ trans('New Group') }}</span>
+            <span>{{ trans('new_group') }}</span>
         </NewGroupButton>
 
         <NewGroupButton

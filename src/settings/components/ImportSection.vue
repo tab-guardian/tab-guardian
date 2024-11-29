@@ -66,8 +66,8 @@ async function prependGroups(groups: Group[]): Promise<void> {
             'Some groups that you want to import already exist with the same name. Do you want to replace them?',
         ),
         showDenyButton: true,
-        confirmButtonText: trans('Yes'),
-        denyButtonText: trans('No'),
+        confirmButtonText: trans('yes'),
+        denyButtonText: trans('no'),
     })
 
     if (answer.isConfirmed) {
@@ -77,7 +77,7 @@ async function prependGroups(groups: Group[]): Promise<void> {
 }
 
 function showSuccessMessage(groups: Group[]): void {
-    const msg = trans(':n groups imported successfully', groups.length.toString())
+    const msg = trans('groups_imported', groups.length.toString())
     showToast(msg)
 }
 

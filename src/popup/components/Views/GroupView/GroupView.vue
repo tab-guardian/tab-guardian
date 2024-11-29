@@ -51,8 +51,6 @@ watchEffect(() => {
             <Links v-else :group />
         </div>
 
-        <Message v-else>
-            😢 {{ trans('Something went wrong! No group selected') }}
-        </Message>
+        <Message v-else> 😢 {{ trans('error_no_group_selected') }} </Message>
     </View>
 </template>

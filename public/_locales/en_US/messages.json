@@ -1,0 +1,167 @@
+{
+    "new_group": "New Group",
+    "error_no_group_selected": "Something went wrong! No group selected",
+    "want_delete_group": "Do you want to delete the group?",
+    "yes": "Yes",
+    "no": "No",
+    "no_links_this_group": "There are no links in this group",
+    "select_tabs": "Select Tabs",
+    "click_on_each_tab": "Click on each tab to select or unselect it for saving to memory",
+    "select_all": "Select all",
+    "deselect_all": "Deselect all",
+    "cancel": "Cancel",
+    "add_tabs": "Add tabs",
+
+    "no_tabs_found": "No tabs found",
+    "no_groups_yet": "There are no groups yet",
+    "settings": "Settings",
+    "enter_pass": "Enter a password",
+    "add_more_links": "Add more links",
+    "delete_this_group": "Delete this group",
+    "rename_this_group": "Rename this group",
+    "additional_options": "Additional options",
+    "enter_group_name": "Enter a group name",
+    "group_name": "Group name",
+    "enter_pass_unlock_content": "Enter a password to unlock the content of this group",
+    "got_it": "Got it",
+    "wrong_pass": "Incorrect password",
+    "group_unlocked": "Group is unlocked",
+    "group_locked": "Group is locked",
+    "cant_remember_pass": "Something went wrong! Cannot remember your password",
+    "error_occurred": "Error occurred",
+    "open_tabs": "Open tabs",
+    "open_tabs_delete_group": "Open tabs and delete this group",
+    "copy_tabs_into_group": "Copy tabs into this group",
+    "move_tabs_into_group": "Move tabs into this group",
+    "new_name_saved": "The new name has been saved",
+    "group_private_unlock_it": "This group is private. You need to unlock it to see the options",
+    "group_not_found": "Group has not been found",
+    "group_already_locked": "Group is already locked",
+    "pass_empty": "Password is empty",
+    "private_group_unlocked": "This private group is unlocked",
+    "lock": "Lock",
+    "lock_group": "Lock the group",
+    "no_tabs_to_save": "No tabs to save",
+    "tabs_not_saved": "Tabs have been saved",
+    "create_group": "Create the group",
+    "you_not_selected_tabs": "You haven't selected any tabs",
+    "tabs_added_to_group": "Tabs added to the group",
+    "group_created_without_tabs": "Group created without any tabs selected",
+    "group_created_with_tabs": "Group created with tabs",
+    "close_selected_tabs": "Close selected tabs",
+    "tabs_opened": "Tabs opened",
+    "group_pass": "Group password",
+    "wait_before_try_again": "Wait before trying again",
+    "bind_to_url": "Bind to this URL",
+    "private_groups_are_secure": "Private groups are secure and use encryption. Only users with the password can access them",
+    "rate_us": "Rate Us",
+    "storage_usage": "Storage usage",
+    "group_name_long": "Group name is too long",
+    "bytes": "bytes",
+    "contribute": "Contribute",
+    "release_notes": "Release Notes",
+    "change_icon": "Change Icon",
+    "choose_group_icon": "Choose a group icon",
+    "select": "Select",
+    "icon_is_set": "Icon has been set",
+    "feature_does_not_work_this_url": "This feature doesn't work for this current URL",
+    "repeat_pass": "Repeat password",
+    "passwords_not_match": "Passwords do not match",
+    "export this group": "Export this group",
+    "rebind_to_other_url": "Rebind to other URL",
+    "enter_new_url_bind_private_to_new_url": "Enter a new URL to bind your private group to this new URL. This group will be only visible in the list of groups only when you visit this specific URL. Do not forget to lock the group",
+    "enter_new_url_bind_to": "Enter a new URL to bind to",
+    "rebind": "Rebind",
+    "group_rebind_successful": "Group rebind successful",
+    "url_must_start_with_http": "URL must start with http:// or https://",
+    "select_emoji": "Select emoji",
+    "select_image": "Select image",
+    "input_one_emoji": "The input must contain exactly one emoji",
+    "enter_any_emoji": "Enter any emoji",
+    "any_emoji_as_group_icon": "Type any emoji to set it as a group icon",
+    "emoji": "Emoji",
+    "enter_image_url": "Enter image URL",
+    "type_any_image_url_to_set_it": "Type any image URL to set it as a group icon",
+    "group_name_or_tab_search": "Group name or tab title to search...",
+    "change_the_conf_here": "Change the extension configurations here",
+    "lock_group_after_restore": "Lock the group back after restoring the tabs",
+    "settings_updated": "Settings have been updated",
+    "erase_all_groups": "Erase all groups",
+    "i_confirm_want_delete_groups": "I confirm that I want to delete all groups",
+    "confirm_want_delete_groups": "Confirm that you want to delete all groups",
+    "all_groups_deleted": "All the groups have been deleted",
+    "show_private_groups_incognito": "Show private groups only in browser incognito mode. In regular browser mode, they will be hidden",
+    "settings_saved": "Settings have been saved",
+    "go_to_settings_and_enable_allow_incognito": "Go to the extension settings and enable the option 'Allow in incognito' or 'Allow in Private'",
+    "override_existing_match": "If the new group name matches an existing one, override it",
+    "only_private_groups_incognito": "Show only private groups in browser incognito mode. It means that public groups will be hidden in incognito mode",
+    "export_tab_groups": "Export Tab Groups",
+    "export": "Export",
+    "export_all_your_groups": "Export all of your tab groups. Keep in mind that private groups are not going to be exported. If you want to export them, you need to do it for each private group separately",
+    "no groups to export": "No groups to export",
+    "will_be_used_encrypt_exported_data": "It will be used to encrypt the exported data",
+    "import_groups": "Import Tab Groups",
+    "import_private_public_groups": "Import private or public tab groups",
+    "import": "Import",
+    "choose_exported_file": "Choose the exported file",
+    "choose_file_import": "Please choose a file to import",
+    "failed_decrypt_file": "Failed to decrypt the file",
+    "error_reading_file": "Error reading file",
+    "some_groups_already_exist_same_name": "Some groups that you want to import already exist with the same name. Do you want to replace them?",
+    "replace_groups": "Replace groups?",
+    "file_chosen": "File chosen",
+    "groups_imported": {
+        "message": "$n$ groups imported successfully",
+        "placeholders": {
+            "n": {
+                "content": "$1",
+                "example": "5"
+            }
+        }
+    },
+    "many_attempts_locked_for": {
+        "message": "Too many attempts. Locked for $n$ minutes",
+        "placeholders": {
+            "n": {
+                "content": "$1",
+                "example": "5"
+            }
+        }
+    },
+    "many_attempts_next_attempt_in": {
+        "message": "Too many attempts. Next attempt in $n$ minutes",
+        "placeholders": {
+            "n": {
+                "content": "$1",
+                "example": "5"
+            }
+        }
+    },
+    "bind_group_url": {
+        "message": "Bind this group to the ($url$) URL. This will hide the group from everywhere else except this URL. It adds an extra layer of security",
+        "placeholders": {
+            "url": {
+                "content": "$1",
+                "example": "https://example.com"
+            }
+        }
+    },
+    "url_must_be_less_than": {
+        "message": "URL must be less than $n$ character",
+        "placeholders": {
+            "n": {
+                "content": "$1",
+                "example": "5"
+            }
+        }
+    },
+    "url_must_be_at_least": {
+        "message": "URL must be at least $n$ characters",
+        "placeholders": {
+            "n": {
+                "content": "$1",
+                "example": "5"
+            }
+        }
+    }
+}

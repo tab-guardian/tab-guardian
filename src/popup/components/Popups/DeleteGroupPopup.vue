@@ -30,7 +30,7 @@ async function deleteGroup(): Promise<void> {
     <Popup
         v-if="groupStore.selectedGroup"
         @cancel="closePopup('deleteGroup')"
-        :content="trans('Do you want to delete the group?')"
+        :content="trans('want_delete_group')"
     >
         <template #buttons>
             <PopupButton
@@ -38,11 +38,11 @@ async function deleteGroup(): Promise<void> {
                 type="button"
                 class="bg-transparent !text-font border-slate-400 dark:border-slate-600"
             >
-                {{ trans('No') }}
+                {{ trans('no') }}
             </PopupButton>
 
             <PopupButton @click="deleteGroup" type="button" class="popup__button">
-                {{ trans('Yes') }}
+                {{ trans('yes') }}
             </PopupButton>
         </template>
     </Popup>
