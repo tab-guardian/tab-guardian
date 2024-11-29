@@ -34,7 +34,12 @@ watchEffect(() => {
             autofocus
         />
 
-        <h2 v-else :class="classes" class="border border-transparent">
+        <h2
+            v-else
+            v-on:dblclick="store.startGroupRenaming"
+            :class="classes"
+            class="border border-transparent select-none"
+        >
             {{ group.name }}
         </h2>
 

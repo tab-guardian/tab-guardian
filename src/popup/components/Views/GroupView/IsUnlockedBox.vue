@@ -33,7 +33,7 @@ async function promptEnterPassword(): Promise<void> {
 
 <template>
     <div
-        class="flex items-center justify-between mb-4 bg-unsafe p-3 rounded-lg gap-4"
+        class="flex items-center justify-between mb-4 mt-2 bg-unsafe p-3 rounded-lg gap-4"
     >
         <ShieldExclamationIcon class="w-8 h-8 text-red-400" />
 
