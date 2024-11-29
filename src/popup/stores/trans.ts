@@ -8,9 +8,9 @@ import getFromStorage from '@common/modules/storage/getFromStorage'
 const DEFAULT_LANG = 'en'
 
 export const languages = [
-    { code: 'en', name: 'English', flag: '🇬🇧' },
     { code: 'ru', name: 'Русский', flag: '🇷🇺' },
     { code: 'zh', name: '中文', flag: '🇨🇳' },
+    { code: 'en', name: 'English', flag: '🇬🇧' },
 ]
 
 export const useTransStore = defineStore('trans', () => {

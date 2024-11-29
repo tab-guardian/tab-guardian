@@ -16,12 +16,19 @@ const { lang, trans, changeLang } = useTransStore()
             <label
                 v-for="l in languages"
                 :key="l.code"
-                class="inline-flex items-center gap-2 border border-border px-2 py-0.5 rounded-lg"
+                :class="[
+                    'inline-flex items-center gap-2 border border-border px-3 py-1 rounded-md',
+                    'cursor-pointer',
+                    lang === l.code
+                        ? 'bg-primary text-page'
+                        : 'hover:border-primary',
+                ]"
             >
                 <input
                     type="radio"
                     :id="l.code"
                     :value="l.code"
+                    class="hidden"
                     name="locale"
                     v-model="lang"
                     @change="changeLang(l.code)"
