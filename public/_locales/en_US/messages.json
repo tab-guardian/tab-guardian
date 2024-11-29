@@ -1,15 +1,22 @@
 {
+    "yes": "Yes",
+    "no": "No",
+    "lock": "Lock",
+    "emoji": "Emoji",
+    "bytes": "bytes",
+    "rebind": "Rebind",
+    "select": "Select",
+    "cancel": "Cancel",
+    "import": "Import",
+    "export": "Export",
     "new_group": "New Group",
     "error_no_group_selected": "Something went wrong! No group selected",
     "want_delete_group": "Do you want to delete the group?",
-    "yes": "Yes",
-    "no": "No",
     "no_links_this_group": "There are no links in this group",
     "select_tabs": "Select Tabs",
     "click_on_each_tab": "Click on each tab to select or unselect it for saving to memory",
     "select_all": "Select all",
     "deselect_all": "Deselect all",
-    "cancel": "Cancel",
     "add_tabs": "Add tabs",
     "no_tabs_found": "No tabs found",
     "no_groups_yet": "There are no groups yet",
@@ -37,7 +44,6 @@
     "group_already_locked": "Group is already locked",
     "pass_empty": "Password is empty",
     "private_group_unlocked": "This private group is unlocked",
-    "lock": "Lock",
     "no_tabs_to_save": "No tabs to save",
     "tabs_now_saved": "Tabs have been saved",
     "create_group": "Create the group",
@@ -51,12 +57,10 @@
     "rate_us": "Rate Us",
     "storage_usage": "Storage usage",
     "group_name_long": "Group name is too long",
-    "bytes": "bytes",
     "contribute": "Contribute",
     "release_notes": "Release Notes",
     "change_icon": "Change Icon",
     "choose_group_icon": "Choose a group icon",
-    "select": "Select",
     "icon_is_set": "Icon has been set",
     "repeat_pass": "Repeat password",
     "passwords_not_match": "Passwords do not match",
@@ -64,7 +68,6 @@
     "rebind_to_other_url": "Rebind to other URL",
     "enter_new_url_bind_private_to_new_url": "Enter a new URL to bind your private group to this new URL. This group will be only visible in the list of groups only when you visit this specific URL. Do not forget to lock the group",
     "enter_new_url_bind_to": "Enter a new URL to bind to",
-    "rebind": "Rebind",
     "group_rebind_successful": "Group rebind successful",
     "url_must_start_with_http": "URL must start with http:// or https://",
     "select_emoji": "Select emoji",
@@ -72,7 +75,6 @@
     "input_one_emoji": "The input must contain exactly one emoji",
     "enter_any_emoji": "Enter any emoji",
     "any_emoji_as_group_icon": "Type any emoji to set it as a group icon",
-    "emoji": "Emoji",
     "enter_image_url": "Enter image URL",
     "type_any_image_url_to_set_it": "Type any image URL to set it as a group icon",
     "group_name_or_tab_search": "Group name or tab title to search...",
@@ -88,12 +90,10 @@
     "override_existing_match": "If the new group name matches an existing one, override it",
     "only_private_groups_incognito": "Show only private groups in browser incognito mode. It means that public groups will be hidden in incognito mode",
     "export_tab_groups": "Export Tab Groups",
-    "export": "Export",
     "export_all_your_groups": "Export all of your tab groups. Keep in mind that private groups are not going to be exported. If you want to export them, you need to do it for each private group separately",
     "no_groups_export": "No groups to export",
     "import_groups": "Import Tab Groups",
     "import_private_public_groups": "Import private or public tab groups",
-    "import": "Import",
     "choose_exported_file": "Choose the exported file",
     "choose_file_import": "Please choose a file to import",
     "failed_decrypt_file": "Failed to decrypt the file",
@@ -104,55 +104,37 @@
     "groups_imported": {
         "message": "$n$ groups imported successfully",
         "placeholders": {
-            "n": {
-                "content": "$1",
-                "example": "5"
-            }
+            "n": {"content": "$1"}
         }
     },
     "many_attempts_locked_for": {
         "message": "Too many attempts. Locked for $n$ minutes",
         "placeholders": {
-            "n": {
-                "content": "$1",
-                "example": "5"
-            }
+            "n": {"content": "$1"}
         }
     },
     "many_attempts_next_attempt_in": {
         "message": "Too many attempts. Next attempt in $n$ minutes",
         "placeholders": {
-            "n": {
-                "content": "$1",
-                "example": "5"
-            }
+            "n": {"content": "$1"}
         }
     },
     "bind_group_url": {
         "message": "Bind this group to the ($url$) URL. This will hide the group from everywhere else except this URL. It adds an extra layer of security",
         "placeholders": {
-            "url": {
-                "content": "$1",
-                "example": "https://example.com"
-            }
+            "url": {"content": "$1"}
         }
     },
     "url_must_be_less_than": {
         "message": "URL must be less than $n$ character",
         "placeholders": {
-            "n": {
-                "content": "$1",
-                "example": "5"
-            }
+            "n": {"content": "$1"}
         }
     },
     "url_must_be_at_least": {
         "message": "URL must be at least $n$ characters",
         "placeholders": {
-            "n": {
-                "content": "$1",
-                "example": "5"
-            }
+            "n": {"content": "$1"}
         }
     }
 }
