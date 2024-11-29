@@ -22,22 +22,22 @@ const rateUsLink = isFirefox()
 const links = [
     {
         href: 'https://github.com/tab-guardian/tab-guardian',
-        label: trans('Contribute'),
+        label: trans('contribute'),
         icon: GitHubIcon,
     },
     {
         href: 'https://github.com/tab-guardian/tab-guardian/blob/main/CHANGELOG.md',
-        label: trans('Release Notes'),
+        label: trans('release_notes'),
         icon: DocumentIcon,
     },
     {
         href: rateUsLink,
-        label: trans('Rate Us'),
+        label: trans('rate_us'),
         icon: StarIcon,
     },
     {
         href: 'javascript:',
-        label: trans('Settings'),
+        label: trans('settings'),
         icon: CogIcon,
         callback: openSettingsPage,
     },

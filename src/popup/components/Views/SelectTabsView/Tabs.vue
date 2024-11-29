@@ -13,7 +13,7 @@ const store = useSelectTabsStore()
     <Spinner v-if="store.loading" />
 
     <Message v-else-if="store.links.length === 0">
-        {{ trans('No tabs found') }}
+        {{ trans('no_tabs_found') }}
     </Message>
 
     <div v-else>

@@ -43,7 +43,7 @@ async function openTabs(): Promise<void> {
         :src="upImage"
         alt="Open tabs"
         @click.prevent="openTabs"
-        v-tippy="trans('Open tabs')"
+        v-tippy="trans('open_tabs')"
         class="w-4 h-4 transition-transform hover:scale-110 dark:invert"
         :class="{
             'cursor-not-allowed opacity-40': group.links.length === 0,

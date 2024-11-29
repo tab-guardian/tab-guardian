@@ -64,11 +64,11 @@ function selectLinks(): void {
 </script>
 
 <template>
-    <Popup @cancel="closePopup('groupName')" :content="trans('Enter a group name')">
+    <Popup @cancel="closePopup('groupName')" :content="trans('enter_group_name')">
         <form @submit.prevent="selectLinks" class="flex flex-col gap-3">
             <Input
                 v-model="store.newGroup.name"
-                :label="trans('Group name')"
+                :label="trans('group_name')"
                 @loaded="inp => inp.focus()"
                 :meta="`${store.groupNameLength} / ${store.groupNameMaxLength}`"
                 :maxlength="store.groupNameMaxLength"
@@ -81,7 +81,7 @@ function selectLinks(): void {
                 v-model="store.newGroup.password"
                 type="password"
                 id="group-password"
-                :label="trans('Enter a password')"
+                :label="trans('enter_pass')"
             />
 
             <Input

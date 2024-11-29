@@ -17,7 +17,7 @@ onMounted(() => {
 
 <template>
     <div class="container py-7">
-        <h1 class="text-4xl font-bold">{{ trans('Settings') }}</h1>
+        <h1 class="text-4xl font-bold">{{ trans('settings') }}</h1>
         <p class="text-xl">
             {{ trans('Change the extension configurations here') }}
         </p>

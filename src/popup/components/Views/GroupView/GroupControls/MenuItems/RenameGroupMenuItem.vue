@@ -10,7 +10,7 @@ const store = useGroupStore()
 <template>
     <MenuItem
         @click="store.startGroupRenaming"
-        :label="trans('Rename this group')"
+        :label="trans('rename_this_group')"
         :icon="PencilSquareIcon"
     />
 </template>

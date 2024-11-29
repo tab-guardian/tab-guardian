@@ -15,7 +15,7 @@ function deleteGroup(): void {
 <template>
     <MenuItem
         @click="deleteGroup"
-        :label="trans('Delete this group')"
+        :label="trans('delete_this_group')"
         :icon="TrashIcon"
         :class="[
             'text-red-500 !border-red-500',

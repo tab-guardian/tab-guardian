@@ -14,7 +14,7 @@ onMounted(() => {
 
 <template>
     <Message v-if="store.groups.length === 0">
-        {{ trans('There are no groups yet') }}
+        {{ trans('no_groups_yet') }}
     </Message>
 
     <div v-else class="flex flex-col">

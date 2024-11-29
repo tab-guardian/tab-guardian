@@ -13,9 +13,6 @@ function askForGroupName(isPrivate: boolean) {
     groupStore.newGroup.isPrivate = isPrivate
     openPopup('groupName')
 }
-
-const privateTip =
-    'Private groups are secure and use encryption. Only users with the password can access them'
 </script>
 
 <template>
@@ -30,7 +27,7 @@ const privateTip =
         </NewGroupButton>
 
         <NewGroupButton
-            v-tippy="trans(privateTip)"
+            v-tippy="trans('private_groups_are_secure')"
             @click="askForGroupName(true)"
             class="w-24 bg-private hover:bg-private-hover"
             :disabled="groupStore.isSaving"

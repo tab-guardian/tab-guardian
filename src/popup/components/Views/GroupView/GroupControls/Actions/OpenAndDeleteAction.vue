@@ -23,7 +23,7 @@ async function openAndDeleteTabs(): Promise<void> {
 
 <template>
     <Control
-        v-tippy="trans('Open tabs and delete this group')"
+        v-tippy="trans('open_tabs_delete_group')"
         @click="openAndDeleteTabs"
         class="bg-orange-300 dark:bg-orange-700"
         :class="{

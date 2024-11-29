@@ -55,13 +55,13 @@ async function saveTabs(): Promise<void> {
 
 function showToastMessage(operation: SelectTabsOperation, links: Link[]): void {
     if (operation === 'adding' && links.length === 0) {
-        showToast(trans("You haven't selected any tabs"))
+        showToast(trans('you_not_selected_tabs'))
     } else if (operation === 'adding') {
-        showToast(trans('Tabs added to the group'))
+        showToast(trans('tabs_added_to_group'))
     } else if (operation === 'creating' && links.length === 0) {
-        showToast(trans('Group created without any tabs selected'))
+        showToast(trans('group_created_without_tabs'))
     } else {
-        showToast(trans('Group created with tabs'))
+        showToast(trans('group_created_with_tabs'))
     }
 }
 </script>
@@ -85,7 +85,7 @@ function showToastMessage(operation: SelectTabsOperation, links: Link[]): void {
         <div class="flex items-center justify-between gap-3 mt-3">
             <div class="text-right">
                 <SlideSwitch v-model="groupStore.closeSelectedTabs">
-                    {{ trans('Close selected tabs') }}
+                    {{ trans('close_selected_tabs') }}
                 </SlideSwitch>
             </div>
 
@@ -93,7 +93,7 @@ function showToastMessage(operation: SelectTabsOperation, links: Link[]): void {
                 <span v-if="store.operation === 'adding'">
                     {{ trans('add_tabs') }}
                 </span>
-                <span v-else>{{ trans('Create the group') }}</span>
+                <span v-else>{{ trans('create_group') }}</span>
             </SaveButton>
         </div>
     </View>

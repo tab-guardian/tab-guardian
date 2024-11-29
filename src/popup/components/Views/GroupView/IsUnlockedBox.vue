@@ -19,14 +19,14 @@ async function promptEnterPassword(): Promise<void> {
     const pass = await getPasswordFromStorage(group.id)
 
     if (!pass) {
-        showToast(trans('Something went wrong! Cannot remember your password'))
+        showToast(trans('cant_remember_pass'), 'error')
         return
     }
 
     await groupStore.encryptGroupById(group.id, pass)
     await deletePasswordFromStorage(group.id)
 
-    showToast(trans('Group is locked'))
+    showToast(trans('group_locked'))
 }
 </script>
 
@@ -37,7 +37,7 @@ async function promptEnterPassword(): Promise<void> {
         <ShieldExclamationIcon class="w-8 h-8 text-red-400" />
 
         <span class="text-sm">
-            {{ trans('This private group is unlocked') }}
+            {{ trans('private_group_unlocked') }}
         </span>
 
         <button
@@ -49,7 +49,7 @@ async function promptEnterPassword(): Promise<void> {
             ]"
         >
             <LockClosedIcon width="18" height="18" />
-            {{ trans('Lock') }}
+            {{ trans('lock') }}
         </button>
     </div>
 </template>

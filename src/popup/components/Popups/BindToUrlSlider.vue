@@ -37,7 +37,7 @@ function attachBindURL(checked: boolean): void {
 
     if (!currURL.value) {
         error.err('No current URL found')
-        showToast(trans('Error occurred'), 'error')
+        showToast(trans('error_occurred'), 'error')
         return
     }
 
@@ -52,7 +52,7 @@ function attachBindURL(checked: boolean): void {
         @changed="attachBindURL"
     >
         <div class="flex items-center gap-1">
-            {{ trans('Bind to this URL') }}
+            {{ trans('bind_to_url') }}
         </div>
     </SlideSwitch>
 </template>

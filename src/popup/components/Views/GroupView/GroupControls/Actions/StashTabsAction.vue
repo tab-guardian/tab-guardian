@@ -18,7 +18,7 @@ function stashTabs(): void {
 
 <template>
     <Control
-        v-tippy="trans('Copy tabs into this group')"
+        v-tippy="trans('copy_tabs_into_group')"
         @click="stashTabs"
         class="bg-slate-300 dark:bg-slate-700"
     >

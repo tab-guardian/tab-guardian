@@ -139,17 +139,17 @@ export const useGroupStore = defineStore('group', () => {
         const group = getGroupById(groupId)
 
         if (!group) {
-            showToast(trans('Group has not been found'), 'error')
+            showToast(trans('group_not_found'), 'error')
             return false
         }
 
         if (group.isEncrypted) {
-            showToast(trans('Group is already locked'), 'error')
+            showToast(trans('group_already_locked'), 'error')
             return false
         }
 
         if (pass === '') {
-            showToast(trans('Password is empty'), 'error')
+            showToast(trans('pass_empty'), 'error')
             return false
         }
 
@@ -166,7 +166,7 @@ export const useGroupStore = defineStore('group', () => {
 
             await saveGroup(encrypted)
         } catch (err) {
-            showToast(trans('Error occurred'), 'error')
+            showToast(trans('error_occurred'), 'error')
             error.err(err)
         }
 
@@ -263,7 +263,7 @@ export const useGroupStore = defineStore('group', () => {
     async function renameGroup(): Promise<void> {
         if (!selectedGroup.value) {
             error.err('No group selected for renaming')
-            showToast(trans('Error occurred'), 'error')
+            showToast(trans('error_occurred'), 'error')
             return
         }
 
@@ -275,7 +275,7 @@ export const useGroupStore = defineStore('group', () => {
         const group = getGroupById(selectedGroup.value.id)
 
         if (!group) {
-            showToast(trans('Error occurred'), 'error')
+            showToast(trans('error_occurred'), 'error')
             return
         }
 
@@ -288,7 +288,7 @@ export const useGroupStore = defineStore('group', () => {
         isTitleFieldActive.value = false
 
         await saveGroup(group)
-        showToast(trans('The new name has been saved'))
+        showToast(trans('new_name_saved'))
     }
 
     async function deleteGroup(groupId: number): Promise<void> {

@@ -54,7 +54,7 @@ export const useTabsStore = defineStore('tabs', () => {
         const links = await getCurrentLinks()
 
         if (!links.length) {
-            showToast(trans('No tabs to save'), 'error')
+            showToast(trans('no_tabs_to_save'), 'error')
             return
         }
 
@@ -67,7 +67,7 @@ export const useTabsStore = defineStore('tabs', () => {
             await closeTabs(links.map(l => l.id))
         }
 
-        showToast(trans('Tabs have been saved'))
+        showToast(trans('tabs_now_saved'))
     }
 
     return {

@@ -12,7 +12,7 @@ const tabsStore = useTabsStore()
 
 <template>
     <Control
-        v-tippy="trans('Open tabs')"
+        v-tippy="trans('open_tabs')"
         @click="tabsStore.openTabs(group)"
         class="bg-green-300 dark:bg-green-700"
         :class="{

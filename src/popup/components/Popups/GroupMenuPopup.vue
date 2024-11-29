@@ -28,8 +28,7 @@ const isEncrypted = computed<boolean>(() => {
             v-if="isEncrypted"
             class="mt-2 pt-2 text-font-gray border-t border-border"
         >
-            <!-- prettier-ignore -->
-            {{ trans('This group is private. You need to unlock it to see the options') }}
+            {{ trans('group_private_unlock_it') }}
         </p>
 
         <div v-else class="flex flex-col gap-1 mt-3">
@@ -41,7 +40,7 @@ const isEncrypted = computed<boolean>(() => {
                 v-if="group && !group.isPrivate"
                 :to="{ name: 'groupIcon', params: { id: group.id } }"
             >
-                <MenuItem :label="trans('Change Icon')" :icon="PhotoIcon" />
+                <MenuItem :label="trans('change_icon')" :icon="PhotoIcon" />
             </RouterLink>
 
             <RebindUrlItem v-if="group && group.isPrivate && group.bindURL" />

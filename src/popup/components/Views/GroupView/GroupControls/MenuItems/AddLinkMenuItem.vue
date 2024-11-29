@@ -25,7 +25,7 @@ function addLink(): void {
 <template>
     <MenuItem
         @click="addLink"
-        :label="trans('Add more links')"
+        :label="trans('add_more_links')"
         :icon="PlusCircleIcon"
     />
 </template>

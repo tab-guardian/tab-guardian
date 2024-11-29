@@ -48,10 +48,7 @@ async function encryptPrivateGroup(group: Group): Promise<Group | null> {
     const pass = await getPasswordFromStorage(group.id)
 
     if (!pass) {
-        showToast(
-            trans('Something went wrong! Cannot remember your password'),
-            'error',
-        )
+        showToast(trans('cant_remember_pass'), 'error')
         return null
     }
 
