@@ -5,7 +5,7 @@ import error from '@common/modules/error'
 import saveToStorage from '@common/modules/storage/saveToStorage'
 import getFromStorage from '@common/modules/storage/getFromStorage'
 
-const DEFAULT_LANG = 'en'
+const DEFAULT_LANG = 'ru'
 
 export const languages = [
     { code: 'en', name: 'English', flag: '🇬🇧' },
@@ -17,11 +17,26 @@ export const useTransStore = defineStore('trans', () => {
     const messages = ref<Messages>({})
 
     async function init(): Promise<void> {
-        const l = await getFromStorage<string>('lang')
+        const savedLang = await getFromStorage<string>('lang')
 
-        if (l) {
-            lang.value = l
+        if (savedLang) {
+            lang.value = savedLang
+            return
         }
+
+        setBrowserLang()
+    }
+
+    function setBrowserLang(): void {
+        const browserLang = navigator.language.slice(0, 2)
+        const isLangSupported = languages.some(l => l.code === browserLang)
+
+        if (isLangSupported) {
+            lang.value = browserLang
+            return
+        }
+
+        error.info(`Language ${browserLang} is not supported by the extension`)
     }
 
     async function loadMessages(msgs: Messages): Promise<void> {
