@@ -5,6 +5,7 @@ import { usePopupStore } from '@/stores/popup'
 import { useTransStore } from '@/stores/trans'
 import en from '@/locales/en.json'
 import ru from '@/locales/ru.json'
+import zh from '@/locales/zh.json'
 import Navbar from '@/components/Navbar/Navbar.vue'
 import DeleteGroupPopup from '@/components/Popups/DeleteGroupPopup.vue'
 import GroupMenuPopup from '@/components/Popups/GroupMenuPopup.vue'
@@ -19,7 +20,7 @@ const { isOpenPopup } = usePopupStore()
 const { loadMessages } = useTransStore()
 
 onBeforeMount(async () => {
-    await loadMessages({ en, ru })
+    await loadMessages({ en, ru, zh })
 })
 
 onMounted(() => {

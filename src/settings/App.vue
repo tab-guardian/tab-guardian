@@ -4,6 +4,7 @@ import { useSettingsStore } from '@/stores/settings'
 import { useTransStore } from '@/stores/trans'
 import en from '@settings/locales/en.json'
 import ru from '@settings/locales/ru.json'
+import zh from '@settings/locales/zh.json'
 import Spinner from '@/components/Spinner.vue'
 import OptionsSection from '@settings/components/OptionsSection.vue'
 import EraseSection from '@settings/components/EraseSection.vue'
@@ -15,7 +16,7 @@ const store = useSettingsStore()
 const { trans, loadMessages } = useTransStore()
 
 onBeforeMount(async () => {
-    await loadMessages({ en, ru })
+    await loadMessages({ en, ru, zh })
 })
 
 onMounted(() => {

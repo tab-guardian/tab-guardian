@@ -5,11 +5,12 @@ import error from '@common/modules/error'
 import saveToStorage from '@common/modules/storage/saveToStorage'
 import getFromStorage from '@common/modules/storage/getFromStorage'
 
-const DEFAULT_LANG = 'ru'
+const DEFAULT_LANG = 'en'
 
 export const languages = [
     { code: 'en', name: 'English', flag: '🇬🇧' },
     { code: 'ru', name: 'Русский', flag: '🇷🇺' },
+    { code: 'zh', name: '中文', flag: '🇨🇳' },
 ]
 
 export const useTransStore = defineStore('trans', () => {
