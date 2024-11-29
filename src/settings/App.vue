@@ -19,7 +19,7 @@ onMounted(() => {
     <div class="container py-7">
         <h1 class="text-4xl font-bold">{{ trans('settings') }}</h1>
         <p class="text-xl">
-            {{ trans('Change the extension configurations here') }}
+            {{ trans('change_the_conf_here') }}
         </p>
 
         <Spinner v-if="store.loading" />

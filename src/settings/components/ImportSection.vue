@@ -17,7 +17,7 @@ const groupStore = useGroupStore()
 
 async function importGroups(): Promise<void> {
     if (!file.value) {
-        showToast(trans('Please choose a file to import'), 'error')
+        showToast(trans('choose_file_import'), 'error')
         return
     }
 
@@ -31,13 +31,13 @@ async function importGroups(): Promise<void> {
             await prependGroups(Array.isArray(json) ? json : [json])
         } catch (err) {
             console.error(err)
-            showToast(trans('Failed to decrypt the file'), 'error')
+            showToast(trans('failed_decrypt_file'), 'error')
         }
     }
 
     reader.onerror = e => {
         console.error('Error reading file:', e)
-        showToast(trans('Error reading file'), 'error')
+        showToast(trans('error_reading_file'), 'error')
     }
 
     reader.readAsText(file.value)
@@ -61,10 +61,8 @@ async function prependGroups(groups: Group[]): Promise<void> {
     }
 
     const answer = await Swal.fire({
-        title: trans('Replace groups?'),
-        text: trans(
-            'Some groups that you want to import already exist with the same name. Do you want to replace them?',
-        ),
+        title: trans('replace_groups'),
+        text: trans('some_groups_already_exist_same_name'),
         showDenyButton: true,
         confirmButtonText: trans('yes'),
         denyButtonText: trans('no'),
@@ -89,20 +87,20 @@ function fileChosen(f: File, elem: HTMLInputElement): void {
 
 <template>
     <Section
-        :title="trans('Import Tab Groups')"
-        :subtitle="trans('Import private or public tab groups')"
+        :title="trans('import_groups')"
+        :subtitle="trans('import_private_public_groups')"
     >
         <div class="space-y-4">
             <FileInput
                 @chosen="fileChosen"
                 type="file"
-                :label="trans(file ? 'File chosen' : 'Choose the exported file')"
+                :label="file ? trans('file_chosen') : trans('choose_exported_file')"
                 id="choose-file"
             />
 
             <Button @clicked="importGroups" class="mt-4" :disabled="!file">
                 <ArrowDownTrayIcon class="w-5 h-5 rotate-180" />
-                {{ trans('Import') }}
+                {{ trans('import') }}
             </Button>
         </div>
     </Section>

@@ -15,7 +15,7 @@ function rebind(): void {
 <template>
     <MenuItem
         @click="rebind"
-        :label="trans('Rebind to other URL')"
+        :label="trans('rebind_to_other_url')"
         :icon="LinkIcon"
     />
 </template>

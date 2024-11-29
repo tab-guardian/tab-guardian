@@ -6,7 +6,7 @@ export default () => {
 
     function urlError(url: string): string | null {
         if (!url.match(/^(http|https):\/\//)) {
-            return trans('URL must start with http:// or https://')
+            return trans('url_must_start_with_http')
         }
 
         if (url.length > MAX_URL_LENGTH) {

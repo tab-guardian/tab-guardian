@@ -59,7 +59,7 @@ async function encryptPrivateGroup(group: Group): Promise<Group | null> {
 <template>
     <MenuItem
         @click="exportGroup"
-        :label="trans('Export this group')"
+        :label="trans('export_this_group')"
         :icon="ArrowDownTrayIcon"
     />
 </template>

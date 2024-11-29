@@ -154,7 +154,7 @@ export const useGroupStore = defineStore('group', () => {
         }
 
         if (confirmPass && pass !== confirmPass) {
-            showToast(trans('Passwords do not match'), 'error')
+            showToast(trans('passwords_not_match'), 'error')
             return false
         }
 

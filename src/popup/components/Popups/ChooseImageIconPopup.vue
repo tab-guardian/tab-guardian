@@ -36,8 +36,8 @@ async function chooseImageIcon(): Promise<void> {
     <Popup
         v-if="groupStore.selectedGroup"
         @cancel="closePopup('chooseImageIcon')"
-        :content="trans('Enter image URL')"
-        :description="trans('Type any image URL to set it as a group icon')"
+        :content="trans('enter_image_url')"
+        :description="trans('type_any_image_url_to_set_it')"
     >
         <form @submit.prevent="chooseImageIcon">
             <Input
@@ -52,7 +52,7 @@ async function chooseImageIcon(): Promise<void> {
 
             <Button type="submit" :disabled="preventSubmit" class="mt-3">
                 <CheckIcon width="20" height="20" />
-                {{ trans('Select') }}
+                {{ trans('select') }}
             </Button>
         </form>
     </Popup>

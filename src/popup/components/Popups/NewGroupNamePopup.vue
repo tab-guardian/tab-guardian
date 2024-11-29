@@ -18,7 +18,7 @@ const selectTabsStore = useSelectTabsStore()
 const passwordErr = computed<string>(() => {
     return store.newGroup.confirmPassword.length > 0 &&
         store.newGroup.password !== store.newGroup.confirmPassword
-        ? trans('Passwords do not match')
+        ? trans('passwords_not_match')
         : ''
 })
 
@@ -89,7 +89,7 @@ function selectLinks(): void {
                 v-model="store.newGroup.confirmPassword"
                 type="password"
                 id="group-confirm-password"
-                :label="trans('Repeat password')"
+                :label="trans('repeat_pass')"
                 :error="passwordErr"
             />
 
