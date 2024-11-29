@@ -2,13 +2,41 @@ import type { Messages } from '@/types'
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import error from '@common/modules/error'
+import saveToStorage from '@common/modules/storage/saveToStorage'
+import getFromStorage from '@common/modules/storage/getFromStorage'
+
+const DEFAULT_LANG = 'en'
+
+export const languages = [
+    { code: 'en', name: 'English', flag: '🇬🇧' },
+    { code: 'ru', name: 'Русский', flag: '🇷🇺' },
+]
 
 export const useTransStore = defineStore('trans', () => {
-    const lang = ref<string>('ru')
+    const lang = ref<string>(DEFAULT_LANG)
     const messages = ref<Messages>({})
 
-    function loadMessages(msgs: Messages): void {
+    async function init(): Promise<void> {
+        const l = await getFromStorage<string>('lang')
+
+        if (l) {
+            lang.value = l
+        }
+    }
+
+    async function loadMessages(msgs: Messages): Promise<void> {
         messages.value = msgs
+        await init()
+    }
+
+    function changeLang(l: string): void {
+        if (!l) {
+            error.err('Language not set')
+            return
+        }
+
+        lang.value = l
+        saveToStorage('lang', l)
     }
 
     function trans(key: string, ...args: string[]): string {
@@ -35,7 +63,9 @@ export const useTransStore = defineStore('trans', () => {
     }
 
     return {
+        lang,
         trans,
+        changeLang,
         loadMessages,
     }
 })

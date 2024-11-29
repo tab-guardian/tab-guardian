@@ -18,8 +18,8 @@ const { loadSettingsFromStorage } = useSettingsStore()
 const { isOpenPopup } = usePopupStore()
 const { loadMessages } = useTransStore()
 
-onBeforeMount(() => {
-    loadMessages({ en, ru })
+onBeforeMount(async () => {
+    await loadMessages({ en, ru })
 })
 
 onMounted(() => {

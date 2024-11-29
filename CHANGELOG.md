@@ -3,6 +3,7 @@
 ## v1.5.0 (2024-11-28)
 - 🧑‍💻 Added `Settings` button to the sidebar
 - ✨ Added support for the Russian language
+- ✨ Added the ability to choose the language of the extension
 
 ## v1.4.4 (2024-10-31)
 - ✨ Restore tabs button is now disabled if the group is empty

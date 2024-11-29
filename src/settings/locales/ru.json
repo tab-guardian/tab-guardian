@@ -30,5 +30,7 @@
     "Yes": "Да",
     "No": "Нет",
     ":n groups imported successfully": ":n групп успешно импортировано",
-    "File chosen": "Файл выбран"
+    "File chosen": "Файл выбран",
+    "Change Language": "Изменить язык",
+    "Change the extension interface language": "Измените язык интерфейса расширения"
 }
