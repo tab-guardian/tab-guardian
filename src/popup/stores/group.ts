@@ -3,6 +3,7 @@ import { ref, computed, onMounted } from 'vue'
 import { defineStore } from 'pinia'
 import { useTransStore } from '@/stores/trans'
 import { useSettingsStore } from '@/stores/settings'
+import { usePopupStore } from '@/stores/popup'
 import showToast from '@common/modules/showToast'
 import getGroupsFromStorage from '@common/modules/storage/getGroupsFromStorage'
 import error from '@common/modules/error'
@@ -19,6 +20,8 @@ import deleteAllGroupsFromStorage from '@common/modules/storage/deleteAllGroupsF
 import generateGroupId from '@common/modules/generateGroupId'
 
 export const useGroupStore = defineStore('group', () => {
+    const popupStore = usePopupStore()
+
     const groupNameMaxLength = 45
     const groupNameLength = computed<number>(() => {
         return newGroup.value.name.length
@@ -164,7 +167,7 @@ export const useGroupStore = defineStore('group', () => {
 
             await saveGroup(encrypted)
         } catch (err) {
-            showToast(trans('Error ocurred'), 'error')
+            showToast(trans('Error occurred'), 'error')
             error.err(err)
         }
 
@@ -245,10 +248,23 @@ export const useGroupStore = defineStore('group', () => {
         await saveGroup(group)
     }
 
+    function startGroupRenaming(): void {
+        if (!selectedGroup.value) {
+            error.err('No group selected to rename')
+            return
+        }
+
+        isTitleFieldActive.value = true
+        selectedGroup.value = selectedGroup.value
+        newGroup.value.name = selectedGroup.value.name
+
+        popupStore.closePopup('groupView')
+    }
+
     async function renameGroup(): Promise<void> {
         if (!selectedGroup.value) {
             error.err('No group selected for renaming')
-            showToast(trans('Error ocurred'), 'error')
+            showToast(trans('Error occurred'), 'error')
             return
         }
 
@@ -260,7 +276,7 @@ export const useGroupStore = defineStore('group', () => {
         const group = getGroupById(selectedGroup.value.id)
 
         if (!group) {
-            showToast(trans('Error ocurred'), 'error')
+            showToast(trans('Error occurred'), 'error')
             return
         }
 
@@ -376,6 +392,7 @@ export const useGroupStore = defineStore('group', () => {
         deleteAllLinks,
         deleteAllGroups,
         updateUpdatedAt,
+        startGroupRenaming,
         setIcon,
         addGroups,
     }

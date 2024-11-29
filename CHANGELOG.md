@@ -1,5 +1,14 @@
 # Release Notes
 
+## v1.5.0 (2024-11-29)
+- 🧑‍💻 Added `Settings` button to the sidebar
+- ✨ Added support for the Russian language 🇷🇺
+- ✨ Added the ability to choose the language of the extension on the settings page
+- ✨ When you open an extension, it will choose the language based on your browser language. If you chose a different language in the extension settings, it will use that language instead
+- ✨ When renaming the group, you can now press `Enter` to save the new name
+- ✨ Added support for the Chinese language 🇨🇳
+- 🐛 Fix typos
+
 ## v1.4.4 (2024-10-31)
 - ✨ Restore tabs button is now disabled if the group is empty
 - 🐛 Bug fix [#7](https://github.com/tab-guardian/tab-guardian/issues/7). If you restore tabs from an empty group, it would error out

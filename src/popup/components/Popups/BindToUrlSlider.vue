@@ -40,7 +40,7 @@ function attachBindURL(checked: boolean): void {
 
     if (!currURL.value) {
         error.err('No current URL found')
-        showToast(trans('Error ocurred'), 'error')
+        showToast(trans('Error occurred'), 'error')
         return
     }
 
