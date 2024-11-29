@@ -276,7 +276,7 @@ export const useGroupStore = defineStore('group', () => {
         const group = getGroupById(selectedGroup.value.id)
 
         if (!group) {
-            showToast(trans('Error ocurred'), 'error')
+            showToast(trans('Error occurred'), 'error')
             return
         }
 
