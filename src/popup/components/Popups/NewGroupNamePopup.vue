@@ -45,12 +45,12 @@ function selectLinks(): void {
     }
 
     if (store.newGroup.isPrivate && !store.newGroup.password) {
-        showToast(trans('Password is empty'), 'error')
+        showToast(trans('password_empty'), 'error')
         return
     }
 
     if (store.groupNameLength > store.groupNameMaxLength) {
-        showToast(trans('Group name is too long'), 'error')
+        showToast(trans('group_name_long'), 'error')
         return
     }
 
