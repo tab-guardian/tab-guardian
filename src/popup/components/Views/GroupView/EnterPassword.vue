@@ -55,7 +55,7 @@ async function submitPass(): Promise<void> {
         if (e instanceof Error && e.message === 'Malformed UTF-8 data') {
             showToast(trans('Incorrect password'), 'error')
         } else {
-            showToast(trans('Error ocurred'), 'error')
+            showToast(trans('Error occurred'), 'error')
         }
     }
 

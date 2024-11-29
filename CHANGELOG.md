@@ -7,6 +7,7 @@
 - ✨ When you open an extension, it will choose the language based on your browser language. If you chose a different language in the extension settings, it will use that language instead
 - ✨ When renaming the group, you can now press `Enter` to save the new name
 - ✨ Added support for the Chinese language 🇨🇳
+- 🐛 Fix typos
 
 ## v1.4.4 (2024-10-31)
 - ✨ Restore tabs button is now disabled if the group is empty

@@ -167,7 +167,7 @@ export const useGroupStore = defineStore('group', () => {
 
             await saveGroup(encrypted)
         } catch (err) {
-            showToast(trans('Error ocurred'), 'error')
+            showToast(trans('Error occurred'), 'error')
             error.err(err)
         }
 
@@ -264,7 +264,7 @@ export const useGroupStore = defineStore('group', () => {
     async function renameGroup(): Promise<void> {
         if (!selectedGroup.value) {
             error.err('No group selected for renaming')
-            showToast(trans('Error ocurred'), 'error')
+            showToast(trans('Error occurred'), 'error')
             return
         }
 
