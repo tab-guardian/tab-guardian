@@ -4,9 +4,7 @@ import type { Group } from '@/types'
 import { useGroupStore } from '@/stores/group'
 import GroupIcon from '@/components/Views/MainView/Groups/GroupIcon.vue'
 
-defineProps<{
-    group: Group
-}>()
+defineProps<{ group: Group }>()
 
 const classes = 'text-lg my-1 px-2 py-0.5'
 const inputRef = ref<HTMLInputElement | null>(null)
