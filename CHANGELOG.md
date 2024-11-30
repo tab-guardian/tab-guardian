@@ -1,6 +1,6 @@
 # Release Notes
 
-## v1.5.1 (2024-11-29)
+## v1.5.1 (2024-11-30)
 - 🧑‍💻 Change internalization to match [Chrome i18n API](https://developer.chrome.com/docs/extensions/reference/api/i18n#concepts_and_usage)
 
 ## v1.5.0 (2024-11-29)
