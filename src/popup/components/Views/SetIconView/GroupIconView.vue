@@ -67,21 +67,21 @@ function openImageIconPopup(): void {
 
         <ul class="grid grid-cols-6 gap-2 mt-3">
             <IconItem
-                v-for="[name, icon] in Object.entries(getIcons())"
-                :key="name"
-                @click="selectIcon(name)"
-                :selected="group!.icon === name"
-            >
-                <component :is="icon" class="w-8 h-8" />
-            </IconItem>
-
-            <IconItem
                 v-for="icon in favIcons"
                 :key="icon"
                 @click="selectIcon(icon)"
                 :selected="group!.icon === icon"
             >
                 <img :src="icon" class="w-8 h-8" />
+            </IconItem>
+
+            <IconItem
+                v-for="[name, icon] in Object.entries(getIcons())"
+                :key="name"
+                @click="selectIcon(name)"
+                :selected="group!.icon === name"
+            >
+                <component :is="icon" class="w-8 h-8" />
             </IconItem>
         </ul>
     </View>
