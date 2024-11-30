@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import type { Group } from '@/types'
-import { useTransStore } from '@/stores/trans'
+import trans from '@common/modules/trans'
 import { useGroupStore } from '@/stores/group'
 import { ref, onMounted, onUnmounted } from 'vue'
 import Buttons from '@/components/Views/MainView/NewGroup/Buttons.vue'
 import MagnifyingGlassIcon from '@common/components/Icons/MagnifyingGlassIcon.vue'
 
-const { trans } = useTransStore()
 const groupStore = useGroupStore()
 
 const initialGroups = ref<Group[]>([])
@@ -96,7 +95,7 @@ function hideInput(): void {
                 ref="inpElem"
                 type="text"
                 class="w-full py-1 px-2 border border-border rounded-lg text-sm ring-0 focus:ring-2 focus:outline-none bg-transparent"
-                :placeholder="trans('Group name or tab title to search...')"
+                :placeholder="trans('group_name_or_tab_search')"
                 @input="filterGroups"
                 @blur="hideInput"
             />

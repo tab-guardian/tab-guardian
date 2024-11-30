@@ -2,7 +2,7 @@
 import type { Group } from '@/types'
 import { computed, watchEffect } from 'vue'
 import { useGroupStore } from '@/stores/group'
-import { useTransStore } from '@/stores/trans'
+import trans from '@common/modules/trans'
 import { useRoute } from 'vue-router'
 import View from '@/components/Views/View.vue'
 import Links from '@/components/Views/GroupView/Links.vue'
@@ -13,7 +13,6 @@ import Actions from '@/components/Views/GroupView/GroupControls/Actions/Actions.
 import IsUnlockedBox from '@/components/Views/GroupView/IsUnlockedBox.vue'
 import Message from '@common/components/Message.vue'
 
-const { trans } = useTransStore()
 const { params } = useRoute()
 const store = useGroupStore()
 
@@ -52,8 +51,6 @@ watchEffect(() => {
             <Links v-else :group />
         </div>
 
-        <Message v-else>
-            😢 {{ trans('Something went wrong! No group selected') }}
-        </Message>
+        <Message v-else> 😢 {{ trans('error_no_group_selected') }} </Message>
     </View>
 </template>

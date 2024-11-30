@@ -1,7 +1,7 @@
 import type { Attempts } from '@/types'
 import { onMounted, ref } from 'vue'
 import { defineStore } from 'pinia'
-import { useTransStore } from './trans'
+import trans from '@common/modules/trans'
 import getFromStorage from '@common/modules/storage/getFromStorage'
 import saveToStorage from '@common/modules/storage/saveToStorage'
 import error from '@common/modules/error'
@@ -16,8 +16,6 @@ export const useAttemptsStore = defineStore('attempts', () => {
         lockEndTime: null,
         isLocked: false,
     })
-
-    const { trans } = useTransStore()
 
     onMounted(loadAttemptsFromStorage)
 
@@ -47,12 +45,16 @@ export const useAttemptsStore = defineStore('attempts', () => {
                 return true
             }
 
-            const msg = 'Too many attempts. Next attempt in :n minutes'
             const durationLeft = Math.ceil(
                 (attempts.value.lockEndTime! - Date.now()) / 1000 / 60,
             )
 
-            showToast(trans(msg, durationLeft.toString()), 'error', 5000)
+            const msg = trans(
+                'many_attempts_next_attempt_in',
+                durationLeft.toString(),
+            )
+
+            showToast(msg, 'error', 5000)
 
             return false
         }
@@ -63,8 +65,8 @@ export const useAttemptsStore = defineStore('attempts', () => {
             attempts.value.isLocked = true
             attempts.value.lockEndTime = Date.now() + lockDuration * 60 * 1000
 
-            const msg = 'Too many attempts. Locked for :n minutes'
-            showToast(trans(msg, lockDuration.toString()), 'error', 3000)
+            const msg = trans('many_attempts_locked_for', lockDuration.toString())
+            showToast(msg, 'error', 3000)
 
             saveAttemptsToStorage()
 

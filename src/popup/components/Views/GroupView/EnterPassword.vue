@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Group } from '@/types'
 import { ref } from 'vue'
-import { useTransStore } from '@/stores/trans'
+import trans from '@common/modules/trans'
 import { useGroupStore } from '@/stores/group'
 import { useTabsStore } from '@/stores/tabs'
 import { useAttemptsStore } from '@/stores/attempts'
@@ -19,7 +19,6 @@ type Props = {
 const props = defineProps<Props>()
 
 const { params } = useRoute()
-const { trans } = useTransStore()
 const router = useRouter()
 const groupStore = useGroupStore()
 const tabsStore = useTabsStore()
@@ -29,7 +28,7 @@ const password = ref<string>('')
 
 async function submitPass(): Promise<void> {
     if (!password.value) {
-        showToast(trans('Enter a password'), 'error')
+        showToast(trans('enter_pass'), 'error')
         return
     }
 
@@ -48,14 +47,14 @@ async function submitPass(): Promise<void> {
 
         params.openTabs === 'true'
             ? openTabsAndEncryptGroup()
-            : showToast(trans('Group is unlocked'))
+            : showToast(trans('group_unlocked'))
     } catch (e: any) {
         error.warn('Caught and handled error: ', e)
 
         if (e instanceof Error && e.message === 'Malformed UTF-8 data') {
-            showToast(trans('Incorrect password'), 'error')
+            showToast(trans('wrong_pass'), 'error')
         } else {
-            showToast(trans('Error occurred'), 'error')
+            showToast(trans('error_occurred'), 'error')
         }
     }
 
@@ -73,14 +72,14 @@ async function openTabsAndEncryptGroup(): Promise<void> {
     <div class="px-2 mt-3">
         <p class="flex items-center gap-3 mb-2 text-sm leading-4">
             <ShieldCheckIcon width="45" height="45" />
-            {{ trans('Enter a password to unlock the content of this group') }}
+            {{ trans('enter_pass_unlock_content') }}
         </p>
 
         <form @submit.prevent="submitPass">
             <Input
                 @loaded="inp => inp.focus()"
                 v-model="password"
-                :label="trans('Enter a password')"
+                :label="trans('enter_pass')"
                 type="password"
                 id="enter-password"
                 :withButton="true"

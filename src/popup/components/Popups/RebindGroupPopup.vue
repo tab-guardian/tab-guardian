@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { useGroupStore } from '@/stores/group'
-import { useTransStore } from '@/stores/trans'
+import trans from '@common/modules/trans'
 import { usePopupStore } from '@/stores/popup'
 import { useRouter } from 'vue-router'
 import useUrlHelper from '@common/composables/useUrlHelper'
@@ -13,7 +13,6 @@ import Button from '@common/components/Form/Button.vue'
 import Input from '@common/components/Form/Input.vue'
 import CheckIcon from '@common/components/Icons/CheckIcon.vue'
 
-const { trans } = useTransStore()
 const { closePopup } = usePopupStore()
 const { urlError } = useUrlHelper()
 const groupStore = useGroupStore()
@@ -45,7 +44,7 @@ async function rebindGroup(): Promise<void> {
     groupStore.selectedGroup.bindURL = hashURL(url.value)
     groupStore.saveGroup(groupStore.selectedGroup)
 
-    showToast(trans('Group rebind successful'))
+    showToast(trans('group_rebind_successful'))
 }
 </script>
 
@@ -53,12 +52,8 @@ async function rebindGroup(): Promise<void> {
     <Popup
         v-if="groupStore.selectedGroup"
         @cancel="closePopup('rebindGroup')"
-        :content="trans('Enter a new URL to bind to')"
-        :description="
-            trans(
-                'Enter a new URL to bind your private group to this new URL. This group will be only visible in the list of groups only when you visit this specific URL. Do not forget to lock the group',
-            )
-        "
+        :content="trans('enter_new_url_bind_to')"
+        :description="trans('enter_new_url_bind_private_to_new_url')"
     >
         <form @submit.prevent="rebindGroup">
             <Input
@@ -73,7 +68,7 @@ async function rebindGroup(): Promise<void> {
 
             <Button type="submit" :disabled="preventSubmit" class="mt-3">
                 <CheckIcon width="20" height="20" />
-                {{ trans('Rebind') }}
+                {{ trans('rebind') }}
             </Button>
         </form>
     </Popup>

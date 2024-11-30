@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Group } from '@/types'
 import { useTabsStore } from '@/stores/tabs'
-import { useTransStore } from '@/stores/trans'
+import trans from '@common/modules/trans'
 import downRemoveImage from '@/assets/images/tab-icons/down-remove.png'
 import Control from '@/components/Control.vue'
 
@@ -10,7 +10,6 @@ const props = defineProps<{
 }>()
 
 const tabsStore = useTabsStore()
-const { trans } = useTransStore()
 
 function stashTabs(): void {
     tabsStore.stashTabs(props.group, true)
@@ -19,7 +18,7 @@ function stashTabs(): void {
 
 <template>
     <Control
-        v-tippy="trans('Move tabs into this group')"
+        v-tippy="trans('move_tabs_into_group')"
         @click="stashTabs"
         class="bg-slate-300 dark:bg-slate-700"
     >

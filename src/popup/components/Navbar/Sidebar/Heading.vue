@@ -1,13 +1,12 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue'
-import { useTransStore } from '@/stores/trans'
+import trans from '@common/modules/trans'
 import getImageURL from '@common/modules/getImageURL'
 import isDevelopment from '@common/modules/isDevelopment'
 import getLocalStorageUsage from '@common/modules/storage/getLocalStorageUsage'
 
 onMounted(setCurrentBytesUsage)
 
-const { trans } = useTransStore()
 const currentBytesUsage = ref<number | null>(null)
 const maxBytes = isDevelopment() ? 102400 : chrome.storage.local.QUOTA_BYTES
 
@@ -40,7 +39,7 @@ async function setCurrentBytesUsage(): Promise<void> {
 
         <ul v-if="currentBytesUsage !== null" class="ml-3 w-36">
             <h2 class="mb-1 text-sm">
-                {{ trans('Storage usage') }} {{ storageUsage.toFixed(2) }}%
+                {{ trans('storage_usage') }} {{ storageUsage.toFixed(2) }}%
             </h2>
 
             <div class="w-full rounded-full h-1 bg-slate-300 dark:bg-slate-700">

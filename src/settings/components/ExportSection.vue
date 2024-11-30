@@ -1,19 +1,18 @@
 <script setup lang="ts">
-import { useTransStore } from '@/stores/trans'
+import trans from '@common/modules/trans'
 import { useGroupStore } from '@/stores/group'
 import showToast from '@common/modules/showToast'
 import Section from '@settings/components/Section.vue'
 import Button from '@common/components/Form/Button.vue'
 import ArrowDownTrayIcon from '@common/components/Icons/ArrowDownTrayIcon.vue'
 
-const { trans } = useTransStore()
 const groupStore = useGroupStore()
 
 async function exportGroups(): Promise<void> {
     const groups = groupStore.groups.filter(group => !group.isPrivate)
 
     if (groups.length === 0) {
-        showToast(trans('No groups to export'), 'error')
+        showToast(trans('no_groups_export'), 'error')
         return
     }
 
@@ -33,16 +32,12 @@ async function exportGroups(): Promise<void> {
 
 <template>
     <Section
-        :title="trans('Export Tab Groups')"
-        :subtitle="
-            trans(
-                'Export all of your tab groups. Keep in mind that private groups are not going to be exported. If you want to export them, you need to do it for each private group separately',
-            )
-        "
+        :title="trans('export_tab_groups')"
+        :subtitle="trans('export_all_your_groups')"
     >
         <Button @clicked="exportGroups" class="mt-4">
             <ArrowDownTrayIcon class="w-5 h-5" />
-            {{ trans('Export') }}
+            {{ trans('export') }}
         </Button>
     </Section>
 </template>

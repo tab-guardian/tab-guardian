@@ -1,9 +1,3 @@
-export type Messages = {
-    [key: string]: {
-        [key: string]: string
-    }
-}
-
 export type Link = {
     id: number
     title: string

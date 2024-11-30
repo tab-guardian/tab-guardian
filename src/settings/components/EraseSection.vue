@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useTransStore } from '@/stores/trans'
+import trans from '@common/modules/trans'
 import { useGroupStore } from '@/stores/group'
 import { useSettingsStore } from '@/stores/settings'
 import showToast from '@common/modules/showToast'
@@ -8,7 +8,6 @@ import Section from '@settings/components/Section.vue'
 import Button from '@common/components/Form/Button.vue'
 import TrashIcon from '@common/components/Icons/TrashIcon.vue'
 
-const { trans } = useTransStore()
 const store = useSettingsStore()
 const groupStore = useGroupStore()
 
@@ -18,11 +17,11 @@ async function deleteGroups(): Promise<void> {
     }
 
     const answer = await Swal.fire({
-        title: trans('Erase all groups'),
-        text: trans('I confirm that I want to delete all groups'),
+        title: trans('erase_all_groups"'),
+        text: trans('i_confirm_want_delete_groups'),
         showDenyButton: true,
-        confirmButtonText: trans('Yes'),
-        denyButtonText: trans('No'),
+        confirmButtonText: trans('yes'),
+        denyButtonText: trans('no'),
     })
 
     if (!answer.isConfirmed) {
@@ -32,21 +31,21 @@ async function deleteGroups(): Promise<void> {
     store.loading = true
     await groupStore.deleteAllGroups()
 
-    showToast(trans('All the groups have been deleted'))
+    showToast(trans('all_groups_deleted'))
 
     store.loading = false
 }
 </script>
 
 <template>
-    <Section :title="trans('Erase all groups')">
+    <Section :title="trans('erase_all_groups')">
         <div class="flex items-center justify-between gap-3">
             <Button
                 @clicked="deleteGroups"
                 additionalClasses="bg-red-600 dark:bg-red-400"
             >
                 <TrashIcon class="w-5 h-5" />
-                {{ trans('Erase all groups') }}
+                {{ trans('erase_all_groups') }}
             </Button>
         </div>
     </Section>

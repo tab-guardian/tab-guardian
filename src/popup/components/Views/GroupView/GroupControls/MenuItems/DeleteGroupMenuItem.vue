@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import MenuItem from '@/components/MenuItem.vue'
 import TrashIcon from '@common/components/Icons/TrashIcon.vue'
-import { useTransStore } from '@/stores/trans'
+import trans from '@common/modules/trans'
 import { usePopupStore } from '@/stores/popup'
 
-const { trans } = useTransStore()
 const { closePopup, openPopup } = usePopupStore()
 
 function deleteGroup(): void {
@@ -16,7 +15,7 @@ function deleteGroup(): void {
 <template>
     <MenuItem
         @click="deleteGroup"
-        :label="trans('Delete this group')"
+        :label="trans('delete_this_group')"
         :icon="TrashIcon"
         :class="[
             'text-red-500 !border-red-500',

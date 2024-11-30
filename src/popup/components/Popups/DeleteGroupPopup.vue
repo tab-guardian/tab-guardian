@@ -1,13 +1,12 @@
 <script setup lang="ts">
 import { useGroupStore } from '@/stores/group'
-import { useTransStore } from '@/stores/trans'
+import trans from '@common/modules/trans'
 import { usePopupStore } from '@/stores/popup'
 import { useRouter } from 'vue-router'
 import error from '@common/modules/error'
 import Popup from '@/components/Popups/Popup.vue'
 import PopupButton from '@/components/Popups/PopupButton.vue'
 
-const { trans } = useTransStore()
 const { closePopup } = usePopupStore()
 const groupStore = useGroupStore()
 const router = useRouter()
@@ -31,7 +30,7 @@ async function deleteGroup(): Promise<void> {
     <Popup
         v-if="groupStore.selectedGroup"
         @cancel="closePopup('deleteGroup')"
-        :content="trans('Do you want to delete the group?')"
+        :content="trans('want_delete_group')"
     >
         <template #buttons>
             <PopupButton
@@ -39,11 +38,11 @@ async function deleteGroup(): Promise<void> {
                 type="button"
                 class="bg-transparent !text-font border-slate-400 dark:border-slate-600"
             >
-                {{ trans('No') }}
+                {{ trans('no') }}
             </PopupButton>
 
             <PopupButton @click="deleteGroup" type="button" class="popup__button">
-                {{ trans('Yes') }}
+                {{ trans('yes') }}
             </PopupButton>
         </template>
     </Popup>

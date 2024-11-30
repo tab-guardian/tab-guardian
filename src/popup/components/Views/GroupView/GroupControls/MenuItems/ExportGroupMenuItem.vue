@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Group } from '@/types'
 import { useGroupStore } from '@/stores/group'
-import { useTransStore } from '@/stores/trans'
+import trans from '@common/modules/trans'
 import { usePopupStore } from '@/stores/popup'
 import error from '@common/modules/error'
 import encryptGroup from '@common/modules/encrypt/encryptGroup'
@@ -11,7 +11,6 @@ import getPasswordFromStorage from '@common/modules/storage/getPasswordFromStora
 import showToast from '@common/modules/showToast'
 
 const store = useGroupStore()
-const { trans } = useTransStore()
 const popupsStore = usePopupStore()
 
 async function exportGroup(): Promise<void> {
@@ -49,10 +48,7 @@ async function encryptPrivateGroup(group: Group): Promise<Group | null> {
     const pass = await getPasswordFromStorage(group.id)
 
     if (!pass) {
-        showToast(
-            trans('Something went wrong! Cannot remember your password'),
-            'error',
-        )
+        showToast(trans('cant_remember_pass'), 'error')
         return null
     }
 
@@ -63,7 +59,7 @@ async function encryptPrivateGroup(group: Group): Promise<Group | null> {
 <template>
     <MenuItem
         @click="exportGroup"
-        :label="trans('Export this group')"
+        :label="trans('export_this_group')"
         :icon="ArrowDownTrayIcon"
     />
 </template>

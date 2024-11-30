@@ -3,7 +3,7 @@ import type { SelectTabsOperation, Link } from '@/types'
 import { onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useSelectTabsStore } from '@/stores/selectTabs'
-import { useTransStore } from '@/stores/trans'
+import trans from '@common/modules/trans'
 import { useGroupStore } from '@/stores/group'
 import showToast from '@common/modules/showToast'
 import View from '@/components/Views/View.vue'
@@ -12,13 +12,10 @@ import SaveButton from '@/components/Views/SelectTabsView/SaveButton.vue'
 import ControlButton from '@/components/Views/SelectTabsView/ControlButton.vue'
 import SlideSwitch from '@common/components/Form/SlideSwitch.vue'
 
-const { trans } = useTransStore()
 const store = useSelectTabsStore()
 const router = useRouter()
 const groupStore = useGroupStore()
-const subtitle = trans(
-    'Click on each tab to select or unselect it for saving to memory',
-)
+const subtitle = trans('click_on_each_tab')
 
 onMounted(() => addEventListener('keydown', saveTabsAfterEnter))
 onUnmounted(() => removeEventListener('keydown', saveTabsAfterEnter))
@@ -58,28 +55,28 @@ async function saveTabs(): Promise<void> {
 
 function showToastMessage(operation: SelectTabsOperation, links: Link[]): void {
     if (operation === 'adding' && links.length === 0) {
-        showToast(trans("You haven't selected any tabs"))
+        showToast(trans('you_not_selected_tabs'))
     } else if (operation === 'adding') {
-        showToast(trans('Tabs added to the group'))
+        showToast(trans('tabs_added_to_group'))
     } else if (operation === 'creating' && links.length === 0) {
-        showToast(trans('Group created without any tabs selected'))
+        showToast(trans('group_created_without_tabs'))
     } else {
-        showToast(trans('Group created with tabs'))
+        showToast(trans('group_created_with_tabs'))
     }
 }
 </script>
 
 <template>
-    <View class="select-tabs" :title="trans('Select Tabs')" :subtitle="subtitle">
+    <View class="select-tabs" :title="trans('select')" :subtitle="subtitle">
         <div class="flex gap-1 my-2">
             <ControlButton @click="store.selectAll">
-                {{ trans('Select all') }}
+                {{ trans('select_all') }}
             </ControlButton>
             <ControlButton @click="store.deselectAll">
-                {{ trans('Deselect all') }}
+                {{ trans('deselect_all') }}
             </ControlButton>
             <ControlButton @click="router.go(-1)">
-                {{ trans('Cancel') }}
+                {{ trans('cancel') }}
             </ControlButton>
         </div>
 
@@ -88,15 +85,15 @@ function showToastMessage(operation: SelectTabsOperation, links: Link[]): void {
         <div class="flex items-center justify-between gap-3 mt-3">
             <div class="text-right">
                 <SlideSwitch v-model="groupStore.closeSelectedTabs">
-                    {{ trans('Close selected tabs') }}
+                    {{ trans('close_selected_tabs') }}
                 </SlideSwitch>
             </div>
 
             <SaveButton @clicked="saveTabs">
                 <span v-if="store.operation === 'adding'">
-                    {{ trans('Add tabs') }}
+                    {{ trans('add_tabs') }}
                 </span>
-                <span v-else>{{ trans('Create the group') }}</span>
+                <span v-else>{{ trans('create_group') }}</span>
             </SaveButton>
         </div>
     </View>

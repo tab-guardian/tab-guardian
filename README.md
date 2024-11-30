@@ -8,7 +8,7 @@ For those who prioritize security, Tab Guardian offers the added feature of encr
 ## Features
 Here is what makes Tab Guardian a great tool for managing your tabs:
 
-- [x] Multi-language support 🇬🇧 🇷🇺 🇨🇳. More languages will be added soon
+- [x] Multi-language support 🇬🇧 🇷🇺 🇨🇳 depending on your operating system's language preferences
 - [x] You can save tabs and restore them later
 - [x] You can edit a group including adding and removing tabs from it
 - [x] You can create encrypted (locked) groups that require password to unlock

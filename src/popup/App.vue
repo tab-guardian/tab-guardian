@@ -1,11 +1,7 @@
 <script setup lang="ts">
-import { onMounted, onBeforeMount } from 'vue'
+import { onMounted } from 'vue'
 import { useSettingsStore } from '@/stores/settings'
 import { usePopupStore } from '@/stores/popup'
-import { useTransStore } from '@/stores/trans'
-import en from '@/locales/en.json'
-import ru from '@/locales/ru.json'
-import zh from '@/locales/zh.json'
 import Navbar from '@/components/Navbar/Navbar.vue'
 import DeleteGroupPopup from '@/components/Popups/DeleteGroupPopup.vue'
 import GroupMenuPopup from '@/components/Popups/GroupMenuPopup.vue'
@@ -17,11 +13,6 @@ import AppearTransition from '@common/components/Transitions/AppearTransition.vu
 
 const { loadSettingsFromStorage } = useSettingsStore()
 const { isOpenPopup } = usePopupStore()
-const { loadMessages } = useTransStore()
-
-onBeforeMount(async () => {
-    await loadMessages({ en, ru, zh })
-})
 
 onMounted(() => {
     loadSettingsFromStorage()

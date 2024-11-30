@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted } from 'vue'
 import { useGroupStore } from '@/stores/group'
-import { useTransStore } from '@/stores/trans'
+import trans from '@common/modules/trans'
 import { usePopupStore } from '@/stores/popup'
 import { useSelectTabsStore } from '@/stores/selectTabs'
 import showToast from '@common/modules/showToast'
@@ -11,7 +11,6 @@ import Button from '@common/components/Form/Button.vue'
 import ChevronRightIcon from '@common/components/Icons/ChevronRightIcon.vue'
 import BindToUrlSlider from '@/components/Popups/BindToUrlSlider.vue'
 
-const { trans } = useTransStore()
 const { closePopup, closeAllPopups } = usePopupStore()
 const store = useGroupStore()
 const selectTabsStore = useSelectTabsStore()
@@ -19,7 +18,7 @@ const selectTabsStore = useSelectTabsStore()
 const passwordErr = computed<string>(() => {
     return store.newGroup.confirmPassword.length > 0 &&
         store.newGroup.password !== store.newGroup.confirmPassword
-        ? trans('Passwords do not match')
+        ? trans('passwords_not_match')
         : ''
 })
 
@@ -46,12 +45,12 @@ function selectLinks(): void {
     }
 
     if (store.newGroup.isPrivate && !store.newGroup.password) {
-        showToast(trans('Password is empty'), 'error')
+        showToast(trans('password_empty'), 'error')
         return
     }
 
     if (store.groupNameLength > store.groupNameMaxLength) {
-        showToast(trans('Group name is too long'), 'error')
+        showToast(trans('group_name_long'), 'error')
         return
     }
 
@@ -65,11 +64,11 @@ function selectLinks(): void {
 </script>
 
 <template>
-    <Popup @cancel="closePopup('groupName')" :content="trans('Enter a group name')">
+    <Popup @cancel="closePopup('groupName')" :content="trans('enter_group_name')">
         <form @submit.prevent="selectLinks" class="flex flex-col gap-3">
             <Input
                 v-model="store.newGroup.name"
-                :label="trans('Group name')"
+                :label="trans('group_name')"
                 @loaded="inp => inp.focus()"
                 :meta="`${store.groupNameLength} / ${store.groupNameMaxLength}`"
                 :maxlength="store.groupNameMaxLength"
@@ -82,7 +81,7 @@ function selectLinks(): void {
                 v-model="store.newGroup.password"
                 type="password"
                 id="group-password"
-                :label="trans('Enter a password')"
+                :label="trans('enter_pass')"
             />
 
             <Input
@@ -90,7 +89,7 @@ function selectLinks(): void {
                 v-model="store.newGroup.confirmPassword"
                 type="password"
                 id="group-confirm-password"
-                :label="trans('Repeat password')"
+                :label="trans('repeat_pass')"
                 :error="passwordErr"
             />
 
@@ -99,7 +98,7 @@ function selectLinks(): void {
                 <div v-else></div>
 
                 <Button type="submit" :disabled="preventSubmit">
-                    {{ trans('Select Tabs') }}
+                    {{ trans('select') }}
                     <ChevronRightIcon width="20" height="20" />
                 </Button>
             </div>

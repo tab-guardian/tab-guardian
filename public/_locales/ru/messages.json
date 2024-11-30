@@ -1,0 +1,141 @@
+{
+    "ext_name": {"message": "Хранитель Вкладок"},
+    "ext_description": {"message": "Расширение для браузера, которое позволяет сохранять и восстанавливать ваши вкладки, включая их шифрование с использованием пароля"},
+    "yes": {"message": "Да"},
+    "no": {"message": "Нет"},
+    "lock": {"message": "Заблокировать"},
+    "emoji": {"message": "Эмодзи"},
+    "bytes": {"message": "байт"},
+    "rebind": {"message": "Перепривязать"},
+    "select": {"message": "Выбрать"},
+    "cancel": {"message": "Отмена"},
+    "import": {"message": "Импортировать"},
+    "export": {"message": "Экспортировать"},
+    "new_group": {"message": "Новая группа"},
+    "error_no_group_selected": {"message": "Что-то пошло не так! Группа не выбрана"},
+    "want_delete_group": {"message": "Вы хотите удалить группу?"},
+    "no_links_this_group": {"message": "В этой группе нет ссылок"},
+    "click_on_each_tab": {"message": "Нажмите на каждую вкладку, чтобы выбрать или отменить выбор для сохранения"},
+    "select_all": {"message": "Выбрать все"},
+    "deselect_all": {"message": "Снять со всех"},
+    "add_tabs": {"message": "Добавить вкладки"},
+    "no_tabs_found": {"message": "Вкладки не найдены"},
+    "no_groups_yet": {"message": "Группы пока отсутствуют"},
+    "settings": {"message": "Настройки"},
+    "enter_pass": {"message": "Введите пароль"},
+    "add_more_links": {"message": "Добавить больше вкладок"},
+    "delete_this_group": {"message": "Удалить"},
+    "rename_this_group": {"message": "Переименовать"},
+    "additional_options": {"message": "Дополнительные параметры"},
+    "enter_group_name": {"message": "Введите имя группы"},
+    "group_name": {"message": "Имя группы"},
+    "enter_pass_unlock_content": {"message": "Введите пароль для разблокировки содержимого этой группы"},
+    "wrong_pass": {"message": "Неверный пароль"},
+    "group_unlocked": {"message": "Группа разблокирована"},
+    "group_locked": {"message": "Группа заблокирована"},
+    "cant_remember_pass": {"message": "Что-то пошло не так! Не могу вспомнить ваш пароль"},
+    "error_occurred": {"message": "Произошла ошибка"},
+    "open_tabs": {"message": "Открыть вкладки"},
+    "open_tabs_delete_group": {"message": "Открыть вкладки и удалить эту группу"},
+    "copy_tabs_into_group": {"message": "Скопировать вкладки в эту группу"},
+    "move_tabs_into_group": {"message": "Переместить вкладки в эту группу"},
+    "new_name_saved": {"message": "Новое имя сохранено"},
+    "group_private_unlock_it": {"message": "Эта группа приватная. Разблокируйте её, чтобы увидеть параметры"},
+    "group_not_found": {"message": "Группа не найдена"},
+    "group_already_locked": {"message": "Группа уже заблокирована"},
+    "pass_empty": {"message": "Пароль пуст"},
+    "private_group_unlocked": {"message": "Эта приватная группа разблокирована"},
+    "no_tabs_to_save": {"message": "Нет вкладок для сохранения"},
+    "tabs_now_saved": {"message": "Вкладки сохранены"},
+    "create_group": {"message": "Создать"},
+    "you_not_selected_tabs": {"message": "Вы не выбрали ни одной вкладки"},
+    "tabs_added_to_group": {"message": "Вкладки добавлены в группу"},
+    "group_created_without_tabs": {"message": "Группа создана без выбранных вкладок"},
+    "group_created_with_tabs": {"message": "Группа создана с вкладками"},
+    "close_selected_tabs": {"message": "Закрыть выбранное"},
+    "bind_to_url": {"message": "Привязать к URL"},
+    "private_groups_are_secure": {"message": "Приватные группы защищены и используют шифрование. Доступ к ним имеют только пользователи с паролем"},
+    "rate_us": {"message": "Оцените нас"},
+    "storage_usage": {"message": "Хранилище"},
+    "group_name_long": {"message": "Имя группы слишком длинное"},
+    "contribute": {"message": "Поддержите нас"},
+    "release_notes": {"message": "Журнал изменений"},
+    "change_icon": {"message": "Изменить значок"},
+    "choose_group_icon": {"message": "Выберите значок группы"},
+    "icon_is_set": {"message": "Значок установлен"},
+    "repeat_pass": {"message": "Повторите пароль"},
+    "passwords_not_match": {"message": "Пароли не совпадают"},
+    "export_this_group": {"message": "Экспортировать"},
+    "rebind_to_other_url": {"message": "Перепривязать к другому URL"},
+    "enter_new_url_bind_private_to_new_url": {"message": "Введите новый URL для привязки вашей приватной группы. Эта группа будет видна только при посещении указанного URL. Не забудьте заблокировать группу"},
+    "enter_new_url_bind_to": {"message": "Введите новый URL для привязки"},
+    "group_rebind_successful": {"message": "Группа успешно перепривязана"},
+    "url_must_start_with_http": {"message": "URL должен начинаться с http:// или https://"},
+    "select_emoji": {"message": "Эмодзи"},
+    "select_image": {"message": "Изображение"},
+    "input_one_emoji": {"message": "Ввод должен содержать ровно одно эмодзи"},
+    "enter_any_emoji": {"message": "Введите любое эмодзи"},
+    "any_emoji_as_group_icon": {"message": "Введите любое эмодзи, чтобы установить его в качестве значка группы"},
+    "enter_image_url": {"message": "Введите URL изображения"},
+    "type_any_image_url_to_set_it": {"message": "Введите URL изображения, чтобы установить его в качестве значка группы"},
+    "group_name_or_tab_search": {"message": "Имя группы или название вкладки..."},
+    "change_the_conf_here": {"message": "Измените настройки расширения здесь"},
+    "lock_group_after_restore": {"message": "Заблокировать группу после восстановления вкладок"},
+    "erase_all_groups": {"message": "Удалить все группы"},
+    "i_confirm_want_delete_groups": {"message": "Я подтверждаю, что хочу удалить все группы"},
+    "confirm_want_delete_groups": {"message": "Подтвердите, что хотите удалить все группы"},
+    "all_groups_deleted": {"message": "Все группы удалены"},
+    "show_private_groups_incognito": {"message": "Показывать приватные группы только в режиме инкогнито браузера. В обычном режиме они будут скрыты"},
+    "settings_saved": {"message": "Настройки сохранены"},
+    "go_to_settings_and_enable_allow_incognito": {"message": "Перейдите в настройки расширения и включите опцию 'Разрешить в режиме инкогнито'"},
+    "override_existing_match": {"message": "Если имя новой группы совпадает с существующим, замените его"},
+    "only_private_groups_incognito": {"message": "Показывать только приватные группы в режиме инкогнито браузера"},
+    "export_tab_groups": {"message": "Экспортировать группы вкладок"},
+    "export_all_your_groups": {"message": "Экспортируйте все группы вкладок. Приватные группы не будут экспортированы. Чтобы экспортировать их, сделайте это для каждой группы отдельно"},
+    "no_groups_export": {"message": "Нет групп для экспорта"},
+    "import_groups": {"message": "Импортировать группы вкладок"},
+    "import_private_public_groups": {"message": "Импортировать приватные или публичные группы вкладок"},
+    "choose_exported_file": {"message": "Выберите экспортированный файл"},
+    "choose_file_import": {"message": "Пожалуйста, выберите файл для импорта"},
+    "failed_decrypt_file": {"message": "Не удалось расшифровать файл"},
+    "error_reading_file": {"message": "Ошибка чтения файла"},
+    "some_groups_already_exist_same_name": {"message": "Некоторые группы, которые вы хотите импортировать, уже существуют с таким же именем. Вы хотите заменить их?"},
+    "replace_groups": {"message": "Заменить группы?"},
+    "file_chosen": {"message": "Файл выбран"},
+    "groups_imported": {
+        "message": "$n$ групп успешно импортировано",
+        "placeholders": {
+            "n": {"content": "$1"}
+        }
+    },
+    "many_attempts_locked_for": {
+        "message": "Слишком много попыток. Заблокировано на $n$ минут",
+        "placeholders": {
+            "n": {"content": "$1"}
+        }
+    },
+    "many_attempts_next_attempt_in": {
+        "message": "Слишком много попыток. Следующая попытка через $n$ минут",
+        "placeholders": {
+            "n": {"content": "$1"}
+        }
+    },
+    "bind_group_url": {
+        "message": "Привяжите эту группу к URL ($url$). Это скроет группу отовсюду, кроме указанного URL, добавив дополнительный уровень безопасности",
+        "placeholders": {
+            "url": {"content": "$1"}
+        }
+    },
+    "url_must_be_less_than": {
+        "message": "URL должен содержать менее $n$ символов",
+        "placeholders": {
+            "n": {"content": "$1"}
+        }
+    },
+    "url_must_be_at_least": {
+        "message": "URL должен содержать не менее $n$ символов",
+        "placeholders": {
+            "n": {"content": "$1"}
+        }
+    }
+}

@@ -2,7 +2,7 @@
 import type { Group } from '@/types'
 import { onMounted, computed } from 'vue'
 import { usePopupStore } from '@/stores/popup'
-import { useTransStore } from '@/stores/trans'
+import trans from '@common/modules/trans'
 import { useGroupStore } from '@/stores/group'
 import { useRouter } from 'vue-router'
 import getIcons from '@/modules/getIcons'
@@ -16,7 +16,6 @@ import PhotoIcon from '@common/components/Icons/PhotoIcon.vue'
 const store = useGroupStore()
 const router = useRouter()
 const { closeAllPopups, openPopup } = usePopupStore()
-const { trans } = useTransStore()
 const groupId = Number(router.currentRoute.value.params.id)
 
 const group = computed<Group | null>(() => store.getGroupById(groupId))
@@ -40,7 +39,7 @@ async function selectIcon(icon: string): Promise<void> {
 
     await store.setIcon(group.value.id, icon)
 
-    showToast(trans('Icon has been set'))
+    showToast(trans('icon_is_set'))
 
     router.push({ name: 'group', params: { id: group.value.id.toString() } })
 }
@@ -55,27 +54,18 @@ function openImageIconPopup(): void {
 </script>
 
 <template>
-    <View :title="trans('Choose a group icon')">
+    <View :title="trans('choose_group_icon')">
         <div class="flex gap-2 mt-2">
             <Btn @click="openImageIconPopup">
-                <PhotoIcon class="size-5" /> {{ trans('Select image') }}
+                <PhotoIcon class="size-5" /> {{ trans('select_image') }}
             </Btn>
 
             <Btn @click="openEmojiPopup">
-                <FaceSmileIcon class="size-5" /> {{ trans('Select emoji') }}
+                <FaceSmileIcon class="size-5" /> {{ trans('select_emoji') }}
             </Btn>
         </div>
 
         <ul class="grid grid-cols-6 gap-2 mt-3">
-            <IconItem
-                v-for="[name, icon] in Object.entries(getIcons())"
-                :key="name"
-                @click="selectIcon(name)"
-                :selected="group!.icon === name"
-            >
-                <component :is="icon" class="w-8 h-8" />
-            </IconItem>
-
             <IconItem
                 v-for="icon in favIcons"
                 :key="icon"
@@ -83,6 +73,15 @@ function openImageIconPopup(): void {
                 :selected="group!.icon === icon"
             >
                 <img :src="icon" class="w-8 h-8" />
+            </IconItem>
+
+            <IconItem
+                v-for="[name, icon] in Object.entries(getIcons())"
+                :key="name"
+                @click="selectIcon(name)"
+                :selected="group!.icon === name"
+            >
+                <component :is="icon" class="w-8 h-8" />
             </IconItem>
         </ul>
     </View>

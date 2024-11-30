@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Group } from '@/types'
 import { ref } from 'vue'
-import { useTransStore } from '@/stores/trans'
+import trans from '@common/modules/trans'
 import { useGroupStore } from '@/stores/group'
 import showToast from '@common/modules/showToast'
 import Swal from 'sweetalert2'
@@ -10,7 +10,6 @@ import Button from '@common/components/Form/Button.vue'
 import FileInput from '@common/components/Form/FileInput.vue'
 import ArrowDownTrayIcon from '@common/components/Icons/ArrowDownTrayIcon.vue'
 
-const { trans } = useTransStore()
 const password = ref<string>('')
 const file = ref<File | null>(null)
 const fileInput = ref<HTMLInputElement | null>(null)
@@ -18,7 +17,7 @@ const groupStore = useGroupStore()
 
 async function importGroups(): Promise<void> {
     if (!file.value) {
-        showToast(trans('Please choose a file to import'), 'error')
+        showToast(trans('choose_file_import'), 'error')
         return
     }
 
@@ -32,13 +31,13 @@ async function importGroups(): Promise<void> {
             await prependGroups(Array.isArray(json) ? json : [json])
         } catch (err) {
             console.error(err)
-            showToast(trans('Failed to decrypt the file'), 'error')
+            showToast(trans('failed_decrypt_file'), 'error')
         }
     }
 
     reader.onerror = e => {
         console.error('Error reading file:', e)
-        showToast(trans('Error reading file'), 'error')
+        showToast(trans('error_reading_file'), 'error')
     }
 
     reader.readAsText(file.value)
@@ -62,13 +61,11 @@ async function prependGroups(groups: Group[]): Promise<void> {
     }
 
     const answer = await Swal.fire({
-        title: trans('Replace groups?'),
-        text: trans(
-            'Some groups that you want to import already exist with the same name. Do you want to replace them?',
-        ),
+        title: trans('replace_groups'),
+        text: trans('some_groups_already_exist_same_name'),
         showDenyButton: true,
-        confirmButtonText: trans('Yes'),
-        denyButtonText: trans('No'),
+        confirmButtonText: trans('yes'),
+        denyButtonText: trans('no'),
     })
 
     if (answer.isConfirmed) {
@@ -78,7 +75,7 @@ async function prependGroups(groups: Group[]): Promise<void> {
 }
 
 function showSuccessMessage(groups: Group[]): void {
-    const msg = trans(':n groups imported successfully', groups.length.toString())
+    const msg = trans('groups_imported', groups.length.toString())
     showToast(msg)
 }
 
@@ -90,20 +87,20 @@ function fileChosen(f: File, elem: HTMLInputElement): void {
 
 <template>
     <Section
-        :title="trans('Import Tab Groups')"
-        :subtitle="trans('Import private or public tab groups')"
+        :title="trans('import_groups')"
+        :subtitle="trans('import_private_public_groups')"
     >
         <div class="space-y-4">
             <FileInput
                 @chosen="fileChosen"
                 type="file"
-                :label="trans(file ? 'File chosen' : 'Choose the exported file')"
+                :label="file ? trans('file_chosen') : trans('choose_exported_file')"
                 id="choose-file"
             />
 
             <Button @clicked="importGroups" class="mt-4" :disabled="!file">
                 <ArrowDownTrayIcon class="w-5 h-5 rotate-180" />
-                {{ trans('Import') }}
+                {{ trans('import') }}
             </Button>
         </div>
     </Section>

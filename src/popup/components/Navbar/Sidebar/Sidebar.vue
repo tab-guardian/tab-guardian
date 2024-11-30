@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useSidebarStore } from '@/stores/sidebar'
-import { useTransStore } from '@/stores/trans'
+import trans from '@common/modules/trans'
 import openSettingsPage from '@/modules/openSettingsPage'
 import isFirefox from '@common/modules/isFirefox'
 import getImageURL from '@common/modules/getImageURL'
@@ -15,7 +15,6 @@ import GitHubIcon from '@common/components/Icons/GitHubIcon.vue'
 import DocumentIcon from '@common/components/Icons/DocumentIcon.vue'
 
 const sidebarStore = useSidebarStore()
-const { trans } = useTransStore()
 const rateUsLink = isFirefox()
     ? 'todo:'
     : 'https://chromewebstore.google.com/detail/tab-guardian/kjdklkfpliphcbnphmfhalllclfieojp'
@@ -23,22 +22,22 @@ const rateUsLink = isFirefox()
 const links = [
     {
         href: 'https://github.com/tab-guardian/tab-guardian',
-        label: trans('Contribute'),
+        label: trans('contribute'),
         icon: GitHubIcon,
     },
     {
         href: 'https://github.com/tab-guardian/tab-guardian/blob/main/CHANGELOG.md',
-        label: trans('Release Notes'),
+        label: trans('release_notes'),
         icon: DocumentIcon,
     },
     {
         href: rateUsLink,
-        label: trans('Rate Us'),
+        label: trans('rate_us'),
         icon: StarIcon,
     },
     {
         href: 'javascript:',
-        label: trans('Settings'),
+        label: trans('settings'),
         icon: CogIcon,
         callback: openSettingsPage,
     },
@@ -76,7 +75,7 @@ const links = [
                     class="justify-end pr-2 mb-2 text-font-gray text-xs flex gap-2 w-full"
                 >
                     <img :src="getImageURL('icons/icon-32.png')" class="w-4 h-4" />
-                    Tab Guardian {{ __APP_VERSION__ }}
+                    {{ trans('ext_name') }} {{ __APP_VERSION__ }}
                 </small>
             </aside>
         </RightSlideTransition>
