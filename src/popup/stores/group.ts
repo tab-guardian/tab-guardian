@@ -362,6 +362,10 @@ export const useGroupStore = defineStore('group', () => {
     async function saveGroup(group: Group): Promise<void> {
         group.updatedAt = Date.now()
 
+        if (!group.createdAt) {
+            group.createdAt = Date.now()
+        }
+
         await saveGroupToStorage(group)
 
         groups.value = groups.value.map(g => (g.id === group.id ? group : g))
