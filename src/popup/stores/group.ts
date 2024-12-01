@@ -181,6 +181,7 @@ export const useGroupStore = defineStore('group', () => {
             isPrivate: newGroup.value.isPrivate,
             isEncrypted: false,
             updatedAt: Date.now(),
+            createdAt: Date.now(),
             links: [],
         }
 
