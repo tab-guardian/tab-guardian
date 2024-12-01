@@ -1,6 +1,9 @@
 {
     "ext_name": {"message": "标签守护者"},
     "ext_description": {"message": "允许您保存和恢复标签页的浏览器扩展，包括使用密码加密它们"},
+    "details": {"message": "详情"},
+    "group_details": {"message": "组详情"},
+    "you_can_find_details_here": {"message": "您可以在这里找到所有的组详情"},
     "yes": {"message": "是"},
     "no": {"message": "否"},
     "lock": {"message": "锁定"},

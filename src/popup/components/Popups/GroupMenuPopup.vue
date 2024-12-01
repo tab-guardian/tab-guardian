@@ -12,6 +12,7 @@ import RebindUrlItem from '@/components/Views/GroupView/GroupControls/MenuItems/
 import ExportGroupMenuItem from '@/components/Views/GroupView/GroupControls/MenuItems/ExportGroupMenuItem.vue'
 import MenuItem from '@/components/MenuItem.vue'
 import PhotoIcon from '@common/components/Icons/PhotoIcon.vue'
+import InfoCircleIcon from '@common/components/Icons/InfoCircleIcon.vue'
 
 const { closePopup } = usePopupStore()
 const groupStore = useGroupStore()
@@ -32,6 +33,13 @@ const isEncrypted = computed<boolean>(() => {
         </p>
 
         <div v-else class="flex flex-col gap-1 mt-3">
+            <RouterLink
+                v-if="group"
+                :to="{ name: 'groupInfo', params: { id: group.id } }"
+            >
+                <MenuItem :label="trans('details')" :icon="InfoCircleIcon" />
+            </RouterLink>
+
             <AddLinkMenuItem />
             <RenameGroupMenuItem />
             <ExportGroupMenuItem />

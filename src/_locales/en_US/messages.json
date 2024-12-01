@@ -1,6 +1,9 @@
 {
     "ext_name": {"message": "Tab Guardian"},
     "ext_description": {"message": "Browser extension that allows you to save and restore your tabs including encrypting them with a password"},
+    "details": {"message": "Details"},
+    "group_details": {"message": "Group Details"},
+    "you_can_find_details_here": {"message": "You can find all of your group details here"},
     "yes": {"message": "Yes"},
     "no": {"message": "No"},
     "lock": {"message": "Lock"},
