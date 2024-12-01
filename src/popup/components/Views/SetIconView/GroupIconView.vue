@@ -15,8 +15,9 @@ import PhotoIcon from '@common/components/Icons/PhotoIcon.vue'
 
 const store = useGroupStore()
 const router = useRouter()
-const { closeAllPopups, openPopup } = usePopupStore()
 const groupId = Number(router.currentRoute.value.params.id)
+
+const { closeAllPopups, openPopup } = usePopupStore()
 
 const group = computed<Group | null>(() => store.getGroupById(groupId))
 
