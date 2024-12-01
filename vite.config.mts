@@ -2,6 +2,7 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { readFileSync } from 'fs'
 import { resolve } from 'path'
+import { viteStaticCopy } from 'vite-plugin-static-copy'
 
 const packageJson = JSON.parse(
     readFileSync(resolve(__dirname, 'package.json'), 'utf-8'),
@@ -16,6 +17,14 @@ export default defineConfig({
                     includeAbsolute: false,
                 },
             },
+        }),
+        viteStaticCopy({
+            targets: [
+                {
+                    src: 'src/_locales',
+                    dest: '',
+                },
+            ],
         }),
     ],
 
