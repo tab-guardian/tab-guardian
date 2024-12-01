@@ -24,17 +24,14 @@ Here is what makes Tab Guardian a great tool for managing your tabs:
 - [x] You can set emoji as an icon for your group
 
 ## Links
-
 - [Brave extension](https://chrome.google.com/webstore/detail/tab-guardian/fceclmihdanbepiogjoeiolnpkalcjpe)
 - [Edge extension](https://chrome.google.com/webstore/detail/tab-guardian/fceclmihdanbepiogjoeiolnpkalcjpe)
 - [Chrome extension](https://chrome.google.com/webstore/detail/tab-guardian/fceclmihdanbepiogjoeiolnpkalcjpe)
 
 ## Start working on the source code
-
 All necessary scripts are in package.json file. You need to have [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/lang/en/) JavaScript package managers.
 
 ### Installation
-
 **Clone the repo**
 ```bash
 git clone https://github.com/tab-guardian/tab-guardian.git && cd tab-guardian
@@ -62,5 +59,4 @@ npm run prod
 ```
 
 ### Code style
-
 Don't worry about the code style. We use [Prettier](https://prettier.io/) to format the code. You can run it manually by executing `yarn prettier` or `npm run prettier` to format the code, or `yarn prettier-check` or `npm run prettier-check` to check if the code is formatted correctly.
