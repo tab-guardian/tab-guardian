@@ -25,6 +25,7 @@ watchEffect(() => {
         <form
             v-if="store.isTitleFieldActive"
             @submit.prevent="store.isTitleFieldActive = false"
+            class="w-full"
         >
             <input
                 v-model="store.newGroup.name"
@@ -33,7 +34,7 @@ watchEffect(() => {
                 :maxlength="store.groupNameMaxLength"
                 ref="inputRef"
                 type="text"
-                class="border border-border bg-safe text-font w-full rounded-md pr-16"
+                class="bg-transparent text-font w-full outline-none pr-16"
                 autofocus
             />
         </form>
