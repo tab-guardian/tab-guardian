@@ -3,7 +3,9 @@ import isDevelopment from '@common/modules/isDevelopment'
 let englishMessages: { [key: string]: { message: string } } | null = null
 
 if (isDevelopment()) {
-    englishMessages = (await import('../../../public/_locales/en_US/messages.json'))
+    const devLocale = import.meta.env.VITE_DEV_LOCALE as 'ru' | 'zh_CH' | 'en'
+
+    englishMessages = (await import(`../../_locales/${devLocale}/messages.json`))
         .default
 }
 

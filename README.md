@@ -44,6 +44,11 @@ yarn install
 npm i
 ```
 
+**Duplicate `.env.example` file and rename it to `.env`**
+```bash
+cp .env.example .env
+```
+
 **Watch files**
 ```bash
 yarn watch
