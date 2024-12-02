@@ -36,8 +36,8 @@ const createdAt = computed<string>(() => {
         :title="trans('group_details')"
         :subtitle="trans('you_can_find_details_here')"
     >
-        <div v-if="group" class="pt-4 px-7">
-            <ul class="space-y-1">
+        <div v-if="group" class="pt-3 px-3">
+            <ul class="space-y-2">
                 <ListItem :field="trans('group_name')" :value="group.name" />
                 <ListItem
                     :field="trans('tabs_count')"
@@ -46,6 +46,12 @@ const createdAt = computed<string>(() => {
                 <ListItem
                     :field="trans('is_private')"
                     :value="group.isPrivate ? trans('yes') : trans('no')"
+                />
+
+                <ListItem
+                    v-if="group.bindURL"
+                    :field="trans('bound_to_url')"
+                    :value="trans('yes')"
                 />
 
                 <ListItem :field="trans('created_at')" :value="createdAt" />

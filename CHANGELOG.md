@@ -1,6 +1,6 @@
 # Release Notes
 
-## v1.6.0 (2024-12-01)
+## v1.6.0 (2024-12-02)
 - ✨ Added 1 more icon for groups
 - ✨ When the group is opened, it will show the number of tabs in the group
 

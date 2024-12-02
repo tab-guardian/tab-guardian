@@ -52,7 +52,7 @@ function attachBindURL(checked: boolean): void {
         @changed="attachBindURL"
     >
         <div class="flex items-center gap-1">
-            {{ trans('bind_to_url') }}
+            {{ trans('bind_to_this_url') }}
         </div>
     </SlideSwitch>
 </template>
