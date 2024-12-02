@@ -47,6 +47,7 @@ import PaintBrushIcon from '@common/components/Icons/PaintBrushIcon.vue'
 import PlayIcon from '@common/components/Icons/PlayIcon.vue'
 import FaceSmileIcon from '@common/components/Icons/FaceSmileIcon.vue'
 import MagnifyingGlassIcon from '@common/components/Icons/MagnifyingGlassIcon.vue'
+import InfoCircleIcon from '@common/components/Icons/InfoCircleIcon.vue'
 
 export default (): { [key: string]: Component } => {
     return {
@@ -98,5 +99,6 @@ export default (): { [key: string]: Component } => {
         PlusCircleIcon,
         ArrowDownTrayIcon,
         GitHubIcon,
+        InfoCircleIcon,
     }
 }

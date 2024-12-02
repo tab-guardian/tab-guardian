@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Group } from '@/types'
-import { computed, watchEffect } from 'vue'
+import { computed, onMounted, watchEffect } from 'vue'
 import { useGroupStore } from '@/stores/group'
 import trans from '@common/modules/trans'
 import { useRoute } from 'vue-router'
@@ -30,6 +30,12 @@ const showButtons = computed<boolean>(() => {
     return group.value !== null && !group.value.isEncrypted
 })
 
+onMounted(() => {
+    if (group.value) {
+        store.incrementViewedTimes(group.value)
+    }
+})
+
 watchEffect(() => {
     store.selectedGroup = group.value
 })
@@ -51,6 +57,6 @@ watchEffect(() => {
             <Links v-else :group />
         </div>
 
-        <Message v-else> 😢 {{ trans('error_no_group_selected') }} </Message>
+        <Message v-else>😢 {{ trans('error_no_group_selected') }}</Message>
     </View>
 </template>

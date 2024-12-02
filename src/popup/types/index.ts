@@ -13,6 +13,9 @@ export type Group = {
     isPrivate: boolean
     isEncrypted: boolean
     updatedAt: number
+    openedTimes?: number
+    viewedTimes?: number
+    createdAt?: number
     hide?: boolean
     bindURL?: string
     icon?: string
@@ -24,6 +27,7 @@ export type NewGroup = {
     password: string
     confirmPassword: string
     bindURL: string | null
+    createdAt?: number
 }
 
 export type Settings = {

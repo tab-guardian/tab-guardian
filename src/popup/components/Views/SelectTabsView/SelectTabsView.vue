@@ -15,7 +15,6 @@ import SlideSwitch from '@common/components/Form/SlideSwitch.vue'
 const store = useSelectTabsStore()
 const router = useRouter()
 const groupStore = useGroupStore()
-const subtitle = trans('click_on_each_tab')
 
 onMounted(() => addEventListener('keydown', saveTabsAfterEnter))
 onUnmounted(() => removeEventListener('keydown', saveTabsAfterEnter))
@@ -67,7 +66,11 @@ function showToastMessage(operation: SelectTabsOperation, links: Link[]): void {
 </script>
 
 <template>
-    <View class="select-tabs" :title="trans('select')" :subtitle="subtitle">
+    <View
+        class="select-tabs"
+        :title="trans('select')"
+        :subtitle="trans('click_on_each_tab')"
+    >
         <div class="flex gap-1 my-2">
             <ControlButton @click="store.selectAll">
                 {{ trans('select_all') }}
