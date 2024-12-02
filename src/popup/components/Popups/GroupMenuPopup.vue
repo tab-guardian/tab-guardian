@@ -35,7 +35,7 @@ const isEncrypted = computed<boolean>(() => {
         <div v-else class="flex flex-col gap-1 mt-3">
             <RouterLink
                 v-if="group"
-                :to="{ name: 'groupInfo', params: { id: group.id } }"
+                :to="{ name: 'groupDetails', params: { id: group.id } }"
             >
                 <MenuItem :label="trans('details')" :icon="InfoCircleIcon" />
             </RouterLink>

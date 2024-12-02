@@ -8,6 +8,7 @@ import Message from '@common/components/Message.vue'
 const store = useGroupStore()
 
 onMounted(() => {
+    store.loadGroupsFromStorage()
     store.selectedGroup = null
 })
 </script>

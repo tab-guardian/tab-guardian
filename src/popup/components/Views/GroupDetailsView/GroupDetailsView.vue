@@ -8,7 +8,7 @@ import moment from 'moment'
 import trans from '@common/modules/trans'
 import View from '@/components/Views/View.vue'
 import Message from '@common/components/Message.vue'
-import ListItem from '@/components/Views/GroupInfoView/ListItem.vue'
+import ListItem from '@/components/Views/GroupDetailsView/ListItem.vue'
 
 const router = useRouter()
 const store = useGroupStore()
@@ -20,14 +20,6 @@ onMounted(closeAllPopups)
 
 const DATE_FORMAT = 'DD.MM.YYYY HH:mm'
 const group = computed<Group | null>(() => store.getGroupById(groupId))
-
-const createdAt = computed<string>(() => {
-    if (!group.value || !group.value.createdAt) {
-        return '-'
-    }
-
-    return moment(group.value.createdAt).format(DATE_FORMAT)
-})
 </script>
 
 <template>
@@ -39,10 +31,24 @@ const createdAt = computed<string>(() => {
         <div v-if="group" class="pt-3 px-3">
             <ul class="space-y-2">
                 <ListItem :field="trans('group_name')" :value="group.name" />
+
                 <ListItem
                     :field="trans('tabs_count')"
                     :value="group.links.length.toString()"
                 />
+
+                <ListItem
+                    v-if="group.viewedTimes"
+                    :field="trans('group_views')"
+                    :value="group.viewedTimes.toString()"
+                />
+
+                <ListItem
+                    v-if="group.openedTimes"
+                    :field="trans('opened_tabs_times')"
+                    :value="group.openedTimes.toString()"
+                />
+
                 <ListItem
                     :field="trans('is_private')"
                     :value="group.isPrivate ? trans('yes') : trans('no')"
@@ -54,7 +60,11 @@ const createdAt = computed<string>(() => {
                     :value="trans('yes')"
                 />
 
-                <ListItem :field="trans('created_at')" :value="createdAt" />
+                <ListItem
+                    v-if="group.createdAt"
+                    :field="trans('created_at')"
+                    :value="moment(group.createdAt).format(DATE_FORMAT)"
+                />
 
                 <ListItem
                     :field="trans('updated_at')"

@@ -15,6 +15,8 @@
     "bytes": {"message": "bytes"},
     "rebind": {"message": "Rebind"},
     "bound_to_url": {"message": "Bound to URL"},
+    "group_views": {"message": "Group views"},
+    "opened_tabs_times": {"message": "Opened tabs times"},
     "select": {"message": "Select"},
     "cancel": {"message": "Cancel"},
     "import": {"message": "Import"},

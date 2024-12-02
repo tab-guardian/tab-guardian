@@ -182,6 +182,8 @@ export const useGroupStore = defineStore('group', () => {
             isEncrypted: false,
             updatedAt: Date.now(),
             createdAt: Date.now(),
+            openedTimes: 0,
+            viewedTimes: 0,
             links: [],
         }
 
@@ -192,18 +194,6 @@ export const useGroupStore = defineStore('group', () => {
         await prependGroup(group)
 
         return group
-    }
-
-    async function updateUpdatedAt(groupId: number): Promise<void> {
-        const group = getGroupById(groupId)
-
-        if (!group) {
-            return
-        }
-
-        group.updatedAt = Date.now()
-
-        await saveGroup(group)
     }
 
     async function prependGroup(group: Group): Promise<void> {
@@ -314,6 +304,42 @@ export const useGroupStore = defineStore('group', () => {
         await saveGroup(group)
     }
 
+    async function incrementOpenedTimes(group: Group): Promise<void> {
+        if (group.openedTimes) {
+            group.openedTimes++
+        } else {
+            group.openedTimes = 1
+        }
+
+        groups.value = groups.value.map(g => {
+            if (g.id === group.id) {
+                g.openedTimes = group.openedTimes
+            }
+
+            return g
+        })
+
+        await saveGroup(group)
+    }
+
+    async function incrementViewedTimes(group: Group): Promise<void> {
+        if (group.viewedTimes) {
+            group.viewedTimes++
+        } else {
+            group.viewedTimes = 1
+        }
+
+        groups.value = groups.value.map(g => {
+            if (g.id === group.id) {
+                g.viewedTimes = group.viewedTimes
+            }
+
+            return g
+        })
+
+        await saveGroup(group)
+    }
+
     async function deleteLink(groupId: number, linkId: number): Promise<void> {
         const group = getGroupById(groupId)
 
@@ -391,8 +417,10 @@ export const useGroupStore = defineStore('group', () => {
         getGroupById,
         deleteAllLinks,
         deleteAllGroups,
-        updateUpdatedAt,
         startGroupRenaming,
+        incrementOpenedTimes,
+        incrementViewedTimes,
+        loadGroupsFromStorage,
         setIcon,
         addGroups,
     }
