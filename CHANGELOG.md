@@ -3,6 +3,8 @@
 ## v1.6.0 (2024-12-02)
 - ✨ Added 1 more icon for groups
 - ✨ When the group is opened, it will show the number of tabs in the group
+- ✨ Added "Details" page for the group where you can see all the details of the particular group
+- ✨ Added the statistics of how many times the user opened tabs and viewed the group. You can access it on the group "Details" page
 
 ## v1.5.1 (2024-11-30)
 - 🧑‍💻 Change internalization to match [Chrome i18n API](https://developer.chrome.com/docs/extensions/reference/api/i18n#concepts_and_usage)

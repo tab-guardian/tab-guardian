@@ -9,6 +9,7 @@ import trans from '@common/modules/trans'
 import View from '@/components/Views/View.vue'
 import Message from '@common/components/Message.vue'
 import ListItem from '@/components/Views/GroupDetailsView/ListItem.vue'
+import Tip from '@common/components/Tip.vue'
 
 const router = useRouter()
 const store = useGroupStore()
@@ -38,18 +39,6 @@ const group = computed<Group | null>(() => store.getGroupById(groupId))
                 />
 
                 <ListItem
-                    v-if="group.viewedTimes"
-                    :field="trans('group_views')"
-                    :value="group.viewedTimes.toString()"
-                />
-
-                <ListItem
-                    v-if="group.openedTimes"
-                    :field="trans('opened_tabs_times')"
-                    :value="group.openedTimes.toString()"
-                />
-
-                <ListItem
                     :field="trans('is_private')"
                     :value="group.isPrivate ? trans('yes') : trans('no')"
                 />
@@ -67,9 +56,25 @@ const group = computed<Group | null>(() => store.getGroupById(groupId))
                 />
 
                 <ListItem
-                    :field="trans('updated_at')"
+                    :field="trans('last_saved')"
                     :value="moment(group.updatedAt).format(DATE_FORMAT)"
                 />
+
+                <ListItem
+                    v-if="group.viewedTimes"
+                    :field="trans('group_views')"
+                    :value="group.viewedTimes.toString()"
+                >
+                    <Tip :tip="trans('group_views_tip')" />
+                </ListItem>
+
+                <ListItem
+                    v-if="group.openedTimes"
+                    :field="trans('opened_tabs_times')"
+                    :value="group.openedTimes.toString()"
+                >
+                    <Tip :tip="trans('opened_tabs_times_tip')" />
+                </ListItem>
             </ul>
         </div>
 
