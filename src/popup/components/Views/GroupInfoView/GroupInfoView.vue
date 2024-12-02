@@ -4,6 +4,7 @@ import { computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { usePopupStore } from '@/stores/popup'
 import { useGroupStore } from '@/stores/group'
+import moment from 'moment'
 import trans from '@common/modules/trans'
 import View from '@/components/Views/View.vue'
 import Message from '@common/components/Message.vue'
@@ -17,7 +18,16 @@ const { closeAllPopups } = usePopupStore()
 
 onMounted(closeAllPopups)
 
+const DATE_FORMAT = 'DD.MM.YYYY HH:mm'
 const group = computed<Group | null>(() => store.getGroupById(groupId))
+
+const createdAt = computed<string>(() => {
+    if (!group.value || !group.value.createdAt) {
+        return '-'
+    }
+
+    return moment(group.value.createdAt).format(DATE_FORMAT)
+})
 </script>
 
 <template>
@@ -28,7 +38,22 @@ const group = computed<Group | null>(() => store.getGroupById(groupId))
     >
         <div v-if="group" class="pt-4 px-7">
             <ul class="space-y-1">
-                <ListItem field="one" value="nice" />
+                <ListItem :field="trans('group_name')" :value="group.name" />
+                <ListItem
+                    :field="trans('tabs_count')"
+                    :value="group.links.length.toString()"
+                />
+                <ListItem
+                    :field="trans('is_private')"
+                    :value="group.isPrivate ? trans('yes') : trans('no')"
+                />
+
+                <ListItem :field="trans('created_at')" :value="createdAt" />
+
+                <ListItem
+                    :field="trans('updated_at')"
+                    :value="moment(group.updatedAt).format(DATE_FORMAT)"
+                />
             </ul>
         </div>
 
