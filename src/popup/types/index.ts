@@ -13,7 +13,7 @@ export type Group = {
     isPrivate: boolean
     isEncrypted: boolean
     updatedAt: number
-    createdAt: number
+    createdAt?: number
     hide?: boolean
     bindURL?: string
     icon?: string
