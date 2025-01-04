@@ -5,12 +5,10 @@ import GroupSearch from '@/components/Views/MainView/NewGroup/GroupSearch.vue'
 </script>
 
 <template>
-    <div>
-        <div class="text-center p-2 border-b border-border">
-            <Buttons />
-            <GroupSearch />
-        </div>
-
-        <Groups />
+    <div class="text-center p-2 border-b border-border">
+        <Buttons />
+        <GroupSearch />
     </div>
+
+    <Groups />
 </template>
