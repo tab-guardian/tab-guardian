@@ -18,12 +18,7 @@ export const useTabsStore = defineStore('tabs', () => {
             return false
         }
 
-        if (!settingsStore.settings.encryptAfterRestore) {
-            await restore(group)
-            return true
-        }
-
-        if (!group.isPrivate) {
+        if (!settingsStore.settings.encryptAfterRestore || !group.isPrivate) {
             await restore(group)
             return true
         }

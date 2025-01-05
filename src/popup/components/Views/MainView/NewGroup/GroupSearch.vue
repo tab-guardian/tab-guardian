@@ -2,12 +2,14 @@
 import type { Group } from '@/types'
 import { useGroupStore } from '@/stores/group'
 import { useTabsStore } from '@/stores/tabs'
+import { useRouter } from 'vue-router'
 import { ref, onMounted, onUnmounted } from 'vue'
 import trans from '@common/modules/trans'
 import MagnifyingGlassIcon from '@common/components/Icons/MagnifyingGlassIcon.vue'
 
 const groupStore = useGroupStore()
 const tabsStore = useTabsStore()
+const router = useRouter()
 const initialGroups = ref<Group[]>([])
 const inpElem = ref<HTMLInputElement | null>(null)
 const query = ref<string>('')
@@ -29,14 +31,27 @@ onUnmounted(() => {
     groupStore.groups = initialGroups.value
 })
 
-function openFirstGroup(e: KeyboardEvent): void {
+async function openFirstGroup(e: KeyboardEvent): Promise<void> {
     const noGroups = groupStore.groups.length === 0
 
     if (e.key !== 'Enter' || noGroups || query.value === '') {
         return
     }
 
-    tabsStore.openTabs(groupStore.groups[0])
+    const group = groupStore.groups[0]
+
+    if (!group.isPrivate) {
+        await tabsStore.openTabs(group)
+        return
+    }
+
+    await router.push({
+        name: 'group',
+        params: {
+            id: group.id,
+            openTabs: 'true',
+        },
+    })
 }
 
 function focusOnSearch(e: KeyboardEvent): void {
