@@ -19,10 +19,10 @@ const groupStore = useGroupStore()
 onMounted(() => addEventListener('keydown', saveTabsAfterEnter))
 onUnmounted(() => removeEventListener('keydown', saveTabsAfterEnter))
 
-function saveTabsAfterEnter(e: Event): void {
+async function saveTabsAfterEnter(e: Event): Promise<void> {
     if (e instanceof KeyboardEvent && e.key === 'Enter') {
-        saveTabs()
         removeEventListener('keydown', saveTabsAfterEnter)
+        await saveTabs()
     }
 }
 
@@ -37,7 +37,7 @@ async function saveTabs(): Promise<void> {
 
     const selectedLinks = store.getSelectedLinks()
 
-    groupStore.prependLinksTo(groupId, selectedLinks)
+    await groupStore.prependLinksTo(groupId, selectedLinks)
 
     if (groupStore.newGroup.isPrivate) {
         await groupStore.encryptGroupById(
