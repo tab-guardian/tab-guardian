@@ -4,10 +4,10 @@ import getGroupIdsFromStorage from '@common/modules/storage/getGroupIdsFromStora
 import error from '@common/modules/error'
 
 export default async (): Promise<Group[]> => {
-    const ids = await getGroupIdsFromStorage()
+    const groupIds = await getGroupIdsFromStorage()
     const groups: Group[] = []
 
-    for (let groupId of ids) {
+    for (let groupId of groupIds) {
         const group = await getFromStorage<Group>(groupId.toString())
 
         if (!group) {
