@@ -1,6 +1,6 @@
 # Release Notes
 
-## v1.7.0 (2025-01-04)
+## v1.7.0 (2025-01-05)
 - ✨ When you filter groups, you can press `Enter` to open the first group in the list
 
 ## v1.6.0 (2024-12-02)
