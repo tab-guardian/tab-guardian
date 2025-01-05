@@ -1,5 +1,5 @@
 import type { Group, Link, NewGroup } from '@/types'
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import trans from '@common/modules/trans'
 import { useSettingsStore } from '@/stores/settings'
@@ -42,8 +42,6 @@ export const useGroupStore = defineStore('group', () => {
         confirmPassword: '',
         bindURL: null,
     })
-
-    onMounted(loadGroupsFromStorage)
 
     function getGroupById(groupId: number | undefined): Group | null {
         if (!groupId) {
