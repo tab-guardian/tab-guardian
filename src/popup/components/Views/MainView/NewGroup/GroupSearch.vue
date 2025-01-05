@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import type { Group } from '@/types'
 import { useGroupStore } from '@/stores/group'
+import { useTabsStore } from '@/stores/tabs'
 import { ref, onMounted, onUnmounted } from 'vue'
 import trans from '@common/modules/trans'
 import MagnifyingGlassIcon from '@common/components/Icons/MagnifyingGlassIcon.vue'
 
 const groupStore = useGroupStore()
+const tabsStore = useTabsStore()
 const initialGroups = ref<Group[]>([])
 const inpElem = ref<HTMLInputElement | null>(null)
 const query = ref<string>('')
@@ -13,10 +15,12 @@ const placeholder = navigator.userAgent.indexOf('Mac OS X') != -1 ? '⌘+k' : 'c
 
 onMounted(() => {
     document.addEventListener('keydown', focusOnSearch)
+    document.addEventListener('keydown', openFirstGroup)
 })
 
 onUnmounted(() => {
     document.removeEventListener('keydown', focusOnSearch)
+    document.removeEventListener('keydown', openFirstGroup)
 
     if (initialGroups.value.length === 0) {
         initialGroups.value = groupStore.groups
@@ -24,6 +28,16 @@ onUnmounted(() => {
 
     groupStore.groups = initialGroups.value
 })
+
+function openFirstGroup(e: KeyboardEvent): void {
+    const noGroups = groupStore.groups.length === 0
+
+    if (e.key !== 'Enter' || noGroups || query.value === '') {
+        return
+    }
+
+    tabsStore.openTabs(groupStore.groups[0])
+}
 
 function focusOnSearch(e: KeyboardEvent): void {
     if (!inpElem.value) {
