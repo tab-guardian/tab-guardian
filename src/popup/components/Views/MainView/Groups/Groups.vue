@@ -7,9 +7,9 @@ import Message from '@common/components/Message.vue'
 
 const store = useGroupStore()
 
-onMounted(() => {
-    store.loadGroupsFromStorage()
+onMounted(async () => {
     store.selectedGroup = null
+    await store.loadGroupsFromStorage()
 })
 </script>
 
