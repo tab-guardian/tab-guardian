@@ -33,8 +33,9 @@ onUnmounted(() => {
 
 async function openFirstGroup(e: KeyboardEvent): Promise<void> {
     const noGroups = groupStore.groups.length === 0
+    const inpIsFocused = inpElem.value === document.activeElement
 
-    if (e.key !== 'Enter' || noGroups || query.value === '') {
+    if (e.key !== 'Enter' || noGroups || query.value === '' || !inpIsFocused) {
         return
     }
 
