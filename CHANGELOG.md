@@ -1,5 +1,8 @@
 # Release Notes
 
+## v1.7.1 (2025-01-08)
+- 🧑‍💻 Remove 'Group views' stats from groups that was updated each time when we view the group
+
 ## v1.7.0 (2025-01-05)
 - ✨ When you filter groups, you can press `Enter` to open the first group in the list
 - 🐛 Bug fix. Sometimes, when you create a new group, it wasn't showing up immediately. The popup needed to be reloaded to see a new group. Now it fixed

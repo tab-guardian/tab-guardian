@@ -15,8 +15,6 @@
     "bytes": {"message": "字节"},
     "rebind": {"message": "重新绑定"},
     "bound_to_url": {"message": "绑定到 URL"},
-    "group_views": {"message": "组浏览次数"},
-    "group_views_tip": {"message": "此组被查看的次数"},
     "opened_tabs_times": {"message": "打开标签页次数"},
     "opened_tabs_times_tip": {"message": "此组中的标签页被一次性打开的次数，而不是单个标签页的打开次数"},
     "select": {"message": "选择"},
