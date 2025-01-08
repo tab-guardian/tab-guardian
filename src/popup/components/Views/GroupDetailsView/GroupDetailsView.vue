@@ -61,14 +61,6 @@ const group = computed<Group | null>(() => store.getGroupById(groupId))
                 />
 
                 <ListItem
-                    v-if="group.viewedTimes"
-                    :field="trans('group_views')"
-                    :value="group.viewedTimes.toString()"
-                >
-                    <Tip :tip="trans('group_views_tip')" />
-                </ListItem>
-
-                <ListItem
                     v-if="group.openedTimes"
                     :field="trans('opened_tabs_times')"
                     :value="group.openedTimes.toString()"

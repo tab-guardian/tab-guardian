@@ -15,8 +15,6 @@
     "bytes": {"message": "байт"},
     "rebind": {"message": "Отвязать"},
     "bound_to_url": {"message": "Привязана к URL"},
-    "group_views": {"message": "Просмотров группы"},
-    "group_views_tip": {"message": "Количество просмотров этой группы"},
     "opened_tabs_times": {"message": "Открыто вкладок раз"},
     "opened_tabs_times_tip": {"message": "Общее количество одновременных открытий вкладок в этой группе. Не индивидуальное количество открытых вкладок"},
     "select": {"message": "Выбрать"},

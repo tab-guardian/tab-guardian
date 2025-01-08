@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Group } from '@/types'
-import { computed, onMounted, watchEffect } from 'vue'
+import { computed, watchEffect } from 'vue'
 import { useGroupStore } from '@/stores/group'
 import trans from '@common/modules/trans'
 import { useRoute } from 'vue-router'
@@ -28,12 +28,6 @@ const group = computed<Group | null>(() => {
 
 const showButtons = computed<boolean>(() => {
     return group.value !== null && !group.value.isEncrypted
-})
-
-onMounted(() => {
-    if (group.value) {
-        store.incrementViewedTimes(group.value)
-    }
 })
 
 watchEffect(() => {

@@ -14,7 +14,6 @@ export type Group = {
     isEncrypted: boolean
     updatedAt: number
     openedTimes?: number
-    viewedTimes?: number
     createdAt?: number
     hide?: boolean
     bindURL?: string

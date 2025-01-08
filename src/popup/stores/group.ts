@@ -181,7 +181,6 @@ export const useGroupStore = defineStore('group', () => {
             updatedAt: Date.now(),
             createdAt: Date.now(),
             openedTimes: 0,
-            viewedTimes: 0,
             links: [],
         }
 
@@ -320,24 +319,6 @@ export const useGroupStore = defineStore('group', () => {
         await saveGroup(group)
     }
 
-    async function incrementViewedTimes(group: Group): Promise<void> {
-        if (group.viewedTimes) {
-            group.viewedTimes++
-        } else {
-            group.viewedTimes = 1
-        }
-
-        groups.value = groups.value.map(g => {
-            if (g.id === group.id) {
-                g.viewedTimes = group.viewedTimes
-            }
-
-            return g
-        })
-
-        await saveGroup(group)
-    }
-
     async function deleteLink(groupId: number, linkId: number): Promise<void> {
         const group = getGroupById(groupId)
 
@@ -417,7 +398,6 @@ export const useGroupStore = defineStore('group', () => {
         deleteAllGroups,
         startGroupRenaming,
         incrementOpenedTimes,
-        incrementViewedTimes,
         loadGroupsFromStorage,
         setIcon,
         addGroups,

@@ -15,8 +15,6 @@
     "bytes": {"message": "bytes"},
     "rebind": {"message": "Rebind"},
     "bound_to_url": {"message": "Bound to URL"},
-    "group_views": {"message": "Group views"},
-    "group_views_tip": {"message": "The number of times this group has been viewed"},
     "opened_tabs_times": {"message": "Opened tabs times"},
     "opened_tabs_times_tip": {"message": "The number of times the tabs in this group have been opened at once. Not the individual tabs opened"},
     "select": {"message": "Select"},
