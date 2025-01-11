@@ -1,5 +1,8 @@
 # Release Notes
 
+## v1.7.2 (2025-01-11)
+- 🐛 Fixed a bug where we couldn't export any groups in settings, were getting an error "No groups to export"
+
 ## v1.7.1 (2025-01-08)
 - 🧑‍💻 Remove 'Group views' stats from groups that was updated each time when we view the group
 
