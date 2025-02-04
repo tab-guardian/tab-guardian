@@ -18,6 +18,7 @@ import getCurrentURL from '@/modules/getCurrentURL'
 import deleteGroupFromStorage from '@common/modules/storage/deleteGroupFromStorage'
 import deleteAllGroupsFromStorage from '@common/modules/storage/deleteAllGroupsFromStorage'
 import generateGroupId from '@common/modules/generateGroupId'
+import savePasswordToStorage from '@common/modules/storage/savePasswordToStorage'
 
 export const useGroupStore = defineStore('group', () => {
     const popupStore = usePopupStore()
@@ -68,6 +69,16 @@ export const useGroupStore = defineStore('group', () => {
         }
 
         return group
+    }
+
+    async function updatePassword(pass: string): Promise<void> {
+        if (!selectedGroup.value) {
+            error.err('No group selected to update password')
+            showToast(trans('error_occurred'), 'error')
+            return
+        }
+
+        savePasswordToStorage(selectedGroup.value.id, pass)
     }
 
     async function loadGroupsFromStorage(): Promise<void> {
@@ -238,6 +249,7 @@ export const useGroupStore = defineStore('group', () => {
     function startGroupRenaming(): void {
         if (!selectedGroup.value) {
             error.err('No group selected to rename')
+            showToast(trans('error_occurred'), 'error')
             return
         }
 
@@ -342,8 +354,6 @@ export const useGroupStore = defineStore('group', () => {
 
         await saveGroup(group)
 
-        resetNewGroup()
-
         if (closeSelectedTabs.value) {
             await closeTabsByIds(links.map(link => link.id))
         }
@@ -399,7 +409,9 @@ export const useGroupStore = defineStore('group', () => {
         startGroupRenaming,
         incrementOpenedTimes,
         loadGroupsFromStorage,
+        resetNewGroup,
         setIcon,
+        updatePassword,
         addGroups,
     }
 })

@@ -22,7 +22,7 @@ const passwordErr = computed<string>(() => {
         : ''
 })
 
-const preventSubmit = computed<boolean>(() => {
+const preventPasswordSubmit = computed<boolean>(() => {
     if (!store.newGroup.isPrivate) {
         return !store.newGroup.name
     }
@@ -34,13 +34,14 @@ const preventSubmit = computed<boolean>(() => {
     )
 })
 
-onMounted(async () => {
+onMounted(() => {
     store.newGroup.name = ''
     store.newGroup.password = ''
 })
 
 function selectLinks(): void {
-    if (preventSubmit.value) {
+    if (preventPasswordSubmit.value) {
+        console.info('Preventing password submit')
         return
     }
 
@@ -97,7 +98,7 @@ function selectLinks(): void {
                 <BindToUrlSlider v-if="store.newGroup.isPrivate" />
                 <div v-else></div>
 
-                <Button type="submit" :disabled="preventSubmit">
+                <Button type="submit" :disabled="preventPasswordSubmit">
                     {{ trans('select') }}
                     <ChevronRightIcon width="20" height="20" />
                 </Button>

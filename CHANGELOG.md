@@ -1,5 +1,9 @@
 # Release Notes
 
+## v1.7.3 (2025-02-04)
+- 🐛 Fixed a bug where you after creating a private group, it was unlocked. Plus, you couldn't lock it because it was giving you an error `Something went wrong! Cannot remember your password`
+- ✨ If, for some reason, the extension forgot the group password when you private group is unlocked, you'll be able to create a new password for the group
+
 ## v1.7.2 (2025-01-11)
 - 🐛 Fixed a bug where we couldn't export any groups in settings, were getting an error "No groups to export"
 

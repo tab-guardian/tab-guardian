@@ -2,6 +2,7 @@
 import type { Group } from '@/types'
 import trans from '@common/modules/trans'
 import { useGroupStore } from '@/stores/group'
+import { usePopupStore } from '@/stores/popup'
 import showToast from '@common/modules/showToast'
 import ShieldExclamationIcon from '@common/components/Icons/ShieldExclamationIcon.vue'
 import LockClosedIcon from '@common/components/Icons/LockClosedIcon.vue'
@@ -14,12 +15,14 @@ type Props = {
 
 const { group } = defineProps<Props>()
 const groupStore = useGroupStore()
+const { openPopup } = usePopupStore()
 
 async function promptEnterPassword(): Promise<void> {
     const pass = await getPasswordFromStorage(group.id)
 
     if (!pass) {
-        showToast(trans('cant_remember_pass'), 'error')
+        showToast(trans('cant_remember_pass'), 'error', 4000)
+        openPopup('newPassword')
         return
     }
 

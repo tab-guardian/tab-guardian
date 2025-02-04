@@ -1,4 +1,40 @@
 {
+    "groups_imported": {
+        "message": "成功导入 $n$ 个组",
+        "placeholders": {
+            "n": {"content": "$1"}
+        }
+    },
+    "many_attempts_locked_for": {
+        "message": "尝试次数过多。已锁定 $n$ 分钟",
+        "placeholders": {
+            "n": {"content": "$1"}
+        }
+    },
+    "many_attempts_next_attempt_in": {
+        "message": "尝试次数过多。下一次尝试在 $n$ 分钟后",
+        "placeholders": {
+            "n": {"content": "$1"}
+        }
+    },
+    "bind_group_url": {
+        "message": "将该组绑定到 URL ($url$)。此操作会将该组隐藏在其他地方，仅在此 URL 可见，增加一层额外的安全性",
+        "placeholders": {
+            "url": {"content": "$1"}
+        }
+    },
+    "url_must_be_less_than": {
+        "message": "URL 必须少于 $n$ 个字符",
+        "placeholders": {
+            "n": {"content": "$1"}
+        }
+    },
+    "url_must_be_at_least": {
+        "message": "URL 必须至少 $n$ 个字符",
+        "placeholders": {
+            "n": {"content": "$1"}
+        }
+    },
     "ext_name": {"message": "标签守护者"},
     "ext_description": {"message": "允许您保存和恢复标签页的浏览器扩展，包括使用密码加密它们"},
     "details": {"message": "详情"},
@@ -32,18 +68,23 @@
     "no_tabs_found": {"message": "未找到标签页"},
     "no_groups_yet": {"message": "还没有组"},
     "settings": {"message": "设置"},
+    "pass_updated": {"message": "密码已更新"},
+    "enter_new_pass": {"message": "输入新密码"},
     "enter_pass": {"message": "输入密码"},
+    "enter_pass_unlock_content": {"message": "输入密码以解锁该组内容"},
+    "wrong_pass": {"message": "密码错误"},
+    "cant_remember_pass": {"message": "出了点问题！无法记住您的密码。请重新输入"},
+    "pass_empty": {"message": "密码为空"},
+    "repeat_pass": {"message": "重复密码"},
+    "passwords_not_match": {"message": "密码不匹配"},
     "add_more_links": {"message": "添加更多链接"},
     "delete_this_group": {"message": "删除该组"},
     "rename_this_group": {"message": "重命名该组"},
     "additional_options": {"message": "附加选项"},
     "enter_group_name": {"message": "输入组名称"},
     "group_name": {"message": "组名称"},
-    "enter_pass_unlock_content": {"message": "输入密码以解锁该组内容"},
-    "wrong_pass": {"message": "密码错误"},
     "group_unlocked": {"message": "组已解锁"},
     "group_locked": {"message": "组已锁定"},
-    "cant_remember_pass": {"message": "出现问题！无法记住您的密码"},
     "error_occurred": {"message": "发生错误"},
     "open_tabs": {"message": "打开标签页"},
     "open_tabs_delete_group": {"message": "打开标签页并删除该组"},
@@ -53,7 +94,6 @@
     "group_private_unlock_it": {"message": "该组是私有的。您需要解锁以查看选项"},
     "group_not_found": {"message": "未找到该组"},
     "group_already_locked": {"message": "该组已锁定"},
-    "pass_empty": {"message": "密码为空"},
     "private_group_unlocked": {"message": "该私有组已解锁"},
     "no_tabs_to_save": {"message": "没有标签页可保存"},
     "tabs_now_saved": {"message": "标签页已保存"},
@@ -73,8 +113,6 @@
     "change_icon": {"message": "更改图标"},
     "choose_group_icon": {"message": "选择组图标"},
     "icon_is_set": {"message": "图标已设置"},
-    "repeat_pass": {"message": "重复密码"},
-    "passwords_not_match": {"message": "密码不匹配"},
     "export_this_group": {"message": "导出该组"},
     "rebind_to_other_url": {"message": "重新绑定到其他 URL"},
     "enter_new_url_bind_private_to_new_url": {"message": "输入一个新 URL 将您的私有组绑定到此新 URL。只有在访问该 URL 时该组才会可见。不要忘记锁定该组"},
@@ -112,40 +150,5 @@
     "some_groups_already_exist_same_name": {"message": "要导入的某些组已存在相同名称。您想替换它们吗？"},
     "replace_groups": {"message": "替换组？"},
     "file_chosen": {"message": "文件已选择"},
-    "groups_imported": {
-        "message": "成功导入 $n$ 个组",
-        "placeholders": {
-            "n": {"content": "$1"}
-        }
-    },
-    "many_attempts_locked_for": {
-        "message": "尝试次数过多。已锁定 $n$ 分钟",
-        "placeholders": {
-            "n": {"content": "$1"}
-        }
-    },
-    "many_attempts_next_attempt_in": {
-        "message": "尝试次数过多。下一次尝试在 $n$ 分钟后",
-        "placeholders": {
-            "n": {"content": "$1"}
-        }
-    },
-    "bind_group_url": {
-        "message": "将该组绑定到 URL ($url$)。此操作会将该组隐藏在其他地方，仅在此 URL 可见，增加一层额外的安全性",
-        "placeholders": {
-            "url": {"content": "$1"}
-        }
-    },
-    "url_must_be_less_than": {
-        "message": "URL 必须少于 $n$ 个字符",
-        "placeholders": {
-            "n": {"content": "$1"}
-        }
-    },
-    "url_must_be_at_least": {
-        "message": "URL 必须至少 $n$ 个字符",
-        "placeholders": {
-            "n": {"content": "$1"}
-        }
-    }
+    "save": {"message": "保存"}
 }
