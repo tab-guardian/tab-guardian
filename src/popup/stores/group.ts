@@ -43,25 +43,6 @@ export const useGroupStore = defineStore('group', () => {
         bindURL: null,
     })
 
-    const passwordErr = computed<string>(() => {
-        return newGroup.value.confirmPassword.length > 0 &&
-            newGroup.value.password !== newGroup.value.confirmPassword
-            ? trans('passwords_not_match')
-            : ''
-    })
-
-    const preventPasswordSubmit = computed<boolean>(() => {
-        if (!newGroup.value.isPrivate) {
-            return !newGroup.value.name
-        }
-
-        return (
-            !!passwordErr.value ||
-            !newGroup.value.password ||
-            !newGroup.value.confirmPassword
-        )
-    })
-
     function getGroupById(groupId: number | undefined): Group | null {
         if (!groupId) {
             error.warn('No group id provided when trying to get group by id')
@@ -404,8 +385,6 @@ export const useGroupStore = defineStore('group', () => {
         newGroup,
         groupNameMaxLength,
         groupNameLength,
-        passwordErr,
-        preventPasswordSubmit,
         saveGroup,
         deleteGroup,
         deleteLink,
