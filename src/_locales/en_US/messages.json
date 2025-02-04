@@ -112,6 +112,8 @@
     "some_groups_already_exist_same_name": {"message": "Some groups that you want to import already exist with the same name. Do you want to replace them?"},
     "replace_groups": {"message": "Replace groups?"},
     "file_chosen": {"message": "File chosen"},
+    "save": {"message": "Save"},
+    "enter_new_pass": {"message": "Enter a new password"},
     "groups_imported": {
         "message": "$n$ groups imported successfully",
         "placeholders": {

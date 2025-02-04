@@ -112,6 +112,8 @@
     "some_groups_already_exist_same_name": {"message": "Некоторые группы, которые вы хотите импортировать, уже существуют с таким же именем. Вы хотите заменить их?"},
     "replace_groups": {"message": "Заменить группы?"},
     "file_chosen": {"message": "Файл выбран"},
+    "save": {"message": "Сохранить"},
+    "enter_new_pass": {"message": "Введите новый пароль"},
     "groups_imported": {
         "message": "$n$ групп успешно импортировано",
         "placeholders": {

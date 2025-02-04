@@ -112,6 +112,8 @@
     "some_groups_already_exist_same_name": {"message": "要导入的某些组已存在相同名称。您想替换它们吗？"},
     "replace_groups": {"message": "替换组？"},
     "file_chosen": {"message": "文件已选择"},
+    "save": {"message": "保存"},
+    "enter_new_pass": {"message": "输入新密码"},
     "groups_imported": {
         "message": "成功导入 $n$ 个组",
         "placeholders": {
