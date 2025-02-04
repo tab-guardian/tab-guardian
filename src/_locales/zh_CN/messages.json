@@ -1,4 +1,40 @@
 {
+    "groups_imported": {
+        "message": "成功导入 $n$ 个组",
+        "placeholders": {
+            "n": {"content": "$1"}
+        }
+    },
+    "many_attempts_locked_for": {
+        "message": "尝试次数过多。已锁定 $n$ 分钟",
+        "placeholders": {
+            "n": {"content": "$1"}
+        }
+    },
+    "many_attempts_next_attempt_in": {
+        "message": "尝试次数过多。下一次尝试在 $n$ 分钟后",
+        "placeholders": {
+            "n": {"content": "$1"}
+        }
+    },
+    "bind_group_url": {
+        "message": "将该组绑定到 URL ($url$)。此操作会将该组隐藏在其他地方，仅在此 URL 可见，增加一层额外的安全性",
+        "placeholders": {
+            "url": {"content": "$1"}
+        }
+    },
+    "url_must_be_less_than": {
+        "message": "URL 必须少于 $n$ 个字符",
+        "placeholders": {
+            "n": {"content": "$1"}
+        }
+    },
+    "url_must_be_at_least": {
+        "message": "URL 必须至少 $n$ 个字符",
+        "placeholders": {
+            "n": {"content": "$1"}
+        }
+    },
     "ext_name": {"message": "标签守护者"},
     "ext_description": {"message": "允许您保存和恢复标签页的浏览器扩展，包括使用密码加密它们"},
     "details": {"message": "详情"},
@@ -113,41 +149,5 @@
     "replace_groups": {"message": "替换组？"},
     "file_chosen": {"message": "文件已选择"},
     "save": {"message": "保存"},
-    "enter_new_pass": {"message": "输入新密码"},
-    "groups_imported": {
-        "message": "成功导入 $n$ 个组",
-        "placeholders": {
-            "n": {"content": "$1"}
-        }
-    },
-    "many_attempts_locked_for": {
-        "message": "尝试次数过多。已锁定 $n$ 分钟",
-        "placeholders": {
-            "n": {"content": "$1"}
-        }
-    },
-    "many_attempts_next_attempt_in": {
-        "message": "尝试次数过多。下一次尝试在 $n$ 分钟后",
-        "placeholders": {
-            "n": {"content": "$1"}
-        }
-    },
-    "bind_group_url": {
-        "message": "将该组绑定到 URL ($url$)。此操作会将该组隐藏在其他地方，仅在此 URL 可见，增加一层额外的安全性",
-        "placeholders": {
-            "url": {"content": "$1"}
-        }
-    },
-    "url_must_be_less_than": {
-        "message": "URL 必须少于 $n$ 个字符",
-        "placeholders": {
-            "n": {"content": "$1"}
-        }
-    },
-    "url_must_be_at_least": {
-        "message": "URL 必须至少 $n$ 个字符",
-        "placeholders": {
-            "n": {"content": "$1"}
-        }
-    }
+    "enter_new_pass": {"message": "输入新密码"}
 }

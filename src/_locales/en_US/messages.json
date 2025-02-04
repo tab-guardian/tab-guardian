@@ -1,4 +1,40 @@
 {
+    "groups_imported": {
+        "message": "$n$ groups imported successfully",
+        "placeholders": {
+            "n": {"content": "$1"}
+        }
+    },
+    "many_attempts_locked_for": {
+        "message": "Too many attempts. Locked for $n$ minutes",
+        "placeholders": {
+            "n": {"content": "$1"}
+        }
+    },
+    "many_attempts_next_attempt_in": {
+        "message": "Too many attempts. Next attempt in $n$ minutes",
+        "placeholders": {
+            "n": {"content": "$1"}
+        }
+    },
+    "bind_group_url": {
+        "message": "Bind this group to the ($url$) URL. This will hide the group from everywhere else except this URL. It adds an extra layer of security",
+        "placeholders": {
+            "url": {"content": "$1"}
+        }
+    },
+    "url_must_be_less_than": {
+        "message": "URL must be less than $n$ character",
+        "placeholders": {
+            "n": {"content": "$1"}
+        }
+    },
+    "url_must_be_at_least": {
+        "message": "URL must be at least $n$ characters",
+        "placeholders": {
+            "n": {"content": "$1"}
+        }
+    },
     "ext_name": {"message": "Tab Guardian"},
     "ext_description": {"message": "Browser extension that allows you to save and restore your tabs including encrypting them with a password"},
     "details": {"message": "Details"},
@@ -113,41 +149,5 @@
     "replace_groups": {"message": "Replace groups?"},
     "file_chosen": {"message": "File chosen"},
     "save": {"message": "Save"},
-    "enter_new_pass": {"message": "Enter a new password"},
-    "groups_imported": {
-        "message": "$n$ groups imported successfully",
-        "placeholders": {
-            "n": {"content": "$1"}
-        }
-    },
-    "many_attempts_locked_for": {
-        "message": "Too many attempts. Locked for $n$ minutes",
-        "placeholders": {
-            "n": {"content": "$1"}
-        }
-    },
-    "many_attempts_next_attempt_in": {
-        "message": "Too many attempts. Next attempt in $n$ minutes",
-        "placeholders": {
-            "n": {"content": "$1"}
-        }
-    },
-    "bind_group_url": {
-        "message": "Bind this group to the ($url$) URL. This will hide the group from everywhere else except this URL. It adds an extra layer of security",
-        "placeholders": {
-            "url": {"content": "$1"}
-        }
-    },
-    "url_must_be_less_than": {
-        "message": "URL must be less than $n$ character",
-        "placeholders": {
-            "n": {"content": "$1"}
-        }
-    },
-    "url_must_be_at_least": {
-        "message": "URL must be at least $n$ characters",
-        "placeholders": {
-            "n": {"content": "$1"}
-        }
-    }
+    "enter_new_pass": {"message": "Enter a new password"}
 }

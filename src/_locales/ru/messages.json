@@ -1,4 +1,40 @@
 {
+    "groups_imported": {
+        "message": "$n$ групп успешно импортировано",
+        "placeholders": {
+            "n": {"content": "$1"}
+        }
+    },
+    "many_attempts_locked_for": {
+        "message": "Слишком много попыток. Заблокировано на $n$ минут",
+        "placeholders": {
+            "n": {"content": "$1"}
+        }
+    },
+    "many_attempts_next_attempt_in": {
+        "message": "Слишком много попыток. Следующая попытка через $n$ минут",
+        "placeholders": {
+            "n": {"content": "$1"}
+        }
+    },
+    "bind_group_url": {
+        "message": "Привяжите эту группу к URL ($url$). Это скроет группу отовсюду, кроме указанного URL, добавив дополнительный уровень безопасности",
+        "placeholders": {
+            "url": {"content": "$1"}
+        }
+    },
+    "url_must_be_less_than": {
+        "message": "URL должен содержать менее $n$ символов",
+        "placeholders": {
+            "n": {"content": "$1"}
+        }
+    },
+    "url_must_be_at_least": {
+        "message": "URL должен содержать не менее $n$ символов",
+        "placeholders": {
+            "n": {"content": "$1"}
+        }
+    },
     "ext_name": {"message": "Хранитель Вкладок"},
     "ext_description": {"message": "Расширение для браузера, которое позволяет сохранять и восстанавливать ваши вкладки, включая их шифрование с использованием пароля"},
     "details": {"message": "Детали"},
@@ -113,41 +149,5 @@
     "replace_groups": {"message": "Заменить группы?"},
     "file_chosen": {"message": "Файл выбран"},
     "save": {"message": "Сохранить"},
-    "enter_new_pass": {"message": "Введите новый пароль"},
-    "groups_imported": {
-        "message": "$n$ групп успешно импортировано",
-        "placeholders": {
-            "n": {"content": "$1"}
-        }
-    },
-    "many_attempts_locked_for": {
-        "message": "Слишком много попыток. Заблокировано на $n$ минут",
-        "placeholders": {
-            "n": {"content": "$1"}
-        }
-    },
-    "many_attempts_next_attempt_in": {
-        "message": "Слишком много попыток. Следующая попытка через $n$ минут",
-        "placeholders": {
-            "n": {"content": "$1"}
-        }
-    },
-    "bind_group_url": {
-        "message": "Привяжите эту группу к URL ($url$). Это скроет группу отовсюду, кроме указанного URL, добавив дополнительный уровень безопасности",
-        "placeholders": {
-            "url": {"content": "$1"}
-        }
-    },
-    "url_must_be_less_than": {
-        "message": "URL должен содержать менее $n$ символов",
-        "placeholders": {
-            "n": {"content": "$1"}
-        }
-    },
-    "url_must_be_at_least": {
-        "message": "URL должен содержать не менее $n$ символов",
-        "placeholders": {
-            "n": {"content": "$1"}
-        }
-    }
+    "enter_new_pass": {"message": "Введите новый пароль"}
 }
