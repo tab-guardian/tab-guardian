@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import type { Group } from '@/types'
 import { useGroupStore } from '@/stores/group'
-import trans from '@common/modules/trans'
 import { usePopupStore } from '@/stores/popup'
+import trans from '@common/modules/trans'
 import error from '@common/modules/error'
 import encryptGroup from '@common/modules/encrypt/encryptGroup'
 import ArrowDownTrayIcon from '@common/components/Icons/ArrowDownTrayIcon.vue'
@@ -11,7 +11,7 @@ import getPasswordFromStorage from '@common/modules/storage/getPasswordFromStora
 import showToast from '@common/modules/showToast'
 
 const store = useGroupStore()
-const popupsStore = usePopupStore()
+const { openPopup, closePopup } = usePopupStore()
 
 async function exportGroup(): Promise<void> {
     if (!store.selectedGroup) {
@@ -41,7 +41,7 @@ async function exportGroup(): Promise<void> {
 
     URL.revokeObjectURL(url)
 
-    popupsStore.closePopup('groupView')
+    closePopup('groupView')
 }
 
 async function encryptPrivateGroup(group: Group): Promise<Group | null> {
@@ -49,6 +49,7 @@ async function encryptPrivateGroup(group: Group): Promise<Group | null> {
 
     if (!pass) {
         showToast(trans('cant_remember_pass'), 'error')
+        openPopup('newPassword')
         return null
     }
 

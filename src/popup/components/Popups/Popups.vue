@@ -2,6 +2,7 @@
 import DeleteGroupPopup from '@/components/Popups/DeleteGroupPopup.vue'
 import GroupMenuPopup from '@/components/Popups/GroupMenuPopup.vue'
 import NewGroupNamePopup from '@/components/Popups/NewGroupNamePopup.vue'
+import NewPasswordPopup from '@/components/Popups/NewPasswordPopup.vue'
 import RebindGroupPopup from '@/components/Popups/RebindGroupPopup.vue'
 import ChooseEmojiPopup from '@/components/Popups/ChooseEmojiPopup.vue'
 import ChooseImageIconPopup from '@/components/Popups/ChooseImageIconPopup.vue'
@@ -22,6 +23,10 @@ const { isOpenPopup } = usePopupStore()
 
     <AppearTransition>
         <NewGroupNamePopup v-if="isOpenPopup('groupName')" />
+    </AppearTransition>
+
+    <AppearTransition>
+        <NewPasswordPopup v-if="isOpenPopup('newPassword')" />
     </AppearTransition>
 
     <AppearTransition>
