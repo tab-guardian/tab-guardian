@@ -31,7 +31,7 @@ function updatePassword(): void {
 </script>
 
 <template>
-    <Popup @cancel="closePopup('groupName')" :content="trans('enter_new_pass')">
+    <Popup @cancel="closePopup('newPassword')" :content="trans('enter_new_pass')">
         <form @submit.prevent="updatePassword" class="flex flex-col gap-3">
             <Input
                 v-model="pass"

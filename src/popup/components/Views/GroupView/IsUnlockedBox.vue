@@ -21,7 +21,7 @@ async function promptEnterPassword(): Promise<void> {
     const pass = await getPasswordFromStorage(group.id)
 
     if (!pass) {
-        showToast(trans('cant_remember_pass'), 'error')
+        showToast(trans('cant_remember_pass'), 'error', 4000)
         openPopup('newPassword')
         return
     }

@@ -34,13 +34,14 @@ const preventPasswordSubmit = computed<boolean>(() => {
     )
 })
 
-onMounted(async () => {
+onMounted(() => {
     store.newGroup.name = ''
     store.newGroup.password = ''
 })
 
 function selectLinks(): void {
-    if (preventPasswordSubmit) {
+    if (preventPasswordSubmit.value) {
+        console.info('Preventing password submit')
         return
     }
 
