@@ -1,6 +1,6 @@
 # Release Notes
 
-## v1.7.3 (2025-02-14)
+## v1.7.3 (2025-02-04)
 - 🐛 Fixed a bug where you after creating a private group, it was unlocked. Plus, you couldn't lock it because it was giving you an error `Something went wrong! Cannot remember your password`
 
 ## v1.7.2 (2025-01-11)
