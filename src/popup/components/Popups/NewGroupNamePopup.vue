@@ -15,32 +15,13 @@ const { closePopup, closeAllPopups } = usePopupStore()
 const store = useGroupStore()
 const selectTabsStore = useSelectTabsStore()
 
-const passwordErr = computed<string>(() => {
-    return store.newGroup.confirmPassword.length > 0 &&
-        store.newGroup.password !== store.newGroup.confirmPassword
-        ? trans('passwords_not_match')
-        : ''
-})
-
-const preventSubmit = computed<boolean>(() => {
-    if (!store.newGroup.isPrivate) {
-        return !store.newGroup.name
-    }
-
-    return (
-        !!passwordErr.value ||
-        !store.newGroup.password ||
-        !store.newGroup.confirmPassword
-    )
-})
-
 onMounted(async () => {
     store.newGroup.name = ''
     store.newGroup.password = ''
 })
 
 function selectLinks(): void {
-    if (preventSubmit.value) {
+    if (store.preventPasswordSubmit) {
         return
     }
 
@@ -90,14 +71,14 @@ function selectLinks(): void {
                 type="password"
                 id="group-confirm-password"
                 :label="trans('repeat_pass')"
-                :error="passwordErr"
+                :error="store.passwordErr"
             />
 
             <div class="flex items-end gap-3 justify-between">
                 <BindToUrlSlider v-if="store.newGroup.isPrivate" />
                 <div v-else></div>
 
-                <Button type="submit" :disabled="preventSubmit">
+                <Button type="submit" :disabled="store.preventPasswordSubmit">
                     {{ trans('select') }}
                     <ChevronRightIcon width="20" height="20" />
                 </Button>
