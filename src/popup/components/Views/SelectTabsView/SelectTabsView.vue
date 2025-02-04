@@ -11,6 +11,7 @@ import Tabs from '@/components/Views/SelectTabsView/Tabs.vue'
 import SaveButton from '@/components/Views/SelectTabsView/SaveButton.vue'
 import ControlButton from '@/components/Views/SelectTabsView/ControlButton.vue'
 import SlideSwitch from '@common/components/Form/SlideSwitch.vue'
+import savePasswordToStorage from '@common/modules/storage/savePasswordToStorage'
 
 const store = useSelectTabsStore()
 const router = useRouter()
@@ -39,15 +40,16 @@ async function saveTabs(): Promise<void> {
 
     await groupStore.prependLinksTo(groupId, selectedLinks)
 
+    const pass = groupStore.newGroup.password
+    const confirm = groupStore.newGroup.confirmPassword
+
     if (groupStore.newGroup.isPrivate) {
-        await groupStore.encryptGroupById(
-            groupId,
-            groupStore.newGroup.password,
-            groupStore.newGroup.confirmPassword,
-        )
+        await savePasswordToStorage(groupId, pass)
+        await groupStore.encryptGroupById(groupId, pass, confirm)
     }
 
     store.closeTabsModal()
+    groupStore.resetNewGroup()
 
     showToastMessage(store.operation, selectedLinks)
 }

@@ -63,6 +63,8 @@ export const useTabsStore = defineStore('tabs', () => {
             await closeTabs(links.map(l => l.id))
         }
 
+        groupStore.resetNewGroup()
+
         showToast(trans('tabs_now_saved'))
     }
 

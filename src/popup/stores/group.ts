@@ -354,8 +354,6 @@ export const useGroupStore = defineStore('group', () => {
 
         await saveGroup(group)
 
-        resetNewGroup()
-
         if (closeSelectedTabs.value) {
             await closeTabsByIds(links.map(link => link.id))
         }
@@ -411,6 +409,7 @@ export const useGroupStore = defineStore('group', () => {
         startGroupRenaming,
         incrementOpenedTimes,
         loadGroupsFromStorage,
+        resetNewGroup,
         setIcon,
         updatePassword,
         addGroups,
