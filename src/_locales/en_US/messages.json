@@ -43,7 +43,7 @@
     "wrong_pass": {"message": "Incorrect password"},
     "group_unlocked": {"message": "Group is unlocked"},
     "group_locked": {"message": "Group is locked"},
-    "cant_remember_pass": {"message": "Something went wrong! Cannot remember your password"},
+    "cant_remember_pass": {"message": "Something went wrong! Cannot remember your password. Please, enter it again"},
     "error_occurred": {"message": "Error occurred"},
     "open_tabs": {"message": "Open tabs"},
     "open_tabs_delete_group": {"message": "Open tabs and delete this group"},

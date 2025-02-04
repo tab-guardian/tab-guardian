@@ -43,7 +43,7 @@
     "wrong_pass": {"message": "密码错误"},
     "group_unlocked": {"message": "组已解锁"},
     "group_locked": {"message": "组已锁定"},
-    "cant_remember_pass": {"message": "出现问题！无法记住您的密码"},
+    "cant_remember_pass": {"message": "出了点问题！无法记住您的密码。请重新输入"},
     "error_occurred": {"message": "发生错误"},
     "open_tabs": {"message": "打开标签页"},
     "open_tabs_delete_group": {"message": "打开标签页并删除该组"},

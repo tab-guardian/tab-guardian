@@ -43,7 +43,7 @@
     "wrong_pass": {"message": "Неверный пароль"},
     "group_unlocked": {"message": "Группа разблокирована"},
     "group_locked": {"message": "Группа заблокирована"},
-    "cant_remember_pass": {"message": "Что-то пошло не так! Не могу вспомнить ваш пароль"},
+    "cant_remember_pass": {"message": "Что-то пошло не так! Не могу вспомнить ваш пароль. Пожалуйста, введите его снова"},
     "error_occurred": {"message": "Произошла ошибка"},
     "open_tabs": {"message": "Открыть вкладки"},
     "open_tabs_delete_group": {"message": "Открыть вкладки и удалить эту группу"},
