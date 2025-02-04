@@ -7,6 +7,7 @@ import Popup from '@/components/Popups/Popup.vue'
 import Input from '@common/components/Form/Input.vue'
 import Button from '@common/components/Form/Button.vue'
 import ChevronRightIcon from '@common/components/Icons/ChevronRightIcon.vue'
+import showToast from '@common/modules/showToast'
 
 const { closePopup, closeAllPopups } = usePopupStore()
 const store = useGroupStore()
@@ -26,7 +27,8 @@ const preventPasswordSubmit = computed<boolean>(() => {
 
 function updatePassword(): void {
     store.updatePassword(pass.value)
-    // todo: complete here
+    showToast(trans('pass_updated'))
+    closeAllPopups()
 }
 </script>
 

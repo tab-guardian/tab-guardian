@@ -74,6 +74,7 @@
     "wrong_pass": {"message": "Неверный пароль"},
     "cant_remember_pass": {"message": "Что-то пошло не так! Не могу вспомнить ваш пароль. Пожалуйста, введите его снова"},
     "repeat_pass": {"message": "Повторите пароль"},
+    "pass_updated": {"message": "Пароль обновлен"},
     "pass_empty": {"message": "Пароль пуст"},
     "passwords_not_match": {"message": "Пароли не совпадают"},
     "add_more_links": {"message": "Добавить больше вкладок"},
