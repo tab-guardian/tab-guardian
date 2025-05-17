@@ -18,9 +18,9 @@
         }
     },
     "bind_group_url": {
-        "message": "将该组绑定到 URL ($url$)。此操作会将该组隐藏在其他地方，仅在此 URL 可见，增加一层额外的安全性",
+        "message": "将该组绑定到 URL ($n$)。此操作会将该组隐藏在其他地方，仅在此 URL 可见，增加一层额外的安全性",
         "placeholders": {
-            "url": {"content": "$1"}
+            "n": {"content": "$1"}
         }
     },
     "url_must_be_less_than": {
