@@ -11,7 +11,7 @@ import SlideSwitch from '@common/components/Form/SlideSwitch.vue'
 const store = useGroupStore()
 
 const currURL = ref<string | null>(null)
-const bindTip = ref<string>(trans('bind_group_url', currURL.value || ''))
+const bindTip = ref<string>(trans('bind_group_url', 'unknown'))
 
 onMounted(async () => {
     await setBindTip()
@@ -22,6 +22,7 @@ async function setBindTip(): Promise<void> {
 
     if (url) {
         currURL.value = url
+        bindTip.value = trans('bind_group_url', url)
         return
     }
 
@@ -47,7 +48,7 @@ function attachBindURL(checked: boolean): void {
 
 <template>
     <SlideSwitch
-        v-tippy="currURL ? bindTip : bindTip"
+        v-tippy="bindTip"
         :disabled="!currURL"
         @changed="attachBindURL"
     >

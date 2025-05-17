@@ -18,9 +18,9 @@
         }
     },
     "bind_group_url": {
-        "message": "Bind this group to the ($url$) URL. This will hide the group from everywhere else except this URL. It adds an extra layer of security",
+        "message": "Bind this group to the ($n$) URL. This will hide the group from everywhere else except this URL. It adds an extra layer of security",
         "placeholders": {
-            "url": {"content": "$1"}
+            "n": {"content": "$1"}
         }
     },
     "url_must_be_less_than": {

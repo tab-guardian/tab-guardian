@@ -1,5 +1,8 @@
 # Release Notes
 
+## v1.7.4 (2025-05-17)
+- 🐛 Fixed missing URL displayed when you hover over the "Bind to URL" select switch while creating a private group
+
 ## v1.7.3 (2025-02-04)
 - 🐛 Fixed a bug where you after creating a private group, it was unlocked. Plus, you couldn't lock it because it was giving you an error `Something went wrong! Cannot remember your password`
 - ✨ If, for some reason, the extension forgot the group password when you private group is unlocked, you'll be able to create a new password for the group
