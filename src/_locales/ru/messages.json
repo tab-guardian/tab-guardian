@@ -150,5 +150,6 @@
     "some_groups_already_exist_same_name": {"message": "Некоторые группы, которые вы хотите импортировать, уже существуют с таким же именем. Вы хотите заменить их?"},
     "replace_groups": {"message": "Заменить группы?"},
     "file_chosen": {"message": "Файл выбран"},
-    "save": {"message": "Сохранить"}
+    "save": {"message": "Сохранить"},
+    "date_format_is": {"message": "Фортат даты"}
 }
