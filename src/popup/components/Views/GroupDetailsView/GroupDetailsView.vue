@@ -54,14 +54,14 @@ const group = computed<Group | null>(() => store.getGroupById(groupId))
                     :field="trans('created_at')"
                     :value="moment(group.createdAt).format(DATE_FORMAT)"
                 >
-                    <Tip :tip="trans('date_format_is') + ' DD.MM.YYYY HH:SS'" />
+                    <Tip :tip="trans('date_format_is') + ' ' + DATE_FORMAT" />
                 </ListItem>
 
                 <ListItem
                     :field="trans('last_saved')"
                     :value="moment(group.updatedAt).format(DATE_FORMAT)"
                 >
-                    <Tip :tip="trans('date_format_is') + ' DD.MM.YYYY HH:SS'" />
+                    <Tip :tip="trans('date_format_is') + ' ' + DATE_FORMAT" />
                 </ListItem>
 
                 <ListItem
