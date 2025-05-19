@@ -4,6 +4,7 @@
 - ✨ To the "Last saved" and "Created at" fields on group details page added a tooltip `Date format is DD.MM.YYYY HH:SS` to let people know the format
 - ✨ Storage usage number in the sidebar is now also formatted. Instead of a number like 34553 it will now show 34 553 with a space separator
 - ✨ Added clearing search field after pressing Enter key
+- 🧑‍💻 When you now open any tab (link) from the group, it will update the "Last updated" field on the group
 
 ## v1.7.4 (2025-05-17)
 - 🐛 Fixed missing URL displayed when you hover over the "Bind to URL" select switch while creating a private group
