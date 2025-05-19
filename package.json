@@ -13,6 +13,7 @@
     },
     "scripts": {
         "dev": "vite",
+        "watch": "vite",
         "build": "vite build",
         "prettier": "prettier ./src --write",
         "prettier-check": "prettier ./src --check",

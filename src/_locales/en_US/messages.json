@@ -150,5 +150,6 @@
     "some_groups_already_exist_same_name": {"message": "Some groups that you want to import already exist with the same name. Do you want to replace them?"},
     "replace_groups": {"message": "Replace groups?"},
     "file_chosen": {"message": "File chosen"},
-    "save": {"message": "Save"}
+    "save": {"message": "Save"},
+    "date_format_is": {"message": "Date format is"}
 }

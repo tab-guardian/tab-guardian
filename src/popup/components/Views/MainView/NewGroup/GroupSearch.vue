@@ -41,6 +41,11 @@ async function openFirstGroup(e: KeyboardEvent): Promise<void> {
 
     const group = groupStore.groups[0]
 
+    // Clear the input field after Enter was pressed
+    query.value = ''
+    inpElem.value!.value = ''
+    groupStore.groups = initialGroups.value
+
     if (!group.isPrivate) {
         await tabsStore.openTabs(group)
         return
