@@ -1,6 +1,10 @@
 import Toastify from 'toastify-js'
 
-export default (text: string, type: 'error' | 'info' = 'info', duration = 2000): void => {
+export default (
+    text: string,
+    type: 'error' | 'info' = 'info',
+    duration = 2000,
+): void => {
     Toastify({
         text,
         duration,
@@ -10,9 +14,7 @@ export default (text: string, type: 'error' | 'info' = 'info', duration = 2000):
         stopOnFocus: true,
         style: {
             background:
-                type === 'info'
-                    ? ''
-                    : 'linear-gradient(135deg, #7e3d3d, #7e1919)',
+                type === 'info' ? '' : 'linear-gradient(135deg, #7e3d3d, #7e1919)',
             borderRadius: '8px',
             position: 'absolute',
             boxShadow:
