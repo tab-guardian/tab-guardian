@@ -12,8 +12,7 @@
         "url": "https://github.com/tab-guardian/tab-guardian"
     },
     "scripts": {
-        "dev": "vite",
-        "watch": "vite",
+        "dev": "vite --host",
         "build": "vite build",
         "prettier": "prettier ./src --write",
         "prettier-check": "prettier ./src --check",

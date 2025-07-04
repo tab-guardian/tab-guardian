@@ -1,0 +1,7 @@
+.vscode
+.git
+.github
+.env
+node_modules
+*.md
+LICENSE

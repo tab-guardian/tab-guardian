@@ -1,0 +1,13 @@
+name: tab-guardian
+
+services:
+    app:
+        image: tab-guardian
+        container_name: tab-guardian
+        build:
+            context: .
+        volumes:
+            - .:/app
+            - /app/node_modules
+        ports:
+            - 3000:5173

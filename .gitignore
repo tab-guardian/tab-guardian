@@ -1,7 +1,3 @@
-/mix-manifest.json
-/.vscode
-/.idea
-/extension/main.js
-/extension/main.js.LICENSE.txt
-/extension/main.css
-/dist
+dist
+node_modules
+.env
