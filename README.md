@@ -66,7 +66,7 @@ npm run prod
 ### Code style
 Don't worry about the code style. We use [Prettier](https://prettier.io/) to format the code. You can run it manually by executing `yarn prettier` or `npm run prettier` to format the code, or `yarn prettier-check` or `npm run prettier-check` to check if the code is formatted correctly.
 
-## Development
+## Contribute
 ### NPM Commands Available
 All necessary scripts are in `package.json` file. I'm using Vite here.
 
@@ -92,44 +92,49 @@ npm run build
 npm run prettier
 ```
 
-### Without a Container Engine
-If you don't use container engines like [Podman](https://podman.io/) or [Docker](https://www.docker.com/), you need to do a little bit setup. You need to have [npm](https://www.npmjs.com/) package managers to run the commands.
-
 ### With a Container Engine
-If you use container engines like [Podman](https://podman.io/) or [Docker](https://www.docker.com/) it's a lot easier for you. You just need to have Podman with Podman Compose or Docker with Docker Compose installed on your machine.
+If you use container engines like [Podman](https://podman.io/) or [Docker](https://www.docker.com/) it's a lot easier for you.
 
 #### Build the Image
-To build the image, run this command:
+To build the image, run this Docker command:
 ```bash
 docker compose build
-# for Podman, run this:
+```
+For Podman, run this:
+```bash
 podman-compose build
 ```
 
-#### Run the container
-After the image is build, you can run a container from that image. Run this command:
+#### Run the Container
+After the image is build, you can run a container from that image. Run this Docker command:
 ```bash
 docker compose up -d
-# for Podman, run this:
+```
+For Podman, run this:
+```bash
 podman-compose up -d
 ```
 
 After the container is created, it will run the development server which is available on `http://localhost:3000`. You can enter it and run [NPM commands](#npm-commands-available).
 
 #### Enter the Container
-To enter inside the container, run this command:
+To enter inside the container, run this Docker command:
 ```bash
 docker compose exec app sh
-# for Podman, run this:
+```
+For Podman, run this:
+```bash
 podman-compose exec app sh
 ```
 
 You'll be able to run [NPM commands](#npm-commands-available) inside of the container.
 
 #### Delete the Container
-When you are done working, you can delete the container by running this:
+When you are done working, you can delete the container by running Docker this:
 ```bash
 docker compose down
-# for Podman, run this:
+```
+For Podman, run this:
+```bash
 podman-compose down
 ```
