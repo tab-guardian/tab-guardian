@@ -115,7 +115,20 @@ For Podman, run this:
 podman-compose up -d
 ```
 
-After the container is created, it will run the development server which is available on `http://localhost:3000`. You can enter it and run [NPM commands](#npm-commands-available).
+After the container is created, it will run the development server which is available on `http://localhost:3000`.
+
+#### Copy `node_modules` Locally
+If you need to copy `node_modules` directory from the container to your local machine, run this command for Docker:
+```bash
+docker cp tab-guardian:/app/node_modules .
+```
+For Podman, run this:
+```bash
+podman cp tab-guardian:/app/node_modules .
+```
+
+> [!NOTE]
+> `node_modules` is excluded from using volume in [docker-compose.yml](docker-compose.yml) file, that's why you need to copy it manually. It's done to prevent your local modules to be copied to Linux container, since it can create incompatibility issues between operating systems if you don't use Linux.
 
 #### Enter the Container
 To enter inside the container, run this Docker command:
