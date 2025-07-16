@@ -6,8 +6,9 @@ services:
         container_name: tab-guardian
         build:
             context: .
+            dockerfile: Containerfile
         volumes:
-            - .:/app
+            - .:/app:z
             - /app/node_modules
         ports:
             - 3000:5173
