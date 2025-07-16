@@ -93,24 +93,17 @@ npm run prettier
 ```
 
 ### With a Container Engine
-If you use container engines like [Podman](https://podman.io/) or [Docker](https://www.docker.com/) it's a lot easier for you.
+> [!NOTE]
+> If you use [🐳 Docker](https://app.docker.com/) instead of [🦦 Podman](https://podman.io/), just replace `podman-compose` with `docker compose`, and `podman` with `docker` in code examples below.
 
 #### Build the Image
-To build the image, run this Docker command:
-```bash
-docker compose build
-```
-For Podman, run this:
+To build the image, run this command:
 ```bash
 podman-compose build
 ```
 
 #### Run the Container
-After the image is build, you can run a container from that image. Run this Docker command:
-```bash
-docker compose up -d
-```
-For Podman, run this:
+After the image is build, you can run a container from that image. Run this command:
 ```bash
 podman-compose up -d
 ```
@@ -118,11 +111,7 @@ podman-compose up -d
 After the container is created, it will run the development server which is available on `http://localhost:3000`.
 
 #### Copy `node_modules` Locally
-If you need to copy `node_modules` directory from the container to your local machine, run this command for Docker:
-```bash
-docker cp tab-guardian:/app/node_modules .
-```
-For Podman, run this:
+If you need to copy `node_modules` directory from the container to your local machine, run this command:
 ```bash
 podman cp tab-guardian:/app/node_modules .
 ```
@@ -131,11 +120,7 @@ podman cp tab-guardian:/app/node_modules .
 > `node_modules` is excluded from using volume in [compose.yml](compose.yml) file, that's why you need to copy it manually. It's done to prevent your local modules to be copied to Linux container, since it can create incompatibility issues between operating systems if you don't use Linux.
 
 #### Enter the Container
-To enter inside the container, run this Docker command:
-```bash
-docker compose exec app sh
-```
-For Podman, run this:
+To enter inside the container, run this command:
 ```bash
 podman-compose exec app sh
 ```
@@ -143,11 +128,7 @@ podman-compose exec app sh
 You'll be able to run [NPM commands](#npm-commands-available) inside of the container.
 
 #### Delete the Container
-When you are done working, you can delete the container by running Docker this:
-```bash
-docker compose down
-```
-For Podman, run this:
+When you are done working, you can delete the container by running this:
 ```bash
 podman-compose down
 ```
