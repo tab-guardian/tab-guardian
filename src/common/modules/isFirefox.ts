@@ -1,3 +1,1 @@
-export default (): boolean => {
-    return navigator.userAgent.indexOf('Firefox') !== -1
-}
+export default (): boolean => typeof browser !== 'undefined'
