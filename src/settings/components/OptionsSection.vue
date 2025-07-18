@@ -6,7 +6,7 @@ import showToast from '@common/modules/showToast'
 import Section from '@settings/components/Section.vue'
 import SlideSwitch from '@common/components/Form/SlideSwitch.vue'
 import { isDevelopment } from '@common/modules/isDevelopment'
-import { isFirefox } from '@common/modules/isFirefox'
+import { isFirefox } from '@common/modules/browser/isFirefox'
 
 const store = useSettingsStore()
 const incognitoModeAllowed = ref<boolean>(false)

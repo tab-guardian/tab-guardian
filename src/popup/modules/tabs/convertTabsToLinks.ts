@@ -1,5 +1,5 @@
 import type { Link } from '@/types'
-import getImageURL from '@common/modules/getImageURL'
+import { getImageURL } from '@common/modules/browser/runtime'
 
 export default (tabs: chrome.tabs.Tab[]): Link[] => {
     const links: Link[] = []

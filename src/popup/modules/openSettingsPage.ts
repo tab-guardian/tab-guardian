@@ -1,4 +1,5 @@
 import { isDevelopment } from '@common/modules/isDevelopment'
+import { getImageURL } from '@common/modules/browser/runtime'
 
 export default async (): Promise<chrome.tabs.Tab | null> => {
     if (isDevelopment()) {
@@ -7,7 +8,7 @@ export default async (): Promise<chrome.tabs.Tab | null> => {
     }
 
     const tab = await chrome.tabs.create({
-        url: chrome.runtime.getURL('settings.html'),
+        url: getImageURL('settings.html'),
         active: true,
     })
 

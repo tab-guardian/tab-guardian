@@ -13,7 +13,7 @@ import saveGroupToStorage from '@common/modules/storage/saveGroupToStorage'
 import encryptGroup from '@common/modules/encrypt/encryptGroup'
 import closeTabsByIds from '@/modules/tabs/closeTabsByIds'
 import { isDevelopment } from '@common/modules/isDevelopment'
-import isIncognitoWindow from '@/modules/isIncognitoWindow'
+import { isIncognito } from '@common/modules/browser/windows'
 import getCurrentURL from '@/modules/getCurrentURL'
 import deleteGroupFromStorage from '@common/modules/storage/deleteGroupFromStorage'
 import deleteAllGroupsFromStorage from '@common/modules/storage/deleteAllGroupsFromStorage'
@@ -113,7 +113,7 @@ export const useGroupStore = defineStore('group', () => {
     }
 
     async function shouldHideGroup(group: Group): Promise<boolean> {
-        const isIncognito = await isIncognitoWindow()
+        const isPrivate = await isIncognito()
 
         if (group.bindURL) {
             const hashedURL = await getCurrentURL(true)
@@ -126,14 +126,14 @@ export const useGroupStore = defineStore('group', () => {
         const showOnlyPrivateGroupsInIncognito =
             settingsStore.settings.showOnlyPrivateGroupsInIncognito
 
-        if (!group.isPrivate && isIncognito && showOnlyPrivateGroupsInIncognito) {
+        if (!group.isPrivate && isPrivate && showOnlyPrivateGroupsInIncognito) {
             return true
         }
 
         const showPrivateGroupsOnlyInIncognito =
             settingsStore.settings.showPrivateGroupsOnlyInIncognito
 
-        if (group.isPrivate && !isIncognito && showPrivateGroupsOnlyInIncognito) {
+        if (group.isPrivate && !isPrivate && showPrivateGroupsOnlyInIncognito) {
             return true
         }
 
