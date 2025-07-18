@@ -5,7 +5,7 @@ import { useSettingsStore } from '@/stores/settings'
 import showToast from '@common/modules/showToast'
 import Section from '@settings/components/Section.vue'
 import SlideSwitch from '@common/components/Form/SlideSwitch.vue'
-import isDevelopment from '@common/modules/isDevelopment'
+import { isDevelopment } from '@common/modules/isDevelopment'
 
 const store = useSettingsStore()
 const incognitoModeAllowed = ref<boolean>(false)

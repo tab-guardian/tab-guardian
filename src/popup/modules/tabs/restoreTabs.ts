@@ -1,5 +1,5 @@
 import type { Link } from '@/types'
-import isDevelopment from '@common/modules/isDevelopment'
+import { isDevelopment } from '@common/modules/isDevelopment'
 import queryTabs from './queryTabs'
 
 export default async (links: Link[]): Promise<void> => {

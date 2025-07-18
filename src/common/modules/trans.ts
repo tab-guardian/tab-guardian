@@ -1,4 +1,5 @@
 import isDevelopment from '@common/modules/isDevelopment'
+import isFirefox from '@common/modules/isFirefox'
 
 let englishMessages: { [key: string]: { message: string } } | null = null
 
@@ -16,6 +17,14 @@ export default (msg: string, ...args: string[]): string => {
         }
 
         return englishMessages[msg].message
+    }
+
+    return getMessage(msg, args)
+}
+
+function getMessage(msg: string, args?: string | string[]): string {
+    if (isFirefox()) {
+        return browser.i18n.getMessage(msg, args)
     }
 
     return chrome.i18n.getMessage(msg, args)

@@ -3,7 +3,7 @@ import queryTabs from '@/modules/tabs/queryTabs'
 import getFakeLinks from '@/modules/getFakeLinks'
 import convertTabsToLinks from '@/modules/tabs/convertTabsToLinks'
 import error from '@common/modules/error'
-import isDevelopment from '@common/modules/isDevelopment'
+import { isDevelopment } from '@common/modules/isDevelopment'
 
 export default async (): Promise<Link[]> => {
     if (isDevelopment()) {

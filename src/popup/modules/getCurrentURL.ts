@@ -1,4 +1,4 @@
-import isDevelopment from '@common/modules/isDevelopment'
+import { isDevelopment } from '@common/modules/isDevelopment'
 import hashURL from '@/modules/hashURL'
 
 export default async (hash = false): Promise<string | null> => {

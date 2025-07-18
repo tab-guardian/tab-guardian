@@ -1,4 +1,4 @@
-import isDevelopment from '@common/modules/isDevelopment'
+import { isDevelopment } from '@common/modules/isDevelopment'
 
 export default async (): Promise<chrome.tabs.Tab | null> => {
     if (isDevelopment()) {
