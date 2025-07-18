@@ -1,4 +1,5 @@
 import isDevelopment from '@common/modules/isDevelopment'
+import isFirefox from '@common/modules/isFirefox'
 import error from '@common/modules/error'
 
 export default <T>(key: string): Promise<T | null> => {
@@ -7,13 +8,20 @@ export default <T>(key: string): Promise<T | null> => {
             return resolve(getFromLocalStorage<T>(key))
         }
 
+        if (isFirefox()) {
+            browser.storage.local.get(key).then(result => {
+                resolve(getFromBrowserStorage<T>(key, result))
+            })
+            return
+        }
+
         chrome.storage.local.get(key, result => {
-            resolve(getFromChromeStorage<T>(key, result))
+            resolve(getFromBrowserStorage<T>(key, result))
         })
     })
 }
 
-function getFromChromeStorage<T>(
+function getFromBrowserStorage<T>(
     key: string,
     result: { [key: string]: any },
 ): T | null {

@@ -1,4 +1,5 @@
 import error from '@common/modules/error'
+import isFirefox from '@common/modules/isFirefox'
 
 export default async <T>(
     key: string,
@@ -17,5 +18,6 @@ export default async <T>(
         return
     }
 
-    await chrome.storage.local.set({ [key]: jsonStr })
+    const storage = isFirefox() ? browser.storage.local : chrome.storage.local
+    await storage.set({ [key]: jsonStr })
 }

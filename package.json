@@ -20,6 +20,7 @@
     },
     "devDependencies": {
         "@types/chrome": "^0.0.267",
+        "@types/firefox": "^0.0.34",
         "@types/crypto-js": "^4.2.2",
         "@types/firefox-webext-browser": "^120.0.3",
         "@types/toastify-js": "^1.12.3",

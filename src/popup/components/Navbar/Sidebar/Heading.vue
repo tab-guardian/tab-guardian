@@ -3,6 +3,7 @@ import { ref, onMounted, computed } from 'vue'
 import trans from '@common/modules/trans'
 import getImageURL from '@common/modules/getImageURL'
 import isDevelopment from '@common/modules/isDevelopment'
+import isFirefox from '@common/modules/isFirefox'
 import getLocalStorageUsage from '@common/modules/storage/getLocalStorageUsage'
 
 onMounted(setCurrentBytesUsage)
@@ -21,6 +22,15 @@ const storageUsage = computed(() => {
 async function setCurrentBytesUsage(): Promise<void> {
     if (isDevelopment()) {
         currentBytesUsage.value = getLocalStorageUsage()
+        return
+    }
+
+    if (isFirefox()) {
+        currentBytesUsage.value = new TextEncoder().encode(
+            Object.entries(await browser.storage.sync.get())
+                .map(([key, value]) => key + JSON.stringify(value))
+                .join(''),
+        ).length
         return
     }
 
