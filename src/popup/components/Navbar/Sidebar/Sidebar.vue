@@ -16,7 +16,7 @@ import DocumentIcon from '@common/components/Icons/DocumentIcon.vue'
 
 const sidebarStore = useSidebarStore()
 const rateUsLink = isFirefox()
-    ? 'todo:'
+    ? 'https://addons.mozilla.org/firefox/addon/tab-guardian/'
     : 'https://chromewebstore.google.com/detail/tab-guardian/kjdklkfpliphcbnphmfhalllclfieojp'
 
 const links = [
