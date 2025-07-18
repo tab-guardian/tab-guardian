@@ -1,1 +1,3 @@
-export default (): boolean => typeof browser !== 'undefined'
+export function isFirefox(): boolean {
+    return typeof browser !== 'undefined'
+}

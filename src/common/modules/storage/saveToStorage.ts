@@ -1,5 +1,5 @@
 import error from '@common/modules/error'
-import isFirefox from '@common/modules/isFirefox'
+import { isFirefox } from '@common/modules/isFirefox'
 
 export default async <T>(
     key: string,

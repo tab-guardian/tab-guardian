@@ -2,7 +2,7 @@
 import { useSidebarStore } from '@/stores/sidebar'
 import trans from '@common/modules/trans'
 import openSettingsPage from '@/modules/openSettingsPage'
-import isFirefox from '@common/modules/isFirefox'
+import { isFirefox } from '@common/modules/isFirefox'
 import getImageURL from '@common/modules/getImageURL'
 import Hamburger from '@/components/Navbar/Sidebar/Hamburger.vue'
 import RightSlideTransition from '@common/components/Transitions/RightSlideTransition.vue'
