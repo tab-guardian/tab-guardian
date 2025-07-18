@@ -6,6 +6,9 @@ export default async (): Promise<boolean> => {
         return true
     }
 
-    const currWindow = await chrome.windows.getCurrent()
+    const currWindow = isFirefox()
+        ? await browser.windows.getCurrent()
+        : await chrome.windows.getCurrent()
+
     return currWindow.incognito
 }

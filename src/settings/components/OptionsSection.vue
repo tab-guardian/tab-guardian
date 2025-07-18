@@ -18,10 +18,13 @@ const incognitoWarningMessage = computed<string | null>(() => {
 })
 
 onMounted(async () => {
-    if (!isDevelopment()) {
-        incognitoModeAllowed.value =
-            await chrome.extension.isAllowedIncognitoAccess()
+    if (isDevelopment()) {
+        return
     }
+
+    incognitoModeAllowed.value = isFirefox()
+        ? await browser.extension.isAllowedIncognitoAccess()
+        : await chrome.extension.isAllowedIncognitoAccess()
 })
 
 function updateSettings(): void {
