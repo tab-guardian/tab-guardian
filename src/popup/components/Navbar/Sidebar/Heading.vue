@@ -2,7 +2,7 @@
 import { ref, onMounted, computed } from 'vue'
 import trans from '@common/modules/trans'
 import getImageURL from '@common/modules/getImageURL'
-import isDevelopment from '@common/modules/isDevelopment'
+import { isDevelopment } from '@common/modules/isDevelopment'
 import isFirefox from '@common/modules/isFirefox'
 import getLocalStorageUsage from '@common/modules/storage/getLocalStorageUsage'
 

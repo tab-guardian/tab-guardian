@@ -1,3 +1,4 @@
+import { isDevelopment } from '@common/modules/isDevelopment'
 
 export default async (): Promise<boolean> => {
     if (isDevelopment()) {

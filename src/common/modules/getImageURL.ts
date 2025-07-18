@@ -1,4 +1,4 @@
-import isDevelopment from '@common/modules/isDevelopment'
+import { isDevelopment } from '@common/modules/isDevelopment'
 
 export default (uri: string): string => {
     if (isDevelopment()) {
