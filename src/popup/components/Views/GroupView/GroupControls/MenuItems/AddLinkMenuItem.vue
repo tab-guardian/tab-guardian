@@ -4,7 +4,7 @@ import PlusCircleIcon from '@common/components/Icons/PlusCircleIcon.vue'
 import { trans } from '@common/modules/trans'
 import { useSelectTabsStore } from '@/stores/selectTabs'
 import { useGroupStore } from '@/stores/group'
-import error from '@common/modules/error'
+import { error } from '@common/modules/error'
 
 const store = useSelectTabsStore()
 const groupStore = useGroupStore()

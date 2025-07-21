@@ -1,10 +1,10 @@
 import type { Tab } from '@common/types'
 import type { QueryInfo } from '@common/types'
 import { isDevelopment } from '@common/modules/isDevelopment'
-import error from '@common/modules/error'
+import { error } from '@common/modules/error'
 import { targetBrowser } from '@common/modules/browser/targetBrowser'
 
-export default (queryInfo?: QueryInfo): Promise<Tab[]> => {
+export function queryTabs(queryInfo?: QueryInfo): Promise<Tab[]> {
     return new Promise(async (resolve, reject) => {
         if (isDevelopment()) {
             error.info(

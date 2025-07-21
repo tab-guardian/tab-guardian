@@ -4,10 +4,10 @@ import { trans } from '@common/modules/trans'
 import { useGroupStore } from '@/stores/group'
 import { usePopupStore } from '@/stores/popup'
 import { showToast } from '@common/modules/showToast'
+import { getPasswordFromStorage } from '@common/modules/storage/getPasswordFromStorage'
+import { deletePasswordFromStorage } from '@common/modules/storage/deletePasswordFromStorage'
 import ShieldExclamationIcon from '@common/components/Icons/ShieldExclamationIcon.vue'
 import LockClosedIcon from '@common/components/Icons/LockClosedIcon.vue'
-import getPasswordFromStorage from '@common/modules/storage/getPasswordFromStorage'
-import deletePasswordFromStorage from '@common/modules/storage/deletePasswordFromStorage'
 
 type Props = {
     group: Group

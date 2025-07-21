@@ -1,4 +1,4 @@
-import error from '@common/modules/error'
+import { error } from '@common/modules/error'
 import { targetBrowser } from '@common/modules/browser/targetBrowser'
 
 export default async <T>(

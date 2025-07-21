@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import type { Link } from '@/types'
 import { useGroupStore } from '@/stores/group'
-import error from '@common/modules/error'
-import restoreTabs from '@/modules/tabs/restoreTabs'
+import { error } from '@common/modules/error'
+import { restoreTabs } from '@/modules/tabs/restoreTabs'
 import DeleteLinkButton from '@/components/Views/GroupView/DeleteLinkButton.vue'
 import LinkElement from '@/components/LinkElement.vue'
 

@@ -2,10 +2,10 @@
 import { ref, onMounted } from 'vue'
 import { trans } from '@common/modules/trans'
 import { useGroupStore } from '@/stores/group'
-import getCurrentURL from '@/modules/getCurrentURL'
-import error from '@common/modules/error'
+import { getCurrentURL } from '@/modules/getCurrentURL'
+import { error } from '@common/modules/error'
 import { showToast } from '@common/modules/showToast'
-import hashURL from '@/modules/hashURL'
+import { hashURL } from '@/modules/hashURL'
 import SlideSwitch from '@common/components/Form/SlideSwitch.vue'
 
 const store = useGroupStore()

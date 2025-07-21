@@ -3,15 +3,15 @@ import { ref, computed } from 'vue'
 import { useGroupStore } from '@/stores/group'
 import { trans } from '@common/modules/trans'
 import { usePopupStore } from '@/stores/popup'
-import error from '@common/modules/error'
+import { error } from '@common/modules/error'
+import { useURLHelper } from '@common/composables/useURLHelper'
 import Popup from '@/components/Popups/Popup.vue'
-import useUrlHelper from '@common/composables/useUrlHelper'
 import Button from '@common/components/Form/Button.vue'
 import Input from '@common/components/Form/Input.vue'
 import CheckIcon from '@common/components/Icons/CheckIcon.vue'
 
 const { submitPopup, closePopup } = usePopupStore()
-const { urlError } = useUrlHelper()
+const { urlError } = useURLHelper()
 const groupStore = useGroupStore()
 const url = ref<string>('')
 

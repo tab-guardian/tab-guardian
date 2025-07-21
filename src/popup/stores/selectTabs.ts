@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import { useRouter } from 'vue-router'
 import { usePopupStore } from '@/stores/popup'
-import getCurrentLinks from '@/modules/tabs/getCurrentLinks'
+import { getCurrentLinks } from '@/modules/tabs/getCurrentLinks'
 
 type SelectLinksParams = {
     operation: SelectTabsOperation

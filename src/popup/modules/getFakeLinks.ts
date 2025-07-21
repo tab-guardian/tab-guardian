@@ -1,6 +1,6 @@
 import type { Link } from '@/types'
 
-export default (): Link[] => {
+export function getFakeLinks(): Link[] {
     return [
         {
             id: 1 + Date.now() + Math.floor(Math.random() * 1000),

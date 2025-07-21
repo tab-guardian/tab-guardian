@@ -1,9 +1,9 @@
 import type { Link } from '@/types'
 import { isDevelopment } from '@common/modules/isDevelopment'
 import { targetBrowser } from '@common/modules/browser/targetBrowser'
-import queryTabs from '@/modules/tabs/queryTabs'
+import { queryTabs } from '@/modules/tabs/queryTabs'
 
-export default async (links: Link[]): Promise<void> => {
+export async function restoreTabs(links: Link[]): Promise<void> {
     if (isDevelopment()) {
         links.forEach(link => {
             window.open(link.url, '_blank')

@@ -2,7 +2,7 @@ import type { Link } from '@/types'
 import type { Tab } from '@common/types'
 import { getImageURL } from '@common/modules/browser/runtime'
 
-export default (tabs: Tab[]): Link[] => {
+export function convertTabsToLinks(tabs: Tab[]): Link[] {
     const links: Link[] = []
 
     for (const tab of tabs) {

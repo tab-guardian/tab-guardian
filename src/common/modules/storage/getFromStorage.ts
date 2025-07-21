@@ -1,6 +1,6 @@
 import { isDevelopment } from '@common/modules/isDevelopment'
 import { isFirefox } from '@common/modules/browser/isFirefox'
-import error from '@common/modules/error'
+import { error } from '@common/modules/error'
 
 export default <T>(key: string): Promise<T | null> => {
     return new Promise(resolve => {

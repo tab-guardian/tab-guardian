@@ -11,7 +11,7 @@ import Tabs from '@/components/Views/SelectTabsView/Tabs.vue'
 import SaveButton from '@/components/Views/SelectTabsView/SaveButton.vue'
 import ControlButton from '@/components/Views/SelectTabsView/ControlButton.vue'
 import SlideSwitch from '@common/components/Form/SlideSwitch.vue'
-import savePasswordToStorage from '@common/modules/storage/savePasswordToStorage'
+import { savePasswordToStorage } from '@common/modules/storage/savePasswordToStorage'
 
 const store = useSelectTabsStore()
 const router = useRouter()
