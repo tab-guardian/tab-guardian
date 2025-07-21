@@ -2,7 +2,7 @@ import type { Group } from '@/types'
 import { saveToStorage } from '@common/modules/storage/saveToStorage'
 import { deleteFromStorage } from '@common/modules/storage/deleteFromStorage'
 import { saveGroupIdsToStorage } from '@common/modules/storage/saveGroupIdsToStorage'
-improt { getGroupIdsFromStorage } from '@common/modules/storage/getGroupIdsFromStorage'
+import { getGroupIdsFromStorage } from '@common/modules/storage/getGroupIdsFromStorage'
 
 export async function saveGroupToStorage(group: Group): Promise<void> {
     const links = group.links.map(link => {

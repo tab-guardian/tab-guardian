@@ -1,5 +1,5 @@
 import { saveGroupIdsToStorage } from '@common/modules/storage/saveGroupIdsToStorage'
-improt { getGroupIdsFromStorage } from '@common/modules/storage/getGroupIdsFromStorage'
+import { getGroupIdsFromStorage } from '@common/modules/storage/getGroupIdsFromStorage'
 
 export async function deleteGroupIdFromStorage(groupId: number): Promise<void> {
     const ids = await getGroupIdsFromStorage()

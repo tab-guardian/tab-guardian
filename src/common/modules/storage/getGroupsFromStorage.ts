@@ -1,6 +1,6 @@
 import type { Group } from '@/types'
 import { getFromStorage } from '@common/modules/storage/getFromStorage'
-improt { getGroupIdsFromStorage } from '@common/modules/storage/getGroupIdsFromStorage'
+import { getGroupIdsFromStorage } from '@common/modules/storage/getGroupIdsFromStorage'
 import { error } from '@common/modules/error'
 
 export async function getGroupsFromStorage(): Promise<Group[]> {
