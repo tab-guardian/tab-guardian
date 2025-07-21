@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Group as GroupType } from '@/types'
-import getIcons from '@/modules/getIcons'
+import { getIcons } from '@/modules/getIcons'
 import { isSingleEmoji } from '@common/modules/emoji/isSingleEmoji'
 
 type Props = {

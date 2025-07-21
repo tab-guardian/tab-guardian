@@ -6,7 +6,7 @@ import { useSettingsStore } from '@/stores/settings'
 import { showToast } from '@common/modules/showToast'
 import { getCurrentLinks } from '@/modules/tabs/getCurrentLinks'
 import { restoreTabs } from '@/modules/tabs/restoreTabs'
-import closeTabs from '@/modules/tabs/closeTabs'
+import { closeTabs } from '@/modules/tabs/closeTabs'
 import { getPasswordFromStorage } from '@common/modules/storage/getPasswordFromStorage'
 
 export const useTabsStore = defineStore('tabs', () => {

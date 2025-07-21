@@ -1,4 +1,4 @@
-import getFromStorage from '@common/modules/storage/getFromStorage'
+import { getFromStorage } from '@common/modules/storage/getFromStorage'
 
 export async function getPasswordFromStorage(
     groupId: number,

@@ -1,4 +1,4 @@
-import saveToStorage from '@common/modules/storage/saveToStorage'
+import { saveToStorage } from '@common/modules/storage/saveToStorage'
 
 export async function savePasswordToStorage(
     groupId: number,

@@ -1,4 +1,4 @@
-import getGroupIdsFromStorage from '@common/modules/storage/getGroupIdsFromStorage'
+improt { getGroupIdsFromStorage } from '@common/modules/storage/getGroupIdsFromStorage'
 import { deleteGroupFromStorage } from '@common/modules/storage/deleteGroupFromStorage'
 import { saveGroupIdsToStorage } from '@common/modules/storage/saveGroupIdsToStorage'
 

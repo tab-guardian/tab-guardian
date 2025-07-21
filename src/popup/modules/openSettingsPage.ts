@@ -3,7 +3,7 @@ import { isDevelopment } from '@common/modules/isDevelopment'
 import { getImageURL } from '@common/modules/browser/runtime'
 import { targetBrowser } from '@common/modules/browser/targetBrowser'
 
-export default async (): Promise<Tab | null> => {
+export async function openSettingsPage(): Promise<Tab | null> {
     if (isDevelopment()) {
         window.open('settings.html')
         return null

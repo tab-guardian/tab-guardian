@@ -1,6 +1,6 @@
 import { isFirefox } from '@common/modules/browser/isFirefox'
 
-export default async (ids: number[]): Promise<void> => {
+export async function closeTabs(ids: number[]): Promise<void> {
     if (isFirefox()) {
         await browser.runtime.sendMessage('closeTabs', { payload: ids })
         return
