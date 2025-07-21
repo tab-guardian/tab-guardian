@@ -15,8 +15,7 @@
         "dev": "vite --host",
         "build": "vite build",
         "prettier": "prettier ./src --write",
-        "prettier-check": "prettier ./src --check",
-        "latest": "yarn upgrade-interactive --latest"
+        "prettier-check": "prettier ./src --check"
     },
     "devDependencies": {
         "@types/chrome": "^0.0.267",

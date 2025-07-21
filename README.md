@@ -14,7 +14,7 @@ Here is what makes Tab Guardian a great tool for managing your tabs:
 - [x] You can create encrypted (locked) groups that require password to unlock
 - [x] All the pinned tabs are saved and restored as pinned tabs
 - [x] Tabs restored in the same order as they were saved
-- [x] Supports all the modern browsers: Brave, Edge, and Chrome
+- [x] Supports all the modern browsers: Firefox, Zen, Brave, Edge, Chrome, etc.
 - [x] Tab Guardian is very configurable to suit your needs
 - [x] You can privately export individual private tab group into an encrypted file and import it later or on another device or browser
 - [x] You can export all of your public tab groups into a file and import them later or on another device or browser
@@ -24,9 +24,8 @@ Here is what makes Tab Guardian a great tool for managing your tabs:
 - [x] You can set emoji as an icon for your group
 
 ## Links
-- [Brave extension](https://chrome.google.com/webstore/detail/tab-guardian/fceclmihdanbepiogjoeiolnpkalcjpe)
-- [Edge extension](https://chrome.google.com/webstore/detail/tab-guardian/fceclmihdanbepiogjoeiolnpkalcjpe)
-- [Chrome extension](https://chrome.google.com/webstore/detail/tab-guardian/fceclmihdanbepiogjoeiolnpkalcjpe)
+- [Firefox ADD-ONS](https://addons.mozilla.org/firefox/addon/tab-guardian/)
+- [Chrome Web Store](https://chrome.google.com/webstore/detail/tab-guardian/fceclmihdanbepiogjoeiolnpkalcjpe)
 
 ## Start working on the source code
 All necessary scripts are in package.json file. You need to have [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/lang/en/) JavaScript package managers.
