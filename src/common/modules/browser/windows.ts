@@ -13,9 +13,9 @@ export async function isIncognito(): Promise<boolean> {
     return currWindow.incognito
 }
 
-export async function update(windowId: number) {
+export async function updateWindow(windowId: number) {
     if (isFirefox()) {
-        // todo: here
+        browser.windows.update(windowId, { focused: true })
     }
 
     chrome.windows.update(windowId, { focused: true })

@@ -1,5 +1,6 @@
 import { isDevelopment } from '@common/modules/isDevelopment'
 import { getImageURL } from '@common/modules/browser/runtime'
+import { updateWindow } from '@common/modules/browser/windows'
 
 export default async (): Promise<chrome.tabs.Tab | null> => {
     if (isDevelopment()) {
@@ -13,7 +14,7 @@ export default async (): Promise<chrome.tabs.Tab | null> => {
     })
 
     if (tab.id) {
-        chrome.windows.update(tab.windowId, { focused: true })
+        updateWindow(tab.windowId)
     }
 
     return tab
