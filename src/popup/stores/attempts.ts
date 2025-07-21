@@ -1,11 +1,11 @@
 import type { Attempts } from '@/types'
 import { onMounted, ref } from 'vue'
 import { defineStore } from 'pinia'
-import trans from '@common/modules/trans'
+import { trans } from '@common/modules/trans'
 import getFromStorage from '@common/modules/storage/getFromStorage'
 import saveToStorage from '@common/modules/storage/saveToStorage'
 import error from '@common/modules/error'
-import showToast from '@common/modules/showToast'
+import { showToast } from '@common/modules/showToast'
 
 export const useAttemptsStore = defineStore('attempts', () => {
     const maxAttempts = 2

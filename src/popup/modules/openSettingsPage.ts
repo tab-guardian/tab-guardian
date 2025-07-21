@@ -1,20 +1,23 @@
+import type { Tab } from '@common/types'
 import { isDevelopment } from '@common/modules/isDevelopment'
 import { getImageURL } from '@common/modules/browser/runtime'
-import { updateWindow } from '@common/modules/browser/windows'
+import { targetBrowser } from '@common/modules/browser/targetBrowser'
 
-export default async (): Promise<chrome.tabs.Tab | null> => {
+export default async (): Promise<Tab | null> => {
     if (isDevelopment()) {
         window.open('settings.html')
         return null
     }
 
-    const tab = await chrome.tabs.create({
+    const target = targetBrowser()
+
+    const tab = await target.tabs.create({
         url: getImageURL('settings.html'),
         active: true,
     })
 
-    if (tab.id) {
-        updateWindow(tab.windowId)
+    if (tab && tab.windowId) {
+        target.windows.update(tab.windowId, { focused: true })
     }
 
     return tab

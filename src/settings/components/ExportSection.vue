@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { useGroupStore } from '@/stores/group'
 import { onMounted } from 'vue'
-import trans from '@common/modules/trans'
-import showToast from '@common/modules/showToast'
+import { trans } from '@common/modules/trans'
+import { showToast } from '@common/modules/showToast'
 import Section from '@settings/components/Section.vue'
 import Button from '@common/components/Form/Button.vue'
 import ArrowDownTrayIcon from '@common/components/Icons/ArrowDownTrayIcon.vue'

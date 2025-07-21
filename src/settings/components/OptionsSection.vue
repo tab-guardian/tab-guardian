@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue'
-import trans from '@common/modules/trans'
+import { isDevelopment } from '@common/modules/isDevelopment'
+import { targetBrowser } from '@common/modules/browser/targetBrowser'
 import { useSettingsStore } from '@/stores/settings'
-import showToast from '@common/modules/showToast'
+import { trans } from '@common/modules/trans'
+import { showToast } from '@common/modules/showToast'
 import Section from '@settings/components/Section.vue'
 import SlideSwitch from '@common/components/Form/SlideSwitch.vue'
-import { isDevelopment } from '@common/modules/isDevelopment'
-import { isFirefox } from '@common/modules/browser/isFirefox'
 
 const store = useSettingsStore()
 const incognitoModeAllowed = ref<boolean>(false)
@@ -22,9 +22,8 @@ onMounted(async () => {
         return
     }
 
-    incognitoModeAllowed.value = isFirefox()
-        ? await browser.extension.isAllowedIncognitoAccess()
-        : await chrome.extension.isAllowedIncognitoAccess()
+    incognitoModeAllowed.value =
+        await targetBrowser().extension.isAllowedIncognitoAccess()
 })
 
 function updateSettings(): void {

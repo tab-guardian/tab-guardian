@@ -2,7 +2,7 @@
 import type { Group } from '@/types'
 import { useTabsStore } from '@/stores/tabs'
 import { useRouter } from 'vue-router'
-import trans from '@common/modules/trans'
+import { trans } from '@common/modules/trans'
 import upRemoveImage from '@/assets/images/tab-icons/up-remove.png'
 import Control from '@/components/Control.vue'
 

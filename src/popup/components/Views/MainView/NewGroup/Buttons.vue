@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useGroupStore } from '@/stores/group'
-import trans from '@common/modules/trans'
+import { trans } from '@common/modules/trans'
 import { usePopupStore } from '@/stores/popup'
 import ShieldCheckIcon from '@common/components/Icons/ShieldCheckIcon.vue'
 import PlusCircleIcon from '@common/components/Icons/PlusCircleIcon.vue'

@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import trans from '@common/modules/trans'
+import { trans } from '@common/modules/trans'
 import { useGroupStore } from '@/stores/group'
 import { useSettingsStore } from '@/stores/settings'
-import showToast from '@common/modules/showToast'
+import { showToast } from '@common/modules/showToast'
 import Swal from 'sweetalert2'
 import Section from '@settings/components/Section.vue'
 import Button from '@common/components/Form/Button.vue'

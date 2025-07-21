@@ -1,6 +1,7 @@
 import type { Link } from '@/types'
 import { isDevelopment } from '@common/modules/isDevelopment'
-import queryTabs from './queryTabs'
+import { targetBrowser } from '@common/modules/browser/targetBrowser'
+import queryTabs from '@/modules/tabs/queryTabs'
 
 export default async (links: Link[]): Promise<void> => {
     if (isDevelopment()) {
@@ -12,7 +13,7 @@ export default async (links: Link[]): Promise<void> => {
     }
 
     links.forEach(link => {
-        chrome.tabs.create({
+        targetBrowser().tabs.create({
             url: link.url,
             active: false,
             pinned: link.isPinned,
@@ -33,5 +34,5 @@ async function closeEmptyTab(): Promise<void> {
         return
     }
 
-    await chrome.tabs.remove(tabs[0].id)
+    await targetBrowser().tabs.remove(tabs[0].id)
 }

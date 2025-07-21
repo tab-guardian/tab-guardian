@@ -1,4 +1,4 @@
-import trans from '@common/modules/trans'
+import { trans } from '@common/modules/trans'
 
 export default () => {
     const MIN_URL_LENGTH = 11

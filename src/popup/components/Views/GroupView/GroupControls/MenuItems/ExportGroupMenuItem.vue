@@ -2,13 +2,13 @@
 import type { Group } from '@/types'
 import { useGroupStore } from '@/stores/group'
 import { usePopupStore } from '@/stores/popup'
-import trans from '@common/modules/trans'
+import { trans } from '@common/modules/trans'
 import error from '@common/modules/error'
 import encryptGroup from '@common/modules/encrypt/encryptGroup'
 import ArrowDownTrayIcon from '@common/components/Icons/ArrowDownTrayIcon.vue'
 import MenuItem from '@/components/MenuItem.vue'
 import getPasswordFromStorage from '@common/modules/storage/getPasswordFromStorage'
-import showToast from '@common/modules/showToast'
+import { showToast } from '@common/modules/showToast'
 
 const store = useGroupStore()
 const { openPopup, closePopup } = usePopupStore()

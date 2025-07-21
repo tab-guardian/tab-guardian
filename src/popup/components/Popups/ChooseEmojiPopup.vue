@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { useGroupStore } from '@/stores/group'
-import trans from '@common/modules/trans'
+import { trans } from '@common/modules/trans'
 import { usePopupStore } from '@/stores/popup'
 import error from '@common/modules/error'
 import containsEmoji from '@common/modules/emoji/containsEmoji'

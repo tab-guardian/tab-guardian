@@ -1,12 +1,10 @@
 import { isDevelopment } from '@common/modules/isDevelopment'
-import { isFirefox } from '@common/modules/browser/isFirefox'
+import { targetBrowser } from '@common/modules/browser/targetBrowser'
 
 export function getImageURL(uri: string): string {
     if (isDevelopment()) {
         return `${uri}`
     }
 
-    return isFirefox()
-        ? browser.runtime.getURL(`${uri}`)
-        : chrome.runtime.getURL(`${uri}`)
+    return targetBrowser().runtime.getURL(`${uri}`)
 }

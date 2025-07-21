@@ -1,5 +1,5 @@
 import error from '@common/modules/error'
-import { isFirefox } from '@common/modules/browser/isFirefox'
+import { targetBrowser } from '@common/modules/browser/targetBrowser'
 
 export default async <T>(
     key: string,
@@ -18,6 +18,5 @@ export default async <T>(
         return
     }
 
-    const storage = isFirefox() ? browser.storage.local : chrome.storage.local
-    await storage.set({ [key]: jsonStr })
+    await targetBrowser().storage.local.set({ [key]: jsonStr })
 }

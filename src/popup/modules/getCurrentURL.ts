@@ -1,4 +1,5 @@
 import { isDevelopment } from '@common/modules/isDevelopment'
+import { isFirefox } from '@common/modules/browser/isFirefox'
 import hashURL from '@/modules/hashURL'
 
 export default async (hash = false): Promise<string | null> => {
@@ -7,7 +8,9 @@ export default async (hash = false): Promise<string | null> => {
     }
 
     return new Promise(resolve => {
-        chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
+        const tabs = isFirefox() ? browser.tabs : chrome.tabs
+
+        tabs.query({ active: true, currentWindow: true }, tabs => {
             if (tabs.length === 0) {
                 resolve(null)
             }

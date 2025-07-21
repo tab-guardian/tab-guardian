@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useSidebarStore } from '@/stores/sidebar'
-import trans from '@common/modules/trans'
+import { trans } from '@common/modules/trans'
 import openSettingsPage from '@/modules/openSettingsPage'
 import { isFirefox } from '@common/modules/browser/isFirefox'
 import { getImageURL } from '@common/modules/browser/runtime'
