@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+podman-compose exec app npm run build
+
+zip -r dist.zip ./dist/
+
+echo "✅ Archive dist.zip is ready to be uploaded!"
