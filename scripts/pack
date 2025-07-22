@@ -3,6 +3,6 @@ set -euo pipefail
 
 podman-compose exec app npm run build
 
-zip -r dist.zip ./dist/
+cd dist && zip -r ../dist.zip . && cd -
 
 echo "✅ Archive dist.zip is ready to be uploaded!"
