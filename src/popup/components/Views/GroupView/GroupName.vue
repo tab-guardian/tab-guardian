@@ -29,6 +29,7 @@ watchEffect(() => {
         >
             <input
                 v-model="store.newGroup.name"
+                @keydown.enter="store.renameGroup"
                 @blur="store.renameGroup"
                 :class="classes"
                 :maxlength="store.groupNameMaxLength"
