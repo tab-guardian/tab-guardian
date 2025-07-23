@@ -176,7 +176,7 @@
     },
     "settings_saved": { "message": "Settings have been saved" },
     "go_to_settings_and_enable_allow_incognito": {
-        "message": "Go to the extension settings and enable the option 'Allow in incognito' or 'Allow in Private'"
+        "message": "Go to the extension settings and enable the option 'Allow in incognito', 'Allow in Private' or 'Run in Private Windows'"
     },
     "override_existing_match": {
         "message": "If the new group name matches an existing one, override it"

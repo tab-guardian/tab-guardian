@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watchEffect, computed } from 'vue'
+import { ref, watchEffect } from 'vue'
 import type { Group } from '@/types'
 import { useGroupStore } from '@/stores/group'
 import GroupIcon from '@/components/Views/MainView/Groups/GroupIcon.vue'
