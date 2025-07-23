@@ -1,7 +1,7 @@
-import saveGroupIdsToStorage from '@common/modules/storage/saveGroupIdsToStorage'
-import getGroupIdsFromStorage from '@common/modules/storage/getGroupIdsFromStorage'
+import { saveGroupIdsToStorage } from '@common/modules/storage/saveGroupIdsToStorage'
+import { getGroupIdsFromStorage } from '@common/modules/storage/getGroupIdsFromStorage'
 
-export default async (groupId: number): Promise<void> => {
+export async function deleteGroupIdFromStorage(groupId: number): Promise<void> {
     const ids = await getGroupIdsFromStorage()
     const newIds = ids.filter(id => id !== groupId)
 

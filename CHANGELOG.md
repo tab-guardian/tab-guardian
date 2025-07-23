@@ -1,5 +1,9 @@
 # Release Notes
 
+## v1.9.0 (2025-07-23)
+- ✨ Added support for Firefox based browsers
+- 🧑‍💻 Added build script to `scripts` directory
+
 ## v1.8.1 (2025-07-05)
 - 🧑‍💻 Added container engine support like Podman and Docker
 

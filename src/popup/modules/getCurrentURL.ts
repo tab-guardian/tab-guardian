@@ -1,13 +1,14 @@
-import isDevelopment from '@common/modules/isDevelopment'
-import hashURL from '@/modules/hashURL'
+import { isDevelopment } from '@common/modules/isDevelopment'
+import { targetBrowser } from '@common/modules/browser/targetBrowser'
+import { hashURL } from '@/modules/hashURL'
 
-export default async (hash = false): Promise<string | null> => {
+export async function getCurrentURL(hash = false): Promise<string | null> {
     if (isDevelopment()) {
         return window.location.href
     }
 
     return new Promise(resolve => {
-        chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
+        targetBrowser().tabs.query({ active: true, currentWindow: true }, tabs => {
             if (tabs.length === 0) {
                 resolve(null)
             }

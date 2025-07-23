@@ -1,7 +1,7 @@
 import type { Group, Link } from '@/types'
 import CryptoJS from 'crypto-js'
 
-export default (group: Group, pass: string): Group => {
+export function decryptGroup(group: Group, pass: string): Group {
     const decryptedLinks: Link[] = []
 
     for (const link of group.links) {

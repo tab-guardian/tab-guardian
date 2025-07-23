@@ -3,15 +3,15 @@ import type { SelectTabsOperation, Link } from '@/types'
 import { onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useSelectTabsStore } from '@/stores/selectTabs'
-import trans from '@common/modules/trans'
+import { trans } from '@common/modules/trans'
 import { useGroupStore } from '@/stores/group'
-import showToast from '@common/modules/showToast'
+import { showToast } from '@common/modules/showToast'
 import View from '@/components/Views/View.vue'
 import Tabs from '@/components/Views/SelectTabsView/Tabs.vue'
 import SaveButton from '@/components/Views/SelectTabsView/SaveButton.vue'
 import ControlButton from '@/components/Views/SelectTabsView/ControlButton.vue'
 import SlideSwitch from '@common/components/Form/SlideSwitch.vue'
-import savePasswordToStorage from '@common/modules/storage/savePasswordToStorage'
+import { savePasswordToStorage } from '@common/modules/storage/savePasswordToStorage'
 
 const store = useSelectTabsStore()
 const router = useRouter()

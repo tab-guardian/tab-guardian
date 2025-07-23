@@ -49,7 +49,7 @@ import FaceSmileIcon from '@common/components/Icons/FaceSmileIcon.vue'
 import MagnifyingGlassIcon from '@common/components/Icons/MagnifyingGlassIcon.vue'
 import InfoCircleIcon from '@common/components/Icons/InfoCircleIcon.vue'
 
-export default (): { [key: string]: Component } => {
+export function getIcons(): { [key: string]: Component } {
     return {
         HomeIcon,
         BriefcaseIcon,

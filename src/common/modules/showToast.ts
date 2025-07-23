@@ -1,10 +1,10 @@
 import Toastify from 'toastify-js'
 
-export default (
+export function showToast(
     text: string,
     type: 'error' | 'info' = 'info',
     duration = 2000,
-): void => {
+): void {
     Toastify({
         text,
         duration,

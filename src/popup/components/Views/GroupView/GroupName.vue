@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watchEffect, computed } from 'vue'
+import { ref, watchEffect } from 'vue'
 import type { Group } from '@/types'
 import { useGroupStore } from '@/stores/group'
 import GroupIcon from '@/components/Views/MainView/Groups/GroupIcon.vue'
@@ -29,6 +29,7 @@ watchEffect(() => {
         >
             <input
                 v-model="store.newGroup.name"
+                @keydown.enter="store.renameGroup"
                 @blur="store.renameGroup"
                 :class="classes"
                 :maxlength="store.groupNameMaxLength"

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import trans from '@common/modules/trans'
+import { trans } from '@common/modules/trans'
 
 type Emits = {
     (e: 'clicked'): void

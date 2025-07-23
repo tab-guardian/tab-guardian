@@ -1,11 +1,11 @@
 import type { Link } from '@/types'
-import queryTabs from '@/modules/tabs/queryTabs'
-import getFakeLinks from '@/modules/getFakeLinks'
-import convertTabsToLinks from '@/modules/tabs/convertTabsToLinks'
-import error from '@common/modules/error'
-import isDevelopment from '@common/modules/isDevelopment'
+import { queryTabs } from '@/modules/tabs/queryTabs'
+import { getFakeLinks } from '@/modules/getFakeLinks'
+import { convertTabsToLinks } from '@/modules/tabs/convertTabsToLinks'
+import { error } from '@common/modules/error'
+import { isDevelopment } from '@common/modules/isDevelopment'
 
-export default async (): Promise<Link[]> => {
+export async function getCurrentLinks(): Promise<Link[]> {
     if (isDevelopment()) {
         return getFakeLinks()
     }

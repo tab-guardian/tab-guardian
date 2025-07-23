@@ -1,6 +1,6 @@
 import emojiRegex from 'emoji-regex'
 
-export default (inp: string): boolean => {
+export function isSingleEmoji(inp: string): boolean {
     const regex = emojiRegex()
     const matches = [...inp.matchAll(regex)]
 

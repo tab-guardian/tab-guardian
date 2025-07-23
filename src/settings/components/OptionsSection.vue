@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue'
-import trans from '@common/modules/trans'
+import { isDevelopment } from '@common/modules/isDevelopment'
+import { targetBrowser } from '@common/modules/browser/targetBrowser'
 import { useSettingsStore } from '@/stores/settings'
-import showToast from '@common/modules/showToast'
+import { trans } from '@common/modules/trans'
+import { showToast } from '@common/modules/showToast'
 import Section from '@settings/components/Section.vue'
 import SlideSwitch from '@common/components/Form/SlideSwitch.vue'
-import isDevelopment from '@common/modules/isDevelopment'
 
 const store = useSettingsStore()
 const incognitoModeAllowed = ref<boolean>(false)
@@ -17,10 +18,12 @@ const incognitoWarningMessage = computed<string | null>(() => {
 })
 
 onMounted(async () => {
-    if (!isDevelopment()) {
-        incognitoModeAllowed.value =
-            await chrome.extension.isAllowedIncognitoAccess()
+    if (isDevelopment()) {
+        return
     }
+
+    incognitoModeAllowed.value =
+        await targetBrowser().extension.isAllowedIncognitoAccess()
 })
 
 function updateSettings(): void {

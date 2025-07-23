@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Group } from '@/types'
-import trans from '@common/modules/trans'
+import { trans } from '@common/modules/trans'
 import { useGroupStore } from '@/stores/group'
 import { VueDraggableNext } from 'vue-draggable-next'
 import LinkItem from '@/components/Views/GroupView/LinkItem.vue'

@@ -148,7 +148,7 @@
     },
     "settings_saved": { "message": "设置已保存" },
     "go_to_settings_and_enable_allow_incognito": {
-        "message": "前往扩展设置并启用选项“在隐身模式下允许”"
+        "message": "进入扩展设置，启用 “允许在隐身状态下”、“允许在私人状态下 ”或 “在私人窗口中运行 ”选项"
     },
     "override_existing_match": { "message": "如果新组名与现有组名匹配，则覆盖" },
     "only_private_groups_incognito": { "message": "仅在隐身模式下显示私有组" },

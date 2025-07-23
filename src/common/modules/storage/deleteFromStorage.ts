@@ -1,10 +1,11 @@
-import isDevelopment from '@common/modules/isDevelopment'
+import { isDevelopment } from '@common/modules/isDevelopment'
+import { targetBrowser } from '@common/modules/browser/targetBrowser'
 
-export default async (key: string): Promise<void> => {
+export async function deleteFromStorage(key: string): Promise<void> {
     if (isDevelopment()) {
         localStorage.removeItem(key)
         return
     }
 
-    await chrome.storage.local.remove(key)
+    await targetBrowser().storage.local.remove(key)
 }

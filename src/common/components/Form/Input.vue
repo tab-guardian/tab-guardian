@@ -48,7 +48,7 @@ watchEffect(() => {
                     {{ label }}
                 </label>
 
-                <Tip v-if="tip" :tip="tip" />
+                <Tip v-if="tip" :tip />
             </div>
 
             <small v-if="meta" class="text-font-gray">

@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { useGroupStore } from '@/stores/group'
-import trans from '@common/modules/trans'
+import { trans } from '@common/modules/trans'
 import { usePopupStore } from '@/stores/popup'
 import { useRouter } from 'vue-router'
-import error from '@common/modules/error'
+import { error } from '@common/modules/error'
 import Popup from '@/components/Popups/Popup.vue'
 import PopupButton from '@/components/Popups/PopupButton.vue'
 

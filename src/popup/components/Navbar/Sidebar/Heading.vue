@@ -1,14 +1,18 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue'
-import trans from '@common/modules/trans'
-import getImageURL from '@common/modules/getImageURL'
-import isDevelopment from '@common/modules/isDevelopment'
-import getLocalStorageUsage from '@common/modules/storage/getLocalStorageUsage'
+import { trans } from '@common/modules/trans'
+import { getImageURL } from '@common/modules/browser/runtime'
+import { isDevelopment } from '@common/modules/isDevelopment'
+import { isFirefox } from '@common/modules/browser/isFirefox'
+import { getLocalStorageUsage } from '@common/modules/storage/getLocalStorageUsage'
+
+const MAX_BYTES_LOCAL_STORAGE = 102400
+const MAX_BYTES_FIREFOX_LOCAL = 10485760
 
 onMounted(setCurrentBytesUsage)
 
 const currentBytesUsage = ref<number | null>(null)
-const maxBytes = isDevelopment() ? 102400 : chrome.storage.local.QUOTA_BYTES
+const maxBytes = getMaxBytes()
 
 const storageUsage = computed(() => {
     if (currentBytesUsage.value === null) {
@@ -18,9 +22,27 @@ const storageUsage = computed(() => {
     return (currentBytesUsage.value / maxBytes) * 100
 })
 
+function getMaxBytes(): number {
+    if (isDevelopment()) {
+        return MAX_BYTES_LOCAL_STORAGE
+    }
+
+    return isFirefox() ? MAX_BYTES_FIREFOX_LOCAL : chrome.storage.local.QUOTA_BYTES
+}
+
 async function setCurrentBytesUsage(): Promise<void> {
     if (isDevelopment()) {
         currentBytesUsage.value = getLocalStorageUsage()
+        return
+    }
+
+    if (isFirefox()) {
+        const storageData = await browser.storage.local.get()
+        const entries = Object.entries(storageData)
+            .map(([key, value]) => key + JSON.stringify(value))
+            .join('')
+
+        currentBytesUsage.value = new TextEncoder().encode(entries).length
         return
     }
 

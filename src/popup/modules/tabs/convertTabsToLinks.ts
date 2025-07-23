@@ -1,7 +1,8 @@
 import type { Link } from '@/types'
-import getImageURL from '@common/modules/getImageURL'
+import type { Tab } from '@common/types'
+import { getImageURL } from '@common/modules/browser/runtime'
 
-export default (tabs: chrome.tabs.Tab[]): Link[] => {
+export function convertTabsToLinks(tabs: Tab[]): Link[] {
     const links: Link[] = []
 
     for (const tab of tabs) {
@@ -25,9 +26,12 @@ const icons = [
     ['http://localhost', 'localhost.png'],
     ['chrome://', 'chrome.png'],
     ['brave://', 'brave.png'],
+    ['firefox://', 'brave.png'],
+    ['about:preferences', 'firefox.png'],
+    ['about:config', 'firefox.png'],
 ]
 
-function getFaviconIconUrl(tab: chrome.tabs.Tab): string {
+function getFaviconIconUrl(tab: Tab): string {
     if (tab.url) {
         for (const [prefix, icon] of icons) {
             if (tab.url.startsWith(prefix)) {

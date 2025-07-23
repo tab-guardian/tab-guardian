@@ -1,4 +1,4 @@
-export default (isPrivate: boolean): string => {
+export function getDefaultGroupName(isPrivate: boolean): string {
     if (isPrivate) {
         return 'Private Group'
     }

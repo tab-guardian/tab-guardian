@@ -1,13 +1,13 @@
 import type { Group } from '@/types'
 import { defineStore } from 'pinia'
 import { useGroupStore } from '@/stores/group'
-import trans from '@common/modules/trans'
+import { trans } from '@common/modules/trans'
 import { useSettingsStore } from '@/stores/settings'
-import showToast from '@common/modules/showToast'
-import getCurrentLinks from '@/modules/tabs/getCurrentLinks'
-import restoreTabs from '@/modules/tabs/restoreTabs'
-import closeTabs from '@/modules/tabs/closeTabs'
-import getPasswordFromStorage from '@common/modules/storage/getPasswordFromStorage'
+import { showToast } from '@common/modules/showToast'
+import { getCurrentLinks } from '@/modules/tabs/getCurrentLinks'
+import { restoreTabs } from '@/modules/tabs/restoreTabs'
+import { closeTabs } from '@/modules/tabs/closeTabs'
+import { getPasswordFromStorage } from '@common/modules/storage/getPasswordFromStorage'
 
 export const useTabsStore = defineStore('tabs', () => {
     const groupStore = useGroupStore()
@@ -49,6 +49,8 @@ export const useTabsStore = defineStore('tabs', () => {
     async function stashTabs(group: Group, closeAllTabs: boolean): Promise<void> {
         const links = await getCurrentLinks()
 
+        console.log({ group })
+
         if (!links.length) {
             showToast(trans('no_tabs_to_save'), 'error')
             return
@@ -60,6 +62,7 @@ export const useTabsStore = defineStore('tabs', () => {
         }
 
         if (closeAllTabs) {
+            console.log({ links })
             await closeTabs(links.map(l => l.id))
         }
 

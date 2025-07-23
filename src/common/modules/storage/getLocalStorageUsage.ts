@@ -1,4 +1,4 @@
-export default (): number => {
+export function getLocalStorageUsage(): number {
     let totalBytes = 0
 
     for (let i = 0; i < localStorage.length; i++) {

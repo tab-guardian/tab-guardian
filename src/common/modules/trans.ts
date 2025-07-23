@@ -1,4 +1,5 @@
-import isDevelopment from '@common/modules/isDevelopment'
+import { isDevelopment } from '@common/modules/isDevelopment'
+import { targetBrowser } from '@common/modules/browser/targetBrowser'
 
 let englishMessages: { [key: string]: { message: string } } | null = null
 
@@ -9,7 +10,7 @@ if (isDevelopment()) {
         .default
 }
 
-export default (msg: string, ...args: string[]): string => {
+export function trans(msg: string, ...args: string[]): string {
     if (englishMessages) {
         if (!englishMessages[msg]) {
             console.warn(`English translation not found for key "${msg}"`)
@@ -18,5 +19,9 @@ export default (msg: string, ...args: string[]): string => {
         return englishMessages[msg].message
     }
 
-    return chrome.i18n.getMessage(msg, args)
+    return getMessage(msg, args)
+}
+
+function getMessage(msg: string, args?: string | string[]): string {
+    return targetBrowser().i18n.getMessage(msg, args)
 }

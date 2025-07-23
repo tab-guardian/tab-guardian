@@ -4,7 +4,7 @@ import { useGroupStore } from '@/stores/group'
 import { useTabsStore } from '@/stores/tabs'
 import { useRouter } from 'vue-router'
 import { ref, onMounted, onUnmounted } from 'vue'
-import trans from '@common/modules/trans'
+import { trans } from '@common/modules/trans'
 import MagnifyingGlassIcon from '@common/components/Icons/MagnifyingGlassIcon.vue'
 
 const groupStore = useGroupStore()
@@ -13,7 +13,8 @@ const router = useRouter()
 const initialGroups = ref<Group[]>([])
 const inpElem = ref<HTMLInputElement | null>(null)
 const query = ref<string>('')
-const placeholder = navigator.userAgent.indexOf('Mac OS X') != -1 ? '⌘+k' : 'ctrl+k'
+const placeholder =
+    navigator.userAgent.indexOf('Mac OS X') != -1 ? '⌘+k' : 'ctrl+alt+k'
 
 onMounted(() => {
     document.addEventListener('keydown', focusOnSearch)
@@ -70,8 +71,13 @@ function focusOnSearch(e: KeyboardEvent): void {
         inpElem.value.blur()
     }
 
-    // Toggle search when pressing cmd + k or ctrl + k
-    if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
+    // 🍏 Mac (cmd + k)
+    if (e.key === 'k' && e.metaKey) {
+        inpElem.value.focus()
+    }
+
+    // 🐧 Linux / 💩 Windows (ctrl + alt + k)
+    if (e.key === 'k' && e.altKey && e.ctrlKey) {
         inpElem.value.focus()
     }
 }

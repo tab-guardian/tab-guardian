@@ -1,16 +1,16 @@
 <script setup lang="ts">
 import type { Group } from '@/types'
 import { ref } from 'vue'
-import trans from '@common/modules/trans'
+import { trans } from '@common/modules/trans'
 import { useGroupStore } from '@/stores/group'
 import { useTabsStore } from '@/stores/tabs'
 import { useAttemptsStore } from '@/stores/attempts'
 import { useRoute, useRouter } from 'vue-router'
-import error from '@common/modules/error'
-import showToast from '@common/modules/showToast'
+import { error } from '@common/modules/error'
+import { showToast } from '@common/modules/showToast'
 import ShieldCheckIcon from '@common/components/Icons/ShieldCheckIcon.vue'
 import Input from '@common/components/Form/Input.vue'
-import savePasswordToStorage from '@common/modules/storage/savePasswordToStorage'
+import { savePasswordToStorage } from '@common/modules/storage/savePasswordToStorage'
 
 type Props = {
     group: Group

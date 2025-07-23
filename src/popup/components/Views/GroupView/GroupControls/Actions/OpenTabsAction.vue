@@ -3,7 +3,7 @@ import type { Group } from '@/types'
 import Control from '@/components/Control.vue'
 import upImage from '@/assets/images/tab-icons/up.png'
 import { useTabsStore } from '@/stores/tabs'
-import trans from '@common/modules/trans'
+import { trans } from '@common/modules/trans'
 
 defineProps<{ group: Group }>()
 

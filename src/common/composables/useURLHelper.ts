@@ -1,6 +1,6 @@
-import trans from '@common/modules/trans'
+import { trans } from '@common/modules/trans'
 
-export default () => {
+export function useURLHelper() {
     const MIN_URL_LENGTH = 11
     const MAX_URL_LENGTH = 1000
 

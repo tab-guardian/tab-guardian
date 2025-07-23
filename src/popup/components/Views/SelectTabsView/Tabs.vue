@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useSelectTabsStore } from '@/stores/selectTabs'
-import trans from '@common/modules/trans'
+import { trans } from '@common/modules/trans'
 import { VueDraggableNext } from 'vue-draggable-next'
 import Spinner from '@/components/Spinner.vue'
 import TabItem from '@/components/Views/SelectTabsView/TabItem.vue'

@@ -1,24 +1,24 @@
 import type { Group, Link, NewGroup } from '@/types'
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
-import trans from '@common/modules/trans'
+import { trans } from '@common/modules/trans'
 import { useSettingsStore } from '@/stores/settings'
 import { usePopupStore } from '@/stores/popup'
-import showToast from '@common/modules/showToast'
-import getGroupsFromStorage from '@common/modules/storage/getGroupsFromStorage'
-import error from '@common/modules/error'
-import getDefaultGroupName from '@/modules/getDefaultGroupName'
-import unlock from '@common/modules/encrypt/decryptGroup'
-import saveGroupToStorage from '@common/modules/storage/saveGroupToStorage'
-import encryptGroup from '@common/modules/encrypt/encryptGroup'
-import closeTabsByIds from '@/modules/tabs/closeTabsByIds'
-import isDevelopment from '@common/modules/isDevelopment'
-import isIncognitoWindow from '@/modules/isIncognitoWindow'
-import getCurrentURL from '@/modules/getCurrentURL'
-import deleteGroupFromStorage from '@common/modules/storage/deleteGroupFromStorage'
-import deleteAllGroupsFromStorage from '@common/modules/storage/deleteAllGroupsFromStorage'
-import generateGroupId from '@common/modules/generateGroupId'
-import savePasswordToStorage from '@common/modules/storage/savePasswordToStorage'
+import { showToast } from '@common/modules/showToast'
+import { error } from '@common/modules/error'
+import { isDevelopment } from '@common/modules/isDevelopment'
+import { isIncognito } from '@common/modules/browser/windows'
+import { deleteGroupFromStorage } from '@common/modules/storage/deleteGroupFromStorage'
+import { getGroupsFromStorage } from '@common/modules/storage/getGroupsFromStorage'
+import { getDefaultGroupName } from '@/modules/getDefaultGroupName'
+import { decryptGroup as unlock } from '@common/modules/encrypt/decryptGroup'
+import { saveGroupToStorage } from '@common/modules/storage/saveGroupToStorage'
+import { encryptGroup } from '@common/modules/encrypt/encryptGroup'
+import { closeTabsByIds } from '@/modules/tabs/closeTabsByIds'
+import { getCurrentURL } from '@/modules/getCurrentURL'
+import { deleteAllGroupsFromStorage } from '@common/modules/storage/deleteAllGroupsFromStorage'
+import { generateGroupId } from '@common/modules/generateGroupId'
+import { savePasswordToStorage } from '@common/modules/storage/savePasswordToStorage'
 
 export const useGroupStore = defineStore('group', () => {
     const popupStore = usePopupStore()
@@ -113,7 +113,7 @@ export const useGroupStore = defineStore('group', () => {
     }
 
     async function shouldHideGroup(group: Group): Promise<boolean> {
-        const isIncognito = await isIncognitoWindow()
+        const isPrivate = await isIncognito()
 
         if (group.bindURL) {
             const hashedURL = await getCurrentURL(true)
@@ -126,14 +126,14 @@ export const useGroupStore = defineStore('group', () => {
         const showOnlyPrivateGroupsInIncognito =
             settingsStore.settings.showOnlyPrivateGroupsInIncognito
 
-        if (!group.isPrivate && isIncognito && showOnlyPrivateGroupsInIncognito) {
+        if (!group.isPrivate && isPrivate && showOnlyPrivateGroupsInIncognito) {
             return true
         }
 
         const showPrivateGroupsOnlyInIncognito =
             settingsStore.settings.showPrivateGroupsOnlyInIncognito
 
-        if (group.isPrivate && !isIncognito && showPrivateGroupsOnlyInIncognito) {
+        if (group.isPrivate && !isPrivate && showPrivateGroupsOnlyInIncognito) {
             return true
         }
 

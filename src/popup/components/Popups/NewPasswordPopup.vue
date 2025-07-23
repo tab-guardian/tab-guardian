@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
 import { useGroupStore } from '@/stores/group'
-import trans from '@common/modules/trans'
+import { trans } from '@common/modules/trans'
 import { usePopupStore } from '@/stores/popup'
 import Popup from '@/components/Popups/Popup.vue'
 import Input from '@common/components/Form/Input.vue'
 import Button from '@common/components/Form/Button.vue'
 import ChevronRightIcon from '@common/components/Icons/ChevronRightIcon.vue'
-import showToast from '@common/modules/showToast'
+import { showToast } from '@common/modules/showToast'
 
 const { closePopup, closeAllPopups } = usePopupStore()
 const store = useGroupStore()

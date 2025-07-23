@@ -1,9 +1,10 @@
-import error from '@common/modules/error'
+import { error } from '@common/modules/error'
+import { targetBrowser } from '@common/modules/browser/targetBrowser'
 
-export default async <T>(
+export async function saveToStorage<T>(
     key: string,
     value: T | null | undefined,
-): Promise<void> => {
+): Promise<void> {
     if (!value) {
         const msg = `Failed to save "${key}" to storage because there is not value`
         error.err(msg)
@@ -17,5 +18,5 @@ export default async <T>(
         return
     }
 
-    await chrome.storage.local.set({ [key]: jsonStr })
+    await targetBrowser().storage.local.set({ [key]: jsonStr })
 }

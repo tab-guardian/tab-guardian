@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { useSidebarStore } from '@/stores/sidebar'
-import trans from '@common/modules/trans'
-import openSettingsPage from '@/modules/openSettingsPage'
-import isFirefox from '@common/modules/isFirefox'
-import getImageURL from '@common/modules/getImageURL'
+import { trans } from '@common/modules/trans'
+import { openSettingsPage } from '@/modules/openSettingsPage'
+import { isFirefox } from '@common/modules/browser/isFirefox'
+import { getImageURL } from '@common/modules/browser/runtime'
 import Hamburger from '@/components/Navbar/Sidebar/Hamburger.vue'
 import RightSlideTransition from '@common/components/Transitions/RightSlideTransition.vue'
 import Overlay from '@/components/Navbar/Sidebar/Overlay.vue'
@@ -16,7 +16,7 @@ import DocumentIcon from '@common/components/Icons/DocumentIcon.vue'
 
 const sidebarStore = useSidebarStore()
 const rateUsLink = isFirefox()
-    ? 'todo:'
+    ? 'https://addons.mozilla.org/firefox/addon/tab-guardian/'
     : 'https://chromewebstore.google.com/detail/tab-guardian/kjdklkfpliphcbnphmfhalllclfieojp'
 
 const links = [
