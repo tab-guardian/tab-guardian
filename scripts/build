@@ -16,7 +16,7 @@ build_zip_archive () {
     # Rename versionaled manifest to a regular manifest.json
     mv "$MANIFEST_PATH" "$REGULAR_MANIFEST_PATH"
 
-    podman-compose exec app npm run build >/dev/null 2>&1
+    podman-compose exec app npm run build
 
     cd dist && zip -r ../"$ZIP_NAME" . && cd -
 
