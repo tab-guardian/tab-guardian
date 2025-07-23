@@ -1,30 +1,80 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+show_help () {
+    echo "Usage:"
+    echo "  $0 [OPTION...]"
+    echo ""
+    echo "Options:"
+    echo "  --verbose        Enable verbose mode"
+    echo "  --help           Show help options"
+}
+
+build_source_zip_archive () {
+    ZIP_NAME="source.zip"
+
+    echo "⏳ Zippping $ZIP_NAME..."
+
+    zip -r "$ZIP_NAME" . -x "node_modules/*" ".git/*" >/dev/null 2>&1
+
+    echo "✅ DONE! $ZIP_NAME!"
+}
+
 build_zip_archive () {
     PLATFORM_NAME="$1"
     REGULAR_MANIFEST_PATH="./public/manifest.json"
     ZIP_NAME="$PLATFORM_NAME.zip"
     MANIFEST_PATH="./public/$2"
-    ICON="$3"
 
     if [ ! -f "$MANIFEST_PATH" ]; then
         echo "Manifest file `$MANIFEST_PATH` not found for $PLATFORM_NAME!"
         return
     fi
 
+    echo "⏳ Zippping $ZIP_NAME..."
+
     # Rename versionaled manifest to a regular manifest.json
     mv "$MANIFEST_PATH" "$REGULAR_MANIFEST_PATH"
 
-    podman-compose exec app npm run build
+    if [ $verbose -eq 1 ]; then
+        podman-compose exec app npm run build
+    else
+        podman-compose exec app npm run build >/dev/null 2>&1
+    fi
 
-    cd dist && zip -r ../"$ZIP_NAME" . && cd -
+    if [ $verbose -eq 1 ]; then
+        cd dist && zip -r ../"$ZIP_NAME" . && cd -
+    else
+        cd dist && zip -r ../"$ZIP_NAME" . >/dev/null 2>&1 && cd - >/dev/null 2>&1
+    fi
 
     # Rename regular manifest.json back to a versioned
     mv "$REGULAR_MANIFEST_PATH" "$MANIFEST_PATH" 
 
-    echo "$ICON Archive $ZIP_NAME is ready!"
+    echo "✅ DONE! $ZIP_NAME!"
 }
 
-build_zip_archive "firefox" "manifest2.json" "🦊"
-build_zip_archive "chrome" "manifest3.json" "💩"
+verbose=0
+help=0
+
+# Parse command-line arguments
+for arg in "$@"; do
+    if [ "$arg" == "--verbose" ]; then
+        verbose=1
+    elif [ "$arg" == "--help" ]; then
+        help=1
+    else
+        show_help
+        exit 1
+    fi
+done
+
+# Display help message if --help is set
+if [ $help -eq 1 ]; then
+    show_help
+    exit 0
+fi
+
+build_zip_archive "firefox" "manifest2.json"
+build_zip_archive "chrome" "manifest3.json"
+build_source_zip_archive
