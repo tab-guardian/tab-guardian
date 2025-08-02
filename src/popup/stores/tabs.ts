@@ -60,7 +60,6 @@ export const useTabsStore = defineStore('tabs', () => {
         }
 
         if (closeAllTabs) {
-            console.log({ links })
             await closeTabs(links.map(l => l.id))
         }
 
