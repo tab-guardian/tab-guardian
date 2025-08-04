@@ -1,4 +1,3 @@
-import { isFirefox } from '@common/modules/browser/isFirefox'
 import { targetBrowser } from '@common/modules/browser/targetBrowser'
 
 const target = targetBrowser()
