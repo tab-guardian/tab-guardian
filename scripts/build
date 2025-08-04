@@ -8,6 +8,8 @@ show_help () {
     echo "Options:"
     echo "  --verbose        Enable verbose mode"
     echo "  --help           Show help options"
+    echo "  --firefox        Build only Firefox extension"
+    echo "  --chrome         Build only Chrome extension"
 }
 
 build_source_zip_archive () {
@@ -17,7 +19,7 @@ build_source_zip_archive () {
 
     zip -r "$ZIP_NAME" . -x "node_modules/*" ".git/*" >/dev/null 2>&1
 
-    echo "✅ DONE! $ZIP_NAME!"
+    echo "✅ DONE: archived: $ZIP_NAME"
 }
 
 build_zip_archive () {
@@ -27,7 +29,7 @@ build_zip_archive () {
     MANIFEST_PATH="./public/$2"
 
     if [ ! -f "$MANIFEST_PATH" ]; then
-        echo "Manifest file `$MANIFEST_PATH` not found for $PLATFORM_NAME!"
+        echo "Manifest file `$MANIFEST_PATH` not found for $PLATFORM_NAME"
         return
     fi
 
@@ -42,6 +44,8 @@ build_zip_archive () {
         podman-compose exec app npm run build >/dev/null 2>&1
     fi
 
+    echo "✅ DONE: npm run build"
+
     if [ $verbose -eq 1 ]; then
         cd dist && zip -r ../"$ZIP_NAME" . && cd -
     else
@@ -51,21 +55,30 @@ build_zip_archive () {
     # Rename regular manifest.json back to a versioned
     mv "$REGULAR_MANIFEST_PATH" "$MANIFEST_PATH" 
 
-    echo "✅ DONE! $ZIP_NAME!"
+    echo "✅ DONE: archived: $ZIP_NAME"
 }
 
 verbose=0
 help=0
+only_firefox=0
+only_chrome=0
 
 # Parse command-line arguments
 for arg in "$@"; do
     if [ "$arg" == "--verbose" ]; then
         verbose=1
-    elif [ "$arg" == "--help" ]; then
+    fi
+
+    if [ "$arg" == "--help" ]; then
         help=1
-    else
-        show_help
-        exit 1
+    fi
+
+    if [ "$arg" == "--firefox" ]; then
+        only_firefox=1
+    fi
+
+    if [ "$arg" == "--chrome" ]; then
+        only_chrome=1
     fi
 done
 
@@ -75,6 +88,14 @@ if [ $help -eq 1 ]; then
     exit 0
 fi
 
-build_zip_archive "firefox" "manifest2.json"
-build_zip_archive "chrome" "manifest3.json"
-build_source_zip_archive
+if [ $only_firefox -eq 0 ] && [ $only_chrome -eq 0 ]; then
+    echo "No platform specified, building both extensions.."
+
+    build_zip_archive "firefox" "manifest2.json"
+    build_zip_archive "chrome" "manifest3.json"
+    build_source_zip_archive
+elif [ $only_firefox -eq 1 ]; then
+    build_zip_archive "firefox" "manifest2.json"
+elif [ $only_chrome -eq 1 ]; then
+    build_zip_archive "chrome" "manifest3.json"
+fi
