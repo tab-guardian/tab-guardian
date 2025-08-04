@@ -26,9 +26,8 @@ const icons = [
     ['http://localhost', 'localhost.png'],
     ['chrome://', 'chrome.png'],
     ['brave://', 'brave.png'],
-    ['firefox://', 'brave.png'],
-    ['about:preferences', 'firefox.png'],
-    ['about:config', 'firefox.png'],
+    ['firefox:', 'firefox.png'],
+    ['about:', 'firefox.png'],
 ]
 
 function getFaviconIconUrl(tab: Tab): string {
