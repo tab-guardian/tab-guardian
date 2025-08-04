@@ -99,3 +99,5 @@ elif [ $only_firefox -eq 1 ]; then
 elif [ $only_chrome -eq 1 ]; then
     build_zip_archive "chrome" "manifest3.json"
 fi
+
+rm -r dist
