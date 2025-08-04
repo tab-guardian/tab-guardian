@@ -4,7 +4,7 @@
     "description": "__MSG_ext_description__",
     "permissions": ["storage", "tabs"],
     "default_locale": "en",
-    "version": "1.9.0",
+    "version": "1.9.1",
     "web_accessible_resources": [
         {
             "resources": ["icons/*", "assets/*"],
@@ -18,14 +18,15 @@
         "128": "icons/icon-128.png"
     },
     "action": {
-		"default_icon": {
+        "default_icon": {
             "32": "icons/icon-32.png",
             "48": "icons/icon-48.png"
         },
-		"default_title": "Tab Guardian",
+        "default_title": "Tab Guardian",
         "default_popup": "index.html"
     },
     "background": {
-        "service_worker": "assets/background.js"
+        "service_worker": "assets/background.js",
+        "type": "module"
     }
 }

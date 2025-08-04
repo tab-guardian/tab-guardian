@@ -1,5 +1,11 @@
 # Release Notes
 
+## v1.9.1 (2025-08-05)
+- Fixes for Firefox-based browsers:
+    - 🐛 Fixed "Move tabs into group" button not working properly. Tabs weren't closing
+    - 🐛 Some links caused errors when opening them. Links like `about:debugging`, `about:config`, etc.
+    - 🐛 You couldn't change group icons to some favicon icons before
+
 ## v1.9.0 (2025-07-23)
 - ✨ Added support for Firefox based browsers
 - 🧑‍💻 Added build script to `scripts` directory

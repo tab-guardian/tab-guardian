@@ -49,8 +49,6 @@ export const useTabsStore = defineStore('tabs', () => {
     async function stashTabs(group: Group, closeAllTabs: boolean): Promise<void> {
         const links = await getCurrentLinks()
 
-        console.log({ group })
-
         if (!links.length) {
             showToast(trans('no_tabs_to_save'), 'error')
             return
@@ -62,7 +60,6 @@ export const useTabsStore = defineStore('tabs', () => {
         }
 
         if (closeAllTabs) {
-            console.log({ links })
             await closeTabs(links.map(l => l.id))
         }
 

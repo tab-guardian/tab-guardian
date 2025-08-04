@@ -3,7 +3,7 @@
     "name": "__MSG_ext_name__",
     "description": "__MSG_ext_description__",
     "default_locale": "en",
-    "version": "1.9.0",
+    "version": "1.9.1",
     "web_accessible_resources": [
         "icons/*",
         "assets/*"
@@ -27,8 +27,7 @@
         "default_popup": "index.html"
     },
     "background": {
-        "scripts": [
-            "assets/background.js"
-        ]
+        "scripts": ["assets/background.js"],
+        "type": "module"
     }
 }
