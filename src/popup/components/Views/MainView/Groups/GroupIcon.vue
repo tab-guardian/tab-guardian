@@ -3,11 +3,7 @@ import type { Group as GroupType } from '@/types'
 import { getIcons } from '@/modules/getIcons'
 import { isSingleEmoji } from '@common/modules/emoji/isSingleEmoji'
 
-type Props = {
-    group: GroupType
-}
-
-const { group } = defineProps<Props>()
+defineProps<{ group: GroupType }>()
 </script>
 
 <template>
