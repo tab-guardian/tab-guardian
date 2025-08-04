@@ -1,7 +1,8 @@
 # Release Notes
 
 ## v1.9.1 (2025-08-05)
-- 🐛 Fixed "Move tabs into group" button not working properly on Firefox-based browsers
+- 🐛 Fixed "Move tabs into group" button not working properly on Firefox-based browsers. Tabs weren't closing
+- 🐛 Fixed errors with opening some links on Firefox-based browsers
 
 ## v1.9.0 (2025-07-23)
 - ✨ Added support for Firefox based browsers
