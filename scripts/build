@@ -6,6 +6,10 @@ set -euo pipefail
 # ============================================================================
 
 show_help () {
+    echo "Builds and wraps the source code into firefox.zip, chrome.zip and"
+    echo "source.zip files that later can be used to upload extensions to"
+    echo "Chrome and Mozilla stores or test them in the browser."
+    echo ""
     echo "Usage:"
     echo "  $0 [OPTION...]"
     echo ""
@@ -62,6 +66,25 @@ build_zip_archive () {
     echo "✅ DONE: archived: $ZIP_NAME"
 }
 
+start_container_if_needed () {
+    podman_exists=$(command -v podman-compose)
+    docker_exists=$(command -v docker)
+
+    if [ "$podman_exists" ]; then
+        echo "🦦 Starting a Podman container..."
+        # podman-compose up -d
+        return
+    fi
+
+    if [ "$docker_exists" ]; then
+        echo "🐋 Starting a Docker container..."
+        # docker compose up -d
+        return
+    fi
+
+    echo "❌ ERROR: You need to have `podman-compose` or `docker` to run this script"
+}
+
 # ============================================================================
 # Reading and Settings Flag
 # ============================================================================
@@ -99,6 +122,9 @@ if [ $help -eq 1 ]; then
     show_help
     exit 0
 fi
+
+start_container_if_needed
+exit 1
 
 if [ $only_firefox -eq 0 ] && [ $only_chrome -eq 0 ]; then
     echo "No platform specified, building both extensions.."
