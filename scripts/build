@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-exit 1
-
 verbose=0
 help=0
 only_firefox=0
@@ -41,7 +39,7 @@ build_source_zip_archive () {
 
     zip -r "$ZIP_NAME" . -x "node_modules/*" ".git/*" >/dev/null 2>&1
 
-    echo "  ✅ SUCCESS: archived: $ZIP_NAME"
+    echo "✅ SUCCESS: archived: $ZIP_NAME"
 }
 
 build_zip_archive () {
@@ -51,8 +49,8 @@ build_zip_archive () {
     MANIFEST_PATH="./public/$2"
 
     if [[ ! -f "$MANIFEST_PATH" ]]; then
-        echo "Manifest file `$MANIFEST_PATH` not found for $PLATFORM_NAME"
-        return
+        echo "❌ FAILURE: `$MANIFEST_PATH` file not found for $PLATFORM_NAME"
+        exit 1
     fi
 
     echo "⏳ LOADING: archiving $ZIP_NAME..."
@@ -69,7 +67,7 @@ build_zip_archive () {
     # Rename regular manifest.json back to a versioned
     mv "$REGULAR_MANIFEST_PATH" "$MANIFEST_PATH" 
 
-    echo "  ✅ SUCCESS: archived: $ZIP_NAME"
+    echo "✅ SUCCESS: archived: $ZIP_NAME"
 }
 
 start_container_if_needed () {
@@ -110,7 +108,7 @@ EOF
 }
 
 compile_assets_locally () {
-    echo "  ⏳ LOADING: compiling assets 'npm run build'..."
+    echo "⏳ LOADING: compiling assets 'npm run build'..."
 
     if [[ $verbose -eq 1 ]]; then
         npm run build
@@ -118,11 +116,11 @@ compile_assets_locally () {
         npm run build >/dev/null 2>&1
     fi
 
-    echo "  ✅ SUCCESS: 'npm run build'"
+    echo "✅ SUCCESS: 'npm run build'"
 }
 
 compile_assets_with_containers () {
-    echo "  ⏳ LOADING: compiling assets with '$container_exec'..."
+    echo "⏳ LOADING: compiling assets with '$container_exec'..."
 
     if [[ $verbose -eq 1 ]]; then
         $container_exec exec app npm run build
@@ -130,7 +128,7 @@ compile_assets_with_containers () {
         $container_exec exec app npm run build >/dev/null 2>&1
     fi
 
-    echo "  ✅ SUCCESS: 'npm run build'"
+    echo "✅ SUCCESS: 'npm run build'"
 }
 
 compile_assets () {
