@@ -1,0 +1,50 @@
+name: Build and Release
+
+on:
+    push:
+        branches: [master]
+
+permissions:
+    contents: write
+
+jobs:
+    build-and-deploy:
+        runs-on: ubuntu-latest
+        steps:
+            - name: 🛎️ Checkout
+              uses: actions/checkout@v4
+
+            - name: ⏳ Install Podman
+              run: |
+                sudo apt update
+                sudo apt -y install podman
+
+            - name: ⏳ Install Podman Compose
+              run: |
+                sudo apt -y install python3-pip
+                sudo pip3 install podman-compose
+
+            - name: 🔧 Build and create zip files
+              run: ./scripts/build
+
+            - name: 👁️ Show Directory
+              run: ls -hla
+
+            - name: 📦 Upload Artifacts
+              uses: actions/upload-artifact@v4
+              with:
+                name: extension-zips
+                path: |
+                  firefox.zip
+                  chrome.zip
+                  source.zip
+
+            - name: 🚀 Create GitHub Release
+              uses: softprops/action-gh-release@v2
+              if: startsWith(github.ref, 'refs/tags/')
+              with:
+                token: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
+                files: |
+                  firefox.zip
+                  chrome.zip
+                  source.zip
