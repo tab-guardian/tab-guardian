@@ -2,8 +2,7 @@ name: Build and Release
 
 on:
     push:
-        tags:
-            - '*'
+        branches: [master]
 
 permissions:
     contents: write
@@ -27,9 +26,6 @@ jobs:
 
             - name: 🔧 Build and create zip files
               run: ./scripts/build
-
-            - name: 👁️ Show Directory
-              run: ls -hla
 
             - name: 📦 Upload Artifacts
               uses: actions/upload-artifact@v4
