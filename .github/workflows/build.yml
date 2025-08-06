@@ -43,8 +43,9 @@ jobs:
             - name: 🚀 Create GitHub Release
               uses: softprops/action-gh-release@v2
               with:
-                token: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
+                token: ${{ secrets.RELEASES_SECRET }}
                 files: |
                   firefox.zip
                   chrome.zip
                   source.zip
+
