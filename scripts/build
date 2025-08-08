@@ -5,7 +5,6 @@ verbose=0
 help=0
 only_firefox=0
 only_chrome=0
-local_build=0
 container_exec="podman-compose"
 
 help_text=$(cat <<EOF
@@ -14,7 +13,6 @@ files that later can be used to upload extensions to Chrome and Mozilla stores
 or test them in the browser.
 
 By default, it uses container engines like Podman and Docker to compile assets.
-If you want to use locally installed "npm", you need to pass "--local" flag.
 
 Usage:
   $0 [OPTION...]
@@ -24,7 +22,6 @@ Options:
   --help           Show help options
   --firefox        Build only Firefox extension
   --chrome         Build only Chrome extension
-  --local          Use local "npm" instead of Podman and Docker
 EOF
 )
 
@@ -71,10 +68,6 @@ build_zip_archive () {
 }
 
 start_container_if_needed () {
-    if [[ $local_build -eq 1 ]]; then
-        return
-    fi
-
     podman_exists=$(command -v podman-compose)
     docker_exists=$(command -v docker)
 
@@ -101,13 +94,11 @@ start_container_if_needed () {
         return
     fi
 
-    echo "❌ FAILURE: you need to have 'podman-compose' or 'docker' to run"
-    echo "   this script. You can also provide '--local' flag to compile"
-    echo "   assets locally with 'npm'."
+    echo "❌ FAILURE: you need to have 'podman-compose' or 'docker' to run this script"
 EOF
 }
 
-compile_assets_locally () {
+compile_assets () {
     echo "⏳ LOADING: compiling assets 'npm run build'..."
 
     if [[ $verbose -eq 1 ]]; then
@@ -131,15 +122,6 @@ compile_assets_with_containers () {
     echo "✅ SUCCESS: 'npm run build'"
 }
 
-compile_assets () {
-    if [[ $local_build -eq 1 ]]; then
-        compile_assets_locally
-        return
-    fi
-
-    compile_assets_with_containers
-}
-
 # ============================================================================
 # Reading and Settings Flag
 # ============================================================================
@@ -160,10 +142,6 @@ for arg in "$@"; do
 
     if [[ "$arg" == "--chrome" ]]; then
         only_chrome=1
-    fi
-
-    if [[ "$arg" == "--local" ]]; then
-        local_build=1
     fi
 done
 
