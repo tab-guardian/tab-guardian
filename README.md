@@ -25,7 +25,10 @@ Here is what makes Tab Guardian a great tool for managing your tabs:
 
 ## Links
 - [Firefox ADD-ONS](https://addons.mozilla.org/firefox/addon/tab-guardian/)
-- [Chrome Web Store](https://chrome.google.com/webstore/detail/tab-guardian/fceclmihdanbepiogjoeiolnpkalcjpe)
+- [Chrome Web Store](https://chromewebstore.google.com/detail/tab-guardian/kjdklkfpliphcbnphmfhalllclfieojp)
+
+## Build Extension from Source
+TODO:
 
 ## Start working on the source code
 All necessary scripts are in package.json file. You need to have [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/lang/en/) JavaScript package managers.
