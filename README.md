@@ -28,10 +28,12 @@ Here is what makes Tab Guardian a great tool for managing your tabs:
 - [Chrome Web Store](https://chromewebstore.google.com/detail/tab-guardian/kjdklkfpliphcbnphmfhalllclfieojp)
 
 ## Build Extension from Source
-To build the extension from souce you need to run [scripts/build](https://github.com/tab-guardian/tab-guardian/blob/master/scripts/build) bash script. It will generate `firefox.zip`, `chrome.zip` and `source.zip` files inside of your project's root.
+You can build the extension in 3 ways:
+1. `scripts/build` - build locally. You'll need to have `npm`, `zip`, `grep` installed on your machine
+2. `scripts/podman` - bulid with Podman container engine. You'll need to have `podman` and `podman-compose` installed on your machine
+3. `scripts/docker` - bulid with Docker container engine. You'll need to have `docker` installed on your machine
 
-> [!IMPORTANT]
-> The `scripts/build` script requires you to have Podman or Docker installed on your machine.
+It will generate `firefox.zip`, `chrome.zip` and `source.zip` files inside of your project's root.
 
 ## Start working on the source code
 All necessary scripts are in package.json file. You need to have [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/lang/en/) JavaScript package managers.

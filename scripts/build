@@ -5,14 +5,11 @@ verbose=0
 help=0
 only_firefox=0
 only_chrome=0
-container_exec="podman-compose"
 
 help_text=$(cat <<EOF
 Builds and wraps the source code into firefox.zip, chrome.zip and source.zip
 files that later can be used to upload extensions to Chrome and Mozilla stores
 or test them in the browser.
-
-By default, it uses container engines like Podman and Docker to compile assets.
 
 Usage:
   $0 [OPTION...]
@@ -67,37 +64,6 @@ build_zip_archive () {
     echo "✅ SUCCESS: archived: $ZIP_NAME"
 }
 
-start_container_if_needed () {
-    podman_exists=$(command -v podman-compose)
-    docker_exists=$(command -v docker)
-
-    if [[ -n "$podman_exists" ]]; then
-        is_running=$(podman ps | grep -E 'Up\s[0-9]+\s' || true)
-
-        if [[ -z "$is_running" ]]; then
-            echo "⏳ LOADING: starting a Podman container..."
-            podman-compose up -d >/dev/null
-        fi
-
-        return
-    fi
-
-    if [[ -n "$docker_exists" ]]; then
-        is_running=$(docker ps | grep -E 'Up\s[0-9]+\s' || true)
-        container_exec="docker compose"
-
-        if [[ -z "$is_running" ]]; then
-            echo "⏳ LOADING: starting a Docker container..."
-            docker compose up -d >/dev/null
-        fi
-
-        return
-    fi
-
-    echo "❌ FAILURE: you need to have 'podman-compose' or 'docker' to run this script"
-EOF
-}
-
 compile_assets () {
     echo "⏳ LOADING: compiling assets 'npm run build'..."
 
@@ -105,18 +71,6 @@ compile_assets () {
         npm run build
     else
         npm run build >/dev/null 2>&1
-    fi
-
-    echo "✅ SUCCESS: 'npm run build'"
-}
-
-compile_assets_with_containers () {
-    echo "⏳ LOADING: compiling assets with '$container_exec'..."
-
-    if [[ $verbose -eq 1 ]]; then
-        $container_exec exec app npm run build
-    else
-        $container_exec exec app npm run build >/dev/null 2>&1
     fi
 
     echo "✅ SUCCESS: 'npm run build'"
@@ -155,7 +109,6 @@ if [[ $help -eq 1 ]]; then
     exit 0
 fi
 
-start_container_if_needed
 compile_assets
 
 if [[ $only_firefox -eq 0 ]] && [[ $only_chrome -eq 0 ]]; then
