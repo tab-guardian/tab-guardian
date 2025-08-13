@@ -1,5 +1,8 @@
 # Release Notes
 
+## v1.9.2 (2025-08-13)
+- Fixed issue with Chinese language not showing up in extension settings in Chrome developer dashboard
+
 ## v1.9.1 (2025-08-05)
 - Fixes for Firefox-based browsers:
     - 🐛 Fixed "Move tabs into group" button not working properly. Tabs weren't closing

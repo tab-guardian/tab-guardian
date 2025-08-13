@@ -52,6 +52,8 @@ build_zip_archive () {
     # Rename versionaled manifest to a regular manifest.json
     mv "$MANIFEST_PATH" "$REGULAR_MANIFEST_PATH"
 
+    compile_assets
+
     if [[ $verbose -eq 1 ]]; then
         cd dist && zip -r ../"$ZIP_NAME" . && cd -
     else
@@ -108,8 +110,6 @@ if [[ $help -eq 1 ]]; then
     echo "$help_text"
     exit 0
 fi
-
-compile_assets
 
 if [[ $only_firefox -eq 0 ]] && [[ $only_chrome -eq 0 ]]; then
     echo "⏳ LOADING: no platform specified with a flag."
