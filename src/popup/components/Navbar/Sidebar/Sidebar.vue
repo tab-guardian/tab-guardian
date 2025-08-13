@@ -26,7 +26,7 @@ const links = [
         icon: GitHubIcon,
     },
     {
-        href: 'https://github.com/tab-guardian/tab-guardian/blob/main/CHANGELOG.md',
+        href: 'https://github.com/tab-guardian/tab-guardian/blob/master/CHANGELOG.md',
         label: trans('release_notes'),
         icon: DocumentIcon,
     },
