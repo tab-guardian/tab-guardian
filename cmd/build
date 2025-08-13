@@ -117,11 +117,12 @@ if [[ $only_firefox -eq 0 ]] && [[ $only_chrome -eq 0 ]]; then
 
     build_zip_archive "firefox" "manifest2.json"
     build_zip_archive "chrome" "manifest3.json"
-    build_source_zip_archive
 elif [[ $only_firefox -eq 1 ]]; then
     build_zip_archive "firefox" "manifest2.json"
 elif [[ $only_chrome -eq 1 ]]; then
     build_zip_archive "chrome" "manifest3.json"
 fi
+
+build_source_zip_archive
 
 rm -r dist
