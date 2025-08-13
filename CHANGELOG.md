@@ -1,5 +1,8 @@
 # Release Notes
 
+## v1.9.3 (2025-08-13)
+- Fixed wrong "Release Notes" link in the sidebar
+
 ## v1.9.2 (2025-08-13)
 - Fixed issue with Chinese language not showing up in extension settings in Chrome developer dashboard
 
