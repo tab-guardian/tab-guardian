@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-docker compose exec app scripts/build
+podman-compose exec app cmd/build
