@@ -7,7 +7,7 @@ export function getFakeLinks(): Link[] {
         {
             id: 1 + rand,
             url: 'https://duckduckgo.com/',
-            title: 'DuckDuckGo — Privacy, simplified. Trust me man',
+            title: 'DuckDuckGo — Privacy, simplified',
             favIconUrl: 'https://duckduckgo.com/favicon.ico',
             isPinned: true,
         },
