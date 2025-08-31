@@ -9,6 +9,5 @@ services:
             dockerfile: Containerfile
         volumes:
             - .:/app:z
-            - /app/node_modules
         ports:
             - 3000:5173
