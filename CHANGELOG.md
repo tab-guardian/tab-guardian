@@ -1,5 +1,8 @@
 # Release Notes
 
+## v1.10.0 (2025-08-31)
+- ✨ Now, when you export a group, it will have a slugifying version of the group name. For example, 'Test Group' will have a name 'test-group.json'
+
 ## v1.9.3 (2025-08-13)
 - Fixed wrong "Release Notes" link in the sidebar
 
