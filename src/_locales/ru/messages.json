@@ -68,7 +68,7 @@
         "message": "Что-то пошло не так! Группа не выбрана"
     },
     "want_delete_group": { "message": "Вы хотите удалить группу?" },
-    "no_links_this_group": { "message": "В этой группе нет ссылок" },
+    "no_tabs_this_group": { "message": "В этой группе нет вкладок" },
     "click_on_each_tab": {
         "message": "Нажмите на каждую вкладку, чтобы выбрать или отменить выбор для сохранения"
     },
@@ -91,7 +91,7 @@
     "pass_updated": { "message": "Пароль обновлен" },
     "pass_empty": { "message": "Пароль пуст" },
     "passwords_not_match": { "message": "Пароли не совпадают" },
-    "add_more_links": { "message": "Добавить больше вкладок" },
+    "add_more_tabs": { "message": "Добавить больше вкладок" },
     "delete_this_group": { "message": "Удалить" },
     "rename_this_group": { "message": "Переименовать" },
     "additional_options": { "message": "Дополнительные параметры" },

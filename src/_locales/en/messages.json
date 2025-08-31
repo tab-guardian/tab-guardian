@@ -68,7 +68,7 @@
         "message": "Something went wrong! No group selected"
     },
     "want_delete_group": { "message": "Do you want to delete the group?" },
-    "no_links_this_group": { "message": "There are no links in this group" },
+    "no_tabs_this_group": { "message": "There are no tabs in this group" },
     "click_on_each_tab": {
         "message": "Click on each tab to select or unselect it for saving to memory"
     },
@@ -91,7 +91,7 @@
     "pass_empty": { "message": "Password is empty" },
     "passwords_not_match": { "message": "Passwords do not match" },
     "repeat_pass": { "message": "Repeat password" },
-    "add_more_links": { "message": "Add more links" },
+    "add_more_tabs": { "message": "Add more tabs" },
     "delete_this_group": { "message": "Delete this group" },
     "rename_this_group": { "message": "Rename this group" },
     "additional_options": { "message": "Additional options" },
