@@ -13,7 +13,8 @@ import EnterPassword from '@/components/Views/GroupView/EnterPassword.vue'
 import Actions from '@/components/Views/GroupView/GroupControls/Actions/Actions.vue'
 import IsUnlockedBox from '@/components/Views/GroupView/IsUnlockedBox.vue'
 import Message from '@common/components/Message.vue'
-import TabLinkPopup from '@/components/Popups/TabLinkPopup.vue'
+import TabMenuPopup from '@/components/Popups/TabMenuPopup.vue'
+import GroupMenuPopup from '@/components/Popups/GroupMenuPopup.vue'
 import AppearTransition from '@common/components/Transitions/AppearTransition.vue'
 
 const { params } = useRoute()

@@ -4,17 +4,21 @@ import type { Component } from 'vue'
 type Props = {
     label: string
     icon: Component
+    disabled?: boolean
 }
 
-const { label } = defineProps<Props>()
+withDefaults(defineProps<Props>(), {
+    disabled: false,
+})
 </script>
 
 <template>
     <div
         :class="[
             'px-2 py-1.5 bg-page border border-border rounded-lg',
-            'flex items-center gap-2 cursor-pointer',
+            'flex items-center gap-2 cursor-pointer select-none',
             'hover:border-primary hover:text-primary',
+            disabled ? ' opacity-50 pointer-events-none ' : '',
         ]"
     >
         <component :is="icon" width="22" height="22" />

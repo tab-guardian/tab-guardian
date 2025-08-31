@@ -32,7 +32,7 @@ const isEncrypted = computed<boolean>(() => {
             {{ trans('group_private_unlock_it') }}
         </p>
 
-        <div v-else class="flex flex-col gap-1 mt-3">
+        <div v-else class="space flex flex-col gap-1 mt-3">
             <RouterLink
                 v-if="group"
                 :to="{ name: 'groupDetails', params: { id: group.id } }"
