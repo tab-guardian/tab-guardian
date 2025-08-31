@@ -14,6 +14,7 @@ export function trans(msg: string, ...args: string[]): string {
     if (englishMessages) {
         if (!englishMessages[msg]) {
             console.warn(`English translation not found for key "${msg}"`)
+            return msg
         }
 
         return englishMessages[msg].message
