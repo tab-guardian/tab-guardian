@@ -1,5 +1,5 @@
 import type { Popups } from '@/types'
-import { ref } from 'vue'
+import { reactive, ref } from 'vue'
 import { defineStore } from 'pinia'
 
 const defaultPopups: Popups = {
@@ -10,11 +10,13 @@ const defaultPopups: Popups = {
     chooseEmoji: false,
     chooseImageIcon: false,
     newPassword: false,
+    tabLinkView: false,
 }
 
 export const usePopupStore = defineStore('popup', () => {
     const popups = ref<Popups>(structuredClone(defaultPopups))
-    const onSubmit = ref<((data?: any) => void) | null>(null)
+    const sharedData = ref<any>(null)
+    const onCloseCallback = ref<null | ((data?: any) => void)>(null)
 
     function closeAllPopups(): void {
         for (const key in popups.value) {
@@ -22,11 +24,11 @@ export const usePopupStore = defineStore('popup', () => {
         }
     }
 
-    function openPopup(key: keyof Popups, submitCallback?: (data?: any) => void): void {
+    function openPopup(key: keyof Popups, data?: any): void {
         popups.value[key] = true
 
-        if (submitCallback) {
-            onSubmit.value = submitCallback
+        if (data) {
+            sharedData.value = data
         }
     }
 
@@ -34,12 +36,19 @@ export const usePopupStore = defineStore('popup', () => {
         popups.value = structuredClone(defaultPopups)
     }
 
+    function onClose(callback: (data?: any) => void): void {
+        onCloseCallback.value = callback
+    }
+
+    /**
+     * @param data Pass data that you want to pass to onClose callback
+     */
     function closePopup(key: keyof Popups, data?: any): void {
         popups.value[key] = false
+        sharedData.value = null
 
-        if (data && onSubmit.value) {
-            onSubmit.value(data)
-            onSubmit.value = null
+        if (data && onCloseCallback.value) {
+            onCloseCallback.value(data)
         }
     }
 
@@ -51,6 +60,7 @@ export const usePopupStore = defineStore('popup', () => {
         popups,
         openPopup,
         closePopup,
+        onClose,
         closeAllPopups,
         isOpenPopup,
         resetGroups,
