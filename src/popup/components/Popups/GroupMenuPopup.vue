@@ -24,7 +24,7 @@ const isEncrypted = computed<boolean>(() => {
 </script>
 
 <template>
-    <Popup :content="trans('additional_options')" @cancel="closePopup('groupView')">
+    <Popup :content="trans('additional_options')" @cancel="closePopup('groupMenuView')">
         <p
             v-if="isEncrypted"
             class="mt-2 pt-2 text-font-gray border-t border-border"

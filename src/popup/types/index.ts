@@ -37,14 +37,14 @@ export type Settings = {
 }
 
 export type Popups = {
-    groupView: boolean
+    groupMenuView: boolean
     deleteGroup: boolean
     groupName: boolean
     rebindGroup: boolean
     chooseEmoji: boolean
     chooseImageIcon: boolean
     newPassword: boolean
-    tabLinkView: boolean
+    tabMenuView: boolean
 }
 
 export type Modals = {

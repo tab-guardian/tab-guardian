@@ -42,7 +42,7 @@ async function exportGroup(): Promise<void> {
 
     URL.revokeObjectURL(url)
 
-    closePopup('groupView')
+    closePopup('groupMenuView')
 }
 
 async function encryptPrivateGroup(group: Group): Promise<Group | null> {

@@ -26,7 +26,7 @@ async function openTab(): Promise<void> {
 }
 
 async function openTabLinkPopup(): Promise<void> {
-    openPopup('tabLinkView', props.link)
+    openPopup('tabMenuView', props.link)
 }
 </script>
 

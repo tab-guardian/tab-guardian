@@ -6,7 +6,7 @@ import { usePopupStore } from '@/stores/popup'
 const { openPopup } = usePopupStore()
 
 function openPopupHandler(): void {
-    openPopup('groupView')
+    openPopup('groupMenuView')
 }
 </script>
 

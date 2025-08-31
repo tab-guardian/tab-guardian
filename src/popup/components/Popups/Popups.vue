@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { usePopupStore } from '@/stores/popup'
 import DeleteGroupPopup from '@/components/Popups/DeleteGroupPopup.vue'
-import GroupMenuPopup from '@/components/Popups/GroupMenuPopup.vue'
 import NewGroupNamePopup from '@/components/Popups/NewGroupNamePopup.vue'
 import NewPasswordPopup from '@/components/Popups/NewPasswordPopup.vue'
 import RebindGroupPopup from '@/components/Popups/RebindGroupPopup.vue'
@@ -15,10 +14,6 @@ const { isOpenPopup } = usePopupStore()
 <template>
     <AppearTransition>
         <DeleteGroupPopup v-if="isOpenPopup('deleteGroup')" />
-    </AppearTransition>
-
-    <AppearTransition>
-        <GroupMenuPopup v-if="isOpenPopup('groupView')" />
     </AppearTransition>
 
     <AppearTransition>

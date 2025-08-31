@@ -3,14 +3,14 @@ import { reactive, ref } from 'vue'
 import { defineStore } from 'pinia'
 
 const defaultPopups: Popups = {
-    groupView: false,
+    groupMenuView: false,
     deleteGroup: false,
     groupName: false,
     rebindGroup: false,
     chooseEmoji: false,
     chooseImageIcon: false,
     newPassword: false,
-    tabLinkView: false,
+    tabMenuView: false,
 }
 
 export const usePopupStore = defineStore('popup', () => {

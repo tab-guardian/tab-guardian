@@ -50,7 +50,11 @@ watchEffect(() => {
             <GroupName :group />
 
             <AppearTransition>
-                <TabLinkPopup v-if="isOpenPopup('tabLinkView')" />
+                <TabMenuPopup v-if="isOpenPopup('tabMenuView')" />
+            </AppearTransition>
+
+            <AppearTransition>
+                <GroupMenuPopup v-if="isOpenPopup('groupMenuView')" />
             </AppearTransition>
 
             <IsUnlockedBox v-if="group.isPrivate && !group.isEncrypted" :group />

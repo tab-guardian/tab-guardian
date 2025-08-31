@@ -7,7 +7,7 @@ import { usePopupStore } from '@/stores/popup'
 const { closePopup, openPopup } = usePopupStore()
 
 function deleteGroup(): void {
-    closePopup('groupView')
+    closePopup('groupMenuView')
     openPopup('deleteGroup')
 }
 </script>
