@@ -4,8 +4,8 @@ import { readFileSync } from 'fs'
 import { resolve } from 'path'
 import { viteStaticCopy } from 'vite-plugin-static-copy'
 
-const packageJson = JSON.parse(
-    readFileSync(resolve(__dirname, 'package.json'), 'utf-8'),
+const manifestContent = JSON.parse(
+    readFileSync(resolve(__dirname, 'public/manifest2.json'), 'utf-8'),
 )
 
 export default defineConfig({
@@ -55,6 +55,6 @@ export default defineConfig({
     },
 
     define: {
-        __APP_VERSION__: JSON.stringify(packageJson.version),
+        __APP_VERSION__: JSON.stringify(manifestContent.version),
     },
 })
