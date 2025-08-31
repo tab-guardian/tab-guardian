@@ -46,8 +46,6 @@ git clone https://github.com/tab-guardian/tab-guardian.git && cd tab-guardian
 
 **Install all dependencies**
 ```bash
-yarn install
-# or
 npm i
 ```
 
@@ -56,31 +54,12 @@ npm i
 cp .env.example .env
 ```
 
-**Watch files**
-```bash
-yarn watch
-# or
-npm run watch
-```
-
-**Compile to production**
-```bash
-yarn prod
-# or
-npm run prod
-```
-
 ### Code style
 Don't worry about the code style. We use [Prettier](https://prettier.io/) to format the code. You can run it manually by executing `yarn prettier` or `npm run prettier` to format the code, or `yarn prettier-check` or `npm run prettier-check` to check if the code is formatted correctly.
 
 ## Contribute
 ### NPM Commands Available
 All necessary scripts are in `package.json` file. I'm using Vite here.
-
-#### Install all the Dependencies
-```bash
-npm i
-```
 
 #### Watch File Changes
 Start a development server with Vite and serve your source files via native ES modules.
