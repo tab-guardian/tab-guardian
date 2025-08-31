@@ -11,7 +11,7 @@ import Button from '@common/components/Form/Button.vue'
 import Input from '@common/components/Form/Input.vue'
 import CheckIcon from '@common/components/Icons/CheckIcon.vue'
 
-const { submitPopup, closePopup } = usePopupStore()
+const { closePopup } = usePopupStore()
 const groupStore = useGroupStore()
 const emoji = ref<string>('')
 
@@ -41,7 +41,7 @@ async function chooseEmoji(): Promise<void> {
         return
     }
 
-    submitPopup('chooseEmoji', emoji.value)
+    closePopup('chooseEmoji', emoji.value)
 }
 </script>
 

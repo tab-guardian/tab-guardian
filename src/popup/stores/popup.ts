@@ -22,11 +22,11 @@ export const usePopupStore = defineStore('popup', () => {
         }
     }
 
-    function openPopup(key: keyof Popups, callback?: (data?: any) => void): void {
+    function openPopup(key: keyof Popups, submitCallback?: (data?: any) => void): void {
         popups.value[key] = true
 
-        if (callback) {
-            onSubmit.value = callback
+        if (submitCallback) {
+            onSubmit.value = submitCallback
         }
     }
 
@@ -34,14 +34,10 @@ export const usePopupStore = defineStore('popup', () => {
         popups.value = structuredClone(defaultPopups)
     }
 
-    function closePopup(key: keyof Popups): void {
+    function closePopup(key: keyof Popups, data?: any): void {
         popups.value[key] = false
-    }
 
-    function submitPopup(key: keyof Popups, data?: any): void {
-        closePopup(key)
-
-        if (onSubmit.value) {
+        if (data && onSubmit.value) {
             onSubmit.value(data)
             onSubmit.value = null
         }
@@ -57,7 +53,6 @@ export const usePopupStore = defineStore('popup', () => {
         closePopup,
         closeAllPopups,
         isOpenPopup,
-        submitPopup,
         resetGroups,
     }
 })

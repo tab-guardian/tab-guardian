@@ -10,7 +10,7 @@ import Button from '@common/components/Form/Button.vue'
 import Input from '@common/components/Form/Input.vue'
 import CheckIcon from '@common/components/Icons/CheckIcon.vue'
 
-const { submitPopup, closePopup } = usePopupStore()
+const { closePopup } = usePopupStore()
 const { urlError } = useURLHelper()
 const groupStore = useGroupStore()
 const url = ref<string>('')
@@ -28,7 +28,7 @@ async function chooseImageIcon(): Promise<void> {
         return
     }
 
-    submitPopup('chooseImageIcon', url.value)
+    closePopup('chooseImageIcon', url.value)
 }
 </script>
 
