@@ -13,7 +13,7 @@ import EnterPassword from '@/components/Views/GroupView/EnterPassword.vue'
 import Actions from '@/components/Views/GroupView/GroupControls/Actions/Actions.vue'
 import IsUnlockedBox from '@/components/Views/GroupView/IsUnlockedBox.vue'
 import Message from '@common/components/Message.vue'
-import TabMenuPopup from '@/components/Popups/TabMenuPopup.vue'
+import LinkMenuPopup from '@/components/Popups/LinkMenuPopup.vue'
 import GroupMenuPopup from '@/components/Popups/GroupMenuPopup.vue'
 import AppearTransition from '@common/components/Transitions/AppearTransition.vue'
 
@@ -51,7 +51,7 @@ watchEffect(() => {
             <GroupName :group />
 
             <AppearTransition>
-                <TabMenuPopup v-if="isOpenPopup('tabMenuView')" />
+                <LinkMenuPopup v-if="isOpenPopup('linkMenuView')" />
             </AppearTransition>
 
             <AppearTransition>

@@ -44,7 +44,7 @@ export type Popups = {
     chooseEmoji: boolean
     chooseImageIcon: boolean
     newPassword: boolean
-    tabMenuView: boolean
+    linkMenuView: boolean
 }
 
 export type Modals = {

@@ -28,7 +28,7 @@ async function cutTab(): Promise<void> {
     <Popup
         v-if="link"
         :content="link.title"
-        @cancel="closePopup('tabMenuView')"
+        @cancel="closePopup('linkMenuView')"
     >
         <div class="flex flex-col gap-1 mt-3">
             <MenuItem
