@@ -4,6 +4,7 @@ import { computed, watchEffect } from 'vue'
 import { useGroupStore } from '@/stores/group'
 import { trans } from '@common/modules/trans'
 import { useRoute } from 'vue-router'
+import { usePopupStore } from '@/stores/popup'
 import View from '@/components/Views/View.vue'
 import Links from '@/components/Views/GroupView/Links.vue'
 import GroupName from '@/components/Views/GroupView/GroupName.vue'
@@ -12,9 +13,12 @@ import EnterPassword from '@/components/Views/GroupView/EnterPassword.vue'
 import Actions from '@/components/Views/GroupView/GroupControls/Actions/Actions.vue'
 import IsUnlockedBox from '@/components/Views/GroupView/IsUnlockedBox.vue'
 import Message from '@common/components/Message.vue'
+import TabLinkPopup from '@/components/Popups/TabLinkPopup.vue'
+import AppearTransition from '@common/components/Transitions/AppearTransition.vue'
 
 const { params } = useRoute()
 const store = useGroupStore()
+const { isOpenPopup } = usePopupStore()
 
 const group = computed<Group | null>(() => {
     const id = params.id
@@ -44,6 +48,10 @@ watchEffect(() => {
 
         <div v-if="group" class="group">
             <GroupName :group />
+
+            <AppearTransition>
+                <TabLinkPopup v-if="isOpenPopup('tabLinkView')" />
+            </AppearTransition>
 
             <IsUnlockedBox v-if="group.isPrivate && !group.isEncrypted" :group />
 

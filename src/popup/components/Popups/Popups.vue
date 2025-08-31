@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { usePopupStore } from '@/stores/popup'
 import DeleteGroupPopup from '@/components/Popups/DeleteGroupPopup.vue'
 import GroupMenuPopup from '@/components/Popups/GroupMenuPopup.vue'
 import NewGroupNamePopup from '@/components/Popups/NewGroupNamePopup.vue'
@@ -7,7 +8,6 @@ import RebindGroupPopup from '@/components/Popups/RebindGroupPopup.vue'
 import ChooseEmojiPopup from '@/components/Popups/ChooseEmojiPopup.vue'
 import ChooseImageIconPopup from '@/components/Popups/ChooseImageIconPopup.vue'
 import AppearTransition from '@common/components/Transitions/AppearTransition.vue'
-import { usePopupStore } from '@/stores/popup'
 
 const { isOpenPopup } = usePopupStore()
 </script>

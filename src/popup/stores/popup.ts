@@ -56,12 +56,17 @@ export const usePopupStore = defineStore('popup', () => {
         return popups.value[key]
     }
 
+    function getSharedData<T>(): T | null {
+        return sharedData.value
+    }
+
     return {
         popups,
         openPopup,
         closePopup,
         onClose,
         closeAllPopups,
+        getSharedData,
         isOpenPopup,
         resetGroups,
     }
