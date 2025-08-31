@@ -5,10 +5,7 @@ import { trans } from '@common/modules/trans'
 import downRemoveImage from '@/assets/images/tab-icons/down-remove.png'
 import Control from '@/components/Control.vue'
 
-const props = defineProps<{
-    group: Group
-}>()
-
+const props = defineProps<{ group: Group }>()
 const tabsStore = useTabsStore()
 
 function stashTabs(): void {

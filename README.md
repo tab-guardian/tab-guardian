@@ -109,3 +109,9 @@ When you are done working, you can delete the container by running this:
 ```bash
 podman-compose down
 ```
+
+## Terminology
+Here are some words that you need to know in order to undetstand the context of the app:
+- `group` group is a collection of links (tabs)
+- `link` in the context of this app is a link that is stored in your group
+- `tab` tab is what users see in their browsers. After storing those tabs in a group they become `links`
