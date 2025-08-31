@@ -16,9 +16,8 @@ withDefaults(defineProps<Props>(), {
     <div
         :class="[
             'px-2 py-1.5 bg-page border border-border rounded-lg',
-            'flex items-center gap-2 cursor-pointer select-none',
-            'hover:border-primary hover:text-primary',
-            disabled ? ' opacity-50 pointer-events-none ' : '',
+            'flex items-center gap-2 select-none',
+            disabled ? ' opacity-50 ' : ' hover:border-primary hover:text-primary cursor-pointer ',
         ]"
     >
         <component :is="icon" width="22" height="22" />

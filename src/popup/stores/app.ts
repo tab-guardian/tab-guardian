@@ -1,18 +1,18 @@
 import { Link } from '@/types'
-import type { Attempts } from '@/types'
 import { defineStore } from 'pinia'
-import { onMounted, ref } from 'vue'
-import { trans } from '@common/modules/trans'
-import { getFromStorage } from '@common/modules/storage/getFromStorage'
-import { saveToStorage } from '@common/modules/storage/saveToStorage'
-import { error } from '@common/modules/error'
-import { showToast } from '@common/modules/showToast'
+import { ref, computed } from 'vue'
+
+type LinkBuffer = {
+    groupId: number
+    link: Link
+}
 
 export const useAppStore = defineStore('app', () => {
-    // It stores copied or cut links
-    const linkBuffer = ref<Link | null>(null)
+    const linkBuffer = ref<LinkBuffer | null>(null)
+    const canCopy = computed<boolean>(() => linkBuffer.value === null)
 
     return {
         linkBuffer,
+        canCopy,
     }
 })

@@ -4,22 +4,48 @@ import { computed } from 'vue'
 import { trans } from '@common/modules/trans'
 import { usePopupStore } from '@/stores/popup'
 import { useGroupStore } from '@/stores/group'
+import { showToast } from '@common/modules/showToast'
+import { useAppStore } from '@/stores/app'
+import { error } from '@common/modules/error'
 import Popup from '@/components/Popups/Popup.vue'
 import MenuItem from '@/components/MenuItem.vue'
 import ScissorsIcon from '@common/components/Icons/ScissorsIcon.vue'
 import CopyIcon from '@common/components/Icons/CopyIcon.vue'
-import { showToast } from '@common/modules/showToast'
 
 const { closePopup, getSharedData } = usePopupStore()
+const appStore = useAppStore()
 const groupStore = useGroupStore()
 const group = computed<Group | null>(() => groupStore.selectedGroup)
 const link = computed<Link | null>(() => getSharedData<Link>())
 
-async function copyTab(): Promise<void> {
+async function yankLink(action: 'copy' | 'cut'): Promise<void> {
+    if (!appStore.canCopy) {
+        return
+    }
+
+    if (!link.value) {
+        error.warn(`Cannot ${action} the link because link.value is null`)
+        return
+    }
+
+    if (!group.value) {
+        error.warn(`Cannot ${action} the link because group.value is null`)
+        return
+    }
+
+    appStore.linkBuffer = {
+        groupId: group.value.id,
+        link: link.value,
+    }
+}
+
+async function copyLink(): Promise<void> {
+    yankLink('copy')
     showToast(trans('tab_copied'))
 }
 
-async function cutTab(): Promise<void> {
+async function cutLink(): Promise<void> {
+    yankLink('cut')
     showToast(trans('tab_cut'))
 }
 </script>
@@ -34,14 +60,15 @@ async function cutTab(): Promise<void> {
             <MenuItem
                 :label="trans('cut_tab')"
                 :icon="ScissorsIcon"
-                @click="cutTab"
-                :disabled="true"
+                @click="cutLink"
+                :disabled="!appStore.canCopy"
             />
 
             <MenuItem
                 :label="trans('copy_tab')"
                 :icon="CopyIcon"
-                @click="copyTab"
+                @click="copyLink"
+                :disabled="!appStore.canCopy"
             />
         </div>
     </Popup>
