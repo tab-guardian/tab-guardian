@@ -39,9 +39,11 @@ async function closeEmptyTab(): Promise<void> {
         active: true,
     })
 
-    if (tabs.length === 0 || !tabs[0].id) {
-        return
-    }
+    for (const tab of tabs) {
+        if (!tab.id) {
+            continue
+        }
 
-    await targetBrowser().tabs.remove(tabs[0].id)
+        await targetBrowser().tabs.remove(tab.id)
+    }
 }
