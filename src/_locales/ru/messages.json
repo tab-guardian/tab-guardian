@@ -94,6 +94,7 @@
     "add_more_tabs": { "message": "Добавить больше вкладок" },
     "cut_tab": { "message": "Вырезать эту вкладку" },
     "copy_tab": { "message": "Скопировать эту вкладку" },
+    "paste_tabs_here": { "message": "Вставить вкладки здесь" },
     "tab_copied": { "message": "Вкладка скопирована" },
     "tab_cut": { "message": "Вкладка вырезана" },
     "delete_this_group": { "message": "Удалить" },

@@ -84,6 +84,7 @@
     "add_more_tabs": { "message": "添加更多标签页" },
     "cut_tab": { "message": "剪下这个标签" },
     "copy_tab": { "message": "复制此标签页" },
+    "paste_tabs_here": { "message": "在此粘贴标签" },
     "tab_copied": { "message": "标签已复制" },
     "tab_cut": { "message": "标签已被剪切" },
     "delete_this_group": { "message": "删除该组" },

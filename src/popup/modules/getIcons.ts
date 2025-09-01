@@ -50,6 +50,7 @@ import MagnifyingGlassIcon from '@common/components/Icons/MagnifyingGlassIcon.vu
 import InfoCircleIcon from '@common/components/Icons/InfoCircleIcon.vue'
 import ScissorsIcon from '@common/components/Icons/ScissorsIcon.vue'
 import CopyIcon from '@common/components/Icons/CopyIcon.vue'
+import PasteIcon from '@common/components/Icons/PasteIcon.vue'
 
 export function getIcons(): { [key: string]: Component } {
     return {
@@ -104,5 +105,6 @@ export function getIcons(): { [key: string]: Component } {
         InfoCircleIcon,
         ScissorsIcon,
         CopyIcon,
+        PasteIcon,
     }
 }

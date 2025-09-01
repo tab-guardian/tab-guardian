@@ -19,7 +19,7 @@ const group = computed<Group | null>(() => groupStore.selectedGroup)
 const link = computed<Link | null>(() => getSharedData<Link>())
 
 async function yankLink(action: 'copy' | 'cut'): Promise<void> {
-    if (!appStore.canCopy) {
+    if (!appStore.bufferIsEmpty) {
         return
     }
 
@@ -34,6 +34,7 @@ async function yankLink(action: 'copy' | 'cut'): Promise<void> {
     }
 
     appStore.linkBuffer = {
+        action,
         groupId: group.value.id,
         link: link.value,
     }
@@ -61,14 +62,14 @@ async function cutLink(): Promise<void> {
                 :label="trans('cut_tab')"
                 :icon="ScissorsIcon"
                 @click="cutLink"
-                :disabled="!appStore.canCopy"
+                :disabled="!appStore.bufferIsEmpty"
             />
 
             <MenuItem
                 :label="trans('copy_tab')"
                 :icon="CopyIcon"
                 @click="copyLink"
-                :disabled="!appStore.canCopy"
+                :disabled="!appStore.bufferIsEmpty"
             />
         </div>
     </Popup>

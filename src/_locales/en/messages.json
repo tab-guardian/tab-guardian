@@ -94,6 +94,7 @@
     "add_more_tabs": { "message": "Add more tabs" },
     "cut_tab": { "message": "Cut this tab" },
     "copy_tab": { "message": "Copy this tab" },
+    "paste_tabs_here": { "message": "Paste tabs here" },
     "tab_copied": { "message": "Tab has been copied" },
     "tab_cut": { "message": "Tab has been cut" },
     "delete_this_group": { "message": "Delete this group" },
