@@ -1,14 +1,17 @@
 <script setup lang="ts">
 import type { Component } from 'vue'
+import Tip from '@common/components/Tip.vue'
 
 type Props = {
     label: string
     icon: Component
     disabled?: boolean
+    tip?: string,
 }
 
 withDefaults(defineProps<Props>(), {
     disabled: false,
+    tip: '',
 })
 </script>
 
@@ -21,6 +24,6 @@ withDefaults(defineProps<Props>(), {
         ]"
     >
         <component :is="icon" width="22" height="22" />
-        <span>{{ label }}</span>
+        <span>{{ label }} <Tip v-if="tip" :tip /></span>
     </div>
 </template>

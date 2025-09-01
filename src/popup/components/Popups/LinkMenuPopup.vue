@@ -11,12 +11,20 @@ import Popup from '@/components/Popups/Popup.vue'
 import MenuItem from '@/components/MenuItem.vue'
 import ScissorsIcon from '@common/components/Icons/ScissorsIcon.vue'
 import CopyIcon from '@common/components/Icons/CopyIcon.vue'
+import PasteLinkMenuItem from '@/components//Views/GroupView/GroupControls/MenuItems/PasteLinkMenuItem.vue'
 
 const { closePopup, getSharedData } = usePopupStore()
 const appStore = useAppStore()
 const groupStore = useGroupStore()
 const group = computed<Group | null>(() => groupStore.selectedGroup)
 const link = computed<Link | null>(() => getSharedData<Link>())
+const copyBtnTooltip = computed<string>(() => {
+    if (appStore.bufferIsEmpty) {
+        return ''
+    }
+
+    return trans('already_copied')
+})
 
 async function yankLink(action: 'copy' | 'cut'): Promise<void> {
     if (!appStore.bufferIsEmpty) {
@@ -53,7 +61,7 @@ async function cutLink(): Promise<void> {
 
 <template>
     <Popup
-        v-if="link"
+        v-if="group && link"
         :content="link.title"
         @cancel="closePopup('linkMenuView')"
     >
@@ -63,6 +71,7 @@ async function cutLink(): Promise<void> {
                 :icon="ScissorsIcon"
                 @click="cutLink"
                 :disabled="!appStore.bufferIsEmpty"
+                :tip="copyBtnTooltip"
             />
 
             <MenuItem
@@ -70,7 +79,17 @@ async function cutLink(): Promise<void> {
                 :icon="CopyIcon"
                 @click="copyLink"
                 :disabled="!appStore.bufferIsEmpty"
+                :tip="copyBtnTooltip"
             />
+
+            <PasteLinkMenuItem :group />
         </div>
     </Popup>
+
+    <!-- If there is no selected group (edge case) -->
+    <Popup
+        v-else
+        :content="trans('error_no_group_selected')"
+        @cancel="closePopup('linkMenuView')"
+    />
 </template>

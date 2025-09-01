@@ -204,5 +204,8 @@
     "replace_groups": { "message": "Заменить группы?" },
     "file_chosen": { "message": "Файл выбран" },
     "save": { "message": "Сохранить" },
-    "date_format_is": { "message": "Фортат даты" }
+    "date_format_is": { "message": "Фортат даты" },
+    "cant_paste_into_same_group": { "message": "Невозможно вставлять вкладку в ту же группу с которой она скопирована" },
+    "already_copied": { "message": "Вкладка уже скопирована. Вы можете вставить ее в другую группу" },
+    "nothing_to_paste": { "message": "Нет ничего, чтобы вставить" }
 }

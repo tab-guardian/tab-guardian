@@ -12,9 +12,12 @@ export const useAppStore = defineStore('app', () => {
     const linkBuffer = ref<LinkBuffer | null>(null)
     const bufferIsEmpty = computed<boolean>(() => linkBuffer.value === null)
 
-    function pasteLink(): void {
+    function pasteLink(groupId: number): void {
         // TODO: implement
         // 1. add link to the current group
+        // 2. if cut operation, remove link from old group
+        // 3. close all popups
+        // 4. show success message
     }
 
     return {
