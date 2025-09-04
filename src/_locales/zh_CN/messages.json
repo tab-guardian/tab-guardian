@@ -176,6 +176,5 @@
     "save": { "message": "保存" },
     "date_format_is": { "message": "日期格式是" },
     "cant_paste_into_same_group": { "message": "无法将标签页插入到与复制来源相同的组中" },
-    "already_copied": { "message": "标签页已复制。您可以将其粘贴到其他组中" },
     "nothing_to_paste": { "message": "没有内容可粘贴" }
 }

@@ -210,6 +210,5 @@
     "save": { "message": "Save" },
     "date_format_is": { "message": "Date format is" },
     "cant_paste_into_same_group": { "message": "It is not possible to insert a tab into the same group from which it was copied." },
-    "already_copied": { "message": "The tab is already copied. You can paste it into a different group" },
     "nothing_to_paste": { "message": "There is nothing to paste" }
 }

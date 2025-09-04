@@ -18,13 +18,6 @@ const appStore = useAppStore()
 const groupStore = useGroupStore()
 const group = computed<Group | null>(() => groupStore.selectedGroup)
 const link = computed<Link | null>(() => getSharedData<Link>())
-const copyBtnTooltip = computed<string>(() => {
-    if (appStore.bufferIsEmpty) {
-        return ''
-    }
-
-    return trans('already_copied')
-})
 
 async function yankLink(action: 'copy' | 'cut'): Promise<void> {
     if (!appStore.bufferIsEmpty) {
@@ -70,16 +63,12 @@ async function cutLink(): Promise<void> {
                 :label="trans('cut_tab')"
                 :icon="ScissorsIcon"
                 @click="cutLink"
-                :disabled="!appStore.bufferIsEmpty"
-                :tip="copyBtnTooltip"
             />
 
             <MenuItem
                 :label="trans('copy_tab')"
                 :icon="CopyIcon"
                 @click="copyLink"
-                :disabled="!appStore.bufferIsEmpty"
-                :tip="copyBtnTooltip"
             />
 
             <PasteLinkMenuItem :group />
