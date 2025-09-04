@@ -209,6 +209,6 @@
     "file_chosen": { "message": "File chosen" },
     "save": { "message": "Save" },
     "date_format_is": { "message": "Date format is" },
-    "cant_paste_into_same_group": { "message": "It is not possible to insert a tab into the same group from which it was copied." },
+    "tab_pasted": { "message": "The tab was pasted in the current group" },
     "nothing_to_paste": { "message": "There is nothing to paste" }
 }

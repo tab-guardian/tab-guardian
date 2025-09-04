@@ -6,26 +6,20 @@ import { useAppStore } from '@/stores/app'
 import MenuItem from '@/components/MenuItem.vue'
 import PasteIcon from '@common/components/Icons/PasteIcon.vue'
 
-const props = defineProps<{ group: Group }>()
+defineProps<{ group: Group }>()
 
 const appStore = useAppStore()
 
 const disabled = computed<boolean>(() => {
-    if (!appStore.linkBuffer) {
-        return true
-    }
-
-    return appStore.linkBuffer.groupId === props.group.id
+    return !appStore.linkBuffer
 })
 
 const tooltip = computed<string>(() => {
-    if (!appStore.linkBuffer) {
-        return trans('nothing_to_paste')
+    if (appStore.linkBuffer) {
+        return ''
     }
 
-    const sameGroup = appStore.linkBuffer.groupId === props.group.id
-
-    return sameGroup ? trans('cant_paste_into_same_group') : ''
+    return trans('nothing_to_paste')
 })
 </script>
 
