@@ -4,8 +4,8 @@ import { useGroupStore } from '@/stores/group'
 import { trans } from '@common/modules/trans'
 import { usePopupStore } from '@/stores/popup'
 import { error } from '@common/modules/error'
-import { validateURL } from '@common/modules/validateURL'
-import { isImageURL } from '@/modules/isImageURL'
+import { isImageURL } from '@/modules/url/isImageURL'
+import { validateImageURL } from '@/modules/url/validateImageURL'
 import Popup from '@/components/Popups/Popup.vue'
 import PopupButton from '@/components/Popups/PopupButton.vue'
 import Input from '@common/components/Form/Input.vue'
@@ -14,9 +14,8 @@ import CheckIcon from '@common/components/Icons/CheckIcon.vue'
 const { closePopup } = usePopupStore()
 const groupStore = useGroupStore()
 const url = ref<string>('')
-
-const errorMessage = computed<string | null>(() => validateURL(url.value))
-const preventSubmit = computed<boolean>(() => validateURL(url.value) !== null)
+const errorMessage = computed<string | null>(() => validateImageURL(url.value))
+const preventSubmit = computed<boolean>(() => validateImageURL(url.value) !== null)
 
 onMounted(setImageIcon)
 
@@ -51,6 +50,10 @@ async function chooseImageIcon(): Promise<void> {
         :content="trans('enter_image_url')"
         :description="trans('type_any_image_url_to_set_it')"
     >
+        <template #right-side>
+            <img v-if="url" :src="url" width="30" />
+        </template>
+
         <Input
             v-model="url"
             label="URL"

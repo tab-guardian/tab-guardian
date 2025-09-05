@@ -1,4 +1,4 @@
-const imgFormats = ['.png', '.webp', '.jpeg', '.jpg', '.svg', '.gif']
+export const imgFormats = ['.png', '.webp', '.jpeg', '.jpg', '.svg', '.gif']
 
 export function isImageURL(imgURL: string | null | undefined): boolean {
     if (!imgURL) {
