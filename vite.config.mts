@@ -1,12 +1,14 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import { readFileSync } from 'fs'
-import { resolve } from 'path'
+import fs from 'fs'
+import path from 'path'
 import { viteStaticCopy } from 'vite-plugin-static-copy'
 
-const manifestContent = JSON.parse(
-    readFileSync(resolve(__dirname, 'public/manifest2.json'), 'utf-8'),
-)
+const manifestPath = fs.existsSync(path.resolve(__dirname, 'public/manifest2.json'))
+    ? path.resolve(__dirname, 'public/manifest2.json')
+    : path.resolve(__dirname, 'public/manifest.json');
+
+const manifestContent = JSON.parse(fs.readFileSync(manifestPath, 'utf-8'))
 
 export default defineConfig({
     plugins: [
