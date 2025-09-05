@@ -8,13 +8,12 @@ import { error } from '@common/modules/error'
 import { isEmoji } from '@/modules/isEmoji'
 import 'emoji-picker-element'
 import Popup from '@/components/Popups/Popup.vue'
-import Button from '@common/components/Form/Button.vue'
+import PopupButton from '@/components/Popups/PopupButton.vue'
 import CheckIcon from '@common/components/Icons/CheckIcon.vue'
 
 const { closePopup } = usePopupStore()
 const groupStore = useGroupStore()
 const emoji = ref<string>('')
-
 const preventSubmit = computed<boolean>(() => !isEmoji(emoji.value))
 
 onMounted(setInitialEmoji)
@@ -63,18 +62,18 @@ function submit(): void {
 
         <emoji-picker v-on:emoji-click="chooseEmoji"></emoji-picker>
 
-        <div class="flex gap-4 items-center justify-end mt-4">
-            <Button
+        <template #buttons>
+            <PopupButton
                 @click="closePopup('chooseEmoji')"
-                additionalClasses="!bg-transparent !text-font"
+                :isSecondary="true"
             >
                 {{ trans('cancel') }}
-            </Button>
+            </PopupButton>
 
-            <Button @click="submit" :disabled="preventSubmit">
+            <PopupButton @click="submit" :disabled="preventSubmit">
                 <CheckIcon width="20" height="20" />
                 {{ trans('select') }}
-            </Button>
-        </div>
+            </PopupButton>
+        </template>
     </Popup>
 </template>
