@@ -50,7 +50,6 @@
     "no": { "message": "否" },
     "lock": { "message": "锁定" },
     "emoji": { "message": "表情符号" },
-    "bytes": { "message": "字节" },
     "rebind": { "message": "重新绑定" },
     "bound_to_url": { "message": "绑定到 URL" },
     "opened_tabs_times": { "message": "打开标签页次数" },

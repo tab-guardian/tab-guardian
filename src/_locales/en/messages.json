@@ -52,7 +52,6 @@
     "no": { "message": "No" },
     "lock": { "message": "Lock" },
     "emoji": { "message": "Emoji" },
-    "bytes": { "message": "bytes" },
     "rebind": { "message": "Rebind" },
     "bound_to_url": { "message": "Bound to URL" },
     "opened_tabs_times": { "message": "Opened tabs times" },

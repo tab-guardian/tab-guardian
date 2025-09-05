@@ -52,7 +52,6 @@
     "no": { "message": "Нет" },
     "lock": { "message": "Заблокировать" },
     "emoji": { "message": "Эмодзи" },
-    "bytes": { "message": "байт" },
     "rebind": { "message": "Отвязать" },
     "bound_to_url": { "message": "Привязана к URL" },
     "opened_tabs_times": { "message": "Открыто вкладок раз" },
