@@ -6,6 +6,7 @@ import LinkElementInner from '@/components/LinkElementInner.vue'
 const props = defineProps<{
     link: Link
     isSelected?: boolean
+    className?: string
 }>()
 
 const classes = computed(() => {
@@ -17,6 +18,10 @@ const classes = computed(() => {
 
     if (props.isSelected) {
         result.push('bg-safe hover:bg-safe-hover')
+    }
+
+    if (props.className) {
+        result.push(props.className)
     }
 
     return result

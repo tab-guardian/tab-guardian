@@ -20,6 +20,14 @@ export const useAppStore = defineStore('app', () => {
     const { prependLinksTo, deleteLink } = useGroupStore()
     const { closeAllPopups } = usePopupStore()
 
+    function linkIsCut(linkId: number): boolean {
+        if (!linkBuffer.value || linkBuffer.value.action !== 'cut') {
+            return false
+        }
+
+        return linkBuffer.value.link.id === linkId
+    }
+
     async function pasteLink(groupId: number): Promise<void> {
         if (!linkBuffer.value) {
             error.warn(`There is nothing to paste for group ${groupId}`)
@@ -47,6 +55,7 @@ export const useAppStore = defineStore('app', () => {
     return {
         linkBuffer,
         bufferIsEmpty,
+        linkIsCut,
         pasteLink,
     }
 })

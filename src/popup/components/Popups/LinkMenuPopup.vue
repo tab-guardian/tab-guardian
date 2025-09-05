@@ -13,17 +13,13 @@ import ScissorsIcon from '@common/components/Icons/ScissorsIcon.vue'
 import CopyIcon from '@common/components/Icons/CopyIcon.vue'
 import PasteLinkMenuItem from '@/components//Views/GroupView/GroupControls/MenuItems/PasteLinkMenuItem.vue'
 
-const { closePopup, getSharedData } = usePopupStore()
+const { closePopup, closeAllPopups, getSharedData } = usePopupStore()
 const appStore = useAppStore()
 const groupStore = useGroupStore()
 const group = computed<Group | null>(() => groupStore.selectedGroup)
 const link = computed<Link | null>(() => getSharedData<Link>())
 
-async function yankLink(action: 'copy' | 'cut'): Promise<void> {
-    if (!appStore.bufferIsEmpty) {
-        return
-    }
-
+async function yankLink(action: 'copy' | 'cut', successMsg: string): Promise<void> {
     if (!link.value) {
         error.warn(`Cannot ${action} the link because link.value is null`)
         return
@@ -39,16 +35,17 @@ async function yankLink(action: 'copy' | 'cut'): Promise<void> {
         groupId: group.value.id,
         link: link.value,
     }
+
+    closeAllPopups()
+    showToast(successMsg)
 }
 
 async function copyLink(): Promise<void> {
-    yankLink('copy')
-    showToast(trans('tab_copied'))
+    yankLink('copy', trans('tab_copied'))
 }
 
 async function cutLink(): Promise<void> {
-    yankLink('cut')
-    showToast(trans('tab_cut'))
+    yankLink('cut', trans('tab_cut'))
 }
 </script>
 
