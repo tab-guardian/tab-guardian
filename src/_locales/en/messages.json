@@ -51,7 +51,6 @@
     "yes": { "message": "Yes" },
     "no": { "message": "No" },
     "lock": { "message": "Lock" },
-    "emoji": { "message": "Emoji" },
     "rebind": { "message": "Rebind" },
     "bound_to_url": { "message": "Bound to URL" },
     "opened_tabs_times": { "message": "Opened tabs times" },
@@ -149,11 +148,7 @@
     },
     "select_emoji": { "message": "Select emoji" },
     "select_image": { "message": "Select image" },
-    "input_one_emoji": { "message": "The input must contain exactly one emoji" },
-    "enter_any_emoji": { "message": "Enter any emoji" },
-    "any_emoji_as_group_icon": {
-        "message": "Type any emoji to set it as a group icon"
-    },
+    "pick_any_emoji": { "message": "Pick any emoji" },
     "enter_image_url": { "message": "Enter image URL" },
     "type_any_image_url_to_set_it": {
         "message": "Type any image URL to set it as a group icon"
@@ -209,5 +204,6 @@
     "save": { "message": "Save" },
     "date_format_is": { "message": "Date format is" },
     "tab_pasted": { "message": "The tab was pasted in the current group" },
+    "your_emoji_is": { "message": "Your emoji is" },
     "nothing_to_paste": { "message": "There is nothing to paste" }
 }

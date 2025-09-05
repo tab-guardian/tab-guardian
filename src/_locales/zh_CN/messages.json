@@ -49,7 +49,6 @@
     "yes": { "message": "是" },
     "no": { "message": "否" },
     "lock": { "message": "锁定" },
-    "emoji": { "message": "表情符号" },
     "rebind": { "message": "重新绑定" },
     "bound_to_url": { "message": "绑定到 URL" },
     "opened_tabs_times": { "message": "打开标签页次数" },
@@ -133,9 +132,7 @@
     "url_must_start_with_http": { "message": "URL 必须以 http:// 或 https:// 开头" },
     "select_emoji": { "message": "选择表情符号" },
     "select_image": { "message": "选择图片" },
-    "input_one_emoji": { "message": "输入内容必须包含一个表情符号" },
-    "enter_any_emoji": { "message": "输入任何表情符号" },
-    "any_emoji_as_group_icon": { "message": "输入一个表情符号将其设置为组图标" },
+    "pick_any_emoji": { "message": "选择任意表情符号" },
     "enter_image_url": { "message": "输入图片 URL" },
     "type_any_image_url_to_set_it": {
         "message": "输入任何图片 URL 将其设置为组图标"
@@ -175,5 +172,6 @@
     "save": { "message": "保存" },
     "date_format_is": { "message": "日期格式是" },
     "tab_pasted": { "message": "该标签已粘贴到当前组中" },
+    "your_emoji_is": { "message": "你的表情符号是" },
     "nothing_to_paste": { "message": "没有内容可粘贴" }
 }

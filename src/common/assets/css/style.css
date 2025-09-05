@@ -8,3 +8,11 @@
 [data-tippy-root] {
     overflow-wrap: break-word;
 }
+
+emoji-picker {
+    width: 100%;
+    --background: transparent;
+    --border-color: transparent;
+    --border-size: 0;
+    --input-padding: 5px 7px;
+}

@@ -14,6 +14,9 @@ export default defineConfig({
     plugins: [
         vue({
             template: {
+                compilerOptions: {
+                    isCustomElement: (tag) => ['emoji-picker'].includes(tag)
+                },
                 transformAssetUrls: {
                     base: null,
                     includeAbsolute: false,

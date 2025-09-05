@@ -51,7 +51,6 @@
     "yes": { "message": "Да" },
     "no": { "message": "Нет" },
     "lock": { "message": "Заблокировать" },
-    "emoji": { "message": "Эмодзи" },
     "rebind": { "message": "Отвязать" },
     "bound_to_url": { "message": "Привязана к URL" },
     "opened_tabs_times": { "message": "Открыто вкладок раз" },
@@ -149,11 +148,7 @@
     },
     "select_emoji": { "message": "Эмодзи" },
     "select_image": { "message": "Изображение" },
-    "input_one_emoji": { "message": "Ввод должен содержать ровно одно эмодзи" },
-    "enter_any_emoji": { "message": "Введите любое эмодзи" },
-    "any_emoji_as_group_icon": {
-        "message": "Введите любое эмодзи, чтобы установить его в качестве значка группы"
-    },
+    "pick_any_emoji": { "message": "Выберите любой эмодзи" },
     "enter_image_url": { "message": "Введите URL изображения" },
     "type_any_image_url_to_set_it": {
         "message": "Введите URL изображения, чтобы установить его в качестве значка группы"
@@ -205,5 +200,6 @@
     "save": { "message": "Сохранить" },
     "date_format_is": { "message": "Фортат даты" },
     "tab_pasted": { "message": "Вкладка вставлена в текущую группу" },
+    "your_emoji_is": { "message": "Ваш эмодзи" },
     "nothing_to_paste": { "message": "Нет ничего, чтобы вставить" }
 }
