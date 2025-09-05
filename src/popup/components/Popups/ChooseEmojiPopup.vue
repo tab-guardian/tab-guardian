@@ -5,8 +5,7 @@ import { useGroupStore } from '@/stores/group'
 import { trans } from '@common/modules/trans'
 import { usePopupStore } from '@/stores/popup'
 import { error } from '@common/modules/error'
-import { containsEmoji } from '@common/modules/emoji/containsEmoji'
-import { isSingleEmoji } from '@common/modules/emoji/isSingleEmoji'
+import { isEmoji } from '@/modules/isEmoji'
 import 'emoji-picker-element'
 import Popup from '@/components/Popups/Popup.vue'
 import Button from '@common/components/Form/Button.vue'
@@ -14,12 +13,9 @@ import CheckIcon from '@common/components/Icons/CheckIcon.vue'
 
 const { closePopup } = usePopupStore()
 const groupStore = useGroupStore()
-const initialEmoji = ref<string>('')
 const emoji = ref<string>('')
 
-const preventSubmit = computed<boolean>(
-    () => !isSingleEmoji(emoji.value) || !containsEmoji(emoji.value),
-)
+const preventSubmit = computed<boolean>(() => !isEmoji(emoji.value))
 
 onMounted(setInitialEmoji)
 
@@ -30,9 +26,8 @@ function setInitialEmoji(): void {
         return
     }
 
-    if (isSingleEmoji(group.icon)) {
+    if (isEmoji(group.icon)) {
         emoji.value = group.icon
-        initialEmoji.value = group.icon
     }
 }
 
@@ -56,11 +51,6 @@ function submit(): void {
 
     closePopup('chooseEmoji', emoji.value)
 }
-
-function cancel(): void {
-    emoji.value = initialEmoji.value
-    closePopup('chooseEmoji', initialEmoji.value)
-}
 </script>
 
 <template>
@@ -75,7 +65,7 @@ function cancel(): void {
 
         <div class="flex gap-4 items-center justify-end mt-4">
             <Button
-                @click="cancel"
+                @click="closePopup('chooseEmoji')"
                 additionalClasses="!bg-transparent !text-font"
             >
                 {{ trans('cancel') }}

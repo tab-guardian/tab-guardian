@@ -33,7 +33,7 @@ const favIcons = computed<string[]>(() => {
 onMounted(popupStore.closeAllPopups)
 
 async function selectIcon(icon: string): Promise<void> {
-    if (!group.value || group.value.icon === icon) {
+    if (!group.value || icon === '' || group.value.icon === icon) {
         return
     }
 
