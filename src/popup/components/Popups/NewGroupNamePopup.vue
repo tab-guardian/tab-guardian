@@ -65,7 +65,7 @@ function selectLinks(): void {
 </script>
 
 <template>
-    <Popup @cancel="closePopup('groupName')" :content="trans('enter_group_name')">
+    <Popup @cancel="closePopup('newGroupName')" :content="trans('enter_group_name')">
         <form @submit.prevent="selectLinks" class="flex flex-col gap-3">
             <Input
                 v-model="store.newGroup.name"

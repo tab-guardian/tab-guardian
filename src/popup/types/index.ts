@@ -39,7 +39,7 @@ export type Settings = {
 export type Popups = {
     groupMenuView: boolean
     deleteGroup: boolean
-    groupName: boolean
+    newGroupName: boolean
     rebindGroup: boolean
     chooseEmoji: boolean
     chooseImageIcon: boolean

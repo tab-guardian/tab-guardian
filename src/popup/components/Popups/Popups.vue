@@ -16,7 +16,7 @@ const { isOpenPopup } = usePopupStore()
 
 const popups: Array<{ name: keyof Popups, comp: Component }> = [
     {comp: DeleteGroupPopup, name: 'deleteGroup'},
-    {comp: NewGroupNamePopup, name: 'groupName'},
+    {comp: NewGroupNamePopup, name: 'newGroupName'},
     {comp: NewPasswordPopup, name: 'newPassword'},
     {comp: RebindGroupPopup, name: 'rebindGroup'},
     {comp: ChooseEmojiPopup, name: 'chooseEmoji'},
