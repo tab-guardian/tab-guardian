@@ -173,5 +173,6 @@
     "date_format_is": { "message": "日期格式是" },
     "tab_pasted": { "message": "该标签已粘贴到当前组中" },
     "your_emoji_is": { "message": "你的表情符号是" },
+    "image_format_allowed": { "message": "仅允许使用以下格式的图片" },
     "nothing_to_paste": { "message": "没有内容可粘贴" }
 }

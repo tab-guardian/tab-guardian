@@ -4,6 +4,7 @@
 - ✨ Added copy and cut tabs from a group into a different group [#39](https://github.com/tab-guardian/tab-guardian/issues/39)
 - ✨ Added 3 more black and white icons for groups
 - ✨ Added emoji picker when you choose emoji for your group as an icon
+- ✨ Added preview for the image group icon when you choose it [#38](https://github.com/tab-guardian/tab-guardian/issues/38)
 - 🧑‍💻 Change, when you export a group, it will have a slugifying version of the group name. For example, 'Test Group' will have a name 'test-group.json'
 - 🐛 Fixed not visible version number in the right bottom of the sidebar
 - 🐛 Fixed small style issue on a sidebar where the amount of bytes used were showing [#40](https://github.com/tab-guardian/tab-guardian/issues/40) [#42](https://github.com/tab-guardian/tab-guardian/issues/42)

@@ -205,5 +205,6 @@
     "date_format_is": { "message": "Date format is" },
     "tab_pasted": { "message": "The tab was pasted in the current group" },
     "your_emoji_is": { "message": "Your emoji is" },
+    "image_format_allowed": { "message": "Images are only allowed with these formats" },
     "nothing_to_paste": { "message": "There is nothing to paste" }
 }

@@ -201,5 +201,6 @@
     "date_format_is": { "message": "Фортат даты" },
     "tab_pasted": { "message": "Вкладка вставлена в текущую группу" },
     "your_emoji_is": { "message": "Ваш эмодзи" },
+    "image_format_allowed": { "message": "Только изображения таких форматов разрешены" },
     "nothing_to_paste": { "message": "Нет ничего, чтобы вставить" }
 }

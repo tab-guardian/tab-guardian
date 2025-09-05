@@ -1,25 +1,9 @@
-export const imgFormats = ['.png', '.webp', '.jpeg', '.jpg', '.svg', '.gif']
+import { validateImageURL } from "@/modules/url/validateImageURL"
 
-export function isImageURL(imgURL: string | null | undefined): boolean {
-    if (!imgURL) {
+export function isImageURL(url: string | null | undefined): boolean {
+    if (!url) {
         return false
     }
 
-    // remove everything after ? mark from image URL
-    const clearURL = imgURL.split('?')[0]
-
-    let hasImageExt = false
-
-    for (const format of imgFormats) {
-        if (clearURL.endsWith(format)) {
-            hasImageExt = true
-            break
-        }
-    }
-
-    if (!hasImageExt) {
-        return false
-    }
-
-    return clearURL.startsWith('http')
+    return validateImageURL(url) === null
 }

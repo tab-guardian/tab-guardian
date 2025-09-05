@@ -70,7 +70,7 @@ watchEffect(() => {
                     autocapitalize="off"
                 />
 
-                <small v-if="error" class="text-red-600 block mt-0.5">
+                <small v-if="error" class="text-red-600 block mt-1">
                     {{ error }}
                 </small>
             </div>
