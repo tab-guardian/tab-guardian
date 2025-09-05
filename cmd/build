@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-verbose=0
 help=0
 only_firefox=0
 only_chrome=0
@@ -15,7 +14,6 @@ Usage:
   $0 [OPTION...]
 
 Options:
-  --verbose        Enable verbose mode
   --help           Show help options
   --firefox        Build only Firefox extension
   --chrome         Build only Chrome extension
@@ -54,11 +52,7 @@ build_zip_archive () {
 
     compile_assets
 
-    if [[ $verbose -eq 1 ]]; then
-        cd dist && zip -r ../"$ZIP_NAME" . && cd -
-    else
-        cd dist && zip -r ../"$ZIP_NAME" . >/dev/null 2>&1 && cd - >/dev/null 2>&1
-    fi
+    cd dist && zip -r ../"$ZIP_NAME" . && cd -
 
     # Rename regular manifest.json back to a versioned
     mv "$REGULAR_MANIFEST_PATH" "$MANIFEST_PATH" 
@@ -68,13 +62,7 @@ build_zip_archive () {
 
 compile_assets () {
     echo "⏳ LOADING: compiling assets 'npm run build'..."
-
-    if [[ $verbose -eq 1 ]]; then
-        npm run build
-    else
-        npm run build >/dev/null 2>&1
-    fi
-
+    npm run build
     echo "✅ SUCCESS: 'npm run build'"
 }
 
@@ -84,10 +72,6 @@ compile_assets () {
 
 # Parse command-line arguments
 for arg in "$@"; do
-    if [[ "$arg" == "--verbose" ]]; then
-        verbose=1
-    fi
-
     if [[ "$arg" == "--help" ]]; then
         help=1
     fi
@@ -117,11 +101,12 @@ if [[ $only_firefox -eq 0 ]] && [[ $only_chrome -eq 0 ]]; then
 
     build_zip_archive "firefox" "manifest2.json"
     build_zip_archive "chrome" "manifest3.json"
-    build_source_zip_archive
 elif [[ $only_firefox -eq 1 ]]; then
     build_zip_archive "firefox" "manifest2.json"
 elif [[ $only_chrome -eq 1 ]]; then
     build_zip_archive "chrome" "manifest3.json"
 fi
+
+build_source_zip_archive
 
 rm -r dist

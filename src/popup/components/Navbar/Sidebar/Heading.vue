@@ -59,7 +59,7 @@ async function setCurrentBytesUsage(): Promise<void> {
             class="absolute top-1/2 -translate-y-1/2 -right-14 drop-shadow-md"
         />
 
-        <ul v-if="currentBytesUsage !== null" class="ml-3 w-40">
+        <ul v-if="currentBytesUsage !== null" class="ml-3 w-40 mt-16">
             <h2 class="mb-1 text-sm">
                 {{ trans('storage_usage') }} {{ storageUsage.toFixed(2) }}%
             </h2>
@@ -70,12 +70,6 @@ async function setCurrentBytesUsage(): Promise<void> {
                     :style="{ width: storageUsage + '%' }"
                 ></div>
             </div>
-
-            <small>
-                {{ currentBytesUsage.toLocaleString('fr-FR') }} /
-                {{ maxBytes.toLocaleString('fr-FR') }}
-                {{ trans('bytes') }}
-            </small>
         </ul>
     </div>
 </template>

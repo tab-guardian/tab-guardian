@@ -4,8 +4,8 @@ import { useGroupStore } from '@/stores/group'
 import { trans } from '@common/modules/trans'
 import { usePopupStore } from '@/stores/popup'
 import { useRouter } from 'vue-router'
-import { useURLHelper } from '@common/composables/useURLHelper'
-import { hashURL } from '@/modules/hashURL'
+import { validateURL } from '@/modules/url/validateURL'
+import { hashURL } from '@/modules/url/hashURL'
 import { error } from '@common/modules/error'
 import { showToast } from '@common/modules/showToast'
 import Popup from '@/components/Popups/Popup.vue'
@@ -14,13 +14,12 @@ import Input from '@common/components/Form/Input.vue'
 import CheckIcon from '@common/components/Icons/CheckIcon.vue'
 
 const { closePopup } = usePopupStore()
-const { urlError } = useURLHelper()
 const groupStore = useGroupStore()
 const router = useRouter()
 const url = ref<string>('')
 
-const errorMessage = computed<string | null>(() => urlError(url.value))
-const preventSubmit = computed<boolean>(() => urlError(url.value) !== null)
+const errorMessage = computed<string | null>(() => validateURL(url.value))
+const preventSubmit = computed<boolean>(() => validateURL(url.value) !== null)
 
 async function rebindGroup(): Promise<void> {
     if (preventSubmit.value) {

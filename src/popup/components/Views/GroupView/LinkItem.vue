@@ -3,6 +3,8 @@ import type { Link } from '@/types'
 import { useGroupStore } from '@/stores/group'
 import { error } from '@common/modules/error'
 import { restoreTabs } from '@/modules/tabs/restoreTabs'
+import { usePopupStore } from '@/stores/popup'
+import { useAppStore } from '@/stores/app'
 import DeleteLinkButton from '@/components/Views/GroupView/DeleteLinkButton.vue'
 import LinkElement from '@/components/LinkElement.vue'
 
@@ -11,7 +13,9 @@ const props = defineProps<{
     groupId: number
 }>()
 
+const { linkIsCut } = useAppStore()
 const groupStore = useGroupStore()
+const { openPopup } = usePopupStore()
 
 async function openTab(): Promise<void> {
     if (groupStore.selectedGroup) {
@@ -22,10 +26,19 @@ async function openTab(): Promise<void> {
 
     await restoreTabs([props.link])
 }
+
+async function openTabLinkPopup(): Promise<void> {
+    openPopup('linkMenuView', props.link)
+}
 </script>
 
 <template>
-    <LinkElement @click="openTab" :link>
+    <LinkElement
+        @click="openTab"
+        @click.prevent.right="openTabLinkPopup"
+        :className="linkIsCut(link.id) ? 'opacity-50' : ''"
+        :link
+    >
         <DeleteLinkButton @click.stop :linkId="link.id" :groupId />
     </LinkElement>
 </template>

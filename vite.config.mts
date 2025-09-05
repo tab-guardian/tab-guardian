@@ -1,17 +1,22 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import { readFileSync } from 'fs'
-import { resolve } from 'path'
+import fs from 'fs'
+import path from 'path'
 import { viteStaticCopy } from 'vite-plugin-static-copy'
 
-const packageJson = JSON.parse(
-    readFileSync(resolve(__dirname, 'package.json'), 'utf-8'),
-)
+const manifestPath = fs.existsSync(path.resolve(__dirname, 'public/manifest2.json'))
+    ? path.resolve(__dirname, 'public/manifest2.json')
+    : path.resolve(__dirname, 'public/manifest.json');
+
+const manifestContent = JSON.parse(fs.readFileSync(manifestPath, 'utf-8'))
 
 export default defineConfig({
     plugins: [
         vue({
             template: {
+                compilerOptions: {
+                    isCustomElement: (tag) => ['emoji-picker'].includes(tag)
+                },
                 transformAssetUrls: {
                     base: null,
                     includeAbsolute: false,
@@ -55,6 +60,6 @@ export default defineConfig({
     },
 
     define: {
-        __APP_VERSION__: JSON.stringify(packageJson.version),
+        __APP_VERSION__: JSON.stringify(manifestContent.version),
     },
 })

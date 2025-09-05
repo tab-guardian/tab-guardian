@@ -9,6 +9,7 @@ import ArrowDownTrayIcon from '@common/components/Icons/ArrowDownTrayIcon.vue'
 import MenuItem from '@/components/MenuItem.vue'
 import { getPasswordFromStorage } from '@common/modules/storage/getPasswordFromStorage'
 import { showToast } from '@common/modules/showToast'
+import slug from 'slug'
 
 const store = useGroupStore()
 const { openPopup, closePopup } = usePopupStore()
@@ -36,12 +37,12 @@ async function exportGroup(): Promise<void> {
 
     const a = document.createElement('a')
     a.href = url
-    a.download = 'tab-group-export.json'
+    a.download = `tg-${slug(group.name)}.json`
     a.click()
 
     URL.revokeObjectURL(url)
 
-    closePopup('groupView')
+    closePopup('groupMenuView')
 }
 
 async function encryptPrivateGroup(group: Group): Promise<Group | null> {

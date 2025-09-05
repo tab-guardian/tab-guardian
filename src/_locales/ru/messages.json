@@ -51,8 +51,6 @@
     "yes": { "message": "Да" },
     "no": { "message": "Нет" },
     "lock": { "message": "Заблокировать" },
-    "emoji": { "message": "Эмодзи" },
-    "bytes": { "message": "байт" },
     "rebind": { "message": "Отвязать" },
     "bound_to_url": { "message": "Привязана к URL" },
     "opened_tabs_times": { "message": "Открыто вкладок раз" },
@@ -68,7 +66,7 @@
         "message": "Что-то пошло не так! Группа не выбрана"
     },
     "want_delete_group": { "message": "Вы хотите удалить группу?" },
-    "no_links_this_group": { "message": "В этой группе нет ссылок" },
+    "no_tabs_this_group": { "message": "В этой группе нет вкладок" },
     "click_on_each_tab": {
         "message": "Нажмите на каждую вкладку, чтобы выбрать или отменить выбор для сохранения"
     },
@@ -91,7 +89,12 @@
     "pass_updated": { "message": "Пароль обновлен" },
     "pass_empty": { "message": "Пароль пуст" },
     "passwords_not_match": { "message": "Пароли не совпадают" },
-    "add_more_links": { "message": "Добавить больше вкладок" },
+    "add_more_tabs": { "message": "Добавить больше вкладок" },
+    "cut_tab": { "message": "Вырезать эту вкладку" },
+    "copy_tab": { "message": "Скопировать эту вкладку" },
+    "paste_tabs_here": { "message": "Вставить вкладки здесь" },
+    "tab_copied": { "message": "Вкладка скопирована" },
+    "tab_cut": { "message": "Вкладка вырезана" },
     "delete_this_group": { "message": "Удалить" },
     "rename_this_group": { "message": "Переименовать" },
     "additional_options": { "message": "Дополнительные параметры" },
@@ -145,11 +148,7 @@
     },
     "select_emoji": { "message": "Эмодзи" },
     "select_image": { "message": "Изображение" },
-    "input_one_emoji": { "message": "Ввод должен содержать ровно одно эмодзи" },
-    "enter_any_emoji": { "message": "Введите любое эмодзи" },
-    "any_emoji_as_group_icon": {
-        "message": "Введите любое эмодзи, чтобы установить его в качестве значка группы"
-    },
+    "pick_any_emoji": { "message": "Выберите любой эмодзи" },
     "enter_image_url": { "message": "Введите URL изображения" },
     "type_any_image_url_to_set_it": {
         "message": "Введите URL изображения, чтобы установить его в качестве значка группы"
@@ -199,5 +198,9 @@
     "replace_groups": { "message": "Заменить группы?" },
     "file_chosen": { "message": "Файл выбран" },
     "save": { "message": "Сохранить" },
-    "date_format_is": { "message": "Фортат даты" }
+    "date_format_is": { "message": "Фортат даты" },
+    "tab_pasted": { "message": "Вкладка вставлена в текущую группу" },
+    "your_emoji_is": { "message": "Ваш эмодзи" },
+    "image_format_allowed": { "message": "Только изображения таких форматов разрешены" },
+    "nothing_to_paste": { "message": "Нет ничего, чтобы вставить" }
 }

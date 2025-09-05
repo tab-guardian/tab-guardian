@@ -17,8 +17,7 @@ const store = useGroupStore()
 const router = useRouter()
 const groupId = Number(router.currentRoute.value.params.id)
 
-const { closeAllPopups, openPopup } = usePopupStore()
-
+const popupStore = usePopupStore()
 const group = computed<Group | null>(() => store.getGroupById(groupId))
 
 const favIcons = computed<string[]>(() => {
@@ -31,10 +30,10 @@ const favIcons = computed<string[]>(() => {
     return Array.from(new Set(icons))
 })
 
-onMounted(closeAllPopups)
+onMounted(popupStore.closeAllPopups)
 
 async function selectIcon(icon: string): Promise<void> {
-    if (!group.value) {
+    if (!group.value || icon === '' || group.value.icon === icon) {
         return
     }
 
@@ -46,11 +45,13 @@ async function selectIcon(icon: string): Promise<void> {
 }
 
 function openEmojiPopup(): void {
-    openPopup('chooseEmoji', (emo: string) => selectIcon(emo))
+    popupStore.openPopup('chooseEmoji')
+    popupStore.onClose((emo: string) => selectIcon(emo))
 }
 
 function openImageIconPopup(): void {
-    openPopup('chooseImageIcon', (url: string) => selectIcon(url))
+    popupStore.openPopup('chooseImageIcon')
+    popupStore.onClose((url: string) => selectIcon(url))
 }
 </script>
 

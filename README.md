@@ -46,8 +46,6 @@ git clone https://github.com/tab-guardian/tab-guardian.git && cd tab-guardian
 
 **Install all dependencies**
 ```bash
-yarn install
-# or
 npm i
 ```
 
@@ -56,31 +54,12 @@ npm i
 cp .env.example .env
 ```
 
-**Watch files**
-```bash
-yarn watch
-# or
-npm run watch
-```
-
-**Compile to production**
-```bash
-yarn prod
-# or
-npm run prod
-```
-
 ### Code style
 Don't worry about the code style. We use [Prettier](https://prettier.io/) to format the code. You can run it manually by executing `yarn prettier` or `npm run prettier` to format the code, or `yarn prettier-check` or `npm run prettier-check` to check if the code is formatted correctly.
 
 ## Contribute
 ### NPM Commands Available
 All necessary scripts are in `package.json` file. I'm using Vite here.
-
-#### Install all the Dependencies
-```bash
-npm i
-```
 
 #### Watch File Changes
 Start a development server with Vite and serve your source files via native ES modules.
@@ -117,15 +96,6 @@ podman-compose up -d
 
 After the container is created, it will run the development server which is available on `http://localhost:3000`.
 
-#### Copy `node_modules` Locally
-If you need to copy `node_modules` directory from the container to your local machine, run this command:
-```bash
-podman cp tab-guardian:/app/node_modules .
-```
-
-> [!NOTE]
-> `node_modules` is excluded from using volume in [compose.yml](compose.yml) file, that's why you need to copy it manually. It's done to prevent your local modules to be copied to Linux container, since it can create incompatibility issues between operating systems if you don't use Linux.
-
 #### Enter the Container
 To enter inside the container, run this command:
 ```bash
@@ -139,3 +109,9 @@ When you are done working, you can delete the container by running this:
 ```bash
 podman-compose down
 ```
+
+## Terminology
+Here are some words that you need to know in order to undetstand the context of the app:
+- `group` group is a collection of links (tabs)
+- `link` in the context of this app is a link that is stored in your group
+- `tab` tab is what users see in their browsers. After storing those tabs in a group they become `links`

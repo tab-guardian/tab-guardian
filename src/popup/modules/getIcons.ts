@@ -48,6 +48,9 @@ import PlayIcon from '@common/components/Icons/PlayIcon.vue'
 import FaceSmileIcon from '@common/components/Icons/FaceSmileIcon.vue'
 import MagnifyingGlassIcon from '@common/components/Icons/MagnifyingGlassIcon.vue'
 import InfoCircleIcon from '@common/components/Icons/InfoCircleIcon.vue'
+import ScissorsIcon from '@common/components/Icons/ScissorsIcon.vue'
+import CopyIcon from '@common/components/Icons/CopyIcon.vue'
+import PasteIcon from '@common/components/Icons/PasteIcon.vue'
 
 export function getIcons(): { [key: string]: Component } {
     return {
@@ -100,5 +103,8 @@ export function getIcons(): { [key: string]: Component } {
         ArrowDownTrayIcon,
         GitHubIcon,
         InfoCircleIcon,
+        ScissorsIcon,
+        CopyIcon,
+        PasteIcon,
     }
 }

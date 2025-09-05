@@ -2,7 +2,7 @@
 import type { Group as GroupType } from '@/types'
 import { computed } from 'vue'
 import { getIcons } from '@/modules/getIcons'
-import { isSingleEmoji } from '@common/modules/emoji/isSingleEmoji'
+import { isEmoji } from '@/modules/isEmoji'
 
 const { group } = defineProps<{ group: GroupType }>()
 
@@ -22,7 +22,7 @@ const showGroupIcon = computed<boolean>(() =>
     <div v-if="group.icon" class="w-6 h-6 flex items-center justify-center">
         <img v-if="showGroupIcon" :src="group.icon" class="w-5 h-5" />
 
-        <span v-else-if="isSingleEmoji(group.icon)">
+        <span v-else-if="isEmoji(group.icon)">
             {{ group.icon }}
         </span>
 

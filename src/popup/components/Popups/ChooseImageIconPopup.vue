@@ -1,22 +1,33 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useGroupStore } from '@/stores/group'
 import { trans } from '@common/modules/trans'
 import { usePopupStore } from '@/stores/popup'
 import { error } from '@common/modules/error'
-import { useURLHelper } from '@common/composables/useURLHelper'
+import { isImageURL } from '@/modules/url/isImageURL'
+import { validateImageURL } from '@/modules/url/validateImageURL'
 import Popup from '@/components/Popups/Popup.vue'
-import Button from '@common/components/Form/Button.vue'
+import PopupButton from '@/components/Popups/PopupButton.vue'
 import Input from '@common/components/Form/Input.vue'
 import CheckIcon from '@common/components/Icons/CheckIcon.vue'
 
-const { submitPopup, closePopup } = usePopupStore()
-const { urlError } = useURLHelper()
+const { closePopup } = usePopupStore()
 const groupStore = useGroupStore()
 const url = ref<string>('')
+const errorMessage = computed<string | null>(() => validateImageURL(url.value))
+const preventSubmit = computed<boolean>(() => validateImageURL(url.value) !== null)
 
-const errorMessage = computed<string | null>(() => urlError(url.value))
-const preventSubmit = computed<boolean>(() => urlError(url.value) !== null)
+onMounted(setImageIcon)
+
+function setImageIcon(): void {
+    const group = groupStore.selectedGroup
+
+    if (!group || !isImageURL(group.icon)) {
+        return
+    }
+
+    url.value = group.icon!
+}
 
 async function chooseImageIcon(): Promise<void> {
     if (preventSubmit.value) {
@@ -28,7 +39,7 @@ async function chooseImageIcon(): Promise<void> {
         return
     }
 
-    submitPopup('chooseImageIcon', url.value)
+    closePopup('chooseImageIcon', url.value)
 }
 </script>
 
@@ -39,21 +50,32 @@ async function chooseImageIcon(): Promise<void> {
         :content="trans('enter_image_url')"
         :description="trans('type_any_image_url_to_set_it')"
     >
-        <form @submit.prevent="chooseImageIcon">
-            <Input
-                v-model="url"
-                label="URL"
-                @loaded="inp => inp.focus()"
-                type="text"
-                id="group-icon-emoji"
-                placeholder="https://example.com/icon.png"
-                :error="errorMessage"
-            />
+        <template #right-side>
+            <img v-if="url" :src="url" width="30" />
+        </template>
 
-            <Button type="submit" :disabled="preventSubmit" class="mt-3">
+        <Input
+            v-model="url"
+            label="URL"
+            @loaded="inp => inp.focus()"
+            type="text"
+            id="group-icon-emoji"
+            placeholder="https://example.com/icon.png"
+            :error="errorMessage"
+        />
+
+        <template #buttons>
+            <PopupButton
+                @click="closePopup('chooseImageIcon')"
+                :isSecondary="true"
+            >
+                {{ trans('cancel') }}
+            </PopupButton>
+
+            <PopupButton @click="chooseImageIcon" :disabled="preventSubmit">
                 <CheckIcon width="20" height="20" />
                 {{ trans('select') }}
-            </Button>
-        </form>
+            </PopupButton>
+        </template>
     </Popup>
 </template>

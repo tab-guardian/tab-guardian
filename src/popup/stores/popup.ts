@@ -1,20 +1,22 @@
 import type { Popups } from '@/types'
-import { ref } from 'vue'
+import { reactive, ref } from 'vue'
 import { defineStore } from 'pinia'
 
 const defaultPopups: Popups = {
-    groupView: false,
+    groupMenuView: false,
     deleteGroup: false,
     groupName: false,
     rebindGroup: false,
     chooseEmoji: false,
     chooseImageIcon: false,
     newPassword: false,
+    linkMenuView: false,
 }
 
 export const usePopupStore = defineStore('popup', () => {
     const popups = ref<Popups>(structuredClone(defaultPopups))
-    const onSubmit = ref<((data?: any) => void) | null>(null)
+    const sharedData = ref<any>(null)
+    const onCloseCallback = ref<null | ((data?: any) => void)>(null)
 
     function closeAllPopups(): void {
         for (const key in popups.value) {
@@ -22,11 +24,11 @@ export const usePopupStore = defineStore('popup', () => {
         }
     }
 
-    function openPopup(key: keyof Popups, callback?: (data?: any) => void): void {
+    function openPopup(key: keyof Popups, data?: any): void {
         popups.value[key] = true
 
-        if (callback) {
-            onSubmit.value = callback
+        if (data) {
+            sharedData.value = data
         }
     }
 
@@ -34,16 +36,19 @@ export const usePopupStore = defineStore('popup', () => {
         popups.value = structuredClone(defaultPopups)
     }
 
-    function closePopup(key: keyof Popups): void {
-        popups.value[key] = false
+    function onClose(callback: (data?: any) => void): void {
+        onCloseCallback.value = callback
     }
 
-    function submitPopup(key: keyof Popups, data?: any): void {
-        closePopup(key)
+    /**
+     * @param data Pass data that you want to pass to onClose callback
+     */
+    function closePopup(key: keyof Popups, data?: any): void {
+        popups.value[key] = false
+        sharedData.value = null
 
-        if (onSubmit.value) {
-            onSubmit.value(data)
-            onSubmit.value = null
+        if (data && onCloseCallback.value) {
+            onCloseCallback.value(data)
         }
     }
 
@@ -51,13 +56,18 @@ export const usePopupStore = defineStore('popup', () => {
         return popups.value[key]
     }
 
+    function getSharedData<T>(): T | null {
+        return sharedData.value
+    }
+
     return {
         popups,
         openPopup,
         closePopup,
+        onClose,
         closeAllPopups,
+        getSharedData,
         isOpenPopup,
-        submitPopup,
         resetGroups,
     }
 })

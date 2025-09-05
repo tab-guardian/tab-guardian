@@ -5,10 +5,7 @@ import downImage from '@/assets/images/tab-icons/down.png'
 import { useTabsStore } from '@/stores/tabs'
 import { trans } from '@common/modules/trans'
 
-const props = defineProps<{
-    group: Group
-}>()
-
+const props = defineProps<{ group: Group }>()
 const tabsStore = useTabsStore()
 
 function stashTabs(): void {

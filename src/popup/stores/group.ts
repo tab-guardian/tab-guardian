@@ -257,7 +257,7 @@ export const useGroupStore = defineStore('group', () => {
         selectedGroup.value = selectedGroup.value
         newGroup.value.name = selectedGroup.value.name
 
-        popupStore.closePopup('groupView')
+        popupStore.closePopup('groupMenuView')
     }
 
     async function renameGroup(): Promise<void> {

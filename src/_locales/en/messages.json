@@ -51,8 +51,6 @@
     "yes": { "message": "Yes" },
     "no": { "message": "No" },
     "lock": { "message": "Lock" },
-    "emoji": { "message": "Emoji" },
-    "bytes": { "message": "bytes" },
     "rebind": { "message": "Rebind" },
     "bound_to_url": { "message": "Bound to URL" },
     "opened_tabs_times": { "message": "Opened tabs times" },
@@ -68,7 +66,7 @@
         "message": "Something went wrong! No group selected"
     },
     "want_delete_group": { "message": "Do you want to delete the group?" },
-    "no_links_this_group": { "message": "There are no links in this group" },
+    "no_tabs_this_group": { "message": "There are no tabs in this group" },
     "click_on_each_tab": {
         "message": "Click on each tab to select or unselect it for saving to memory"
     },
@@ -91,7 +89,12 @@
     "pass_empty": { "message": "Password is empty" },
     "passwords_not_match": { "message": "Passwords do not match" },
     "repeat_pass": { "message": "Repeat password" },
-    "add_more_links": { "message": "Add more links" },
+    "add_more_tabs": { "message": "Add more tabs" },
+    "cut_tab": { "message": "Cut this tab" },
+    "copy_tab": { "message": "Copy this tab" },
+    "paste_tabs_here": { "message": "Paste tabs here" },
+    "tab_copied": { "message": "Tab has been copied" },
+    "tab_cut": { "message": "Tab has been cut" },
     "delete_this_group": { "message": "Delete this group" },
     "rename_this_group": { "message": "Rename this group" },
     "additional_options": { "message": "Additional options" },
@@ -141,15 +144,11 @@
     "enter_new_url_bind_to": { "message": "Enter a new URL to bind to" },
     "group_rebind_successful": { "message": "Group rebind successful" },
     "url_must_start_with_http": {
-        "message": "URL must start with http:// or https://"
+        "message": "URL must start with https://"
     },
     "select_emoji": { "message": "Select emoji" },
     "select_image": { "message": "Select image" },
-    "input_one_emoji": { "message": "The input must contain exactly one emoji" },
-    "enter_any_emoji": { "message": "Enter any emoji" },
-    "any_emoji_as_group_icon": {
-        "message": "Type any emoji to set it as a group icon"
-    },
+    "pick_any_emoji": { "message": "Pick any emoji" },
     "enter_image_url": { "message": "Enter image URL" },
     "type_any_image_url_to_set_it": {
         "message": "Type any image URL to set it as a group icon"
@@ -203,5 +202,9 @@
     "replace_groups": { "message": "Replace groups?" },
     "file_chosen": { "message": "File chosen" },
     "save": { "message": "Save" },
-    "date_format_is": { "message": "Date format is" }
+    "date_format_is": { "message": "Date format is" },
+    "tab_pasted": { "message": "The tab was pasted in the current group" },
+    "your_emoji_is": { "message": "Your emoji is" },
+    "image_format_allowed": { "message": "Images are only allowed with these formats" },
+    "nothing_to_paste": { "message": "There is nothing to paste" }
 }

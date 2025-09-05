@@ -20,9 +20,13 @@ defineProps<{
         >
             <span class="text-lg mb-3 block">{{ content }}</span>
 
-            <p v-if="description" class="text-sm mb-4 mt-2 opacity-80">
-                {{ description }}
-            </p>
+            <div class="flex items-center gap-3">
+                <p v-if="description" class="text-sm mb-4 mt-2 opacity-80">
+                    {{ description }}
+                </p>
+
+                <slot name="right-side" />
+            </div>
 
             <slot />
 

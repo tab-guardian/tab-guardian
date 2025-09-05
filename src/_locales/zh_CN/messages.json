@@ -49,8 +49,6 @@
     "yes": { "message": "是" },
     "no": { "message": "否" },
     "lock": { "message": "锁定" },
-    "emoji": { "message": "表情符号" },
-    "bytes": { "message": "字节" },
     "rebind": { "message": "重新绑定" },
     "bound_to_url": { "message": "绑定到 URL" },
     "opened_tabs_times": { "message": "打开标签页次数" },
@@ -64,7 +62,7 @@
     "new_group": { "message": "新建组" },
     "error_no_group_selected": { "message": "出现问题！未选择任何组" },
     "want_delete_group": { "message": "您确定要删除该组吗？" },
-    "no_links_this_group": { "message": "该组中没有链接" },
+    "no_tabs_this_group": { "message": "此组中没有选项卡" },
     "click_on_each_tab": { "message": "点击每个标签页以选择或取消选择以保存" },
     "select_all": { "message": "全选" },
     "deselect_all": { "message": "取消全选" },
@@ -81,7 +79,12 @@
     "pass_empty": { "message": "密码为空" },
     "repeat_pass": { "message": "重复密码" },
     "passwords_not_match": { "message": "密码不匹配" },
-    "add_more_links": { "message": "添加更多链接" },
+    "add_more_tabs": { "message": "添加更多标签页" },
+    "cut_tab": { "message": "剪下这个标签" },
+    "copy_tab": { "message": "复制此标签页" },
+    "paste_tabs_here": { "message": "在此粘贴标签" },
+    "tab_copied": { "message": "标签已复制" },
+    "tab_cut": { "message": "标签已被剪切" },
     "delete_this_group": { "message": "删除该组" },
     "rename_this_group": { "message": "重命名该组" },
     "additional_options": { "message": "附加选项" },
@@ -129,9 +132,7 @@
     "url_must_start_with_http": { "message": "URL 必须以 http:// 或 https:// 开头" },
     "select_emoji": { "message": "选择表情符号" },
     "select_image": { "message": "选择图片" },
-    "input_one_emoji": { "message": "输入内容必须包含一个表情符号" },
-    "enter_any_emoji": { "message": "输入任何表情符号" },
-    "any_emoji_as_group_icon": { "message": "输入一个表情符号将其设置为组图标" },
+    "pick_any_emoji": { "message": "选择任意表情符号" },
     "enter_image_url": { "message": "输入图片 URL" },
     "type_any_image_url_to_set_it": {
         "message": "输入任何图片 URL 将其设置为组图标"
@@ -169,5 +170,9 @@
     "replace_groups": { "message": "替换组？" },
     "file_chosen": { "message": "文件已选择" },
     "save": { "message": "保存" },
-    "date_format_is": { "message": "日期格式是" }
+    "date_format_is": { "message": "日期格式是" },
+    "tab_pasted": { "message": "该标签已粘贴到当前组中" },
+    "your_emoji_is": { "message": "你的表情符号是" },
+    "image_format_allowed": { "message": "仅允许使用以下格式的图片" },
+    "nothing_to_paste": { "message": "没有内容可粘贴" }
 }

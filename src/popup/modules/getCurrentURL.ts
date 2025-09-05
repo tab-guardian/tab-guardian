@@ -1,6 +1,6 @@
 import { isDevelopment } from '@common/modules/isDevelopment'
 import { targetBrowser } from '@common/modules/browser/targetBrowser'
-import { hashURL } from '@/modules/hashURL'
+import { hashURL } from '@/modules/url/hashURL'
 
 export async function getCurrentURL(hash = false): Promise<string | null> {
     if (isDevelopment()) {
