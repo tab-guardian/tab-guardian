@@ -1,5 +1,8 @@
 # Release Notes
 
+## v1.11.0 (2025-09-08)
+- ✨ 
+
 ## v1.10.0 (2025-09-05)
 - ✨ Added copy and cut tabs from a group into a different group [#39](https://github.com/tab-guardian/tab-guardian/issues/39)
 - ✨ Added 3 more black and white icons for groups
