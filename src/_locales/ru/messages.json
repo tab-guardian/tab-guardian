@@ -65,6 +65,7 @@
     "error_no_group_selected": {
         "message": "Что-то пошло не так! Группа не выбрана"
     },
+    "error_no_tab_selected": { "message": "Вкладка не выбрана" },
     "want_delete_group": { "message": "Вы хотите удалить группу?" },
     "no_tabs_this_group": { "message": "В этой группе нет вкладок" },
     "click_on_each_tab": {

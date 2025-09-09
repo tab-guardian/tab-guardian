@@ -36,15 +36,21 @@ export type Settings = {
     showOnlyPrivateGroupsInIncognito: boolean
 }
 
+type PopupItem = {
+    open: boolean
+    data: any
+}
+
 export type Popups = {
-    groupMenuView: boolean
-    deleteGroup: boolean
-    groupName: boolean
-    rebindGroup: boolean
-    chooseEmoji: boolean
-    chooseImageIcon: boolean
-    newPassword: boolean
-    linkMenuView: boolean
+    groupMenuView: PopupItem
+    deleteGroup: PopupItem
+    groupName: PopupItem
+    rebindGroup: PopupItem
+    chooseEmoji: PopupItem
+    chooseImageIcon: PopupItem
+    newPassword: PopupItem
+    linkMenuView: PopupItem
+    newGroupName: PopupItem
 }
 
 export type Modals = {

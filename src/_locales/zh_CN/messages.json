@@ -60,6 +60,7 @@
     "import": { "message": "导入" },
     "export": { "message": "导出" },
     "new_group": { "message": "新建组" },
+    "error_no_tab_selected": { "message": "未选中任何选项卡" },
     "error_no_group_selected": { "message": "出现问题！未选择任何组" },
     "want_delete_group": { "message": "您确定要删除该组吗？" },
     "no_tabs_this_group": { "message": "此组中没有选项卡" },

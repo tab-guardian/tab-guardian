@@ -65,6 +65,7 @@
     "error_no_group_selected": {
         "message": "Something went wrong! No group selected"
     },
+    "error_no_tab_selected": { "message": "No tab selected" },
     "want_delete_group": { "message": "Do you want to delete the group?" },
     "no_tabs_this_group": { "message": "There are no tabs in this group" },
     "click_on_each_tab": {

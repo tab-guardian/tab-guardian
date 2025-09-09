@@ -15,7 +15,7 @@ const props = defineProps<{
 
 const { linkIsCut } = useAppStore()
 const groupStore = useGroupStore()
-const { openPopup } = usePopupStore()
+const { openPopup, setSharedData } = usePopupStore()
 
 async function openTab(): Promise<void> {
     if (groupStore.selectedGroup) {
@@ -28,7 +28,8 @@ async function openTab(): Promise<void> {
 }
 
 async function openTabLinkPopup(): Promise<void> {
-    openPopup('linkMenuView', props.link)
+    openPopup('linkMenuView')
+    setSharedData('linkMenuView', props.link)
 }
 </script>
 

@@ -1,6 +1,6 @@
 # Release Notes
 
-## v1.11.0 (2025-09-08)
+## v1.11.0 (2025-09-10)
 - 🧑‍💻 Improve helping messages in settings
 - 🐛 Fixed type in "Erase all groups" message
 - 🐛 Fixed displaying message after wrong password attempts [#46](https://github.com/tab-guardian/tab-guardian/issues/46)

@@ -17,7 +17,7 @@ const { closePopup, closeAllPopups, getSharedData } = usePopupStore()
 const appStore = useAppStore()
 const groupStore = useGroupStore()
 const group = computed<Group | null>(() => groupStore.selectedGroup)
-const link = computed<Link | null>(() => getSharedData<Link>())
+const link = computed<Link | null>(() => getSharedData<Link>('linkMenuView'))
 
 async function yankLink(action: 'copy' | 'cut', successMsg: string): Promise<void> {
     if (!link.value) {
@@ -75,7 +75,7 @@ async function cutLink(): Promise<void> {
     <!-- If there is no selected group (edge case) -->
     <Popup
         v-else
-        :content="trans('error_no_group_selected')"
+        :content="trans('error_no_tab_selected')"
         @cancel="closePopup('linkMenuView')"
     />
 </template>
