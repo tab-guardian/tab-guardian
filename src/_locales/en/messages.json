@@ -171,7 +171,7 @@
     },
     "all_groups_deleted": { "message": "All the groups have been deleted" },
     "show_private_groups_incognito": {
-        "message": "Show private groups only in browser incognito mode. In regular browser mode, they will be hidden"
+        "message": "Hide private groups everywhere but incognito (private) windows"
     },
     "settings_saved": { "message": "Settings have been saved" },
     "go_to_settings_and_enable_allow_incognito": {
@@ -181,7 +181,7 @@
         "message": "If the new group name matches an existing one, override it"
     },
     "only_private_groups_incognito": {
-        "message": "Show only private groups in browser incognito mode. It means that public groups will be hidden in incognito mode"
+        "message": "Hide public groups from browser incognito (private mode)"
     },
     "export_tab_groups": { "message": "Export Tab Groups" },
     "export_all_your_groups": {

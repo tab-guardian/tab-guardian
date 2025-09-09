@@ -145,14 +145,14 @@
     "confirm_want_delete_groups": { "message": "确认要删除所有组" },
     "all_groups_deleted": { "message": "所有组已被删除" },
     "show_private_groups_incognito": {
-        "message": "仅在浏览器隐身模式下显示私有组。普通模式下将隐藏"
+        "message": "在除隐身（私密）窗口外的所有位置隐藏私人群组"
     },
     "settings_saved": { "message": "设置已保存" },
     "go_to_settings_and_enable_allow_incognito": {
         "message": "进入扩展设置，启用 “允许在隐身状态下”、“允许在私人状态下 ”或 “在私人窗口中运行 ”选项"
     },
     "override_existing_match": { "message": "如果新组名与现有组名匹配，则覆盖" },
-    "only_private_groups_incognito": { "message": "仅在隐身模式下显示私有组" },
+    "only_private_groups_incognito": { "message": "在浏览器隐身模式（私密模式）中隐藏公共群组" },
     "export_tab_groups": { "message": "导出标签页组" },
     "export_all_your_groups": {
         "message": "导出所有标签页组。请注意，私有组不会被导出。如果需要导出私有组，请单独进行"
