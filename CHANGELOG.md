@@ -3,6 +3,7 @@
 ## v1.11.0 (2025-09-08)
 - 🧑‍💻 Improve helping messages in settings
 - 🐛 Fixed type in "Erase all groups" message
+- 🐛 Fixed displaying message after wrong password attempts [#46](https://github.com/tab-guardian/tab-guardian/issues/46)
 
 ## v1.10.0 (2025-09-05)
 - ✨ Added copy and cut tabs from a group into a different group [#39](https://github.com/tab-guardian/tab-guardian/issues/39)
