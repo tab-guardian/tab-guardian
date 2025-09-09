@@ -201,5 +201,6 @@
     "tab_pasted": { "message": "Вкладка вставлена в текущую группу" },
     "your_emoji_is": { "message": "Ваш эмодзи" },
     "image_format_allowed": { "message": "Только изображения таких форматов разрешены" },
+    "new_password": { "message": "Новый пароль" },
     "nothing_to_paste": { "message": "Нет ничего, чтобы вставить" }
 }

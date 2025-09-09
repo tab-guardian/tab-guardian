@@ -1,5 +1,5 @@
 import type { Popups } from '@/types'
-import { reactive, ref } from 'vue'
+import { ref } from 'vue'
 import { defineStore } from 'pinia'
 
 const defaultPopups: Popups = {

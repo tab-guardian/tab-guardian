@@ -3,11 +3,11 @@ import { ref, computed, onMounted } from 'vue'
 import { useGroupStore } from '@/stores/group'
 import { trans } from '@common/modules/trans'
 import { usePopupStore } from '@/stores/popup'
+import { showToast } from '@common/modules/showToast'
 import Popup from '@/components/Popups/Popup.vue'
 import Input from '@common/components/Form/Input.vue'
 import Button from '@common/components/Form/Button.vue'
 import ChevronRightIcon from '@common/components/Icons/ChevronRightIcon.vue'
-import { showToast } from '@common/modules/showToast'
 
 const { closePopup, closeAllPopups } = usePopupStore()
 const store = useGroupStore()
@@ -28,7 +28,7 @@ const preventPasswordSubmit = computed<boolean>(() => {
 function updatePassword(): void {
     store.updatePassword(pass.value)
     showToast(trans('pass_updated'))
-    closeAllPopups()
+    closePopup('newPassword', pass.value)
 }
 </script>
 
