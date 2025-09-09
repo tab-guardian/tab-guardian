@@ -134,7 +134,7 @@ function hideInput(): void {
                 'w-full py-1 px-2 border border-border rounded-lg text-sm',
                 'ring-0 focus:ring-2 focus:outline-none bg-transparent',
             ]"
-            :placeholder="trans('group_name_or_tab_search')"
+            :placeholder="trans('enter_group_name')"
             @input="filterGroups"
             @blur="hideInput"
         />

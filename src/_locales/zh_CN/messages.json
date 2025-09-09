@@ -137,7 +137,6 @@
     "type_any_image_url_to_set_it": {
         "message": "输入任何图片 URL 将其设置为组图标"
     },
-    "group_name_or_tab_search": { "message": "组名称或标签页标题搜索..." },
     "change_the_conf_here": { "message": "在此更改扩展配置" },
     "lock_group_after_restore": { "message": "恢复标签页后重新锁定组" },
     "erase_all_groups": { "message": "删除所有组" },

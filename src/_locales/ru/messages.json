@@ -153,7 +153,6 @@
     "type_any_image_url_to_set_it": {
         "message": "Введите URL изображения, чтобы установить его в качестве значка группы"
     },
-    "group_name_or_tab_search": { "message": "Имя группы или название вкладки..." },
     "change_the_conf_here": { "message": "Измените настройки расширения здесь" },
     "lock_group_after_restore": {
         "message": "Заблокировать группу после восстановления вкладок"

@@ -153,9 +153,6 @@
     "type_any_image_url_to_set_it": {
         "message": "Type any image URL to set it as a group icon"
     },
-    "group_name_or_tab_search": {
-        "message": "Group name or tab title to search..."
-    },
     "change_the_conf_here": {
         "message": "Change the extension configurations here"
     },
