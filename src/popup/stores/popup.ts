@@ -1,35 +1,31 @@
 import type { Popups } from '@/types'
-import { reactive, ref } from 'vue'
+import { ref } from 'vue'
 import { defineStore } from 'pinia'
 
 const defaultPopups: Popups = {
-    groupMenuView: false,
-    deleteGroup: false,
-    groupName: false,
-    rebindGroup: false,
-    chooseEmoji: false,
-    chooseImageIcon: false,
-    newPassword: false,
-    linkMenuView: false,
+    groupMenuView: { open: false, data: null },
+    deleteGroup: { open: false, data: null },
+    groupName: { open: false, data: null },
+    rebindGroup: { open: false, data: null },
+    chooseEmoji: { open: false, data: null },
+    chooseImageIcon: { open: false, data: null },
+    newPassword: { open: false, data: null },
+    linkMenuView: { open: false, data: null },
+    newGroupName: { open: false, data: null },
 }
 
 export const usePopupStore = defineStore('popup', () => {
     const popups = ref<Popups>(structuredClone(defaultPopups))
-    const sharedData = ref<any>(null)
     const onCloseCallback = ref<null | ((data?: any) => void)>(null)
 
     function closeAllPopups(): void {
         for (const key in popups.value) {
-            popups.value[key as keyof Popups] = false
+            popups.value[key as keyof Popups].open = false
         }
     }
 
-    function openPopup(key: keyof Popups, data?: any): void {
-        popups.value[key] = true
-
-        if (data) {
-            sharedData.value = data
-        }
+    function openPopup(key: keyof Popups): void {
+        popups.value[key].open = true
     }
 
     function resetGroups(): void {
@@ -44,8 +40,8 @@ export const usePopupStore = defineStore('popup', () => {
      * @param data Pass data that you want to pass to onClose callback
      */
     function closePopup(key: keyof Popups, data?: any): void {
-        popups.value[key] = false
-        sharedData.value = null
+        popups.value[key].open = false
+        popups.value[key].data = null
 
         if (data && onCloseCallback.value) {
             onCloseCallback.value(data)
@@ -53,11 +49,15 @@ export const usePopupStore = defineStore('popup', () => {
     }
 
     function isOpenPopup(key: keyof Popups): boolean {
-        return popups.value[key]
+        return popups.value[key].open
     }
 
-    function getSharedData<T>(): T | null {
-        return sharedData.value
+    function getSharedData<T>(key: keyof Popups): T | null {
+        return popups.value[key].data
+    }
+
+    function setSharedData(key: keyof Popups, data: any): void {
+        popups.value[key].data = data
     }
 
     return {
@@ -66,6 +66,7 @@ export const usePopupStore = defineStore('popup', () => {
         closePopup,
         onClose,
         closeAllPopups,
+        setSharedData,
         getSharedData,
         isOpenPopup,
         resetGroups,

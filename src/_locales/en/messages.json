@@ -65,6 +65,7 @@
     "error_no_group_selected": {
         "message": "Something went wrong! No group selected"
     },
+    "error_no_tab_selected": { "message": "No tab selected" },
     "want_delete_group": { "message": "Do you want to delete the group?" },
     "no_tabs_this_group": { "message": "There are no tabs in this group" },
     "click_on_each_tab": {
@@ -153,9 +154,6 @@
     "type_any_image_url_to_set_it": {
         "message": "Type any image URL to set it as a group icon"
     },
-    "group_name_or_tab_search": {
-        "message": "Group name or tab title to search..."
-    },
     "change_the_conf_here": {
         "message": "Change the extension configurations here"
     },
@@ -171,7 +169,7 @@
     },
     "all_groups_deleted": { "message": "All the groups have been deleted" },
     "show_private_groups_incognito": {
-        "message": "Show private groups only in browser incognito mode. In regular browser mode, they will be hidden"
+        "message": "Hide private groups everywhere but incognito (private) windows"
     },
     "settings_saved": { "message": "Settings have been saved" },
     "go_to_settings_and_enable_allow_incognito": {
@@ -181,7 +179,7 @@
         "message": "If the new group name matches an existing one, override it"
     },
     "only_private_groups_incognito": {
-        "message": "Show only private groups in browser incognito mode. It means that public groups will be hidden in incognito mode"
+        "message": "Hide public groups from browser incognito (private mode)"
     },
     "export_tab_groups": { "message": "Export Tab Groups" },
     "export_all_your_groups": {
@@ -206,5 +204,6 @@
     "tab_pasted": { "message": "The tab was pasted in the current group" },
     "your_emoji_is": { "message": "Your emoji is" },
     "image_format_allowed": { "message": "Images are only allowed with these formats" },
+    "new_password": { "message": "New password" },
     "nothing_to_paste": { "message": "There is nothing to paste" }
 }

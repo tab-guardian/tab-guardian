@@ -65,6 +65,7 @@
     "error_no_group_selected": {
         "message": "Что-то пошло не так! Группа не выбрана"
     },
+    "error_no_tab_selected": { "message": "Вкладка не выбрана" },
     "want_delete_group": { "message": "Вы хотите удалить группу?" },
     "no_tabs_this_group": { "message": "В этой группе нет вкладок" },
     "click_on_each_tab": {
@@ -153,7 +154,6 @@
     "type_any_image_url_to_set_it": {
         "message": "Введите URL изображения, чтобы установить его в качестве значка группы"
     },
-    "group_name_or_tab_search": { "message": "Имя группы или название вкладки..." },
     "change_the_conf_here": { "message": "Измените настройки расширения здесь" },
     "lock_group_after_restore": {
         "message": "Заблокировать группу после восстановления вкладок"
@@ -167,7 +167,7 @@
     },
     "all_groups_deleted": { "message": "Все группы удалены" },
     "show_private_groups_incognito": {
-        "message": "Показывать приватные группы только в режиме инкогнито браузера. В обычном режиме они будут скрыты"
+        "message": "Скрывать приватные группы везде, кроме окон в режиме инкогнито (приватных)"
     },
     "settings_saved": { "message": "Настройки сохранены" },
     "go_to_settings_and_enable_allow_incognito": {
@@ -177,7 +177,7 @@
         "message": "Если имя новой группы совпадает с существующим, замените его"
     },
     "only_private_groups_incognito": {
-        "message": "Показывать только приватные группы в режиме инкогнито браузера"
+        "message": "Скрыть публичные группы из окон браузера в режиме инкогнито (приватном режиме)"
     },
     "export_tab_groups": { "message": "Экспортировать группы вкладок" },
     "export_all_your_groups": {
@@ -202,5 +202,6 @@
     "tab_pasted": { "message": "Вкладка вставлена в текущую группу" },
     "your_emoji_is": { "message": "Ваш эмодзи" },
     "image_format_allowed": { "message": "Только изображения таких форматов разрешены" },
+    "new_password": { "message": "Новый пароль" },
     "nothing_to_paste": { "message": "Нет ничего, чтобы вставить" }
 }

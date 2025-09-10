@@ -5,9 +5,7 @@ import OpenAndDeleteAction from '@/components/Views/GroupView/GroupControls/Acti
 import StashAndCloseTabsAction from '@/components/Views/GroupView/GroupControls/Actions/StashAndCloseTabsAction.vue'
 import StashTabsAction from '@/components/Views/GroupView/GroupControls/Actions/StashTabsAction.vue'
 
-defineProps<{
-    group: Group
-}>()
+defineProps<{ group: Group }>()
 </script>
 
 <template>

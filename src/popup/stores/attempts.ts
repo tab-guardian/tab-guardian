@@ -7,10 +7,10 @@ import { saveToStorage } from '@common/modules/storage/saveToStorage'
 import { error } from '@common/modules/error'
 import { showToast } from '@common/modules/showToast'
 
-export const useAttemptsStore = defineStore('attempts', () => {
-    const maxAttempts = 2
-    const lockDuration = 2
+const MAX_ATTEMPTS = 2
+const LOCK_DURATION = 2 // in minutes
 
+export const useAttemptsStore = defineStore('attempts', () => {
     const attempts = ref<Attempts>({
         amount: 0,
         lockEndTime: null,
@@ -37,14 +37,13 @@ export const useAttemptsStore = defineStore('attempts', () => {
     }
 
     function isAllowedToTry(): boolean {
+        const isLockExpired = Date.now() >= (attempts.value.lockEndTime || 0)
+
+        if (attempts.value.isLocked && isLockExpired) {
+            resetAttempts()
+        }
+
         if (attempts.value.isLocked) {
-            const isLockExpired = Date.now() >= (attempts.value.lockEndTime || 0)
-
-            if (isLockExpired) {
-                resetAttempts()
-                return true
-            }
-
             const durationLeft = Math.ceil(
                 (attempts.value.lockEndTime! - Date.now()) / 1000 / 60,
             )
@@ -61,13 +60,11 @@ export const useAttemptsStore = defineStore('attempts', () => {
 
         attempts.value.amount++
 
-        if (attempts.value.amount > maxAttempts) {
+        if (attempts.value.amount > MAX_ATTEMPTS) {
             attempts.value.isLocked = true
-            attempts.value.lockEndTime = Date.now() + lockDuration * 60 * 1000
+            attempts.value.lockEndTime = Date.now() + LOCK_DURATION * 60 * 1000
 
-            const msg = trans('many_attempts_locked_for', lockDuration.toString())
-            showToast(msg, 'error', 3000)
-
+            lockedMessageToast()
             saveAttemptsToStorage()
 
             return false
@@ -76,6 +73,11 @@ export const useAttemptsStore = defineStore('attempts', () => {
         saveAttemptsToStorage()
 
         return true
+    }
+
+    function lockedMessageToast(): void {
+        const msg = trans('many_attempts_locked_for', LOCK_DURATION.toString())
+        showToast(msg, 'error', 5000)
     }
 
     function incrementAttempts(): void {
@@ -91,7 +93,13 @@ export const useAttemptsStore = defineStore('attempts', () => {
         saveAttemptsToStorage()
     }
 
+    function hasMaxAttempts(): boolean {
+        return attempts.value.amount >= MAX_ATTEMPTS
+    }
+
     return {
+        hasMaxAttempts,
+        lockedMessageToast,
         saveAttemptsToStorage,
         isAllowedToTry,
         resetAttempts,

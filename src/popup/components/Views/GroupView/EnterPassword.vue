@@ -22,7 +22,7 @@ const { params } = useRoute()
 const router = useRouter()
 const groupStore = useGroupStore()
 const tabsStore = useTabsStore()
-const attemptsStore = useAttemptsStore()
+const { lockedMessageToast, hasMaxAttempts, isAllowedToTry, resetAttempts } = useAttemptsStore()
 
 const password = ref<string>('')
 
@@ -32,7 +32,7 @@ async function submitPass(): Promise<void> {
         return
     }
 
-    if (!attemptsStore.isAllowedToTry()) {
+    if (!isAllowedToTry()) {
         password.value = ''
         return
     }
@@ -43,16 +43,24 @@ async function submitPass(): Promise<void> {
 
     try {
         await groupStore.decryptGroup(props.group, password.value)
-        attemptsStore.resetAttempts()
+        resetAttempts()
 
         params.openTabs === 'true'
             ? openTabsAndEncryptGroup()
             : showToast(trans('group_unlocked'))
     } catch (e: any) {
-        error.warn('Caught and handled error: ', e)
+        const wrongPass = e instanceof Error && e.message === 'Malformed UTF-8 data'
 
-        if (e instanceof Error && e.message === 'Malformed UTF-8 data') {
+        if (!wrongPass) {
+            error.err('Caught and handled error: ', e)
+        }
+
+        if (wrongPass) {
             showToast(trans('wrong_pass'), 'error')
+
+            if (hasMaxAttempts()) {
+                lockedMessageToast()
+            }
         } else {
             showToast(trans('error_occurred'), 'error')
         }

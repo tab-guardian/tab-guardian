@@ -1,11 +1,17 @@
 # Release Notes
 
+## v1.11.0 (2025-09-10)
+- 🧑‍💻 Improve helping messages in settings
+- 🐛 Fixed type in "Erase all groups" message
+- 🐛 Fixed displaying message after wrong password attempts [#46](https://github.com/tab-guardian/tab-guardian/issues/46)
+- ✨ When you lock a private group, you can now change its password to a new one [#41](https://github.com/tab-guardian/tab-guardian/issues/41)
+
 ## v1.10.0 (2025-09-05)
 - ✨ Added copy and cut tabs from a group into a different group [#39](https://github.com/tab-guardian/tab-guardian/issues/39)
 - ✨ Added 3 more black and white icons for groups
 - ✨ Added emoji picker when you choose an emoji for your group as an icon
 - ✨ Added preview for the image group icon when you choose it [#38](https://github.com/tab-guardian/tab-guardian/issues/38)
-- 🧑‍💻 Changed,: when you export a group, it will have a slugifying version of the group name. For example, 'Test Group' will have the name 'test-group.json'
+- 🧑‍💻 Changed: when you export a group, it will have a slugifying version of the group name. For example, 'Test Group' will have the name 'test-group.json'
 - 🐛 Fixed not visible version number in the right bottom of the sidebar
 - 🐛 Fixed a small style issue on a sidebar where the amount of bytes used were showing [#40](https://github.com/tab-guardian/tab-guardian/issues/40) [#42](https://github.com/tab-guardian/tab-guardian/issues/42)
 

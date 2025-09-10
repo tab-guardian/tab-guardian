@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Group } from '@/types'
 import Control from '@/components/Control.vue'
-import upImage from '@/assets/images/tab-icons/up.png'
+import { getImageURL } from '@common/modules/browser/url'
 import { useTabsStore } from '@/stores/tabs'
 import { trans } from '@common/modules/trans'
 
@@ -19,6 +19,10 @@ const tabsStore = useTabsStore()
             'cursor-not-allowed !opacity-40': group.links.length === 0,
         }"
     >
-        <img :src="upImage" alt="Open tabs" class="dark:invert" />
+        <img
+            :src="getImageURL('tab-icons/up.png')"
+            alt="Open tabs"
+            class="dark:invert"
+        />
     </Control>
 </template>

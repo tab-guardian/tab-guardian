@@ -2,7 +2,7 @@
 import type { Group } from '@/types'
 import { useTabsStore } from '@/stores/tabs'
 import { trans } from '@common/modules/trans'
-import downRemoveImage from '@/assets/images/tab-icons/down-remove.png'
+import { getImageURL } from '@common/modules/browser/url'
 import Control from '@/components/Control.vue'
 
 const props = defineProps<{ group: Group }>()
@@ -19,6 +19,10 @@ function stashTabs(): void {
         @click="stashTabs"
         class="bg-slate-300 dark:bg-slate-700"
     >
-        <img :src="downRemoveImage" alt="Stash and close tabs" class="dark:invert" />
+        <img
+            :src="getImageURL('tab-icons/down-remove.png')"
+            alt="Stash and close tabs"
+            class="dark:invert"
+        />
     </Control>
 </template>

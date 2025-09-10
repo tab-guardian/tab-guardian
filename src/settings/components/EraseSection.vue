@@ -17,7 +17,7 @@ async function deleteGroups(): Promise<void> {
     }
 
     const answer = await Swal.fire({
-        title: trans('erase_all_groups"'),
+        title: trans('erase_all_groups'),
         text: trans('i_confirm_want_delete_groups'),
         showDenyButton: true,
         confirmButtonText: trans('yes'),

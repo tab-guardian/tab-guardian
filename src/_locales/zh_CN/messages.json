@@ -60,6 +60,7 @@
     "import": { "message": "导入" },
     "export": { "message": "导出" },
     "new_group": { "message": "新建组" },
+    "error_no_tab_selected": { "message": "未选中任何选项卡" },
     "error_no_group_selected": { "message": "出现问题！未选择任何组" },
     "want_delete_group": { "message": "您确定要删除该组吗？" },
     "no_tabs_this_group": { "message": "此组中没有选项卡" },
@@ -137,7 +138,6 @@
     "type_any_image_url_to_set_it": {
         "message": "输入任何图片 URL 将其设置为组图标"
     },
-    "group_name_or_tab_search": { "message": "组名称或标签页标题搜索..." },
     "change_the_conf_here": { "message": "在此更改扩展配置" },
     "lock_group_after_restore": { "message": "恢复标签页后重新锁定组" },
     "erase_all_groups": { "message": "删除所有组" },
@@ -145,14 +145,14 @@
     "confirm_want_delete_groups": { "message": "确认要删除所有组" },
     "all_groups_deleted": { "message": "所有组已被删除" },
     "show_private_groups_incognito": {
-        "message": "仅在浏览器隐身模式下显示私有组。普通模式下将隐藏"
+        "message": "在除隐身（私密）窗口外的所有位置隐藏私人群组"
     },
     "settings_saved": { "message": "设置已保存" },
     "go_to_settings_and_enable_allow_incognito": {
         "message": "进入扩展设置，启用 “允许在隐身状态下”、“允许在私人状态下 ”或 “在私人窗口中运行 ”选项"
     },
     "override_existing_match": { "message": "如果新组名与现有组名匹配，则覆盖" },
-    "only_private_groups_incognito": { "message": "仅在隐身模式下显示私有组" },
+    "only_private_groups_incognito": { "message": "在浏览器隐身模式（私密模式）中隐藏公共群组" },
     "export_tab_groups": { "message": "导出标签页组" },
     "export_all_your_groups": {
         "message": "导出所有标签页组。请注意，私有组不会被导出。如果需要导出私有组，请单独进行"
@@ -174,5 +174,6 @@
     "tab_pasted": { "message": "该标签已粘贴到当前组中" },
     "your_emoji_is": { "message": "你的表情符号是" },
     "image_format_allowed": { "message": "仅允许使用以下格式的图片" },
+    "new_password": { "message": "新密码" },
     "nothing_to_paste": { "message": "没有内容可粘贴" }
 }
