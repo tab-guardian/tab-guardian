@@ -1,6 +1,6 @@
 import type { Link } from '@/types'
 import type { Tab } from '@common/types'
-import { getImageURL } from '@common/modules/browser/runtime'
+import { getImageURL } from '@common/modules/browser/url'
 
 export function convertTabsToLinks(tabs: Tab[]): Link[] {
     const links: Link[] = []
@@ -34,10 +34,10 @@ function getFaviconIconUrl(tab: Tab): string {
     if (tab.url) {
         for (const [prefix, icon] of icons) {
             if (tab.url.startsWith(prefix)) {
-                return getImageURL('images/' + icon)
+                return getImageURL(icon)
             }
         }
     }
 
-    return tab.favIconUrl || getImageURL('images/no-image.png')
+    return tab.favIconUrl || getImageURL('no-image.png')
 }

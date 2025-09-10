@@ -3,7 +3,7 @@ import type { Group } from '@/types'
 import { useTabsStore } from '@/stores/tabs'
 import { useRouter } from 'vue-router'
 import { trans } from '@common/modules/trans'
-import upRemoveImage from '@/assets/images/tab-icons/up-remove.png'
+import { getImageURL } from '@common/modules/browser/url'
 import Control from '@/components/Control.vue'
 
 const props = defineProps<{ group: Group }>()
@@ -30,6 +30,10 @@ async function openAndDeleteTabs(): Promise<void> {
             'cursor-not-allowed !opacity-40': group.links.length === 0,
         }"
     >
-        <img :src="upRemoveImage" alt="Open and delete tabs" class="dark:invert" />
+        <img
+            :src="getImageURL('tab-icons/up-remove.png')"
+            alt="Open and delete tabs"
+            class="dark:invert"
+        />
     </Control>
 </template>

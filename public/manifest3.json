@@ -7,20 +7,24 @@
     "version": "1.11.0",
     "web_accessible_resources": [
         {
-            "resources": ["icons/*", "assets/*"],
+            "resources": [
+                "images/*",
+                "sounds/*",
+                "assets/*"
+            ],
             "matches": ["<all_urls>"]
         }
     ],
     "icons": {
-        "32": "icons/icon-32.png",
-        "48": "icons/icon-48.png",
-        "64": "icons/icon-64.png",
-        "128": "icons/icon-128.png"
+        "32": "images/icons/icon-32.png",
+        "48": "images/icons/icon-48.png",
+        "64": "images/icons/icon-64.png",
+        "128": "images/icons/icon-128.png"
     },
     "action": {
         "default_icon": {
-            "32": "icons/icon-32.png",
-            "48": "icons/icon-48.png"
+            "32": "images/icons/icon-32.png",
+            "48": "images/icons/icon-48.png"
         },
         "default_title": "Tab Guardian",
         "default_popup": "index.html"

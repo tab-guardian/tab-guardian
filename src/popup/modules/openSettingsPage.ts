@@ -1,6 +1,6 @@
 import type { Tab } from '@common/types'
 import { isDevelopment } from '@common/modules/isDevelopment'
-import { getImageURL } from '@common/modules/browser/runtime'
+import { getPublicURL } from '@common/modules/browser/url'
 import { targetBrowser } from '@common/modules/browser/targetBrowser'
 
 export async function openSettingsPage(): Promise<Tab | null> {
@@ -12,7 +12,7 @@ export async function openSettingsPage(): Promise<Tab | null> {
     const target = targetBrowser()
 
     const tab = await target.tabs.create({
-        url: getImageURL('settings.html'),
+        url: getPublicURL('settings.html'),
         active: true,
     })
 
