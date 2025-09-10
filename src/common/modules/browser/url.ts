@@ -5,10 +5,6 @@ export function getImageURL(uri: string): string {
     return getPublicURL(`images/${uri}`)
 }
 
-export function getSoundURL(uri: string): string {
-    return getPublicURL(`sounds/${uri}`)
-}
-
 export function getPublicURL(uri: string): string {
     if (isDevelopment()) {
         return `${uri}`
