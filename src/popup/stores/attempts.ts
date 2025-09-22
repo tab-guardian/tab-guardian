@@ -7,9 +7,8 @@ import { saveToStorage } from '@common/modules/storage/saveToStorage'
 import { error } from '@common/modules/error'
 import { showToast } from '@common/modules/showToast'
 
-// TODO: change back
-const MAX_ATTEMPTS = 9999992
-const LOCK_DURATION = 1 // in minutes
+const MAX_ATTEMPTS = 2
+const LOCK_DURATION = 2 // in minutes
 
 export const useAttemptsStore = defineStore('attempts', () => {
     const attempts = ref<Attempts>({
