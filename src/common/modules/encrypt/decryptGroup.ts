@@ -1,11 +1,13 @@
-import type { Group, Link } from '@/types'
+import type { EncryptionAlgo, Group, Link } from '@/types'
 import CryptoJS from 'crypto-js'
+import { decryptWithWebpCrypto } from '@common/modules/encrypt/decryptWithWebCrypto'
 
-export function decryptGroup(group: Group, pass: string): Group {
+export async function decryptGroup(group: Group, pass: string): Promise<Group> {
     const decryptedLinks: Link[] = []
 
     for (const link of group.links) {
-        decryptedLinks.push(decryptLink(link, pass))
+        const decryptedLink = await decryptLink(link, pass, group.algo)
+        decryptedLinks.push(decryptedLink)
     }
 
     group.links = decryptedLinks
@@ -14,10 +16,14 @@ export function decryptGroup(group: Group, pass: string): Group {
     return group
 }
 
-function decryptLink(link: Link, pass: string): Link {
-    const url = decrypt(link.url, pass)
-    const title = decrypt(link.title, pass)
-    const favIconUrl = decrypt(link.favIconUrl, pass)
+async function decryptLink(
+    link: Link,
+    pass: string,
+    encryptAlgo?: EncryptionAlgo,
+): Promise<Link> {
+    const url = await decrypt(link.url, pass, encryptAlgo)
+    const title = await decrypt(link.title, pass, encryptAlgo)
+    const favIconUrl = await decrypt(link.favIconUrl, pass, encryptAlgo)
 
     if (url + title + favIconUrl === '') {
         throw new Error('Malformed UTF-8 data')
@@ -26,6 +32,15 @@ function decryptLink(link: Link, pass: string): Link {
     return { ...link, url, title, favIconUrl }
 }
 
-function decrypt(text: string, pass: string): string {
-    return CryptoJS.AES.decrypt(text, pass).toString(CryptoJS.enc.Utf8)
+async function decrypt(
+    text: string,
+    pass: string,
+    encryptAlgo?: EncryptionAlgo,
+): Promise<string> {
+    if (!encryptAlgo) {
+        return CryptoJS.AES.decrypt(text, pass).toString(CryptoJS.enc.Utf8)
+    }
+
+    return await decryptWithWebpCrypto(text, pass, encryptAlgo)
 }
+

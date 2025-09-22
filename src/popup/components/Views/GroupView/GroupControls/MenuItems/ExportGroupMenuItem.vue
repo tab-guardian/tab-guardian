@@ -54,7 +54,7 @@ async function encryptPrivateGroup(group: Group): Promise<Group | null> {
         return null
     }
 
-    return encryptGroup(group, pass)
+    return await encryptGroup(group, pass)
 }
 </script>
 

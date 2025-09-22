@@ -11,7 +11,7 @@ import { isIncognito } from '@common/modules/browser/windows'
 import { deleteGroupFromStorage } from '@common/modules/storage/deleteGroupFromStorage'
 import { getGroupsFromStorage } from '@common/modules/storage/getGroupsFromStorage'
 import { getDefaultGroupName } from '@/modules/getDefaultGroupName'
-import { decryptGroup as unlock } from '@common/modules/encrypt/decryptGroup'
+import { decryptGroup as decryptGroupAlias } from '@common/modules/encrypt/decryptGroup'
 import { saveGroupToStorage } from '@common/modules/storage/saveGroupToStorage'
 import { encryptGroup } from '@common/modules/encrypt/encryptGroup'
 import { closeTabsByIds } from '@/modules/tabs/closeTabsByIds'
@@ -168,7 +168,7 @@ export const useGroupStore = defineStore('group', () => {
         }
 
         try {
-            const encrypted = encryptGroup(group, pass)
+            const encrypted = await encryptGroup(group, pass)
 
             encrypted.isEncrypted = true
             encrypted.isPrivate = true
@@ -360,7 +360,7 @@ export const useGroupStore = defineStore('group', () => {
     }
 
     async function decryptGroup(group: Group, pass: string): Promise<void> {
-        const unlockedGroup = unlock(group, pass)
+        const unlockedGroup = await decryptGroupAlias(group, pass)
         await saveGroup(unlockedGroup)
     }
 

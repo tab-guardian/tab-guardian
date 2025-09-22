@@ -14,7 +14,7 @@ export function getFakeLinks(): Link[] {
         {
             id: 2 + rand,
             url: 'https://serhii.io/',
-            title: 'Blog for developers | {S} Serhii',
+            title: 'Блог для программистов 👍 | {S} Serhii',
             favIconUrl: 'https://serhii.io/favicon.png',
             isPinned: false,
         },

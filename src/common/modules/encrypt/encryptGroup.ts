@@ -1,29 +1,34 @@
-import type { Group, Link } from '@/types'
-import CryptoJS from 'crypto-js'
+import type { EncryptionAlgo, Group, Link } from '@/types'
+import { encryptWithWebCrypto } from '@common/modules/encrypt/encryptWithWebCrypto'
 
-export function encryptGroup(group: Group, pass: string): Group {
+const DEFAULT_ENCRYPT_ALGO = import.meta.env.VITE_CURR_ENCRYPT_ALGO as EncryptionAlgo
+
+export async function encryptGroup(group: Group, pass: string): Promise<Group> {
     const encryptedLinks: Link[] = []
+    const encryptAlgo = group.algo || DEFAULT_ENCRYPT_ALGO
 
     for (const link of group.links) {
-        encryptedLinks.push(encryptLink(link, pass))
+        const encryptedLink = await encryptLink(link, pass, encryptAlgo)
+        encryptedLinks.push(encryptedLink)
     }
 
+    group.algo = encryptAlgo
     group.links = encryptedLinks
     group.isEncrypted = true
 
     return group
 }
 
-function encryptLink(link: Link, pass: string): Link {
+async function encryptLink(
+    link: Link,
+    pass: string,
+    encryptionAlgo: EncryptionAlgo,
+): Promise<Link> {
     return {
         id: link.id,
-        url: encrypt(link.url, pass),
-        title: encrypt(link.title, pass),
-        favIconUrl: encrypt(link.favIconUrl, pass),
+        url: await encryptWithWebCrypto(link.url, pass, encryptionAlgo),
+        title: await encryptWithWebCrypto(link.title, pass, encryptionAlgo),
+        favIconUrl: await encryptWithWebCrypto(link.favIconUrl, pass, encryptionAlgo),
         isPinned: link.isPinned,
     }
-}
-
-function encrypt(text: string, pass: string): string {
-    return CryptoJS.AES.encrypt(text, pass).toString()
 }

@@ -6,6 +6,8 @@ export type Link = {
     isPinned: boolean
 }
 
+export type EncryptionAlgo = 'AES-GCM'
+
 export type Group = {
     id: number
     name: string
@@ -18,6 +20,7 @@ export type Group = {
     hide?: boolean
     bindURL?: string
     icon?: string
+    algo?: EncryptionAlgo
 }
 
 export type NewGroup = {
