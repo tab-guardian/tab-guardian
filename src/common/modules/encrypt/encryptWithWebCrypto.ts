@@ -1,18 +1,16 @@
 import { EncryptionAlgo } from "@/types"
-import { createEncryptKey } from "@common/modules/encrypt/webCrypto"
 
 export async function encryptWithWebCrypto(
     text: string,
-    pass: string,
-    encryptionAlgo: EncryptionAlgo,
+    cryptoKey: CryptoKey,
+    salt: Uint8Array<ArrayBuffer>,
+    encryptAlgo: EncryptionAlgo,
 ): Promise<string> {
-    const salt = crypto.getRandomValues(new Uint8Array(16))
     const iv = crypto.getRandomValues(new Uint8Array(16))
-    const cryptoKey = await createEncryptKey(pass, salt, encryptionAlgo)
     const textBytes = new TextEncoder().encode(text)
 
     const encrypted = await crypto.subtle.encrypt(
-        { name: encryptionAlgo, iv },
+        { name: encryptAlgo, iv },
         cryptoKey,
         textBytes,
     )
