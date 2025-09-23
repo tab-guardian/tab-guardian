@@ -39,10 +39,6 @@ async function submitPass(): Promise<void> {
         return
     }
 
-    // With this, we don't need to type password to lock the
-    // group after just unlocking it
-    savePasswordToStorage(props.group.id, password.value)
-
     try {
         await groupStore.decryptGroup(props.group, password.value)
         resetAttempts()
