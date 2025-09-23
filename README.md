@@ -29,9 +29,10 @@ Here is what makes Tab Guardian a great tool for managing your tabs:
 
 ## Build Extension from Source
 You can build the extension in 3 ways:
-1. `cmd/build` - build locally. You'll need to have `npm` and `zip` installed on your machine
-2. `cmd/podman` - bulid with Podman container engine. You'll need to have `podman` and `podman-compose` installed on your machine
-3. `cmd/docker` - bulid with Docker container engine. You'll need to have `docker` installed on your machine
+1. `cmd/new`    - updates extension version in manifest files and creates a new branch with provided version number
+1. `cmd/build`  - build locally. You'll need to have `npm` and `zip` installed on your machine
+1. `cmd/podman` - bulid with Podman container engine. You'll need to have `podman` and `podman-compose` installed on your machine
+1. `cmd/docker` - bulid with Docker container engine. You'll need to have `docker` installed on your machine
 
 It will generate `firefox.zip`, `chrome.zip` and `source.zip` files inside of your project's root.
 
