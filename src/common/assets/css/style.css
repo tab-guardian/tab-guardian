@@ -17,3 +17,25 @@ emoji-picker {
     --border-size: 0;
     --input-padding: 5px 7px;
 }
+
+.spinner-stroke-anim {
+    animation: dash-animation 1.5s ease-in-out infinite;
+    stroke: var(--tg-color-primary);
+}
+
+@keyframes dash-animation {
+    0% {
+        stroke-dasharray: 1, 200;
+        stroke-dashoffset: 0;
+    }
+
+    50% {
+        stroke-dasharray: 89, 200;
+        stroke-dashoffset: -35;
+    }
+
+    100% {
+        stroke-dasharray: 89, 200;
+        stroke-dashoffset: -124;
+    }
+}
