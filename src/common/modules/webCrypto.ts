@@ -69,8 +69,8 @@ async function createCryptoKey(
     encryptAlgo: EncryptionAlgo,
     keyUsages: KeyUsage[],
 ): Promise<CryptoKey> {
-    // Derive key from password
-    const keyMaterial = await crypto.subtle.importKey(
+    // Improve the raw password as a CryptoKey
+    const baseKey = await crypto.subtle.importKey(
         'raw',
         new TextEncoder().encode(pass),
         KEY_ALGO,
@@ -78,17 +78,14 @@ async function createCryptoKey(
         ['deriveKey'],
     )
 
-    const algorithm = {
-        name: KEY_ALGO,
-        salt,
-        iterations: 100000,
-        hash: HASH,
-    }
+    const algorithm = { name: KEY_ALGO, salt, iterations: 100000, hash: HASH }
+    const keyType = { name: encryptAlgo, length: SIZE_OF_KEY }
 
+    // Create the actual CryptoKey from the base
     return await crypto.subtle.deriveKey(
         algorithm,
-        keyMaterial,
-        { name: encryptAlgo, length: SIZE_OF_KEY },
+        baseKey,
+        keyType,
         false,
         keyUsages,
     )
