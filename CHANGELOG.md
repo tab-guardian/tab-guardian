@@ -5,6 +5,7 @@
 - ✨ Added showing a warning message on private groups that use the old encryption implementation to suggest them to re-encrypt for improved security
 - ✨ Added a loading spinner that appears when you unlock and lock the private group [#55](https://github.com/tab-guardian/tab-guardian/issues/55)
 - 🧑‍💻 Change password attempts from 2 to 3 for incorrect password because 3 is a sweet spot
+- ✨ Added a progress bar that shows progress on encryption and decryption of groups
 
 ## v1.11.0 (2025-09-10)
 - 🧑‍💻 Improve helping messages in settings
