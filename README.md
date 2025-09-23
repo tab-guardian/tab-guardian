@@ -88,13 +88,18 @@ To build the image, run this command:
 podman-compose build
 ```
 
+#### Create node_modules locally
+```bash
+docker compose run --rm app npm i
+```
+
 #### Run the Container
 After the image is build, you can run a container from that image. Run this command:
 ```bash
 podman-compose up -d
 ```
 
-After the container is created, it will run the development server which is available on `http://localhost:3000`.
+After the container is created, it will run the development server which is available on `http://localhost:3000` with hot reloading.
 
 #### Enter the Container
 To enter inside the container, run this command:
