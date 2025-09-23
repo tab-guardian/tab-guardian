@@ -4,12 +4,14 @@ import { ref } from 'vue'
 import { trans } from '@common/modules/trans'
 import { useGroupStore } from '@/stores/group'
 import { usePopupStore } from '@/stores/popup'
+import { useCryptoStore } from '@/stores/crypto'
 import { showToast } from '@common/modules/showToast'
 import { getPasswordFromStorage } from '@common/modules/storage/getPasswordFromStorage'
 import { deletePasswordFromStorage } from '@common/modules/storage/deletePasswordFromStorage'
 import LockClosedIcon from '@common/components/Icons/LockClosedIcon.vue'
 import WarningBox from '@common/components/WarningBox.vue'
 import SmallSpinner from '@common/components/SmallSpinner.vue'
+import ProgressBar from '@common/components/ProgressBar.vue'
 
 type Props = {
     group: Group
@@ -17,6 +19,7 @@ type Props = {
 
 const { group } = defineProps<Props>()
 const groupStore = useGroupStore()
+const cryptoStore = useCryptoStore()
 const { openPopup, onClose } = usePopupStore()
 
 const newPassword = ref<boolean>(false)
@@ -59,6 +62,12 @@ async function lockGroup(pass: string): Promise<void> {
 </script>
 
 <template>
+    <ProgressBar
+        v-if="encrypting"
+        :current="cryptoStore.progress.current"
+        :max="cryptoStore.progress.max"
+    />
+
     <WarningBox :message="trans('private_group_unlocked')">
         <div class="w-52 flex flex-col items-center gap-1.5">
             <button

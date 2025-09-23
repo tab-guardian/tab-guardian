@@ -4,6 +4,7 @@ import { defineStore } from 'pinia'
 import { trans } from '@common/modules/trans'
 import { useSettingsStore } from '@/stores/settings'
 import { usePopupStore } from '@/stores/popup'
+import { useCryptoStore } from '@/stores/crypto'
 import { showToast } from '@common/modules/showToast'
 import { error } from '@common/modules/error'
 import { isDevelopment } from '@common/modules/isDevelopment'
@@ -12,8 +13,6 @@ import { deleteGroupFromStorage } from '@common/modules/storage/deleteGroupFromS
 import { getGroupsFromStorage } from '@common/modules/storage/getGroupsFromStorage'
 import { getDefaultGroupName } from '@/modules/getDefaultGroupName'
 import { saveGroupToStorage } from '@common/modules/storage/saveGroupToStorage'
-import { decryptGroup as decryptGroupAlias } from '@common/modules/crypto/decryptGroup'
-import { encryptGroup } from '@common/modules/crypto/encryptGroup'
 import { closeTabsByIds } from '@/modules/tabs/closeTabsByIds'
 import { getCurrentURL } from '@/modules/getCurrentURL'
 import { deleteAllGroupsFromStorage } from '@common/modules/storage/deleteAllGroupsFromStorage'
@@ -22,6 +21,7 @@ import { savePasswordToStorage } from '@common/modules/storage/savePasswordToSto
 
 export const useGroupStore = defineStore('group', () => {
     const popupStore = usePopupStore()
+    const cryptoStore = useCryptoStore()
 
     const groupNameMaxLength = 45
     const groupNameLength = computed<number>(() => {
@@ -168,7 +168,7 @@ export const useGroupStore = defineStore('group', () => {
         }
 
         try {
-            const encrypted = await encryptGroup(group, pass)
+            const encrypted = await cryptoStore.encryptGroup(group, pass)
 
             encrypted.isEncrypted = true
             encrypted.isPrivate = true
@@ -360,7 +360,7 @@ export const useGroupStore = defineStore('group', () => {
     }
 
     async function decryptGroup(group: Group, pass: string): Promise<void> {
-        const unlockedGroup = await decryptGroupAlias(group, pass)
+        const unlockedGroup = await cryptoStore.decryptGroup(group, pass)
         await saveGroup(unlockedGroup)
     }
 

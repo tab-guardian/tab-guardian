@@ -4,7 +4,7 @@ import { useGroupStore } from '@/stores/group'
 import { usePopupStore } from '@/stores/popup'
 import { trans } from '@common/modules/trans'
 import { error } from '@common/modules/error'
-import { encryptGroup } from '@common/modules/crypto/encryptGroup'
+import { useCryptoStore } from '@/stores/crypto'
 import ArrowDownTrayIcon from '@common/components/Icons/ArrowDownTrayIcon.vue'
 import MenuItem from '@/components/MenuItem.vue'
 import { getPasswordFromStorage } from '@common/modules/storage/getPasswordFromStorage'
@@ -12,6 +12,7 @@ import { showToast } from '@common/modules/showToast'
 import slug from 'slug'
 
 const store = useGroupStore()
+const cryptoStore = useCryptoStore()
 const { openPopup, closePopup } = usePopupStore()
 
 async function exportGroup(): Promise<void> {
@@ -54,7 +55,7 @@ async function encryptPrivateGroup(group: Group): Promise<Group | null> {
         return null
     }
 
-    return await encryptGroup(group, pass)
+    return await cryptoStore.encryptGroup(group, pass)
 }
 </script>
 

@@ -6,6 +6,7 @@ import { trans } from '@common/modules/trans'
 import { useGroupStore } from '@/stores/group'
 import { useTabsStore } from '@/stores/tabs'
 import { useAttemptsStore } from '@/stores/attempts'
+import { useCryptoStore } from '@/stores/crypto'
 import { useRoute, useRouter } from 'vue-router'
 import { error } from '@common/modules/error'
 import { showToast } from '@common/modules/showToast'
@@ -13,6 +14,7 @@ import { savePasswordToStorage } from '@common/modules/storage/savePasswordToSto
 import ShieldCheckIcon from '@common/components/Icons/ShieldCheckIcon.vue'
 import Input from '@common/components/Form/Input.vue'
 import WarningBox from '@common/components/WarningBox.vue'
+import ProgressBar from '@common/components/ProgressBar.vue'
 
 type Props = {
     group: Group
@@ -24,6 +26,7 @@ const { params } = useRoute()
 const router = useRouter()
 const groupStore = useGroupStore()
 const tabsStore = useTabsStore()
+const cryptoStore = useCryptoStore()
 const { lockedMessageToast, hasMaxAttempts, isAllowedToTry, resetAttempts } = useAttemptsStore()
 
 const password = ref<string>('')
@@ -106,6 +109,13 @@ async function openTabsAndEncryptGroup(): Promise<void> {
                 :loading="decrypting"
             />
         </form>
+
+        <ProgressBar
+            v-if="decrypting"
+            :current="cryptoStore.progress.current"
+            :max="cryptoStore.progress.max"
+            class="mt-3"
+        />
 
         <WarningBox
             v-if="!group.algo"
