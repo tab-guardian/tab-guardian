@@ -19,8 +19,11 @@ const percent = computed<number>(() => {
 
 <template>
     <div class="flex gap-2 items-center w-full">
-        <div class="bg-secondary border border-border rounded-full relative overflow-hidden h-2 flex-1">
-            <div class="bg-primary absolute left-0 inset-y-0 transition-all" :style="{ width: percent + '%' }"></div>
+        <div class="w-full rounded-full h-1 bg-slate-300 dark:bg-slate-700">
+            <div
+                class="bg-primary h-1 rounded-full shadow-[0_0_10px_2px_rgba(59,130,246,1)]"
+                :style="{ width: percent + '%' }"
+            ></div>
         </div>
 
         <small>{{ percent }}%</small>

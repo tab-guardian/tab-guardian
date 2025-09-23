@@ -5,6 +5,7 @@ import { getImageURL } from '@common/modules/browser/url'
 import { isDevelopment } from '@common/modules/isDevelopment'
 import { isFirefox } from '@common/modules/browser/isFirefox'
 import { getLocalStorageUsage } from '@common/modules/storage/getLocalStorageUsage'
+import ProgressBar from '@common/components/ProgressBar.vue'
 
 const LOCAL_STORAGE_QUOTA_BYTES = 5_242_880
 const FIREFOX_QUOTA_BYTES = 5_242_880
@@ -60,33 +61,9 @@ async function setCurrentBytesUsage(): Promise<void> {
         />
 
         <ul v-if="currentBytesUsage !== null" class="ml-3 w-40 mt-16">
-            <h2 class="mb-1 text-sm">
-                {{ trans('storage_usage') }} {{ storageUsage.toFixed(2) }}%
-            </h2>
-
-            <div class="w-full rounded-full h-1 bg-slate-300 dark:bg-slate-700">
-                <div
-                    class="bg-primary h-1 rounded-full bar"
-                    :style="{ width: storageUsage + '%' }"
-                ></div>
-            </div>
+            <h2 class="mb-1 text-sm">{{ trans('storage_usage') }}</h2>
+            <ProgressBar :current="storageUsage" :max="100" />
         </ul>
     </div>
 </template>
 
-<style scoped>
-.bar {
-    box-shadow: 0 0 10px 2px rgba(59, 130, 246, 1);
-    animation: glow 1.5s infinite;
-}
-
-@keyframes glow {
-    0%,
-    100% {
-        box-shadow: 0 0 10px 2px rgba(59, 130, 246, 1);
-    }
-    50% {
-        box-shadow: 0 0 10px 4px rgba(59, 130, 246, 0.6);
-    }
-}
-</style>
