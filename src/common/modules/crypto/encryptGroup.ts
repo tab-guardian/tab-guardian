@@ -1,6 +1,6 @@
 import type { EncryptionAlgo, Group, Link } from '@/types'
-import { encrypt, uint8ArrToString } from '@common/modules/encrypt/webCrypto'
-import { createEncryptKey } from "@common/modules/encrypt/webCrypto"
+import { encrypt, uint8ArrToString } from '@common/modules/crypto/webCrypto'
+import { createEncryptKey } from "@common/modules/crypto/webCrypto"
 
 const DEFAULT_ENCRYPT_ALGO = import.meta.env.VITE_CURR_ENCRYPT_ALGO as EncryptionAlgo
 

@@ -1,7 +1,7 @@
 import type { EncryptionAlgo, Group, Link } from '@/types'
 import CryptoJS from 'crypto-js'
-import { decrypt, stringToUint8Arr } from '@common/modules/encrypt/webCrypto'
-import { createDecryptKey } from '@common/modules/encrypt/webCrypto'
+import { decrypt, stringToUint8Arr } from '@common/modules/crypto/webCrypto'
+import { createDecryptKey } from '@common/modules/crypto/webCrypto'
 
 export async function decryptGroup(group: Group, pass: string): Promise<Group> {
     const decryptedLinks: Link[] = []
