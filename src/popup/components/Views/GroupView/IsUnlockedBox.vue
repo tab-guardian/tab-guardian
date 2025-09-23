@@ -7,8 +7,8 @@ import { usePopupStore } from '@/stores/popup'
 import { showToast } from '@common/modules/showToast'
 import { getPasswordFromStorage } from '@common/modules/storage/getPasswordFromStorage'
 import { deletePasswordFromStorage } from '@common/modules/storage/deletePasswordFromStorage'
-import ShieldExclamationIcon from '@common/components/Icons/ShieldExclamationIcon.vue'
 import LockClosedIcon from '@common/components/Icons/LockClosedIcon.vue'
+import WarningBox from '@common/components/WarningBox.vue'
 
 type Props = {
     group: Group
@@ -49,13 +49,7 @@ async function lockGroup(pass: string): Promise<void> {
 </script>
 
 <template>
-    <div
-        class="flex items-center justify-between mb-4 mt-1 bg-unsafe p-3 rounded-lg gap-4"
-    >
-        <ShieldExclamationIcon class="w-8 h-8 text-red-400" />
-
-        <span class="text-sm">{{ trans('private_group_unlocked') }}</span>
-
+    <WarningBox :message="trans('private_group_unlocked')">
         <div class="w-52 flex flex-col items-center gap-1.5">
             <button
                 @click="promptEnterPassword"
@@ -74,5 +68,5 @@ async function lockGroup(pass: string): Promise<void> {
                 <small>{{ trans('new_password') }}</small>
             </label>
         </div>
-    </div>
+    </WarningBox>
 </template>
