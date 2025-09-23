@@ -4,6 +4,8 @@ export type Link = {
     url: string
     favIconUrl: string
     isPinned: boolean
+    salt?: string
+    iv?: string
 }
 
 export type EncryptionAlgo = 'AES-GCM'

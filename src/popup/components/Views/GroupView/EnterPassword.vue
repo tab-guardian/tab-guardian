@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Group } from '@/types'
+import { CRYPTO_JS_DECRYPTION_FAILED, WEB_CRYPTO_DECRYPTION_FAILED } from '@/errors'
 import { ref } from 'vue'
 import { trans } from '@common/modules/trans'
 import { useGroupStore } from '@/stores/group'
@@ -8,9 +9,9 @@ import { useAttemptsStore } from '@/stores/attempts'
 import { useRoute, useRouter } from 'vue-router'
 import { error } from '@common/modules/error'
 import { showToast } from '@common/modules/showToast'
+import { savePasswordToStorage } from '@common/modules/storage/savePasswordToStorage'
 import ShieldCheckIcon from '@common/components/Icons/ShieldCheckIcon.vue'
 import Input from '@common/components/Form/Input.vue'
-import { savePasswordToStorage } from '@common/modules/storage/savePasswordToStorage'
 
 type Props = {
     group: Group
@@ -49,7 +50,9 @@ async function submitPass(): Promise<void> {
             ? openTabsAndEncryptGroup()
             : showToast(trans('group_unlocked'))
     } catch (e: any) {
-        const wrongPass = e instanceof Error && e.message === 'Malformed UTF-8 data'
+        const wrongPass = e instanceof Error &&
+            [CRYPTO_JS_DECRYPTION_FAILED, WEB_CRYPTO_DECRYPTION_FAILED]
+                .includes(e.message)
 
         if (!wrongPass) {
             error.err('Caught and handled error: ', e)

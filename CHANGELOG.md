@@ -1,5 +1,8 @@
 # Release Notes
 
+## v1.12.0 (2025-09-23)
+- ✨ Added improved encryption algoriphm `AES-GCM` with WEB Crypto API without breaking backward compatibility [#54](https://github.com/tab-guardian/tab-guardian/issues/54)
+
 ## v1.11.0 (2025-09-10)
 - 🧑‍💻 Improve helping messages in settings
 - 🐛 Fixed type in "Erase all groups" message
