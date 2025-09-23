@@ -6,8 +6,8 @@ import { isDevelopment } from '@common/modules/isDevelopment'
 import { isFirefox } from '@common/modules/browser/isFirefox'
 import { getLocalStorageUsage } from '@common/modules/storage/getLocalStorageUsage'
 
-const MAX_BYTES_LOCAL_STORAGE = 102400
-const MAX_BYTES_FIREFOX_LOCAL = 10485760
+const LOCAL_STORAGE_QUOTA_BYTES = 5_242_880
+const FIREFOX_QUOTA_BYTES = 5_242_880
 
 onMounted(setCurrentBytesUsage)
 
@@ -24,10 +24,10 @@ const storageUsage = computed(() => {
 
 function getMaxBytes(): number {
     if (isDevelopment()) {
-        return MAX_BYTES_LOCAL_STORAGE
+        return LOCAL_STORAGE_QUOTA_BYTES
     }
 
-    return isFirefox() ? MAX_BYTES_FIREFOX_LOCAL : chrome.storage.local.QUOTA_BYTES
+    return isFirefox() ? FIREFOX_QUOTA_BYTES : chrome.storage.local.QUOTA_BYTES
 }
 
 async function setCurrentBytesUsage(): Promise<void> {
