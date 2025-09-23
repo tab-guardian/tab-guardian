@@ -175,5 +175,6 @@
     "your_emoji_is": { "message": "你的表情符号是" },
     "image_format_allowed": { "message": "仅允许使用以下格式的图片" },
     "new_password": { "message": "新密码" },
+    "uses_old_encrypt_impl": { "message": "该组使用旧版加密实现。您可以通过解锁该组再重新锁定来修复此问题" },
     "nothing_to_paste": { "message": "没有内容可粘贴" }
 }

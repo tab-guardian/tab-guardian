@@ -12,6 +12,7 @@ import { showToast } from '@common/modules/showToast'
 import { savePasswordToStorage } from '@common/modules/storage/savePasswordToStorage'
 import ShieldCheckIcon from '@common/components/Icons/ShieldCheckIcon.vue'
 import Input from '@common/components/Form/Input.vue'
+import WarningBox from '@common/components/WarningBox.vue'
 
 type Props = {
     group: Group
@@ -96,5 +97,11 @@ async function openTabsAndEncryptGroup(): Promise<void> {
                 :withButton="true"
             />
         </form>
+
+        <WarningBox
+            v-if="!group.algo"
+            class="mt-4"
+            :message="trans('uses_old_encrypt_impl')"
+        />
     </div>
 </template>
