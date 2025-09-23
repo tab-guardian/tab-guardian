@@ -27,8 +27,13 @@ const tabsStore = useTabsStore()
 const { lockedMessageToast, hasMaxAttempts, isAllowedToTry, resetAttempts } = useAttemptsStore()
 
 const password = ref<string>('')
+const decrypting = ref<boolean>(false)
 
 async function submitPass(): Promise<void> {
+    if (decrypting.value) {
+        return
+    }
+
     if (!password.value) {
         showToast(trans('enter_pass'), 'error')
         return
@@ -40,12 +45,15 @@ async function submitPass(): Promise<void> {
     }
 
     try {
+        decrypting.value = true
+
         await groupStore.decryptGroup(props.group, password.value)
         resetAttempts()
 
         // With this, we don't need to type password to lock the
         // group after just unlocking it
         savePasswordToStorage(props.group.id, password.value)
+
         params.openTabs === 'true'
             ? openTabsAndEncryptGroup()
             : showToast(trans('group_unlocked'))
@@ -69,6 +77,7 @@ async function submitPass(): Promise<void> {
         }
     }
 
+    decrypting.value = false
     password.value = ''
 }
 
@@ -94,6 +103,7 @@ async function openTabsAndEncryptGroup(): Promise<void> {
                 type="password"
                 id="enter-password"
                 :withButton="true"
+                :loading="decrypting"
             />
         </form>
 

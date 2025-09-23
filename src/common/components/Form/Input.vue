@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { ref, computed, watchEffect } from 'vue'
 import Tip from '@common/components/Tip.vue'
+import SmallSpinner from '@common/components/SmallSpinner.vue'
+import ArrowRightIcon from '@common/components/Icons/ArrowRightIcon.vue'
 
 const emit = defineEmits<{
     (e: 'loaded', input: HTMLInputElement): void
@@ -19,6 +21,7 @@ const props = defineProps<{
     placeholder?: string
     maxlength?: number
     error?: string | null
+    loading?: boolean
 }>()
 
 const modelValue = defineModel()
@@ -65,6 +68,7 @@ watchEffect(() => {
                     v-model="modelValue"
                     ref="inputRef"
                     :placeholder="placeholder || label || ''"
+                    :disabled="loading"
                     :maxlength
                     autocomplete="off"
                     autocapitalize="off"
@@ -78,13 +82,15 @@ watchEffect(() => {
             <button
                 v-if="withButton"
                 type="submit"
+                :disabled="loading"
                 :class="[
                     'bg-private transition-colors w-14 h-9 rounded-md',
-                    'flex items-center justify-center cursor-pointer text-secondary',
-                    'hover:bg-private-hover',
+                    'flex items-center justify-center text-secondary',
+                    loading ? 'opacity-70' : 'hover:bg-private-hover',
                 ]"
             >
-                <span aria-hidden="true" aria-describedby="Enter">⏎</span>
+                <SmallSpinner v-if="loading" width="20" />
+                <ArrowRightIcon v-else width="20" />
             </button>
         </div>
     </div>

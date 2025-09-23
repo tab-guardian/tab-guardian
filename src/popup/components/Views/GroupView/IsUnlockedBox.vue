@@ -66,9 +66,9 @@ async function lockGroup(pass: string): Promise<void> {
                 @click="promptEnterPassword"
                 :class="[
                     'bg-unsafe px-3 py-2 rounded-md w-32',
-                    'text-sm hover:bg-unsafe-hover text-bg font-semibold',
+                    'text-sm text-bg font-semibold',
                     'flex items-center gap-2 justify-center',
-                    encrypting ? 'opacity-70' : '',
+                    encrypting ? 'opacity-70' : 'hover:bg-unsafe-hover',
                 ]"
             >
                 <SmallSpinner v-if="encrypting" width="18" height="18" />
