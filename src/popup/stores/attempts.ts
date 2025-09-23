@@ -7,7 +7,7 @@ import { saveToStorage } from '@common/modules/storage/saveToStorage'
 import { error } from '@common/modules/error'
 import { showToast } from '@common/modules/showToast'
 
-const MAX_ATTEMPTS = 2
+const MAX_ATTEMPTS = 3
 const LOCK_DURATION = 2 // in minutes
 
 export const useAttemptsStore = defineStore('attempts', () => {
