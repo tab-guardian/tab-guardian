@@ -28,7 +28,9 @@
         "default_popup": "index.html"
     },
     "background": {
-        "scripts": ["assets/background.js"],
+        "scripts": [
+            "assets/background.js"
+        ],
         "type": "module"
     }
 }
