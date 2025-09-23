@@ -9,6 +9,7 @@ import { getPasswordFromStorage } from '@common/modules/storage/getPasswordFromS
 import { deletePasswordFromStorage } from '@common/modules/storage/deletePasswordFromStorage'
 import LockClosedIcon from '@common/components/Icons/LockClosedIcon.vue'
 import WarningBox from '@common/components/WarningBox.vue'
+import SmallSpinner from '@common/components/SmallSpinner.vue'
 
 type Props = {
     group: Group
@@ -19,8 +20,13 @@ const groupStore = useGroupStore()
 const { openPopup, onClose } = usePopupStore()
 
 const newPassword = ref<boolean>(false)
+const lockLoading = ref<boolean>(false)
 
 async function promptEnterPassword(): Promise<void> {
+    if (lockLoading.value) {
+        return
+    }
+
     if (newPassword.value) {
         await deletePasswordFromStorage(group.id)
     }
@@ -41,8 +47,12 @@ async function promptEnterPassword(): Promise<void> {
 }
 
 async function lockGroup(pass: string): Promise<void> {
+    lockLoading.value = true
+
     await groupStore.encryptGroupById(group.id, pass)
     await deletePasswordFromStorage(group.id)
+
+    lockLoading.value = false
 
     showToast(trans('group_locked'))
 }
@@ -52,14 +62,17 @@ async function lockGroup(pass: string): Promise<void> {
     <WarningBox :message="trans('private_group_unlocked')">
         <div class="w-52 flex flex-col items-center gap-1.5">
             <button
+                :disabled="lockLoading"
                 @click="promptEnterPassword"
                 :class="[
                     'bg-unsafe px-3 py-2 rounded-md w-32',
                     'text-sm hover:bg-unsafe-hover text-bg font-semibold',
                     'flex items-center gap-2 justify-center',
+                    lockLoading ? 'opacity-60' : '',
                 ]"
             >
-                <LockClosedIcon width="18" height="18" />
+                <SmallSpinner v-if="lockLoading" width="18" height="18" />
+                <LockClosedIcon v-else width="18" height="18" />
                 {{ trans('lock') }}
             </button>
 
