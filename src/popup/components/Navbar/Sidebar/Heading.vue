@@ -4,7 +4,7 @@ import { trans } from '@common/modules/trans'
 import { getImageURL } from '@common/modules/browser/url'
 import { isDevelopment } from '@common/modules/isDevelopment'
 import { isFirefox } from '@common/modules/browser/isFirefox'
-import { getLocalStorageUsage } from '@common/modules/storage/getLocalStorageUsage'
+import { getLocalStorageUsage } from '@common/modules/storage'
 import ProgressBar from '@common/components/ProgressBar.vue'
 
 const LOCAL_STORAGE_QUOTA_BYTES = 5_242_880

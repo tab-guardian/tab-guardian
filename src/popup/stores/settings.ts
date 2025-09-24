@@ -1,8 +1,7 @@
 import type { Settings } from '@/types'
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import { getFromStorage } from '@common/modules/storage/getFromStorage'
-import { saveToStorage } from '@common/modules/storage/saveToStorage'
+import { getFromStorage, saveToStorage } from '@common/modules/storage'
 
 export const useSettingsStore = defineStore('settings', () => {
     const settings = ref<Settings>({

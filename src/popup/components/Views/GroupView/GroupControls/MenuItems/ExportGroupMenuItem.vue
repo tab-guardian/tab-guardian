@@ -7,7 +7,7 @@ import { error } from '@common/modules/error'
 import { useCryptoStore } from '@/stores/crypto'
 import ArrowDownTrayIcon from '@common/components/Icons/ArrowDownTrayIcon.vue'
 import MenuItem from '@/components/MenuItem.vue'
-import { getPasswordFromStorage } from '@common/modules/storage/getPasswordFromStorage'
+import { getPasswordFromStorage } from '@common/modules/storage/password'
 import { showToast } from '@common/modules/showToast'
 import slug from 'slug'
 

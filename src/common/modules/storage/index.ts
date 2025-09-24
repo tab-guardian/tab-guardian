@@ -1,6 +1,27 @@
 import { isDevelopment } from '@common/modules/isDevelopment'
+import { targetBrowser } from '@common/modules/browser/targetBrowser'
 import { isFirefox } from '@common/modules/browser/isFirefox'
 import { error } from '@common/modules/error'
+
+export async function saveToStorage<T>(
+    key: string,
+    value: T | null | undefined,
+): Promise<void> {
+    if (!value) {
+        const msg = `Failed to save "${key}" to storage because there is not value`
+        error.err(msg)
+        return
+    }
+
+    const jsonStr = JSON.stringify(value)
+
+    if (import.meta.env.MODE === 'development') {
+        localStorage.setItem(key, jsonStr)
+        return
+    }
+
+    await targetBrowser().storage.local.set({ [key]: jsonStr })
+}
 
 export function getFromStorage<T>(key: string): Promise<T | null> {
     return new Promise(resolve => {
@@ -19,6 +40,35 @@ export function getFromStorage<T>(key: string): Promise<T | null> {
             resolve(getFromBrowserStorage<T>(key, result))
         })
     })
+}
+
+export async function deleteFromStorage(key: string): Promise<void> {
+    if (isDevelopment()) {
+        localStorage.removeItem(key)
+        return
+    }
+
+    await targetBrowser().storage.local.remove(key)
+}
+
+export function getLocalStorageUsage(): number {
+    let totalBytes = 0
+
+    for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i)
+
+        if (!key) {
+            continue
+        }
+
+        const value = localStorage.getItem(key)
+
+        if (value) {
+            totalBytes += key.length + value.length
+        }
+    }
+
+    return totalBytes
 }
 
 function getFromBrowserStorage<T>(

@@ -9,15 +9,17 @@ import { showToast } from '@common/modules/showToast'
 import { error } from '@common/modules/error'
 import { isDevelopment } from '@common/modules/isDevelopment'
 import { isIncognito } from '@common/modules/browser/windows'
-import { deleteGroupFromStorage } from '@common/modules/storage/deleteGroupFromStorage'
-import { getGroupsFromStorage } from '@common/modules/storage/getGroupsFromStorage'
 import { getDefaultGroupName } from '@/modules/getDefaultGroupName'
-import { saveGroupToStorage } from '@common/modules/storage/saveGroupToStorage'
 import { closeTabsByIds } from '@/modules/tabs/closeTabsByIds'
 import { getCurrentURL } from '@/modules/getCurrentURL'
-import { deleteAllGroupsFromStorage } from '@common/modules/storage/deleteAllGroupsFromStorage'
 import { generateGroupId } from '@common/modules/generateGroupId'
-import { savePasswordToStorage } from '@common/modules/storage/savePasswordToStorage'
+import { savePasswordToStorage } from '@common/modules/storage/password'
+import {
+    deleteAllGroupsFromStorage,
+    deleteGroupFromStorage,
+    getGroupsFromStorage,
+    saveGroupToStorage,
+} from '@common/modules/storage/group'
 
 export const useGroupStore = defineStore('group', () => {
     const popupStore = usePopupStore()
