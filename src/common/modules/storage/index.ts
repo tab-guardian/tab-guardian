@@ -15,7 +15,7 @@ export async function saveToStorage<T>(
 
     const jsonStr = JSON.stringify(value)
 
-    if (import.meta.env.MODE === 'development') {
+    if (isDevelopment()) {
         localStorage.setItem(key, jsonStr)
         return
     }
