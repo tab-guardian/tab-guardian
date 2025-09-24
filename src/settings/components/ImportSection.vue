@@ -50,6 +50,8 @@ async function importGroups(): Promise<void> {
 }
 
 async function prependGroups(groups: Group[]): Promise<void> {
+    await groupStore.loadGroupsFromStorage()
+
     const groupsWithSameName = groups.reduce((acc, group) => {
         return acc + groupStore.groups.filter(g => g.name === group.name).length
     }, 0)
