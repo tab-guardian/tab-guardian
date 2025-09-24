@@ -4,7 +4,11 @@ export type Link = {
     url: string
     favIconUrl: string
     isPinned: boolean
+    salt?: string
+    iv?: string
 }
+
+export type EncryptionAlgo = 'AES-GCM'
 
 export type Group = {
     id: number
@@ -18,6 +22,7 @@ export type Group = {
     hide?: boolean
     bindURL?: string
     icon?: string
+    algo?: EncryptionAlgo
 }
 
 export type NewGroup = {

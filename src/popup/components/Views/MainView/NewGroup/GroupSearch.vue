@@ -14,7 +14,7 @@ const initialGroups = ref<Group[]>([])
 const inpElem = ref<HTMLInputElement | null>(null)
 const query = ref<string>('')
 const placeholder =
-    navigator.userAgent.indexOf('Mac OS X') != -1 ? '⌘+k' : 'ctrl+alt+k'
+    navigator.userAgent.indexOf('Mac OS X') != -1 ? '⌃⌘k' : 'ctrl+alt+k'
 
 onMounted(() => {
     document.addEventListener('keydown', focusOnSearch)
@@ -71,12 +71,12 @@ function focusOnSearch(e: KeyboardEvent): void {
         inpElem.value.blur()
     }
 
-    // 🍏 Mac (cmd + k)
-    if (e.key === 'k' && e.metaKey) {
+    // 🍏 Mac (cmd + control + k)
+    if (e.key === 'k' && e.ctrlKey && e.metaKey) {
         inpElem.value.focus()
     }
 
-    // 🐧 Linux / 💩 Windows (ctrl + alt + k)
+    // 🐧 Linux / 🪟 Windows (ctrl + alt + k)
     if (e.key === 'k' && e.altKey && e.ctrlKey) {
         inpElem.value.focus()
     }

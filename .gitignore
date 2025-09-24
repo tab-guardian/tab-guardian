@@ -4,3 +4,4 @@ node_modules
 firefox.zip
 chrome.zip
 source.zip
+.DS_Store

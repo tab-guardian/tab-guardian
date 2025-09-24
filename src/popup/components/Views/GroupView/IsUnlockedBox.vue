@@ -4,11 +4,13 @@ import { ref } from 'vue'
 import { trans } from '@common/modules/trans'
 import { useGroupStore } from '@/stores/group'
 import { usePopupStore } from '@/stores/popup'
+import { useCryptoStore } from '@/stores/crypto'
 import { showToast } from '@common/modules/showToast'
-import { getPasswordFromStorage } from '@common/modules/storage/getPasswordFromStorage'
-import { deletePasswordFromStorage } from '@common/modules/storage/deletePasswordFromStorage'
-import ShieldExclamationIcon from '@common/components/Icons/ShieldExclamationIcon.vue'
+import { getPasswordFromStorage, deletePasswordFromStorage } from '@common/modules/storage/password'
 import LockClosedIcon from '@common/components/Icons/LockClosedIcon.vue'
+import WarningBox from '@common/components/WarningBox.vue'
+import SmallSpinner from '@common/components/SmallSpinner.vue'
+import ProgressBar from '@common/components/ProgressBar.vue'
 
 type Props = {
     group: Group
@@ -16,11 +18,17 @@ type Props = {
 
 const { group } = defineProps<Props>()
 const groupStore = useGroupStore()
+const cryptoStore = useCryptoStore()
 const { openPopup, onClose } = usePopupStore()
 
 const newPassword = ref<boolean>(false)
+const encrypting = ref<boolean>(false)
 
 async function promptEnterPassword(): Promise<void> {
+    if (encrypting.value) {
+        return
+    }
+
     if (newPassword.value) {
         await deletePasswordFromStorage(group.id)
     }
@@ -41,31 +49,38 @@ async function promptEnterPassword(): Promise<void> {
 }
 
 async function lockGroup(pass: string): Promise<void> {
+    encrypting.value = true
+
     await groupStore.encryptGroupById(group.id, pass)
     await deletePasswordFromStorage(group.id)
+
+    encrypting.value = false
 
     showToast(trans('group_locked'))
 }
 </script>
 
 <template>
-    <div
-        class="flex items-center justify-between mb-4 mt-1 bg-unsafe p-3 rounded-lg gap-4"
-    >
-        <ShieldExclamationIcon class="w-8 h-8 text-red-400" />
+    <ProgressBar
+        v-if="encrypting"
+        :current="cryptoStore.progress.current"
+        :max="cryptoStore.progress.max"
+    />
 
-        <span class="text-sm">{{ trans('private_group_unlocked') }}</span>
-
+    <WarningBox :message="trans('private_group_unlocked')">
         <div class="w-52 flex flex-col items-center gap-1.5">
             <button
+                :disabled="encrypting"
                 @click="promptEnterPassword"
                 :class="[
                     'bg-unsafe px-3 py-2 rounded-md w-32',
-                    'text-sm hover:bg-unsafe-hover text-bg font-semibold',
+                    'text-sm text-bg font-semibold',
                     'flex items-center gap-2 justify-center',
+                    encrypting ? 'opacity-70' : 'hover:bg-unsafe-hover',
                 ]"
             >
-                <LockClosedIcon width="18" height="18" />
+                <SmallSpinner v-if="encrypting" width="18" height="18" />
+                <LockClosedIcon v-else width="18" height="18" />
                 {{ trans('lock') }}
             </button>
 
@@ -74,5 +89,5 @@ async function lockGroup(pass: string): Promise<void> {
                 <small>{{ trans('new_password') }}</small>
             </label>
         </div>
-    </div>
+    </WarningBox>
 </template>

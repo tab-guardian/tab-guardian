@@ -205,5 +205,6 @@
     "your_emoji_is": { "message": "Your emoji is" },
     "image_format_allowed": { "message": "Images are only allowed with these formats" },
     "new_password": { "message": "New password" },
+    "uses_old_encrypt_impl": { "message": "This group uses the old encryption implementation. You can fix it by unlocking this group and locking it back" },
     "nothing_to_paste": { "message": "There is nothing to paste" }
 }

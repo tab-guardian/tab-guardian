@@ -4,24 +4,26 @@ import { defineStore } from 'pinia'
 import { trans } from '@common/modules/trans'
 import { useSettingsStore } from '@/stores/settings'
 import { usePopupStore } from '@/stores/popup'
+import { useCryptoStore } from '@/stores/crypto'
 import { showToast } from '@common/modules/showToast'
 import { error } from '@common/modules/error'
 import { isDevelopment } from '@common/modules/isDevelopment'
 import { isIncognito } from '@common/modules/browser/windows'
-import { deleteGroupFromStorage } from '@common/modules/storage/deleteGroupFromStorage'
-import { getGroupsFromStorage } from '@common/modules/storage/getGroupsFromStorage'
 import { getDefaultGroupName } from '@/modules/getDefaultGroupName'
-import { decryptGroup as unlock } from '@common/modules/encrypt/decryptGroup'
-import { saveGroupToStorage } from '@common/modules/storage/saveGroupToStorage'
-import { encryptGroup } from '@common/modules/encrypt/encryptGroup'
 import { closeTabsByIds } from '@/modules/tabs/closeTabsByIds'
 import { getCurrentURL } from '@/modules/getCurrentURL'
-import { deleteAllGroupsFromStorage } from '@common/modules/storage/deleteAllGroupsFromStorage'
 import { generateGroupId } from '@common/modules/generateGroupId'
-import { savePasswordToStorage } from '@common/modules/storage/savePasswordToStorage'
+import { savePasswordToStorage } from '@common/modules/storage/password'
+import {
+    deleteAllGroupsFromStorage,
+    deleteGroupFromStorage,
+    getGroupsFromStorage,
+    saveGroupToStorage,
+} from '@common/modules/storage/group'
 
 export const useGroupStore = defineStore('group', () => {
     const popupStore = usePopupStore()
+    const cryptoStore = useCryptoStore()
 
     const groupNameMaxLength = 45
     const groupNameLength = computed<number>(() => {
@@ -168,7 +170,7 @@ export const useGroupStore = defineStore('group', () => {
         }
 
         try {
-            const encrypted = encryptGroup(group, pass)
+            const encrypted = await cryptoStore.encryptGroup(group, pass)
 
             encrypted.isEncrypted = true
             encrypted.isPrivate = true
@@ -360,7 +362,7 @@ export const useGroupStore = defineStore('group', () => {
     }
 
     async function decryptGroup(group: Group, pass: string): Promise<void> {
-        const unlockedGroup = unlock(group, pass)
+        const unlockedGroup = await cryptoStore.decryptGroup(group, pass)
         await saveGroup(unlockedGroup)
     }
 

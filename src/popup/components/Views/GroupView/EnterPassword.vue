@@ -1,16 +1,20 @@
 <script setup lang="ts">
 import type { Group } from '@/types'
+import { CRYPTO_JS_DECRYPTION_FAILED, WEB_CRYPTO_DECRYPTION_FAILED } from '@/errors'
 import { ref } from 'vue'
 import { trans } from '@common/modules/trans'
 import { useGroupStore } from '@/stores/group'
 import { useTabsStore } from '@/stores/tabs'
 import { useAttemptsStore } from '@/stores/attempts'
+import { useCryptoStore } from '@/stores/crypto'
 import { useRoute, useRouter } from 'vue-router'
 import { error } from '@common/modules/error'
 import { showToast } from '@common/modules/showToast'
+import { savePasswordToStorage } from '@common/modules/storage/password'
 import ShieldCheckIcon from '@common/components/Icons/ShieldCheckIcon.vue'
 import Input from '@common/components/Form/Input.vue'
-import { savePasswordToStorage } from '@common/modules/storage/savePasswordToStorage'
+import WarningBox from '@common/components/WarningBox.vue'
+import ProgressBar from '@common/components/ProgressBar.vue'
 
 type Props = {
     group: Group
@@ -22,11 +26,17 @@ const { params } = useRoute()
 const router = useRouter()
 const groupStore = useGroupStore()
 const tabsStore = useTabsStore()
+const cryptoStore = useCryptoStore()
 const { lockedMessageToast, hasMaxAttempts, isAllowedToTry, resetAttempts } = useAttemptsStore()
 
 const password = ref<string>('')
+const decrypting = ref<boolean>(false)
 
 async function submitPass(): Promise<void> {
+    if (decrypting.value) {
+        return
+    }
+
     if (!password.value) {
         showToast(trans('enter_pass'), 'error')
         return
@@ -37,19 +47,23 @@ async function submitPass(): Promise<void> {
         return
     }
 
-    // With this, we don't need to type password to lock the
-    // group after just unlocking it
-    savePasswordToStorage(props.group.id, password.value)
-
     try {
+        decrypting.value = true
+
         await groupStore.decryptGroup(props.group, password.value)
         resetAttempts()
+
+        // With this, we don't need to type password to lock the
+        // group after just unlocking it
+        savePasswordToStorage(props.group.id, password.value)
 
         params.openTabs === 'true'
             ? openTabsAndEncryptGroup()
             : showToast(trans('group_unlocked'))
     } catch (e: any) {
-        const wrongPass = e instanceof Error && e.message === 'Malformed UTF-8 data'
+        const wrongPass = e instanceof Error &&
+            [CRYPTO_JS_DECRYPTION_FAILED, WEB_CRYPTO_DECRYPTION_FAILED]
+                .includes(e.message)
 
         if (!wrongPass) {
             error.err('Caught and handled error: ', e)
@@ -66,6 +80,7 @@ async function submitPass(): Promise<void> {
         }
     }
 
+    decrypting.value = false
     password.value = ''
 }
 
@@ -91,7 +106,21 @@ async function openTabsAndEncryptGroup(): Promise<void> {
                 type="password"
                 id="enter-password"
                 :withButton="true"
+                :loading="decrypting"
             />
         </form>
+
+        <ProgressBar
+            v-if="decrypting"
+            :current="cryptoStore.progress.current"
+            :max="cryptoStore.progress.max"
+            class="mt-3"
+        />
+
+        <WarningBox
+            v-if="!group.algo"
+            class="mt-4"
+            :message="trans('uses_old_encrypt_impl')"
+        />
     </div>
 </template>

@@ -42,7 +42,7 @@ watchEffect(() => {
             <MenuButton />
         </template>
 
-        <div v-if="group" class="group">
+        <div v-if="group">
             <GroupName :group />
 
             <IsUnlockedBox v-if="group.isPrivate && !group.isEncrypted" :group />

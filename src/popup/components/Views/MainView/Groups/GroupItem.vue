@@ -48,6 +48,7 @@ const groupClasses = computed(() => {
                 <ShieldCheckIcon
                     v-if="group.isEncrypted"
                     class="w-6 h-6 text-private"
+                    :class="{ 'text-red-400': !group.algo }"
                 />
 
                 <ShieldExclamationIcon v-else class="w-6 h-6 text-red-400" />
