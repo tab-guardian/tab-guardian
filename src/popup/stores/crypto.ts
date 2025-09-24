@@ -1,5 +1,5 @@
 import type { EncryptionAlgo, Group, Link } from '@/types'
-import { reactive } from 'vue'
+import { reactive, readonly } from 'vue'
 import { defineStore } from 'pinia'
 import { encrypt, decrypt, uint8ArrToString, createEncryptKey, createDecryptKey, stringToUint8Arr } from '@common/modules/webCrypto'
 import CryptoJS from 'crypto-js'
@@ -118,7 +118,7 @@ export const useCryptoStore = defineStore('crypto', () => {
     }
 
     return {
-        progress,
+        progress: readonly(progress),
         encryptGroup,
         decryptGroup,
     }
