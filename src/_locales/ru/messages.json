@@ -59,7 +59,6 @@
     },
     "select": { "message": "Выбрать" },
     "cancel": { "message": "Отмена" },
-    "import": { "message": "Импортировать" },
     "export": { "message": "Экспортировать" },
     "new_group": { "message": "Новая группа" },
     "error_no_group_selected": {

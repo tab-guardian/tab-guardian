@@ -59,7 +59,6 @@
     },
     "select": { "message": "Select" },
     "cancel": { "message": "Cancel" },
-    "import": { "message": "Import" },
     "export": { "message": "Export" },
     "new_group": { "message": "New Group" },
     "error_no_group_selected": {

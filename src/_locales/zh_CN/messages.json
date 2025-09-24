@@ -57,7 +57,6 @@
     },
     "select": { "message": "选择" },
     "cancel": { "message": "取消" },
-    "import": { "message": "导入" },
     "export": { "message": "导出" },
     "new_group": { "message": "新建组" },
     "error_no_tab_selected": { "message": "未选中任何选项卡" },
