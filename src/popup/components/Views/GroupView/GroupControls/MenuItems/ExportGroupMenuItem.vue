@@ -5,11 +5,12 @@ import { usePopupStore } from '@/stores/popup'
 import { trans } from '@common/modules/trans'
 import { error } from '@common/modules/error'
 import { useCryptoStore } from '@/stores/crypto'
-import ArrowDownTrayIcon from '@common/components/Icons/ArrowDownTrayIcon.vue'
-import MenuItem from '@/components/MenuItem.vue'
 import { getPasswordFromStorage } from '@common/modules/storage/password'
 import { showToast } from '@common/modules/showToast'
+import { cloneDeep } from 'lodash'
 import slug from 'slug'
+import ArrowDownTrayIcon from '@common/components/Icons/ArrowDownTrayIcon.vue'
+import MenuItem from '@/components/MenuItem.vue'
 
 const store = useGroupStore()
 const cryptoStore = useCryptoStore()
@@ -21,7 +22,7 @@ async function exportGroup(): Promise<void> {
         return
     }
 
-    let group = Object.assign({}, store.selectedGroup)
+    let group = cloneDeep(store.selectedGroup)
 
     if (group.isPrivate) {
         const encrypted = await encryptPrivateGroup(group)

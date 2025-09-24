@@ -6,6 +6,7 @@ import { error } from '@common/modules/error'
 import { showToast } from '@common/modules/showToast'
 import { useGroupStore } from '@/stores/group'
 import { usePopupStore } from '@/stores/popup'
+import { cloneDeep } from 'lodash'
 
 type LinkBuffer = {
     action: 'copy' | 'cut',
@@ -34,7 +35,7 @@ export const useAppStore = defineStore('app', () => {
             return
         }
 
-        const link = Object.assign({}, linkBuffer.value.link)
+        const link = cloneDeep(linkBuffer.value.link)
         link.id = Date.now()
 
         await prependLinksTo(groupId, [link])

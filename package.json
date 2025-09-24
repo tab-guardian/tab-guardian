@@ -19,6 +19,7 @@
     },
     "devDependencies": {
         "@types/chrome": "^0.0.267",
+        "@types/lodash": "^4.17.20",
         "@types/crypto-js": "^4.2.2",
         "@types/firefox": "^0.0.34",
         "@types/firefox-webext-browser": "^120.0.3",
@@ -41,6 +42,7 @@
         "crypto-js": "^4.2.0",
         "emoji-picker-element": "^1.26.3",
         "emoji-regex": "^10.4.0",
+        "lodash": "^4.17.21",
         "moment": "^2.30.1",
         "pinia": "^2.1.7",
         "slug": "^11.0.0",
