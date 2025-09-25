@@ -6,7 +6,7 @@ import { useSelectTabsStore } from '@/stores/selectTabs'
 import { trans } from '@common/modules/trans'
 import { useGroupStore } from '@/stores/group'
 import { showToast } from '@common/modules/showToast'
-import { savePasswordToStorage } from '@common/modules/storage/password'
+import { error } from '@common/modules/error'
 import View from '@/components/Views/View.vue'
 import Tabs from '@/components/Views/SelectTabsView/Tabs.vue'
 import SaveButton from '@/components/Views/SelectTabsView/SaveButton.vue'
@@ -46,6 +46,7 @@ async function saveTabs(): Promise<void> {
         )
 
         if (!encrypted) {
+            error.info(`Group ${groupId} wasn't encrypted`)
             return
         }
 
