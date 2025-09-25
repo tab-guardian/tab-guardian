@@ -86,6 +86,8 @@ export const useGroupStore = defineStore('group', () => {
     async function loadGroupsFromStorage(): Promise<void> {
         const storageGroups = await getGroupsFromStorage()
 
+        // Disable hiding groups in incognito because we don't have
+        // incognito in a web app with Vite server
         if (isDevelopment()) {
             groups.value = storageGroups
             groups.value.sort((a, b) => b.updatedAt - a.updatedAt)
