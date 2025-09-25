@@ -49,7 +49,7 @@ export const useNewGroupStore = defineStore('newGroup', () => {
         return {
             id: generateGroupId(),
             name: choices.value.name || getDefaultGroupName(isPrivate),
-            isPrivate: isPrivate,
+            isPrivate,
             isEncrypted: false,
             updatedAt: Date.now(),
             createdAt: Date.now(),
@@ -88,13 +88,13 @@ export const useNewGroupStore = defineStore('newGroup', () => {
 
         const contains = choices.value.selectedLinks.some(l => l.id === link.id)
 
+        // Remove the link ID from selected IDs if contains
         if (contains) {
-            choices.value.selectedLinks.push(link)
+            choices.value.selectedLinks = choices.value.selectedLinks.filter(l => l.id !== link.id)
             return
         }
 
-        // Remove the link ID from selected IDs
-        choices.value.selectedLinks = choices.value.selectedLinks.filter(l => l.id !== link.id)
+        choices.value.selectedLinks.push(link)
     }
 
     return {

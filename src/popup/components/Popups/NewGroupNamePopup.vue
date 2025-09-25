@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { SelectTabsOperation } from '@/types'
-import { onMounted } from 'vue'
 import { trans } from '@common/modules/trans'
 import { usePopupStore } from '@/stores/popup'
 import { useNewGroupStore, GROUP_NAME_MAX_LENTH } from '@/stores/newGroup'
@@ -15,8 +14,6 @@ import BindToUrlSlider from '@/components/Popups/BindToUrlSlider.vue'
 const { closePopup, closeAllPopups } = usePopupStore()
 const newGroupStore = useNewGroupStore()
 const router = useRouter()
-
-onMounted(() => newGroupStore.resetChoices())
 
 function selectLinks(): void {
     if (newGroupStore.preventPasswordSubmit) {

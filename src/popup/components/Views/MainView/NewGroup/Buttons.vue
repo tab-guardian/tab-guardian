@@ -1,16 +1,19 @@
 <script setup lang="ts">
-import { useGroupStore } from '@/stores/group'
+import { useNewGroupStore } from '@/stores/newGroup'
 import { trans } from '@common/modules/trans'
 import { usePopupStore } from '@/stores/popup'
+import { onMounted } from 'vue'
 import ShieldCheckIcon from '@common/components/Icons/ShieldCheckIcon.vue'
 import PlusCircleIcon from '@common/components/Icons/PlusCircleIcon.vue'
 import NewGroupButton from '@/components/Views/MainView/NewGroup/NewGroupButton.vue'
 
+onMounted(() => newGroupStore.resetChoices())
+
 const { openPopup } = usePopupStore()
-const groupStore = useGroupStore()
+const newGroupStore = useNewGroupStore()
 
 function askForGroupName(isPrivate: boolean) {
-    groupStore.newGroup.isPrivate = isPrivate
+    newGroupStore.choices.isPrivate = isPrivate
     openPopup('newGroupName')
 }
 </script>
@@ -19,7 +22,6 @@ function askForGroupName(isPrivate: boolean) {
     <div class="flex items-center gap-2">
         <NewGroupButton
             @click="askForGroupName(false)"
-            :disabled="groupStore.isSaving"
             class="w-full bg-primary hover:bg-primary-hover"
         >
             <PlusCircleIcon class="w-6 h-6" />
@@ -30,7 +32,6 @@ function askForGroupName(isPrivate: boolean) {
             v-tippy="trans('private_groups_are_secure')"
             @click="askForGroupName(true)"
             class="w-24 bg-private hover:bg-private-hover"
-            :disabled="groupStore.isSaving"
         >
             <ShieldCheckIcon class="w-8 h-8" />
         </NewGroupButton>

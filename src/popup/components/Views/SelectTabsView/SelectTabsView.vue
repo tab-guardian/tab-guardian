@@ -8,11 +8,14 @@ import { useGroupStore } from '@/stores/group'
 import { getCurrentLinks } from '@/modules/tabs/getCurrentLinks'
 import { showToast } from '@common/modules/showToast'
 import { error } from '@common/modules/error'
+import { VueDraggableNext } from 'vue-draggable-next'
 import View from '@/components/Views/View.vue'
-import Tabs from '@/components/Views/SelectTabsView/Tabs.vue'
+import TabItem from '@/components/Views/SelectTabsView/TabItem.vue'
+import Message from '@common/components/Message.vue'
 import SaveButton from '@/components/Views/SelectTabsView/SaveButton.vue'
 import ControlButton from '@/components/Views/SelectTabsView/ControlButton.vue'
 import SlideSwitch from '@common/components/Form/SlideSwitch.vue'
+import Spinner from '@common/components/Spinner.vue'
 
 const newGroupStore = useNewGroupStore()
 const groupStore = useGroupStore()
@@ -114,7 +117,17 @@ function showToastMessage(linksLength: number): void {
             </ControlButton>
         </div>
 
-        <Tabs />
+        <Spinner v-if="loading" />
+
+        <Message v-else-if="links.length === 0">
+            {{ trans('no_tabs_found') }}
+        </Message>
+
+        <div v-else>
+            <VueDraggableNext v-model="links" class="space-y-2">
+                <TabItem v-for="link in links" :key="link.id" :link />
+            </VueDraggableNext>
+        </div>
 
         <div class="flex items-center justify-between gap-3 mt-3">
             <div class="text-right">
