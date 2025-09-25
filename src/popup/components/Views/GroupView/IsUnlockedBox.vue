@@ -6,6 +6,7 @@ import { useGroupStore } from '@/stores/group'
 import { usePopupStore } from '@/stores/popup'
 import { useCryptoStore } from '@/stores/crypto'
 import { showToast } from '@common/modules/showToast'
+import { error } from '@common/modules/error'
 import { getPasswordFromStorage, deletePasswordFromStorage } from '@common/modules/storage/password'
 import LockClosedIcon from '@common/components/Icons/LockClosedIcon.vue'
 import WarningBox from '@common/components/WarningBox.vue'
@@ -51,7 +52,14 @@ async function promptEnterPassword(): Promise<void> {
 async function lockGroup(pass: string): Promise<void> {
     encrypting.value = true
 
-    await groupStore.encryptGroupById(group.id, pass)
+    const encrypted = await groupStore.encryptGroupById(group.id, pass)
+
+    if (!encrypted) {
+        error.info(`Group ${group.id} wasn't encrypted`)
+        return
+    }
+
+    await groupStore.saveGroup(encrypted)
     await deletePasswordFromStorage(group.id)
 
     encrypting.value = false

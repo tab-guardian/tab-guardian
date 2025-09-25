@@ -142,31 +142,32 @@ export const useGroupStore = defineStore('group', () => {
         return false
     }
 
+    // Doesn't save the group to storage
     async function encryptGroupById(
         groupId: number,
         pass: string,
         confirmPass?: string,
-    ): Promise<boolean> {
+    ): Promise<Group | null> {
         const group = getGroupById(groupId)
 
         if (!group) {
             showToast(trans('group_not_found'), 'error')
-            return false
+            return null
         }
 
         if (group.isEncrypted) {
             showToast(trans('group_already_locked'), 'error')
-            return false
+            return null
         }
 
         if (pass === '') {
             showToast(trans('pass_empty'), 'error')
-            return false
+            return null
         }
 
         if (confirmPass && pass !== confirmPass) {
             showToast(trans('passwords_not_match'), 'error')
-            return false
+            return null
         }
 
         try {
@@ -175,13 +176,13 @@ export const useGroupStore = defineStore('group', () => {
             encrypted.isEncrypted = true
             encrypted.isPrivate = true
 
-            await saveGroup(encrypted)
+            return encrypted
         } catch (err) {
             showToast(trans('error_occurred'), 'error')
             error.err(err)
         }
 
-        return true
+        return null
     }
 
     async function createEmptyGroup(): Promise<Group> {
@@ -345,8 +346,8 @@ export const useGroupStore = defineStore('group', () => {
         await saveGroup(group)
     }
 
-    async function prependLinksTo(groupId: number, links: Link[]): Promise<void> {
-        const group = getGroupById(groupId)
+    async function prependLinksTo(groupId: number | Group, links: Link[]): Promise<void> {
+        const group = groupId instanceof Object ? groupId : getGroupById(groupId)
 
         if (!group) {
             return

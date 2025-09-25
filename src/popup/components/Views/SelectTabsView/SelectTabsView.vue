@@ -6,6 +6,7 @@ import { useSelectTabsStore } from '@/stores/selectTabs'
 import { trans } from '@common/modules/trans'
 import { useGroupStore } from '@/stores/group'
 import { showToast } from '@common/modules/showToast'
+import { savePasswordToStorage } from '@common/modules/storage/password'
 import View from '@/components/Views/View.vue'
 import Tabs from '@/components/Views/SelectTabsView/Tabs.vue'
 import SaveButton from '@/components/Views/SelectTabsView/SaveButton.vue'
@@ -37,17 +38,24 @@ async function saveTabs(): Promise<void> {
 
     const selectedLinks = store.getSelectedLinks()
 
-    await groupStore.prependLinksTo(groupId, selectedLinks)
-
-    const pass = groupStore.newGroup.password
-    const confirm = groupStore.newGroup.confirmPassword
-
     if (groupStore.newGroup.isPrivate) {
-        await groupStore.encryptGroupById(groupId, pass, confirm)
+        const encrypted = await groupStore.encryptGroupById(
+            groupId,
+            groupStore.newGroup.password,
+            groupStore.newGroup.confirmPassword,
+        )
+
+        if (!encrypted) {
+            return
+        }
+
+        await groupStore.prependLinksTo(encrypted, selectedLinks)
+    } else {
+        await groupStore.prependLinksTo(groupId, selectedLinks)
     }
 
-    store.closeTabsModal()
     groupStore.resetNewGroup()
+    store.closeTabsModal()
 
     showToastMessage(store.operation, selectedLinks)
 }

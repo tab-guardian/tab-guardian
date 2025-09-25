@@ -52,10 +52,10 @@ export const useSelectTabsStore = defineStore('selectTabs', () => {
     }
 
     function closeTabsModal(): void {
-        router.go(-1)
         links.value = []
         selectedIds.value = []
         targetGroupId.value = null
+        router.go(-1)
     }
 
     function selectAll(): void {
