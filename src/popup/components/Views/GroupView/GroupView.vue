@@ -13,11 +13,11 @@ import Actions from '@/components/Views/GroupView/GroupControls/Actions/Actions.
 import IsUnlockedBox from '@/components/Views/GroupView/IsUnlockedBox.vue'
 import Message from '@common/components/Message.vue'
 
-const { params } = useRoute()
+const route = useRoute()
 const store = useGroupStore()
 
 const group = computed<Group | null>(() => {
-    const id = params.id
+    const id = route.params.id
 
     if (!id) {
         return null

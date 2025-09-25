@@ -50,8 +50,9 @@ async function handleCreateGroup(): Promise<void> {
         return
     }
 
-    await groupStore.save(group)
+    groupStore.groups.push(group)
 
+    await groupStore.save(group)
     await router.push({ name: 'group', params: { id: group.id } })
 
     newGroupStore.resetChoices()
@@ -76,11 +77,15 @@ async function createGroup(): Promise<Group | null> {
 }
 
 async function createPrivateGroup(group: Group): Promise<Group | null> {
-    const encryptedGroup = await groupStore.encrypt(
-        group,
-        newGroupStore.choices.password || '',
-        newGroupStore.choices.confirmPassword || '',
-    )
+    const pass = newGroupStore.choices.password
+    const confirm = newGroupStore.choices.confirmPassword
+
+    if (!pass || !confirm) {
+        error.err(`Password and confirm must not be empty`)
+        return null
+    }
+
+    const encryptedGroup = await groupStore.encrypt(group, pass, confirm)
 
     if (!encryptedGroup) {
         error.info(`Group ${group.id} wasn't encrypted`)
