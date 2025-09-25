@@ -1,12 +1,15 @@
 export type UserChoices = {
     isPrivate: boolean | null
     name: string | null
-    links: Link[] | null
+    selectedLinks: Link[] | null
     closeTabs: boolean | null
     password: string | null
     confirmPassword: string | null
-    selectedTabsIds: number[] | null
+    wantsSelectAllLinks: boolean | null
 }
+
+export type SelectTabsOperation = 'adding' | 'creating'
+
 export type Link = {
     id: number
     title: string

@@ -1,24 +1,47 @@
-import type { Group, UserChoices } from '@/types'
-import { ref } from 'vue'
+import type { Group, UserChoices, Link } from '@/types'
+import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import { getDefaultGroupName } from '@/modules/getDefaultGroupName'
 import { generateGroupId } from '@common/modules/generateGroupId'
+import { trans } from '@common/modules/trans'
 
-const GROUP_NAME_MAX_LENTH = 45
+export const GROUP_NAME_MAX_LENTH = 45
 
 export const useNewGroupStore = defineStore('newGroup', () => {
     // null suggest that there was no choice yet
     const choices = ref<UserChoices>({
         isPrivate: null,
         name: null,
-        links: null,
+        selectedLinks: null,
         closeTabs: null,
         password: null,
         confirmPassword: null,
-        selectedTabsIds: null,
+        wantsSelectAllLinks: null,
     })
 
-    const targetGroupId = ref<number | null>(null)
+    const passwordErr = computed<string>(() => {
+        const pass = choices.value.password || ''
+        const confirm = choices.value.confirmPassword || ''
+        const hasErr = confirm.length > 0 && pass !== confirm
+
+        return hasErr ? trans('passwords_not_match') : ''
+    })
+
+    const nameLength = computed<number>(() => {
+        choices.value.name ??= ''
+        return choices.value.name.length
+    })
+
+    const preventPasswordSubmit = computed<boolean>(() => {
+        if (!choices.value.isPrivate) {
+            return nameLength.value === 0
+        }
+
+        const pass = choices.value.password
+        const confirm = choices.value.confirmPassword
+
+        return (!!passwordErr.value || !pass || !confirm)
+    })
 
     function createGroupFromChoices(): Group {
         const isPrivate = choices.value.isPrivate || false
@@ -30,8 +53,18 @@ export const useNewGroupStore = defineStore('newGroup', () => {
             isEncrypted: false,
             updatedAt: Date.now(),
             createdAt: Date.now(),
-            links: choices.value.links || [],
+            links: choices.value.selectedLinks || [],
         }
+    }
+
+    function isNameTooLong(): boolean {
+        choices.value.name ??= ''
+        return choices.value.name.length > GROUP_NAME_MAX_LENTH
+    }
+
+    function isPasswordEmpty(): boolean {
+        choices.value.isPrivate ??= false
+        return choices.value.isPrivate && !choices.value.password
     }
 
     function resetChoices(): void {
@@ -41,47 +74,40 @@ export const useNewGroupStore = defineStore('newGroup', () => {
         }
     }
 
-    function selectAll(): void {
-        if (!choices.value.selectedTabsIds) {
-            choices.value.selectedTabsIds = []
-        }
-
-        if (!choices.value.links) {
-            choices.value.links = []
-        }
-
-        choices.value.selectedTabsIds = choices.value.links.map(l => l.id)
+    function selectAllLinks(allLinks: Link[]): void {
+        choices.value.selectedLinks ??= []
+        choices.value.selectedLinks = allLinks
     }
 
-    function deselectAll(): void {
-        if (!choices.value.selectedTabsIds) {
-            choices.value.selectedTabsIds = []
-        }
-
-        choices.value.selectedTabsIds = null
+    function deselectAllLinks(): void {
+        choices.value.selectedLinks = null
     }
 
-    function toggleSelect(tabId: number): void {
-        if (!choices.value.selectedTabsIds) {
-            choices.value.selectedTabsIds = []
-        }
+    function toggleSelect(link: Link): void {
+        choices.value.selectedLinks ??= []
 
-        const contains = choices.value.selectedTabsIds.includes(tabId)
+        const contains = choices.value.selectedLinks.some(l => l.id === link.id)
 
         if (contains) {
-            choices.value.selectedTabsIds.push(tabId)
+            choices.value.selectedLinks.push(link)
             return
         }
 
-        // Remove the tab ID from selected IDs
-        choices.value.selectedTabsIds = choices.value.selectedTabsIds.filter(id => id !== tabId)
+        // Remove the link ID from selected IDs
+        choices.value.selectedLinks = choices.value.selectedLinks.filter(l => l.id !== link.id)
     }
 
     return {
+        nameLength,
         choices,
-        targetGroupId,
+        preventPasswordSubmit,
+        passwordErr,
+        createGroupFromChoices,
+        isNameTooLong,
+        isPasswordEmpty,
         toggleSelect,
-        selectAll,
-        deselectAll,
+        resetChoices,
+        selectAllLinks,
+        deselectAllLinks,
     }
 })
