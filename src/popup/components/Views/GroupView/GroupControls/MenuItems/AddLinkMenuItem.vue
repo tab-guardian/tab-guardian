@@ -2,11 +2,11 @@
 import MenuItem from '@/components/MenuItem.vue'
 import PlusCircleIcon from '@common/components/Icons/PlusCircleIcon.vue'
 import { trans } from '@common/modules/trans'
-import { useSelectTabsStore } from '@/stores/selectTabs'
+import { useNewGroupStore } from '@/stores/newGroup'
 import { useGroupStore } from '@/stores/group'
 import { error } from '@common/modules/error'
 
-const store = useSelectTabsStore()
+const store = useNewGroupStore()
 const groupStore = useGroupStore()
 
 function addLink(): void {

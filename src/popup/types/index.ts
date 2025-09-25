@@ -34,15 +34,6 @@ export type Group = {
     algo?: EncryptionAlgo
 }
 
-export type NewGroup = {
-    name: string
-    isPrivate: boolean
-    password: string
-    confirmPassword: string
-    bindURL: string | null
-    createdAt?: number
-}
-
 export type Settings = {
     encryptAfterRestore: boolean
     showPrivateGroupsOnlyInIncognito: boolean
@@ -72,8 +63,6 @@ export type Modals = {
     group: boolean
     selectTabs: boolean
 }
-
-export type SelectTabsOperation = 'adding' | 'creating'
 
 export type Attempts = {
     amount: number

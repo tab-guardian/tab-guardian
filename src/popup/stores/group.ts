@@ -1,5 +1,5 @@
-import type { Group, Link, NewGroup } from '@/types'
-import { ref, computed } from 'vue'
+import type { Group, Link } from '@/types'
+import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import { trans } from '@common/modules/trans'
 import { useSettingsStore } from '@/stores/settings'
@@ -9,7 +9,6 @@ import { showToast } from '@common/modules/showToast'
 import { error } from '@common/modules/error'
 import { isDevelopment } from '@common/modules/isDevelopment'
 import { isIncognito } from '@common/modules/browser/windows'
-import { getDefaultGroupName } from '@/modules/getDefaultGroupName'
 import { closeTabsByIds } from '@/modules/tabs/closeTabsByIds'
 import { getCurrentURL } from '@/modules/getCurrentURL'
 import { generateGroupId } from '@common/modules/generateGroupId'
@@ -24,27 +23,13 @@ import {
 export const useGroupStore = defineStore('group', () => {
     const popupStore = usePopupStore()
     const cryptoStore = useCryptoStore()
-
-    const groupNameMaxLength = 45
-    const groupNameLength = computed<number>(() => {
-        return newGroup.value.name.length
-    })
+    const settingsStore = useSettingsStore()
 
     const groups = ref<Group[]>([])
     const isSaving = ref<boolean>(false)
     const selectedGroup = ref<Group | null>(null)
     const isTitleFieldActive = ref<boolean>(false)
     const closeSelectedTabs = ref<boolean>(false)
-
-    const settingsStore = useSettingsStore()
-
-    const newGroup = ref<NewGroup>({
-        name: '',
-        isPrivate: false,
-        password: '',
-        confirmPassword: '',
-        bindURL: null,
-    })
 
     function getGroupById(groupId: number | undefined): Group | null {
         if (!groupId) {
@@ -144,19 +129,7 @@ export const useGroupStore = defineStore('group', () => {
         return false
     }
 
-    // Doesn't save the group to storage
-    async function encryptGroupById(
-        groupId: number,
-        pass: string,
-        confirmPass?: string,
-    ): Promise<Group | null> {
-        const group = getGroupById(groupId)
-
-        if (!group) {
-            showToast(trans('group_not_found'), 'error')
-            return null
-        }
-
+    async function encrypt(group: Group, pass: string, confirm?: string): Promise<Group | null> {
         if (group.isEncrypted) {
             showToast(trans('group_already_locked'), 'error')
             return null
@@ -167,7 +140,7 @@ export const useGroupStore = defineStore('group', () => {
             return null
         }
 
-        if (confirmPass && pass !== confirmPass) {
+        if (confirm && pass !== confirm) {
             showToast(trans('passwords_not_match'), 'error')
             return null
         }
@@ -185,40 +158,6 @@ export const useGroupStore = defineStore('group', () => {
         }
 
         return null
-    }
-
-    async function createEmptyGroup(): Promise<Group> {
-        const group: Group = {
-            id: generateGroupId(),
-            name:
-                newGroup.value.name || getDefaultGroupName(newGroup.value.isPrivate),
-            isPrivate: newGroup.value.isPrivate,
-            isEncrypted: false,
-            updatedAt: Date.now(),
-            createdAt: Date.now(),
-            openedTimes: 0,
-            links: [],
-        }
-
-        if (newGroup.value.bindURL) {
-            group.bindURL = newGroup.value.bindURL
-        }
-
-        await prependGroup(group)
-
-        return group
-    }
-
-    async function prependGroup(group: Group): Promise<void> {
-        if (settingsStore.settings.overrideWithSameName) {
-            const sameNameGroup = groups.value.find(g => g.name === group.name)
-
-            if (sameNameGroup) {
-                await deleteGroup(sameNameGroup.id)
-            }
-        }
-
-        groups.value.unshift(group)
     }
 
     async function addGroups(groups: Group[], replace: boolean): Promise<void> {
@@ -260,7 +199,6 @@ export const useGroupStore = defineStore('group', () => {
 
         isTitleFieldActive.value = true
         selectedGroup.value = selectedGroup.value
-        newGroup.value.name = selectedGroup.value.name
 
         popupStore.closePopup('groupMenuView')
     }
@@ -369,16 +307,6 @@ export const useGroupStore = defineStore('group', () => {
         await saveGroup(unlockedGroup)
     }
 
-    function resetNewGroup(): void {
-        newGroup.value = {
-            name: '',
-            isPrivate: false,
-            password: '',
-            confirmPassword: '',
-            bindURL: '',
-        }
-    }
-
     async function saveGroup(group: Group): Promise<void> {
         group.updatedAt = Date.now()
 
@@ -397,24 +325,19 @@ export const useGroupStore = defineStore('group', () => {
         selectedGroup,
         isTitleFieldActive,
         closeSelectedTabs,
-        newGroup,
-        groupNameMaxLength,
-        groupNameLength,
         saveGroup,
         deleteGroup,
         deleteLink,
         prependLinksTo,
         decryptGroup,
         renameGroup,
-        createEmptyGroup,
-        encryptGroupById,
+        encrypt,
         getGroupById,
         deleteAllLinks,
         deleteAllGroups,
         startGroupRenaming,
         incrementOpenedTimes,
         loadGroupsFromStorage,
-        resetNewGroup,
         setIcon,
         updatePassword,
         addGroups,
