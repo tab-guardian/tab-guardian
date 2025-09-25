@@ -22,7 +22,7 @@ type Props = {
 
 const props = defineProps<Props>()
 
-const { params } = useRoute()
+const route = useRoute()
 const router = useRouter()
 const groupStore = useGroupStore()
 const tabsStore = useTabsStore()
@@ -57,7 +57,7 @@ async function submitPass(): Promise<void> {
         // group after just unlocking it
         await savePasswordToStorage(props.group.id, password.value)
 
-        params.openTabs === 'true'
+        route.params.openTabs === 'true'
             ? openTabsAndEncryptGroup()
             : showToast(trans('group_unlocked'))
     } catch (e: any) {
