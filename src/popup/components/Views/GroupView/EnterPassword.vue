@@ -55,7 +55,7 @@ async function submitPass(): Promise<void> {
 
         // With this, we don't need to type password to lock the
         // group after just unlocking it
-        savePasswordToStorage(props.group.id, password.value)
+        await savePasswordToStorage(props.group.id, password.value)
 
         params.openTabs === 'true'
             ? openTabsAndEncryptGroup()
