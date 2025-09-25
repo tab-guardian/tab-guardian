@@ -1,3 +1,12 @@
+export type UserChoices = {
+    isPrivate: boolean | null
+    name: string | null
+    links: Link[] | null
+    closeTabs: boolean | null
+    password: string | null
+    confirmPassword: string | null
+    selectedTabsIds: number[] | null
+}
 export type Link = {
     id: number
     title: string
