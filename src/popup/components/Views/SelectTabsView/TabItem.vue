@@ -1,21 +1,17 @@
 <script setup lang="ts">
 import type { Link } from '@/types'
-import { useSelectTabsStore } from '@/stores/selectTabs'
+import { useNewGroupStore } from '@/stores/newGroup'
 import LinkElement from '@/components/LinkElement.vue'
 
-type Props = {
-    link: Link
-}
-
-const { link } = defineProps<Props>()
-const store = useSelectTabsStore()
+const { link } = defineProps<{ link: Link }>()
+const newGroupStore = useNewGroupStore()
 </script>
 
 <template>
     <LinkElement
-        :isSelected="store.selectedIds.includes(link.id)"
+        :isSelected="newGroupStore.selectedIds.includes(link.id)"
         :link
-        @click="store.toggleSelect(link.id)"
+        @click="newGroupStore.toggleSelect(link.id)"
     >
         <label
             :class="[
@@ -24,13 +20,13 @@ const store = useSelectTabsStore()
             ]"
         >
             <input
-                @change="store.toggleSelect(link.id)"
+                @change="newGroupStore.toggleSelect(link.id)"
                 type="checkbox"
                 class="hidden"
             />
 
             <div
-                v-if="store.selectedIds.includes(link.id)"
+                v-if="newGroupStore.selectedIds.includes(link.id)"
                 class="w-3 h-3 bg-private rounded-full"
             ></div>
         </label>

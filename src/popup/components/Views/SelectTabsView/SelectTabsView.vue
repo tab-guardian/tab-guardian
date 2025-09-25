@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import type { SelectTabsOperation, Link } from '@/types'
-import { onMounted, onUnmounted } from 'vue'
-import { useRouter } from 'vue-router'
-import { useSelectTabsStore } from '@/stores/selectTabs'
+import type { Group, Link, SelectTabsOperation } from '@/types'
+import { ref, computed, onMounted } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { useNewGroupStore } from '@/stores/newGroup'
 import { trans } from '@common/modules/trans'
 import { useGroupStore } from '@/stores/group'
+import { getCurrentLinks } from '@/modules/tabs/getCurrentLinks'
 import { showToast } from '@common/modules/showToast'
 import { error } from '@common/modules/error'
 import View from '@/components/Views/View.vue'
@@ -13,60 +14,85 @@ import SaveButton from '@/components/Views/SelectTabsView/SaveButton.vue'
 import ControlButton from '@/components/Views/SelectTabsView/ControlButton.vue'
 import SlideSwitch from '@common/components/Form/SlideSwitch.vue'
 
-const store = useSelectTabsStore()
-const router = useRouter()
+const newGroupStore = useNewGroupStore()
 const groupStore = useGroupStore()
+const router = useRouter()
+const route = useRoute()
 
-onMounted(() => addEventListener('keydown', saveTabsAfterEnter))
-onUnmounted(() => removeEventListener('keydown', saveTabsAfterEnter))
+const loading = ref<boolean>(false)
+const links = ref<Link[]>([])
+const operation = computed<SelectTabsOperation>(() => {
+    return route.params.operation as SelectTabsOperation || 'adding'
+})
 
-async function saveTabsAfterEnter(e: Event): Promise<void> {
-    if (e instanceof KeyboardEvent && e.key === 'Enter') {
-        removeEventListener('keydown', saveTabsAfterEnter)
-        await saveTabs()
+onMounted(async () => await fetchLinks())
+
+async function fetchLinks(): Promise<void> {
+    loading.value = true
+
+    links.value = await getCurrentLinks()
+
+    if (newGroupStore.choices.wantsSelectAllLinks) {
+        newGroupStore.selectAllLinks(links.value)
     }
+
+    loading.value = false
 }
 
-async function saveTabs(): Promise<void> {
-    let groupId = store.targetGroupId
+async function handleCreateGroup(): Promise<void> {
+    const group = await createGroup()
 
-    if (!groupId) {
-        const newGroup = await groupStore.createEmptyGroup()
-        groupId = newGroup.id
-        store.targetGroupId = newGroup.id
+    if (!group) {
+        error.warn(`Can't save group because it wasn't created`)
+        return
     }
 
-    const selectedLinks = store.getSelectedLinks()
+    await groupStore.saveGroup(group)
 
-    if (groupStore.newGroup.isPrivate) {
-        const encrypted = await groupStore.encryptGroupById(
-            groupId,
-            groupStore.newGroup.password,
-            groupStore.newGroup.confirmPassword,
-        )
+    await router.push({ name: 'group', params: { id: group.id } })
 
-        if (!encrypted) {
-            error.info(`Group ${groupId} wasn't encrypted`)
-            return
-        }
+    newGroupStore.resetChoices()
 
-        await groupStore.prependLinksTo(encrypted, selectedLinks)
-    } else {
-        await groupStore.prependLinksTo(groupId, selectedLinks)
-    }
-
-    groupStore.resetNewGroup()
-    store.closeTabsModal()
-
-    showToastMessage(store.operation, selectedLinks)
+    showToastMessage(group.links.length)
 }
 
-function showToastMessage(operation: SelectTabsOperation, links: Link[]): void {
-    if (operation === 'adding' && links.length === 0) {
+async function createGroup(): Promise<Group | null> {
+    const group = newGroupStore.createGroupFromChoices()
+
+    if (!newGroupStore.choices.isPrivate) {
+        return group
+    }
+
+    const privateGroup = await createPrivateGroup(group)
+
+    if (!privateGroup) {
+        return null
+    }
+
+    return privateGroup
+}
+
+async function createPrivateGroup(group: Group): Promise<Group | null> {
+    const encryptedGroup = await groupStore.encrypt(
+        group,
+        newGroupStore.choices.password || '',
+        newGroupStore.choices.confirmPassword || '',
+    )
+
+    if (!encryptedGroup) {
+        error.info(`Group ${group.id} wasn't encrypted`)
+        return null
+    }
+
+    return group
+}
+
+function showToastMessage(linksLength: number): void {
+    if (operation.value === 'adding' && linksLength === 0) {
         showToast(trans('you_not_selected_tabs'))
-    } else if (operation === 'adding') {
+    } else if (operation.value === 'adding') {
         showToast(trans('tabs_added_to_group'))
-    } else if (operation === 'creating' && links.length === 0) {
+    } else if (operation.value === 'creating' && linksLength === 0) {
         showToast(trans('group_created_without_tabs'))
     } else {
         showToast(trans('group_created_with_tabs'))
@@ -75,16 +101,12 @@ function showToastMessage(operation: SelectTabsOperation, links: Link[]): void {
 </script>
 
 <template>
-    <View
-        class="select-tabs"
-        :title="trans('select')"
-        :subtitle="trans('click_on_each_tab')"
-    >
+    <View class="select-tabs" :title="trans('select')" :subtitle="trans('click_on_each_tab')">
         <div class="flex gap-1 my-2">
-            <ControlButton @click="store.selectAll">
+            <ControlButton @click="newGroupStore.selectAllLinks(links)">
                 {{ trans('select_all') }}
             </ControlButton>
-            <ControlButton @click="store.deselectAll">
+            <ControlButton @click="newGroupStore.deselectAllLinks">
                 {{ trans('deselect_all') }}
             </ControlButton>
             <ControlButton @click="router.go(-1)">
@@ -101,8 +123,8 @@ function showToastMessage(operation: SelectTabsOperation, links: Link[]): void {
                 </SlideSwitch>
             </div>
 
-            <SaveButton @clicked="saveTabs">
-                <span v-if="store.operation === 'adding'">
+            <SaveButton @clicked="handleCreateGroup">
+                <span v-if="operation === 'adding'">
                     {{ trans('add_tabs') }}
                 </span>
                 <span v-else>{{ trans('create_group') }}</span>
