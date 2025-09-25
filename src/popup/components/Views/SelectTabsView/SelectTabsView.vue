@@ -47,7 +47,7 @@ async function handleCreateGroup(): Promise<void> {
         return
     }
 
-    await groupStore.saveGroup(group)
+    await groupStore.save(group)
 
     await router.push({ name: 'group', params: { id: group.id } })
 

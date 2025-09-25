@@ -52,14 +52,14 @@ async function promptEnterPassword(): Promise<void> {
 async function lockGroup(pass: string): Promise<void> {
     encrypting.value = true
 
-    const encrypted = await groupStore.encryptGroupById(group.id, pass)
+    const encrypted = await groupStore.encrypt(group, pass)
 
     if (!encrypted) {
         error.info(`Group ${group.id} wasn't encrypted`)
         return
     }
 
-    await groupStore.saveGroup(encrypted)
+    await groupStore.save(encrypted)
     await deletePasswordFromStorage(group.id)
 
     encrypting.value = false

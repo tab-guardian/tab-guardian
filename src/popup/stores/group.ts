@@ -172,7 +172,7 @@ export const useGroupStore = defineStore('group', () => {
                 }
             }
 
-            await saveGroup(group)
+            await save(group)
         }
 
         await loadGroupsFromStorage()
@@ -187,7 +187,7 @@ export const useGroupStore = defineStore('group', () => {
 
         group.icon = icon
 
-        await saveGroup(group)
+        await save(group)
     }
 
     function startGroupRenaming(): void {
@@ -230,7 +230,7 @@ export const useGroupStore = defineStore('group', () => {
 
         isTitleFieldActive.value = false
 
-        await saveGroup(group)
+        await save(group)
         showToast(trans('new_name_saved'))
     }
 
@@ -253,7 +253,7 @@ export const useGroupStore = defineStore('group', () => {
 
         group.links = []
 
-        await saveGroup(group)
+        await save(group)
     }
 
     async function incrementOpenedTimes(group: Group): Promise<void> {
@@ -271,7 +271,7 @@ export const useGroupStore = defineStore('group', () => {
             return g
         })
 
-        await saveGroup(group)
+        await save(group)
     }
 
     async function deleteLink(groupId: number, linkId: number): Promise<void> {
@@ -283,31 +283,31 @@ export const useGroupStore = defineStore('group', () => {
 
         group.links = group.links.filter(link => link.id !== linkId)
 
-        await saveGroup(group)
+        await save(group)
     }
 
-    async function prependLinksTo(groupId: number | Group, links: Link[]): Promise<void> {
+    async function prependLinksTo(groupId: number | Group, links: Link[]): Promise<Group | null> {
         const group = groupId instanceof Object ? groupId : getGroupById(groupId)
 
         if (!group) {
-            return
+            return null
         }
 
         group.links.unshift(...links)
 
-        await saveGroup(group)
-
         if (closeSelectedTabs.value) {
             await closeTabsByIds(links.map(link => link.id))
         }
+
+        return group
     }
 
     async function decryptGroup(group: Group, pass: string): Promise<void> {
         const unlockedGroup = await cryptoStore.decryptGroup(group, pass)
-        await saveGroup(unlockedGroup)
+        await save(unlockedGroup)
     }
 
-    async function saveGroup(group: Group): Promise<void> {
+    async function save(group: Group): Promise<void> {
         group.updatedAt = Date.now()
 
         await saveGroupToStorage(group)
@@ -325,7 +325,7 @@ export const useGroupStore = defineStore('group', () => {
         selectedGroup,
         isTitleFieldActive,
         closeSelectedTabs,
-        saveGroup,
+        save,
         deleteGroup,
         deleteLink,
         prependLinksTo,

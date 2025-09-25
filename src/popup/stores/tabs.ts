@@ -31,14 +31,14 @@ export const useTabsStore = defineStore('tabs', () => {
         }
 
         await restore(group)
-        const encrypted = await groupStore.encryptGroupById(group.id, userPass || pass)
+        const encrypted = await groupStore.encrypt(group, userPass || pass)
 
         if (!encrypted) {
             error.info(`Group ${group.id} wasn't encrypted`)
             return false
         }
 
-        await groupStore.saveGroup(encrypted)
+        await groupStore.save(encrypted)
 
         return true
     }
