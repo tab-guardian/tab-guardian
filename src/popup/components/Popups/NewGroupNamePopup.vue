@@ -17,7 +17,7 @@ const { closePopup, closeAllPopups } = usePopupStore()
 const newGroupStore = useNewGroupStore()
 const router = useRouter()
 
-function selectLinks(): void {
+function submitName(): void {
     if (newGroupStore.preventPasswordSubmit) {
         console.info('Preventing password submit. Validation failed')
         return
@@ -44,8 +44,11 @@ function selectLinks(): void {
 </script>
 
 <template>
-    <Popup @cancel="closePopup('newGroupName')" :content="trans('enter_group_name')">
-        <form @submit.prevent="selectLinks" class="flex flex-col gap-3">
+    <Popup
+        @cancel="closePopup('newGroupName')"
+        :content="trans('enter_group_name')"
+    >
+        <form @submit.prevent="submitName" class="flex flex-col gap-3">
             <NameInput v-model:name="newGroupStore.choices.name" />
 
             <Input
@@ -69,7 +72,10 @@ function selectLinks(): void {
                 <BindToUrlSlider v-if="newGroupStore.choices.isPrivate" />
                 <div v-else></div> <!-- keep this for flex justify between -->
 
-                <Button type="submit" :disabled="newGroupStore.preventPasswordSubmit">
+                <Button
+                    type="submit"
+                    :disabled="newGroupStore.preventPasswordSubmit"
+                >
                     {{ trans('select') }}
                     <ChevronRightIcon width="20" height="20" />
                 </Button>
