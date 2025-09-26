@@ -159,7 +159,8 @@ export const useGroupStore = defineStore('group', () => {
         return null
     }
 
-    async function addGroups(groups: Group[], replace: boolean): Promise<void> {
+    // Add groups to memory and save them to storage
+    async function addAndSaveGroups(groups: Group[], replace: boolean): Promise<void> {
         for (const group of groups) {
             group.id = generateGroupId()
 
@@ -338,6 +339,6 @@ export const useGroupStore = defineStore('group', () => {
         loadGroupsFromStorage,
         setIcon,
         updatePassword,
-        addGroups,
+        addAndSaveGroups,
     }
 })

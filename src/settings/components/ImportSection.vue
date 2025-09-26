@@ -55,7 +55,7 @@ async function prependGroups(groups: Group[]): Promise<void> {
     }, 0)
 
     if (groupsWithSameName === 0) {
-        groupStore.addGroups(groups, false)
+        groupStore.addAndSaveGroups(groups, false)
         showSuccessMessage(groups)
         return
     }
@@ -69,7 +69,7 @@ async function prependGroups(groups: Group[]): Promise<void> {
     })
 
     if (answer.isConfirmed) {
-        await groupStore.addGroups(groups, true)
+        await groupStore.addAndSaveGroups(groups, true)
         showSuccessMessage(groups)
     }
 }
