@@ -10,7 +10,6 @@ export const useNewGroupStore = defineStore('newGroup', () => {
     const choices = ref<UserChoices>({
         isPrivate: null,
         name: null,
-        selectedLinks: null,
         closeTabs: null,
         password: null,
         confirmPassword: null,
@@ -40,17 +39,15 @@ export const useNewGroupStore = defineStore('newGroup', () => {
         return (!!passwordErr.value || !pass || !confirm)
     })
 
-    function createGroupFromChoices(): Group {
-        const isPrivate = choices.value.isPrivate || false
-
+    function createGroupFromChoices(links: Link[]): Group {
         return {
             id: generateGroupId(),
-            name: choices.value.name || getDefaultGroupName(isPrivate),
-            isPrivate,
+            name: choices.value.name || getDefaultGroupName(),
+            isPrivate: choices.value.isPrivate || false,
             isEncrypted: false,
             updatedAt: Date.now(),
             createdAt: Date.now(),
-            links: choices.value.selectedLinks || [],
+            links,
         }
     }
 
@@ -66,29 +63,6 @@ export const useNewGroupStore = defineStore('newGroup', () => {
         }
     }
 
-    function selectAllLinks(allLinks: Link[]): void {
-        choices.value.selectedLinks ??= []
-        choices.value.selectedLinks = allLinks
-    }
-
-    function deselectAllLinks(): void {
-        choices.value.selectedLinks = null
-    }
-
-    function toggleSelect(link: Link): void {
-        choices.value.selectedLinks ??= []
-
-        const contains = choices.value.selectedLinks.some(l => l.id === link.id)
-
-        // Remove the link ID from selected IDs if contains
-        if (contains) {
-            choices.value.selectedLinks = choices.value.selectedLinks.filter(l => l.id !== link.id)
-            return
-        }
-
-        choices.value.selectedLinks.push(link)
-    }
-
     return {
         nameLength,
         choices,
@@ -96,9 +70,6 @@ export const useNewGroupStore = defineStore('newGroup', () => {
         passwordErr,
         createGroupFromChoices,
         isPasswordEmpty,
-        toggleSelect,
         resetChoices,
-        selectAllLinks,
-        deselectAllLinks,
     }
 })

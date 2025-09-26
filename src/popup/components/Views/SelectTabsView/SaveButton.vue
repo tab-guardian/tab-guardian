@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { trans } from '@common/modules/trans'
-
 type Emits = {
     (e: 'clicked'): void
 }
@@ -19,7 +17,6 @@ const emit = defineEmits<Emits>()
                 'hover:bg-primary-hover',
             ]"
         >
-            <span aria-hidden="true" aria-describedby="Enter">⏎</span>
             <slot />
         </button>
     </div>

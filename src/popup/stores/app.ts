@@ -18,7 +18,7 @@ export const useAppStore = defineStore('app', () => {
     const linkBuffer = ref<LinkBuffer | null>(null)
     const bufferIsEmpty = computed<boolean>(() => linkBuffer.value === null)
 
-    const { prependLinksTo, deleteLink } = useGroupStore()
+    const { saveLinksTo, deleteLink } = useGroupStore()
     const { closeAllPopups } = usePopupStore()
 
     function linkIsCut(linkId: number): boolean {
@@ -38,7 +38,7 @@ export const useAppStore = defineStore('app', () => {
         const link = cloneDeep(linkBuffer.value.link)
         link.id = Date.now()
 
-        await prependLinksTo(groupId, [link])
+        await saveLinksTo(groupId, [link])
 
         if (linkBuffer.value.action === 'cut') {
             await deleteLink(

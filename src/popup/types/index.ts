@@ -1,7 +1,6 @@
 export type UserChoices = {
     isPrivate: boolean | null
     name: string | null
-    selectedLinks: Link[] | null
     closeTabs: boolean | null
     password: string | null
     confirmPassword: string | null

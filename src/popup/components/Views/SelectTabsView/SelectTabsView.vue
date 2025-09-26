@@ -24,6 +24,8 @@ const route = useRoute()
 
 const loading = ref<boolean>(false)
 const links = ref<Link[]>([])
+const selectedLinks = ref<Link[]>([])
+
 const operation = computed<SelectTabsOperation>(() => {
     return route.params.operation as SelectTabsOperation || 'creating'
 })
@@ -36,7 +38,7 @@ async function fetchLinks(): Promise<void> {
     links.value = await getCurrentLinks()
 
     if (newGroupStore.choices.wantsSelectAllLinks) {
-        newGroupStore.selectAllLinks(links.value)
+        selectAllLinks()
     }
 
     loading.value = false
@@ -57,11 +59,25 @@ async function handleCreateGroup(): Promise<void> {
 
     newGroupStore.resetChoices()
 
-    showToastMessage(group.links.length)
+    showToastMessage()
+}
+
+async function handleSaveGroup(): Promise<void> {
+    const group = groupStore.selectedGroup
+
+    if (!group) {
+        showToast(trans('error_no_group_selected'), 'error')
+        return
+    }
+
+    await groupStore.saveLinksTo(group.id, selectedLinks.value)
+    await router.push({ name: 'group', params: { id: group.id } })
+
+    showToastMessage()
 }
 
 async function createGroup(): Promise<Group | null> {
-    const group = newGroupStore.createGroupFromChoices()
+    const group = newGroupStore.createGroupFromChoices(selectedLinks.value)
 
     if (!newGroupStore.choices.isPrivate) {
         return group
@@ -95,26 +111,48 @@ async function createPrivateGroup(group: Group): Promise<Group | null> {
     return group
 }
 
-function showToastMessage(linksLength: number): void {
-    if (operation.value === 'adding' && linksLength === 0) {
+function showToastMessage(): void {
+    const length = selectedLinks.value.length
+
+    if (operation.value === 'adding' && length === 0) {
         showToast(trans('you_not_selected_tabs'))
     } else if (operation.value === 'adding') {
         showToast(trans('tabs_added_to_group'))
-    } else if (operation.value === 'creating' && linksLength === 0) {
+    } else if (operation.value === 'creating' && length === 0) {
         showToast(trans('group_created_without_tabs'))
     } else {
         showToast(trans('group_created_with_tabs'))
     }
+}
+
+function selectAllLinks(): void {
+    selectedLinks.value = links.value
+}
+
+function deselectAllLinks(): void {
+    selectedLinks.value = []
+}
+
+function toggleSelect(link: Link): void {
+    const contains = selectedLinks.value.some(l => l.id === link.id)
+
+    // Remove the link ID from selected if contains
+    if (contains) {
+        selectedLinks.value = selectedLinks.value.filter(l => l.id !== link.id)
+        return
+    }
+
+    selectedLinks.value.push(link)
 }
 </script>
 
 <template>
     <View :title="trans('select')" :subtitle="trans('click_on_each_tab')">
         <div class="flex gap-1 my-2">
-            <ControlButton @click="newGroupStore.selectAllLinks(links)">
+            <ControlButton @click="selectAllLinks">
                 {{ trans('select_all') }}
             </ControlButton>
-            <ControlButton @click="newGroupStore.deselectAllLinks">
+            <ControlButton @click="deselectAllLinks">
                 {{ trans('deselect_all') }}
             </ControlButton>
             <ControlButton @click="router.go(-1)">
@@ -130,7 +168,13 @@ function showToastMessage(linksLength: number): void {
 
         <div v-else>
             <VueDraggableNext v-model="links" class="space-y-2">
-                <TabItem v-for="link in links" :key="link.id" :link />
+                <TabItem
+                    v-for="link in links"
+                    :key="link.id"
+                    :link
+                    :isSelected="selectedLinks.some(l => l.id === link.id)"
+                    @toggle="toggleSelect(link)"
+                />
             </VueDraggableNext>
         </div>
 
@@ -141,12 +185,13 @@ function showToastMessage(linksLength: number): void {
                 </SlideSwitch>
             </div>
 
-            <SaveButton @clicked="handleCreateGroup">
-                <span v-if="operation === 'adding'">
-                    {{ trans('add_tabs') }}
-                </span>
-                <span v-else>{{ trans('create_group') }}</span>
+            <SaveButton v-if="operation === 'creating'" @clicked="handleCreateGroup">
+                {{ trans('create_group') }}
             </SaveButton>
+            <SaveButton v-else-if="operation === 'adding'" @clicked="handleSaveGroup">
+                {{ trans('add_tabs') }}
+            </SaveButton>
+            <span v-else>{{ trans('error_occurred') }}</span>
         </div>
     </View>
 </template>

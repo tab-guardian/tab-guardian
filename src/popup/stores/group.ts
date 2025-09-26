@@ -226,7 +226,7 @@ export const useGroupStore = defineStore('group', () => {
         await save(group)
     }
 
-    async function deleteLink(groupId: number, linkId: number): Promise<void> {
+    async function deleteLinkFrom(groupId: number, linkId: number): Promise<void> {
         const group = getGroupById(groupId)
 
         if (!group) {
@@ -238,20 +238,20 @@ export const useGroupStore = defineStore('group', () => {
         await save(group)
     }
 
-    async function prependLinksTo(groupId: number | Group, links: Link[]): Promise<Group | null> {
-        const group = groupId instanceof Object ? groupId : getGroupById(groupId)
+    async function saveLinksTo(groupId: number, links: Link[]): Promise<void> {
+        const group = getGroupById(groupId)
 
         if (!group) {
-            return null
+            return
         }
 
-        group.links.unshift(...links)
+        group.links.push(...links)
 
         if (closeSelectedTabs.value) {
             await closeTabsByIds(links.map(link => link.id))
         }
 
-        return group
+        await save(group)
     }
 
     async function save(group: Group): Promise<void> {
@@ -274,8 +274,8 @@ export const useGroupStore = defineStore('group', () => {
         closeSelectedTabs,
         save,
         deleteGroup,
-        deleteLink,
-        prependLinksTo,
+        deleteLinkFrom,
+        saveLinksTo,
         encrypt,
         getGroupById,
         deleteAllLinks,

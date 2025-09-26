@@ -14,7 +14,7 @@ const groupStore = useGroupStore()
 
 <template>
     <div
-        @click.prevent="groupStore.deleteLink(groupId, linkId)"
+        @click.prevent="groupStore.deleteLinkFrom(groupId, linkId)"
         :class="[
             'flex items-center py-1 rounded-sm transition-all',
             'border border-transparent hover:border-border',

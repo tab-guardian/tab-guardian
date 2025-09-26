@@ -1,30 +1,24 @@
 <script setup lang="ts">
+import type { SelectTabsOperation } from '@/types'
+import { trans } from '@common/modules/trans'
+import { useRouter } from 'vue-router'
+import { usePopupStore } from '@/stores/popup'
 import MenuItem from '@/components/MenuItem.vue'
 import PlusCircleIcon from '@common/components/Icons/PlusCircleIcon.vue'
-import { trans } from '@common/modules/trans'
-import { useNewGroupStore } from '@/stores/newGroup'
-import { useGroupStore } from '@/stores/group'
-import { error } from '@common/modules/error'
 
-const store = useNewGroupStore()
-const groupStore = useGroupStore()
+const { closePopup } = usePopupStore()
+const router = useRouter()
 
-function addLink(): void {
-    if (!groupStore.selectedGroup) {
-        error.warn('No group selected to add links to')
-        return
-    }
-
-    store.showView({
-        groupId: groupStore.selectedGroup.id,
-        operation: 'adding',
-    })
+function switchToSelectTabsView(): void {
+    const operation: SelectTabsOperation = 'adding'
+    router.push({ name: 'select-tabs', params: { operation } })
+    closePopup('groupMenuView')
 }
 </script>
 
 <template>
     <MenuItem
-        @click="addLink"
+        @click="switchToSelectTabsView"
         :label="trans('add_more_tabs')"
         :icon="PlusCircleIcon"
     />
