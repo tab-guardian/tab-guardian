@@ -25,7 +25,7 @@ const route = useRoute()
 const loading = ref<boolean>(false)
 const links = ref<Link[]>([])
 const operation = computed<SelectTabsOperation>(() => {
-    return route.params.operation as SelectTabsOperation || 'adding'
+    return route.params.operation as SelectTabsOperation || 'creating'
 })
 
 onMounted(async () => await fetchLinks())
@@ -53,7 +53,7 @@ async function handleCreateGroup(): Promise<void> {
     groupStore.groups.push(group)
 
     await groupStore.save(group)
-    await router.push({ name: 'main' })
+    await router.push({ name: 'group', params: { id: group.id } })
 
     newGroupStore.resetChoices()
 
@@ -109,7 +109,7 @@ function showToastMessage(linksLength: number): void {
 </script>
 
 <template>
-    <View class="select-tabs" :title="trans('select')" :subtitle="trans('click_on_each_tab')">
+    <View :title="trans('select')" :subtitle="trans('click_on_each_tab')">
         <div class="flex gap-1 my-2">
             <ControlButton @click="newGroupStore.selectAllLinks(links)">
                 {{ trans('select_all') }}

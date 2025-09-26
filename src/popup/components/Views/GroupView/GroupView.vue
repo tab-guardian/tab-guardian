@@ -36,7 +36,7 @@ watchEffect(() => {
 </script>
 
 <template>
-    <View>
+    <View :routeLocation="{ name: 'main' }">
         <template #controls>
             <Actions v-if="group && showButtons" :group />
             <MenuButton />
