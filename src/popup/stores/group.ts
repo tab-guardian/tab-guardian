@@ -26,7 +26,6 @@ export const useGroupStore = defineStore('group', () => {
     const settingsStore = useSettingsStore()
 
     const groups = ref<Group[]>([])
-    const isSaving = ref<boolean>(false)
     const selectedGroup = ref<Group | null>(null)
     const isTitleFieldActive = ref<boolean>(false)
     const closeSelectedTabs = ref<boolean>(false)
@@ -321,7 +320,6 @@ export const useGroupStore = defineStore('group', () => {
 
     return {
         groups,
-        isSaving,
         selectedGroup,
         isTitleFieldActive,
         closeSelectedTabs,
