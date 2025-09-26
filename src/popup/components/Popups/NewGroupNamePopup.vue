@@ -2,9 +2,10 @@
 import type { SelectTabsOperation } from '@/types'
 import { trans } from '@common/modules/trans'
 import { usePopupStore } from '@/stores/popup'
-import { useNewGroupStore, GROUP_NAME_MAX_LENTH } from '@/stores/newGroup'
+import { useNewGroupStore } from '@/stores/newGroup'
 import { showToast } from '@common/modules/showToast'
 import { useRouter } from 'vue-router'
+import { isNameTooLong } from '@/modules/groupValidation'
 import Popup from '@/components/Popups/Popup.vue'
 import Input from '@common/components/Form/Input.vue'
 import Button from '@common/components/Form/Button.vue'
@@ -27,7 +28,7 @@ function selectLinks(): void {
         return
     }
 
-    if (newGroupStore.isNameTooLong()) {
+    if (isNameTooLong(newGroupStore.choices.name)) {
         showToast(trans('group_name_long'), 'error')
         return
     }

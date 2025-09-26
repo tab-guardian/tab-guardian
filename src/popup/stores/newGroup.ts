@@ -3,10 +3,7 @@ import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import { getDefaultGroupName } from '@/modules/getDefaultGroupName'
 import { generateGroupId } from '@common/modules/generateGroupId'
-import { trans } from '@common/modules/trans'
 import { passwordError } from '@/modules/groupValidation'
-
-export const GROUP_NAME_MAX_LENTH = 45
 
 export const useNewGroupStore = defineStore('newGroup', () => {
     // null suggest that there was no choice yet
@@ -57,11 +54,6 @@ export const useNewGroupStore = defineStore('newGroup', () => {
         }
     }
 
-    function isNameTooLong(): boolean {
-        choices.value.name ??= ''
-        return choices.value.name.length > GROUP_NAME_MAX_LENTH
-    }
-
     function isPasswordEmpty(): boolean {
         choices.value.isPrivate ??= false
         return choices.value.isPrivate && !choices.value.password
@@ -103,7 +95,6 @@ export const useNewGroupStore = defineStore('newGroup', () => {
         preventPasswordSubmit,
         passwordErr,
         createGroupFromChoices,
-        isNameTooLong,
         isPasswordEmpty,
         toggleSelect,
         resetChoices,
