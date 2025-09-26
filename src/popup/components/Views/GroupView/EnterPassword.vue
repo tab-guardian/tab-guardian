@@ -50,7 +50,9 @@ async function submitPass(): Promise<void> {
     try {
         decrypting.value = true
 
-        await groupStore.decryptGroup(props.group, password.value)
+        const decryptedGroup = await cryptoStore.decryptGroup(props.group, password.value)
+        await groupStore.save(decryptedGroup)
+
         resetAttempts()
 
         // With this, we don't need to type password to lock the

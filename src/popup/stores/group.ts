@@ -301,11 +301,6 @@ export const useGroupStore = defineStore('group', () => {
         return group
     }
 
-    async function decryptGroup(group: Group, pass: string): Promise<void> {
-        const unlockedGroup = await cryptoStore.decryptGroup(group, pass)
-        await save(unlockedGroup)
-    }
-
     async function save(group: Group): Promise<void> {
         group.updatedAt = Date.now()
 
@@ -329,7 +324,6 @@ export const useGroupStore = defineStore('group', () => {
         deleteGroup,
         deleteLink,
         prependLinksTo,
-        decryptGroup,
         renameGroup,
         encrypt,
         getGroupById,
