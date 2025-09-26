@@ -3,7 +3,6 @@ import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import { trans } from '@common/modules/trans'
 import { useSettingsStore } from '@/stores/settings'
-import { usePopupStore } from '@/stores/popup'
 import { useCryptoStore } from '@/stores/crypto'
 import { showToast } from '@common/modules/showToast'
 import { error } from '@common/modules/error'
@@ -21,13 +20,11 @@ import {
 } from '@common/modules/storage/group'
 
 export const useGroupStore = defineStore('group', () => {
-    const popupStore = usePopupStore()
     const cryptoStore = useCryptoStore()
     const settingsStore = useSettingsStore()
 
     const groups = ref<Group[]>([])
     const selectedGroup = ref<Group | null>(null)
-    const isTitleFieldActive = ref<boolean>(false)
     const closeSelectedTabs = ref<boolean>(false)
 
     function getGroupById(groupId: number | undefined): Group | null {
@@ -189,19 +186,6 @@ export const useGroupStore = defineStore('group', () => {
         await save(group)
     }
 
-    function startGroupRenaming(): void {
-        if (!selectedGroup.value) {
-            error.err('No group selected to rename')
-            showToast(trans('error_occurred'), 'error')
-            return
-        }
-
-        isTitleFieldActive.value = true
-        selectedGroup.value = selectedGroup.value
-
-        popupStore.closePopup('groupMenuView')
-    }
-
     async function renameGroup(): Promise<void> {
         if (!selectedGroup.value) {
             error.err('No group selected for renaming')
@@ -318,7 +302,6 @@ export const useGroupStore = defineStore('group', () => {
     return {
         groups,
         selectedGroup,
-        isTitleFieldActive,
         closeSelectedTabs,
         save,
         deleteGroup,
@@ -329,7 +312,6 @@ export const useGroupStore = defineStore('group', () => {
         getGroupById,
         deleteAllLinks,
         deleteAllGroups,
-        startGroupRenaming,
         incrementOpenedTimes,
         loadGroupsFromStorage,
         setIcon,
