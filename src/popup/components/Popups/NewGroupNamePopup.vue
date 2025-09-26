@@ -10,6 +10,7 @@ import Input from '@common/components/Form/Input.vue'
 import Button from '@common/components/Form/Button.vue'
 import ChevronRightIcon from '@common/components/Icons/ChevronRightIcon.vue'
 import BindToUrlSlider from '@/components/Popups/BindToUrlSlider.vue'
+import NameInput from '@common/components/Form/NameInput.vue'
 
 const { closePopup, closeAllPopups } = usePopupStore()
 const newGroupStore = useNewGroupStore()
@@ -44,15 +45,7 @@ function selectLinks(): void {
 <template>
     <Popup @cancel="closePopup('newGroupName')" :content="trans('enter_group_name')">
         <form @submit.prevent="selectLinks" class="flex flex-col gap-3">
-            <Input
-                v-model="newGroupStore.choices.name"
-                :label="trans('group_name')"
-                @loaded="inp => inp.focus()"
-                :meta="`${newGroupStore.nameLength} / ${GROUP_NAME_MAX_LENTH}`"
-                :maxlength="GROUP_NAME_MAX_LENTH"
-                type="text"
-                id="new-group-name"
-            />
+            <NameInput v-model:name="newGroupStore.choices.name" />
 
             <Input
                 v-if="newGroupStore.choices.isPrivate"
