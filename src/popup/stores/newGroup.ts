@@ -4,6 +4,7 @@ import { defineStore } from 'pinia'
 import { getDefaultGroupName } from '@/modules/getDefaultGroupName'
 import { generateGroupId } from '@common/modules/generateGroupId'
 import { trans } from '@common/modules/trans'
+import { passwordError } from '@/modules/groupValidation'
 
 export const GROUP_NAME_MAX_LENTH = 45
 
@@ -19,12 +20,11 @@ export const useNewGroupStore = defineStore('newGroup', () => {
         wantsSelectAllLinks: null,
     })
 
-    const passwordErr = computed<string>(() => {
-        const pass = choices.value.password || ''
-        const confirm = choices.value.confirmPassword || ''
-        const hasErr = confirm.length > 0 && pass !== confirm
-
-        return hasErr ? trans('passwords_not_match') : ''
+    const passwordErr = computed<string | null>(() => {
+        return passwordError(
+            choices.value.password,
+            choices.value.confirmPassword,
+        )
     })
 
     const nameLength = computed<number>(() => {
