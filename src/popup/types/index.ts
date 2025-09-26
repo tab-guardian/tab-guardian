@@ -59,6 +59,7 @@ export type Popups = {
     newPassword: PopupItem
     linkMenuView: PopupItem
     newGroupName: PopupItem
+    editGroupName: PopupItem
 }
 
 export type Modals = {

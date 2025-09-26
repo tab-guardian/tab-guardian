@@ -11,6 +11,7 @@ import ChooseEmojiPopup from '@/components/Popups/ChooseEmojiPopup.vue'
 import ChooseImageIconPopup from '@/components/Popups/ChooseImageIconPopup.vue'
 import LinkMenuPopup from '@/components/Popups/LinkMenuPopup.vue'
 import GroupMenuPopup from '@/components/Popups/GroupMenuPopup.vue'
+import EditGroupNamePopup from '@/components/Popups/EditGroupNamePopup.vue'
 
 const { isOpenPopup } = usePopupStore()
 
@@ -23,6 +24,7 @@ const popups: Array<{ name: keyof Popups, comp: Component }> = [
     {comp: ChooseImageIconPopup, name: 'chooseImageIcon'},
     {comp: LinkMenuPopup, name: 'linkMenuView'},
     {comp: GroupMenuPopup, name: 'groupMenuView'},
+    {comp: EditGroupNamePopup, name: 'editGroupName'},
 ]
 </script>
 

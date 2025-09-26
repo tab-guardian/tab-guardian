@@ -18,6 +18,7 @@ function startGroupRenaming(): void {
     }
 
     popupStore.closePopup('groupMenuView')
+    popupStore.openPopup('editGroupName')
 }
 
 </script>

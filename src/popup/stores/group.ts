@@ -186,37 +186,6 @@ export const useGroupStore = defineStore('group', () => {
         await save(group)
     }
 
-    async function renameGroup(): Promise<void> {
-        if (!selectedGroup.value) {
-            error.err('No group selected for renaming')
-            showToast(trans('error_occurred'), 'error')
-            return
-        }
-
-        if (groupNameLength.value > groupNameMaxLength) {
-            showToast(trans('Group name is too long'), 'error')
-            return
-        }
-
-        const group = getGroupById(selectedGroup.value.id)
-
-        if (!group) {
-            showToast(trans('error_occurred'), 'error')
-            return
-        }
-
-        if (newGroup.value.name === '') {
-            group.name = getDefaultGroupName(newGroup.value.isPrivate)
-        } else {
-            group.name = newGroup.value.name
-        }
-
-        isTitleFieldActive.value = false
-
-        await save(group)
-        showToast(trans('new_name_saved'))
-    }
-
     async function deleteGroup(groupId: number): Promise<void> {
         groups.value = groups.value.filter(g => g.id !== groupId)
         await deleteGroupFromStorage(groupId)
@@ -307,7 +276,6 @@ export const useGroupStore = defineStore('group', () => {
         deleteGroup,
         deleteLink,
         prependLinksTo,
-        renameGroup,
         encrypt,
         getGroupById,
         deleteAllLinks,

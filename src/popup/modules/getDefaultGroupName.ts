@@ -1,8 +1,4 @@
-export function getDefaultGroupName(isPrivate: boolean): string {
-    if (isPrivate) {
-        return 'Private Group'
-    }
-
+export function getDefaultGroupName(): string {
     const date = new Date()
     const year = date.getFullYear()
     const month = addZeroWhenNeeded(date.getMonth() + 1)

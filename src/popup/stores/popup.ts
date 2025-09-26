@@ -12,6 +12,7 @@ const defaultPopups: Popups = {
     newPassword: { open: false, data: null },
     linkMenuView: { open: false, data: null },
     newGroupName: { open: false, data: null },
+    editGroupName: { open: false, data: null },
 }
 
 export const usePopupStore = defineStore('popup', () => {
