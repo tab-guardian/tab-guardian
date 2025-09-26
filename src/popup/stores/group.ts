@@ -311,11 +311,13 @@ export const useGroupStore = defineStore('group', () => {
 
         await saveGroupToStorage(group)
 
-        groups.value = groups.value.map(g => (g.id === group.id ? group : g))
-        groups.value = await filterGroups(groups.value)
-        groups.value.sort((a, b) => b.updatedAt - a.updatedAt)
+        const updatedGroups = groups.value.map(g => (g.id === group.id ? group : g))
+        displayGroups(updatedGroups)
+    }
 
-        setTimeout(() => (isSaving.value = false), 500)
+    async function displayGroups(groupsToDisplay: Group[]): Promise<void> {
+        groups.value = await filterGroups(groupsToDisplay)
+        groups.value.sort((a, b) => b.updatedAt - a.updatedAt)
     }
 
     return {
