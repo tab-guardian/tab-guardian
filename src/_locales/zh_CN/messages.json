@@ -5,6 +5,12 @@
             "n": { "content": "$1" }
         }
     },
+    "not_enough_storage": {
+        "message": "存储配额已满。最大配额为 $n$ 兆字节，您已使用 $n$ 兆字节",
+        "placeholders": {
+            "n": { "content": "$1" }
+        }
+    },
     "many_attempts_locked_for": {
         "message": "尝试次数过多。已锁定 $n$ 分钟",
         "placeholders": {

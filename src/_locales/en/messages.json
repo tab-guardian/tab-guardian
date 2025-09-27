@@ -5,6 +5,12 @@
             "n": { "content": "$1" }
         }
     },
+    "not_enough_storage": {
+        "message": "Cannot exceed storage quota. Maximum quota is $n$ MB, you use $n$ MB",
+        "placeholders": {
+            "n": { "content": "$1" }
+        }
+    },
     "many_attempts_locked_for": {
         "message": "Too many attempts. Locked for $n$ minutes",
         "placeholders": {

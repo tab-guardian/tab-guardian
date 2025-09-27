@@ -3,8 +3,8 @@ import { ref, onMounted, computed } from 'vue'
 import { trans } from '@common/modules/trans'
 import { getImageURL } from '@common/modules/browser/url'
 import { getBytesInUse, getMaxBytes } from '@common/modules/storage'
+import { formatNumber } from '@common/modules/numberUtil'
 import ProgressBar from '@common/components/ProgressBar.vue'
-
 
 onMounted(async () => {
     currentBytesUsage.value = await getBytesInUse()
@@ -31,8 +31,14 @@ const storageUsage = computed(() => {
             class="absolute top-1/2 -translate-y-1/2 -right-14 drop-shadow-md"
         />
 
-        <ul v-if="currentBytesUsage !== null" class="ml-3 w-40 mt-16">
-            <h2 class="mb-1 text-sm">{{ trans('storage_usage') }}</h2>
+        <ul v-if="currentBytesUsage !== null" class="ml-3 w-40 mt-8">
+            <h2 class="mb-1 text-md">{{ trans('storage_usage') }}</h2>
+
+            <ul class="text-xs mt-1 mb-2">
+                <li>Used: <b>{{ formatNumber(currentBytesUsage / 1024) }}</b> KB</li>
+                <li>Max: &nbsp;<b>{{ formatNumber(maxBytes / 1024) }}</b> KB</li>
+            </ul>
+
             <ProgressBar :current="storageUsage" :max="100" />
         </ul>
     </div>

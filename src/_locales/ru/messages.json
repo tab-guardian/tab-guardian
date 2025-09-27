@@ -5,6 +5,12 @@
             "n": { "content": "$1" }
         }
     },
+    "not_enough_storage": {
+        "message": "Нельзя превышать квоту хранения. Максимальная квота составляет $n$ МБ, вы используете $n$ МБ",
+        "placeholders": {
+            "n": { "content": "$1" }
+        }
+    },
     "many_attempts_locked_for": {
         "message": "Слишком много попыток. Заблокировано на $n$ минут",
         "placeholders": {

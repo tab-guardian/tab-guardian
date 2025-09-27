@@ -1,9 +1,13 @@
 import { isDevelopment } from '@common/modules/isDevelopment'
 import { targetBrowser } from '@common/modules/browser/targetBrowser'
 import { isFirefox } from '@common/modules/browser/isFirefox'
+import { trans } from '@common/modules/trans'
+import { showToast } from '@common/modules/showToast'
+import { formatNumber } from '@common/modules/numberUtil'
 
 export const LOCAL_STORAGE_QUOTA_BYTES = 5_242_880
 export const FIREFOX_QUOTA_BYTES = 5_242_880
+const MB = (1024 * 1024)
 
 export async function saveToStorage<T>(
     key: string,
@@ -16,6 +20,8 @@ export async function saveToStorage<T>(
     }
 
     const jsonStr = JSON.stringify(value)
+
+    await throwIfQuotaExceeds(jsonStr)
 
     if (isDevelopment()) {
         localStorage.setItem(key, jsonStr)
@@ -98,6 +104,24 @@ export function getLocalStorageUsage(): number {
     }
 
     return totalBytes
+}
+
+async function throwIfQuotaExceeds(jsonStr: string): Promise<void> {
+    const jsonStrBytes = new TextEncoder().encode(jsonStr).length
+
+    const usedBytes = await getBytesInUse()
+    const maxBytes = getMaxBytes()
+    const willBeBytes = usedBytes + jsonStrBytes
+
+    if (willBeBytes > maxBytes) {
+        const max = formatNumber(maxBytes / MB)
+        const used = formatNumber(usedBytes / MB)
+        const msg = trans('not_enough_storage', max, used)
+
+        showToast(msg, 'error', 5000)
+
+        throw new Error(msg)
+    }
 }
 
 function getFromBrowserStorage<T>(
