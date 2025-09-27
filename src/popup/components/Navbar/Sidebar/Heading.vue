@@ -2,15 +2,13 @@
 import { ref, onMounted, computed } from 'vue'
 import { trans } from '@common/modules/trans'
 import { getImageURL } from '@common/modules/browser/url'
-import { isDevelopment } from '@common/modules/isDevelopment'
-import { isFirefox } from '@common/modules/browser/isFirefox'
-import { getLocalStorageUsage } from '@common/modules/storage'
+import { getBytesInUse, getMaxBytes } from '@common/modules/storage'
 import ProgressBar from '@common/components/ProgressBar.vue'
 
-const LOCAL_STORAGE_QUOTA_BYTES = 5_242_880
-const FIREFOX_QUOTA_BYTES = 5_242_880
 
-onMounted(setCurrentBytesUsage)
+onMounted(async () => {
+    currentBytesUsage.value = await getBytesInUse()
+})
 
 const currentBytesUsage = ref<number | null>(null)
 const maxBytes = getMaxBytes()
@@ -22,37 +20,6 @@ const storageUsage = computed(() => {
 
     return (currentBytesUsage.value / maxBytes) * 100
 })
-
-function getMaxBytes(): number {
-    if (isDevelopment()) {
-        return LOCAL_STORAGE_QUOTA_BYTES
-    }
-
-    return isFirefox() ? FIREFOX_QUOTA_BYTES : chrome.storage.local.QUOTA_BYTES
-}
-
-async function setCurrentBytesUsage(): Promise<void> {
-    if (isDevelopment()) {
-        currentBytesUsage.value = getLocalStorageUsage()
-        return
-    }
-
-    if (isFirefox()) {
-        const storageData = await browser.storage.local.get()
-
-        const entries = Object.entries(storageData)
-            .map(([key, value]) => key + JSON.stringify(value))
-            .map(str => str.replaceAll('\\"', '"'))
-            .join('')
-
-        const bytes = new TextEncoder().encode(entries)
-
-        currentBytesUsage.value = bytes.length
-        return
-    }
-
-    currentBytesUsage.value = await chrome.storage.local.getBytesInUse()
-}
 </script>
 
 <template>

@@ -2,6 +2,9 @@ import { isDevelopment } from '@common/modules/isDevelopment'
 import { targetBrowser } from '@common/modules/browser/targetBrowser'
 import { isFirefox } from '@common/modules/browser/isFirefox'
 
+export const LOCAL_STORAGE_QUOTA_BYTES = 5_242_880
+export const FIREFOX_QUOTA_BYTES = 5_242_880
+
 export async function saveToStorage<T>(
     key: string,
     value: T | null | undefined,
@@ -20,6 +23,33 @@ export async function saveToStorage<T>(
     }
 
     await targetBrowser().storage.local.set({ [key]: jsonStr })
+}
+
+export async function getBytesInUse(): Promise<number> {
+    if (isDevelopment()) {
+        return getLocalStorageUsage()
+    }
+
+    if (!isFirefox()) {
+        return await chrome.storage.local.getBytesInUse()
+    }
+
+    const storageData = await browser.storage.local.get()
+
+    const entries = Object.entries(storageData)
+        .map(([key, value]) => key + JSON.stringify(value))
+        .map(str => str.replaceAll('\\"', '"'))
+        .join('')
+
+    return new TextEncoder().encode(entries).length
+}
+
+export function getMaxBytes(): number {
+    if (isDevelopment()) {
+        return LOCAL_STORAGE_QUOTA_BYTES
+    }
+
+    return isFirefox() ? FIREFOX_QUOTA_BYTES : chrome.storage.local.QUOTA_BYTES
 }
 
 export function getFromStorage<T>(key: string): Promise<T | null> {
