@@ -30,7 +30,7 @@ export const useNewGroupStore = defineStore('newGroup', () => {
 
     const preventPasswordSubmit = computed<boolean>(() => {
         if (!choices.value.isPrivate) {
-            return nameLength.value === 0
+            return false
         }
 
         const pass = choices.value.password
