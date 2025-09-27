@@ -3,6 +3,7 @@ import { useGroupStore } from '@/stores/group'
 import { trans } from '@common/modules/trans'
 import { usePopupStore } from '@/stores/popup'
 import { useRouter } from 'vue-router'
+import { deletePasswordFromStorage } from '@common/modules/storage/password'
 import Popup from '@/components/Popups/Popup.vue'
 import PopupButton from '@/components/Popups/PopupButton.vue'
 
@@ -11,13 +12,19 @@ const groupStore = useGroupStore()
 const router = useRouter()
 
 async function deleteGroup(): Promise<void> {
-    if (!groupStore.selectedGroup) {
+    const group = groupStore.selectedGroup
+
+    if (!group) {
         console.warn('No group selected for deletion')
         return
     }
 
-    await groupStore.deleteGroup(groupStore.selectedGroup.id)
+    await groupStore.deleteGroup(group.id)
     await router.push({ name: 'main' })
+
+    if (group.isPrivate) {
+        await deletePasswordFromStorage(group.id)
+    }
 
     closePopup('deleteGroup')
 
