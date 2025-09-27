@@ -35,7 +35,7 @@ export const useGroupStore = defineStore('group', () => {
         const group = groups.value.find(group => group.id === groupId)
 
         if (!group) {
-            console.error(`Group with id ${groupId} not found`)
+            console.warn(`Group with id ${groupId} not found`)
             return null
         }
 

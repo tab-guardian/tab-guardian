@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Group, Link, SelectTabsOperation } from '@/types'
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useNewGroupStore } from '@/stores/newGroup'
 import { trans } from '@common/modules/trans'
@@ -29,7 +29,17 @@ const operation = computed<SelectTabsOperation>(() => {
     return route.params.operation as SelectTabsOperation || 'creating'
 })
 
-onMounted(async () => await fetchLinks())
+onUnmounted(() => removeEventListener('keydown', saveTabsAfterEnter))
+onMounted(async () => {
+    addEventListener('keydown', saveTabsAfterEnter)
+    await fetchLinks()
+})
+
+async function saveTabsAfterEnter(e: Event): Promise<void> {
+    if (e instanceof KeyboardEvent && e.key === 'Enter') {
+        await handleCreateGroup()
+    }
+}
 
 async function fetchLinks(): Promise<void> {
     loading.value = true
@@ -54,11 +64,12 @@ async function handleCreateGroup(): Promise<void> {
     groupStore.groups.push(group)
 
     await groupStore.save(group)
-    await router.push({ name: 'group', params: { id: group.id } })
 
     newGroupStore.resetChoices()
 
     showToastMessage()
+
+    await router.push({ name: 'group', params: { id: group.id } })
 }
 
 async function handleSaveGroup(): Promise<void> {
