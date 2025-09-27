@@ -6,7 +6,6 @@ import { usePopupStore } from '@/stores/popup'
 import { useGroupStore } from '@/stores/group'
 import { showToast } from '@common/modules/showToast'
 import { useAppStore } from '@/stores/app'
-import { error } from '@common/modules/error'
 import Popup from '@/components/Popups/Popup.vue'
 import MenuItem from '@/components/MenuItem.vue'
 import ScissorsIcon from '@common/components/Icons/ScissorsIcon.vue'
@@ -21,12 +20,12 @@ const link = computed<Link | null>(() => getSharedData<Link>('linkMenuView'))
 
 async function yankLink(action: 'copy' | 'cut', successMsg: string): Promise<void> {
     if (!link.value) {
-        error.warn(`Cannot ${action} the link because link.value is null`)
+        console.warn(`Cannot ${action} the link because link.value is null`)
         return
     }
 
     if (!group.value) {
-        error.warn(`Cannot ${action} the link because group.value is null`)
+        console.warn(`Cannot ${action} the link because group.value is null`)
         return
     }
 

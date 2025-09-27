@@ -5,7 +5,6 @@ import { trans } from '@common/modules/trans'
 import { useSettingsStore } from '@/stores/settings'
 import { useCryptoStore } from '@/stores/crypto'
 import { showToast } from '@common/modules/showToast'
-import { error } from '@common/modules/error'
 import { isDevelopment } from '@common/modules/isDevelopment'
 import { isIncognito } from '@common/modules/browser/windows'
 import { closeTabsByIds } from '@/modules/tabs/closeTabsByIds'
@@ -29,14 +28,14 @@ export const useGroupStore = defineStore('group', () => {
 
     function getGroupById(groupId: number | undefined): Group | null {
         if (!groupId) {
-            error.warn('No group id provided when trying to get group by id')
+            console.warn('No group id provided when trying to get group by id')
             return null
         }
 
         const group = groups.value.find(group => group.id === groupId)
 
         if (!group) {
-            error.err(`Group with id ${groupId} not found`)
+            console.error(`Group with id ${groupId} not found`)
             return null
         }
 
@@ -47,7 +46,7 @@ export const useGroupStore = defineStore('group', () => {
         const group = groups.value.find(group => group.name === name)
 
         if (!group) {
-            error.err(`Group with name ${name} not found`)
+            console.error(`Group with name ${name} not found`)
             return null
         }
 
@@ -56,7 +55,7 @@ export const useGroupStore = defineStore('group', () => {
 
     async function updatePassword(pass: string): Promise<void> {
         if (!selectedGroup.value) {
-            error.err('No group selected to update password')
+            console.error('No group selected to update password')
             showToast(trans('error_occurred'), 'error')
             return
         }
@@ -149,7 +148,7 @@ export const useGroupStore = defineStore('group', () => {
             return encrypted
         } catch (err) {
             showToast(trans('error_occurred'), 'error')
-            error.err(err)
+            console.error(err)
         }
 
         return null

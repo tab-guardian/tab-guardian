@@ -8,7 +8,6 @@ import { useTabsStore } from '@/stores/tabs'
 import { useAttemptsStore } from '@/stores/attempts'
 import { useCryptoStore } from '@/stores/crypto'
 import { useRoute, useRouter } from 'vue-router'
-import { error } from '@common/modules/error'
 import { showToast } from '@common/modules/showToast'
 import { savePasswordToStorage } from '@common/modules/storage/password'
 import ShieldCheckIcon from '@common/components/Icons/ShieldCheckIcon.vue'
@@ -68,7 +67,7 @@ async function submitPass(): Promise<void> {
                 .includes(e.message)
 
         if (!wrongPass) {
-            error.err('Caught and handled error: ', e)
+            console.error('Caught and handled error: ', e)
         }
 
         if (wrongPass) {

@@ -3,7 +3,6 @@ import { onMounted, ref } from 'vue'
 import { defineStore } from 'pinia'
 import { trans } from '@common/modules/trans'
 import { saveToStorage, getFromStorage } from '@common/modules/storage'
-import { error } from '@common/modules/error'
 import { showToast } from '@common/modules/showToast'
 
 const MAX_ATTEMPTS = 3
@@ -28,7 +27,7 @@ export const useAttemptsStore = defineStore('attempts', () => {
 
     function saveAttemptsToStorage(): void {
         if (!attempts.value) {
-            error.err('Attempts value is not set')
+            console.error('Attempts value is not set')
             return
         }
 

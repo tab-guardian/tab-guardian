@@ -7,7 +7,6 @@ import { trans } from '@common/modules/trans'
 import { useGroupStore } from '@/stores/group'
 import { getCurrentLinks } from '@/modules/tabs/getCurrentLinks'
 import { showToast } from '@common/modules/showToast'
-import { error } from '@common/modules/error'
 import { VueDraggableNext } from 'vue-draggable-next'
 import View from '@/components/Views/View.vue'
 import TabItem from '@/components/Views/SelectTabsView/TabItem.vue'
@@ -48,7 +47,7 @@ async function handleCreateGroup(): Promise<void> {
     const group = await createGroup()
 
     if (!group) {
-        error.warn(`Can't save group because it wasn't created`)
+        console.warn(`Can't save group because it wasn't created`)
         return
     }
 
@@ -97,14 +96,14 @@ async function createPrivateGroup(group: Group): Promise<Group | null> {
     const confirm = newGroupStore.choices.confirmPassword
 
     if (!pass || !confirm) {
-        error.err(`Password and confirm must not be empty`)
+        console.error(`Password and confirm must not be empty`)
         return null
     }
 
     const encryptedGroup = await groupStore.encrypt(group, pass, confirm)
 
     if (!encryptedGroup) {
-        error.info(`Group ${group.id} wasn't encrypted`)
+        console.info(`Group ${group.id} wasn't encrypted`)
         return null
     }
 

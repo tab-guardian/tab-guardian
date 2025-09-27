@@ -3,7 +3,6 @@ import { useGroupStore } from '@/stores/group'
 import { trans } from '@common/modules/trans'
 import { usePopupStore } from '@/stores/popup'
 import { useRouter } from 'vue-router'
-import { error } from '@common/modules/error'
 import Popup from '@/components/Popups/Popup.vue'
 import PopupButton from '@/components/Popups/PopupButton.vue'
 
@@ -13,7 +12,7 @@ const router = useRouter()
 
 async function deleteGroup(): Promise<void> {
     if (!groupStore.selectedGroup) {
-        error.warn('No group selected for deletion')
+        console.warn('No group selected for deletion')
         return
     }
 

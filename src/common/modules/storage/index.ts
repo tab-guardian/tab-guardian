@@ -1,7 +1,6 @@
 import { isDevelopment } from '@common/modules/isDevelopment'
 import { targetBrowser } from '@common/modules/browser/targetBrowser'
 import { isFirefox } from '@common/modules/browser/isFirefox'
-import { error } from '@common/modules/error'
 
 export async function saveToStorage<T>(
     key: string,
@@ -9,7 +8,7 @@ export async function saveToStorage<T>(
 ): Promise<void> {
     if (!value) {
         const msg = `Failed to save "${key}" to storage because there is not value`
-        error.err(msg)
+        console.error(msg)
         return
     }
 
@@ -84,7 +83,7 @@ function getFromBrowserStorage<T>(
     const value: T | null | undefined = JSON.parse(strValue)
 
     if (!value) {
-        error.err(`Failed to parse ${key} from storage`)
+        console.error(`Failed to parse ${key} from storage`)
         return null
     }
 
@@ -95,14 +94,14 @@ function getFromLocalStorage<T>(key: string): T | null {
     const strValue: string | null = localStorage.getItem(key)
 
     if (!strValue) {
-        error.info(`"${key}" key not found in local storage`)
+        console.info(`"${key}" key not found in local storage`)
         return null
     }
 
     const value: T | null | undefined = JSON.parse(strValue)
 
     if (!value) {
-        error.err(`Failed to parse ${key} from local storage`)
+        console.error(`Failed to parse ${key} from local storage`)
         return null
     }
 

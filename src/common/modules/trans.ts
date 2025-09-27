@@ -1,6 +1,5 @@
 import { isDevelopment } from '@common/modules/isDevelopment'
 import { targetBrowser } from '@common/modules/browser/targetBrowser'
-import { error } from '@common/modules/error'
 
 let translationMessages: null | {
     [key: string]: { message: string }
@@ -16,7 +15,7 @@ if (isDevelopment()) {
 export function trans(msg: string, ...args: string[]): string {
     if (translationMessages) {
         if (!translationMessages[msg]) {
-            error.warn(`English translation not found for key "${msg}"`)
+            console.warn(`English translation not found for key "${msg}"`)
             return msg
         }
 

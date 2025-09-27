@@ -3,7 +3,6 @@ import { ref, computed, onMounted } from 'vue'
 import { useGroupStore } from '@/stores/group'
 import { trans } from '@common/modules/trans'
 import { usePopupStore } from '@/stores/popup'
-import { error } from '@common/modules/error'
 import { isImageURL } from '@/modules/url/isImageURL'
 import { validateImageURL } from '@/modules/url/validateImageURL'
 import Popup from '@/components/Popups/Popup.vue'
@@ -35,7 +34,7 @@ async function chooseImageIcon(): Promise<void> {
     }
 
     if (!groupStore.selectedGroup) {
-        error.warn('No group selected rebinding URL')
+        console.warn('No group selected rebinding URL')
         return
     }
 

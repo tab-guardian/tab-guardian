@@ -3,7 +3,6 @@ import { ref, onMounted } from 'vue'
 import { trans } from '@common/modules/trans'
 import { useGroupStore } from '@/stores/group'
 import { getCurrentURL } from '@/modules/getCurrentURL'
-import { error } from '@common/modules/error'
 import { showToast } from '@common/modules/showToast'
 import { hashURL } from '@/modules/url/hashURL'
 import SlideSwitch from '@common/components/Form/SlideSwitch.vue'
@@ -37,7 +36,7 @@ function attachBindURL(checked: boolean): void {
     }
 
     if (!currURL.value) {
-        error.err('No current URL found')
+        console.error('No current URL found')
         showToast(trans('error_occurred'), 'error')
         return
     }

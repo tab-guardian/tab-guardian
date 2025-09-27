@@ -4,7 +4,6 @@ import { ref, computed, onMounted } from 'vue'
 import { useGroupStore } from '@/stores/group'
 import { trans } from '@common/modules/trans'
 import { usePopupStore } from '@/stores/popup'
-import { error } from '@common/modules/error'
 import { isEmoji } from '@/modules/isEmoji'
 import 'emoji-picker-element'
 import Popup from '@/components/Popups/Popup.vue'
@@ -44,7 +43,7 @@ function submit(): void {
     }
 
     if (!groupStore.selectedGroup) {
-        error.warn('No group selected rebinding URL')
+        console.warn('No group selected rebinding URL')
         return
     }
 

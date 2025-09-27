@@ -8,7 +8,6 @@ import { getCurrentLinks } from '@/modules/tabs/getCurrentLinks'
 import { restoreTabs } from '@/modules/tabs/restoreTabs'
 import { closeTabs } from '@/modules/tabs/closeTabs'
 import { getPasswordFromStorage } from '@common/modules/storage/password'
-import { error } from '@common/modules/error'
 
 export const useTabsStore = defineStore('tabs', () => {
     const groupStore = useGroupStore()
@@ -34,7 +33,7 @@ export const useTabsStore = defineStore('tabs', () => {
         const encrypted = await groupStore.encrypt(group, userPass || pass)
 
         if (!encrypted) {
-            error.info(`Group ${group.id} wasn't encrypted`)
+            console.info(`Group ${group.id} wasn't encrypted`)
             return false
         }
 

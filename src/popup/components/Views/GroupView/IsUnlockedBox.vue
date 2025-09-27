@@ -6,7 +6,6 @@ import { useGroupStore } from '@/stores/group'
 import { usePopupStore } from '@/stores/popup'
 import { useCryptoStore } from '@/stores/crypto'
 import { showToast } from '@common/modules/showToast'
-import { error } from '@common/modules/error'
 import { getPasswordFromStorage, deletePasswordFromStorage } from '@common/modules/storage/password'
 import LockClosedIcon from '@common/components/Icons/LockClosedIcon.vue'
 import WarningBox from '@common/components/WarningBox.vue'
@@ -55,7 +54,7 @@ async function lockGroup(pass: string): Promise<void> {
     const encrypted = await groupStore.encrypt(group, pass)
 
     if (!encrypted) {
-        error.info(`Group ${group.id} wasn't encrypted`)
+        console.info(`Group ${group.id} wasn't encrypted`)
         return
     }
 

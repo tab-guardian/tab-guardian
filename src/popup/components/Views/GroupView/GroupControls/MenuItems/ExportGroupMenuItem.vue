@@ -3,7 +3,6 @@ import type { Group } from '@/types'
 import { useGroupStore } from '@/stores/group'
 import { usePopupStore } from '@/stores/popup'
 import { trans } from '@common/modules/trans'
-import { error } from '@common/modules/error'
 import { useCryptoStore } from '@/stores/crypto'
 import { getPasswordFromStorage } from '@common/modules/storage/password'
 import { showToast } from '@common/modules/showToast'
@@ -18,7 +17,7 @@ const { openPopup, closePopup } = usePopupStore()
 
 async function exportGroup(): Promise<void> {
     if (!store.selectedGroup) {
-        error.err('No group selected to export')
+        console.error('No group selected to export')
         return
     }
 

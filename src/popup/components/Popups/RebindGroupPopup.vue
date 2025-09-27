@@ -6,7 +6,6 @@ import { usePopupStore } from '@/stores/popup'
 import { useRouter } from 'vue-router'
 import { validateURL } from '@/modules/url/validateURL'
 import { hashURL } from '@/modules/url/hashURL'
-import { error } from '@common/modules/error'
 import { showToast } from '@common/modules/showToast'
 import Popup from '@/components/Popups/Popup.vue'
 import Button from '@common/components/Form/Button.vue'
@@ -27,7 +26,7 @@ async function rebindGroup(): Promise<void> {
     }
 
     if (!groupStore.selectedGroup) {
-        error.warn('No group selected rebinding URL')
+        console.warn('No group selected rebinding URL')
         return
     }
 
