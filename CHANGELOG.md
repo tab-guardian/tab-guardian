@@ -1,10 +1,11 @@
 # Release Notes
 
-## v1.13.0 (2025-09-27)
+## v1.13.0 (2025-09-28)
 - 🧑‍💻 Remove "import" buttom from importing groups on settings page [#60](https://github.com/tab-guardian/tab-guardian/issues/60)
 - 🐛 Fixed issue with creating private group and it wouldn't remember the password user entered. Plus, this change improved the performance of creating a private group
 - 🧑‍💻 A lot of refactoring and rewriting logic for creating a new group
 - 🧑‍💻 When you add a new tab to a group, it will be appended to the end instead of the list
+- 🐛 Fixed incorrect bytes calculation on Firefox-based browsers
 
 ## v1.12.0 (2025-09-24)
 - ✨ Added improved encryption algoriphm `AES-GCM` with WEB Crypto API without breaking backward compatibility [#54](https://github.com/tab-guardian/tab-guardian/issues/54)

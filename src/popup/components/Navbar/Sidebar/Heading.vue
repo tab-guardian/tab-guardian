@@ -39,11 +39,15 @@ async function setCurrentBytesUsage(): Promise<void> {
 
     if (isFirefox()) {
         const storageData = await browser.storage.local.get()
+
         const entries = Object.entries(storageData)
             .map(([key, value]) => key + JSON.stringify(value))
+            .map(str => str.replaceAll('\\"', '"'))
             .join('')
 
-        currentBytesUsage.value = new TextEncoder().encode(entries).length
+        const bytes = new TextEncoder().encode(entries)
+
+        currentBytesUsage.value = bytes.length
         return
     }
 
