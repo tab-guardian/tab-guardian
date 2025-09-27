@@ -28,7 +28,7 @@ async function importGroups(): Promise<void> {
 
             await prependGroups(Array.isArray(json) ? json : [json])
         } catch (err) {
-            console.console.error)
+            console.error(err)
             showToast(trans('failed_decrypt_file'), 'error')
         }
     }
