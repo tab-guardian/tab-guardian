@@ -32,8 +32,15 @@ export async function restoreTabs(links: Link[]): Promise<void> {
 }
 
 async function closeEmptyTab(): Promise<void> {
+    const closeTabsWithURLs = [
+        'about:newtab',
+        'about:blank',
+        'about:privatebrowsing',
+        'chrome://newtab/',
+    ]
+
     const tabs = await queryTabs({
-        url: isFirefox() ? 'about:newtab' : 'chrome://newtab/',
+        url: closeTabsWithURLs,
         currentWindow: true,
         active: true,
     })
