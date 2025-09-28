@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Group } from '@/types'
+import { ref } from 'vue'
 import { useGroupStore } from '@/stores/group'
 import { usePopupStore } from '@/stores/popup'
 import { trans } from '@common/modules/trans'
@@ -15,11 +16,20 @@ const store = useGroupStore()
 const cryptoStore = useCryptoStore()
 const { openPopup, closePopup } = usePopupStore()
 
+const loading = ref<boolean>(false)
+
 async function exportGroup(): Promise<void> {
+    if (loading.value) {
+        console.info('Cannot export because export in progress')
+        return
+    }
+
     if (!store.selectedGroup) {
         console.error('No group selected to export')
         return
     }
+
+    loading.value = true
 
     let group = cloneDeep(store.selectedGroup)
 
@@ -43,6 +53,8 @@ async function exportGroup(): Promise<void> {
 
     URL.revokeObjectURL(url)
 
+    loading.value = false
+
     closePopup('groupMenuView')
 }
 
@@ -64,5 +76,6 @@ async function encryptPrivateGroup(group: Group): Promise<Group | null> {
         @click="exportGroup"
         :label="trans('export_this_group')"
         :icon="ArrowDownTrayIcon"
+        :loading
     />
 </template>
