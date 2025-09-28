@@ -195,12 +195,20 @@ function toggleSelect(link: Link): void {
                 </SlideSwitch>
             </div>
 
-            <SaveButton v-if="operation === 'creating'" @clicked="handleCreateGroup">
+            <SaveButton
+                v-if="operation === 'creating'"
+                @clicked="handleCreateGroup"
+            >
                 {{ trans('create_group') }}
             </SaveButton>
-            <SaveButton v-else-if="operation === 'adding'" @clicked="handleSaveGroup">
+
+            <SaveButton
+                v-else-if="operation === 'adding'"
+                @clicked="handleSaveGroup"
+            >
                 {{ trans('add_tabs') }}
             </SaveButton>
+
             <span v-else>{{ trans('error_occurred') }}</span>
         </div>
     </View>
