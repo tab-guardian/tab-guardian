@@ -35,8 +35,8 @@ const storageUsage = computed(() => {
             <h2 class="mb-1 text-md">{{ trans('storage_usage') }}</h2>
 
             <ul class="text-xs mt-1 mb-2">
-                <li>Used: <b>{{ formatNumber(currentBytesUsage / 1024) }}</b> KB</li>
-                <li>Max: &nbsp;<b>{{ formatNumber(maxBytes / 1024) }}</b> KB</li>
+                <li>Used: <b class="text-primary">{{ formatNumber(currentBytesUsage / 1024) }}</b> KB</li>
+                <li>Max: &nbsp;<b class="text-primary">{{ formatNumber(maxBytes / 1024) }}</b> KB</li>
             </ul>
 
             <ProgressBar :current="storageUsage" :max="100" />
