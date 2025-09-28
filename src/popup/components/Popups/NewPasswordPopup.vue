@@ -5,9 +5,9 @@ import { trans } from '@common/modules/trans'
 import { usePopupStore } from '@/stores/popup'
 import { showToast } from '@common/modules/showToast'
 import Popup from '@/components/Popups/Popup.vue'
-import Input from '@common/components/Form/Input.vue'
 import Button from '@common/components/Form/Button.vue'
 import ChevronRightIcon from '@common/components/Icons/ChevronRightIcon.vue'
+import PasswordInput from '@common/components/Form/PasswordInput.vue'
 
 const { closePopup, closeAllPopups } = usePopupStore()
 const store = useGroupStore()
@@ -35,16 +35,14 @@ function updatePassword(): void {
 <template>
     <Popup @cancel="closePopup('newPassword')" :content="trans('enter_new_pass')">
         <form @submit.prevent="updatePassword" class="flex flex-col gap-3">
-            <Input
+            <PasswordInput
                 v-model="pass"
-                type="password"
                 id="group-password"
                 :label="trans('enter_pass')"
             />
 
-            <Input
+            <PasswordInput
                 v-model="confirmPass"
-                type="password"
                 id="group-confirm-password"
                 :label="trans('repeat_pass')"
                 :error="passwordErr"

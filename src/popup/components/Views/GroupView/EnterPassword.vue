@@ -14,6 +14,7 @@ import ShieldCheckIcon from '@common/components/Icons/ShieldCheckIcon.vue'
 import Input from '@common/components/Form/Input.vue'
 import WarningBox from '@common/components/WarningBox.vue'
 import ProgressBar from '@common/components/ProgressBar.vue'
+import PasswordInput from '@common/components/Form/PasswordInput.vue'
 
 type Props = {
     group: Group
@@ -100,11 +101,10 @@ async function openTabsAndEncryptGroup(): Promise<void> {
         </p>
 
         <form @submit.prevent="submitPass">
-            <Input
+            <PasswordInput
                 @loaded="inp => inp.focus()"
                 v-model="password"
                 :label="trans('enter_pass')"
-                type="password"
                 id="enter-password"
                 :withButton="true"
                 :loading="decrypting"
