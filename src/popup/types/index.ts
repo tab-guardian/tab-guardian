@@ -41,6 +41,7 @@ export type Settings = {
     showPrivateGroupsOnlyInIncognito: boolean
     overrideWithSameName: boolean
     showOnlyPrivateGroupsInIncognito: boolean
+    rememberPasswordAfterUnlock: boolean
 }
 
 type PopupItem = {

@@ -181,5 +181,7 @@
     "image_format_allowed": { "message": "仅允许使用以下格式的图片" },
     "new_password": { "message": "新密码" },
     "uses_old_encrypt_impl": { "message": "该组使用旧版加密实现。您可以通过解锁该组再重新锁定来修复此问题" },
-    "nothing_to_paste": { "message": "没有内容可粘贴" }
+    "nothing_to_paste": { "message": "没有内容可粘贴" },
+    "remember_pass_after_unlock": { "message": "解锁后记住我的密码" },
+    "remember_pass_after_unlock_desc": { "message": "若禁用此选项，每次锁定私人群组时均需输入密码。保持此选项启用状态，系统会将密码存储在临时且安全的存储空间中，您无需再次输入密码即可重新锁定群组" }
 }

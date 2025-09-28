@@ -5,6 +5,7 @@ import { trans } from '@common/modules/trans'
 import { useGroupStore } from '@/stores/group'
 import { usePopupStore } from '@/stores/popup'
 import { useCryptoStore } from '@/stores/crypto'
+import { useSettingsStore } from '@/stores/settings'
 import { showToast } from '@common/modules/showToast'
 import { getPasswordFromStorage, deletePasswordFromStorage } from '@common/modules/storage/password'
 import LockClosedIcon from '@common/components/Icons/LockClosedIcon.vue'
@@ -19,9 +20,10 @@ type Props = {
 const { group } = defineProps<Props>()
 const groupStore = useGroupStore()
 const cryptoStore = useCryptoStore()
+const settingsStore = useSettingsStore()
 const { openPopup, onClose } = usePopupStore()
 
-const newPassword = ref<boolean>(false)
+const useNewPassword = ref<boolean>(false)
 const encrypting = ref<boolean>(false)
 
 async function promptEnterPassword(): Promise<void> {
@@ -29,7 +31,11 @@ async function promptEnterPassword(): Promise<void> {
         return
     }
 
-    if (newPassword.value) {
+    if (!settingsStore.settings.rememberPasswordAfterUnlock) {
+        useNewPassword.value = true
+    }
+
+    if (useNewPassword.value) {
         await deletePasswordFromStorage(group.id)
     }
 
@@ -40,7 +46,7 @@ async function promptEnterPassword(): Promise<void> {
         return
     }
 
-    if (!newPassword.value) {
+    if (!useNewPassword.value) {
         showToast(trans('cant_remember_pass'), 'error', 4000)
     }
 
@@ -91,8 +97,11 @@ async function lockGroup(pass: string): Promise<void> {
                 {{ trans('lock') }}
             </button>
 
-            <label class="flex gap-1.5 align-center opacity-80">
-                <input type="checkbox" v-model="newPassword" />
+            <label
+                v-if="settingsStore.settings.rememberPasswordAfterUnlock"
+                class="flex gap-1.5 align-center opacity-80"
+            >
+                <input type="checkbox" v-model="useNewPassword" />
                 <small>{{ trans('new_password') }}</small>
             </label>
         </div>
