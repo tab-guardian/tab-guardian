@@ -1,11 +1,20 @@
 # Release Notes
 
-## v1.13.0 (2025-09-28)
-- 🧑‍💻 Remove "import" buttom from importing groups on settings page [#60](https://github.com/tab-guardian/tab-guardian/issues/60)
+## v1.13.0 (2025-09-29)
 - 🐛 Fixed issue with creating private group and it wouldn't remember the password user entered. Plus, this change improved the performance of creating a private group
+- 🐛 Fixed incorrect bytes calculation on Firefox-based browsers. It was showing used space a little bit more than it really was
+- 🧑‍💻 Remove "import" buttom from importing groups on settings page [#60](https://github.com/tab-guardian/tab-guardian/issues/60)
 - 🧑‍💻 A lot of refactoring and rewriting logic for creating a new group
 - 🧑‍💻 When you add a new tab to a group, it will be appended to the end instead of the list
-- 🐛 Fixed incorrect bytes calculation on Firefox-based browsers
+- 🧑‍💻 Now, when you open tabs, additional empty pages like `about:blank` and `about:privatebrowsing` will be automatically closed [#64](https://github.com/tab-guardian/tab-guardian/issues/64)
+- 🧑‍💻 Remove `Import` buttom from settings page. Now, when you select a file, it will be automatically uploaded [#60](https://github.com/tab-guardian/tab-guardian/issues/60)
+- 🧑‍💻 Now, you cannot rename private groups without unlocking them [#56](https://github.com/tab-guardian/tab-guardian/issues/56)
+- ✨ Added a spinner to the main (home) page where groups are loaded [#70](https://github.com/tab-guardian/tab-guardian/issues/70)
+- ✨ Added a spinner when you export all groups in settings which indicates that groups are being exported [#68](https://github.com/tab-guardian/tab-guardian/issues/68)
+- ✨ Added a spinner to the "Export a group" button in group popup menu [#66](https://github.com/tab-guardian/tab-guardian/issues/66)
+- ✨ Added a spinner to the "Create" button when you create a group or add more links to it [#67](https://github.com/tab-guardian/tab-guardian/issues/67)
+- ✨ Added functionality that prevents from overloading storage. It will give you an error message that you use all of your quota [#58](https://github.com/tab-guardian/tab-guardian/issues/58)
+- ✨ Added "Remember my password after unlock" option to settings which you can toggle [#62](https://github.com/tab-guardian/tab-guardian/issues/62)
 
 ## v1.12.0 (2025-09-24)
 - ✨ Added improved encryption algoriphm `AES-GCM` with WEB Crypto API without breaking backward compatibility [#54](https://github.com/tab-guardian/tab-guardian/issues/54)
