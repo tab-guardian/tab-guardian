@@ -49,9 +49,12 @@ function updatePassword(): void {
             />
 
             <div class="flex items-end gap-3 justify-between">
-                <Button type="submit" :disabled="preventPasswordSubmit">
+                <Button
+                    type="submit"
+                    :disabled="preventPasswordSubmit"
+                    :icon="ChevronRightIcon"
+                >
                     {{ trans('save') }}
-                    <ChevronRightIcon width="20" height="20" />
                 </Button>
             </div>
         </form>

@@ -76,9 +76,9 @@ function submitName(): void {
                 <Button
                     type="submit"
                     :disabled="newGroupStore.preventPasswordSubmit"
+                    :icon="ChevronRightIcon"
                 >
                     {{ trans('select') }}
-                    <ChevronRightIcon width="20" height="20" />
                 </Button>
             </div>
         </form>

@@ -64,8 +64,12 @@ async function rebindGroup(): Promise<void> {
                 :error="errorMessage"
             />
 
-            <Button type="submit" :disabled="preventSubmit" class="mt-3">
-                <CheckIcon width="20" height="20" />
+            <Button
+                type="submit"
+                :disabled="preventSubmit"
+                :icon="CheckIcon"
+                class="mt-3"
+            >
                 {{ trans('rebind') }}
             </Button>
         </form>

@@ -11,10 +11,11 @@ import { VueDraggableNext } from 'vue-draggable-next'
 import View from '@/components/Views/View.vue'
 import TabItem from '@/components/Views/SelectTabsView/TabItem.vue'
 import Message from '@common/components/Message.vue'
-import SaveButton from '@/components/Views/SelectTabsView/SaveButton.vue'
+import Button from '@common/components/Form/Button.vue'
 import ControlButton from '@/components/Views/SelectTabsView/ControlButton.vue'
 import SlideSwitch from '@common/components/Form/SlideSwitch.vue'
 import Spinner from '@common/components/Spinner.vue'
+import PlusIcon from '@common/components/Icons/PlusIcon.vue'
 
 const newGroupStore = useNewGroupStore()
 const groupStore = useGroupStore()
@@ -204,21 +205,23 @@ function toggleSelect(link: Link): void {
                 </SlideSwitch>
             </div>
 
-            <SaveButton
+            <Button
                 v-if="operation === 'creating'"
                 @clicked="handleCreateGroup"
                 :loading="saving"
+                :icon="PlusIcon"
             >
                 {{ trans('create') }}
-            </SaveButton>
+            </Button>
 
-            <SaveButton
+            <Button
                 v-else-if="operation === 'adding'"
                 @clicked="handleSaveGroup"
                 :loading="saving"
+                :icon="PlusIcon"
             >
                 {{ trans('add_tabs') }}
-            </SaveButton>
+            </Button>
 
             <span v-else>{{ trans('error_occurred') }}</span>
         </div>

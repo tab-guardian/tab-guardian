@@ -53,9 +53,12 @@ async function saveName(): Promise<void> {
         <form @submit.prevent="saveName" class="flex flex-col gap-3">
             <NameInput v-model:name="name" @loaded="inp => inp.focus()" />
 
-            <Button type="submit" :disabled="tooLongName">
+            <Button
+                type="submit"
+                :disabled="tooLongName"
+                :icon="ChevronRightIcon"
+            >
                 {{ trans('save') }}
-                <ChevronRightIcon width="20" height="20" />
             </Button>
         </form>
     </Popup>

@@ -42,9 +42,9 @@ async function deleteGroups(): Promise<void> {
         <div class="flex items-center justify-between gap-3">
             <Button
                 @clicked="deleteGroups"
-                additionalClasses="bg-red-600 dark:bg-red-400"
+                :icon="TrashIcon"
+                className="bg-red-600 dark:bg-red-400"
             >
-                <TrashIcon class="w-5 h-5" />
                 {{ trans('erase_all_groups') }}
             </Button>
         </div>
