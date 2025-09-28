@@ -23,7 +23,7 @@ withDefaults(defineProps<Props>(), {
         :class="[
             'px-2 py-1.5 bg-page border border-border rounded-lg',
             'flex items-center gap-2 select-none',
-            disabled || loading ? ' opacity-50 pointer-events-none ' : ' hover:border-primary hover:text-primary cursor-pointer ',
+            disabled || loading ? 'opacity-50 pointer-events-none' : 'hover:border-primary hover:text-primary cursor-pointer',
         ]"
     >
         <SmallSpinner v-if="loading" width="22" height="22" />

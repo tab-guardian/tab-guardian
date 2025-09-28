@@ -22,6 +22,7 @@ const router = useRouter()
 const route = useRoute()
 
 const loading = ref<boolean>(false)
+const saving = ref<boolean>(false)
 const links = ref<Link[]>([])
 const selectedLinks = ref<Link[]>([])
 
@@ -61,6 +62,8 @@ async function handleCreateGroup(): Promise<void> {
         return
     }
 
+    saving.value = true
+
     groupStore.groups.push(group)
 
     await groupStore.save(group)
@@ -68,6 +71,8 @@ async function handleCreateGroup(): Promise<void> {
     newGroupStore.resetChoices()
 
     showToastMessage()
+
+    saving.value = false
 
     await router.push({ name: 'group', params: { id: group.id } })
 }
@@ -80,10 +85,14 @@ async function handleSaveGroup(): Promise<void> {
         return
     }
 
-    await groupStore.saveLinksTo(group.id, selectedLinks.value)
-    await router.push({ name: 'group', params: { id: group.id } })
+    saving.value = true
 
+    await groupStore.saveLinksTo(group.id, selectedLinks.value)
     showToastMessage()
+
+    saving.value = false
+
+    await router.push({ name: 'group', params: { id: group.id } })
 }
 
 async function createGroup(): Promise<Group | null> {
@@ -198,13 +207,15 @@ function toggleSelect(link: Link): void {
             <SaveButton
                 v-if="operation === 'creating'"
                 @clicked="handleCreateGroup"
+                :loading="saving"
             >
-                {{ trans('create_group') }}
+                {{ trans('create') }}
             </SaveButton>
 
             <SaveButton
                 v-else-if="operation === 'adding'"
                 @clicked="handleSaveGroup"
+                :loading="saving"
             >
                 {{ trans('add_tabs') }}
             </SaveButton>

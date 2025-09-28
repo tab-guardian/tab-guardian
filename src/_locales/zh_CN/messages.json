@@ -110,7 +110,7 @@
     "private_group_unlocked": { "message": "该私有组已解锁" },
     "no_tabs_to_save": { "message": "没有标签页可保存" },
     "tabs_now_saved": { "message": "标签页已保存" },
-    "create_group": { "message": "创建组" },
+    "create": { "message": "创建" },
     "you_not_selected_tabs": { "message": "您未选择任何标签页" },
     "tabs_added_to_group": { "message": "标签页已添加到组" },
     "group_created_without_tabs": { "message": "创建的组没有任何标签页" },

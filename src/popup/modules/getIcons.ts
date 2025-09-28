@@ -51,6 +51,7 @@ import InfoCircleIcon from '@common/components/Icons/InfoCircleIcon.vue'
 import ScissorsIcon from '@common/components/Icons/ScissorsIcon.vue'
 import CopyIcon from '@common/components/Icons/CopyIcon.vue'
 import PasteIcon from '@common/components/Icons/PasteIcon.vue'
+import PlusIcon from '@common/components/Icons/PlusIcon.vue'
 
 export function getIcons(): { [key: string]: Component } {
     return {
@@ -100,6 +101,7 @@ export function getIcons(): { [key: string]: Component } {
         EllipsisVerticalIcon,
         MenuIcon,
         PlusCircleIcon,
+        PlusIcon,
         ArrowDownTrayIcon,
         GitHubIcon,
         InfoCircleIcon,

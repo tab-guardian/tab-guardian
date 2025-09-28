@@ -122,7 +122,7 @@
     "private_group_unlocked": { "message": "Эта приватная группа разблокирована" },
     "no_tabs_to_save": { "message": "Нет вкладок для сохранения" },
     "tabs_now_saved": { "message": "Вкладки сохранены" },
-    "create_group": { "message": "Создать" },
+    "create": { "message": "Создать" },
     "you_not_selected_tabs": { "message": "Вы не выбрали ни одной вкладки" },
     "tabs_added_to_group": { "message": "Вкладки добавлены в группу" },
     "group_created_without_tabs": {

@@ -122,7 +122,7 @@
     "private_group_unlocked": { "message": "This private group is unlocked" },
     "no_tabs_to_save": { "message": "No tabs to save" },
     "tabs_now_saved": { "message": "Tabs have been saved" },
-    "create_group": { "message": "Create the group" },
+    "create": { "message": "Create" },
     "you_not_selected_tabs": { "message": "You haven't selected any tabs" },
     "tabs_added_to_group": { "message": "Tabs added to the group" },
     "group_created_without_tabs": {
