@@ -1,14 +1,13 @@
 import { isDevelopment } from '@common/modules/isDevelopment'
 import { targetBrowser } from '@common/modules/browser/targetBrowser'
+import { env } from '@common/env'
 
 let translationMessages: null | {
     [key: string]: { message: string }
 } = null
 
 if (isDevelopment()) {
-    const devLocale = import.meta.env.VITE_DEV_LOCALE as 'ru' | 'zh_CH' | 'en'
-
-    translationMessages = (await import(`../../_locales/${devLocale}/messages.json`))
+    translationMessages = (await import(`../../_locales/${env.DEV_LOCALE}/messages.json`))
         .default
 }
 

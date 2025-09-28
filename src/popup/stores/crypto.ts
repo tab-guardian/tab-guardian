@@ -2,9 +2,8 @@ import type { EncryptionAlgo, Group, Link } from '@/types'
 import { reactive, readonly } from 'vue'
 import { defineStore } from 'pinia'
 import { encrypt, decrypt, uint8ArrToString, createEncryptKey, createDecryptKey, stringToUint8Arr } from '@common/modules/webCrypto'
+import { env } from '@common/env'
 import CryptoJS from 'crypto-js'
-
-const DEFAULT_ENCRYPT_ALGO = import.meta.env.VITE_CURR_ENCRYPT_ALGO as EncryptionAlgo
 
 export const useCryptoStore = defineStore('crypto', () => {
     const progress = reactive({
@@ -19,7 +18,7 @@ export const useCryptoStore = defineStore('crypto', () => {
 
     async function encryptGroup(group: Group, pass: string): Promise<Group> {
         const encryptedLinks: Link[] = []
-        const encryptAlgo = group.algo || DEFAULT_ENCRYPT_ALGO
+        const encryptAlgo = group.algo || env.CURR_ENCRYPT_ALGO
 
         progress.max = group.links.length
 
