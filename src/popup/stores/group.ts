@@ -23,6 +23,7 @@ export const useGroupStore = defineStore('group', () => {
     const settingsStore = useSettingsStore()
 
     const groups = ref<Group[]>([])
+    const loadingGroups = ref<boolean>(false)
     const selectedGroup = ref<Group | null>(null)
     const closeSelectedTabs = ref<boolean>(false)
 
@@ -64,6 +65,8 @@ export const useGroupStore = defineStore('group', () => {
     }
 
     async function loadGroupsFromStorage(): Promise<void> {
+        loadingGroups.value = true
+
         const storageGroups = await getGroupsFromStorage()
 
         // Disable hiding groups in incognito because we don't have
@@ -71,6 +74,7 @@ export const useGroupStore = defineStore('group', () => {
         if (isDevelopment()) {
             groups.value = storageGroups
             groups.value.sort((a, b) => b.updatedAt - a.updatedAt)
+            loadingGroups.value = false
             return
         }
 
@@ -265,12 +269,14 @@ export const useGroupStore = defineStore('group', () => {
     async function displayGroups(groupsToDisplay: Group[]): Promise<void> {
         groups.value = await filterGroups(groupsToDisplay)
         groups.value.sort((a, b) => b.updatedAt - a.updatedAt)
+        loadingGroups.value = false
     }
 
     return {
         groups,
         selectedGroup,
         closeSelectedTabs,
+        loadingGroups,
         save,
         deleteGroup,
         deleteLinkFrom,
