@@ -7,11 +7,11 @@ import { showToast } from '@common/modules/showToast'
 import { useRouter } from 'vue-router'
 import { isNameTooLong } from '@/modules/groupValidation'
 import Popup from '@/components/Popups/Popup.vue'
-import Input from '@common/components/Form/Input.vue'
 import Button from '@common/components/Form/Button.vue'
 import ChevronRightIcon from '@common/components/Icons/ChevronRightIcon.vue'
 import BindToUrlSlider from '@/components/Popups/BindToUrlSlider.vue'
 import NameInput from '@common/components/Form/NameInput.vue'
+import PasswordInput from '@common/components/Form/PasswordInput.vue'
 
 const { closePopup, closeAllPopups } = usePopupStore()
 const newGroupStore = useNewGroupStore()
@@ -54,18 +54,16 @@ function submitName(): void {
                 @loaded="inp => inp.focus()"
             />
 
-            <Input
+            <PasswordInput
                 v-if="newGroupStore.choices.isPrivate"
                 v-model="newGroupStore.choices.password"
-                type="password"
                 id="group-password"
                 :label="trans('enter_pass')"
             />
 
-            <Input
+            <PasswordInput
                 v-if="newGroupStore.choices.isPrivate"
                 v-model="newGroupStore.choices.confirmPassword"
-                type="password"
                 id="group-confirm-password"
                 :label="trans('repeat_pass')"
                 :error="newGroupStore.passwordErr"
