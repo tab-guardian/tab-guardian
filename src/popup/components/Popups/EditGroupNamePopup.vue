@@ -51,7 +51,7 @@ async function saveName(): Promise<void> {
         :content="trans('enter_group_name')"
     >
         <form @submit.prevent="saveName" class="flex flex-col gap-3">
-            <NameInput v-model:name="name" />
+            <NameInput v-model:name="name" @loaded="inp => inp.focus()" />
 
             <Button type="submit" :disabled="tooLongName">
                 {{ trans('save') }}

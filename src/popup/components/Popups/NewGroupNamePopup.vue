@@ -49,7 +49,10 @@ function submitName(): void {
         :content="trans('enter_group_name')"
     >
         <form @submit.prevent="submitName" class="flex flex-col gap-3">
-            <NameInput v-model:name="newGroupStore.choices.name" />
+            <NameInput
+                v-model:name="newGroupStore.choices.name"
+                @loaded="inp => inp.focus()"
+            />
 
             <Input
                 v-if="newGroupStore.choices.isPrivate"

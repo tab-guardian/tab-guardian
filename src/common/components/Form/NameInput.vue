@@ -6,6 +6,10 @@ import Input from '@common/components/Form/Input.vue'
 
 const name = defineModel<string | null>('name')
 
+const emit = defineEmits<{
+    (e: 'loaded', input: HTMLInputElement): void
+}>()
+
 const meta = computed<string>(() => {
     if (!name.value) {
         return ''
@@ -19,7 +23,7 @@ const meta = computed<string>(() => {
     <Input
         v-model="name"
         :label="trans('group_name')"
-        @loaded="inp => inp.focus()"
+        @loaded="inp => emit('loaded', inp)"
         :meta
         :maxlength="GROUP_NAME_MAX_LENGTH"
         type="text"
