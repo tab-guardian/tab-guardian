@@ -10,7 +10,7 @@ const emit = defineEmits<{
 
 const inputRef = ref<HTMLInputElement | null>(null)
 
-const props = defineProps<{
+type Props = {
     id: string
     type: 'text' | 'password'
     meta?: string
@@ -22,7 +22,12 @@ const props = defineProps<{
     maxlength?: number
     error?: string | null
     loading?: boolean
-}>()
+}
+
+const props = withDefaults(defineProps<Props>(), {
+    loading: false,
+    withButton: false,
+})
 
 const modelValue = defineModel()
 
