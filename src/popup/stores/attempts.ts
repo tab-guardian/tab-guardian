@@ -4,9 +4,7 @@ import { defineStore } from 'pinia'
 import { trans } from '@common/modules/trans'
 import { saveToStorage, getFromStorage } from '@common/modules/storage'
 import { showToast } from '@common/modules/showToast'
-
-const MAX_ATTEMPTS = 3
-const LOCK_DURATION = 2 // in minutes
+import { env } from '@common/env'
 
 export const useAttemptsStore = defineStore('attempts', () => {
     const attempts = ref<Attempts>({
@@ -58,9 +56,9 @@ export const useAttemptsStore = defineStore('attempts', () => {
 
         attempts.value.amount++
 
-        if (attempts.value.amount > MAX_ATTEMPTS) {
+        if (attempts.value.amount > env.PASS_MAX_ATTEMPTS) {
             attempts.value.isLocked = true
-            attempts.value.lockEndTime = Date.now() + LOCK_DURATION * 60 * 1000
+            attempts.value.lockEndTime = Date.now() + env.PASS_LOCK_DURATION * 60 * 1000
 
             lockedMessageToast()
             saveAttemptsToStorage()
@@ -74,7 +72,7 @@ export const useAttemptsStore = defineStore('attempts', () => {
     }
 
     function lockedMessageToast(): void {
-        const msg = trans('many_attempts_locked_for', LOCK_DURATION.toString())
+        const msg = trans('many_attempts_locked_for', env.PASS_LOCK_DURATION.toString())
         showToast(msg, 'error', 5000)
     }
 
@@ -92,7 +90,7 @@ export const useAttemptsStore = defineStore('attempts', () => {
     }
 
     function hasMaxAttempts(): boolean {
-        return attempts.value.amount >= MAX_ATTEMPTS
+        return attempts.value.amount >= env.PASS_MAX_ATTEMPTS
     }
 
     return {
