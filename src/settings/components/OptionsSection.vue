@@ -8,7 +8,7 @@ import { showToast } from '@common/modules/showToast'
 import Section from '@settings/components/Section.vue'
 import SlideSwitch from '@common/components/Form/SlideSwitch.vue'
 
-const store = useSettingsStore()
+const settingsStore = useSettingsStore()
 const incognitoModeAllowed = ref<boolean>(false)
 
 const incognitoWarningMessage = computed<string | null>(() => {
@@ -27,7 +27,7 @@ onMounted(async () => {
 })
 
 function updateSettings(): void {
-    store.updateSettings()
+    settingsStore.updateSettings()
     showToast(trans('settings_saved'))
 }
 </script>
@@ -38,21 +38,29 @@ function updateSettings(): void {
             <div class="flex flex-col gap-3">
                 <SlideSwitch
                     @changed="updateSettings"
-                    v-model="store.settings.encryptAfterRestore"
+                    v-model="settingsStore.settings.encryptAfterRestore"
                 >
                     {{ trans('lock_group_after_restore') }}
                 </SlideSwitch>
 
                 <SlideSwitch
                     @changed="updateSettings"
-                    v-model="store.settings.overrideWithSameName"
+                    v-model="settingsStore.settings.overrideWithSameName"
                 >
                     {{ trans('override_existing_match') }}
                 </SlideSwitch>
 
                 <SlideSwitch
                     @changed="updateSettings"
-                    v-model="store.settings.showPrivateGroupsOnlyInIncognito"
+                    v-model="settingsStore.settings.rememberPasswordAfterUnlock"
+                    :description="trans('remember_pass_after_unlock_desc')"
+                >
+                    {{ trans('remember_pass_after_unlock') }}
+                </SlideSwitch>
+
+                <SlideSwitch
+                    @changed="updateSettings"
+                    v-model="settingsStore.settings.showPrivateGroupsOnlyInIncognito"
                     :disabled="!incognitoModeAllowed"
                     :warning="incognitoWarningMessage"
                 >
@@ -61,7 +69,7 @@ function updateSettings(): void {
 
                 <SlideSwitch
                     @changed="updateSettings"
-                    v-model="store.settings.showOnlyPrivateGroupsInIncognito"
+                    v-model="settingsStore.settings.showOnlyPrivateGroupsInIncognito"
                     :disabled="!incognitoModeAllowed"
                     :warning="incognitoWarningMessage"
                 >
