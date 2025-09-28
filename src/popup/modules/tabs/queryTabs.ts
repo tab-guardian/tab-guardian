@@ -6,10 +6,8 @@ import { targetBrowser } from '@common/modules/browser/targetBrowser'
 export function queryTabs(queryInfo?: QueryInfo): Promise<Tab[]> {
     return new Promise(async (resolve, reject) => {
         if (isDevelopment()) {
-            console.info(
-                'Cannot query tabs because chrome.tabs.query is not available in development mode',
-            )
-
+            const msg = 'Cannot query tabs because chrome.tabs.query is not available in development mode'
+            console.info(msg)
             resolve([])
             return
         }
