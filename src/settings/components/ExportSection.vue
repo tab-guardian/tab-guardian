@@ -37,7 +37,7 @@ async function exportGroups(): Promise<void> {
 <template>
     <Section
         :title="trans('export_tab_groups')"
-        :subtitle="trans('export_all_your_groups')"
+        :subtitle="trans('export_tab_groups_desc')"
     >
         <Button @clicked="exportGroups" class="mt-4">
             <ArrowDownTrayIcon class="w-5 h-5" />

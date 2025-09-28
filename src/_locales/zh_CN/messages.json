@@ -159,7 +159,7 @@
     "override_existing_match": { "message": "如果新组名与现有组名匹配，则覆盖" },
     "only_private_groups_incognito": { "message": "在浏览器隐身模式（私密模式）中隐藏公共群组" },
     "export_tab_groups": { "message": "导出标签页组" },
-    "export_all_your_groups": {
+    "export_tab_groups_desc": {
         "message": "导出所有标签页组。请注意，私有组不会被导出。如果需要导出私有组，请单独进行"
     },
     "no_groups_export": { "message": "没有组可导出" },

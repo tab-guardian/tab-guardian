@@ -187,7 +187,7 @@
         "message": "Hide public groups from browser incognito (private mode)"
     },
     "export_tab_groups": { "message": "Export Tab Groups" },
-    "export_all_your_groups": {
+    "export_tab_groups_desc": {
         "message": "Export all of your tab groups. Keep in mind that private groups are not going to be exported. If you want to export them, you need to do it for each private group separately"
     },
     "no_groups_export": { "message": "No groups to export" },
