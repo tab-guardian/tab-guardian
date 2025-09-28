@@ -11,7 +11,6 @@ import { useRoute, useRouter } from 'vue-router'
 import { showToast } from '@common/modules/showToast'
 import { savePasswordToStorage } from '@common/modules/storage/password'
 import ShieldCheckIcon from '@common/components/Icons/ShieldCheckIcon.vue'
-import Input from '@common/components/Form/Input.vue'
 import WarningBox from '@common/components/WarningBox.vue'
 import ProgressBar from '@common/components/ProgressBar.vue'
 import PasswordInput from '@common/components/Form/PasswordInput.vue'
@@ -104,8 +103,8 @@ async function openTabsAndEncryptGroup(): Promise<void> {
             <PasswordInput
                 @loaded="inp => inp.focus()"
                 v-model="password"
-                :label="trans('enter_pass')"
                 id="enter-password"
+                :label="trans('enter_pass')"
                 :withButton="true"
                 :loading="decrypting"
             />
