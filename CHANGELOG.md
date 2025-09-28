@@ -15,6 +15,7 @@
 - ✨ Added a spinner to the "Create" button when you create a group or add more links to it [#67](https://github.com/tab-guardian/tab-guardian/issues/67)
 - ✨ Added functionality that prevents from overloading storage. It will give you an error message that you use all of your quota [#58](https://github.com/tab-guardian/tab-guardian/issues/58)
 - ✨ Added "Remember my password after unlock" option to settings which you can toggle [#62](https://github.com/tab-guardian/tab-guardian/issues/62)
+- ✨ Added minimum password length requirement with `6` characters [#63](https://github.com/tab-guardian/tab-guardian/issues/63)
 
 ## v1.12.0 (2025-09-24)
 - ✨ Added improved encryption algoriphm `AES-GCM` with WEB Crypto API without breaking backward compatibility [#54](https://github.com/tab-guardian/tab-guardian/issues/54)

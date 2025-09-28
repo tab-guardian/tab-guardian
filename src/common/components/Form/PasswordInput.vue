@@ -11,6 +11,8 @@ type Props = {
     withButton?: boolean
     loading?: boolean
     error?: string | null
+    minlength?: number
+    maxlength?: number
 }
 
 withDefaults(defineProps<Props>(), {
@@ -31,5 +33,7 @@ const modelValue = defineModel()
         :withButton
         :loading
         :error
+        :minlength
+        :maxlength
     />
 </template>

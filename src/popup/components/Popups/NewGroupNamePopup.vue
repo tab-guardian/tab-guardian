@@ -6,6 +6,7 @@ import { useNewGroupStore } from '@/stores/newGroup'
 import { showToast } from '@common/modules/showToast'
 import { useRouter } from 'vue-router'
 import { isNameTooLong } from '@/modules/groupValidation'
+import { env } from '@common/env'
 import Popup from '@/components/Popups/Popup.vue'
 import Button from '@common/components/Form/Button.vue'
 import ChevronRightIcon from '@common/components/Icons/ChevronRightIcon.vue'
@@ -59,6 +60,7 @@ function submitName(): void {
                 v-model="newGroupStore.choices.password"
                 id="group-password"
                 :label="trans('enter_pass')"
+                :minlength="env.MIN_PASS_LENGTH"
             />
 
             <PasswordInput
@@ -67,6 +69,7 @@ function submitName(): void {
                 id="group-confirm-password"
                 :label="trans('repeat_pass')"
                 :error="newGroupStore.passwordErr"
+                :minlength="env.MIN_PASS_LENGTH"
             />
 
             <div class="flex items-end gap-3 justify-between">

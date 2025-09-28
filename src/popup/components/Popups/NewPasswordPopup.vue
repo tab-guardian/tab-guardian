@@ -1,15 +1,16 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed } from 'vue'
 import { useGroupStore } from '@/stores/group'
 import { trans } from '@common/modules/trans'
 import { usePopupStore } from '@/stores/popup'
 import { showToast } from '@common/modules/showToast'
+import { env } from '@common/env'
 import Popup from '@/components/Popups/Popup.vue'
 import Button from '@common/components/Form/Button.vue'
 import ChevronRightIcon from '@common/components/Icons/ChevronRightIcon.vue'
 import PasswordInput from '@common/components/Form/PasswordInput.vue'
 
-const { closePopup, closeAllPopups } = usePopupStore()
+const { closePopup } = usePopupStore()
 const store = useGroupStore()
 
 const pass = ref<string>('')
@@ -39,6 +40,7 @@ function updatePassword(): void {
                 v-model="pass"
                 id="group-password"
                 :label="trans('enter_pass')"
+                :minlength="env.MIN_PASS_LENGTH"
             />
 
             <PasswordInput
@@ -46,6 +48,7 @@ function updatePassword(): void {
                 id="group-confirm-password"
                 :label="trans('repeat_pass')"
                 :error="passwordErr"
+                :minlength="env.MIN_PASS_LENGTH"
             />
 
             <div class="flex items-end gap-3 justify-between">

@@ -20,6 +20,7 @@ type Props = {
     withButton?: boolean
     placeholder?: string
     maxlength?: number
+    minlength?: number
     error?: string | null
     loading?: boolean
 }
@@ -75,6 +76,7 @@ watchEffect(() => {
                     :placeholder="placeholder || label || ''"
                     :disabled="loading"
                     :maxlength
+                    :minlength
                     autocomplete="off"
                     autocapitalize="off"
                 />
