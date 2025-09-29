@@ -163,6 +163,7 @@
         "message": "Lock the group back after restoring the tabs"
     },
     "erase_all_groups": { "message": "Erase all groups" },
+    "erase_all_groups_desc": { "message": "After erasing all groups, you will not be able to restore them back in any way. This action will also remove all of your private groups." },
     "i_confirm_want_delete_groups": {
         "message": "I confirm that I want to delete all groups"
     },

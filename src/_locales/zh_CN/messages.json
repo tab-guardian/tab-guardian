@@ -145,6 +145,7 @@
     },
     "lock_group_after_restore": { "message": "恢复标签页后重新锁定组" },
     "erase_all_groups": { "message": "删除所有组" },
+    "erase_all_groups_desc": { "message": "删除所有群组后，您将无法以任何方式恢复它们。此操作还将移除您所有的私人群组。" },
     "i_confirm_want_delete_groups": { "message": "我确认要删除所有组" },
     "confirm_want_delete_groups": { "message": "确认要删除所有组" },
     "all_groups_deleted": { "message": "所有组已被删除" },

@@ -38,15 +38,16 @@ async function deleteGroups(): Promise<void> {
 </script>
 
 <template>
-    <Section :title="trans('erase_all_groups')">
-        <div class="flex items-center justify-between gap-3">
-            <Button
-                @clicked="deleteGroups"
-                :icon="TrashIcon"
-                className="bg-red-600 dark:bg-red-400"
-            >
-                {{ trans('erase_all_groups') }}
-            </Button>
-        </div>
+    <Section
+        :title="trans('erase_all_groups')"
+        :subtitle="trans('erase_all_groups_desc')"
+    >
+        <Button
+            @clicked="deleteGroups"
+            :icon="TrashIcon"
+            className="bg-red-600 dark:bg-red-400"
+        >
+            {{ trans('erase_all_groups') }}
+        </Button>
     </Section>
 </template>
