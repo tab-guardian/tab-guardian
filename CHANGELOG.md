@@ -10,6 +10,8 @@
 - 🧑‍💻 Remove `Import` buttom from settings page. Now, when you select a file, it will be automatically uploaded [#60](https://github.com/tab-guardian/tab-guardian/issues/60)
 - 🧑‍💻 Now, you cannot rename private groups without unlocking them [#56](https://github.com/tab-guardian/tab-guardian/issues/56)
 - 🧑‍💻 Change enter password max attempts to 5 and lock duration to 10 minutes. It means you have 5 attempts to enter the correct password, after which you will be unable to enter a password for 10 minutes
+- 🧑‍💻 Refactored settings page into a different design
+- ✨ Added 2 more black and white icons for groups
 - ✨ Added a spinner to the main (home) page where groups are loaded [#70](https://github.com/tab-guardian/tab-guardian/issues/70)
 - ✨ Added a spinner when you export all groups in settings, which indicates that groups are being exported [#68](https://github.com/tab-guardian/tab-guardian/issues/68)
 - ✨ Added a spinner to the "Export a group" button in group popup menu [#66](https://github.com/tab-guardian/tab-guardian/issues/66)
