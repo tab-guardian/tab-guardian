@@ -1,38 +1,37 @@
 <script setup lang="ts">
 import { trans } from '@common/modules/trans'
 import { ref, onMounted } from 'vue'
-import { useSettingsStore } from '@/stores/settings'
+import { useGroupStore } from '@/stores/group'
+import { getPasswordsBytes } from '@common/modules/storage/password'
 import { showToast } from '@common/modules/showToast'
 import Section from '@settings/components/Section.vue'
 import Button from '@common/components/Form/Button.vue'
 import TrashIcon from '@common/components/Icons/TrashIcon.vue'
 
-const settingsStore = useSettingsStore()
+const groupStore = useGroupStore()
+
+const deleting = ref<boolean>(false)
 const bytes = ref<number>(0)
 
 onMounted(async () => await calculateBytes())
 
 async function calculateBytes(): Promise<void> {
-    // TODO: get all the cached passwords
-    // ignore passwords that attached to unlocked groups
-    // turn those into a json file without slashes
-    // calculate the bytes length
-    bytes.value = 111
+    bytes.value = await getPasswordsBytes()
 }
 
 async function clearCache(): Promise<void> {
-    if (settingsStore.loading) {
+    if (bytes.value === 0) {
         return
     }
 
-    settingsStore.loading = true
+    deleting.value = true
 
     // TODO: clear storage
-    bytes.value = 0
+    bytes.value =  0
+
+    deleting.value = false
 
     // showToast(trans('all_groups_deleted'))
-
-    settingsStore.loading = false
 }
 </script>
 
@@ -45,6 +44,7 @@ async function clearCache(): Promise<void> {
         <Button
             @clicked="clearCache"
             :icon="TrashIcon"
+            :loading="deleting"
         >
             {{ trans('clear_cache') }}
         </Button>
