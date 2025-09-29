@@ -11,6 +11,12 @@
             "n": { "content": "$1" }
         }
     },
+    "cache_cleared_on": {
+        "message": "Кеш был очищен на $n$ байт данных",
+        "placeholders": {
+            "n": { "content": "$1" }
+        }
+    },
     "not_enough_storage": {
         "message": "Нельзя превышать квоту хранения. Максимальная квота составляет $n$ МБ, вы используете $n$ МБ",
         "placeholders": {

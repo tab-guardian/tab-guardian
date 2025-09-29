@@ -1,3 +1,4 @@
+import type { PasswordBytes } from '@common/types'
 import { saveToStorage, getFromStorage, deleteFromStorage } from '@common/modules/storage'
 import { getGroupsFromStorage } from '@common/modules/storage/group'
 import { isDevelopment } from '@common/modules/isDevelopment'
@@ -17,12 +18,7 @@ export async function deletePasswordFromStorage(groupId: number): Promise<void> 
     await deleteFromStorage(KEY_PREFIX + groupId)
 }
 
-type PasswordBytes = {
-    groupId: number
-    bytes: number
-}
-
-export async function getPasswordsBytes(): Promise<number> {
+export async function getPasswordsBytes(): Promise<PasswordBytes[]> {
     const pwdBytes: PasswordBytes[] = isDevelopment()
         ? getBytesDev()
         : await getBytesExt()
@@ -32,8 +28,6 @@ export async function getPasswordsBytes(): Promise<number> {
         .map(g => g.id)
 
     return pwdBytes.filter(pwd => !unlockedIds.includes(pwd.groupId))
-        .map(pwd => pwd.bytes)
-        .reduce((prev, curr) => prev + curr, 0)
 }
 
 function getBytesDev(): PasswordBytes[] {

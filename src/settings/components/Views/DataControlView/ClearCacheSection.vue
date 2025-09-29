@@ -1,37 +1,44 @@
 <script setup lang="ts">
+import type { PasswordBytes } from '@common/types'
 import { trans } from '@common/modules/trans'
-import { ref, onMounted } from 'vue'
-import { useGroupStore } from '@/stores/group'
-import { getPasswordsBytes } from '@common/modules/storage/password'
+import { ref, computed, onMounted } from 'vue'
+import { getPasswordsBytes, deletePasswordFromStorage } from '@common/modules/storage/password'
 import { showToast } from '@common/modules/showToast'
 import Section from '@settings/components/Section.vue'
 import Button from '@common/components/Form/Button.vue'
 import TrashIcon from '@common/components/Icons/TrashIcon.vue'
 
-const groupStore = useGroupStore()
-
 const deleting = ref<boolean>(false)
-const bytes = ref<number>(0)
+const passwordBytes = ref<PasswordBytes[]>([])
+
+const bytes = computed<number>(() => {
+    return passwordBytes.value
+        .map(pwd => pwd.bytes)
+        .reduce((prev, curr) => prev + curr, 0)
+})
 
 onMounted(async () => await calculateBytes())
 
 async function calculateBytes(): Promise<void> {
-    bytes.value = await getPasswordsBytes()
+    passwordBytes.value = await getPasswordsBytes()
 }
 
 async function clearCache(): Promise<void> {
-    if (bytes.value === 0) {
+    if (passwordBytes.value.length === 0) {
         return
     }
 
     deleting.value = true
 
-    // TODO: clear storage
-    bytes.value =  0
+    for (const pwd of passwordBytes.value) {
+        await deletePasswordFromStorage(pwd.groupId)
+    } 
 
     deleting.value = false
 
-    // showToast(trans('all_groups_deleted'))
+    showToast(trans('cache_cleared_on', bytes.value.toString()), 5000)
+
+    await calculateBytes()
 }
 </script>
 
