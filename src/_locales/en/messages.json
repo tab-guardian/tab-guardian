@@ -5,6 +5,12 @@
             "n": { "content": "$1" }
         }
     },
+    "clear_cache_desc": {
+        "message": "Free $n$ bytes of cache without loosing any data. It's completely safe and recommended to do.",
+        "placeholders": {
+            "n": { "content": "$1" }
+        }
+    },
     "not_enough_storage": {
         "message": "Cannot exceed storage quota. Maximum quota is $n$ MB, you use $n$ MB",
         "placeholders": {
@@ -186,12 +192,12 @@
     },
     "export_tab_groups": { "message": "Export Tab Groups" },
     "export_tab_groups_desc": {
-        "message": "Export all of your tab groups. Keep in mind that private groups are not going to be exported. If you want to export them, you need to do it for each private group separately"
+        "message": "Export all of your tab groups. Keep in mind that private groups are not going to be exported. If you want to export them, you need to do it for each private group separately."
     },
     "no_groups_export": { "message": "No groups to export" },
     "import_groups": { "message": "Import Tab Groups" },
     "import_private_public_groups": {
-        "message": "Import private or public tab groups"
+        "message": "Import private or public tab groups."
     },
     "choose_exported_file": { "message": "Choose the exported file" },
     "choose_file_import": { "message": "Please choose a file to import" },
@@ -212,6 +218,7 @@
     "nothing_to_paste": { "message": "There is nothing to paste" },
     "general": { "message": "General" },
     "data_control": { "message": "Data Control" },
+    "clear_cache": { "message": "Clear Cache" },
     "remember_pass_after_unlock": { "message": "Remember my password after unlock" },
     "remember_pass_after_unlock_desc": { "message": "If you disable this option, you will need to enter a password everytime when you want to lock any private group. Keeping this option enabled saves password in temporary and secure storage and allows you to lock groups back without entering your password" }
 }

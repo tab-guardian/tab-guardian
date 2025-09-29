@@ -5,6 +5,12 @@
             "n": { "content": "$1" }
         }
     },
+    "clear_cache_desc": {
+        "message": "释放$n$字节缓存空间而不丢失任何数据。此操作完全安全且值得推荐。",
+        "placeholders": {
+            "n": { "content": "$1" }
+        }
+    },
     "not_enough_storage": {
         "message": "存储配额已满。最大配额为 $n$ 兆字节，您已使用 $n$ 兆字节",
         "placeholders": {
@@ -160,11 +166,11 @@
     "only_private_groups_incognito": { "message": "在浏览器隐身模式（私密模式）中隐藏公共群组" },
     "export_tab_groups": { "message": "导出标签页组" },
     "export_tab_groups_desc": {
-        "message": "导出所有标签页组。请注意，私有组不会被导出。如果需要导出私有组，请单独进行"
+        "message": "导出所有标签页组。请注意，私有组不会被导出。如果需要导出私有组，请单独进行。"
     },
     "no_groups_export": { "message": "没有组可导出" },
     "import_groups": { "message": "导入标签页组" },
-    "import_private_public_groups": { "message": "导入私有或公共标签页组" },
+    "import_private_public_groups": { "message": "导入私有或公共标签页组。" },
     "choose_exported_file": { "message": "选择导出的文件" },
     "choose_file_import": { "message": "请选择一个文件进行导入" },
     "failed_decrypt_file": { "message": "解密文件失败" },
@@ -184,6 +190,7 @@
     "nothing_to_paste": { "message": "没有内容可粘贴" },
     "general": { "message": "总则" },
     "data_control": { "message": "数据控制" },
+    "clear_cache": { "message": "清除缓存" },
     "remember_pass_after_unlock": { "message": "解锁后记住我的密码" },
     "remember_pass_after_unlock_desc": { "message": "若禁用此选项，每次锁定私人群组时均需输入密码。保持此选项启用状态，系统会将密码存储在临时且安全的存储空间中，您无需再次输入密码即可重新锁定群组" }
 }
