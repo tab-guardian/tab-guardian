@@ -159,9 +159,6 @@
     "type_any_image_url_to_set_it": {
         "message": "Type any image URL to set it as a group icon"
     },
-    "change_the_conf_here": {
-        "message": "Change the extension configurations here"
-    },
     "lock_group_after_restore": {
         "message": "Lock the group back after restoring the tabs"
     },
@@ -212,6 +209,8 @@
     "new_password": { "message": "New password" },
     "uses_old_encrypt_impl": { "message": "This group uses the old encryption implementation. You can fix it by unlocking this group and locking it back" },
     "nothing_to_paste": { "message": "There is nothing to paste" },
+    "general": { "message": "General" },
+    "data_control": { "message": "Data Control" },
     "remember_pass_after_unlock": { "message": "Remember my password after unlock" },
     "remember_pass_after_unlock_desc": { "message": "If you disable this option, you will need to enter a password everytime when you want to lock any private group. Keeping this option enabled saves password in temporary and secure storage and allows you to lock groups back without entering your password" }
 }

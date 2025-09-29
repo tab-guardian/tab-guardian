@@ -3,36 +3,23 @@ import { onMounted } from 'vue'
 import { useSettingsStore } from '@/stores/settings'
 import { trans } from '@common/modules/trans'
 import Spinner from '@common/components/Spinner.vue'
-import OptionsSection from '@settings/components/OptionsSection.vue'
-import EraseSection from '@settings/components/EraseSection.vue'
-import ExportSection from '@settings/components/ExportSection.vue'
-import ImportSection from '@settings/components/ImportSection.vue'
+import SettingsSidebar from '@settings/components/SettingsSidebar.vue'
 
-const store = useSettingsStore()
+const settingsStore = useSettingsStore()
 
 onMounted(() => {
-    store.loadSettingsFromStorage()
+    settingsStore.loadSettingsFromStorage()
 })
 </script>
 
 <template>
-    <div class="container py-7">
-        <h1 class="text-4xl font-bold">{{ trans('settings') }}</h1>
-        <p class="text-xl">
-            {{ trans('change_the_conf_here') }}
-        </p>
+    <div class="max-w-[1000px] mx-3 md:mx-auto">
+        <Spinner v-if="settingsStore.loading" />
 
-        <Spinner v-if="store.loading" />
-
-        <div v-else class="grid grid-cols-1 lg:grid-cols-2 gap-5 mt-4">
-            <div class="flex flex-col gap-4">
-                <OptionsSection />
-            </div>
-
-            <div class="flex flex-col gap-4">
-                <EraseSection />
-                <ExportSection />
-                <ImportSection />
+        <div v-else class="grid grid-cols-1 md:grid-cols-[220px_3fr] mt-3">
+            <SettingsSidebar />
+            <div class="bg-page border border-border p-5 rounded-xl">
+                <RouterView />
             </div>
         </div>
     </div>
