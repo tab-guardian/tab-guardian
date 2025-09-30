@@ -5,6 +5,10 @@
     margin-left: 8px;
 }
 
+.swal2-container {
+    position: absolute !important;
+}
+
 [data-tippy-root] {
     overflow-wrap: break-word;
 }
