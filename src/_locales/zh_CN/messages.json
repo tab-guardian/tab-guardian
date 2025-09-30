@@ -169,14 +169,14 @@
         "message": "进入扩展设置，启用 “允许在隐身状态下”、“允许在私人状态下 ”或 “在私人窗口中运行 ”选项"
     },
     "override_existing_match": { "message": "如果新组名与现有组名匹配，则覆盖" },
-    "only_private_groups_incognito": { "message": "在浏览器隐身模式（私密模式）中隐藏公共群组" },
+    "only_private_groups_incognito": { "message": "在浏览器隐身模式（私密模式）中隐藏已打开的群组" },
     "export_tab_groups": { "message": "导出标签页组" },
     "export_tab_groups_desc": {
         "message": "导出所有标签页组。请注意，私有组不会被导出。如果需要导出私有组，请单独进行。"
     },
     "no_groups_export": { "message": "没有组可导出" },
     "import_groups": { "message": "导入标签页组" },
-    "import_private_public_groups": { "message": "导入私有或公共标签页组。" },
+    "import_private_and_open_groups": { "message": "导入私人和公开群组。" },
     "choose_exported_file": { "message": "选择导出的文件" },
     "choose_file_import": { "message": "请选择一个文件进行导入" },
     "failed_decrypt_file": { "message": "解密文件失败" },
@@ -198,5 +198,7 @@
     "data_control": { "message": "数据控制" },
     "clear_cache": { "message": "清除缓存" },
     "remember_pass_after_unlock": { "message": "解锁后记住我的密码" },
+    "make_group_open": { "message": "设置为公开群组" },
+    "are_you_sure_to_make_group_open": { "message": "您确定要将此群组设为公开吗？这意味着访问该群组时无需输入密码" },
     "remember_pass_after_unlock_desc": { "message": "若禁用此选项，每次锁定私人群组时均需输入密码。保持此选项启用状态，系统会将密码存储在临时且安全的存储空间中，您无需再次输入密码即可重新锁定群组" }
 }

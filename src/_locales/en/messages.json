@@ -194,7 +194,7 @@
         "message": "If the new group name matches an existing one, override it"
     },
     "only_private_groups_incognito": {
-        "message": "Hide public groups from browser incognito (private mode)"
+        "message": "Hide open groups from browser incognito (private mode)"
     },
     "export_tab_groups": { "message": "Export Tab Groups" },
     "export_tab_groups_desc": {
@@ -202,8 +202,8 @@
     },
     "no_groups_export": { "message": "No groups to export" },
     "import_groups": { "message": "Import Tab Groups" },
-    "import_private_public_groups": {
-        "message": "Import private or public tab groups."
+    "import_private_and_open_groups": {
+        "message": "Import private and open groups."
     },
     "choose_exported_file": { "message": "Choose the exported file" },
     "choose_file_import": { "message": "Please choose a file to import" },
@@ -226,5 +226,7 @@
     "data_control": { "message": "Data Control" },
     "clear_cache": { "message": "Clear Cache" },
     "remember_pass_after_unlock": { "message": "Remember my password after unlock" },
+    "make_group_open": { "message": "Make group open" },
+    "are_you_sure_to_make_group_open": { "message": "Are you sure you want to make this group open? It means that you don't need to enter a password to access this group" },
     "remember_pass_after_unlock_desc": { "message": "If you disable this option, you will need to enter a password everytime when you want to lock any private group. Keeping this option enabled saves password in temporary and secure storage and allows you to lock groups back without entering your password" }
 }
