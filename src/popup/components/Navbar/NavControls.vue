@@ -10,7 +10,10 @@ const notificationStore = useNotificationStore()
 
 <template>
     <div class="flex gap-2 items-center absolute right-2">
-        <Control v-if="notificationStore.notification">
+        <Control
+            v-if="notificationStore.notification"
+            v-tippy="notificationStore.notification"
+        >
             <div class="rounded-full bg-orange-400 size-3 absolute top-0 right-0"></div>
             <BellIcon />
         </Control>
