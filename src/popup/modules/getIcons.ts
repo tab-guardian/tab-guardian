@@ -53,6 +53,7 @@ import CopyIcon from '@common/components/Icons/CopyIcon.vue'
 import PasteIcon from '@common/components/Icons/PasteIcon.vue'
 import PlusIcon from '@common/components/Icons/PlusIcon.vue'
 import CircleStackIcon from '@common/components/Icons/CircleStackIcon.vue'
+import LockOpenIcon from '@common/components/Icons/LockOpenIcon.vue'
 
 export function getIcons(): { [key: string]: Component } {
     return {
@@ -62,6 +63,7 @@ export function getIcons(): { [key: string]: Component } {
         StarIcon,
         TrashIcon,
         LockClosedIcon,
+        LockOpenIcon,
         ArrowLeftEndIcon,
         PhotoIcon,
         WalletIcon,
