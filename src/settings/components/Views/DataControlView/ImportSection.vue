@@ -89,7 +89,7 @@ async function fileChosen(f: File, elem: HTMLInputElement): Promise<void> {
 <template>
     <Section
         :title="trans('import_groups')"
-        :subtitle="trans('import_private_public_groups')"
+        :subtitle="trans('import_private_and_open_groups')"
     >
         <div class="space-y-4">
             <FileInput
