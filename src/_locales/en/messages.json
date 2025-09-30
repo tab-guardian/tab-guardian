@@ -6,7 +6,7 @@
         }
     },
     "you_have_unlocked_groups": {
-        "message": "You have $n$ unlocked private groups. Please don't forget to lock them back when you need it.",
+        "message": "You have $n$ unlocked private groups. Please don't forget to lock them back when you no longer need it.",
         "placeholders": {
             "n": { "content": "$1" }
         }
