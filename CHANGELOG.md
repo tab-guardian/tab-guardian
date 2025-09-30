@@ -1,6 +1,6 @@
 # Release Notes
 
-## v1.13.0 (2025-09-29)
+## v1.13.0 (2025-09-30)
 - 🐛 Fixed issue with creating private group and it wouldn't remember the password the user entered. Plus, this change improved the performance of creating a private group
 - 🐛 Fixed incorrect bytes calculation on Firefox-based browsers. It was showing used space a little bit more than it really was
 - 🧑‍💻 Remove "import" button from importing groups on settings page [#60](https://github.com/tab-guardian/tab-guardian/issues/60)
@@ -12,7 +12,7 @@
 - 🧑‍💻 Change enter password max attempts to 5 and lock duration to 10 minutes. It means you have 5 attempts to enter the correct password, after which you will be unable to enter a password for 10 minutes
 - 🧑‍💻 Refactored settings page into a different design
 - 🧑‍💻 Added "Clear Cache" section to settings which only appears if you have any useless data in your cache that can be safely deleted to free up the space
-- ✨ Added 2 more black and white icons for groups
+- ✨ Added 3 more black and white icons for groups
 - ✨ Added a spinner to the main (home) page where groups are loaded [#70](https://github.com/tab-guardian/tab-guardian/issues/70)
 - ✨ Added a spinner when you export all groups in settings, which indicates that groups are being exported [#68](https://github.com/tab-guardian/tab-guardian/issues/68)
 - ✨ Added a spinner to the "Export a group" button in group popup menu [#66](https://github.com/tab-guardian/tab-guardian/issues/66)
@@ -20,6 +20,7 @@
 - ✨ Added functionality that prevents from overloading storage. It will give you an error message that you used all of your quota [#58](https://github.com/tab-guardian/tab-guardian/issues/58)
 - ✨ Added "Remember my password after unlock" option to settings, which you can toggle [#62](https://github.com/tab-guardian/tab-guardian/issues/62)
 - ✨ Added minimum password length requirement with `6` characters [#63](https://github.com/tab-guardian/tab-guardian/issues/63)
+- ✨ Added the ability to make your private groups open [#69](https://github.com/tab-guardian/tab-guardian/issues/69)
 
 ## v1.12.0 (2025-09-24)
 - ✨ Added improved encryption algoriphm `AES-GCM` with WEB Crypto API without breaking backward compatibility [#54](https://github.com/tab-guardian/tab-guardian/issues/54)
