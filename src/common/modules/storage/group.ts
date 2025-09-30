@@ -76,7 +76,5 @@ function decodeGroup(group: Group): Group {
         }
     })
 
-    return {
-        ...group, links
-    }
+    return { ...group, links }
 }
