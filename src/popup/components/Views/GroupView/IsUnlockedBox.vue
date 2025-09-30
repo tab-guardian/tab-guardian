@@ -8,6 +8,8 @@ import { useCryptoStore } from '@/stores/crypto'
 import { useSettingsStore } from '@/stores/settings'
 import { showToast } from '@common/modules/showToast'
 import { getPasswordFromStorage, deletePasswordFromStorage } from '@common/modules/storage/password'
+import { countUnlockedGroups, deleteHasUnlockedGroupsFlag } from '@common/modules/storage/unlockedGroups'
+import { clearWarningBadge } from '@common/modules/badge'
 import LockClosedIcon from '@common/components/Icons/LockClosedIcon.vue'
 import WarningBox from '@common/components/WarningBox.vue'
 import SmallSpinner from '@common/components/SmallSpinner.vue'
@@ -66,6 +68,13 @@ async function lockGroup(pass: string): Promise<void> {
 
     await groupStore.save(encrypted)
     await deletePasswordFromStorage(group.id)
+
+    const unlockedGroupsCount = await countUnlockedGroups()
+
+    if (unlockedGroupsCount === 0) {
+        await deleteHasUnlockedGroupsFlag()
+        await clearWarningBadge()
+    }
 
     encrypting.value = false
 

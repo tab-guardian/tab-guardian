@@ -10,6 +10,8 @@ import { useCryptoStore } from '@/stores/crypto'
 import { useRoute, useRouter } from 'vue-router'
 import { showToast } from '@common/modules/showToast'
 import { savePasswordToStorage } from '@common/modules/storage/password'
+import { setHasUnlockedGroupsFlag } from '@common/modules/storage/unlockedGroups'
+import { renderWarningBadge } from '@common/modules/badge'
 import ShieldCheckIcon from '@common/components/Icons/ShieldCheckIcon.vue'
 import WarningBox from '@common/components/WarningBox.vue'
 import ProgressBar from '@common/components/ProgressBar.vue'
@@ -63,6 +65,10 @@ async function unlockGroup(): Promise<void> {
     await groupStore.save(decryptedGroup)
 
     resetAttempts()
+
+    // Show the warning badge on the extension icon
+    await renderWarningBadge()
+    await setHasUnlockedGroupsFlag()
 
     // With this, we don't need to type password to lock the
     // group after just unlocking it
