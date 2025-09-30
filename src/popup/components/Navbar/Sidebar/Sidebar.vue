@@ -4,11 +4,12 @@ import { trans } from '@common/modules/trans'
 import { openSettingsPage } from '@/modules/openSettingsPage'
 import { isFirefox } from '@common/modules/browser/isFirefox'
 import { getImageURL } from '@common/modules/browser/url'
-import Hamburger from '@/components/Navbar/Sidebar/Hamburger.vue'
+import Control from '@/components/Control.vue'
 import RightSlideTransition from '@common/components/Transitions/RightSlideTransition.vue'
 import Overlay from '@/components/Navbar/Sidebar/Overlay.vue'
 import StarIcon from '@common/components/Icons/StarIcon.vue'
 import CogIcon from '@common/components/Icons/CogIcon.vue'
+import MenuIcon from '@common/components/Icons/MenuIcon.vue'
 import SidebarLink from '@/components/Navbar/Sidebar/SidebarLink.vue'
 import Heading from '@/components/Navbar/Sidebar/Heading.vue'
 import GitHubIcon from '@common/components/Icons/GitHubIcon.vue'
@@ -45,7 +46,13 @@ const links = [
 </script>
 
 <template>
-    <Hamburger />
+    <Control
+        @click="sidebarStore.toggle()"
+        type="button"
+        class="absolute left-2"
+    >
+        <MenuIcon />
+    </Control>
 
     <Teleport to="body">
         <Overlay v-if="sidebarStore.isOpen" @click="sidebarStore.toggle()" />
