@@ -5,6 +5,12 @@
             "n": { "content": "$1" }
         }
     },
+    "you_have_unlocked_groups": {
+        "message": "您当前拥有$n$个未锁定的私人群组。请务必在需要时及时重新锁定它们。",
+        "placeholders": {
+            "n": { "content": "$1" }
+        }
+    },
     "clear_cache_desc": {
         "message": "释放$n$字节缓存空间而不丢失任何数据。此操作完全安全且值得推荐。",
         "placeholders": {

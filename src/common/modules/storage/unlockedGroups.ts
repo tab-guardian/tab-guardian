@@ -12,10 +12,6 @@ export async function hasUnlockedGroupsFlag(): Promise<boolean> {
     return flag === '1'
 }
 
-export async function getHasUnlockedGroupsFlag(): Promise<string | null> {
-    return await getFromStorage<string>(KEY)
-}
-
 export async function deleteHasUnlockedGroupsFlag(): Promise<void> {
     await deleteFromStorage(KEY)
 }

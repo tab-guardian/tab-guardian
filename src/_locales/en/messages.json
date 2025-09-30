@@ -5,6 +5,12 @@
             "n": { "content": "$1" }
         }
     },
+    "you_have_unlocked_groups": {
+        "message": "You have $n$ unlocked private groups. Please don't forget to lock them back when you need it.",
+        "placeholders": {
+            "n": { "content": "$1" }
+        }
+    },
     "clear_cache_desc": {
         "message": "Free $n$ bytes of cache without loosing any data. It's completely safe and recommended to do.",
         "placeholders": {
