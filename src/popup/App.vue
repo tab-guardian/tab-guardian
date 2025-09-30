@@ -1,19 +1,25 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import { useSettingsStore } from '@/stores/settings'
+import { useNotificationStore } from '@/stores/notification'
 import Navbar from '@/components/Navbar/Navbar.vue'
 import AppearTransition from '@common/components/Transitions/AppearTransition.vue'
 import Popups from '@/components/Popups/Popups.vue'
 
 const { loadSettingsFromStorage } = useSettingsStore()
+const { recalculateNotification } = useNotificationStore()
 
-onMounted(() => {
-    loadSettingsFromStorage()
+onMounted(async () => {
+    handleDarkThem()
+    await loadSettingsFromStorage()
+    await recalculateNotification()
+})
 
+function handleDarkThem(): void {
     if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
         document.body.classList.add('dark')
     }
-})
+}
 </script>
 
 <template>

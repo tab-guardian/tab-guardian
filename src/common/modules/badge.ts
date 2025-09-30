@@ -1,5 +1,5 @@
 import { targetBrowser } from "@common/modules/browser/targetBrowser"
-import { isDevelopment } from "./isDevelopment"
+import { isDevelopment } from "@common/modules/isDevelopment"
 
 export async function renderWarningBadge(): Promise<void> {
     if (isDevelopment()) {
