@@ -64,7 +64,7 @@ function submit(): void {
         <template #buttons>
             <PopupButton
                 @click="closePopup('chooseEmoji')"
-                :isSecondary="true"
+                :is-secondary="true"
             >
                 {{ trans('cancel') }}
             </PopupButton>

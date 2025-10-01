@@ -28,7 +28,7 @@ const isEncrypted = computed<boolean>(() => {
 
 <template>
     <Popup :content="trans('additional_options')" @cancel="closePopup('groupMenuView')">
-        <div v-if="group" >
+        <div v-if="group">
             <p
                 v-if="isEncrypted"
                 class="mt-2 pt-2 text-font-gray border-t border-border"
@@ -37,9 +37,7 @@ const isEncrypted = computed<boolean>(() => {
             </p>
 
             <div v-else class="space flex flex-col gap-1 mt-3">
-                <RouterLink
-                    :to="{ name: 'groupDetails', params: { id: group.id } }"
-                >
+                <RouterLink :to="{ name: 'groupDetails', params: { id: group.id } }">
                     <MenuItem :label="trans('details')" :icon="InfoCircleIcon" />
                 </RouterLink>
 

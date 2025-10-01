@@ -29,7 +29,7 @@ const groupStore = useGroupStore()
                 v-for="link in group.links"
                 :key="link.id"
                 :link="link"
-                :groupId="group.id"
+                :group-id="group.id"
             />
         </VueDraggableNext>
     </div>

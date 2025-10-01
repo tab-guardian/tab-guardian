@@ -115,7 +115,7 @@ async function openTabsAndEncryptGroup(): Promise<void> {
                 v-model="password"
                 id="enter-password"
                 :label="trans('enter_pass')"
-                :withButton="true"
+                :with-button="true"
                 :loading="decrypting"
             />
         </form>

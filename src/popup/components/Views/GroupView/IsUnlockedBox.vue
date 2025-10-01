@@ -86,7 +86,7 @@ async function lockGroup(pass: string): Promise<void> {
                 :icon="LockClosedIcon"
                 :loading="encrypting"
                 @click="promptEnterPassword"
-                className="bg-unsafe hover:bg-unsafe-hover text-white"
+                class-name="bg-unsafe hover:bg-unsafe-hover text-white"
             >
                 {{ trans('lock') }}
             </Button>

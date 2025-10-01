@@ -66,7 +66,7 @@ async function chooseImageIcon(): Promise<void> {
         <template #buttons>
             <PopupButton
                 @click="closePopup('chooseImageIcon')"
-                :isSecondary="true"
+                :is-secondary="true"
             >
                 {{ trans('cancel') }}
             </PopupButton>

@@ -41,7 +41,7 @@ async function deleteGroup(): Promise<void> {
         <template #buttons>
             <PopupButton
                 @click="closePopup('deleteGroup')"
-                :isSecondary="true"
+                :is-secondary="true"
             >
                 {{ trans('no') }}
             </PopupButton>

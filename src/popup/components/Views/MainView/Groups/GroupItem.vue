@@ -41,7 +41,6 @@ const groupClasses = computed(() => {
     <RouterLink
         :to="{ name: 'group', params: { id: group.id } }"
         :class="groupClasses"
-        class="group"
     >
         <div class="flex items-center gap-2">
             <div v-if="group.isPrivate" class="w-6 h-6">

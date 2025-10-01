@@ -36,7 +36,7 @@ async function openTabLinkPopup(): Promise<void> {
     <LinkElement
         @click="openTab"
         @click.prevent.right="openTabLinkPopup"
-        :className="linkIsCut(link.id) ? 'opacity-50' : ''"
+        :class-name="linkIsCut(link.id) ? 'opacity-50' : ''"
         :link
     >
         <DeleteLinkButton @click.stop :linkId="link.id" :groupId />

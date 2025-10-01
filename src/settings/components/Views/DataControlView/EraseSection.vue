@@ -45,7 +45,7 @@ async function deleteGroups(): Promise<void> {
         <Button
             @clicked="deleteGroups"
             :icon="TrashIcon"
-            className="bg-red-600 dark:bg-red-400"
+            class-name="bg-red-600 dark:bg-red-400"
         >
             {{ trans('erase_all_groups') }}
         </Button>

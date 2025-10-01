@@ -6,7 +6,7 @@ type Props = {
     icon: Component
 }
 
-const { label, icon } = defineProps<Props>()
+defineProps<Props>()
 </script>
 
 <template>

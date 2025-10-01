@@ -52,8 +52,9 @@ async function dropFile(e: DragEvent): Promise<void> {
         <span
             class="text-xl pointer-events-none"
             :class="drag ? 'text-green-500' : 'text-gray-500'"
-            >{{ label }}</span
         >
+            {{ label }}
+        </span>
 
         <input
             class="hidden pointer-events-none"

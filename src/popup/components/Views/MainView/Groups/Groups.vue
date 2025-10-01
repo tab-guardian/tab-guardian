@@ -23,7 +23,7 @@ onMounted(async () => {
 
     <div v-else class="flex flex-col">
         <div v-for="group in groupStore.groups" :key="group.id">
-            <GroupItem :group="group" v-if="!group.hide" />
+            <GroupItem v-if="!group.hide" :group />
         </div>
     </div>
 </template>

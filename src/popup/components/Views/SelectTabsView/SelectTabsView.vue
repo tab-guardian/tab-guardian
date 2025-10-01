@@ -192,7 +192,7 @@ function toggleSelect(link: Link): void {
                     v-for="link in links"
                     :key="link.id"
                     :link
-                    :isSelected="selectedLinks.some(l => l.id === link.id)"
+                    :is-selected="selectedLinks.some(l => l.id === link.id)"
                     @toggle="toggleSelect(link)"
                 />
             </VueDraggableNext>
