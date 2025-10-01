@@ -5,6 +5,18 @@
             "n": { "content": "$1" }
         }
     },
+    "passwords_min_length": {
+        "message": "Password needs to be at least $n$ characters",
+        "placeholders": {
+            "n": { "content": "$1" }
+        }
+    },
+    "passwords_min_length": {
+        "message": "Password needs to be at least $n$ characters",
+        "placeholders": {
+            "n": { "content": "$1" }
+        }
+    },
     "you_have_unlocked_groups": {
         "message": "You have $n$ unlocked private groups. Please don't forget to lock them back when you no longer need it.",
         "placeholders": {

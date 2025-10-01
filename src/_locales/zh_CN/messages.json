@@ -5,6 +5,12 @@
             "n": { "content": "$1" }
         }
     },
+    "passwords_min_length": {
+        "message": "密码必须至少包含 $n$ 个字符",
+        "placeholders": {
+            "n": { "content": "$1" }
+        }
+    },
     "you_have_unlocked_groups": {
         "message": "您当前拥有$n$个未锁定的私人群组。请务必在不再需要时将其重新锁定。",
         "placeholders": {
