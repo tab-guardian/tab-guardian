@@ -173,7 +173,7 @@ export const useGroupStore = defineStore('group', () => {
                 }
             }
 
-            await save(group)
+            await save(group, false)
         }
 
         await loadGroupsFromStorage()
@@ -261,8 +261,10 @@ export const useGroupStore = defineStore('group', () => {
         await save(group)
     }
 
-    async function save(group: Group): Promise<void> {
-        group.updatedAt = Date.now()
+    async function save(group: Group, updateTimestamp = true): Promise<void> {
+        if (updateTimestamp) {
+            group.updatedAt = Date.now()
+        }
 
         await saveGroupToStorage(group)
 

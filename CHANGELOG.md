@@ -3,6 +3,7 @@
 ## v1.13.0 (2025-10-01)
 - 🐛 Fixed issue with creating private group and it wouldn't remember the password the user entered. Plus, this change improved the performance of creating a private group
 - 🐛 Fixed incorrect bytes calculation on Firefox-based browsers. It was showing used space a little bit more than it really was
+- 🐛 Fixed wrong groups sort order when you import all groups. Now, groups will be in the same order that they were when you exported them
 - 🧑‍💻 Remove "import" button from importing groups on settings page [#60](https://github.com/tab-guardian/tab-guardian/issues/60)
 - 🧑‍💻 A lot of refactoring and rewriting logic for creating a new group
 - 🧑‍💻 When you add a new tab to a group, it will be appended to the end instead of the list
