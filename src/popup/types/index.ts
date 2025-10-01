@@ -5,6 +5,7 @@ export type UserChoices = {
     password: string | null
     confirmPassword: string | null
     wantsSelectAllLinks: boolean | null
+    bindURL: string | null
 }
 
 export type SelectTabsOperation = 'adding' | 'creating'

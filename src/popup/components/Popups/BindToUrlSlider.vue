@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { trans } from '@common/modules/trans'
-import { useGroupStore } from '@/stores/group'
+import { useNewGroupStore } from '@/stores/newGroup'
 import { getCurrentURL } from '@/modules/getCurrentURL'
 import { showToast } from '@common/modules/showToast'
 import { hashURL } from '@/modules/url/hashURL'
 import SlideSwitch from '@common/components/Form/SlideSwitch.vue'
 
-const store = useGroupStore()
+const newGroupStore = useNewGroupStore()
 
 const currURL = ref<string | null>(null)
 const bindTip = ref<string>(trans('bind_group_url', 'unknown'))
@@ -31,7 +31,7 @@ async function setBindTip(): Promise<void> {
 
 function attachBindURL(checked: boolean): void {
     if (!checked) {
-        store.newGroup.bindURL = null
+        newGroupStore.choices.bindURL = null
         return
     }
 
@@ -41,12 +41,16 @@ function attachBindURL(checked: boolean): void {
         return
     }
 
-    store.newGroup.bindURL = hashURL(currURL.value)
+    newGroupStore.choices.bindURL = hashURL(currURL.value)
 }
 </script>
 
 <template>
-    <SlideSwitch v-tippy="bindTip" :disabled="!currURL" @changed="attachBindURL">
+    <SlideSwitch
+        v-tippy="bindTip"
+        :disabled="!currURL"
+        @changed="attachBindURL"
+    >
         <div class="flex items-center gap-1">
             {{ trans('bind_to_this_url') }}
         </div>

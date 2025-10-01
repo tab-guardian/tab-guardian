@@ -13,6 +13,7 @@ export const useNewGroupStore = defineStore('newGroup', () => {
         password: null,
         confirmPassword: null,
         wantsSelectAllLinks: null,
+        bindURL: null,
     })
 
     const nameLength = computed<number>(() => {
@@ -21,7 +22,7 @@ export const useNewGroupStore = defineStore('newGroup', () => {
     })
 
     function createGroupFromChoices(links: Link[]): Group {
-        return {
+        const group: Group = {
             id: generateGroupId(),
             name: choices.value.name || getDefaultGroupName(),
             isPrivate: choices.value.isPrivate || false,
@@ -30,6 +31,12 @@ export const useNewGroupStore = defineStore('newGroup', () => {
             createdAt: Date.now(),
             links,
         }
+
+        if (choices.value.bindURL) {
+            group.bindURL = choices.value.bindURL
+        }
+
+        return group
     }
 
     function isPasswordEmpty(): boolean {
