@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import { trans } from '@common/modules/trans'
 import { useSettingsStore } from '@/stores/settings'
+import { useNotificationStore } from '@/stores/notification'
 import { useCryptoStore } from '@/stores/crypto'
 import { showToast } from '@common/modules/showToast'
 import { isDevelopment } from '@common/modules/isDevelopment'
@@ -21,6 +22,7 @@ import {
 export const useGroupStore = defineStore('group', () => {
     const cryptoStore = useCryptoStore()
     const settingsStore = useSettingsStore()
+    const notificationStore = useNotificationStore()
 
     const groups = ref<Group[]>([])
     const loadingGroups = ref<boolean>(false)
@@ -192,11 +194,13 @@ export const useGroupStore = defineStore('group', () => {
     async function deleteGroup(groupId: number): Promise<void> {
         groups.value = groups.value.filter(g => g.id !== groupId)
         await deleteGroupFromStorage(groupId)
+        await notificationStore.recalculateNotification()
     }
 
     async function deleteAllGroups(): Promise<void> {
         groups.value = []
         await deleteAllGroupsFromStorage()
+        await notificationStore.recalculateNotification()
     }
 
     async function deleteAllLinks(groupId: number): Promise<void> {
