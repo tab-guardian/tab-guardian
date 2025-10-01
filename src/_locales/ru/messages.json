@@ -66,7 +66,7 @@
     "details": { "message": "Детали" },
     "group_details": { "message": "Детали Группы" },
     "you_can_find_details_here": {
-        "message": "Ты можешь найти все детали группы здесь"
+        "message": "Вы можете найти все детали группы здесь"
     },
     "tabs_count": { "message": "Кол-во вкладок" },
     "is_private": { "message": "Приватная" },
@@ -74,7 +74,7 @@
     "last_saved": { "message": "Последнее сохранение" },
     "yes": { "message": "Да" },
     "no": { "message": "Нет" },
-    "lock": { "message": "Заблокировать" },
+    "lock": { "message": "Закрыть" },
     "rebind": { "message": "Отвязать" },
     "bound_to_url": { "message": "Привязана к URL" },
     "opened_tabs_times": { "message": "Открыто вкладок раз" },

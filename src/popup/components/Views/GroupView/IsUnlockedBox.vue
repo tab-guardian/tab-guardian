@@ -13,6 +13,7 @@ import LockClosedIcon from '@common/components/Icons/LockClosedIcon.vue'
 import WarningBox from '@common/components/WarningBox.vue'
 import SmallSpinner from '@common/components/SmallSpinner.vue'
 import ProgressBar from '@common/components/ProgressBar.vue'
+import Button from '@common/components/Form/Button.vue'
 
 const { group } = defineProps<{ group: Group }>()
 const groupStore = useGroupStore()
@@ -80,21 +81,15 @@ async function lockGroup(pass: string): Promise<void> {
     />
 
     <WarningBox :message="trans('private_group_unlocked')">
-        <div class="w-52 flex flex-col items-center gap-1.5">
-            <button
-                :disabled="encrypting"
+        <div class="w-52 flex flex-col items-end gap-1.5">
+            <Button
+                :icon="LockClosedIcon"
+                :loading="encrypting"
                 @click="promptEnterPassword"
-                :class="[
-                    'bg-unsafe px-3 py-2 rounded-md w-36',
-                    'text-sm text-bg font-semibold',
-                    'flex items-center gap-2 justify-center',
-                    encrypting ? 'opacity-70' : 'hover:bg-unsafe-hover',
-                ]"
+                className="bg-unsafe hover:bg-unsafe-hover text-white"
             >
-                <SmallSpinner v-if="encrypting" width="18" height="18" />
-                <LockClosedIcon v-else width="18" height="18" />
                 {{ trans('lock') }}
-            </button>
+            </Button>
 
             <label
                 v-if="settingsStore.settings.rememberPasswordAfterUnlock"
