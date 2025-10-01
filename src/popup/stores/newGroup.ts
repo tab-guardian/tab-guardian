@@ -3,7 +3,6 @@ import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import { getDefaultGroupName } from '@/modules/getDefaultGroupName'
 import { generateGroupId } from '@common/modules/generateGroupId'
-import { passwordError } from '@/modules/groupValidation'
 
 export const useNewGroupStore = defineStore('newGroup', () => {
     // null suggest that there was no choice yet
@@ -16,27 +15,9 @@ export const useNewGroupStore = defineStore('newGroup', () => {
         wantsSelectAllLinks: null,
     })
 
-    const passwordErr = computed<string | null>(() => {
-        return passwordError(
-            choices.value.password,
-            choices.value.confirmPassword,
-        )
-    })
-
     const nameLength = computed<number>(() => {
         choices.value.name ??= ''
         return choices.value.name.length
-    })
-
-    const preventPasswordSubmit = computed<boolean>(() => {
-        if (!choices.value.isPrivate) {
-            return false
-        }
-
-        const pass = choices.value.password
-        const confirm = choices.value.confirmPassword
-
-        return (!!passwordErr.value || !pass || !confirm)
     })
 
     function createGroupFromChoices(links: Link[]): Group {
@@ -66,8 +47,6 @@ export const useNewGroupStore = defineStore('newGroup', () => {
     return {
         nameLength,
         choices,
-        preventPasswordSubmit,
-        passwordErr,
         createGroupFromChoices,
         isPasswordEmpty,
         resetChoices,

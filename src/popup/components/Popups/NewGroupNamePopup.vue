@@ -4,23 +4,25 @@ import { trans } from '@common/modules/trans'
 import { usePopupStore } from '@/stores/popup'
 import { useNewGroupStore } from '@/stores/newGroup'
 import { showToast } from '@common/modules/showToast'
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { isNameTooLong } from '@/modules/groupValidation'
-import { env } from '@common/env'
 import Popup from '@/components/Popups/Popup.vue'
 import Button from '@common/components/Form/Button.vue'
 import ChevronRightIcon from '@common/components/Icons/ChevronRightIcon.vue'
 import BindToUrlSlider from '@/components/Popups/BindToUrlSlider.vue'
 import NameInput from '@common/components/Form/NameInput.vue'
-import PasswordInput from '@common/components/Form/PasswordInput.vue'
+import PasswordFields from '@/components/PasswordFields.vue'
 
 const { closePopup, closeAllPopups } = usePopupStore()
 const newGroupStore = useNewGroupStore()
 const router = useRouter()
 
+const preventSubmit = ref<boolean>(true)
+
 function submitName(): void {
-    if (newGroupStore.preventPasswordSubmit) {
-        console.info('Preventing password submit. Validation failed')
+    if (preventSubmit.value) {
+        console.warn('Cannot submit because has some errors')
         return
     }
 
@@ -55,21 +57,11 @@ function submitName(): void {
                 @loaded="inp => inp.focus()"
             />
 
-            <PasswordInput
+            <PasswordFields
                 v-if="newGroupStore.choices.isPrivate"
-                v-model="newGroupStore.choices.password"
-                id="group-password"
-                :label="trans('enter_pass')"
-                :minlength="env.MIN_PASS_LENGTH"
-            />
-
-            <PasswordInput
-                v-if="newGroupStore.choices.isPrivate"
-                v-model="newGroupStore.choices.confirmPassword"
-                id="group-confirm-password"
-                :label="trans('repeat_pass')"
-                :error="newGroupStore.passwordErr"
-                :minlength="env.MIN_PASS_LENGTH"
+                v-model:pass="newGroupStore.choices.password"
+                v-model:confirm="newGroupStore.choices.confirmPassword"
+                @has-error="hasErr => preventSubmit = hasErr"
             />
 
             <div class="flex items-end gap-3 justify-between">
@@ -78,7 +70,7 @@ function submitName(): void {
 
                 <Button
                     type="submit"
-                    :disabled="newGroupStore.preventPasswordSubmit"
+                    :disabled="preventSubmit"
                     :icon="ChevronRightIcon"
                 >
                     {{ trans('select') }}
