@@ -6,6 +6,7 @@ import { usePopupStore } from '@/stores/popup'
 import { useGroupStore } from '@/stores/group'
 import { showToast } from '@common/modules/showToast'
 import { useAppStore } from '@/stores/app'
+import { limitString } from '@common/modules/limitString'
 import Popup from '@/components/Popups/Popup.vue'
 import MenuItem from '@/components/MenuItem.vue'
 import ScissorsIcon from '@common/components/Icons/ScissorsIcon.vue'
@@ -51,7 +52,7 @@ async function cutLink(): Promise<void> {
 <template>
     <Popup
         v-if="group && link"
-        :content="link.title"
+        :content="limitString(link.title, 25)"
         @cancel="closePopup('linkMenuView')"
     >
         <div class="flex flex-col gap-1 mt-3">
