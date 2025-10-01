@@ -55,6 +55,10 @@ npm i
 cp .env.example .env
 ```
 
+**Check `.env` file**
+Check your `.env` file and set `VITE_DEV_LOCALE` to language that you prefer.
+
+
 ### Code style
 Don't worry about the code style. We use [Prettier](https://prettier.io/) to format the code. You can run it manually by executing `yarn prettier` or `npm run prettier` to format the code, or `yarn prettier-check` or `npm run prettier-check` to check if the code is formatted correctly.
 
