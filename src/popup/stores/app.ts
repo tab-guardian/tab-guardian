@@ -17,7 +17,7 @@ export const useAppStore = defineStore('app', () => {
     const linkBuffer = ref<LinkBuffer | null>(null)
     const bufferIsEmpty = computed<boolean>(() => linkBuffer.value === null)
 
-    const { saveLinksTo, deleteLink } = useGroupStore()
+    const { saveLinksTo, deleteLinkFrom } = useGroupStore()
     const { closeAllPopups } = usePopupStore()
 
     function linkIsCut(linkId: number): boolean {
@@ -40,7 +40,7 @@ export const useAppStore = defineStore('app', () => {
         await saveLinksTo(groupId, [link])
 
         if (linkBuffer.value.action === 'cut') {
-            await deleteLink(
+            await deleteLinkFrom(
                 linkBuffer.value.groupId,
                 linkBuffer.value.link.id,
             )
