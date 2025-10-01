@@ -5,17 +5,12 @@ import Sidebar from '@/components/Navbar/Sidebar/Sidebar.vue'
 </script>
 
 <template>
-    <nav
-        :class="[
-            'flex justify-between align-center h-9 bg-secondary',
-            'shadow-md py-1 px-2 relative',
-        ]"
-    >
+    <nav class="h-9 flex items-center justify-center bg-secondary shadow-md py-1 px-2 relative">
         <Sidebar />
 
         <RouterLink
             :to="{ name: 'main' }"
-            class="inline-flex items-center transition-colors hover:bg-secondary-hover mx-auto px-3 rounded-md text-md"
+            class="block transition-colors hover:bg-secondary-hover px-3 rounded-md text-md"
         >
             {{ trans('ext_name') }}
         </RouterLink>

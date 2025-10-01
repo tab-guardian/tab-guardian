@@ -14,11 +14,7 @@ import WarningBox from '@common/components/WarningBox.vue'
 import SmallSpinner from '@common/components/SmallSpinner.vue'
 import ProgressBar from '@common/components/ProgressBar.vue'
 
-type Props = {
-    group: Group
-}
-
-const { group } = defineProps<Props>()
+const { group } = defineProps<{ group: Group }>()
 const groupStore = useGroupStore()
 const cryptoStore = useCryptoStore()
 const settingsStore = useSettingsStore()
@@ -89,7 +85,7 @@ async function lockGroup(pass: string): Promise<void> {
                 :disabled="encrypting"
                 @click="promptEnterPassword"
                 :class="[
-                    'bg-unsafe px-3 py-2 rounded-md w-32',
+                    'bg-unsafe px-3 py-2 rounded-md w-36',
                     'text-sm text-bg font-semibold',
                     'flex items-center gap-2 justify-center',
                     encrypting ? 'opacity-70' : 'hover:bg-unsafe-hover',

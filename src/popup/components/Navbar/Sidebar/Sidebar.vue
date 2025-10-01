@@ -46,7 +46,7 @@ const links = [
 </script>
 
 <template>
-    <Control @click="sidebarStore.toggle()" class="absolute left-1">
+    <Control @click="sidebarStore.toggle()" class="!absolute left-2">
         <MenuIcon />
     </Control>
 
