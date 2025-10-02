@@ -1,4 +1,3 @@
-import { targetBrowser } from "@common/modules/browser/targetBrowser"
 import { isDevelopment } from "@common/modules/isDevelopment"
 import { isFirefox } from "@common/modules/browser/isFirefox"
 
@@ -8,12 +7,8 @@ export async function renderWarningBadge(): Promise<void> {
         return
     }
 
-    const action = isFirefox()
-        ? browser.browserAction
-        : chrome.action
-
-    await action.setBadgeText({ text: '!' })
-    await action.setBadgeBackgroundColor({ color: [245, 159, 0, 255] })
+    await getAction().setBadgeText({ text: '!' })
+    await getAction().setBadgeBackgroundColor({ color: [245, 159, 0, 255] })
 }
 
 export async function clearWarningBadge(): Promise<void> {
@@ -22,5 +17,9 @@ export async function clearWarningBadge(): Promise<void> {
         return
     }
 
-    await targetBrowser().browserAction.setBadgeText({ text: '' })
+    await getAction().setBadgeText({ text: '' })
+}
+
+function getAction(): typeof browser.browserAction | typeof chrome.action {
+    return isFirefox() ? browser.browserAction : chrome.action
 }
