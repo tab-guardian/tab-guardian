@@ -22,13 +22,13 @@
 - ✨ Added "Remember my password after unlock" option to settings, which you can toggle [#62](https://github.com/tab-guardian/tab-guardian/issues/62)
 - ✨ Added minimum password length requirement with `6` characters [#63](https://github.com/tab-guardian/tab-guardian/issues/63)
 - ✨ Added the ability to make your private groups open [#69](https://github.com/tab-guardian/tab-guardian/issues/69)
-- ✨ Extension icon shows a red warning square when you have at least 1 private group unlocked. It also adds a bell icon to the navbar that tells you that you have a private group unlocked
+- ✨ Extension icon shows a red warning square when you have at least 1 private group unlocked. It also adds a bell icon to the navbar that tells you that you have a private group unlocked [#52](https://github.com/tab-guardian/tab-guardian/issues/52)
 
 ## v1.12.0 (2025-09-24)
 - ✨ Added improved encryption algoriphm `AES-GCM` with WEB Crypto API without breaking backward compatibility [#54](https://github.com/tab-guardian/tab-guardian/issues/54)
 - ✨ Added showing a warning message on private groups that use the old encryption implementation to suggest them to re-encrypt for improved security
 - ✨ Added a loading spinner that appears when you unlock and lock the private group [#55](https://github.com/tab-guardian/tab-guardian/issues/55)
-- ✨ Added a progress bar that shows progress on encryption and decryption of groups [#52](https://github.com/tab-guardian/tab-guardian/issues/52)
+- ✨ Added a progress bar that shows progress on encryption and decryption of groups
 - 🧑‍💻 Change password attempts from 2 to 3 for incorrect password because 3 is a sweet spot
 - 🧑‍💻 Change keybind from `command + k` to `control+command+k` on macos
 
