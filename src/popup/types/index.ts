@@ -1,3 +1,15 @@
+export type UserChoices = {
+    isPrivate: boolean | null
+    name: string | null
+    closeTabs: boolean | null
+    password: string | null
+    confirmPassword: string | null
+    wantsSelectAllLinks: boolean | null
+    bindURL: string | null
+}
+
+export type SelectTabsOperation = 'adding' | 'creating'
+
 export type Link = {
     id: number
     title: string
@@ -25,20 +37,12 @@ export type Group = {
     algo?: EncryptionAlgo
 }
 
-export type NewGroup = {
-    name: string
-    isPrivate: boolean
-    password: string
-    confirmPassword: string
-    bindURL: string | null
-    createdAt?: number
-}
-
 export type Settings = {
     encryptAfterRestore: boolean
     showPrivateGroupsOnlyInIncognito: boolean
     overrideWithSameName: boolean
     showOnlyPrivateGroupsInIncognito: boolean
+    rememberPasswordAfterUnlock: boolean
 }
 
 type PopupItem = {
@@ -56,6 +60,7 @@ export type Popups = {
     newPassword: PopupItem
     linkMenuView: PopupItem
     newGroupName: PopupItem
+    editGroupName: PopupItem
 }
 
 export type Modals = {
@@ -63,8 +68,6 @@ export type Modals = {
     group: boolean
     selectTabs: boolean
 }
-
-export type SelectTabsOperation = 'adding' | 'creating'
 
 export type Attempts = {
     amount: number

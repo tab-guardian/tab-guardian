@@ -11,7 +11,7 @@ type Props = {
 }
 
 const { group } = defineProps<Props>()
-const store = useGroupStore()
+const groupStore = useGroupStore()
 </script>
 
 <template>
@@ -23,13 +23,13 @@ const store = useGroupStore()
         <VueDraggableNext
             v-model="group.links"
             class="space-y-2"
-            @change="store.saveGroup(group)"
+            @change="groupStore.save(group)"
         >
             <LinkItem
                 v-for="link in group.links"
                 :key="link.id"
                 :link="link"
-                :groupId="group.id"
+                :group-id="group.id"
             />
         </VueDraggableNext>
     </div>

@@ -3,7 +3,6 @@ import { isDevelopment } from '@common/modules/isDevelopment'
 import { targetBrowser } from '@common/modules/browser/targetBrowser'
 import { queryTabs } from '@/modules/tabs/queryTabs'
 import { isFirefox } from '@common/modules/browser/isFirefox'
-import { error } from '@common/modules/error'
 
 export async function restoreTabs(links: Link[]): Promise<void> {
     if (isDevelopment()) {
@@ -18,7 +17,7 @@ export async function restoreTabs(links: Link[]): Promise<void> {
         // Exclude opening links that start from `about:` keyword.
         // The only exception is `about:blank` which can be open.
         if (isFire && link.url !== 'about:blank' && link.url.startsWith('about:')) {
-            error.info(`Can't open ${link.url}. Firefox doesn't allow to open links that start with 'about:' word`)
+            console.info(`Can't open ${link.url}. Firefox doesn't allow to open links that start with 'about:' word`)
             continue
         }
 
@@ -33,8 +32,15 @@ export async function restoreTabs(links: Link[]): Promise<void> {
 }
 
 async function closeEmptyTab(): Promise<void> {
+    const closeTabsWithURLs = [
+        'about:newtab',
+        'about:blank',
+        'about:privatebrowsing',
+        'chrome://newtab/',
+    ]
+
     const tabs = await queryTabs({
-        url: isFirefox() ? 'about:newtab' : 'chrome://newtab/',
+        url: closeTabsWithURLs,
         currentWindow: true,
         active: true,
     })

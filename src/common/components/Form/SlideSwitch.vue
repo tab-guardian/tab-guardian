@@ -8,6 +8,7 @@ const emit = defineEmits<{
 defineProps<{
     disabled?: boolean
     warning?: string | null
+    description?: string | null
 }>()
 
 const modelValue = defineModel()
@@ -38,7 +39,10 @@ watch(modelValue, () => {
 
         <small class="text-sm text-font-gray ml-3">
             <slot />
-            <span v-if="warning" class="dark:text-red-300 text-red-500 block">
+            <span v-if="description" class="opacity-75 block text-xs">
+                {{ description }}
+            </span>
+            <span v-if="warning" class="dark:text-red-300 text-red-500 block text-xs">
                 {{ warning }}
             </span>
         </small>

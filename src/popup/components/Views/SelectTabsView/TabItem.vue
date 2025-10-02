@@ -1,38 +1,28 @@
 <script setup lang="ts">
 import type { Link } from '@/types'
-import { useSelectTabsStore } from '@/stores/selectTabs'
 import LinkElement from '@/components/LinkElement.vue'
 
-type Props = {
-    link: Link
-}
+const emit = defineEmits<{
+    (e: 'toggle'): void
+}>()
 
-const { link } = defineProps<Props>()
-const store = useSelectTabsStore()
+defineProps<{
+    link: Link
+    isSelected: boolean
+}>()
 </script>
 
 <template>
-    <LinkElement
-        :isSelected="store.selectedIds.includes(link.id)"
-        :link
-        @click="store.toggleSelect(link.id)"
-    >
+    <LinkElement @click="emit('toggle')" :isSelected :link>
         <label
             :class="[
                 'w-4 h-4 shrink-0 border border-border flex items-center justify-center',
                 'cursor-pointer rounded-full',
             ]"
         >
-            <input
-                @change="store.toggleSelect(link.id)"
-                type="checkbox"
-                class="hidden"
-            />
+            <input @change="emit('toggle')" type="checkbox" class="hidden" />
 
-            <div
-                v-if="store.selectedIds.includes(link.id)"
-                class="w-3 h-3 bg-private rounded-full"
-            ></div>
+            <div v-if="isSelected" class="w-3 h-3 bg-private rounded-full"></div>
         </label>
     </LinkElement>
 </template>

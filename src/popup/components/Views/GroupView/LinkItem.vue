@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { Link } from '@/types'
 import { useGroupStore } from '@/stores/group'
-import { error } from '@common/modules/error'
 import { restoreTabs } from '@/modules/tabs/restoreTabs'
 import { usePopupStore } from '@/stores/popup'
 import { useAppStore } from '@/stores/app'
@@ -19,9 +18,9 @@ const { openPopup, setSharedData } = usePopupStore()
 
 async function openTab(): Promise<void> {
     if (groupStore.selectedGroup) {
-        await groupStore.saveGroup(groupStore.selectedGroup)
+        await groupStore.save(groupStore.selectedGroup)
     } else {
-        error.err(`Group with id ${props.groupId} is not selected as selectedGroup`)
+        console.error(`Group with id ${props.groupId} is not selected as selectedGroup`)
     }
 
     await restoreTabs([props.link])
@@ -37,7 +36,7 @@ async function openTabLinkPopup(): Promise<void> {
     <LinkElement
         @click="openTab"
         @click.prevent.right="openTabLinkPopup"
-        :className="linkIsCut(link.id) ? 'opacity-50' : ''"
+        :class-name="linkIsCut(link.id) ? 'opacity-50' : ''"
         :link
     >
         <DeleteLinkButton @click.stop :linkId="link.id" :groupId />

@@ -6,24 +6,24 @@ import { trans } from '@common/modules/trans'
 import { useRoute } from 'vue-router'
 import View from '@/components/Views/View.vue'
 import Links from '@/components/Views/GroupView/Links.vue'
-import GroupName from '@/components/Views/GroupView/GroupName.vue'
 import MenuButton from '@/components/Views/GroupView/GroupControls/MenuButton.vue'
 import EnterPassword from '@/components/Views/GroupView/EnterPassword.vue'
 import Actions from '@/components/Views/GroupView/GroupControls/Actions/Actions.vue'
 import IsUnlockedBox from '@/components/Views/GroupView/IsUnlockedBox.vue'
 import Message from '@common/components/Message.vue'
+import GroupIcon from '@/components/Views/MainView/Groups/GroupIcon.vue'
 
-const { params } = useRoute()
-const store = useGroupStore()
+const route = useRoute()
+const groupStore = useGroupStore()
 
 const group = computed<Group | null>(() => {
-    const id = params.id
+    const id = route.params.id
 
     if (!id) {
         return null
     }
 
-    return store.getGroupById(Number(id))
+    return groupStore.getGroupById(Number(id))
 })
 
 const showButtons = computed<boolean>(() => {
@@ -31,19 +31,22 @@ const showButtons = computed<boolean>(() => {
 })
 
 watchEffect(() => {
-    store.selectedGroup = group.value
+    groupStore.selectedGroup = group.value
 })
 </script>
 
 <template>
-    <View>
+    <View :routeLocation="{ name: 'main' }">
         <template #controls>
             <Actions v-if="group && showButtons" :group />
             <MenuButton />
         </template>
 
         <div v-if="group">
-            <GroupName :group />
+            <div class="flex items-center gap-1 relative">
+                <GroupIcon v-if="group.icon" :group />
+                <h2 class="text-lg my-1 px-2 py-0.5">{{ group.name }}</h2>
+            </div>
 
             <IsUnlockedBox v-if="group.isPrivate && !group.isEncrypted" :group />
 

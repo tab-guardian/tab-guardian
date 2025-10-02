@@ -6,7 +6,6 @@ import { usePopupStore } from '@/stores/popup'
 import { useRouter } from 'vue-router'
 import { validateURL } from '@/modules/url/validateURL'
 import { hashURL } from '@/modules/url/hashURL'
-import { error } from '@common/modules/error'
 import { showToast } from '@common/modules/showToast'
 import Popup from '@/components/Popups/Popup.vue'
 import Button from '@common/components/Form/Button.vue'
@@ -27,7 +26,7 @@ async function rebindGroup(): Promise<void> {
     }
 
     if (!groupStore.selectedGroup) {
-        error.warn('No group selected rebinding URL')
+        console.warn('No group selected rebinding URL')
         return
     }
 
@@ -41,7 +40,7 @@ async function rebindGroup(): Promise<void> {
     })
 
     groupStore.selectedGroup.bindURL = hashURL(url.value)
-    groupStore.saveGroup(groupStore.selectedGroup)
+    groupStore.save(groupStore.selectedGroup)
 
     showToast(trans('group_rebind_successful'))
 }
@@ -65,8 +64,12 @@ async function rebindGroup(): Promise<void> {
                 :error="errorMessage"
             />
 
-            <Button type="submit" :disabled="preventSubmit" class="mt-3">
-                <CheckIcon width="20" height="20" />
+            <Button
+                type="submit"
+                :disabled="preventSubmit"
+                :icon="CheckIcon"
+                class="mt-3"
+            >
                 {{ trans('rebind') }}
             </Button>
         </form>

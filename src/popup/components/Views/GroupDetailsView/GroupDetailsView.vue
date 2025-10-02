@@ -25,7 +25,6 @@ const group = computed<Group | null>(() => store.getGroupById(groupId))
 
 <template>
     <View
-        class="select-tabs"
         :title="trans('group_details')"
         :subtitle="trans('you_can_find_details_here')"
     >

@@ -14,7 +14,7 @@ export const routes = [
         component: GroupDetailsView,
     },
     {
-        path: '/select-tabs',
+        path: '/select-tabs/:operation?',
         name: 'select-tabs',
         component: SelectTabsView,
     },

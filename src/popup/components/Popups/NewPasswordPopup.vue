@@ -1,31 +1,27 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { ref } from 'vue'
 import { useGroupStore } from '@/stores/group'
 import { trans } from '@common/modules/trans'
 import { usePopupStore } from '@/stores/popup'
 import { showToast } from '@common/modules/showToast'
 import Popup from '@/components/Popups/Popup.vue'
-import Input from '@common/components/Form/Input.vue'
 import Button from '@common/components/Form/Button.vue'
 import ChevronRightIcon from '@common/components/Icons/ChevronRightIcon.vue'
+import PasswordFields from '@/components/PasswordFields.vue'
 
-const { closePopup, closeAllPopups } = usePopupStore()
+const { closePopup } = usePopupStore()
 const store = useGroupStore()
 
 const pass = ref<string>('')
 const confirmPass = ref<string>('')
-
-const passwordErr = computed<string>(() => {
-    return confirmPass.value.length > 0 && pass.value !== confirmPass.value
-        ? trans('passwords_not_match')
-        : ''
-})
-
-const preventPasswordSubmit = computed<boolean>(() => {
-    return !!passwordErr.value || !pass.value || !confirmPass.value
-})
+const preventSubmit = ref<boolean>(true)
 
 function updatePassword(): void {
+    if (preventSubmit.value) {
+        console.warn('Cannot submit because password error')
+        return
+    }
+
     store.updatePassword(pass.value)
     showToast(trans('pass_updated'))
     closePopup('newPassword', pass.value)
@@ -35,27 +31,20 @@ function updatePassword(): void {
 <template>
     <Popup @cancel="closePopup('newPassword')" :content="trans('enter_new_pass')">
         <form @submit.prevent="updatePassword" class="flex flex-col gap-3">
-            <Input
-                v-model="pass"
-                type="password"
-                id="group-password"
-                :label="trans('enter_pass')"
+            <PasswordFields
+                v-model:pass="pass"
+                v-model:confirm="confirmPass"
+                @loaded="el => el.focus()"
+                @has-error="hasErr => preventSubmit = hasErr"
             />
 
-            <Input
-                v-model="confirmPass"
-                type="password"
-                id="group-confirm-password"
-                :label="trans('repeat_pass')"
-                :error="passwordErr"
-            />
-
-            <div class="flex items-end gap-3 justify-between">
-                <Button type="submit" :disabled="preventPasswordSubmit">
-                    {{ trans('save') }}
-                    <ChevronRightIcon width="20" height="20" />
-                </Button>
-            </div>
+            <Button
+                type="submit"
+                :disabled="preventSubmit"
+                :icon="ChevronRightIcon"
+            >
+                {{ trans('save') }}
+            </Button>
         </form>
     </Popup>
 </template>

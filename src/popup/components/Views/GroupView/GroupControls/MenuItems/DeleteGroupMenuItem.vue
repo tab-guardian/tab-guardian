@@ -6,7 +6,7 @@ import { usePopupStore } from '@/stores/popup'
 
 const { closePopup, openPopup } = usePopupStore()
 
-function deleteGroup(): void {
+async function deleteGroup(): Promise<void> {
     closePopup('groupMenuView')
     openPopup('deleteGroup')
 }

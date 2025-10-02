@@ -14,6 +14,7 @@ import MenuItem from '@/components/MenuItem.vue'
 import PhotoIcon from '@common/components/Icons/PhotoIcon.vue'
 import InfoCircleIcon from '@common/components/Icons/InfoCircleIcon.vue'
 import PasteLinkMenuItem from '@/components//Views/GroupView/GroupControls/MenuItems/PasteLinkMenuItem.vue'
+import MakeGroupPublicItem from '@/components//Views/GroupView/GroupControls/MenuItems/MakeGroupPublicItem.vue'
 import Message from '@common/components/Message.vue'
 
 const { closePopup } = usePopupStore()
@@ -27,7 +28,7 @@ const isEncrypted = computed<boolean>(() => {
 
 <template>
     <Popup :content="trans('additional_options')" @cancel="closePopup('groupMenuView')">
-        <div v-if="group" >
+        <div v-if="group">
             <p
                 v-if="isEncrypted"
                 class="mt-2 pt-2 text-font-gray border-t border-border"
@@ -36,13 +37,12 @@ const isEncrypted = computed<boolean>(() => {
             </p>
 
             <div v-else class="space flex flex-col gap-1 mt-3">
-                <RouterLink
-                    :to="{ name: 'groupDetails', params: { id: group.id } }"
-                >
+                <RouterLink :to="{ name: 'groupDetails', params: { id: group.id } }">
                     <MenuItem :label="trans('details')" :icon="InfoCircleIcon" />
                 </RouterLink>
 
                 <PasteLinkMenuItem :group />
+                <MakeGroupPublicItem v-if="group.isPrivate" :group />
                 <AddLinkMenuItem />
                 <RenameGroupMenuItem />
                 <ExportGroupMenuItem />

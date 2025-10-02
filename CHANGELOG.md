@@ -1,5 +1,29 @@
 # Release Notes
 
+## v1.13.0 (2025-10-02)
+- 🐛 Fixed issue with creating private group and it wouldn't remember the password the user entered. Plus, this change improved the performance of creating a private group
+- 🐛 Fixed incorrect bytes calculation on Firefox-based browsers. It was showing used space a little bit more than it really was
+- 🐛 Fixed wrong groups sort order when you import all groups. Now, groups will be in the same order that they were when you exported them
+- 🧑‍💻 Remove "import" button from importing groups on settings page [#60](https://github.com/tab-guardian/tab-guardian/issues/60)
+- 🧑‍💻 A lot of refactoring and rewriting logic for creating a new group
+- 🧑‍💻 When you add a new tab to a group, it will be appended to the end instead of the list
+- 🧑‍💻 Now, when you open tabs, additional empty pages like `about:blank` and `about:privatebrowsing` will be automatically closed [#64](https://github.com/tab-guardian/tab-guardian/issues/64)
+- 🧑‍💻 Remove `Import` buttom from settings page. Now, when you select a file, it will be automatically uploaded [#60](https://github.com/tab-guardian/tab-guardian/issues/60)
+- 🧑‍💻 Now, you cannot rename private groups without unlocking them [#56](https://github.com/tab-guardian/tab-guardian/issues/56)
+- 🧑‍💻 Change enter password max attempts to 5 and lock duration to 10 minutes. It means you have 5 attempts to enter the correct password, after which you will be unable to enter a password for 10 minutes
+- 🧑‍💻 Refactored settings page into a different design
+- 🧑‍💻 Added "Clear Cache" section to settings which only appears if you have any useless data in your cache that can be safely deleted to free up the space
+- ✨ Added 3 more black and white icons for groups
+- ✨ Added a spinner to the main (home) page where groups are loaded [#70](https://github.com/tab-guardian/tab-guardian/issues/70)
+- ✨ Added a spinner when you export all groups in settings, which indicates that groups are being exported [#68](https://github.com/tab-guardian/tab-guardian/issues/68)
+- ✨ Added a spinner to the "Export a group" button in group popup menu [#66](https://github.com/tab-guardian/tab-guardian/issues/66)
+- ✨ Added a spinner to the "Create" button when you create a group or add more links to it [#67](https://github.com/tab-guardian/tab-guardian/issues/67)
+- ✨ Added functionality that prevents from overloading storage. It will give you an error message that you used all of your quota [#58](https://github.com/tab-guardian/tab-guardian/issues/58)
+- ✨ Added "Remember my password after unlock" option to settings, which you can toggle [#62](https://github.com/tab-guardian/tab-guardian/issues/62)
+- ✨ Added minimum password length requirement with `6` characters [#63](https://github.com/tab-guardian/tab-guardian/issues/63)
+- ✨ Added the ability to make your private groups open [#69](https://github.com/tab-guardian/tab-guardian/issues/69)
+- ✨ Extension icon shows a red warning square when you have at least 1 private group unlocked. It also adds a bell icon to the navbar that tells you that you have a private group unlocked [#52](https://github.com/tab-guardian/tab-guardian/issues/52)
+
 ## v1.12.0 (2025-09-24)
 - ✨ Added improved encryption algoriphm `AES-GCM` with WEB Crypto API without breaking backward compatibility [#54](https://github.com/tab-guardian/tab-guardian/issues/54)
 - ✨ Added showing a warning message on private groups that use the old encryption implementation to suggest them to re-encrypt for improved security

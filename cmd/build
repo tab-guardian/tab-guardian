@@ -47,21 +47,22 @@ build_zip_archive () {
 
     echo "⏳ LOADING: archiving $ZIP_NAME..."
 
-    # Rename versionaled manifest to a regular manifest.json
-    mv "$MANIFEST_PATH" "$REGULAR_MANIFEST_PATH"
+    # Create manifest without a version suffix
+    cp -f "$MANIFEST_PATH" "$REGULAR_MANIFEST_PATH"
 
     compile_assets
 
     cd dist && zip -r ../"$ZIP_NAME" . && cd -
 
-    # Rename regular manifest.json back to a versioned
-    mv "$REGULAR_MANIFEST_PATH" "$MANIFEST_PATH" 
+    # Remove regular manifest.json file
+    rm "$REGULAR_MANIFEST_PATH"
 
     echo "✅ SUCCESS: archived: $ZIP_NAME"
 }
 
 compile_assets () {
     echo "⏳ LOADING: compiling assets 'npm run build'..."
+    npm run type-check
     npm run build
     echo "✅ SUCCESS: 'npm run build'"
 }

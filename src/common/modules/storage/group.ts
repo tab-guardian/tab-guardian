@@ -1,6 +1,6 @@
 import type { Group } from '@/types'
 import { saveToStorage, getFromStorage, deleteFromStorage } from '@common/modules/storage'
-import { error } from '@common/modules/error'
+import { cloneDeep } from 'lodash'
 import {
     getGroupIdsFromStorage,
     saveGroupIdsToStorage,
@@ -30,7 +30,8 @@ export async function getGroupsFromStorage(): Promise<Group[]> {
         const group = await getFromStorage<Group>(groupId.toString())
 
         if (!group) {
-            error.err(`Group with id ${groupId} not found in storage`)
+            console.error(`Group ${groupId} not found in storage, deleting it...`)
+            await deleteGroupIdFromStorage(groupId)
             continue
         }
 
@@ -49,10 +50,8 @@ export async function saveGroupToStorage(group: Group): Promise<void> {
         }
     })
 
-    const newGroup = {
-        ...group,
-        links,
-    }
+    const newGroup = cloneDeep(group)
+    newGroup.links = links
 
     const ids = await getGroupIdsFromStorage()
 
@@ -77,7 +76,5 @@ function decodeGroup(group: Group): Group {
         }
     })
 
-    return {
-        ...group, links
-    }
+    return { ...group, links }
 }

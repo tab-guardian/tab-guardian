@@ -7,19 +7,19 @@ type Props = {
 
 const { to } = defineProps<Props>()
 
-const classes = [
+const className = [
     'w-7 h-7 flex items-center justify-center border border-transparent',
     'rounded-md color-font p-0.5 transition-all opacity-90',
-    'hover:opacity-100 hover:border-border',
+    'hover:opacity-100 hover:border-border relative',
 ]
 </script>
 
 <template>
-    <RouterLink v-if="to" :to :class="classes">
+    <RouterLink v-if="to" :to :class="className">
         <slot />
     </RouterLink>
 
-    <button type="button" v-else :class="classes">
+    <button type="button" v-else :class="className">
         <slot />
     </button>
 </template>

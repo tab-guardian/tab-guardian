@@ -4,11 +4,12 @@ import { trans } from '@common/modules/trans'
 import { openSettingsPage } from '@/modules/openSettingsPage'
 import { isFirefox } from '@common/modules/browser/isFirefox'
 import { getImageURL } from '@common/modules/browser/url'
-import Hamburger from '@/components/Navbar/Sidebar/Hamburger.vue'
+import Control from '@/components/Control.vue'
 import RightSlideTransition from '@common/components/Transitions/RightSlideTransition.vue'
 import Overlay from '@/components/Navbar/Sidebar/Overlay.vue'
 import StarIcon from '@common/components/Icons/StarIcon.vue'
 import CogIcon from '@common/components/Icons/CogIcon.vue'
+import MenuIcon from '@common/components/Icons/MenuIcon.vue'
 import SidebarLink from '@/components/Navbar/Sidebar/SidebarLink.vue'
 import Heading from '@/components/Navbar/Sidebar/Heading.vue'
 import GitHubIcon from '@common/components/Icons/GitHubIcon.vue'
@@ -45,7 +46,9 @@ const links = [
 </script>
 
 <template>
-    <Hamburger />
+    <Control @click="sidebarStore.toggle()" class="!absolute left-2">
+        <MenuIcon />
+    </Control>
 
     <Teleport to="body">
         <Overlay v-if="sidebarStore.isOpen" @click="sidebarStore.toggle()" />
@@ -71,9 +74,7 @@ const links = [
                     />
                 </div>
 
-                <small
-                    class="justify-end pr-2 mb-2 text-font-gray text-xs flex gap-2 w-full"
-                >
+                <small class="justify-end pr-2 mb-2 text-font-gray text-xs flex gap-2 w-full">
                     <img :src="getImageURL('icons/icon-32.png')" class="w-4 h-4" />
                     {{ trans('ext_name') }} {{ __APP_VERSION__ }}
                 </small>

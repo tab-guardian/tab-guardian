@@ -1,106 +1,79 @@
 <script setup lang="ts">
-import { computed, onMounted } from 'vue'
-import { useGroupStore } from '@/stores/group'
+import type { SelectTabsOperation } from '@/types'
 import { trans } from '@common/modules/trans'
 import { usePopupStore } from '@/stores/popup'
-import { useSelectTabsStore } from '@/stores/selectTabs'
+import { useNewGroupStore } from '@/stores/newGroup'
 import { showToast } from '@common/modules/showToast'
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { isNameTooLong } from '@/modules/groupValidation'
 import Popup from '@/components/Popups/Popup.vue'
-import Input from '@common/components/Form/Input.vue'
 import Button from '@common/components/Form/Button.vue'
 import ChevronRightIcon from '@common/components/Icons/ChevronRightIcon.vue'
 import BindToUrlSlider from '@/components/Popups/BindToUrlSlider.vue'
+import NameInput from '@common/components/Form/NameInput.vue'
+import PasswordFields from '@/components/PasswordFields.vue'
 
 const { closePopup, closeAllPopups } = usePopupStore()
-const store = useGroupStore()
-const selectTabsStore = useSelectTabsStore()
+const newGroupStore = useNewGroupStore()
+const router = useRouter()
 
-const passwordErr = computed<string>(() => {
-    return store.newGroup.confirmPassword.length > 0 &&
-        store.newGroup.password !== store.newGroup.confirmPassword
-        ? trans('passwords_not_match')
-        : ''
-})
+const preventSubmit = ref<boolean>(true)
 
-const preventPasswordSubmit = computed<boolean>(() => {
-    if (!store.newGroup.isPrivate) {
-        return !store.newGroup.name
-    }
-
-    return (
-        !!passwordErr.value ||
-        !store.newGroup.password ||
-        !store.newGroup.confirmPassword
-    )
-})
-
-onMounted(() => {
-    store.newGroup.name = ''
-    store.newGroup.password = ''
-})
-
-function selectLinks(): void {
-    if (preventPasswordSubmit.value) {
-        console.info('Preventing password submit')
+function submitName(): void {
+    if (preventSubmit.value) {
+        console.warn('Cannot submit because has some errors')
         return
     }
 
-    if (store.newGroup.isPrivate && !store.newGroup.password) {
+    if (newGroupStore.isPasswordEmpty()) {
         showToast(trans('password_empty'), 'error')
         return
     }
 
-    if (store.groupNameLength > store.groupNameMaxLength) {
+    if (isNameTooLong(newGroupStore.choices.name)) {
         showToast(trans('group_name_long'), 'error')
         return
     }
 
+    newGroupStore.choices.wantsSelectAllLinks = true
+
     closeAllPopups()
 
-    selectTabsStore.showView({
-        selectAll: true,
-        operation: 'creating',
-    })
+    const operation: SelectTabsOperation = 'creating'
+
+    router.push({ name: 'select-tabs', params: { operation } })
 }
 </script>
 
 <template>
-    <Popup @cancel="closePopup('newGroupName')" :content="trans('enter_group_name')">
-        <form @submit.prevent="selectLinks" class="flex flex-col gap-3">
-            <Input
-                v-model="store.newGroup.name"
-                :label="trans('group_name')"
+    <Popup
+        @cancel="closePopup('newGroupName')"
+        :content="trans('enter_group_name')"
+    >
+        <form @submit.prevent="submitName" class="flex flex-col gap-3">
+            <NameInput
+                v-model:name="newGroupStore.choices.name"
                 @loaded="inp => inp.focus()"
-                :meta="`${store.groupNameLength} / ${store.groupNameMaxLength}`"
-                :maxlength="store.groupNameMaxLength"
-                type="text"
-                id="new-group-name"
             />
 
-            <Input
-                v-if="store.newGroup.isPrivate"
-                v-model="store.newGroup.password"
-                type="password"
-                id="group-password"
-                :label="trans('enter_pass')"
-            />
-
-            <Input
-                v-if="store.newGroup.isPrivate"
-                v-model="store.newGroup.confirmPassword"
-                type="password"
-                id="group-confirm-password"
-                :label="trans('repeat_pass')"
-                :error="passwordErr"
+            <PasswordFields
+                v-if="newGroupStore.choices.isPrivate"
+                v-model:pass="newGroupStore.choices.password"
+                v-model:confirm="newGroupStore.choices.confirmPassword"
+                @has-error="hasErr => preventSubmit = hasErr"
             />
 
             <div class="flex items-end gap-3 justify-between">
-                <BindToUrlSlider v-if="store.newGroup.isPrivate" />
-                <div v-else></div>
+                <BindToUrlSlider v-if="newGroupStore.choices.isPrivate" />
+                <div v-else></div> <!-- keep this for flex justify between -->
 
-                <Button type="submit" :disabled="preventPasswordSubmit">
+                <Button
+                    type="submit"
+                    :disabled="preventSubmit"
+                    :icon="ChevronRightIcon"
+                >
                     {{ trans('select') }}
-                    <ChevronRightIcon width="20" height="20" />
                 </Button>
             </div>
         </form>

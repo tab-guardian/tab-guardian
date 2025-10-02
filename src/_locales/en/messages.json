@@ -1,50 +1,54 @@
 {
     "groups_imported": {
         "message": "$n$ groups imported successfully",
-        "placeholders": {
-            "n": { "content": "$1" }
-        }
+        "placeholders": {"n": { "content": "$1" }}
+    },
+    "passwords_min_length": {
+        "message": "Password needs to be at least $n$ characters",
+        "placeholders": {"n": { "content": "$1" }}
+    },
+    "you_have_unlocked_groups": {
+        "message": "You have $n$ unlocked private groups. Please don't forget to lock them back when you no longer need it.",
+        "placeholders": {"n": { "content": "$1" }}
+    },
+    "clear_cache_desc": {
+        "message": "Free $n$ bytes of cache without loosing any data. It's completely safe and recommended to do.",
+        "placeholders": {"n": { "content": "$1" }}
+    },
+    "cache_cleared_on": {
+        "message": "Your cache was cleared on $n$ bytes",
+        "placeholders": {"n": { "content": "$1" }}
+    },
+    "not_enough_storage": {
+        "message": "Cannot exceed storage quota. Maximum quota is $n$ MB, you use $n$ MB",
+        "placeholders": {"n": { "content": "$1" }}
     },
     "many_attempts_locked_for": {
         "message": "Too many attempts. Locked for $n$ minutes",
-        "placeholders": {
-            "n": { "content": "$1" }
-        }
+        "placeholders": {"n": { "content": "$1" }}
     },
     "many_attempts_next_attempt_in": {
         "message": "Too many attempts. Next attempt in $n$ minutes",
-        "placeholders": {
-            "n": { "content": "$1" }
-        }
+        "placeholders": {"n": { "content": "$1" }}
     },
     "bind_group_url": {
         "message": "Bind this group to the ($n$) URL. This will hide the group from everywhere else except this URL. It adds an extra layer of security",
-        "placeholders": {
-            "n": { "content": "$1" }
-        }
+        "placeholders": {"n": { "content": "$1" }}
     },
     "url_must_be_less_than": {
         "message": "URL must be less than $n$ character",
-        "placeholders": {
-            "n": { "content": "$1" }
-        }
+        "placeholders": {"n": { "content": "$1" }}
     },
     "url_must_be_at_least": {
         "message": "URL must be at least $n$ characters",
-        "placeholders": {
-            "n": { "content": "$1" }
-        }
+        "placeholders": {"n": { "content": "$1" }}
     },
     "ext_name": { "message": "Tab Guardian" },
-    "ext_description": {
-        "message": "Browser extension that allows you to save and restore your tabs including encrypting them with a password"
-    },
+    "ext_description": { "message": "Browser extension that allows you to save and restore your tabs including encrypting them with a password" },
     "details": { "message": "Details" },
     "group_details": { "message": "Group Details" },
     "tabs_count": { "message": "Tabs count" },
-    "you_can_find_details_here": {
-        "message": "You can find all of your group details here"
-    },
+    "you_can_find_details_here": { "message": "You can find all of your group details here" },
     "is_private": { "message": "Is private" },
     "created_at": { "message": "Created at" },
     "last_saved": { "message": "Last saved" },
@@ -54,23 +58,16 @@
     "rebind": { "message": "Rebind" },
     "bound_to_url": { "message": "Bound to URL" },
     "opened_tabs_times": { "message": "Opened tabs times" },
-    "opened_tabs_times_tip": {
-        "message": "The number of times the tabs in this group have been opened at once. Not the individual tabs opened"
-    },
+    "opened_tabs_times_tip": { "message": "The number of times the tabs in this group have been opened at once. Not the individual tabs opened" },
     "select": { "message": "Select" },
     "cancel": { "message": "Cancel" },
-    "import": { "message": "Import" },
     "export": { "message": "Export" },
     "new_group": { "message": "New Group" },
-    "error_no_group_selected": {
-        "message": "Something went wrong! No group selected"
-    },
+    "error_no_group_selected": { "message": "Something went wrong! No group selected" },
     "error_no_tab_selected": { "message": "No tab selected" },
     "want_delete_group": { "message": "Do you want to delete the group?" },
     "no_tabs_this_group": { "message": "There are no tabs in this group" },
-    "click_on_each_tab": {
-        "message": "Click on each tab to select or unselect it for saving to memory"
-    },
+    "click_on_each_tab": { "message": "Click on each tab to select or unselect it for saving to memory" },
     "select_all": { "message": "Select all" },
     "deselect_all": { "message": "Deselect all" },
     "add_tabs": { "message": "Add tabs" },
@@ -80,13 +77,9 @@
     "enter_new_pass": { "message": "Enter a new password" },
     "pass_updated": { "message": "Password has been updated" },
     "enter_pass": { "message": "Enter a password" },
-    "enter_pass_unlock_content": {
-        "message": "Enter a password to unlock the content of this group"
-    },
+    "enter_pass_unlock_content": { "message": "Enter a password to unlock the content of this group" },
     "wrong_pass": { "message": "Incorrect password" },
-    "cant_remember_pass": {
-        "message": "Something went wrong! Cannot remember your password. Please, enter it again"
-    },
+    "cant_remember_pass": { "message": "Something went wrong! Cannot remember your password. Please, enter it again" },
     "pass_empty": { "message": "Password is empty" },
     "passwords_not_match": { "message": "Passwords do not match" },
     "repeat_pass": { "message": "Repeat password" },
@@ -109,26 +102,20 @@
     "copy_tabs_into_group": { "message": "Copy tabs into this group" },
     "move_tabs_into_group": { "message": "Move tabs into this group" },
     "new_name_saved": { "message": "The new name has been saved" },
-    "group_private_unlock_it": {
-        "message": "This group is private. You need to unlock it to see the options"
-    },
+    "group_private_unlock_it": { "message": "This group is private. You need to unlock it to see the options" },
     "group_not_found": { "message": "Group has not been found" },
     "group_already_locked": { "message": "Group is already locked" },
     "private_group_unlocked": { "message": "This private group is unlocked" },
     "no_tabs_to_save": { "message": "No tabs to save" },
     "tabs_now_saved": { "message": "Tabs have been saved" },
-    "create_group": { "message": "Create the group" },
+    "create": { "message": "Create" },
     "you_not_selected_tabs": { "message": "You haven't selected any tabs" },
     "tabs_added_to_group": { "message": "Tabs added to the group" },
-    "group_created_without_tabs": {
-        "message": "Group created without any tabs selected"
-    },
+    "group_created_without_tabs": { "message": "Group created without any tabs selected" },
     "group_created_with_tabs": { "message": "Group created with tabs" },
     "close_selected_tabs": { "message": "Close selected tabs" },
     "bind_to_this_url": { "message": "Bind to this URL" },
-    "private_groups_are_secure": {
-        "message": "Private groups are secure and use encryption. Only users with the password can access them"
-    },
+    "private_groups_are_secure": { "message": "Private groups are secure and use encryption. Only users with the password can access them" },
     "rate_us": { "message": "Rate Us" },
     "storage_usage": { "message": "Storage usage" },
     "group_name_long": { "message": "Group name is too long" },
@@ -139,64 +126,36 @@
     "icon_is_set": { "message": "Icon has been set" },
     "export_this_group": { "message": "Export this group" },
     "rebind_to_other_url": { "message": "Rebind to other URL" },
-    "enter_new_url_bind_private_to_new_url": {
-        "message": "Enter a new URL to bind your private group to this new URL. This group will be only visible in the list of groups only when you visit this specific URL. Do not forget to lock the group"
-    },
+    "enter_new_url_bind_private_to_new_url": { "message": "Enter a new URL to bind your private group to this new URL. This group will be only visible in the list of groups only when you visit this specific URL. Do not forget to lock the group" },
     "enter_new_url_bind_to": { "message": "Enter a new URL to bind to" },
     "group_rebind_successful": { "message": "Group rebind successful" },
-    "url_must_start_with_http": {
-        "message": "URL must start with https://"
-    },
+    "url_must_start_with_http": { "message": "URL must start with https://" },
     "select_emoji": { "message": "Select emoji" },
     "select_image": { "message": "Select image" },
     "pick_any_emoji": { "message": "Pick any emoji" },
     "enter_image_url": { "message": "Enter image URL" },
-    "type_any_image_url_to_set_it": {
-        "message": "Type any image URL to set it as a group icon"
-    },
-    "change_the_conf_here": {
-        "message": "Change the extension configurations here"
-    },
-    "lock_group_after_restore": {
-        "message": "Lock the group back after restoring the tabs"
-    },
+    "type_any_image_url_to_set_it": { "message": "Type any image URL to set it as a group icon" },
+    "lock_group_after_restore": { "message": "Lock the group back after restoring the tabs" },
     "erase_all_groups": { "message": "Erase all groups" },
-    "i_confirm_want_delete_groups": {
-        "message": "I confirm that I want to delete all groups"
-    },
-    "confirm_want_delete_groups": {
-        "message": "Confirm that you want to delete all groups"
-    },
+    "erase_all_groups_desc": { "message": "After erasing all groups, you will not be able to restore them back in any way. This action will also remove all of your private groups." },
+    "i_confirm_want_delete_groups": { "message": "I confirm that I want to delete all groups" },
+    "confirm_want_delete_groups": { "message": "Confirm that you want to delete all groups" },
     "all_groups_deleted": { "message": "All the groups have been deleted" },
-    "show_private_groups_incognito": {
-        "message": "Hide private groups everywhere but incognito (private) windows"
-    },
+    "show_private_groups_incognito": { "message": "Hide private groups everywhere but incognito (private) windows" },
     "settings_saved": { "message": "Settings have been saved" },
-    "go_to_settings_and_enable_allow_incognito": {
-        "message": "Go to the extension settings and enable the option 'Allow in incognito', 'Allow in Private' or 'Run in Private Windows'"
-    },
-    "override_existing_match": {
-        "message": "If the new group name matches an existing one, override it"
-    },
-    "only_private_groups_incognito": {
-        "message": "Hide public groups from browser incognito (private mode)"
-    },
+    "go_to_settings_and_enable_allow_incognito": { "message": "Go to the extension settings and enable the option 'Allow in incognito', 'Allow in Private' or 'Run in Private Windows'" },
+    "override_existing_match": { "message": "If the new group name matches an existing one, override it" },
+    "only_private_groups_incognito": { "message": "Hide open groups from browser incognito (private mode)" },
     "export_tab_groups": { "message": "Export Tab Groups" },
-    "export_all_your_groups": {
-        "message": "Export all of your tab groups. Keep in mind that private groups are not going to be exported. If you want to export them, you need to do it for each private group separately"
-    },
+    "export_tab_groups_desc": { "message": "Export all of your tab groups. Keep in mind that private groups are not going to be exported. If you want to export them, you need to do it for each private group separately." },
     "no_groups_export": { "message": "No groups to export" },
     "import_groups": { "message": "Import Tab Groups" },
-    "import_private_public_groups": {
-        "message": "Import private or public tab groups"
-    },
+    "import_private_and_open_groups": { "message": "Import private and open groups." },
     "choose_exported_file": { "message": "Choose the exported file" },
     "choose_file_import": { "message": "Please choose a file to import" },
     "failed_decrypt_file": { "message": "Failed to decrypt the file" },
     "error_reading_file": { "message": "Error reading file" },
-    "some_groups_already_exist_same_name": {
-        "message": "Some groups that you want to import already exist with the same name. Do you want to replace them?"
-    },
+    "some_groups_already_exist_same_name": { "message": "Some groups that you want to import already exist with the same name. Do you want to replace them?" },
     "replace_groups": { "message": "Replace groups?" },
     "file_chosen": { "message": "File chosen" },
     "save": { "message": "Save" },
@@ -206,5 +165,13 @@
     "image_format_allowed": { "message": "Images are only allowed with these formats" },
     "new_password": { "message": "New password" },
     "uses_old_encrypt_impl": { "message": "This group uses the old encryption implementation. You can fix it by unlocking this group and locking it back" },
-    "nothing_to_paste": { "message": "There is nothing to paste" }
+    "nothing_to_paste": { "message": "There is nothing to paste" },
+    "general": { "message": "General" },
+    "data_control": { "message": "Data Control" },
+    "clear_cache": { "message": "Clear Cache" },
+    "remember_pass_after_unlock": { "message": "Remember my password after unlock" },
+    "make_group_open": { "message": "Make group open" },
+    "are_you_sure_to_make_group_open": { "message": "Are you sure you want to make this group open? It means that you don't need to enter a password to access this group" },
+    "group_is_now_open": { "message": "This group is now open" },
+    "remember_pass_after_unlock_desc": { "message": "If you disable this option, you will need to enter a password everytime when you want to lock any private group. Keeping this option enabled saves password in temporary and secure storage and allows you to lock groups back without entering your password" }
 }

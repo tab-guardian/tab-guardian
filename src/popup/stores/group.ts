@@ -1,15 +1,13 @@
-import type { Group, Link, NewGroup } from '@/types'
-import { ref, computed } from 'vue'
+import type { Group, Link } from '@/types'
+import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import { trans } from '@common/modules/trans'
 import { useSettingsStore } from '@/stores/settings'
-import { usePopupStore } from '@/stores/popup'
+import { useNotificationStore } from '@/stores/notification'
 import { useCryptoStore } from '@/stores/crypto'
 import { showToast } from '@common/modules/showToast'
-import { error } from '@common/modules/error'
 import { isDevelopment } from '@common/modules/isDevelopment'
 import { isIncognito } from '@common/modules/browser/windows'
-import { getDefaultGroupName } from '@/modules/getDefaultGroupName'
 import { closeTabsByIds } from '@/modules/tabs/closeTabsByIds'
 import { getCurrentURL } from '@/modules/getCurrentURL'
 import { generateGroupId } from '@common/modules/generateGroupId'
@@ -22,40 +20,25 @@ import {
 } from '@common/modules/storage/group'
 
 export const useGroupStore = defineStore('group', () => {
-    const popupStore = usePopupStore()
     const cryptoStore = useCryptoStore()
-
-    const groupNameMaxLength = 45
-    const groupNameLength = computed<number>(() => {
-        return newGroup.value.name.length
-    })
+    const settingsStore = useSettingsStore()
+    const notificationStore = useNotificationStore()
 
     const groups = ref<Group[]>([])
-    const isSaving = ref<boolean>(false)
+    const loadingGroups = ref<boolean>(false)
     const selectedGroup = ref<Group | null>(null)
-    const isTitleFieldActive = ref<boolean>(false)
     const closeSelectedTabs = ref<boolean>(false)
-
-    const settingsStore = useSettingsStore()
-
-    const newGroup = ref<NewGroup>({
-        name: '',
-        isPrivate: false,
-        password: '',
-        confirmPassword: '',
-        bindURL: null,
-    })
 
     function getGroupById(groupId: number | undefined): Group | null {
         if (!groupId) {
-            error.warn('No group id provided when trying to get group by id')
+            console.warn('No group id provided when trying to get group by id')
             return null
         }
 
         const group = groups.value.find(group => group.id === groupId)
 
         if (!group) {
-            error.err(`Group with id ${groupId} not found`)
+            console.warn(`Group with id ${groupId} not found`)
             return null
         }
 
@@ -66,7 +49,7 @@ export const useGroupStore = defineStore('group', () => {
         const group = groups.value.find(group => group.name === name)
 
         if (!group) {
-            error.err(`Group with name ${name} not found`)
+            console.error(`Group with name ${name} not found`)
             return null
         }
 
@@ -75,7 +58,7 @@ export const useGroupStore = defineStore('group', () => {
 
     async function updatePassword(pass: string): Promise<void> {
         if (!selectedGroup.value) {
-            error.err('No group selected to update password')
+            console.error('No group selected to update password')
             showToast(trans('error_occurred'), 'error')
             return
         }
@@ -84,16 +67,20 @@ export const useGroupStore = defineStore('group', () => {
     }
 
     async function loadGroupsFromStorage(): Promise<void> {
+        loadingGroups.value = true
+
         const storageGroups = await getGroupsFromStorage()
 
+        // Disable hiding groups in incognito because we don't have
+        // incognito in a web app with Vite server
         if (isDevelopment()) {
             groups.value = storageGroups
             groups.value.sort((a, b) => b.updatedAt - a.updatedAt)
+            loadingGroups.value = false
             return
         }
 
-        groups.value = await filterGroups(storageGroups)
-        groups.value.sort((a, b) => b.updatedAt - a.updatedAt)
+        displayGroups(storageGroups)
     }
 
     async function filterGroups(storageGroups: Group[]): Promise<Group[]> {
@@ -142,31 +129,20 @@ export const useGroupStore = defineStore('group', () => {
         return false
     }
 
-    async function encryptGroupById(
-        groupId: number,
-        pass: string,
-        confirmPass?: string,
-    ): Promise<boolean> {
-        const group = getGroupById(groupId)
-
-        if (!group) {
-            showToast(trans('group_not_found'), 'error')
-            return false
-        }
-
+    async function encrypt(group: Group, pass: string, confirm?: string): Promise<Group | null> {
         if (group.isEncrypted) {
             showToast(trans('group_already_locked'), 'error')
-            return false
+            return null
         }
 
         if (pass === '') {
             showToast(trans('pass_empty'), 'error')
-            return false
+            return null
         }
 
-        if (confirmPass && pass !== confirmPass) {
+        if (confirm && pass !== confirm) {
             showToast(trans('passwords_not_match'), 'error')
-            return false
+            return null
         }
 
         try {
@@ -175,50 +151,17 @@ export const useGroupStore = defineStore('group', () => {
             encrypted.isEncrypted = true
             encrypted.isPrivate = true
 
-            await saveGroup(encrypted)
+            return encrypted
         } catch (err) {
             showToast(trans('error_occurred'), 'error')
-            error.err(err)
+            console.error(err)
         }
 
-        return true
+        return null
     }
 
-    async function createEmptyGroup(): Promise<Group> {
-        const group: Group = {
-            id: generateGroupId(),
-            name:
-                newGroup.value.name || getDefaultGroupName(newGroup.value.isPrivate),
-            isPrivate: newGroup.value.isPrivate,
-            isEncrypted: false,
-            updatedAt: Date.now(),
-            createdAt: Date.now(),
-            openedTimes: 0,
-            links: [],
-        }
-
-        if (newGroup.value.bindURL) {
-            group.bindURL = newGroup.value.bindURL
-        }
-
-        await prependGroup(group)
-
-        return group
-    }
-
-    async function prependGroup(group: Group): Promise<void> {
-        if (settingsStore.settings.overrideWithSameName) {
-            const sameNameGroup = groups.value.find(g => g.name === group.name)
-
-            if (sameNameGroup) {
-                await deleteGroup(sameNameGroup.id)
-            }
-        }
-
-        groups.value.unshift(group)
-    }
-
-    async function addGroups(groups: Group[], replace: boolean): Promise<void> {
+    // Add groups to memory and save them to storage
+    async function addAndSaveGroups(groups: Group[], replace: boolean): Promise<void> {
         for (const group of groups) {
             group.id = generateGroupId()
 
@@ -230,7 +173,7 @@ export const useGroupStore = defineStore('group', () => {
                 }
             }
 
-            await saveGroup(group)
+            await save(group, false)
         }
 
         await loadGroupsFromStorage()
@@ -245,62 +188,19 @@ export const useGroupStore = defineStore('group', () => {
 
         group.icon = icon
 
-        await saveGroup(group)
-    }
-
-    function startGroupRenaming(): void {
-        if (!selectedGroup.value) {
-            error.err('No group selected to rename')
-            showToast(trans('error_occurred'), 'error')
-            return
-        }
-
-        isTitleFieldActive.value = true
-        selectedGroup.value = selectedGroup.value
-        newGroup.value.name = selectedGroup.value.name
-
-        popupStore.closePopup('groupMenuView')
-    }
-
-    async function renameGroup(): Promise<void> {
-        if (!selectedGroup.value) {
-            error.err('No group selected for renaming')
-            showToast(trans('error_occurred'), 'error')
-            return
-        }
-
-        if (groupNameLength.value > groupNameMaxLength) {
-            showToast(trans('Group name is too long'), 'error')
-            return
-        }
-
-        const group = getGroupById(selectedGroup.value.id)
-
-        if (!group) {
-            showToast(trans('error_occurred'), 'error')
-            return
-        }
-
-        if (newGroup.value.name === '') {
-            group.name = getDefaultGroupName(newGroup.value.isPrivate)
-        } else {
-            group.name = newGroup.value.name
-        }
-
-        isTitleFieldActive.value = false
-
-        await saveGroup(group)
-        showToast(trans('new_name_saved'))
+        await save(group)
     }
 
     async function deleteGroup(groupId: number): Promise<void> {
         groups.value = groups.value.filter(g => g.id !== groupId)
         await deleteGroupFromStorage(groupId)
+        await notificationStore.recalculateNotification()
     }
 
     async function deleteAllGroups(): Promise<void> {
         groups.value = []
         await deleteAllGroupsFromStorage()
+        await notificationStore.recalculateNotification()
     }
 
     async function deleteAllLinks(groupId: number): Promise<void> {
@@ -312,7 +212,7 @@ export const useGroupStore = defineStore('group', () => {
 
         group.links = []
 
-        await saveGroup(group)
+        await save(group)
     }
 
     async function incrementOpenedTimes(group: Group): Promise<void> {
@@ -330,10 +230,10 @@ export const useGroupStore = defineStore('group', () => {
             return g
         })
 
-        await saveGroup(group)
+        await save(group)
     }
 
-    async function deleteLink(groupId: number, linkId: number): Promise<void> {
+    async function deleteLinkFrom(groupId: number, linkId: number): Promise<void> {
         const group = getGroupById(groupId)
 
         if (!group) {
@@ -342,78 +242,59 @@ export const useGroupStore = defineStore('group', () => {
 
         group.links = group.links.filter(link => link.id !== linkId)
 
-        await saveGroup(group)
+        await save(group)
     }
 
-    async function prependLinksTo(groupId: number, links: Link[]): Promise<void> {
+    async function saveLinksTo(groupId: number, links: Link[]): Promise<void> {
         const group = getGroupById(groupId)
 
         if (!group) {
             return
         }
 
-        group.links.unshift(...links)
-
-        await saveGroup(group)
+        group.links.push(...links)
 
         if (closeSelectedTabs.value) {
             await closeTabsByIds(links.map(link => link.id))
         }
+
+        await save(group)
     }
 
-    async function decryptGroup(group: Group, pass: string): Promise<void> {
-        const unlockedGroup = await cryptoStore.decryptGroup(group, pass)
-        await saveGroup(unlockedGroup)
-    }
-
-    function resetNewGroup(): void {
-        newGroup.value = {
-            name: '',
-            isPrivate: false,
-            password: '',
-            confirmPassword: '',
-            bindURL: '',
+    async function save(group: Group, updateTimestamp = true): Promise<void> {
+        if (updateTimestamp) {
+            group.updatedAt = Date.now()
         }
-    }
-
-    async function saveGroup(group: Group): Promise<void> {
-        group.updatedAt = Date.now()
 
         await saveGroupToStorage(group)
 
-        groups.value = groups.value.map(g => (g.id === group.id ? group : g))
-        groups.value = await filterGroups(groups.value)
-        groups.value.sort((a, b) => b.updatedAt - a.updatedAt)
+        const updatedGroups = groups.value.map(g => (g.id === group.id ? group : g))
+        displayGroups(updatedGroups)
+    }
 
-        setTimeout(() => (isSaving.value = false), 500)
+    async function displayGroups(groupsToDisplay: Group[]): Promise<void> {
+        groups.value = await filterGroups(groupsToDisplay)
+        groups.value.sort((a, b) => b.updatedAt - a.updatedAt)
+        loadingGroups.value = false
     }
 
     return {
         groups,
-        isSaving,
         selectedGroup,
-        isTitleFieldActive,
         closeSelectedTabs,
-        newGroup,
-        groupNameMaxLength,
-        groupNameLength,
-        saveGroup,
+        loadingGroups,
+        save,
         deleteGroup,
-        deleteLink,
-        prependLinksTo,
-        decryptGroup,
-        renameGroup,
-        createEmptyGroup,
-        encryptGroupById,
+        deleteLinkFrom,
+        saveLinksTo,
+        encrypt,
         getGroupById,
         deleteAllLinks,
         deleteAllGroups,
-        startGroupRenaming,
         incrementOpenedTimes,
         loadGroupsFromStorage,
-        resetNewGroup,
         setIcon,
         updatePassword,
-        addGroups,
+        addAndSaveGroups,
     }
 })

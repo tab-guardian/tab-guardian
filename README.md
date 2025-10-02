@@ -8,20 +8,20 @@ For those who prioritize security, Tab Guardian offers the added feature of encr
 ## Features
 Here is what makes Tab Guardian a great tool for managing your tabs:
 
-- [x] Multi-language support 🇬🇧 🇷🇺 🇨🇳 depending on your operating system's language preferences
-- [x] You can save tabs and restore them later
-- [x] You can edit a group including adding and removing tabs from it
-- [x] You can create encrypted (locked) groups that require password to unlock
-- [x] All the pinned tabs are saved and restored as pinned tabs
-- [x] Tabs restored in the same order as they were saved
-- [x] Supports all the modern browsers: Firefox, Zen, Brave, Edge, Chrome, etc.
-- [x] Tab Guardian is very configurable to suit your needs
-- [x] You can privately export individual private tab group into an encrypted file and import it later or on another device or browser
-- [x] You can export all of your public tab groups into a file and import them later or on another device or browser
-- [x] You can set an icon for each group to make it easier to recognize
-- [x] You can bind a Tab Group to a specific URL so that it visible in the group list only when you are on that URL. This is useful if you want to hide a group and access it only when you are on a specific web page
-- [x] You can sort tabs by dragging and dropping them
-- [x] You can set emoji as an icon for your group
+- [x] Save and restore your tabs with ease
+- [x] Keep groups flexible: add, remove, copy, cut, or paste tabs between groups
+- [x] Preserve tab order — restored exactly as saved
+- [x] Pinned tabs are remembered and restored as pinned
+- [x] Organize with drag-and-drop sorting
+- [x] Protect sensitive groups with encryption and password locks
+- [x] Privately export a single protected group into an encrypted file for later use or transfer
+- [x] Export and import all public groups across devices and browsers
+- [x] Customize groups with icons or emojis for quick recognition
+- [x] Hide groups until needed by binding them to specific URLs
+- [x] User-friendly interface with tooltips and confirmation popups
+- [x] Highly configurable to suit your workflow
+- [x] Multi-language support 🇬🇧 🇷🇺 🇨🇳 based on your system language
+- [x] Works with all modern browsers: Chrome, Firefox, Edge, Brave, Zen, and more
 
 ## Links
 - [Firefox ADD-ONS](https://addons.mozilla.org/firefox/addon/tab-guardian/)
@@ -54,6 +54,10 @@ npm i
 ```bash
 cp .env.example .env
 ```
+
+**Check `.env` file**
+Check your `.env` file and set `VITE_DEV_LOCALE` to language that you prefer.
+
 
 ### Code style
 Don't worry about the code style. We use [Prettier](https://prettier.io/) to format the code. You can run it manually by executing `yarn prettier` or `npm run prettier` to format the code, or `yarn prettier-check` or `npm run prettier-check` to check if the code is formatted correctly.

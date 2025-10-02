@@ -5,23 +5,24 @@ import { trans } from '@common/modules/trans'
 import { useGroupStore } from '@/stores/group'
 import { usePopupStore } from '@/stores/popup'
 import { useCryptoStore } from '@/stores/crypto'
+import { useSettingsStore } from '@/stores/settings'
+import { useNotificationStore } from '@/stores/notification'
 import { showToast } from '@common/modules/showToast'
 import { getPasswordFromStorage, deletePasswordFromStorage } from '@common/modules/storage/password'
 import LockClosedIcon from '@common/components/Icons/LockClosedIcon.vue'
 import WarningBox from '@common/components/WarningBox.vue'
 import SmallSpinner from '@common/components/SmallSpinner.vue'
 import ProgressBar from '@common/components/ProgressBar.vue'
+import Button from '@common/components/Form/Button.vue'
 
-type Props = {
-    group: Group
-}
-
-const { group } = defineProps<Props>()
+const { group } = defineProps<{ group: Group }>()
 const groupStore = useGroupStore()
 const cryptoStore = useCryptoStore()
+const settingsStore = useSettingsStore()
+const notificationStore = useNotificationStore()
 const { openPopup, onClose } = usePopupStore()
 
-const newPassword = ref<boolean>(false)
+const useNewPassword = ref<boolean>(false)
 const encrypting = ref<boolean>(false)
 
 async function promptEnterPassword(): Promise<void> {
@@ -29,7 +30,11 @@ async function promptEnterPassword(): Promise<void> {
         return
     }
 
-    if (newPassword.value) {
+    if (!settingsStore.settings.rememberPasswordAfterUnlock) {
+        useNewPassword.value = true
+    }
+
+    if (useNewPassword.value) {
         await deletePasswordFromStorage(group.id)
     }
 
@@ -40,7 +45,7 @@ async function promptEnterPassword(): Promise<void> {
         return
     }
 
-    if (!newPassword.value) {
+    if (!useNewPassword.value) {
         showToast(trans('cant_remember_pass'), 'error', 4000)
     }
 
@@ -51,8 +56,16 @@ async function promptEnterPassword(): Promise<void> {
 async function lockGroup(pass: string): Promise<void> {
     encrypting.value = true
 
-    await groupStore.encryptGroupById(group.id, pass)
+    const encrypted = await groupStore.encrypt(group, pass)
+
+    if (!encrypted) {
+        console.info(`Group ${group.id} wasn't encrypted`)
+        return
+    }
+
+    await groupStore.save(encrypted)
     await deletePasswordFromStorage(group.id)
+    await notificationStore.recalculateNotification()
 
     encrypting.value = false
 
@@ -68,24 +81,21 @@ async function lockGroup(pass: string): Promise<void> {
     />
 
     <WarningBox :message="trans('private_group_unlocked')">
-        <div class="w-52 flex flex-col items-center gap-1.5">
-            <button
-                :disabled="encrypting"
+        <div class="w-52 flex flex-col items-end gap-1.5">
+            <Button
+                :icon="LockClosedIcon"
+                :loading="encrypting"
                 @click="promptEnterPassword"
-                :class="[
-                    'bg-unsafe px-3 py-2 rounded-md w-32',
-                    'text-sm text-bg font-semibold',
-                    'flex items-center gap-2 justify-center',
-                    encrypting ? 'opacity-70' : 'hover:bg-unsafe-hover',
-                ]"
+                class-name="bg-unsafe hover:bg-unsafe-hover text-white"
             >
-                <SmallSpinner v-if="encrypting" width="18" height="18" />
-                <LockClosedIcon v-else width="18" height="18" />
                 {{ trans('lock') }}
-            </button>
+            </Button>
 
-            <label class="flex gap-1.5 align-center opacity-80">
-                <input type="checkbox" v-model="newPassword" />
+            <label
+                v-if="settingsStore.settings.rememberPasswordAfterUnlock"
+                class="flex gap-1.5 align-center opacity-80"
+            >
+                <input type="checkbox" v-model="useNewPassword" />
                 <small>{{ trans('new_password') }}</small>
             </label>
         </div>

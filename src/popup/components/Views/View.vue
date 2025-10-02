@@ -1,20 +1,22 @@
 <script setup lang="ts">
 import BackButton from '@/components/Views/GroupView/GroupControls/BackButton.vue'
-import { useRouter } from 'vue-router'
+import { RouteLocationRaw, useRouter } from 'vue-router'
 
 type Props = {
     title?: string
     subtitle?: string
+    routeLocation?: RouteLocationRaw
 }
 
+defineProps<Props>()
+
 const router = useRouter()
-const { title, subtitle } = defineProps<Props>()
 </script>
 
 <template>
     <div class="absolute inset-0 bg-page p-2">
         <div v-if="!title" class="flex justify-between gap-1">
-            <BackButton @click="router.go(-1)" />
+            <BackButton @click="routeLocation ? router.push(routeLocation) : router.go(-1)" />
 
             <slot name="controls" />
         </div>

@@ -51,6 +51,9 @@ import InfoCircleIcon from '@common/components/Icons/InfoCircleIcon.vue'
 import ScissorsIcon from '@common/components/Icons/ScissorsIcon.vue'
 import CopyIcon from '@common/components/Icons/CopyIcon.vue'
 import PasteIcon from '@common/components/Icons/PasteIcon.vue'
+import PlusIcon from '@common/components/Icons/PlusIcon.vue'
+import CircleStackIcon from '@common/components/Icons/CircleStackIcon.vue'
+import LockOpenIcon from '@common/components/Icons/LockOpenIcon.vue'
 
 export function getIcons(): { [key: string]: Component } {
     return {
@@ -60,6 +63,7 @@ export function getIcons(): { [key: string]: Component } {
         StarIcon,
         TrashIcon,
         LockClosedIcon,
+        LockOpenIcon,
         ArrowLeftEndIcon,
         PhotoIcon,
         WalletIcon,
@@ -100,11 +104,13 @@ export function getIcons(): { [key: string]: Component } {
         EllipsisVerticalIcon,
         MenuIcon,
         PlusCircleIcon,
+        PlusIcon,
         ArrowDownTrayIcon,
         GitHubIcon,
         InfoCircleIcon,
         ScissorsIcon,
         CopyIcon,
         PasteIcon,
+        CircleStackIcon,
     }
 }

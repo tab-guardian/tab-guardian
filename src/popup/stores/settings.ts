@@ -9,6 +9,7 @@ export const useSettingsStore = defineStore('settings', () => {
         showPrivateGroupsOnlyInIncognito: false,
         overrideWithSameName: false,
         showOnlyPrivateGroupsInIncognito: false,
+        rememberPasswordAfterUnlock: true,
     })
 
     const loading = ref<boolean>(false)

@@ -6,9 +6,7 @@ import { useGroupStore } from '@/stores/group'
 import { showToast } from '@common/modules/showToast'
 import Swal from 'sweetalert2'
 import Section from '@settings/components/Section.vue'
-import Button from '@common/components/Form/Button.vue'
 import FileInput from '@common/components/Form/FileInput.vue'
-import ArrowDownTrayIcon from '@common/components/Icons/ArrowDownTrayIcon.vue'
 
 const password = ref<string>('')
 const file = ref<File | null>(null)
@@ -50,12 +48,14 @@ async function importGroups(): Promise<void> {
 }
 
 async function prependGroups(groups: Group[]): Promise<void> {
+    await groupStore.loadGroupsFromStorage()
+
     const groupsWithSameName = groups.reduce((acc, group) => {
         return acc + groupStore.groups.filter(g => g.name === group.name).length
     }, 0)
 
     if (groupsWithSameName === 0) {
-        groupStore.addGroups(groups, false)
+        groupStore.addAndSaveGroups(groups, false)
         showSuccessMessage(groups)
         return
     }
@@ -69,7 +69,7 @@ async function prependGroups(groups: Group[]): Promise<void> {
     })
 
     if (answer.isConfirmed) {
-        await groupStore.addGroups(groups, true)
+        await groupStore.addAndSaveGroups(groups, true)
         showSuccessMessage(groups)
     }
 }
@@ -79,16 +79,17 @@ function showSuccessMessage(groups: Group[]): void {
     showToast(msg)
 }
 
-function fileChosen(f: File, elem: HTMLInputElement): void {
+async function fileChosen(f: File, elem: HTMLInputElement): Promise<void> {
     file.value = f
     fileInput.value = elem
+    await importGroups()
 }
 </script>
 
 <template>
     <Section
         :title="trans('import_groups')"
-        :subtitle="trans('import_private_public_groups')"
+        :subtitle="trans('import_private_and_open_groups')"
     >
         <div class="space-y-4">
             <FileInput
@@ -97,11 +98,6 @@ function fileChosen(f: File, elem: HTMLInputElement): void {
                 :label="file ? trans('file_chosen') : trans('choose_exported_file')"
                 id="choose-file"
             />
-
-            <Button @clicked="importGroups" class="mt-4" :disabled="!file">
-                <ArrowDownTrayIcon class="w-5 h-5 rotate-180" />
-                {{ trans('import') }}
-            </Button>
         </div>
     </Section>
 </template>

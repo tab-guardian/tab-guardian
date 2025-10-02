@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useGroupStore } from '@/stores/group'
-import { onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 import { trans } from '@common/modules/trans'
 import { showToast } from '@common/modules/showToast'
 import Section from '@settings/components/Section.vue'
@@ -8,6 +8,7 @@ import Button from '@common/components/Form/Button.vue'
 import ArrowDownTrayIcon from '@common/components/Icons/ArrowDownTrayIcon.vue'
 
 const groupStore = useGroupStore()
+const exporting = ref<boolean>(false)
 
 onMounted(async () => {
     await groupStore.loadGroupsFromStorage()
@@ -21,6 +22,8 @@ async function exportGroups(): Promise<void> {
         return
     }
 
+    exporting.value = true
+
     const json = JSON.stringify(groups)
     const blob = new Blob([json], { type: 'application/json' })
     const url = URL.createObjectURL(blob)
@@ -31,16 +34,22 @@ async function exportGroups(): Promise<void> {
     a.click()
 
     URL.revokeObjectURL(url)
+
+    exporting.value = false
 }
 </script>
 
 <template>
     <Section
         :title="trans('export_tab_groups')"
-        :subtitle="trans('export_all_your_groups')"
+        :subtitle="trans('export_tab_groups_desc')"
     >
-        <Button @clicked="exportGroups" class="mt-4">
-            <ArrowDownTrayIcon class="w-5 h-5" />
+        <Button
+            @clicked="exportGroups"
+            :icon="ArrowDownTrayIcon"
+            :loading="exporting"
+            class="mt-4"
+        >
             {{ trans('export') }}
         </Button>
     </Section>
