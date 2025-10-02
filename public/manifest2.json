@@ -13,6 +13,14 @@
         "storage",
         "tabs"
     ],
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "{2355d391-fb52-4933-bfb9-59b666740b79}",
+            "data_collection_permissions": {
+                "required": ["none"]
+            }
+        }
+    },
     "icons": {
         "32": "images/icons/icon-32.png",
         "48": "images/icons/icon-48.png",
