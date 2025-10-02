@@ -2,6 +2,7 @@
 
 ## v1.13.1 (2025-10-02)
 - 🐛 Fixed Chromium error for using badge on extension icon
+- 🐛 Fixed bug where you couldn't create a new public group
 
 ## v1.13.0 (2025-10-02)
 - 🐛 Fixed issue with creating private group and it wouldn't remember the password the user entered. Plus, this change improved the performance of creating a private group
