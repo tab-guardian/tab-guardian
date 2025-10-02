@@ -1,6 +1,6 @@
 # Release Notes
 
-## v1.13.0 (2025-10-01)
+## v1.13.0 (2025-10-02)
 - 🐛 Fixed issue with creating private group and it wouldn't remember the password the user entered. Plus, this change improved the performance of creating a private group
 - 🐛 Fixed incorrect bytes calculation on Firefox-based browsers. It was showing used space a little bit more than it really was
 - 🐛 Fixed wrong groups sort order when you import all groups. Now, groups will be in the same order that they were when you exported them
