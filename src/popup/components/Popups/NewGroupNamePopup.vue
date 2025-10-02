@@ -18,7 +18,7 @@ const { closePopup, closeAllPopups } = usePopupStore()
 const newGroupStore = useNewGroupStore()
 const router = useRouter()
 
-const preventSubmit = ref<boolean>(true)
+const preventSubmit = ref<boolean>(newGroupStore.choices.isPrivate || false)
 
 function submitName(): void {
     if (preventSubmit.value) {
