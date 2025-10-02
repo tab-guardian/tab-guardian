@@ -1,5 +1,8 @@
 # Release Notes
 
+## v1.13.1 (2025-10-02)
+- 🐛 Fixed Chromium error for using badge on extension icon
+
 ## v1.13.0 (2025-10-02)
 - 🐛 Fixed issue with creating private group and it wouldn't remember the password the user entered. Plus, this change improved the performance of creating a private group
 - 🐛 Fixed incorrect bytes calculation on Firefox-based browsers. It was showing used space a little bit more than it really was
