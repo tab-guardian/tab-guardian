@@ -1,5 +1,8 @@
 # Release Notes
 
+## v1.13.2 (2025-10-03)
+- 🐛 Fixed a bug where tabs would not close when you create a new group or adding more tabs to existing group
+
 ## v1.13.1 (2025-10-02)
 - 🐛 Fixed Chromium error for using badge on extension icon
 - 🐛 Fixed bug where you couldn't create a new public group
