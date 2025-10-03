@@ -62,7 +62,7 @@ build_zip_archive () {
 
 compile_assets () {
     echo "⏳ LOADING: compiling assets 'npm run build'..."
-    npm run type-check
+    npm run check
     npm run build
     echo "✅ SUCCESS: 'npm run build'"
 }

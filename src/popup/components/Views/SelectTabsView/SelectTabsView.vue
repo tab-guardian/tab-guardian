@@ -7,6 +7,7 @@ import { trans } from '@common/modules/trans'
 import { useGroupStore } from '@/stores/group'
 import { getCurrentLinks } from '@/modules/tabs/getCurrentLinks'
 import { showToast } from '@common/modules/showToast'
+import { closeTabs } from '@/modules/tabs/closeTabs'
 import { VueDraggableNext } from 'vue-draggable-next'
 import View from '@/components/Views/View.vue'
 import TabItem from '@/components/Views/SelectTabsView/TabItem.vue'
@@ -24,6 +25,7 @@ const route = useRoute()
 
 const loading = ref<boolean>(false)
 const saving = ref<boolean>(false)
+const closeAllTabs = ref<boolean>(false)
 const links = ref<Link[]>([])
 const selectedLinks = ref<Link[]>([])
 
@@ -69,6 +71,10 @@ async function handleCreateGroup(): Promise<void> {
 
     await groupStore.save(group)
 
+    if (closeAllTabs.value) {
+        await closeTabs(selectedLinks.value.map(l => l.id))
+    }
+
     newGroupStore.resetChoices()
 
     showToastMessage()
@@ -90,6 +96,10 @@ async function handleSaveGroup(): Promise<void> {
 
     await groupStore.saveLinksTo(group.id, selectedLinks.value)
     showToastMessage()
+
+    if (closeAllTabs.value) {
+        await closeTabs(selectedLinks.value.map(l => l.id))
+    }
 
     saving.value = false
 
@@ -200,7 +210,7 @@ function toggleSelect(link: Link): void {
 
         <div class="flex items-center justify-between gap-3 mt-3">
             <div class="text-right">
-                <SlideSwitch v-model="groupStore.closeSelectedTabs">
+                <SlideSwitch v-model="closeAllTabs">
                     {{ trans('close_selected_tabs') }}
                 </SlideSwitch>
             </div>

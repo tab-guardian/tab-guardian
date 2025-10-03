@@ -8,7 +8,6 @@ import { useCryptoStore } from '@/stores/crypto'
 import { showToast } from '@common/modules/showToast'
 import { isDevelopment } from '@common/modules/isDevelopment'
 import { isIncognito } from '@common/modules/browser/windows'
-import { closeTabsByIds } from '@/modules/tabs/closeTabsByIds'
 import { getCurrentURL } from '@/modules/getCurrentURL'
 import { generateGroupId } from '@common/modules/generateGroupId'
 import { savePasswordToStorage } from '@common/modules/storage/password'
@@ -27,7 +26,6 @@ export const useGroupStore = defineStore('group', () => {
     const groups = ref<Group[]>([])
     const loadingGroups = ref<boolean>(false)
     const selectedGroup = ref<Group | null>(null)
-    const closeSelectedTabs = ref<boolean>(false)
 
     function getGroupById(groupId: number | undefined): Group | null {
         if (!groupId) {
@@ -254,10 +252,6 @@ export const useGroupStore = defineStore('group', () => {
 
         group.links.push(...links)
 
-        if (closeSelectedTabs.value) {
-            await closeTabsByIds(links.map(link => link.id))
-        }
-
         await save(group)
     }
 
@@ -281,7 +275,6 @@ export const useGroupStore = defineStore('group', () => {
     return {
         groups,
         selectedGroup,
-        closeSelectedTabs,
         loadingGroups,
         save,
         deleteGroup,

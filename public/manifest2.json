@@ -2,7 +2,7 @@
     "manifest_version": 2,
     "name": "__MSG_ext_name__",
     "description": "__MSG_ext_description__",
-    "version": "1.13.1",
+    "version": "1.13.2",
     "default_locale": "en",
     "web_accessible_resources": [
         "images/*",
@@ -15,9 +15,10 @@
     ],
     "browser_specific_settings": {
         "gecko": {
-            "id": "{2355d391-fb52-4933-bfb9-59b666740b79}",
             "data_collection_permissions": {
-                "required": ["none"]
+                "required": [
+                    "none"
+                ]
             }
         }
     },
