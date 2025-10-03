@@ -16,7 +16,7 @@
         "build": "vite build",
         "prettier": "prettier ./src --write",
         "prettier-check": "prettier ./src --check",
-        "type-check": "vue-tsc --noEmit"
+        "check": "vue-tsc --noEmit"
     },
     "devDependencies": {
         "@types/chrome": "^0.0.267",
