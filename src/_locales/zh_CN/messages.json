@@ -147,7 +147,7 @@
     "override_existing_match": { "message": "如果新组名与现有组名匹配，则覆盖" },
     "only_private_groups_incognito": { "message": "在浏览器隐身模式（私密模式）中隐藏已打开的群组" },
     "export_tab_groups": { "message": "导出标签页组" },
-    "export_tab_groups_desc": { "message": "导出所有标签页组。请注意，私有组不会被导出。如果需要导出私有组，请单独进行。" },
+    "export_tab_groups_desc": { "message": "导出所有私人和公共群组。我们建议您为导出文件设置密码保护。" },
     "no_groups_export": { "message": "没有组可导出" },
     "import_groups": { "message": "导入标签页组" },
     "import_private_and_open_groups": { "message": "导入私人和公开群组。" },
@@ -173,5 +173,6 @@
     "make_group_open": { "message": "设置为公开群组" },
     "are_you_sure_to_make_group_open": { "message": "您确定要将此群组设为公开吗？这意味着访问该群组时无需输入密码" },
     "group_is_now_open": { "message": "该小组现已开放" },
+    "protect_export_using_pass": { "message": "使用密码保护导出（推荐）" },
     "remember_pass_after_unlock_desc": { "message": "若禁用此选项，每次锁定私人群组时均需输入密码。保持此选项启用状态，系统会将密码存储在临时且安全的存储空间中，您无需再次输入密码即可重新锁定群组" }
 }

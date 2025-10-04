@@ -6,16 +6,18 @@ import { showToast } from '@common/modules/showToast'
 import Section from '@settings/components/Section.vue'
 import Button from '@common/components/Form/Button.vue'
 import ArrowDownTrayIcon from '@common/components/Icons/ArrowDownTrayIcon.vue'
+import SlideSwitch from '@common/components/Form/SlideSwitch.vue'
 
 const groupStore = useGroupStore()
 const exporting = ref<boolean>(false)
+const usePassword = ref<boolean>(false)
 
 onMounted(async () => {
     await groupStore.loadGroupsFromStorage()
 })
 
 async function exportGroups(): Promise<void> {
-    const groups = groupStore.groups.filter(group => !group.isPrivate)
+    const groups = groupStore.groups
 
     if (groups.length === 0) {
         showToast(trans('no_groups_export'), 'error')
@@ -44,6 +46,13 @@ async function exportGroups(): Promise<void> {
         :title="trans('export_tab_groups')"
         :subtitle="trans('export_tab_groups_desc')"
     >
+        <SlideSwitch
+            @changed="usePassword = !usePassword"
+            v-model="usePassword"
+        >
+            {{ trans('protect_export_using_pass') }}
+        </SlideSwitch>
+
         <Button
             @clicked="exportGroups"
             :icon="ArrowDownTrayIcon"
