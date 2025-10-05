@@ -29,9 +29,9 @@ export const useCryptoStore = defineStore('crypto', () => {
 
             encryptedLinks.push({
                 id: link.id,
-                url: await encrypt(link.url, key, iv, encryptAlgo),
-                title: await encrypt(link.title, key, iv, encryptAlgo),
-                favIconUrl: await encrypt(link.favIconUrl, key, iv, encryptAlgo),
+                url: uint8ArrToString(await encrypt(link.url, key, iv, encryptAlgo)),
+                title: uint8ArrToString(await encrypt(link.title, key, iv, encryptAlgo)),
+                favIconUrl: uint8ArrToString(await encrypt(link.favIconUrl, key, iv, encryptAlgo)),
                 isPinned: link.isPinned,
                 salt: uint8ArrToString(salt),
                 iv: uint8ArrToString(iv),
