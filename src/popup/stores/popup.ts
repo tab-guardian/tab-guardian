@@ -25,16 +25,16 @@ export const usePopupStore = defineStore('popup', () => {
         }
     }
 
-    function openPopup(key: keyof Popups): void {
+    function openPopup(key: keyof Popups, onClose?: (data?: any) => void): void {
         popups.value[key].open = true
+
+        if (onClose) {
+            onCloseCallback.value = onClose
+        }
     }
 
     function resetGroups(): void {
         popups.value = structuredClone(defaultPopups)
-    }
-
-    function onClose(callback: (data?: any) => void): void {
-        onCloseCallback.value = callback
     }
 
     /**
@@ -65,7 +65,6 @@ export const usePopupStore = defineStore('popup', () => {
         popups,
         openPopup,
         closePopup,
-        onClose,
         closeAllPopups,
         setSharedData,
         getSharedData,

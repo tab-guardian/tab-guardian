@@ -19,7 +19,7 @@ const groupStore = useGroupStore()
 const cryptoStore = useCryptoStore()
 const settingsStore = useSettingsStore()
 const notificationStore = useNotificationStore()
-const { openPopup, onClose } = usePopupStore()
+const { openPopup } = usePopupStore()
 
 const useNewPassword = ref<boolean>(false)
 const encrypting = ref<boolean>(false)
@@ -48,9 +48,7 @@ async function promptEnterPassword(): Promise<void> {
         showToast(trans('cant_remember_pass'), 'error', 4000)
     }
 
-    openPopup('newPassword')
-
-    onClose(async (newPass: string) => {
+    openPopup('newPassword', async (newPass: string) => {
         await groupStore.updatePassword(newPass)
         await lockGroup(newPass)
     })
