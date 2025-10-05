@@ -3,12 +3,17 @@ import { useGroupStore } from '@/stores/group'
 import { ref, onMounted } from 'vue'
 import { trans } from '@common/modules/trans'
 import { showToast } from '@common/modules/showToast'
+import { usePopupStore } from '@/stores/popup'
+import { encryptString } from '@common/modules/webCrypto'
+import { env } from "@common/env"
 import Section from '@settings/components/Section.vue'
 import Button from '@common/components/Form/Button.vue'
 import ArrowDownTrayIcon from '@common/components/Icons/ArrowDownTrayIcon.vue'
 import SlideSwitch from '@common/components/Form/SlideSwitch.vue'
 
 const groupStore = useGroupStore()
+const { openPopup } = usePopupStore()
+
 const exporting = ref<boolean>(false)
 const usePassword = ref<boolean>(false)
 
@@ -26,8 +31,23 @@ async function exportGroups(): Promise<void> {
 
     exporting.value = true
 
-    const json = JSON.stringify(groups)
-    const blob = new Blob([json], { type: 'application/json' })
+    let jsonStr = JSON.stringify(groups)
+
+    if (usePassword.value) {
+        openPopup('newPassword', async (pass: string) => {
+            jsonStr = await encryptJSON(jsonStr, pass)
+            downloadFile(jsonStr)
+        })
+
+        return
+    }
+
+    downloadFile(jsonStr)
+}
+
+
+function downloadFile(jsonStr: string): void {
+    const blob = new Blob([jsonStr], { type: 'application/json' })
     const url = URL.createObjectURL(blob)
 
     const a = document.createElement('a')
@@ -39,6 +59,13 @@ async function exportGroups(): Promise<void> {
 
     exporting.value = false
 }
+
+async function encryptJSON(json: string, pass: string): Promise<string> {
+    const encrypted = await encryptString(json, pass, env.CURR_ENCRYPT_ALGO)
+    const header = `algorithm(${env.CURR_ENCRYPT_ALGO})`
+
+    return `${header}${encrypted}`
+}
 </script>
 
 <template>
@@ -46,10 +73,7 @@ async function exportGroups(): Promise<void> {
         :title="trans('export_tab_groups')"
         :subtitle="trans('export_tab_groups_desc')"
     >
-        <SlideSwitch
-            @changed="usePassword = !usePassword"
-            v-model="usePassword"
-        >
+        <SlideSwitch v-model="usePassword">
             {{ trans('protect_export_using_pass') }}
         </SlideSwitch>
 

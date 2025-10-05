@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import { useSettingsStore } from '@/stores/settings'
-import { trans } from '@common/modules/trans'
 import Spinner from '@common/components/Spinner.vue'
 import SettingsSidebar from '@settings/components/SettingsSidebar.vue'
+import Popups from '@/components/Popups/Popups.vue'
+import NewPasswordPopup from '@/components/Popups/NewPasswordPopup.vue'
 
 const settingsStore = useSettingsStore()
 
@@ -23,4 +24,8 @@ onMounted(() => {
             </div>
         </div>
     </div>
+
+    <Popups :popups="[
+        {comp: NewPasswordPopup, name: 'newPassword'},
+    ]" />
 </template>
