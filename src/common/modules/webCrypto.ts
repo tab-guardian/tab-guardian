@@ -64,7 +64,11 @@ export async function encrypt(
 }
 
 export function uint8ArrToString(arr: Uint8Array): string {
-    return btoa(String.fromCharCode(...arr))
+    const binary = Array.from(arr)
+        .map(byte => String.fromCharCode(byte))
+        .join('')
+
+    return btoa(binary)
 }
 
 export function stringToUint8Arr(str: string): Uint8Array {

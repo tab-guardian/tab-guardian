@@ -61,7 +61,7 @@ export const useGroupStore = defineStore('group', () => {
             return
         }
 
-        savePasswordToStorage(selectedGroup.value.id, pass)
+        await savePasswordToStorage(selectedGroup.value.id, pass)
     }
 
     async function loadGroupsFromStorage(): Promise<void> {

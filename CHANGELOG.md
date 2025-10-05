@@ -1,5 +1,8 @@
 # Release Notes
 
+## v1.14.0 (2025-10-06)
+- 🐛 Fixed potential bugs with encryption/decryption
+
 ## v1.13.2 (2025-10-03)
 - 🐛 Fixed a bug where tabs would not close when you create a new group or adding more tabs to existing group
 

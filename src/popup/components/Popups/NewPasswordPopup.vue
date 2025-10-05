@@ -16,13 +16,13 @@ const pass = ref<string>('')
 const confirmPass = ref<string>('')
 const preventSubmit = ref<boolean>(true)
 
-function updatePassword(): void {
+async function updatePassword(): Promise<void> {
     if (preventSubmit.value) {
         console.warn('Cannot submit because password error')
         return
     }
 
-    store.updatePassword(pass.value)
+    await store.updatePassword(pass.value)
     showToast(trans('pass_updated'))
     closePopup('newPassword', pass.value)
 }
