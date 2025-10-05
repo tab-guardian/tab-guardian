@@ -11,7 +11,6 @@ import { showToast } from '@common/modules/showToast'
 import { getPasswordFromStorage, deletePasswordFromStorage } from '@common/modules/storage/password'
 import LockClosedIcon from '@common/components/Icons/LockClosedIcon.vue'
 import WarningBox from '@common/components/WarningBox.vue'
-import SmallSpinner from '@common/components/SmallSpinner.vue'
 import ProgressBar from '@common/components/ProgressBar.vue'
 import Button from '@common/components/Form/Button.vue'
 
@@ -50,7 +49,11 @@ async function promptEnterPassword(): Promise<void> {
     }
 
     openPopup('newPassword')
-    onClose(async (newPass: string) => await lockGroup(newPass))
+
+    onClose(async (newPass: string) => {
+        await groupStore.updatePassword(newPass)
+        await lockGroup(newPass)
+    })
 }
 
 async function lockGroup(pass: string): Promise<void> {

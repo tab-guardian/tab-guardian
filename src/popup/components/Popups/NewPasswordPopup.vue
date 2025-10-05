@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useGroupStore } from '@/stores/group'
 import { trans } from '@common/modules/trans'
 import { usePopupStore } from '@/stores/popup'
 import { showToast } from '@common/modules/showToast'
@@ -10,26 +9,24 @@ import ChevronRightIcon from '@common/components/Icons/ChevronRightIcon.vue'
 import PasswordFields from '@/components/PasswordFields.vue'
 
 const { closePopup } = usePopupStore()
-const store = useGroupStore()
 
 const pass = ref<string>('')
 const confirmPass = ref<string>('')
 const preventSubmit = ref<boolean>(true)
 
-async function updatePassword(): Promise<void> {
+function updatePassword(): void {
     if (preventSubmit.value) {
         console.warn('Cannot submit because password error')
         return
     }
 
-    await store.updatePassword(pass.value)
     showToast(trans('pass_updated'))
     closePopup('newPassword', pass.value)
 }
 </script>
 
 <template>
-    <Popup @cancel="closePopup('newPassword')" :content="trans('enter_new_pass')">
+    <Popup @cancel="closePopup('newPassword')" :content="trans('enter_pass')">
         <form @submit.prevent="updatePassword" class="flex flex-col gap-3">
             <PasswordFields
                 v-model:pass="pass"
@@ -43,7 +40,7 @@ async function updatePassword(): Promise<void> {
                 :disabled="preventSubmit"
                 :icon="ChevronRightIcon"
             >
-                {{ trans('save') }}
+                {{ trans('confirm') }}
             </Button>
         </form>
     </Popup>
