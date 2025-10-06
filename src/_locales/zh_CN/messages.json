@@ -153,7 +153,6 @@
     "import_private_and_open_groups": { "message": "导入私人和公开群组。" },
     "choose_exported_file": { "message": "选择导出的文件" },
     "choose_file_import": { "message": "请选择一个文件进行导入" },
-    "failed_decrypt_file": { "message": "解密文件失败" },
     "error_reading_file": { "message": "读取文件时出错" },
     "some_groups_already_exist_same_name": { "message": "要导入的某些组已存在相同名称。您想替换它们吗？" },
     "replace_groups": { "message": "替换组？" },

@@ -106,7 +106,7 @@ async function createCryptoKey(
 }
 
 export async function encryptString(
-    str: string | Uint8Array,
+    str: string,
     pass: string,
     algo: EncryptionAlgo,
 ): Promise<string> {

@@ -4,8 +4,9 @@ import { ref, onMounted } from 'vue'
 import { trans } from '@common/modules/trans'
 import { showToast } from '@common/modules/showToast'
 import { usePopupStore } from '@/stores/popup'
-import { encryptString } from '@common/modules/webCrypto'
+import { encryptString, uint8ArrToString } from '@common/modules/webCrypto'
 import { env } from "@common/env"
+import pako from 'pako'
 import Section from '@settings/components/Section.vue'
 import Button from '@common/components/Form/Button.vue'
 import ArrowDownTrayIcon from '@common/components/Icons/ArrowDownTrayIcon.vue'
@@ -31,14 +32,11 @@ async function exportGroups(): Promise<void> {
 
     exporting.value = true
 
-    let jsonStr = JSON.stringify(groups)
+    const jsonStr = JSON.stringify(groups)
+    const compressed = uint8ArrToString(pako.gzip(jsonStr))
 
-    if (usePassword.value) {
-        openPopup('newPassword', async (pass: string) => {
-            jsonStr = await encryptJSON(jsonStr, pass)
-            downloadFile(jsonStr)
-        })
-
+    if (!usePassword.value) {
+        downloadFile(compressed)
         return
     }
 
@@ -48,7 +46,7 @@ async function exportGroups(): Promise<void> {
     })
 }
 
-function downloadFile(jsonStr: string | Uint8Array): void {
+function downloadFile(jsonStr: string): void {
     const blob = new Blob([jsonStr], { type: 'application/json' })
     const url = URL.createObjectURL(blob)
 
@@ -62,7 +60,7 @@ function downloadFile(jsonStr: string | Uint8Array): void {
     exporting.value = false
 }
 
-async function encryptJSON(json: string | Uint8Array, pass: string): Promise<string> {
+async function encryptJSON(json: string, pass: string): Promise<string> {
     const encrypted = await encryptString(json, pass, env.CURR_ENCRYPT_ALGO)
     const header = `algo(${env.CURR_ENCRYPT_ALGO})`
 

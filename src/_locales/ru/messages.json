@@ -153,7 +153,6 @@
     "import_private_and_open_groups": { "message": "Импортировать приватные и открытые группы." },
     "choose_exported_file": { "message": "Выберите экспортированный файл" },
     "choose_file_import": { "message": "Пожалуйста, выберите файл для импорта" },
-    "failed_decrypt_file": { "message": "Не удалось расшифровать файл" },
     "error_reading_file": { "message": "Ошибка чтения файла" },
     "some_groups_already_exist_same_name": { "message": "Некоторые группы, которые вы хотите импортировать, уже существуют с таким же именем. Вы хотите заменить их?" },
     "replace_groups": { "message": "Заменить группы?" },

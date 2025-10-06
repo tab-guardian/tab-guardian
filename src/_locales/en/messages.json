@@ -153,7 +153,6 @@
     "import_private_and_open_groups": { "message": "Import private and open groups." },
     "choose_exported_file": { "message": "Choose the exported file" },
     "choose_file_import": { "message": "Please choose a file to import" },
-    "failed_decrypt_file": { "message": "Failed to decrypt the file" },
     "error_reading_file": { "message": "Error reading file" },
     "some_groups_already_exist_same_name": { "message": "Some groups that you want to import already exist with the same name. Do you want to replace them?" },
     "replace_groups": { "message": "Replace groups?" },

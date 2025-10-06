@@ -3,14 +3,15 @@ import type { EncryptionAlgo, Group } from '@/types'
 import { ref } from 'vue'
 import { trans } from '@common/modules/trans'
 import { useGroupStore } from '@/stores/group'
-import { decryptString } from '@common/modules/webCrypto'
+import { decryptString, stringToUint8Arr } from '@common/modules/webCrypto'
 import { showToast } from '@common/modules/showToast'
 import { getDecryptionError } from '@/errors'
+import { env } from '@common/env'
+import pako from 'pako'
 import Swal from 'sweetalert2'
 import Section from '@settings/components/Section.vue'
 import FileInput from '@common/components/Form/FileInput.vue'
 import PasswordInput from '@common/components/Form/PasswordInput.vue'
-import { env } from '@common/env'
 
 const fileRawData = ref<string>('')
 const password = ref<string>('')
@@ -33,7 +34,7 @@ async function importGroups(): Promise<void> {
             await processFileContent(e.target?.result as string)
         } catch (err) {
             console.error(err)
-            showToast(trans('failed_decrypt_file'), 'error')
+            showToast(trans('error_reading_file'), 'error')
         }
     }
 
@@ -95,6 +96,13 @@ async function processFileContent(rawData: string): Promise<void> {
     }
 
     importing.value = true
+
+    const isCompressed = !rawData.startsWith('{') && !rawData.startsWith('[{')
+
+    if (isCompressed) {
+        const compressedBytes = stringToUint8Arr(rawData)
+        rawData = pako.ungzip(compressedBytes, { to: 'string' })
+    }
 
     const json = JSON.parse(rawData) as Group[] | Group
     const groups = Array.isArray(json) ? json : [json]
