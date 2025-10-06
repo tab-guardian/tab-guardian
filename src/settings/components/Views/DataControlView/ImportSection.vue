@@ -58,10 +58,6 @@ function resetState(): void {
     }
 }
 
-function fileNeedsPassword(rawData: string): boolean {
-    return rawData.startsWith('algo(')
-}
-
 async function handlePasswordSubmit(): Promise<void> {
     if (password.value.length < env.MIN_PASS_LENGTH) {
         const msg = trans('passwords_min_length', env.MIN_PASS_LENGTH.toString())
@@ -93,7 +89,7 @@ async function handlePasswordSubmit(): Promise<void> {
 async function prependGroups(rawData: string): Promise<void> {
     fileRawData.value = rawData
 
-    if (fileNeedsPassword(rawData)) {
+    if (rawData.startsWith('algo(')) {
         isEncryptedFile.value = true
         return
     }
