@@ -16,11 +16,7 @@ import WarningBox from '@common/components/WarningBox.vue'
 import ProgressBar from '@common/components/ProgressBar.vue'
 import PasswordInput from '@common/components/Form/PasswordInput.vue'
 
-type Props = {
-    group: Group
-}
-
-const props = defineProps<Props>()
+const props = defineProps<{ group: Group }>()
 
 const route = useRoute()
 const router = useRouter()

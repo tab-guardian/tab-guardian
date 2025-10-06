@@ -62,7 +62,7 @@ function downloadFile(jsonStr: string): void {
 
 async function encryptJSON(json: string, pass: string): Promise<string> {
     const encrypted = await encryptString(json, pass, env.CURR_ENCRYPT_ALGO)
-    const header = `algorithm(${env.CURR_ENCRYPT_ALGO})`
+    const header = `algo(${env.CURR_ENCRYPT_ALGO})`
 
     return `${header}${encrypted}`
 }

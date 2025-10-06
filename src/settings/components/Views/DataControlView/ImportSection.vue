@@ -1,17 +1,23 @@
 <script setup lang="ts">
-import type { Group } from '@/types'
+import type { EncryptionAlgo, Group } from '@/types'
 import { ref } from 'vue'
 import { trans } from '@common/modules/trans'
 import { useGroupStore } from '@/stores/group'
+import { decryptString } from '@common/modules/webCrypto'
 import { showToast } from '@common/modules/showToast'
 import Swal from 'sweetalert2'
 import Section from '@settings/components/Section.vue'
 import FileInput from '@common/components/Form/FileInput.vue'
+import PasswordInput from '@common/components/Form/PasswordInput.vue'
+import { env } from '@common/env'
 
+const fileRawData = ref<string>('')
 const password = ref<string>('')
 const file = ref<File | null>(null)
 const fileInput = ref<HTMLInputElement | null>(null)
 const groupStore = useGroupStore()
+const importing = ref<boolean>(false)
+const isEncryptedFile = ref<boolean>(false)
 
 async function importGroups(): Promise<void> {
     if (!file.value) {
@@ -23,10 +29,7 @@ async function importGroups(): Promise<void> {
 
     reader.onload = async e => {
         try {
-            const rawData = e.target?.result as string
-            const json = JSON.parse(rawData) as Group[] | Group
-
-            await prependGroups(Array.isArray(json) ? json : [json])
+            await prependGroups(e.target?.result as string)
         } catch (err) {
             console.error(err)
             showToast(trans('failed_decrypt_file'), 'error')
@@ -39,15 +42,61 @@ async function importGroups(): Promise<void> {
     }
 
     reader.readAsText(file.value)
+    resetState()
+}
+
+function resetState(): void {
     password.value = ''
     file.value = null
+    importing.value = false
+    fileRawData.value = ''
+    isEncryptedFile.value = false
 
     if (fileInput.value) {
         fileInput.value.value = ''
     }
 }
 
-async function prependGroups(groups: Group[]): Promise<void> {
+function fileNeedsPassword(rawData: string): boolean {
+    return rawData.startsWith('algo(')
+}
+
+async function handlePasswordSubmit(): Promise<void> {
+    if (password.value.length < env.MIN_PASS_LENGTH) {
+        const msg = trans('passwords_min_length', env.MIN_PASS_LENGTH.toString())
+        showToast(msg, 'error')
+        return
+    }
+
+    const rawData = fileRawData.value
+    const algo = /^algo\(([A-z-]+)\)/.exec(rawData)?.[1] as EncryptionAlgo | undefined
+
+    if (!algo) {
+        throw new Error("Cannot get the encryption algorithm from the file")
+    }
+
+    importing.value = true
+
+    const encrypted = rawData.replace(`algo(${algo})`, '')
+    const decrypted = await decryptString(encrypted, password.value, algo)
+
+    await prependGroups(decrypted)
+    resetState()
+}
+
+async function prependGroups(rawData: string): Promise<void> {
+    fileRawData.value = rawData
+
+    if (fileNeedsPassword(rawData)) {
+        isEncryptedFile.value = true
+        return
+    }
+
+    importing.value = true
+
+    const json = JSON.parse(rawData) as Group[] | Group
+    const groups = Array.isArray(json) ? json : [json]
+
     await groupStore.loadGroupsFromStorage()
 
     const groupsWithSameName = groups.reduce((acc, group) => {
@@ -99,5 +148,20 @@ async function fileChosen(f: File, elem: HTMLInputElement): Promise<void> {
                 id="choose-file"
             />
         </div>
+
+        <form
+            v-if="isEncryptedFile"
+            @submit.prevent="handlePasswordSubmit"
+            class="mt-5 mx-auto max-w-96"
+        >
+            <PasswordInput
+                @loaded="inp => inp.focus()"
+                v-model="password"
+                id="enter-password"
+                :label="trans('enter_pass')"
+                :with-button="true"
+                :loading="importing"
+            />
+        </form>
     </Section>
 </template>

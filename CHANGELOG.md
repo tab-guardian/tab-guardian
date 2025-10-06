@@ -2,6 +2,7 @@
 
 ## v1.14.0 (2025-10-06)
 - 🐛 Fixed potential bugs with encryption/decryption
+- ✨ Improved export/import functionality. Now, you can export all groups with a password protection [#77](https://github.com/tab-guardian/tab-guardian/issues/77)
 
 ## v1.13.2 (2025-10-03)
 - 🐛 Fixed a bug where tabs would not close when you create a new group or adding more tabs to existing group
