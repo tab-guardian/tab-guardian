@@ -1,7 +1,7 @@
 import type { EncryptionAlgo, Group, Link } from '@/types'
 import { reactive, readonly } from 'vue'
 import { defineStore } from 'pinia'
-import { encrypt, decrypt, uint8ArrToString, createEncryptKey, createDecryptKey, stringToUint8Arr } from '@common/modules/webCrypto'
+import { encrypt, decrypt, toBase64, createEncryptKey, createDecryptKey, fromBase64 } from '@common/modules/webCrypto'
 import { env } from '@common/env'
 import CryptoJS from 'crypto-js'
 
@@ -33,12 +33,12 @@ export const useCryptoStore = defineStore('crypto', () => {
 
             encryptedLinks.push({
                 id: link.id,
-                url: uint8ArrToString(url),
-                title: uint8ArrToString(title),
-                favIconUrl: uint8ArrToString(favIconUrl),
+                url: toBase64(url),
+                title: toBase64(title),
+                favIconUrl: toBase64(favIconUrl),
                 isPinned: link.isPinned,
-                salt: uint8ArrToString(salt),
-                iv: uint8ArrToString(iv),
+                salt: toBase64(salt),
+                iv: toBase64(iv),
             })
 
             progress.current++
@@ -95,7 +95,7 @@ export const useCryptoStore = defineStore('crypto', () => {
             throw new Error(`Link ${link.id} doesn't have iv attached. Which should not happen`)
         }
 
-        const ivBytes = stringToUint8Arr(link.iv)
+        const ivBytes = fromBase64(link.iv)
 
         const url = await decrypt(link.url, key, ivBytes, algo)
         const title = await decrypt(link.title, key, ivBytes, algo)

@@ -19,7 +19,7 @@ export async function createDecryptKey(
     encryptAlgo: EncryptionAlgo,
 ): Promise<CryptoKey> {
     if (typeof salt === 'string') {
-        const saltBytes = stringToUint8Arr(salt)
+        const saltBytes = fromBase64(salt)
         return await createCryptoKey(pass, saltBytes, encryptAlgo, ['decrypt'])
     }
 
@@ -34,7 +34,7 @@ export async function decrypt(
     encryptAlgo: EncryptionAlgo,
 ): Promise<string> {
     if (typeof encrypted === 'string') {
-        encrypted = stringToUint8Arr(encrypted)
+        encrypted = fromBase64(encrypted)
     }
 
     const decrypted = await crypto.subtle.decrypt(
@@ -65,7 +65,7 @@ export async function encrypt(
     return new Uint8Array(encrypted)
 }
 
-export function uint8ArrToString(arr: Uint8Array): string {
+export function toBase64(arr: Uint8Array): string {
     const binary = Array.from(arr)
         .map(byte => String.fromCharCode(byte))
         .join('')
@@ -73,7 +73,7 @@ export function uint8ArrToString(arr: Uint8Array): string {
     return btoa(binary)
 }
 
-export function stringToUint8Arr(str: string): Uint8Array {
+export function fromBase64(str: string): Uint8Array {
     return Uint8Array.from(atob(str), c => c.charCodeAt(0))
 }
 
@@ -124,7 +124,7 @@ export async function encryptString(
     uint8Arr.set(iv, salt.length)
     uint8Arr.set(new Uint8Array(encrypted), salt.length + iv.length)
 
-    return uint8ArrToString(uint8Arr)
+    return toBase64(uint8Arr)
 }
 
 export async function decryptString(
@@ -132,7 +132,7 @@ export async function decryptString(
     pass: string,
     algo: EncryptionAlgo,
 ): Promise<string> {
-    const encryptedBytes = stringToUint8Arr(encrypted)
+    const encryptedBytes = fromBase64(encrypted)
 
     // Extract the pieces
     const salt = encryptedBytes.slice(0, KEY_BYTES_LENGTH)

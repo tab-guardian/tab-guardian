@@ -3,7 +3,7 @@ import type { EncryptionAlgo, Group } from '@/types'
 import { ref } from 'vue'
 import { trans } from '@common/modules/trans'
 import { useGroupStore } from '@/stores/group'
-import { decryptString, stringToUint8Arr } from '@common/modules/webCrypto'
+import { decryptString, fromBase64 } from '@common/modules/webCrypto'
 import { showToast } from '@common/modules/showToast'
 import { getDecryptionError } from '@/errors'
 import { env } from '@common/env'
@@ -100,7 +100,7 @@ async function processFileContent(rawData: string): Promise<void> {
     const isCompressed = !rawData.startsWith('{') && !rawData.startsWith('[{')
 
     if (isCompressed) {
-        const compressedBytes = stringToUint8Arr(rawData)
+        const compressedBytes = fromBase64(rawData)
         rawData = pako.ungzip(compressedBytes, { to: 'string' })
     }
 

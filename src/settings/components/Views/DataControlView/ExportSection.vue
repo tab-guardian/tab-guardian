@@ -4,7 +4,7 @@ import { ref, onMounted } from 'vue'
 import { trans } from '@common/modules/trans'
 import { showToast } from '@common/modules/showToast'
 import { usePopupStore } from '@/stores/popup'
-import { encryptString, uint8ArrToString } from '@common/modules/webCrypto'
+import { encryptString, toBase64 } from '@common/modules/webCrypto'
 import { env } from "@common/env"
 import pako from 'pako'
 import Section from '@settings/components/Section.vue'
@@ -33,7 +33,7 @@ async function exportGroups(): Promise<void> {
     exporting.value = true
 
     const jsonStr = JSON.stringify(groups)
-    const compressed = uint8ArrToString(pako.gzip(jsonStr))
+    const compressed = toBase64(pako.gzip(jsonStr))
 
     if (!usePassword.value) {
         downloadFile(compressed)
