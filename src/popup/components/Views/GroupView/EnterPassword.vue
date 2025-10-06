@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Group } from '@/types'
-import { CRYPTO_JS_DECRYPTION_FAILED, WEB_CRYPTO_DECRYPTION_FAILED } from '@/errors'
+import { isWrongPassError, getDecryptionError } from '@/errors'
 import { ref } from 'vue'
 import { trans } from '@common/modules/trans'
 import { useGroupStore } from '@/stores/group'
@@ -74,17 +74,12 @@ async function unlockGroup(): Promise<void> {
 }
 
 function handleUnlockGroupError(err: any): void {
-    const wrongPass = err instanceof Error &&
-        [CRYPTO_JS_DECRYPTION_FAILED, WEB_CRYPTO_DECRYPTION_FAILED]
-            .includes(err.message)
-
-    if (!wrongPass) {
-        console.error('Caught and handled error: ', err)
-        showToast(trans('error_occurred'), 'error')
+    if (!isWrongPassError(err)) {
+        showToast(getDecryptionError(err), 'error')
         return
     }
 
-    showToast(trans('wrong_pass'), 'error')
+    showToast(getDecryptionError(err), 'error')
 
     if (hasMaxAttempts()) {
         lockedMessageToast()
