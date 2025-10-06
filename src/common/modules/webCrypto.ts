@@ -47,12 +47,14 @@ export async function decrypt(
 }
 
 export async function encrypt(
-    text: string,
+    text: string | Uint8Array,
     cryptoKey: CryptoKey,
     iv: Uint8Array,
     encryptAlgo: EncryptionAlgo,
 ): Promise<Uint8Array> {
-    const textBytes = new TextEncoder().encode(text)
+    const textBytes = typeof text === 'string'
+        ? new TextEncoder().encode(text)
+        : text
 
     const encrypted = await crypto.subtle.encrypt(
         { name: encryptAlgo, iv },
@@ -104,7 +106,7 @@ async function createCryptoKey(
 }
 
 export async function encryptString(
-    str: string,
+    str: string | Uint8Array,
     pass: string,
     algo: EncryptionAlgo,
 ): Promise<string> {

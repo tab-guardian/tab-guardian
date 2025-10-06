@@ -42,11 +42,13 @@ async function exportGroups(): Promise<void> {
         return
     }
 
-    downloadFile(jsonStr)
+    openPopup('newPassword', async (pass: string) => {
+        const encrypted = await encryptJSON(compressed, pass)
+        downloadFile(encrypted)
+    })
 }
 
-
-function downloadFile(jsonStr: string): void {
+function downloadFile(jsonStr: string | Uint8Array): void {
     const blob = new Blob([jsonStr], { type: 'application/json' })
     const url = URL.createObjectURL(blob)
 
@@ -60,7 +62,7 @@ function downloadFile(jsonStr: string): void {
     exporting.value = false
 }
 
-async function encryptJSON(json: string, pass: string): Promise<string> {
+async function encryptJSON(json: string | Uint8Array, pass: string): Promise<string> {
     const encrypted = await encryptString(json, pass, env.CURR_ENCRYPT_ALGO)
     const header = `algo(${env.CURR_ENCRYPT_ALGO})`
 
