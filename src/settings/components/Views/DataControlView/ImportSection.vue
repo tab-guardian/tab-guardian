@@ -5,6 +5,7 @@ import { trans } from '@common/modules/trans'
 import { useGroupStore } from '@/stores/group'
 import { decryptString } from '@common/modules/webCrypto'
 import { showToast } from '@common/modules/showToast'
+import { getDecryptionError } from '@/errors'
 import Swal from 'sweetalert2'
 import Section from '@settings/components/Section.vue'
 import FileInput from '@common/components/Form/FileInput.vue'
@@ -78,9 +79,14 @@ async function handlePasswordSubmit(): Promise<void> {
     importing.value = true
 
     const encrypted = rawData.replace(`algo(${algo})`, '')
-    const decrypted = await decryptString(encrypted, password.value, algo)
 
-    await prependGroups(decrypted)
+    try {
+        const decrypted = await decryptString(encrypted, password.value, algo)
+        await prependGroups(decrypted)
+    } catch (err) {
+        showToast(getDecryptionError(err), 'error')
+    }
+
     resetState()
 }
 
