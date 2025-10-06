@@ -30,7 +30,7 @@ async function importGroups(): Promise<void> {
 
     reader.onload = async e => {
         try {
-            await prependGroups(e.target?.result as string)
+            await processFileContent(e.target?.result as string)
         } catch (err) {
             console.error(err)
             showToast(trans('failed_decrypt_file'), 'error')
@@ -78,7 +78,7 @@ async function handlePasswordSubmit(): Promise<void> {
 
     try {
         const decrypted = await decryptString(encrypted, password.value, algo)
-        await prependGroups(decrypted)
+        await processFileContent(decrypted)
     } catch (err) {
         showToast(getDecryptionError(err), 'error')
     }
@@ -86,7 +86,7 @@ async function handlePasswordSubmit(): Promise<void> {
     resetState()
 }
 
-async function prependGroups(rawData: string): Promise<void> {
+async function processFileContent(rawData: string): Promise<void> {
     fileRawData.value = rawData
 
     if (rawData.startsWith('algo(')) {
