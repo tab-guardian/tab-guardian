@@ -11,7 +11,7 @@ import IsUnlockedBox from '@/components/Views/GroupView/IsUnlockedBox.vue'
 describe('IsUnlockedBox', () => {
     beforeEach(() => setActivePinia(createPinia()))
 
-    it('We can see "New password" checkbox if password is set to remembered in settings', () => {
+    it('"New password" checkbox is visible when password is set to cached', () => {
         const settingsStore = useSettingsStore()
         settingsStore.settings.rememberPasswordAfterUnlock = true
 
@@ -24,7 +24,7 @@ describe('IsUnlockedBox', () => {
         expect(wrapper.html()).toContain(trans('new_password'))
     })
 
-    it('We cannot see "New password" checkbox if password is set to not remembered in settings', () => {
+    it('"New password" checkbox should not be visible when password is not set to cached', () => {
         const settingsStore = useSettingsStore()
         settingsStore.settings.rememberPasswordAfterUnlock = false
 
