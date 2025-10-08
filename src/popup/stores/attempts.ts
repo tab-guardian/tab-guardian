@@ -36,7 +36,7 @@ export const useAttemptsStore = defineStore('attempts', () => {
         const isLockExpired = Date.now() >= (attempts.value.lockEndTime || 0)
 
         if (attempts.value.isLocked && isLockExpired) {
-            resetAttempts()
+            await resetAttempts()
         }
 
         if (attempts.value.isLocked) {

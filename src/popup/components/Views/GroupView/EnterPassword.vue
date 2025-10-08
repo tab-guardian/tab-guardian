@@ -62,7 +62,7 @@ async function unlockGroup(): Promise<void> {
     const decryptedGroup = await cryptoStore.decryptGroup(props.group, password.value)
     await groupStore.save(decryptedGroup)
 
-    resetAttempts()
+    await resetAttempts()
 
     await notificationStore.recalculateNotification()
 
