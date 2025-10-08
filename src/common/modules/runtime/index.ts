@@ -15,6 +15,4 @@ if (isDevelopment()) {
     adapter = chromeRuntimeAdapter
 }
 
-export function runtime(): PlatformRuntime {
-    return adapter!
-}
+export const runtime = adapter

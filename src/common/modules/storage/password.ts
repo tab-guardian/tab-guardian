@@ -1,5 +1,5 @@
 import type { PasswordBytes } from '@common/types'
-import { saveToStorage, getFromStorage, deleteFromStorage } from '@common/modules/storage'
+import { runtime } from '@common/modules/runtime'
 import { getGroupsFromStorage } from '@common/modules/storage/group'
 import { isDevelopment } from '@common/modules/isDevelopment'
 import { targetBrowser } from '@common/modules/browser/targetBrowser'
@@ -7,15 +7,15 @@ import { targetBrowser } from '@common/modules/browser/targetBrowser'
 const KEY_PREFIX = 'group-password-'
 
 export async function savePasswordToStorage(groupId: number, pass: string): Promise<void> {
-    await saveToStorage<string>(KEY_PREFIX + groupId, pass)
+    await runtime.storage.set<string>(KEY_PREFIX + groupId, pass)
 }
 
 export async function getPasswordFromStorage(groupId: number): Promise<string | null> {
-    return getFromStorage<string>(KEY_PREFIX + groupId)
+    return runtime.storage.get<string>(KEY_PREFIX + groupId)
 }
 
 export async function deletePasswordFromStorage(groupId: number): Promise<void> {
-    await deleteFromStorage(KEY_PREFIX + groupId)
+    await runtime.storage.remove(KEY_PREFIX + groupId)
 }
 
 export async function getPasswordsBytes(): Promise<PasswordBytes[]> {
