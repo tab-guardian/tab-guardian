@@ -2,16 +2,16 @@
 import { ref, onMounted, computed } from 'vue'
 import { trans } from '@common/modules/trans'
 import { getImageURL } from '@common/modules/browser/url'
-import { getBytesInUse, getMaxBytes } from '@common/modules/storage'
+import { runtime } from '@common/modules/runtime'
 import { formatNumber } from '@common/modules/numberUtil'
 import ProgressBar from '@common/components/ProgressBar.vue'
 
 onMounted(async () => {
-    currentBytesUsage.value = await getBytesInUse()
+    currentBytesUsage.value = await runtime.storage.getBytesInUse()
 })
 
 const currentBytesUsage = ref<number | null>(null)
-const maxBytes = getMaxBytes()
+const maxBytes = runtime.storage.MAX_BYTES_QUOTA
 
 const storageUsage = computed(() => {
     if (currentBytesUsage.value === null) {
