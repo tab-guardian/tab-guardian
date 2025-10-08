@@ -77,13 +77,6 @@ export const useAttemptsStore = defineStore('attempts', () => {
         showToast(msg, 'error', 5000)
     }
 
-    async function incrementAttempts(): Promise<void> {
-        attempts.value.amount++
-        attempts.value.lockEndTime = Date.now()
-
-        await saveAttemptsToStorage()
-    }
-
     async function resetAttempts(): Promise<void> {
         attempts.value.amount = 0
         attempts.value.isLocked = false
@@ -100,6 +93,5 @@ export const useAttemptsStore = defineStore('attempts', () => {
         saveAttemptsToStorage,
         isAllowedToTry,
         resetAttempts,
-        incrementAttempts,
     }
 })
