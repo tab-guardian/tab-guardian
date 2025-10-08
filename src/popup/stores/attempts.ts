@@ -23,7 +23,7 @@ export const useAttemptsStore = defineStore('attempts', () => {
         }
     }
 
-    function saveAttemptsToStorage(): void {
+    async function saveAttemptsToStorage(): Promise<void> {
         if (!attempts.value) {
             console.error('Attempts value is not set')
             return
@@ -32,7 +32,7 @@ export const useAttemptsStore = defineStore('attempts', () => {
         saveToStorage('attempts', attempts.value)
     }
 
-    function isAllowedToTry(): boolean {
+    async function isAllowedToTry(): Promise<boolean> {
         const isLockExpired = Date.now() >= (attempts.value.lockEndTime || 0)
 
         if (attempts.value.isLocked && isLockExpired) {
@@ -61,12 +61,13 @@ export const useAttemptsStore = defineStore('attempts', () => {
             attempts.value.lockEndTime = Date.now() + env.PASS_LOCK_DURATION * 60 * 1000
 
             lockedMessageToast()
-            saveAttemptsToStorage()
+
+            await saveAttemptsToStorage()
 
             return false
         }
 
-        saveAttemptsToStorage()
+        await saveAttemptsToStorage()
 
         return true
     }
@@ -76,17 +77,17 @@ export const useAttemptsStore = defineStore('attempts', () => {
         showToast(msg, 'error', 5000)
     }
 
-    function incrementAttempts(): void {
+    async function incrementAttempts(): Promise<void> {
         attempts.value.amount++
         attempts.value.lockEndTime = Date.now()
 
-        saveAttemptsToStorage()
+        await saveAttemptsToStorage()
     }
 
-    function resetAttempts(): void {
+    async function resetAttempts(): Promise<void> {
         attempts.value.amount = 0
         attempts.value.isLocked = false
-        saveAttemptsToStorage()
+        await saveAttemptsToStorage()
     }
 
     function hasMaxAttempts(): boolean {
