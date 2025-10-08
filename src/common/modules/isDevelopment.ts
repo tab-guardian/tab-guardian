@@ -1,3 +1,3 @@
 export function isDevelopment() {
-    return import.meta.env.MODE === 'development'
+    return ['development', 'test'].includes(import.meta.env.MODE)
 }

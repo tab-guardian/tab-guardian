@@ -16,6 +16,7 @@
         "build": "vite build",
         "prettier": "prettier ./src --write",
         "prettier-check": "prettier ./src --check",
+        "test": "vitest",
         "check": "vue-tsc --noEmit"
     },
     "devDependencies": {
@@ -24,12 +25,14 @@
         "@types/firefox": "^0.0.34",
         "@types/firefox-webext-browser": "^120.0.3",
         "@types/lodash": "^4.17.20",
+        "@types/pako": "^2.0.4",
         "@types/slug": "^5.0.9",
         "@types/toastify-js": "^1.12.3",
-        "@types/pako": "^2.0.4",
         "@vitejs/plugin-vue": "^5.0.4",
+        "@vue/test-utils": "^2.4.6",
         "autoprefixer": "^10.4.19",
         "fs": "^0.0.1-security",
+        "happy-dom": "^19.0.2",
         "path": "^0.12.7",
         "postcss": "^8.4.38",
         "prettier": "^3.2.5",
@@ -38,6 +41,7 @@
         "typescript": "^5.4.5",
         "vite": "^5.2.11",
         "vite-plugin-static-copy": "^2.2.0",
+        "vitest": "^3.2.4",
         "vue-tsc": "^3.1.0"
     },
     "author": "Serhii Cho",
