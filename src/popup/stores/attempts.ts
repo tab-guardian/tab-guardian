@@ -2,7 +2,7 @@ import type { Attempts } from '@/types'
 import { onMounted, ref } from 'vue'
 import { defineStore } from 'pinia'
 import { trans } from '@common/modules/trans'
-import { saveToStorage, getFromStorage } from '@common/modules/storage'
+import { runtime } from '@common/modules/runtime'
 import { showToast } from '@common/modules/showToast'
 import { env } from '@common/env'
 
@@ -16,7 +16,7 @@ export const useAttemptsStore = defineStore('attempts', () => {
     onMounted(loadAttemptsFromStorage)
 
     async function loadAttemptsFromStorage(): Promise<void> {
-        const attemptsValue = await getFromStorage<Attempts>('attempts')
+        const attemptsValue = await runtime.storage.get<Attempts>('attempts')
 
         if (attemptsValue) {
             attempts.value = attemptsValue
@@ -29,7 +29,7 @@ export const useAttemptsStore = defineStore('attempts', () => {
             return
         }
 
-        saveToStorage('attempts', attempts.value)
+        await runtime.storage.set('attempts', attempts.value)
     }
 
     async function isAllowedToTry(): Promise<boolean> {

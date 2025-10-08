@@ -39,7 +39,9 @@ async function submitPass(): Promise<void> {
         return
     }
 
-    if (!isAllowedToTry()) {
+    const allowed = await isAllowedToTry()
+
+    if (!allowed) {
         password.value = ''
         return
     }
