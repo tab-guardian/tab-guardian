@@ -1,5 +1,5 @@
 import type { PlatformRuntime } from "@common/types/runtime"
-import { getFromExtentionStorage, throwIfQuotaExceeds } from "@common/modules/runtime/utils"
+import { getFromExtentionStorage, throwIfQuotaExceeds, mapToTab } from "@common/modules/runtime/utils"
 
 export const chromeRuntimeAdapter: PlatformRuntime = {
     storage: {
@@ -40,9 +40,14 @@ export const chromeRuntimeAdapter: PlatformRuntime = {
 
     tabs: {
         async query(queryInfo) {
-            new Promise(resolve => {
-                chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
-                    resolve(url)
+            return new Promise((resolve, reject) => {
+                chrome.tabs.query(queryInfo, tabs => {
+                    if (chrome.runtime.lastError) {
+                        reject(chrome.runtime.lastError)
+                        return
+                    }
+
+                    resolve(tabs.map(mapToTab))
                 })
             })
         },

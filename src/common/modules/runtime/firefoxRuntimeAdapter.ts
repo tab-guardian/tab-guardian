@@ -1,5 +1,5 @@
 import type { PlatformRuntime } from "@common/types/runtime"
-import { getFromExtentionStorage, throwIfQuotaExceeds } from "@common/modules/runtime/utils"
+import { getFromExtentionStorage, throwIfQuotaExceeds, mapToTab } from "@common/modules/runtime/utils"
 
 export const firefoxRuntimeAdapter: PlatformRuntime = {
     storage: {
@@ -47,10 +47,8 @@ export const firefoxRuntimeAdapter: PlatformRuntime = {
 
     tabs: {
         async query(queryInfo) {
-            const tabs = await browser.tabs.query({ active: true, currentWindow: true })
-            return tabs.map(tab => {
-
-            })
+            const tabs = await browser.tabs.query(queryInfo)
+            return tabs.map(mapToTab)
         },
         async create(createProperties) {
             //
