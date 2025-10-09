@@ -17,37 +17,19 @@ export type PlatformRuntime = {
 
 export type Tab = {
     /**
-     * Either loading or complete.
-     */
-    status?: string | undefined
-
-    /**
      * The zero-based index of the tab within its window.
      */
     index: number
 
     /**
-     * The ID of the tab that opened this tab, if any.
-     * This property is only present if the opener tab still exists.
-     */
-    openerTabId?: number | undefined
-
-    /**
-     * The title of the tab. This property is only present if the
-     * extension's manifest includes the "tabs" permission.
-     */
-    title?: string | undefined
-
-    /**
-     * The URL the tab is displaying. This property is only present if the
-     * extension's manifest includes the "tabs" permission.
-     */
-    url?: string | undefined
-
-    /**
      * Whether the tab is pinned.
      */
     pinned: boolean
+
+    /**
+     * Whether the tab is in an incognito window.
+     */
+    incognito: boolean
 
     /**
      * Whether the tab is highlighted.
@@ -66,11 +48,40 @@ export type Tab = {
     active: boolean
 
     /**
+     * Whether the tab can be discarded automatically by the browser when
+     * resources are low.
+     */
+    autoDiscardable?: boolean
+
+    /**
+     * The ID of the tab that opened this tab, if any.
+     * This property is only present if the opener tab still exists.
+     */
+    openerTabId?: number
+
+    /**
+     * The title of the tab. This property is only present if the
+     * extension's manifest includes the "tabs" permission.
+     */
+    title?: string
+
+    /**
+     * The URL the tab is displaying. This property is only present if the
+     * extension's manifest includes the "tabs" permission.
+     */
+    url?: string
+
+    /**
      * The URL of the tab's favicon. This property is only present if the
      * extension's manifest includes the "tabs" permission. It may also be an
      * empty string if the tab is loading.
      */
-    favIconUrl?: string | undefined
+    favIconUrl?: string
+
+    /**
+     * Either loading or complete.
+     */
+    status?: string
 
     /**
      * The ID of the tab. Tab IDs are unique within a browser session.
@@ -79,74 +90,43 @@ export type Tab = {
      * session ID may be present.
      * 
      */
-    id?: number | undefined
-
-    /**
-     * Whether the tab is in an incognito window.
-     */
-    incognito: boolean
+    id?: number
 
     /**
      * Whether the tab has produced sound over the past couple of seconds
      * (but it might not be heard if also muted). Equivalent to whether
      * the speaker audio indicator is showing.
      */
-    audible?: boolean | undefined
+    audible?: boolean
 
     /**
      * Whether the tab is discarded. A discarded tab is one whose content has
      * been unloaded from memory, but is still visible in the tab strip.
      * Its content gets reloaded the next time it's activated.
      */
-    discarded: boolean
-
-    /**
-     * Whether the tab can be discarded automatically by the browser when
-     * resources are low.
-     */
-    autoDiscardable: boolean
+    discarded?: boolean
 
     /**
      * The width of the tab in pixels.
      */
-    width?: number | undefined
+    width?: number
 
     /**
      * The height of the tab in pixels.
      */
-    height?: number | undefined
+    height?: number
 
     /**
      * The session ID used to uniquely identify a Tab obtained from the
      * sessions API.
      */
-    sessionId?: string | undefined
+    sessionId?: string
 
     /**
      * The last time the tab was accessed as the number of milliseconds
      * since epoch.
      */
-    lastAccessed?: number | undefined
-
-    /**
-     * The URL the tab is navigating to, before it has committed.
-     * This property is only present if the extension's manifest includes
-     * the "tabs" permission and there is a pending navigation.
-     * @see Chrome only
-     */
-    pendingUrl?: string | undefined
-
-    /**
-     * True if the tab is hidden.
-     * @see Firefox only
-     */
-    hidden?: boolean | undefined
-
-    /**
-     * The ID of the group that the tab belongs to.
-     * @see Chrome only
-     */
-    groupId: number
+    lastAccessed?: number
 }
 
 type TabStatus = 'loading' | 'complete'
@@ -162,54 +142,54 @@ type TabsQueryInfo = {
     /**
      * Whether the tabs have completed loading.
      */
-    status?: TabStatus | undefined
+    status?: TabStatus
 
     /**
      * Whether the tabs are in the last focused window.
      */
-    lastFocusedWindow?: boolean | undefined
+    lastFocusedWindow?: boolean
 
     /**
      * The ID of the parent window, or windows.WINDOW_ID_CURRENT for the current window.
      */
-    windowId?: number | undefined
+    windowId?: number
 
     /**
      * The type of window the tabs are in.
      * One of: "normal", "popup", "panel", "app", or "devtools"
      */
-    windowType?: WindowType | undefined
+    windowType?: WindowType
 
     /**
      * Whether the tabs are active in their windows.
      */
-    active?: boolean | undefined
+    active?: boolean
 
     /**
      * The position of the tabs within their windows.
      */
-    index?: number | undefined
+    index?: number
 
     /**
      * Match page titles against a pattern.
      */
-    title?: string | undefined
+    title?: string
 
     /**
      * Match tabs against one or more URL patterns.
      * Note that fragment identifiers are not matched.
      */
-    url?: string | string[] | undefined
+    url?: string | string[]
 
     /**
      * Whether the tabs are in the current window.
      */
-    currentWindow?: boolean | undefined
+    currentWindow?: boolean
 
     /**
      * Whether the tabs are highlighted.
      */
-    highlighted?: boolean | undefined
+    highlighted?: boolean
 
     /**
      * Whether the tabs are discarded.
@@ -218,54 +198,48 @@ type TabsQueryInfo = {
      * next time it's activated.
      * True while the tabs are not loaded with content.
      */
-    discarded?: boolean | undefined
+    discarded?: boolean
 
     /**
      * Whether the tabs can be discarded automatically by the browser when
      * resources are low.
      */
-    autoDiscardable?: boolean | undefined
+    autoDiscardable?: boolean
 
     /**
      * Whether the tabs are pinned.
      */
-    pinned?: boolean | undefined
+    pinned?: boolean
 
     /**
      * Whether the tabs are audible.
      */
-    audible?: boolean | undefined
+    audible?: boolean
 
     /**
      * Whether the tabs are muted.
      */
-    muted?: boolean | undefined
+    muted?: boolean
 
     /**
      * The ID of the group that the tabs are in, or
      * chrome.tabGroups.TAB_GROUP_ID_NONE for ungrouped tabs.
      * @see Chrome only
      */
-    groupId?: number | undefined
-
-    /**
-     * True while the tabs are hidden.
-     * @see Firefox only
-     */
-    hidden?: boolean | undefined
+    groupId?: number
 
     /**
      * The CookieStoreId used for the tab.
      * @see Firefox only
      */
-    cookieStoreId?: string[] | string | undefined
+    cookieStoreId?: string[] | string
 
     /**
      * The ID of the tab that opened this tab. If specified,
      * the opener tab must be in the same window as this tab.
      * @see Firefox only
      */
-    openerTabId?: number | undefined
+    openerTabId?: number
 }
 
 type CreateTabParams = {
@@ -274,14 +248,14 @@ type CreateTabParams = {
      * The provided value will be clamped to between zero and the number of
      * tabs in the window.
      */
-    index?: number | undefined
+    index?: number
 
     /**
      * The ID of the tab that opened this tab.
      * If specified, the opener tab must be in the same window as the
      * newly created tab.
      */
-    openerTabId?: number | undefined
+    openerTabId?: number
 
     /**
      * The URL to navigate the tab to initially.
@@ -290,79 +264,79 @@ type CreateTabParams = {
      * Relative URLs will be relative to the current page within the extension.
      * Defaults to the New Tab Page.
      */
-    url?: string | undefined
+    url?: string
 
     /**
      * Whether the tab should be pinned.
      * Defaults to false.
      */
-    pinned?: boolean | undefined
+    pinned?: boolean
 
     /**
      * The window to create the new tab in.
      * Defaults to the current window.
      */
-    windowId?: number | undefined
+    windowId?: number
 
     /**
      * Whether the tab should become the active tab in the window.
      * Does not affect whether the window is focused (see windows.update).
      * Defaults to true.
      */
-    active?: boolean | undefined
+    active?: boolean
 
     /**
      * The CookieStoreId for the tab that opened this tab.
      * @see Firefox only
      */
-    cookieStoreId?: string | undefined
+    cookieStoreId?: string
 
     /**
      * Whether the document in the tab should be opened in reader mode.
      * @see Firefox only
      */
-    openInReaderMode?: boolean | undefined
+    openInReaderMode?: boolean
 
     /**
      * Whether the tab is marked as 'discarded' when created.
      * @see Firefox only
      */
-    discarded?: boolean | undefined
+    discarded?: boolean
 
     /**
      * The title used for display if the tab is created in discarded mode.
      * @see Firefox only
      */
-    title?: string | undefined
+    title?: string
 
     /**
      * Whether the tab should be muted when created.
      * @see Firefox only
      */
-    muted?: boolean | undefined
+    muted?: boolean
 
     /**
      * Whether the document in the tab can be rendered in reader mode.
      * @see Firefox only
      */
-    isArticle?: boolean | undefined
+    isArticle?: boolean
 
     /**
      * Whether the document in the tab is being rendered in reader mode.
      * @see Firefox only
      */
-    isInReaderMode?: boolean | undefined
+    isInReaderMode?: boolean
 
     /**
      * Whether the tab is drawing attention.
      * @see Firefox only
      */
-    attention?: boolean | undefined
+    attention?: boolean
 
     /**
      * The ID of this tab's successor, if any;
      * `browser.tabs.TAB_ID_NONE` otherwise.
      * @see Firefox only
      */
-    successorTabId?: number | undefined
+    successorTabId?: number
 }

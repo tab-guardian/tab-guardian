@@ -2,7 +2,6 @@ import type { Tab } from '@common/types/runtime'
 import { showToast } from '@common/modules/showToast'
 import { formatNumber } from '@common/modules/numberUtil'
 import { trans } from '@common/modules/trans'
-import { isRuntime } from '@common/modules/runtime'
 
 export function throwIfQuotaExceeds(
     jsonStr: string,
@@ -46,7 +45,7 @@ export function getFromExtentionStorage<T>(
 }
 
 export function mapToTab(tab: chrome.tabs.Tab | browser.tabs.Tab): Tab {
-    const newTab: Tab = {
+    return {
         status: tab.status,
         index: tab.index,
         openerTabId: tab.openerTabId,
@@ -67,15 +66,4 @@ export function mapToTab(tab: chrome.tabs.Tab | browser.tabs.Tab): Tab {
         sessionId: tab.sessionId,
         lastAccessed: tab.lastAccessed,
     }
-
-    if (isRuntime('firefox')) {
-        newTab.hidden = (tab as browser.tabs.Tab).hidden
-    }
-
-    if (isRuntime('chrome')) {
-        newTab.pendingUrl = (tab as chrome.tabs.Tab).pendingUrl
-        newTab.groupId = (tab as chrome.tabs.Tab).groupId
-    }
-
-    return newTab
 }
