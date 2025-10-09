@@ -1,4 +1,5 @@
-import { getFromExtentionStorage } from "@common/modules/runtime/utils"
+import type { PlatformRuntime } from "@common/types/runtime"
+import { getFromExtentionStorage, throwIfQuotaExceeds } from "@common/modules/runtime/utils"
 
 export const chromeRuntimeAdapter: PlatformRuntime = {
     storage: {
@@ -12,7 +13,7 @@ export const chromeRuntimeAdapter: PlatformRuntime = {
             })
         },
 
-        async set<T>(key: string, value: T | null | undefined) {
+        async set(key, value) {
             if (!value) {
                 const msg = `Failed to save "${key}" to storage because there is not value`
                 console.error(msg)
@@ -28,12 +29,28 @@ export const chromeRuntimeAdapter: PlatformRuntime = {
             await chrome.storage.local.set({ [key]: jsonStr })
         },
 
-        async remove(key: string): Promise<void> {
+        async remove(key) {
             chrome.storage.local.remove(key)
         },
 
         async getBytesInUse() {
             return await chrome.storage.local.getBytesInUse()
+        },
+    },
+
+    tabs: {
+        async query(queryInfo) {
+            new Promise(resolve => {
+                chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
+                    resolve(url)
+                })
+            })
+        },
+        async create(createProperties) {
+            //
+        },
+        async remove(tabId) {
+            //
         },
     },
 }

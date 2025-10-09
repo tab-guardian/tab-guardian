@@ -1,4 +1,5 @@
-import { getFromExtentionStorage } from "@common/modules/runtime/utils"
+import type { PlatformRuntime } from "@common/types/runtime"
+import { getFromExtentionStorage, throwIfQuotaExceeds } from "@common/modules/runtime/utils"
 
 export const firefoxRuntimeAdapter: PlatformRuntime = {
     storage: {
@@ -12,7 +13,7 @@ export const firefoxRuntimeAdapter: PlatformRuntime = {
             })
         },
 
-        async set<T>(key: string, value: T | null | undefined) {
+        async set(key, value) {
             if (!value) {
                 const msg = `Failed to save "${key}" to storage because there is not value`
                 console.error(msg)
@@ -28,7 +29,7 @@ export const firefoxRuntimeAdapter: PlatformRuntime = {
             await browser.storage.local.set({ [key]: jsonStr })
         },
 
-        async remove(key: string): Promise<void> {
+        async remove(key) {
             browser.storage.local.remove(key)
         },
 
@@ -41,6 +42,21 @@ export const firefoxRuntimeAdapter: PlatformRuntime = {
                 .join('')
 
             return new TextEncoder().encode(entries).length
+        },
+    },
+
+    tabs: {
+        async query(queryInfo) {
+            const tabs = await browser.tabs.query({ active: true, currentWindow: true })
+            return tabs.map(tab => {
+
+            })
+        },
+        async create(createProperties) {
+            //
+        },
+        async remove(tabId) {
+            //
         },
     },
 }

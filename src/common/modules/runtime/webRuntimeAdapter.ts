@@ -1,3 +1,6 @@
+import type { PlatformRuntime } from "@common/types/runtime"
+import { throwIfQuotaExceeds } from "@common/modules/runtime/utils"
+import { getFakeTab } from "@common/modules/fake"
 
 export const webRuntimeAdapter: PlatformRuntime = {
     storage: {
@@ -21,7 +24,7 @@ export const webRuntimeAdapter: PlatformRuntime = {
             return value
         },
 
-        async set<T>(key: string, value: T | null | undefined) {
+        async set(key, value) {
             if (!value) {
                 const msg = `Failed to save "${key}" to storage because there is not value`
                 console.error(msg)
@@ -36,7 +39,7 @@ export const webRuntimeAdapter: PlatformRuntime = {
             localStorage.setItem(key, jsonStr)
         },
 
-        async remove(key: string): Promise<void> {
+        async remove(key) {
             localStorage.removeItem(key)
         },
 
@@ -58,6 +61,21 @@ export const webRuntimeAdapter: PlatformRuntime = {
             }
 
             return totalBytes
+        },
+    },
+
+    tabs: {
+        async query(_) {
+            console.info('Cannot query tabs in web runtime')
+            return [getFakeTab()]
+        },
+        async create(createProperties) {
+            window.open(createProperties.url, '_blank')
+            console.info('Cannot get tab info in web runtime')
+            return getFakeTab()
+        },
+        async remove(tabId) {
+            console.info(`Cannot remove tab with id ${tabId} in web runtime`)
         },
     },
 }
