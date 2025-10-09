@@ -1,7 +1,5 @@
-import { PlatformRuntime } from "@common/types"
-import { throwIfQuotaExceeds } from "@common/modules/runtime/utils"
 
-export const browserRuntimeAdapter: PlatformRuntime = {
+export const webRuntimeAdapter: PlatformRuntime = {
     storage: {
         MAX_BYTES_QUOTA: 5_242_880,
 

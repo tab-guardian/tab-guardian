@@ -1,5 +1,3 @@
-import { PlatformRuntime } from "@common/types"
-import { throwIfQuotaExceeds } from "@common/modules/runtime/utils"
 import { getFromExtentionStorage } from "@common/modules/runtime/utils"
 
 export const firefoxRuntimeAdapter: PlatformRuntime = {
