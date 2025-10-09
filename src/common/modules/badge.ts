@@ -1,5 +1,5 @@
 import { isDevelopment } from "@common/modules/isDevelopment"
-import { isFirefox } from "@common/modules/browser/isFirefox"
+import { isRuntime } from "@common/modules/runtime"
 
 export async function renderWarningBadge(): Promise<void> {
     if (isDevelopment()) {
@@ -21,5 +21,5 @@ export async function clearWarningBadge(): Promise<void> {
 }
 
 function getAction(): typeof browser.browserAction | typeof chrome.action {
-    return isFirefox() ? browser.browserAction : chrome.action
+    return isRuntime('firefox') ? browser.browserAction : chrome.action
 }

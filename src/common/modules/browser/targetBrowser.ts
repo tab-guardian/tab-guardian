@@ -1,5 +1,5 @@
-import { isFirefox } from '@common/modules/browser/isFirefox'
+import { isRuntime } from '@common/modules/runtime'
 
 export function targetBrowser(): typeof browser | typeof chrome {
-    return isFirefox() ? browser : chrome
+    return isRuntime('firefox') ? browser : chrome
 }

@@ -2,7 +2,7 @@
 import { useSidebarStore } from '@/stores/sidebar'
 import { trans } from '@common/modules/trans'
 import { openSettingsPage } from '@/modules/openSettingsPage'
-import { isFirefox } from '@common/modules/browser/isFirefox'
+import { isRuntime } from '@common/modules/runtime'
 import { getImageURL } from '@common/modules/browser/url'
 import Control from '@/components/Control.vue'
 import RightSlideTransition from '@common/components/Transitions/RightSlideTransition.vue'
@@ -16,7 +16,7 @@ import GitHubIcon from '@common/components/Icons/GitHubIcon.vue'
 import DocumentIcon from '@common/components/Icons/DocumentIcon.vue'
 
 const sidebarStore = useSidebarStore()
-const rateUsLink = isFirefox()
+const rateUsLink = isRuntime('firefox')
     ? 'https://addons.mozilla.org/firefox/addon/tab-guardian/'
     : 'https://chromewebstore.google.com/detail/tab-guardian/kjdklkfpliphcbnphmfhalllclfieojp'
 

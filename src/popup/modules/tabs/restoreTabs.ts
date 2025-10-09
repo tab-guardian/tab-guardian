@@ -2,7 +2,7 @@ import type { Link } from '@common/types'
 import { isDevelopment } from '@common/modules/isDevelopment'
 import { targetBrowser } from '@common/modules/browser/targetBrowser'
 import { queryTabs } from '@/modules/tabs/queryTabs'
-import { isFirefox } from '@common/modules/browser/isFirefox'
+import { isRuntime } from '@common/modules/runtime'
 
 export async function restoreTabs(links: Link[]): Promise<void> {
     if (isDevelopment()) {
@@ -10,13 +10,13 @@ export async function restoreTabs(links: Link[]): Promise<void> {
         return
     }
 
-    const isFire = isFirefox()
+    const isFirefox = isRuntime('firefox')
 
     for (const link of links) {
         // It's a limitation of Firefox, you cannot open about word.
         // Exclude opening links that start from `about:` keyword.
         // The only exception is `about:blank` which can be open.
-        if (isFire && link.url !== 'about:blank' && link.url.startsWith('about:')) {
+        if (isFirefox && link.url !== 'about:blank' && link.url.startsWith('about:')) {
             console.info(`Can't open ${link.url}. Firefox doesn't allow to open links that start with 'about:' word`)
             continue
         }
