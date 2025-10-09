@@ -62,10 +62,6 @@ export function getFakeTab(): Tab {
         pinned: false,
         highlighted: false,
         active: false,
-        windowId: rand + 1,
         incognito: false,
-        discarded: false,
-        autoDiscardable: false,
-        groupId: rand + 2,
     }
 }
