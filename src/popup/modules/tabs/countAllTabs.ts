@@ -1,6 +1,6 @@
 import { queryTabs } from '@/modules/tabs/queryTabs'
 import { isDevelopment } from '@common/modules/isDevelopment'
-import { getFakeLinks } from '@/modules/getFakeLinks'
+import { getFakeLinks } from '@common/modules/fake'
 
 export async function countAllTabs(): Promise<number> {
     if (isDevelopment()) {

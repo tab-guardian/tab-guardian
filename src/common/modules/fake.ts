@@ -1,4 +1,5 @@
-import type { Link } from '@common/types'
+import type { Link, Group } from '@common/types'
+import type { Tab } from '@common/types/runtime'
 
 export function getFakeLinks(): Link[] {
     const rand = Date.now() + Math.floor(Math.random() * 1000)
@@ -40,4 +41,31 @@ export function getFakeLinks(): Link[] {
             isPinned: false,
         },
     ]
+}
+
+export function getFakeGroup(name: string = 'Test Group'): Group {
+    return {
+        id: 1,
+        name,
+        links: getFakeLinks(),
+        isPrivate: false,
+        isEncrypted: false,
+        updatedAt: Date.now(),
+    }
+}
+
+export function getFakeTab(): Tab {
+    const rand = Date.now() + Math.floor(Math.random() * 1000)
+
+    return {
+        index: rand,
+        pinned: false,
+        highlighted: false,
+        active: false,
+        windowId: rand + 1,
+        incognito: false,
+        discarded: false,
+        autoDiscardable: false,
+        groupId: rand + 2,
+    }
 }

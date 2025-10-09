@@ -1,6 +1,6 @@
 import type { Link } from '@common/types'
 import { queryTabs } from '@/modules/tabs/queryTabs'
-import { getFakeLinks } from '@/modules/getFakeLinks'
+import { getFakeLinks } from '@common/modules/fake'
 import { convertTabsToLinks } from '@/modules/tabs/convertTabsToLinks'
 import { isDevelopment } from '@common/modules/isDevelopment'
 
