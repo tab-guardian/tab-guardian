@@ -1,3 +1,10 @@
+export type QueryInfo = chrome.tabs.QueryInfo | browser.tabs._QueryQueryInfo
+
+export type PasswordBytes = {
+    groupId: number
+    bytes: number
+}
+
 export type UserChoices = {
     isPrivate: boolean | null
     name: string | null
