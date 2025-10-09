@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Group } from '@/types'
+import type { Group } from '@common/types'
 import { useTabsStore } from '@/stores/tabs'
 import { useRouter } from 'vue-router'
 import { trans } from '@common/modules/trans'

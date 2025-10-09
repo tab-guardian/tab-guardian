@@ -1,4 +1,4 @@
-import type { Settings } from '@/types'
+import type { Settings } from '@common/types'
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import { runtime } from '@common/modules/runtime'

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Group } from '@/types'
+import type { Group } from '@common/types'
 import { computed } from 'vue'
 import ChevronRightIcon from '@common/components/Icons/ChevronRightIcon.vue'
 import ShieldCheckIcon from '@common/components/Icons/ShieldCheckIcon.vue'

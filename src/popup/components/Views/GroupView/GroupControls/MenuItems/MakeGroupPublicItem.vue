@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Group } from '@/types'
+import type { Group } from '@common/types'
 import { cloneDeep } from 'lodash'
 import { trans } from '@common/modules/trans'
 import { useGroupStore } from '@/stores/group'

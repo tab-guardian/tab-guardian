@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Group } from '@/types'
+import type { Group } from '@common/types'
 import { ref } from 'vue'
 import { useGroupStore } from '@/stores/group'
 import { usePopupStore } from '@/stores/popup'

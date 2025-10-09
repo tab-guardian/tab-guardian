@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Group } from '@/types'
+import type { Group } from '@common/types'
 import { computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { usePopupStore } from '@/stores/popup'

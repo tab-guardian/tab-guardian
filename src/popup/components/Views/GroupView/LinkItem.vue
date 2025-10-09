@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Link } from '@/types'
+import type { Link } from '@common/types'
 import { useGroupStore } from '@/stores/group'
 import { restoreTabs } from '@/modules/tabs/restoreTabs'
 import { usePopupStore } from '@/stores/popup'

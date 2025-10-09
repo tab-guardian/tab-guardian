@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Link } from '@/types'
+import type { Link } from '@common/types'
 
 defineProps<{
     link: Link

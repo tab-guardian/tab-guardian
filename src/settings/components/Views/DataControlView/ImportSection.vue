@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { EncryptionAlgo, Group } from '@/types'
+import type { EncryptionAlgo, Group } from '@common/types'
 import { ref } from 'vue'
 import { trans } from '@common/modules/trans'
 import { useGroupStore } from '@/stores/group'

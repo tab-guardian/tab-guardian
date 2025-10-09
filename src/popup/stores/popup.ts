@@ -1,4 +1,4 @@
-import type { Popups } from '@/types'
+import type { Popups } from '@common/types'
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 

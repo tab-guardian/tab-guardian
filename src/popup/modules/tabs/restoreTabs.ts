@@ -1,4 +1,4 @@
-import type { Link } from '@/types'
+import type { Link } from '@common/types'
 import { isDevelopment } from '@common/modules/isDevelopment'
 import { targetBrowser } from '@common/modules/browser/targetBrowser'
 import { queryTabs } from '@/modules/tabs/queryTabs'

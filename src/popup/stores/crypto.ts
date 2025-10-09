@@ -1,4 +1,4 @@
-import type { EncryptionAlgo, Group, Link } from '@/types'
+import type { EncryptionAlgo, Group, Link } from '@common/types'
 import { reactive, readonly } from 'vue'
 import { defineStore } from 'pinia'
 import { encrypt, decrypt, toBase64, createEncryptKey, createDecryptKey, fromBase64 } from '@common/modules/webCrypto'

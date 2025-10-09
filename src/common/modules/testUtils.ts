@@ -1,4 +1,4 @@
-import type { Group } from '@/types'
+import type { Group } from '@common/types'
 
 export function getFakeGroup(name: string = 'Test Group'): Group {
     return {

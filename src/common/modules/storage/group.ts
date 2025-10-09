@@ -1,4 +1,4 @@
-import type { Group } from '@/types'
+import type { Group } from '@common/types'
 import { runtime } from '@common/modules/runtime'
 import { cloneDeep } from 'lodash'
 import {

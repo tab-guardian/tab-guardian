@@ -1,4 +1,4 @@
-import type { Group, UserChoices, Link } from '@/types'
+import type { Group, UserChoices, Link } from '@common/types'
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import { getDefaultGroupName } from '@/modules/getDefaultGroupName'

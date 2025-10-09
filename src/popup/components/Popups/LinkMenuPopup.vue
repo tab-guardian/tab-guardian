@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Group, Link } from '@/types'
+import type { Group, Link } from '@common/types'
 import { computed } from 'vue'
 import { trans } from '@common/modules/trans'
 import { usePopupStore } from '@/stores/popup'

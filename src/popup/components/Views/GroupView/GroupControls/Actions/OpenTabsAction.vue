@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Group } from '@/types'
+import type { Group } from '@common/types'
 import Control from '@/components/Control.vue'
 import { getImageURL } from '@common/modules/browser/url'
 import { useTabsStore } from '@/stores/tabs'

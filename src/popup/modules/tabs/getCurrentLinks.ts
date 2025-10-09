@@ -1,4 +1,4 @@
-import type { Link } from '@/types'
+import type { Link } from '@common/types'
 import { queryTabs } from '@/modules/tabs/queryTabs'
 import { getFakeLinks } from '@/modules/getFakeLinks'
 import { convertTabsToLinks } from '@/modules/tabs/convertTabsToLinks'

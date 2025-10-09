@@ -1,4 +1,4 @@
-import { Link } from '@/types'
+import { Link } from '@common/types'
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import { trans } from '@common/modules/trans'

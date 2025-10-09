@@ -1,4 +1,4 @@
-import type { EncryptionAlgo } from '@/types'
+import type { EncryptionAlgo } from '@common/types'
 
 // Look into .env and .env.example files in the root of the project
 

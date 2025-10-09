@@ -1,4 +1,4 @@
-import type { Attempts } from '@/types'
+import type { Attempts } from '@common/types'
 import { onMounted, ref } from 'vue'
 import { defineStore } from 'pinia'
 import { trans } from '@common/modules/trans'

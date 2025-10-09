@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Group, Link, SelectTabsOperation } from '@/types'
+import type { Group, Link, SelectTabsOperation } from '@common/types'
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useNewGroupStore } from '@/stores/newGroup'

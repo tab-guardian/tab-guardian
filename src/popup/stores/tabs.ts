@@ -1,4 +1,4 @@
-import type { Group } from '@/types'
+import type { Group } from '@common/types'
 import { defineStore } from 'pinia'
 import { useGroupStore } from '@/stores/group'
 import { trans } from '@common/modules/trans'

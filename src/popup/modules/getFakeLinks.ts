@@ -1,4 +1,4 @@
-import type { Link } from '@/types'
+import type { Link } from '@common/types'
 
 export function getFakeLinks(): Link[] {
     const rand = Date.now() + Math.floor(Math.random() * 1000)

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Group } from '@/types'
+import type { Group } from '@common/types'
 import { computed } from 'vue'
 import { trans } from '@common/modules/trans'
 import { useAppStore } from '@/stores/app'

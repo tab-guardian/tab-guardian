@@ -1,4 +1,4 @@
-import type { Link } from '@/types'
+import type { Link } from '@common/types'
 import type { Tab } from '@common/types'
 import { getImageURL } from '@common/modules/browser/url'
 
