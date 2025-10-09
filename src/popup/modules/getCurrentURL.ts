@@ -1,31 +1,29 @@
-import { isDevelopment } from '@common/modules/isDevelopment'
-import { targetBrowser } from '@common/modules/browser/targetBrowser'
 import { hashURL } from '@/modules/url/hashURL'
+import { runtime, isRuntime } from '@common/modules/runtime'
 
 export async function getCurrentURL(hash = false): Promise<string | null> {
-    if (isDevelopment()) {
+    if (isRuntime('web')) {
         return window.location.href
     }
 
-    return new Promise(resolve => {
-        targetBrowser().tabs.query({ active: true, currentWindow: true }, tabs => {
-            if (tabs.length === 0) {
-                resolve(null)
-            }
-
-            const url = tabs[0].url
-
-            if (!url) {
-                resolve(null)
-                return
-            }
-
-            if (hash) {
-                resolve(hashURL(url))
-                return
-            }
-
-            resolve(url)
-        })
+    const tabs = await runtime.tabs.query({
+        active: true,
+        currentWindow: true,
     })
+
+    if (tabs.length === 0) {
+        return null
+    }
+
+    const url = tabs[0].url
+
+    if (!url) {
+        return null
+    }
+
+    if (hash) {
+        return hashURL(url)
+    }
+
+    return url
 }
