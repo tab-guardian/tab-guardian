@@ -6,15 +6,13 @@ export async function queryTabs(queryInfo?: TabsQueryInfo): Promise<Tab[]> {
     const target = targetBrowser()
     const curWindow = await target.windows.getCurrent()
 
-        const target = targetBrowser()
-        const curWindow = await target.windows.getCurrent()
+    const tabs = await runtime.tabs.query(queryInfo || {})
 
-        target.tabs.query(queryInfo || {}, (tabs: Tab[]) => {
-            if (target.runtime.lastError) {
-                reject(target.runtime.lastError)
-            } else {
-                resolve(tabs.filter(t => t.windowId === curWindow.id))
-            }
-        })
-    })
+    const err = target.runtime.lastError
+
+    if (err) {
+        throw new Error(err.message)
+    }
+
+    return tabs.filter(t => t.windowId === curWindow.id)
 }

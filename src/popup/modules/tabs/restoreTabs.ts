@@ -2,7 +2,7 @@ import type { Link } from '@common/types'
 import { isDevelopment } from '@common/modules/isDevelopment'
 import { targetBrowser } from '@common/modules/browser/targetBrowser'
 import { queryTabs } from '@/modules/tabs/queryTabs'
-import { isRuntime } from '@common/modules/runtime'
+import { runtime, isRuntime } from '@common/modules/runtime'
 
 export async function restoreTabs(links: Link[]): Promise<void> {
     if (isDevelopment()) {
@@ -13,15 +13,15 @@ export async function restoreTabs(links: Link[]): Promise<void> {
     const isFirefox = isRuntime('firefox')
 
     for (const link of links) {
-        // It's a limitation of Firefox, you cannot open about word.
+        // It's a limitation of Firefox, you cannot open about: pages.
         // Exclude opening links that start from `about:` keyword.
         // The only exception is `about:blank` which can be open.
         if (isFirefox && link.url !== 'about:blank' && link.url.startsWith('about:')) {
-            console.info(`Can't open ${link.url}. Firefox doesn't allow to open links that start with 'about:' word`)
+            console.info(`Can't open ${link.url}. Firefox doesn't allow to open links that start with 'about:' keyword`)
             continue
         }
 
-        targetBrowser().tabs.create({
+        runtime.tabs.create({
             url: link.url,
             active: false,
             pinned: link.isPinned,
@@ -50,6 +50,6 @@ async function closeEmptyTab(): Promise<void> {
             continue
         }
 
-        await targetBrowser().tabs.remove(tab.id)
+        await runtime.tabs.remove(tab.id)
     }
 }

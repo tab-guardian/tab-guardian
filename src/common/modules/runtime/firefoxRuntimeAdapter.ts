@@ -51,7 +51,8 @@ export const firefoxRuntimeAdapter: PlatformRuntime = {
             return tabs.map(mapToTab)
         },
         async create(createProperties) {
-            //
+            const tab = await browser.tabs.create(createProperties)
+            return mapToTab(tab)
         },
         async remove(tabId) {
             //

@@ -1,4 +1,5 @@
-import type { Tab } from '@common/types'
+import type { Tab } from '@common/types/runtime'
+import { runtime } from '@common/modules/runtime'
 import { isDevelopment } from '@common/modules/isDevelopment'
 import { getPublicURL } from '@common/modules/browser/url'
 import { targetBrowser } from '@common/modules/browser/targetBrowser'
@@ -9,15 +10,13 @@ export async function openSettingsPage(): Promise<Tab | null> {
         return null
     }
 
-    const target = targetBrowser()
-
-    const tab = await target.tabs.create({
+    const tab = await runtime.tabs.create({
         url: getPublicURL('settings.html'),
         active: true,
     })
 
     if (tab && tab.windowId) {
-        target.windows.update(tab.windowId, { focused: true })
+        targetBrowser().windows.update(tab.windowId, { focused: true })
     }
 
     return tab

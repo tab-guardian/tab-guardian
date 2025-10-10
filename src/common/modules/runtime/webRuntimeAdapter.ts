@@ -67,7 +67,7 @@ export const webRuntimeAdapter: PlatformRuntime = {
     tabs: {
         async query(_) {
             console.info('Cannot query tabs in web runtime')
-            return [getFakeTab()]
+            return []
         },
         async create(createProperties) {
             window.open(createProperties.url, '_blank')

@@ -2,6 +2,7 @@ import { targetBrowser } from '@common/modules/browser/targetBrowser'
 import { hasUnlockedGroupsFlag } from '@common/modules/storage/unlockedGroups'
 import { renderWarningBadge } from '@common/modules/badge'
 import { countAllTabs } from '@/modules/tabs/countAllTabs'
+import { runtime } from '@common/modules/runtime'
 
 const target = targetBrowser()
 
@@ -27,10 +28,10 @@ async function closeTabs(ids: number[]): Promise<void> {
 
     // create a new tab to prevent closing the browser
     if (allTabsCount === ids.length) {
-        target.tabs.create({})
+        runtime.tabs.create({})
     }
 
     for (const id of ids) {
-        await target.tabs.remove(id)
+        await runtime.tabs.remove(id)
     }
 }
