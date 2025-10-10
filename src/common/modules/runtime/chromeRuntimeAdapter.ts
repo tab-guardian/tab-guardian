@@ -18,6 +18,17 @@ export const chromeRuntimeAdapter: PlatformRuntime = {
     storage: {
         MAX_BYTES_QUOTA: chrome.storage.local.QUOTA_BYTES,
 
+        async all() {
+            const items = await chrome.storage.local.get()
+            const result: { [key: string]: string } = {}
+
+            for (const key in items) {
+                result[key] = items[key]
+            }
+
+            return result
+        },
+
         async get<T>(key: string) {
             return new Promise<T | null>(resolve => {
                 chrome.storage.local.get(key, result => {

@@ -42,6 +42,30 @@ export const webRuntimeAdapter: PlatformRuntime = {
     storage: {
         MAX_BYTES_QUOTA: 5_242_880,
 
+        async all() {
+            const result: { [key: string]: string } = {}
+
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i)
+
+                if (!key) {
+                    console.warn(`Cannot get key with index ${i} from local storage`)
+                    continue
+                }
+
+                const item = localStorage.getItem(key)
+
+                if (!item) {
+                    console.warn(`Getting key ${key} from local storage returns null`)
+                    continue
+                }
+
+                result[key] = item
+            }
+
+            return result
+        },
+
         async get<T>(key: string) {
             const strValue: string | null = localStorage.getItem(key)
 

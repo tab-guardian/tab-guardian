@@ -18,6 +18,17 @@ export const firefoxRuntimeAdapter: PlatformRuntime = {
     storage: {
         MAX_BYTES_QUOTA: 5_242_880,
 
+        async all() {
+            const items = await browser.storage.local.get()
+            const result: { [key: string]: string } = {}
+
+            for (const key in items) {
+                result[key] = items[key]
+            }
+
+            return result
+        },
+
         async get<T>(key: string) {
             return new Promise<T | null>(resolve => {
                 browser.storage.local.get(key).then(result => {

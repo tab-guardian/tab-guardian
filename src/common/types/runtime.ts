@@ -21,6 +21,7 @@ export type PlatformRuntime = {
     storage: {
         MAX_BYTES_QUOTA: number
         get: <T>(key: string) => Promise<T | null>
+        all: () => Promise<{ [key: string]: string }>
         set: <T>(key: string, value: T | null | undefined) => Promise<void>
         remove: (key: string) => Promise<void>
         getBytesInUse: () => Promise<number>
