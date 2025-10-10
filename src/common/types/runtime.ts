@@ -1,3 +1,4 @@
+
 export type Runtime = 'chrome' | 'firefox' | 'web'
 
 export type PlatformRuntime = {
@@ -129,16 +130,7 @@ export type Tab = {
     lastAccessed?: number
 }
 
-type TabStatus = 'loading' | 'complete'
-
-type WindowType =
-    | "normal"
-    | "popup"
-    | "panel"
-    | "app"
-    | "devtools"
-
-type TabsQueryInfo = {
+export type TabsQueryInfo = {
     /**
      * Whether the tabs have completed loading.
      */
@@ -340,3 +332,12 @@ type CreateTabParams = {
      */
     successorTabId?: number
 }
+
+type TabStatus = 'loading' | 'complete'
+
+type WindowType =
+    | "normal"
+    | "popup"
+    | "panel"
+    | "app"
+    | "devtools"

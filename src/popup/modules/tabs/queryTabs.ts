@@ -1,16 +1,10 @@
-import type { Tab } from '@common/types'
-import type { QueryInfo } from '@common/types'
-import { isDevelopment } from '@common/modules/isDevelopment'
+import type { Tab, TabsQueryInfo } from '@common/types/runtime'
+import { runtime } from '@common/modules/runtime'
 import { targetBrowser } from '@common/modules/browser/targetBrowser'
 
-export function queryTabs(queryInfo?: QueryInfo): Promise<Tab[]> {
-    return new Promise(async (resolve, reject) => {
-        if (isDevelopment()) {
-            const msg = 'Cannot query tabs because chrome.tabs.query is not available in development mode'
-            console.info(msg)
-            resolve([])
-            return
-        }
+export async function queryTabs(queryInfo?: TabsQueryInfo): Promise<Tab[]> {
+    const target = targetBrowser()
+    const curWindow = await target.windows.getCurrent()
 
         const target = targetBrowser()
         const curWindow = await target.windows.getCurrent()
