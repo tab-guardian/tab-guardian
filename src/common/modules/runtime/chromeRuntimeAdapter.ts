@@ -3,6 +3,10 @@ import { mapToTab, mapToWindow } from "@common/modules/runtime/maps"
 import { getFromExtentionStorage, throwIfQuotaExceeds } from "@common/modules/runtime/utils"
 
 export const chromeRuntimeAdapter: PlatformRuntime = {
+    getURL(path) {
+        return chrome.runtime.getURL(path)
+    },
+
     lastError() {
         return chrome.runtime.lastError?.message ?? null
     },

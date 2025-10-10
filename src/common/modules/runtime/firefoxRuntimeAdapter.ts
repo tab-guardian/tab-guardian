@@ -3,6 +3,10 @@ import { mapToTab, mapToWindow } from "@common/modules/runtime/maps"
 import { getFromExtentionStorage, throwIfQuotaExceeds } from "@common/modules/runtime/utils"
 
 export const firefoxRuntimeAdapter: PlatformRuntime = {
+    getURL(path) {
+        return browser.runtime.getURL(path)
+    },
+
     lastError() {
         return browser.runtime.lastError?.message ?? null
     },

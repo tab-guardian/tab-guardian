@@ -5,6 +5,14 @@ export type RuntimeType =
 
 export type PlatformRuntime = {
     lastError: () => string | null
+
+    /**
+     * Converts a relative path within an app/extension install directory to a fully-qualified URL.
+     * @param path A path to a resource within an app/extension expressed relative to its install directory.
+     * @returns The fully-qualified URL to the resource.
+     */
+    getURL: (path: string) => string
+
     storage: {
         MAX_BYTES_QUOTA: number
         get: <T>(key: string) => Promise<T | null>
@@ -12,11 +20,13 @@ export type PlatformRuntime = {
         remove: (key: string) => Promise<void>
         getBytesInUse: () => Promise<number>
     }
+
     tabs: {
         query: (queryInfo: tabs.QueryInfo) => Promise<tabs.Tab[]>
         create: (createProperties: tabs.CreateProperties) => Promise<tabs.Tab | null>
         remove: (tabId: number) => Promise<void>
     }
+
     windows: {
         getCurrent: () => Promise<windows.Window | null>
         update: (windowId: number, updateInfo: windows.UpdateInfo) => Promise<windows.Window | null>

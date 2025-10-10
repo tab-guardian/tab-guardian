@@ -2,6 +2,10 @@ import type { PlatformRuntime } from "@common/types/runtime"
 import { throwIfQuotaExceeds } from "@common/modules/runtime/utils"
 
 export const webRuntimeAdapter: PlatformRuntime = {
+    getURL(path) {
+        return path
+    },
+
     lastError() {
         console.info('web runtime do not have last error implementation')
         return null
