@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue'
 import { trans } from '@common/modules/trans'
-import { getImageURL } from '@common/modules/browser/url'
 import { runtime } from '@common/modules/runtime'
 import { formatNumber } from '@common/modules/numberUtil'
 import ProgressBar from '@common/components/ProgressBar.vue'
@@ -25,7 +24,7 @@ const storageUsage = computed(() => {
 <template>
     <div class="flex items-center h-36 bg-slate-200 dark:bg-slate-800 relative overflow-hidden">
         <img
-            :src="getImageURL('icons/icon-128.png')"
+            :src="runtime.getURL('images/icons/icon-128.png')"
             class="absolute top-1/2 -translate-y-1/2 -right-14 drop-shadow-md"
         />
 

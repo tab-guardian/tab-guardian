@@ -4,7 +4,7 @@ import { trans } from '@common/modules/trans'
 import { useTabsStore } from '@/stores/tabs'
 import { useGroupStore } from '@/stores/group'
 import { useRouter } from 'vue-router'
-import { getImageURL } from '@common/modules/browser/url'
+import { runtime } from '@common/modules/runtime'
 
 const props = defineProps<{ group: Group }>()
 
@@ -40,7 +40,7 @@ async function openTabs(): Promise<void> {
 
 <template>
     <img
-        :src="getImageURL('tab-icons/up.png')"
+        :src="runtime.getURL('images/tab-icons/up.png')"
         alt="Open tabs"
         @click.prevent="openTabs"
         v-tippy="trans('open_tabs')"

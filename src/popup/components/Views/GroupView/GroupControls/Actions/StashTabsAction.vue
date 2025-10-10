@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Group } from '@common/types'
 import Control from '@/components/Control.vue'
-import { getImageURL } from '@common/modules/browser/url'
+import { runtime } from '@common/modules/runtime'
 import { useTabsStore } from '@/stores/tabs'
 import { trans } from '@common/modules/trans'
 
@@ -20,7 +20,7 @@ function stashTabs(): void {
         class="bg-slate-300 dark:bg-slate-700"
     >
         <img
-            :src="getImageURL('tab-icons/down.png')"
+            :src="runtime.getURL('images/tab-icons/down.png')"
             alt="Stash tabs"
             class="dark:invert"
         />

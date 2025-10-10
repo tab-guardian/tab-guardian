@@ -2,8 +2,7 @@
 import { useSidebarStore } from '@/stores/sidebar'
 import { trans } from '@common/modules/trans'
 import { openSettingsPage } from '@/modules/openSettingsPage'
-import { isRuntime } from '@common/modules/runtime'
-import { getImageURL } from '@common/modules/browser/url'
+import { runtime, isRuntime } from '@common/modules/runtime'
 import Control from '@/components/Control.vue'
 import RightSlideTransition from '@common/components/Transitions/RightSlideTransition.vue'
 import Overlay from '@/components/Navbar/Sidebar/Overlay.vue'
@@ -75,7 +74,7 @@ const links = [
                 </div>
 
                 <small class="justify-end pr-2 mb-2 text-font-gray text-xs flex gap-2 w-full">
-                    <img :src="getImageURL('icons/icon-32.png')" class="w-4 h-4" />
+                    <img :src="runtime.getURL('images/icons/icon-32.png')" class="w-4 h-4" />
                     {{ trans('ext_name') }} {{ __APP_VERSION__ }}
                 </small>
             </aside>
