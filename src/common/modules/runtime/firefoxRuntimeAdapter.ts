@@ -80,10 +80,12 @@ export const firefoxRuntimeAdapter: PlatformRuntime = {
             const firefoxTabs = await browser.tabs.query(queryInfo)
             return firefoxTabs.map(mapToTab)
         },
+
         async create(createProperties) {
             const firefoxTab = await browser.tabs.create(createProperties)
             return mapToTab(firefoxTab)
         },
+
         async remove(tabId) {
             await browser.tabs.remove(tabId)
         },
@@ -94,6 +96,7 @@ export const firefoxRuntimeAdapter: PlatformRuntime = {
             const firefoxWindow = await browser.windows.getCurrent()
             return mapToWindow(firefoxWindow)
         },
+
         async update(windowId, updateInfo) {
             const firefoxWindowState: browser.windows.Window['state'] =
                 updateInfo.state === 'locked-fullscreen' ? 'docked' : updateInfo.state

@@ -1,15 +1,8 @@
 import type { Link } from '@common/types'
-import { isDevelopment } from '@common/modules/isDevelopment'
-import { targetBrowser } from '@common/modules/browser/targetBrowser'
 import { queryTabs } from '@/modules/tabs/queryTabs'
 import { runtime, isRuntime } from '@common/modules/runtime'
 
 export async function restoreTabs(links: Link[]): Promise<void> {
-    if (isDevelopment()) {
-        links.forEach(link => window.open(link.url, '_blank'))
-        return
-    }
-
     const isFirefox = isRuntime('firefox')
 
     for (const link of links) {

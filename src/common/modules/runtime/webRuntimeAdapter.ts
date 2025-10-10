@@ -136,11 +136,13 @@ export const webRuntimeAdapter: PlatformRuntime = {
             console.info('Cannot query tabs in web runtime')
             return []
         },
+
         async create(createProperties) {
             window.open(createProperties.url, '_blank')
             console.info('Cannot get tab info in web runtime')
             return null
         },
+
         async remove(tabId) {
             console.info(`Cannot remove tab with id ${tabId} in web runtime`)
         },
@@ -151,6 +153,7 @@ export const webRuntimeAdapter: PlatformRuntime = {
             console.info('Cannot get current window in web runtime')
             return null
         },
+
         async update() {
             console.info('Cannot update window in web runtime')
             return null

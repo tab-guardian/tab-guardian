@@ -89,6 +89,7 @@ export const chromeRuntimeAdapter: PlatformRuntime = {
             const chromeTab = await chrome.tabs.create(createProperties)
             return mapToTab(chromeTab)
         },
+
         async remove(tabId) {
             await chrome.tabs.remove(tabId)
         },
@@ -99,6 +100,7 @@ export const chromeRuntimeAdapter: PlatformRuntime = {
             const chromeWindow = await chrome.windows.getCurrent()
             return mapToWindow(chromeWindow)
         },
+
         async update(windowId, updateInfo) {
             const win = await chrome.windows.update(windowId, updateInfo)
             return mapToWindow(win)

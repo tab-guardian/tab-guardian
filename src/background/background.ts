@@ -1,10 +1,9 @@
-import { targetBrowser } from '@common/modules/browser/targetBrowser'
 import { hasUnlockedGroupsFlag } from '@common/modules/storage/unlockedGroups'
 import { renderWarningBadge } from '@common/modules/badge'
 import { countAllTabs } from '@/modules/tabs/countAllTabs'
-import { runtime } from '@common/modules/runtime'
+import { runtime, isRuntime } from '@common/modules/runtime'
 
-const target = targetBrowser()
+const target = isRuntime('firefox') ? browser : chrome
 
 target.runtime.onInstalled.addListener(async () => await renderWarningBadgeIfNeeded())
 target.runtime.onStartup.addListener(async () => await renderWarningBadgeIfNeeded())

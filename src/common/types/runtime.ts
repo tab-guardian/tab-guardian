@@ -7,38 +7,38 @@ export type PlatformRuntime = {
     /**
      * @returns Localized string
      */
-    trans: (msg: string, ...args: string[]) => string
+    trans(msg: string, ...args: string[]): string
 
     /**
      * Converts a relative path within an app/extension install directory to a fully-qualified URL.
      * @param path A path to a resource within an app/extension expressed relative to its install directory.
      * @returns The fully-qualified URL to the resource.
      */
-    getURL: (path: string) => string
+    getURL(path: string): string
 
     extension: {
-        lastError: () => string | null
-        isAllowedIncognitoAccess: () => Promise<boolean>
+        lastError(): string | null
+        isAllowedIncognitoAccess(): Promise<boolean>
     }
 
     storage: {
         MAX_BYTES_QUOTA: number
-        get: <T>(key: string) => Promise<T | null>
-        all: () => Promise<{ [key: string]: string }>
-        set: <T>(key: string, value: T | null | undefined) => Promise<void>
-        remove: (key: string) => Promise<void>
-        getBytesInUse: () => Promise<number>
+        get<T>(key: string): Promise<T | null>
+        all(): Promise<{ [key: string]: string }>
+        set<T>(key: string, value: T | null | undefined): Promise<void>
+        remove(key: string): Promise<void>
+        getBytesInUse(): Promise<number>
     }
 
     tabs: {
-        query: (queryInfo: tabs.QueryInfo) => Promise<tabs.Tab[]>
-        create: (createProperties: tabs.CreateProperties) => Promise<tabs.Tab | null>
-        remove: (tabId: number) => Promise<void>
+        query(queryInfo: tabs.QueryInfo): Promise<tabs.Tab[]>
+        create(createProperties: tabs.CreateProperties): Promise<tabs.Tab | null>
+        remove(tabId: number): Promise<void>
     }
 
     windows: {
-        getCurrent: () => Promise<windows.Window | null>
-        update: (windowId: number, updateInfo: windows.UpdateInfo) => Promise<windows.Window | null>
+        getCurrent(): Promise<windows.Window | null>
+        update(windowId: number, updateInfo: windows.UpdateInfo): Promise<windows.Window | null>
     }
 }
 
