@@ -69,7 +69,7 @@ export const webRuntimeAdapter: PlatformRuntime = {
     },
 
     tabs: {
-        async query(_) {
+        async query() {
             console.info('Cannot query tabs in web runtime')
             return []
         },
@@ -86,6 +86,10 @@ export const webRuntimeAdapter: PlatformRuntime = {
     windows: {
         async getCurrent() {
             console.info('Cannot get current window in web runtime')
+            return null
+        },
+        async update() {
+            console.info('Cannot update window in web runtime')
             return null
         },
     }

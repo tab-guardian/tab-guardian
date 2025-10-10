@@ -1,4 +1,4 @@
-import { EncryptionAlgo } from "@/types"
+import { EncryptionAlgo } from "@common/types"
 
 const KEY_BITS = 256 // bits
 const KEY_BYTES_LENGTH = 16
