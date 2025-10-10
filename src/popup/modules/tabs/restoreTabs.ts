@@ -21,7 +21,7 @@ export async function restoreTabs(links: Link[]): Promise<void> {
             continue
         }
 
-        runtime.tabs.create({
+        await runtime.tabs.create({
             url: link.url,
             active: false,
             pinned: link.isPinned,

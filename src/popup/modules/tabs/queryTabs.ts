@@ -1,10 +1,12 @@
-import type { Tab, TabsQueryInfo } from '@common/types/runtime'
+import type { tabs } from '@common/types/runtime'
 import { runtime } from '@common/modules/runtime'
-import { targetBrowser } from '@common/modules/browser/targetBrowser'
 
-export async function queryTabs(queryInfo?: TabsQueryInfo): Promise<Tab[]> {
-    const target = targetBrowser()
-    const curWindow = await target.windows.getCurrent()
+export async function queryTabs(queryInfo?: tabs.QueryInfo): Promise<tabs.Tab[]> {
+    const currWindow = await runtime.windows.getCurrent()
+
+    if (!currWindow) {
+        return []
+    }
 
     const tabs = await runtime.tabs.query(queryInfo || {})
 
@@ -14,5 +16,5 @@ export async function queryTabs(queryInfo?: TabsQueryInfo): Promise<Tab[]> {
         throw new Error(err)
     }
 
-    return tabs.filter(t => t.windowId === curWindow.id)
+    return tabs.filter(t => t.windowId === currWindow.id)
 }

@@ -1,4 +1,4 @@
-import type { PlatformRuntime, Runtime } from '@common/types/runtime'
+import type { PlatformRuntime, RuntimeType } from '@common/types/runtime'
 import { webRuntimeAdapter } from "@common/modules/runtime/webRuntimeAdapter"
 import { chromeRuntimeAdapter } from "@common/modules/runtime/chromeRuntimeAdapter"
 import { firefoxRuntimeAdapter } from "@common/modules/runtime/firefoxRuntimeAdapter"
@@ -15,7 +15,7 @@ if (isRuntime('chrome')) {
 
 export const runtime = adapter!
 
-export function isRuntime(runtime: Runtime): boolean {
+export function isRuntime(runtime: RuntimeType): boolean {
     switch (runtime) {
         case 'firefox':
             return typeof browser !== 'undefined'

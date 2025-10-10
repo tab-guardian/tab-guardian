@@ -1,5 +1,10 @@
 import type { PlatformRuntime } from "@common/types/runtime"
-import { getFromExtentionStorage, throwIfQuotaExceeds, mapToTab } from "@common/modules/runtime/utils"
+import {
+    getFromExtentionStorage,
+    throwIfQuotaExceeds,
+    mapToTab,
+    mapToWindow,
+} from "@common/modules/runtime/utils"
 
 export const chromeRuntimeAdapter: PlatformRuntime = {
     lastError() {
@@ -50,17 +55,28 @@ export const chromeRuntimeAdapter: PlatformRuntime = {
                         reject(chrome.runtime.lastError)
                         return
                     }
+                    if (chrome.runtime.lastError) {
+                        reject(chrome.runtime.lastError)
+                        return
+                    }
 
                     resolve(tabs.map(mapToTab))
                 })
             })
         },
         async create(createProperties) {
-            const tab = await chrome.tabs.create(createProperties)
-            return mapToTab(tab)
+            const chromeTab = await chrome.tabs.create(createProperties)
+            return mapToTab(chromeTab)
         },
         async remove(tabId) {
             await chrome.tabs.remove(tabId)
         },
     },
+
+    windows: {
+        async getCurrent() {
+            const chromeWindow = await chrome.windows.getCurrent()
+            return mapToWindow(chromeWindow)
+        },
+    }
 }

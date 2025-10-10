@@ -28,7 +28,7 @@ async function closeTabs(ids: number[]): Promise<void> {
 
     // create a new tab to prevent closing the browser
     if (allTabsCount === ids.length) {
-        runtime.tabs.create({})
+        await runtime.tabs.create({})
     }
 
     for (const id of ids) {

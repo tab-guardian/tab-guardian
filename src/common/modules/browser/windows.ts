@@ -1,12 +1,6 @@
-import { isDevelopment } from '@common/modules/isDevelopment'
-import { targetBrowser } from '@common/modules/browser/targetBrowser'
+import { runtime } from '@common/modules/runtime'
 
 export async function isIncognito(): Promise<boolean> {
-    if (isDevelopment()) {
-        return true
-    }
-
-    const currWindow = await targetBrowser().windows.getCurrent()
-
-    return currWindow.incognito
+    const currWindow = await runtime.windows.getCurrent()
+    return currWindow ? currWindow.incognito : false
 }

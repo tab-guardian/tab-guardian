@@ -1,6 +1,5 @@
 import type { PlatformRuntime } from "@common/types/runtime"
 import { throwIfQuotaExceeds } from "@common/modules/runtime/utils"
-import { getFakeTab } from "@common/modules/fake"
 
 export const webRuntimeAdapter: PlatformRuntime = {
     lastError() {
@@ -77,10 +76,17 @@ export const webRuntimeAdapter: PlatformRuntime = {
         async create(createProperties) {
             window.open(createProperties.url, '_blank')
             console.info('Cannot get tab info in web runtime')
-            return getFakeTab()
+            return null
         },
         async remove(tabId) {
             console.info(`Cannot remove tab with id ${tabId} in web runtime`)
         },
     },
+
+    windows: {
+        async getCurrent() {
+            console.info('Cannot get current window in web runtime')
+            return null
+        },
+    }
 }

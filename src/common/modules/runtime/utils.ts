@@ -1,4 +1,5 @@
-import type { Tab } from '@common/types/runtime'
+import type { tabs, windows } from '@common/types/runtime'
+import { isRuntime } from '@common/modules/runtime'
 import { showToast } from '@common/modules/showToast'
 import { formatNumber } from '@common/modules/numberUtil'
 import { trans } from '@common/modules/trans'
@@ -44,7 +45,7 @@ export function getFromExtentionStorage<T>(
     return value
 }
 
-export function mapToTab(tab: chrome.tabs.Tab | browser.tabs.Tab): Tab {
+export function mapToTab(tab: chrome.tabs.Tab | browser.tabs.Tab): tabs.Tab {
     return {
         status: tab.status,
         index: tab.index,
@@ -65,5 +66,22 @@ export function mapToTab(tab: chrome.tabs.Tab | browser.tabs.Tab): Tab {
         height: tab.height,
         sessionId: tab.sessionId,
         lastAccessed: tab.lastAccessed,
+    }
+}
+
+export function mapToWindow(win: chrome.windows.Window | browser.windows.Window): windows.Window {
+    return {
+        focused: win.focused,
+        alwaysOnTop: win.alwaysOnTop,
+        incognito: win.incognito,
+        id: win.id,
+        top: win.top,
+        left: win.left,
+        width: win.width,
+        height: win.height,
+        tabs: win.tabs,
+        type: win.type,
+        sessionId: win.sessionId,
+        state: win.state === 'docked' ? 'locked-fullscreen' : win.state,
     }
 }
