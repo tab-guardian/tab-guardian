@@ -23,5 +23,7 @@ export function isRuntime(runtime: Runtime): boolean {
             return typeof chrome !== 'undefined'
         case 'web':
             return typeof window !== 'undefined'
+        default:
+            throw new Error('Unknown runtime is used')
     }
 }
