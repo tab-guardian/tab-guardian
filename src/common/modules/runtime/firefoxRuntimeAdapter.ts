@@ -2,6 +2,10 @@ import type { PlatformRuntime } from "@common/types/runtime"
 import { getFromExtentionStorage, throwIfQuotaExceeds, mapToTab } from "@common/modules/runtime/utils"
 
 export const firefoxRuntimeAdapter: PlatformRuntime = {
+    lastError() {
+        return browser.runtime.lastError?.message ?? null
+    },
+
     storage: {
         MAX_BYTES_QUOTA: 5_242_880,
 

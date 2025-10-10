@@ -3,6 +3,11 @@ import { throwIfQuotaExceeds } from "@common/modules/runtime/utils"
 import { getFakeTab } from "@common/modules/fake"
 
 export const webRuntimeAdapter: PlatformRuntime = {
+    lastError() {
+        console.info('web runtime do not have last error implementation')
+        return null
+    },
+
     storage: {
         MAX_BYTES_QUOTA: 5_242_880,
 

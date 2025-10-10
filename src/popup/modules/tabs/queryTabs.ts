@@ -8,10 +8,10 @@ export async function queryTabs(queryInfo?: TabsQueryInfo): Promise<Tab[]> {
 
     const tabs = await runtime.tabs.query(queryInfo || {})
 
-    const err = target.runtime.lastError
+    const err = runtime.lastError()
 
     if (err) {
-        throw new Error(err.message)
+        throw new Error(err)
     }
 
     return tabs.filter(t => t.windowId === curWindow.id)

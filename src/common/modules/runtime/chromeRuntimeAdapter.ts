@@ -2,6 +2,10 @@ import type { PlatformRuntime } from "@common/types/runtime"
 import { getFromExtentionStorage, throwIfQuotaExceeds, mapToTab } from "@common/modules/runtime/utils"
 
 export const chromeRuntimeAdapter: PlatformRuntime = {
+    lastError() {
+        return chrome.runtime.lastError?.message ?? null
+    },
+
     storage: {
         MAX_BYTES_QUOTA: chrome.storage.local.QUOTA_BYTES,
 

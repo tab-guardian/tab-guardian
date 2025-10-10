@@ -2,6 +2,7 @@
 export type Runtime = 'chrome' | 'firefox' | 'web'
 
 export type PlatformRuntime = {
+    lastError: () => string | null
     storage: {
         MAX_BYTES_QUOTA: number
         get: <T>(key: string) => Promise<T | null>
