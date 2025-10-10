@@ -16,7 +16,10 @@ export type PlatformRuntime = {
      */
     getURL: (path: string) => string
 
-    lastError: () => string | null
+    extension: {
+        lastError: () => string | null
+        isAllowedIncognitoAccess: () => Promise<boolean>
+    }
 
     storage: {
         MAX_BYTES_QUOTA: number

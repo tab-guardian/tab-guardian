@@ -11,8 +11,14 @@ export const firefoxRuntimeAdapter: PlatformRuntime = {
         return browser.runtime.getURL(path)
     },
 
-    lastError() {
-        return browser.runtime.lastError?.message ?? null
+    extension: {
+        lastError() {
+            return browser.runtime.lastError?.message ?? null
+        },
+
+        async isAllowedIncognitoAccess() {
+            return browser.extension.isAllowedIncognitoAccess()
+        },
     },
 
     storage: {

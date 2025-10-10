@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue'
-import { isDevelopment } from '@common/modules/isDevelopment'
-import { targetBrowser } from '@common/modules/browser/targetBrowser'
+import { runtime } from '@common/modules/runtime'
 import { useSettingsStore } from '@/stores/settings'
 import { trans } from '@common/modules/trans'
 import { showToast } from '@common/modules/showToast'
@@ -18,12 +17,8 @@ const incognitoWarningMessage = computed<string | null>(() => {
 })
 
 onMounted(async () => {
-    if (isDevelopment()) {
-        return
-    }
-
     incognitoModeAllowed.value =
-        await targetBrowser().extension.isAllowedIncognitoAccess()
+        await runtime.extension.isAllowedIncognitoAccess()
 })
 
 function updateSettings(): void {

@@ -11,8 +11,14 @@ export const chromeRuntimeAdapter: PlatformRuntime = {
         return chrome.runtime.getURL(path)
     },
 
-    lastError() {
-        return chrome.runtime.lastError?.message ?? null
+    extension: {
+        lastError() {
+            return chrome.runtime.lastError?.message ?? null
+        },
+
+        async isAllowedIncognitoAccess() {
+            return chrome.extension.isAllowedIncognitoAccess()
+        },
     },
 
     storage: {

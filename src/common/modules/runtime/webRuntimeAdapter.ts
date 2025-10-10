@@ -34,9 +34,16 @@ export const webRuntimeAdapter: PlatformRuntime = {
         return path
     },
 
-    lastError() {
-        console.info('web runtime do not have last error implementation')
-        return null
+    extension: {
+        lastError() {
+            console.info('web runtime do not have last error implementation')
+            return null
+        },
+
+        async isAllowedIncognitoAccess() {
+            console.info("web runtime doesn't have incognito access")
+            return false
+        },
     },
 
     storage: {
