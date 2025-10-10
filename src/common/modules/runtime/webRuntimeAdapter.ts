@@ -1,7 +1,35 @@
 import type { PlatformRuntime } from "@common/types/runtime"
 import { throwIfQuotaExceeds } from "@common/modules/runtime/utils"
+import { isRuntime } from "@common/modules/runtime"
+import { env } from '@common/env'
+
+let translationMessages: null | { [key: string]: { message: string } } = null
+
+if (isRuntime('web')) {
+    translationMessages = (await import(`../../../_locales/${env.DEV_LOCALE}/messages.json`))
+        .default
+}
 
 export const webRuntimeAdapter: PlatformRuntime = {
+    trans(msg, ...args) {
+        if (!translationMessages) {
+            throw new Error('Translation messages not loaded')
+        }
+
+        if (!translationMessages[msg]) {
+            console.warn(`English translation not found for key "${msg}"`)
+            return msg
+        }
+
+        const output = translationMessages[msg].message
+
+        if (args.length === 0) {
+            return output
+        }
+
+        return output.replaceAll('$n$', args[0])
+    },
+
     getURL(path) {
         return path
     },

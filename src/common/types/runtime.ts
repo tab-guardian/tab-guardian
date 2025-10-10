@@ -4,7 +4,10 @@ export type RuntimeType =
     | 'web'
 
 export type PlatformRuntime = {
-    lastError: () => string | null
+    /**
+     * @returns Localized string
+     */
+    trans: (msg: string, ...args: string[]) => string
 
     /**
      * Converts a relative path within an app/extension install directory to a fully-qualified URL.
@@ -12,6 +15,8 @@ export type PlatformRuntime = {
      * @returns The fully-qualified URL to the resource.
      */
     getURL: (path: string) => string
+
+    lastError: () => string | null
 
     storage: {
         MAX_BYTES_QUOTA: number
