@@ -56,7 +56,7 @@ export const chromeRuntimeAdapter: PlatformRuntime = {
             return mapToTab(tab)
         },
         async remove(tabId) {
-            //
+            await chrome.tabs.remove(tabId)
         },
     },
 }

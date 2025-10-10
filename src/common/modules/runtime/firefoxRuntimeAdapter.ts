@@ -55,7 +55,7 @@ export const firefoxRuntimeAdapter: PlatformRuntime = {
             return mapToTab(tab)
         },
         async remove(tabId) {
-            //
+            await browser.tabs.remove(tabId)
         },
     },
 }
