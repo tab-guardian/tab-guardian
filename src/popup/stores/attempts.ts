@@ -90,8 +90,8 @@ export const useAttemptsStore = defineStore('attempts', () => {
     return {
         isLocked,
         loadAttemptsFromStorage,
+        isLockedErrorMessage,
         makeAttempt,
-        saveAttemptsToStorage,
-        resetAttempts: unlock,
+        unlock,
     }
 })

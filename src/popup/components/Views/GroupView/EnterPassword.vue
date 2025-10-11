@@ -64,10 +64,9 @@ async function unlockGroup(): Promise<void> {
         props.group,
         password.value,
     )
+
     await groupStore.save(decryptedGroup)
-
-    await attemptsStore.resetAttempts()
-
+    await attemptsStore.unlock()
     await notificationStore.recalculateNotification()
 
     // With this, we don't need to type password to lock the
@@ -87,8 +86,8 @@ function handleUnlockGroupError(err: any): void {
 
     showToast(getDecryptionError(err), 'error')
 
-    if (attemptsStore.hasMaxAttempts()) {
-        attemptsStore.lockedMessageToast()
+    if (attemptsStore.isLocked) {
+        showToast(attemptsStore.isLockedErrorMessage(), 'error', 5000)
     }
 }
 
