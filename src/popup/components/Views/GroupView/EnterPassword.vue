@@ -24,7 +24,7 @@ const groupStore = useGroupStore()
 const notificationStore = useNotificationStore()
 const tabsStore = useTabsStore()
 const cryptoStore = useCryptoStore()
-const { lockedMessageToast, hasMaxAttempts, isAllowedToTry, resetAttempts } = useAttemptsStore()
+const attemptsStore = useAttemptsStore()
 
 const password = ref<string>('')
 const decrypting = ref<boolean>(false)
@@ -39,7 +39,9 @@ async function submitPass(): Promise<void> {
         return
     }
 
-    const allowed = await isAllowedToTry()
+    await attemptsStore.incrementAttempts()
+
+    const allowed = await attemptsStore.isAllowedToTry()
 
     if (!allowed) {
         password.value = ''
@@ -62,7 +64,7 @@ async function unlockGroup(): Promise<void> {
     const decryptedGroup = await cryptoStore.decryptGroup(props.group, password.value)
     await groupStore.save(decryptedGroup)
 
-    await resetAttempts()
+    await attemptsStore.resetAttempts()
 
     await notificationStore.recalculateNotification()
 
@@ -83,8 +85,8 @@ function handleUnlockGroupError(err: any): void {
 
     showToast(getDecryptionError(err), 'error')
 
-    if (hasMaxAttempts()) {
-        lockedMessageToast()
+    if (attemptsStore.hasMaxAttempts()) {
+        attemptsStore.lockedMessageToast()
     }
 }
 

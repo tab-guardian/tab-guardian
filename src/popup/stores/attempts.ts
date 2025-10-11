@@ -32,6 +32,11 @@ export const useAttemptsStore = defineStore('attempts', () => {
         await runtime.storage.set('attempts', attempts.value)
     }
 
+    async function incrementAttempts(): Promise<void> {
+        attempts.value.amount++
+        await saveAttemptsToStorage()
+    }
+
     async function isAllowedToTry(): Promise<boolean> {
         const isLockExpired = Date.now() >= (attempts.value.lockEndTime || 0)
 
@@ -53,8 +58,6 @@ export const useAttemptsStore = defineStore('attempts', () => {
 
             return false
         }
-
-        attempts.value.amount++
 
         if (attempts.value.amount > env.PASS_MAX_ATTEMPTS) {
             attempts.value.isLocked = true
@@ -88,6 +91,7 @@ export const useAttemptsStore = defineStore('attempts', () => {
     }
 
     return {
+        incrementAttempts,
         hasMaxAttempts,
         lockedMessageToast,
         saveAttemptsToStorage,
