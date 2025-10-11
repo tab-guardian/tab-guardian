@@ -2,12 +2,11 @@ import type { Group, Link } from '@common/types'
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import { trans } from '@common/modules/trans'
-import { isRuntime } from '@common/modules/runtime'
+import { runtime } from '@common/modules/runtime'
 import { useSettingsStore } from '@/stores/settings'
 import { useNotificationStore } from '@/stores/notification'
 import { useCryptoStore } from '@/stores/crypto'
 import { showToast } from '@common/modules/showToast'
-import { isIncognito } from '@common/modules/browser/windows'
 import { getCurrentURL } from '@/modules/getCurrentURL'
 import { generateGroupId } from '@common/modules/generateGroupId'
 import { savePasswordToStorage } from '@common/modules/storage/password'
@@ -88,6 +87,11 @@ export const useGroupStore = defineStore('group', () => {
         }
 
         return result
+    }
+
+    async function isIncognito(): Promise<boolean> {
+        const currWindow = await runtime.windows.getCurrent()
+        return currWindow ? currWindow.incognito : false
     }
 
     async function shouldHideGroup(group: Group): Promise<boolean> {
