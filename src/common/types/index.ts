@@ -1,3 +1,9 @@
+export type Locale = 'ru' | 'zh_CN' | 'en'
+
+export type LocaleMessageItem = {
+    [key: string]: { message: string }
+}
+
 export type PasswordBytes = {
     groupId: number
     bytes: number

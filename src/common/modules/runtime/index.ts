@@ -22,7 +22,7 @@ export function isRuntime(runtime: RuntimeType): boolean {
         case 'chrome':
             return typeof chrome !== 'undefined'
         case 'web':
-            return ['development', 'test'].includes(import.meta.env.MODE)
+            return typeof window !== 'undefined'
         default:
             throw new Error('Unknown runtime is used')
     }

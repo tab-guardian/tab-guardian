@@ -22,7 +22,8 @@
           "@/*": ["popup/*"],
           "@bg/*": ["background/*"],
           "@settings/*": ["settings/*"],
-          "@common/*": ["common/*"]
+          "@common/*": ["common/*"],
+          "@locales/*": ["_locales/*"]
       }
     },
     "include": [

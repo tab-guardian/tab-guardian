@@ -1,13 +1,21 @@
 import type { PlatformRuntime } from "@common/types/runtime"
+import type { Locale, LocaleMessageItem } from '@common/types'
 import { throwIfQuotaExceeds } from "@common/modules/runtime/utils"
 import { isRuntime } from "@common/modules/runtime"
 import { env } from '@common/env'
+import enMessages from '@locales/en/messages.json'
+import ruMessages from '@locales/ru/messages.json'
+import zhMessages from '@locales/zh_CN/messages.json'
 
-let translationMessages: null | { [key: string]: { message: string } } = null
+const messageMap = new Map<Locale, LocaleMessageItem>()
+messageMap.set('en', enMessages)
+messageMap.set('ru', ruMessages)
+messageMap.set('zh_CN', zhMessages)
 
-if (isRuntime('web')) {
-    translationMessages = (await import(`../../../_locales/${env.DEV_LOCALE}/messages.json`))
-        .default
+let translationMessages: null | LocaleMessageItem = null
+
+if (!translationMessages && isRuntime('web')) {
+    translationMessages = messageMap.get(env.DEV_LOCALE)!
 }
 
 export function getWebRuntimeAdapter(): PlatformRuntime {
