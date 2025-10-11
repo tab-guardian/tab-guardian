@@ -63,6 +63,7 @@ build_zip_archive () {
 compile_assets () {
     echo "⏳ LOADING: compiling assets 'npm run build'..."
     npm run check
+    npm run prettier-check
     npm run build
     echo "✅ SUCCESS: 'npm run build'"
 }
