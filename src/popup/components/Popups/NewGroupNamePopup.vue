@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { SelectTabsOperation } from '@common/types'
-import { trans } from '@common/modules/trans'
+import { trans } from '@common/modules/utils'
 import { usePopupStore } from '@/stores/popup'
 import { useNewGroupStore } from '@/stores/newGroup'
 import { showToast } from '@common/modules/showToast'

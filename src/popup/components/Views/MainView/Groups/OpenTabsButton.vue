@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Group } from '@common/types'
-import { trans } from '@common/modules/trans'
+import { trans } from '@common/modules/utils'
 import { useTabsStore } from '@/stores/tabs'
 import { useGroupStore } from '@/stores/group'
 import { useRouter } from 'vue-router'

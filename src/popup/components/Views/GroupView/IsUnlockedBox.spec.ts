@@ -3,7 +3,7 @@
 import { describe, it, expect, beforeEach } from 'vitest'
 import { createPinia, setActivePinia } from 'pinia'
 import { mount } from '@vue/test-utils'
-import { trans } from '@common/modules/trans'
+import { trans } from '@common/modules/utils'
 import { useSettingsStore } from '@/stores/settings'
 import { getFakeGroup } from '@common/modules/fake'
 import IsUnlockedBox from '@/components/Views/GroupView/IsUnlockedBox.vue'

@@ -1,4 +1,4 @@
-import { trans } from '@common/modules/trans'
+import { trans } from '@common/modules/utils'
 import { env } from '@common/env'
 
 export const GROUP_NAME_MAX_LENGTH = 45

@@ -1,6 +1,6 @@
 import { showToast } from '@common/modules/showToast'
-import { formatNumber } from '@common/modules/numberUtil'
-import { trans } from '@common/modules/trans'
+import { formatNumber } from '@common/modules/utils'
+import { trans } from '@common/modules/utils'
 
 export function throwIfQuotaExceeds(
     jsonStr: string,

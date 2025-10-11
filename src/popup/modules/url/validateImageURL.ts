@@ -1,4 +1,4 @@
-import { trans } from '@common/modules/trans'
+import { trans } from '@common/modules/utils'
 import { validateURL } from '@/modules/url/validateURL'
 
 export function validateImageURL(url: string): string | null {

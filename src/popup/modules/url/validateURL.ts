@@ -1,4 +1,4 @@
-import { trans } from '@common/modules/trans'
+import { trans } from '@common/modules/utils'
 
 export function validateURL(url: string): string | null {
     const MIN_URL_LENGTH = 11

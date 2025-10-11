@@ -1,7 +1,7 @@
 import { Link } from '@common/types'
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
-import { trans } from '@common/modules/trans'
+import { trans } from '@common/modules/utils'
 import { showToast } from '@common/modules/showToast'
 import { useGroupStore } from '@/stores/group'
 import { usePopupStore } from '@/stores/popup'

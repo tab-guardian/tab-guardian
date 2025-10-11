@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { trans } from '@common/modules/trans'
+import { trans } from '@common/modules/utils'
 import { useNewGroupStore } from '@/stores/newGroup'
 import { getCurrentURL } from '@/modules/getCurrentURL'
 import { showToast } from '@common/modules/showToast'

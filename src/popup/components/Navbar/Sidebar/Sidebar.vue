@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useSidebarStore } from '@/stores/sidebar'
-import { trans } from '@common/modules/trans'
+import { trans } from '@common/modules/utils'
 import { openSettingsPage } from '@/modules/openSettingsPage'
 import { runtime, isRuntime } from '@common/modules/runtime'
 import Control from '@/components/Control.vue'

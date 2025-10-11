@@ -2,7 +2,7 @@
 import type { Group } from '@common/types'
 import { isWrongPassError, getDecryptionError } from '@/errors'
 import { ref } from 'vue'
-import { trans } from '@common/modules/trans'
+import { trans } from '@common/modules/utils'
 import { useGroupStore } from '@/stores/group'
 import { useTabsStore } from '@/stores/tabs'
 import { useAttemptsStore } from '@/stores/attempts'

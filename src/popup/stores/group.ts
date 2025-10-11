@@ -1,14 +1,13 @@
 import type { Group, Link } from '@common/types'
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import { trans } from '@common/modules/trans'
+import { trans, generateGroupId } from '@common/modules/utils'
 import { runtime } from '@common/modules/runtime'
 import { useSettingsStore } from '@/stores/settings'
 import { useNotificationStore } from '@/stores/notification'
 import { useCryptoStore } from '@/stores/crypto'
 import { showToast } from '@common/modules/showToast'
 import { getCurrentURL } from '@/modules/getCurrentURL'
-import { generateGroupId } from '@common/modules/generateGroupId'
 import { savePasswordToStorage } from '@common/modules/storage/password'
 import {
     deleteAllGroupsFromStorage,

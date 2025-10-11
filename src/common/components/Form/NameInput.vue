@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { trans } from '@common/modules/trans'
+import { trans } from '@common/modules/utils'
 import { computed } from 'vue'
 import { GROUP_NAME_MAX_LENGTH } from '@/modules/groupValidation'
 import Input from '@common/components/Form/Input.vue'

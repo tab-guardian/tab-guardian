@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Group } from '@common/types'
 import { useTabsStore } from '@/stores/tabs'
-import { trans } from '@common/modules/trans'
+import { trans } from '@common/modules/utils'
 import { runtime } from '@common/modules/runtime'
 import Control from '@/components/Control.vue'
 

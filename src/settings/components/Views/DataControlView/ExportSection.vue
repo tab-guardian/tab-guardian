@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useGroupStore } from '@/stores/group'
 import { ref, onMounted } from 'vue'
-import { trans } from '@common/modules/trans'
+import { trans } from '@common/modules/utils'
 import { showToast } from '@common/modules/showToast'
 import { usePopupStore } from '@/stores/popup'
 import { encryptString, toBase64 } from '@common/modules/webCrypto'

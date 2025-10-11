@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Group } from '@common/types'
 import { cloneDeep } from 'lodash'
-import { trans } from '@common/modules/trans'
+import { trans } from '@common/modules/utils'
 import { useGroupStore } from '@/stores/group'
 import { showToast } from '@common/modules/showToast'
 import Swal from 'sweetalert2'

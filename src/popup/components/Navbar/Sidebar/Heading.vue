@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue'
-import { trans } from '@common/modules/trans'
+import { trans } from '@common/modules/utils'
 import { runtime } from '@common/modules/runtime'
-import { formatNumber } from '@common/modules/numberUtil'
+import { formatNumber } from '@common/modules/utils'
 import ProgressBar from '@common/components/ProgressBar.vue'
 
 onMounted(async () => {

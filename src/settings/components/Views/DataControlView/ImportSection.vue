@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { EncryptionAlgo, Group } from '@common/types'
 import { ref } from 'vue'
-import { trans } from '@common/modules/trans'
+import { trans } from '@common/modules/utils'
 import { useGroupStore } from '@/stores/group'
 import { decryptString, fromBase64 } from '@common/modules/webCrypto'
 import { showToast } from '@common/modules/showToast'

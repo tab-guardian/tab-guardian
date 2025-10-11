@@ -3,7 +3,7 @@ import type { Group } from '@common/types'
 import { useTabsStore } from '@/stores/tabs'
 import { useRouter } from 'vue-router'
 import { runtime } from '@common/modules/runtime'
-import { trans } from '@common/modules/trans'
+import { trans } from '@common/modules/utils'
 import Control from '@/components/Control.vue'
 
 const props = defineProps<{ group: Group }>()

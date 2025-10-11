@@ -2,7 +2,7 @@ import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import { countUnlockedGroups, deleteHasUnlockedGroupsFlag, setHasUnlockedGroupsFlag } from '@common/modules/storage/unlockedGroups'
 import { renderWarningBadge, clearWarningBadge } from '@common/modules/badge'
-import { trans } from '@common/modules/trans'
+import { trans } from '@common/modules/utils'
 
 export const useNotificationStore = defineStore('notification', () => {
     const notification = ref<string | null>(null)

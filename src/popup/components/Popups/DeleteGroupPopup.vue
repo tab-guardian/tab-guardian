@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useGroupStore } from '@/stores/group'
-import { trans } from '@common/modules/trans'
+import { trans } from '@common/modules/utils'
 import { usePopupStore } from '@/stores/popup'
 import { useRouter } from 'vue-router'
 import { deletePasswordFromStorage } from '@common/modules/storage/password'

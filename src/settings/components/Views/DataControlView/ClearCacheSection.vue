@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { PasswordBytes } from '@common/types'
-import { trans } from '@common/modules/trans'
+import { trans } from '@common/modules/utils'
 import { ref, computed, onMounted } from 'vue'
 import { getPasswordsBytes, deletePasswordFromStorage } from '@common/modules/storage/password'
 import { showToast } from '@common/modules/showToast'

@@ -1,7 +1,7 @@
 import type { Attempts } from '@common/types'
 import { onMounted, ref } from 'vue'
 import { defineStore } from 'pinia'
-import { trans } from '@common/modules/trans'
+import { trans } from '@common/modules/utils'
 import { runtime } from '@common/modules/runtime'
 import { showToast } from '@common/modules/showToast'
 import { env } from '@common/env'
