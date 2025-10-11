@@ -1,6 +1,6 @@
 # Release Notes
 
-## v1.14.0 (2025-10-10)
+## v1.14.0 (2025-10-12)
 - 🐛 Fixed potential bugs with encryption/decryption
 - ✨ Improved export/import functionality. Now, you can export all groups with a password protection [#77](https://github.com/tab-guardian/tab-guardian/issues/77)
 - 🧑‍💻 Huge refactoring of the core logic
