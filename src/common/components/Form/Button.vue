@@ -29,7 +29,9 @@ withDefaults(defineProps<Props>(), {
                 'bg-primary text-page px-6 py-2 rounded-lg text-md inline-flex',
                 'justify-center items-center gap-3',
                 className,
-                loading || disabled ? 'opacity-50 cursor-not-allowed pointer-events-none' : '',
+                loading || disabled
+                    ? 'opacity-50 cursor-not-allowed pointer-events-none'
+                    : '',
             ]"
         >
             <SmallSpinner v-if="loading" class="w-5" />

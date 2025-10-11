@@ -79,14 +79,18 @@ export function getWebRuntimeAdapter(): PlatformRuntime {
                     const key = localStorage.key(i)
 
                     if (!key) {
-                        console.warn(`Cannot get key with index ${i} from local storage`)
+                        console.warn(
+                            `Cannot get key with index ${i} from local storage`,
+                        )
                         continue
                     }
 
                     const item = localStorage.getItem(key)
 
                     if (!item) {
-                        console.warn(`Getting key ${key} from local storage returns null`)
+                        console.warn(
+                            `Getting key ${key} from local storage returns null`,
+                        )
                         continue
                     }
 
@@ -181,6 +185,6 @@ export function getWebRuntimeAdapter(): PlatformRuntime {
                 console.info('Cannot update window in web runtime')
                 return null
             },
-        }
+        },
     }
 }

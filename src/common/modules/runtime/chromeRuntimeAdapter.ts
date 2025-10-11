@@ -1,6 +1,9 @@
-import type { PlatformRuntime } from "@common/types/runtime"
-import { mapToTab, mapToWindow } from "@common/modules/runtime/maps"
-import { getFromExtentionStorage, throwIfQuotaExceeds } from "@common/modules/runtime/utils"
+import type { PlatformRuntime } from '@common/types/runtime'
+import { mapToTab, mapToWindow } from '@common/modules/runtime/maps'
+import {
+    getFromExtentionStorage,
+    throwIfQuotaExceeds,
+} from '@common/modules/runtime/utils'
 
 export function getChromeRuntimeAdapter(): PlatformRuntime {
     return {
@@ -120,6 +123,6 @@ export function getChromeRuntimeAdapter(): PlatformRuntime {
                 const win = await chrome.windows.update(windowId, updateInfo)
                 return mapToWindow(win)
             },
-        }
+        },
     }
 }

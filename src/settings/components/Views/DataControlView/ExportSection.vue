@@ -5,7 +5,7 @@ import { trans } from '@common/modules/utils'
 import { showToast } from '@common/modules/toast'
 import { usePopupStore } from '@/stores/popup'
 import { encryptString, toBase64 } from '@common/modules/webCrypto'
-import { env } from "@common/env"
+import { env } from '@common/env'
 import pako from 'pako'
 import Section from '@settings/components/Section.vue'
 import Button from '@common/components/Form/Button.vue'

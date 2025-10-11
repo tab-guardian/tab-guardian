@@ -61,7 +61,10 @@ async function submitPass(): Promise<void> {
 async function unlockGroup(): Promise<void> {
     decrypting.value = true
 
-    const decryptedGroup = await cryptoStore.decryptGroup(props.group, password.value)
+    const decryptedGroup = await cryptoStore.decryptGroup(
+        props.group,
+        password.value,
+    )
     await groupStore.save(decryptedGroup)
 
     await attemptsStore.resetAttempts()

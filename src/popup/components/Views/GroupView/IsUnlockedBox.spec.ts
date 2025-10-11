@@ -18,7 +18,7 @@ describe('IsUnlockedBox', () => {
         const wrapper = mount(IsUnlockedBox, {
             props: {
                 group: getFakeGroup(),
-            }
+            },
         })
 
         expect(wrapper.html()).toContain(trans('new_password'))
@@ -31,7 +31,7 @@ describe('IsUnlockedBox', () => {
         const wrapper = mount(IsUnlockedBox, {
             props: {
                 group: getFakeGroup(),
-            }
+            },
         })
 
         expect(wrapper.html()).not.toContain(trans('new_password'))

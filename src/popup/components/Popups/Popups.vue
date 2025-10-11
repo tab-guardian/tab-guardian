@@ -7,7 +7,7 @@ import AppearTransition from '@common/components/Transitions/AppearTransition.vu
 const { isOpenPopup } = usePopupStore()
 
 defineProps<{
-    popups: Array<{ name: keyof Popups, comp: Component }>
+    popups: Array<{ name: keyof Popups; comp: Component }>
 }>()
 </script>
 

@@ -42,7 +42,10 @@ watch(modelValue, () => {
             <span v-if="description" class="opacity-75 block text-xs">
                 {{ description }}
             </span>
-            <span v-if="warning" class="dark:text-red-300 text-red-500 block text-xs">
+            <span
+                v-if="warning"
+                class="dark:text-red-300 text-red-500 block text-xs"
+            >
                 {{ warning }}
             </span>
         </small>

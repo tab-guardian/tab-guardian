@@ -8,7 +8,10 @@ import { useCryptoStore } from '@/stores/crypto'
 import { useSettingsStore } from '@/stores/settings'
 import { useNotificationStore } from '@/stores/notification'
 import { showToast } from '@common/modules/toast'
-import { getPasswordFromStorage, deletePasswordFromStorage } from '@common/modules/storage/password'
+import {
+    getPasswordFromStorage,
+    deletePasswordFromStorage,
+} from '@common/modules/storage/password'
 import LockClosedIcon from '@common/components/Icons/LockClosedIcon.vue'
 import WarningBox from '@common/components/WarningBox.vue'
 import ProgressBar from '@common/components/ProgressBar.vue'

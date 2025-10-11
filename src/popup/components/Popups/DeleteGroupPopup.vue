@@ -39,10 +39,7 @@ async function deleteGroup(): Promise<void> {
         :content="trans('want_delete_group')"
     >
         <template #buttons>
-            <PopupButton
-                @click="closePopup('deleteGroup')"
-                :is-secondary="true"
-            >
+            <PopupButton @click="closePopup('deleteGroup')" :is-secondary="true">
                 {{ trans('no') }}
             </PopupButton>
 

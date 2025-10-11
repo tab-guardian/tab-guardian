@@ -23,7 +23,7 @@ export function throwIfQuotaExceeds(
 ): void {
     const jsonStrBytes = new TextEncoder().encode(jsonStr).length
 
-    const MB = (1024 * 1024)
+    const MB = 1024 * 1024
     const willBeBytes = usedBytes + jsonStrBytes
 
     if (willBeBytes > bytesQuota) {

@@ -3,7 +3,10 @@ import { env } from '@common/env'
 
 export const GROUP_NAME_MAX_LENGTH = 45
 
-export function passwordError(pass: string | null, confirm: string | null): string | null {
+export function passwordError(
+    pass: string | null,
+    confirm: string | null,
+): string | null {
     pass ??= ''
     confirm ??= ''
 

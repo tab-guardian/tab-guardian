@@ -1,7 +1,4 @@
-export type RuntimeType =
-    | 'chrome'
-    | 'firefox'
-    | 'web'
+export type RuntimeType = 'chrome' | 'firefox' | 'web'
 
 export type PlatformRuntime = {
     /**
@@ -62,7 +59,10 @@ export type PlatformRuntime = {
 
     windows: {
         getCurrent(): Promise<windows.Window | null>
-        update(windowId: number, updateInfo: windows.UpdateInfo): Promise<windows.Window | null>
+        update(
+            windowId: number,
+            updateInfo: windows.UpdateInfo,
+        ): Promise<windows.Window | null>
     }
 }
 
@@ -142,7 +142,7 @@ export namespace tabs {
          * Under some circumstances a Tab may not be assigned an ID, for example
          * when querying foreign tabs using the sessions API, in which case a
          * session ID may be present.
-         * 
+         *
          */
         id?: number
 
@@ -388,12 +388,7 @@ export namespace tabs {
 }
 
 export namespace windows {
-    export type Type =
-        | "normal"
-        | "popup"
-        | "panel"
-        | "app"
-        | "devtools"
+    export type Type = 'normal' | 'popup' | 'panel' | 'app' | 'devtools'
 
     export type State =
         | 'normal'

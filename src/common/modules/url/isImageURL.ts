@@ -1,4 +1,4 @@
-import { validateImageURL } from "@common/modules/url/validateImageURL"
+import { validateImageURL } from '@common/modules/url/validateImageURL'
 
 export function isImageURL(url: string | null | undefined): boolean {
     if (!url) {

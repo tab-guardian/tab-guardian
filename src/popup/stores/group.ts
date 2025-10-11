@@ -121,7 +121,11 @@ export const useGroupStore = defineStore('group', () => {
         return false
     }
 
-    async function encrypt(group: Group, pass: string, confirm?: string): Promise<Group | null> {
+    async function encrypt(
+        group: Group,
+        pass: string,
+        confirm?: string,
+    ): Promise<Group | null> {
         if (group.isEncrypted) {
             showToast(trans('group_already_locked'), 'error')
             return null
@@ -153,7 +157,10 @@ export const useGroupStore = defineStore('group', () => {
     }
 
     // Add groups to memory and save them to storage
-    async function addAndSaveGroups(groups: Group[], replace: boolean): Promise<void> {
+    async function addAndSaveGroups(
+        groups: Group[],
+        replace: boolean,
+    ): Promise<void> {
         for (const group of groups) {
             group.id = generateGroupId()
 

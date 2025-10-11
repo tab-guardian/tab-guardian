@@ -67,10 +67,12 @@ async function handlePasswordSubmit(): Promise<void> {
     }
 
     const rawData = fileRawData.value
-    const algo = /^algo\(([A-z-]+)\)/.exec(rawData)?.[1] as EncryptionAlgo | undefined
+    const algo = /^algo\(([A-z-]+)\)/.exec(rawData)?.[1] as
+        | EncryptionAlgo
+        | undefined
 
     if (!algo) {
-        throw new Error("Cannot get the encryption algorithm from the file")
+        throw new Error('Cannot get the encryption algorithm from the file')
     }
 
     importing.value = true

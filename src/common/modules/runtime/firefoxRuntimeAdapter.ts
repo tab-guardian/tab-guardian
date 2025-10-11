@@ -1,6 +1,9 @@
-import type { PlatformRuntime } from "@common/types/runtime"
-import { mapToTab, mapToWindow } from "@common/modules/runtime/maps"
-import { getFromExtentionStorage, throwIfQuotaExceeds } from "@common/modules/runtime/utils"
+import type { PlatformRuntime } from '@common/types/runtime'
+import { mapToTab, mapToWindow } from '@common/modules/runtime/maps'
+import {
+    getFromExtentionStorage,
+    throwIfQuotaExceeds,
+} from '@common/modules/runtime/utils'
 
 export function getFirefoxRuntimeAdapter(): PlatformRuntime {
     return {
@@ -114,7 +117,9 @@ export function getFirefoxRuntimeAdapter(): PlatformRuntime {
 
             async update(windowId, updateInfo) {
                 const firefoxWindowState: browser.windows.Window['state'] =
-                    updateInfo.state === 'locked-fullscreen' ? 'docked' : updateInfo.state
+                    updateInfo.state === 'locked-fullscreen'
+                        ? 'docked'
+                        : updateInfo.state
 
                 const win = await browser.windows.update(windowId, {
                     ...updateInfo,
@@ -123,6 +128,6 @@ export function getFirefoxRuntimeAdapter(): PlatformRuntime {
 
                 return mapToWindow(win)
             },
-        }
+        },
     }
 }

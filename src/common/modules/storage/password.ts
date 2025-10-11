@@ -4,11 +4,16 @@ import { getGroupsFromStorage } from '@common/modules/storage/group'
 
 const KEY_PREFIX = 'group-password-'
 
-export async function savePasswordToStorage(groupId: number, pass: string): Promise<void> {
+export async function savePasswordToStorage(
+    groupId: number,
+    pass: string,
+): Promise<void> {
     await runtime.storage.set<string>(KEY_PREFIX + groupId, pass)
 }
 
-export async function getPasswordFromStorage(groupId: number): Promise<string | null> {
+export async function getPasswordFromStorage(
+    groupId: number,
+): Promise<string | null> {
     return runtime.storage.get<string>(KEY_PREFIX + groupId)
 }
 
@@ -20,7 +25,8 @@ export async function getPasswordsBytes(): Promise<PasswordBytes[]> {
     const pwdBytes: PasswordBytes[] = await getBytesExt()
 
     const groups = await getGroupsFromStorage()
-    const unlockedIds = groups.filter(g => g.isPrivate && !g.isEncrypted)
+    const unlockedIds = groups
+        .filter(g => g.isPrivate && !g.isEncrypted)
         .map(g => g.id)
 
     return pwdBytes.filter(pwd => !unlockedIds.includes(pwd.groupId))

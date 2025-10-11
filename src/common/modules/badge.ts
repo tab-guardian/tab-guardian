@@ -1,4 +1,4 @@
-import { runtime } from "@common/modules/runtime"
+import { runtime } from '@common/modules/runtime'
 
 export async function renderWarningBadge(): Promise<void> {
     await runtime.action.setBadgeText({ text: '!' })

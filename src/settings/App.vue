@@ -25,7 +25,5 @@ onMounted(() => {
         </div>
     </div>
 
-    <Popups :popups="[
-        {comp: NewPasswordPopup, name: 'newPassword'},
-    ]" />
+    <Popups :popups="[{ comp: NewPasswordPopup, name: 'newPassword' }]" />
 </template>

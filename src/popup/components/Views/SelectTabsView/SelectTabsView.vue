@@ -30,7 +30,7 @@ const links = ref<Link[]>([])
 const selectedLinks = ref<Link[]>([])
 
 const operation = computed<SelectTabsOperation>(() => {
-    return route.params.operation as SelectTabsOperation || 'creating'
+    return (route.params.operation as SelectTabsOperation) || 'creating'
 })
 
 onUnmounted(() => removeEventListener('keydown', saveTabsAfterEnter))

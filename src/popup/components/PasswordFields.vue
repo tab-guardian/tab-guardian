@@ -20,7 +20,7 @@ const passErr = computed<string | null>(() => {
 })
 
 function keyupEventHandler(): void {
-    const hasError  = passErr.value !== null && passErr.value !== ''
+    const hasError = passErr.value !== null && passErr.value !== ''
 
     emit('hasError', hasError)
 

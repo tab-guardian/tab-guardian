@@ -1,7 +1,14 @@
 import type { EncryptionAlgo, Group, Link } from '@common/types'
 import { reactive, readonly } from 'vue'
 import { defineStore } from 'pinia'
-import { encrypt, decrypt, toBase64, createEncryptKey, createDecryptKey, fromBase64 } from '@common/modules/webCrypto'
+import {
+    encrypt,
+    decrypt,
+    toBase64,
+    createEncryptKey,
+    createDecryptKey,
+    fromBase64,
+} from '@common/modules/webCrypto'
 import { env } from '@common/env'
 import CryptoJS from 'crypto-js'
 
@@ -72,13 +79,19 @@ export const useCryptoStore = defineStore('crypto', () => {
         return group
     }
 
-    async function decryptLink(group: Group, link: Link, pass: string): Promise<Link> {
+    async function decryptLink(
+        group: Group,
+        link: Link,
+        pass: string,
+    ): Promise<Link> {
         if (!group.algo) {
             return decryptLinkCryptoJS(link, pass)
         }
 
         if (!link.salt) {
-            throw new Error(`Link ${link.id} doesn't have salt attached. Which should not happen`)
+            throw new Error(
+                `Link ${link.id} doesn't have salt attached. Which should not happen`,
+            )
         }
 
         const key = await createDecryptKey(pass, link.salt, group.algo)
@@ -92,7 +105,9 @@ export const useCryptoStore = defineStore('crypto', () => {
         algo: EncryptionAlgo,
     ): Promise<Link> {
         if (!link.iv) {
-            throw new Error(`Link ${link.id} doesn't have iv attached. Which should not happen`)
+            throw new Error(
+                `Link ${link.id} doesn't have iv attached. Which should not happen`,
+            )
         }
 
         const ivBytes = fromBase64(link.iv)

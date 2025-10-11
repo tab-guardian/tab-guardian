@@ -6,7 +6,9 @@ import { isRuntime } from '@common/modules/runtime/utils'
 
 const target = isRuntime('firefox') ? browser : chrome
 
-target.runtime.onInstalled.addListener(async () => await renderWarningBadgeIfNeeded())
+target.runtime.onInstalled.addListener(
+    async () => await renderWarningBadgeIfNeeded(),
+)
 target.runtime.onStartup.addListener(async () => await renderWarningBadgeIfNeeded())
 
 async function renderWarningBadgeIfNeeded(): Promise<void> {

@@ -1,50 +1,52 @@
 {
     "groups_imported": {
         "message": "成功导入 $n$ 个组",
-        "placeholders": {"n": { "content": "$1" }}
+        "placeholders": { "n": { "content": "$1" } }
     },
     "passwords_min_length": {
         "message": "密码必须至少包含 $n$ 个字符",
-        "placeholders": {"n": { "content": "$1" }}
+        "placeholders": { "n": { "content": "$1" } }
     },
     "you_have_unlocked_groups": {
         "message": "您当前拥有$n$个未锁定的私人群组。请务必在不再需要时将其重新锁定。",
-        "placeholders": {"n": { "content": "$1" }}
+        "placeholders": { "n": { "content": "$1" } }
     },
     "clear_cache_desc": {
         "message": "释放$n$字节缓存空间而不丢失任何数据。此操作完全安全且值得推荐。",
-        "placeholders": {"n": { "content": "$1" }}
+        "placeholders": { "n": { "content": "$1" } }
     },
     "cache_cleared_on": {
         "message": "您的缓存已清除，共清除 $n$ 字节",
-        "placeholders": {"n": { "content": "$1" }}
+        "placeholders": { "n": { "content": "$1" } }
     },
     "not_enough_storage": {
         "message": "存储配额已满。最大配额为 $n$ 兆字节，您已使用 $n$ 兆字节",
-        "placeholders": {"n": { "content": "$1" }}
+        "placeholders": { "n": { "content": "$1" } }
     },
     "many_attempts_locked_for": {
         "message": "尝试次数过多。已锁定 $n$ 分钟",
-        "placeholders": {"n": { "content": "$1" }}
+        "placeholders": { "n": { "content": "$1" } }
     },
     "many_attempts_next_attempt_in": {
         "message": "尝试次数过多。下一次尝试在 $n$ 分钟后",
-        "placeholders": {"n": { "content": "$1" }}
+        "placeholders": { "n": { "content": "$1" } }
     },
     "bind_group_url": {
         "message": "将该组绑定到 URL ($n$)。此操作会将该组隐藏在其他地方，仅在此 URL 可见，增加一层额外的安全性",
-        "placeholders": {"n": { "content": "$1" }}
+        "placeholders": { "n": { "content": "$1" } }
     },
     "url_must_be_less_than": {
         "message": "URL 必须少于 $n$ 个字符",
-        "placeholders": {"n": { "content": "$1" }}
+        "placeholders": { "n": { "content": "$1" } }
     },
     "url_must_be_at_least": {
         "message": "URL 必须至少 $n$ 个字符",
-        "placeholders": {"n": { "content": "$1" }}
+        "placeholders": { "n": { "content": "$1" } }
     },
     "ext_name": { "message": "标签守护者" },
-    "ext_description": { "message": "允许您保存和恢复标签页的浏览器扩展，包括使用密码加密它们" },
+    "ext_description": {
+        "message": "允许您保存和恢复标签页的浏览器扩展，包括使用密码加密它们"
+    },
     "details": { "message": "详情" },
     "group_details": { "message": "组详情" },
     "you_can_find_details_here": { "message": "您可以在这里找到所有的组详情" },
@@ -58,7 +60,9 @@
     "rebind": { "message": "重新绑定" },
     "bound_to_url": { "message": "绑定到 URL" },
     "opened_tabs_times": { "message": "打开标签页次数" },
-    "opened_tabs_times_tip": { "message": "此组中的标签页被一次性打开的次数，而不是单个标签页的打开次数" },
+    "opened_tabs_times_tip": {
+        "message": "此组中的标签页被一次性打开的次数，而不是单个标签页的打开次数"
+    },
     "select": { "message": "选择" },
     "cancel": { "message": "取消" },
     "export": { "message": "导出" },
@@ -114,7 +118,9 @@
     "group_created_with_tabs": { "message": "创建的组包含标签页" },
     "close_selected_tabs": { "message": "关闭选中的标签页" },
     "bind_to_this_url": { "message": "绑定到此 URL" },
-    "private_groups_are_secure": { "message": "私有组是安全的并使用加密。只有知道密码的用户可以访问" },
+    "private_groups_are_secure": {
+        "message": "私有组是安全的并使用加密。只有知道密码的用户可以访问"
+    },
     "rate_us": { "message": "评价我们" },
     "storage_usage": { "message": "存储使用" },
     "group_name_long": { "message": "组名称太长" },
@@ -125,7 +131,9 @@
     "icon_is_set": { "message": "图标已设置" },
     "export_this_group": { "message": "导出该组" },
     "rebind_to_other_url": { "message": "重新绑定到其他 URL" },
-    "enter_new_url_bind_private_to_new_url": { "message": "输入一个新 URL 将您的私有组绑定到此新 URL。只有在访问该 URL 时该组才会可见。不要忘记锁定该组" },
+    "enter_new_url_bind_private_to_new_url": {
+        "message": "输入一个新 URL 将您的私有组绑定到此新 URL。只有在访问该 URL 时该组才会可见。不要忘记锁定该组"
+    },
     "enter_new_url_bind_to": { "message": "输入一个新 URL 进行绑定" },
     "group_rebind_successful": { "message": "组重新绑定成功" },
     "url_must_start_with_http": { "message": "URL 必须以 http:// 或 https:// 开头" },
@@ -133,28 +141,42 @@
     "select_image": { "message": "选择图片" },
     "pick_any_emoji": { "message": "选择任意表情符号" },
     "enter_image_url": { "message": "输入图片 URL" },
-    "type_any_image_url_to_set_it": { "message": "输入任何图片 URL 将其设置为组图标" },
+    "type_any_image_url_to_set_it": {
+        "message": "输入任何图片 URL 将其设置为组图标"
+    },
     "lock_group_after_restore": { "message": "恢复标签页后重新锁定组" },
     "erase_all_groups": { "message": "删除所有组" },
-    "erase_all_groups_desc": { "message": "删除所有群组后，您将无法以任何方式恢复它们。此操作还将移除您所有的私人群组。" },
+    "erase_all_groups_desc": {
+        "message": "删除所有群组后，您将无法以任何方式恢复它们。此操作还将移除您所有的私人群组。"
+    },
     "i_confirm_want_delete_groups": { "message": "我确认要删除所有组" },
     "confirm_want_delete_groups": { "message": "确认要删除所有组" },
     "confirm": { "message": "确认" },
     "all_groups_deleted": { "message": "所有组已被删除" },
-    "show_private_groups_incognito": { "message": "在除隐身（私密）窗口外的所有位置隐藏私人群组" },
+    "show_private_groups_incognito": {
+        "message": "在除隐身（私密）窗口外的所有位置隐藏私人群组"
+    },
     "settings_saved": { "message": "设置已保存" },
-    "go_to_settings_and_enable_allow_incognito": { "message": "进入扩展设置，启用 “允许在隐身状态下”、“允许在私人状态下 ”或 “在私人窗口中运行 ”选项" },
+    "go_to_settings_and_enable_allow_incognito": {
+        "message": "进入扩展设置，启用 “允许在隐身状态下”、“允许在私人状态下 ”或 “在私人窗口中运行 ”选项"
+    },
     "override_existing_match": { "message": "如果新组名与现有组名匹配，则覆盖" },
-    "only_private_groups_incognito": { "message": "在浏览器隐身模式（私密模式）中隐藏已打开的群组" },
+    "only_private_groups_incognito": {
+        "message": "在浏览器隐身模式（私密模式）中隐藏已打开的群组"
+    },
     "export_tab_groups": { "message": "导出标签页组" },
-    "export_tab_groups_desc": { "message": "导出所有私人和公共群组。我们建议您为导出文件设置密码保护。" },
+    "export_tab_groups_desc": {
+        "message": "导出所有私人和公共群组。我们建议您为导出文件设置密码保护。"
+    },
     "no_groups_export": { "message": "没有组可导出" },
     "import_groups": { "message": "导入标签页组" },
     "import_private_and_open_groups": { "message": "导入私人和公开群组。" },
     "choose_exported_file": { "message": "选择导出的文件" },
     "choose_file_import": { "message": "请选择一个文件进行导入" },
     "error_reading_file": { "message": "读取文件时出错" },
-    "some_groups_already_exist_same_name": { "message": "要导入的某些组已存在相同名称。您想替换它们吗？" },
+    "some_groups_already_exist_same_name": {
+        "message": "要导入的某些组已存在相同名称。您想替换它们吗？"
+    },
     "replace_groups": { "message": "替换组？" },
     "file_chosen": { "message": "文件已选择" },
     "save": { "message": "保存" },
@@ -163,15 +185,21 @@
     "your_emoji_is": { "message": "你的表情符号是" },
     "image_format_allowed": { "message": "仅允许使用以下格式的图片" },
     "new_password": { "message": "新密码" },
-    "uses_old_encrypt_impl": { "message": "该组使用旧版加密实现。您可以通过解锁该组再重新锁定来修复此问题" },
+    "uses_old_encrypt_impl": {
+        "message": "该组使用旧版加密实现。您可以通过解锁该组再重新锁定来修复此问题"
+    },
     "nothing_to_paste": { "message": "没有内容可粘贴" },
     "general": { "message": "总则" },
     "data_control": { "message": "数据控制" },
     "clear_cache": { "message": "清除缓存" },
     "remember_pass_after_unlock": { "message": "解锁后记住我的密码" },
     "make_group_open": { "message": "设置为公开群组" },
-    "are_you_sure_to_make_group_open": { "message": "您确定要将此群组设为公开吗？这意味着访问该群组时无需输入密码" },
+    "are_you_sure_to_make_group_open": {
+        "message": "您确定要将此群组设为公开吗？这意味着访问该群组时无需输入密码"
+    },
     "group_is_now_open": { "message": "该小组现已开放" },
     "protect_export_using_pass": { "message": "使用密码保护导出（推荐）" },
-    "remember_pass_after_unlock_desc": { "message": "若禁用此选项，每次锁定私人群组时均需输入密码。保持此选项启用状态，系统会将密码存储在临时且安全的存储空间中，您无需再次输入密码即可重新锁定群组" }
+    "remember_pass_after_unlock_desc": {
+        "message": "若禁用此选项，每次锁定私人群组时均需输入密码。保持此选项启用状态，系统会将密码存储在临时且安全的存储空间中，您无需再次输入密码即可重新锁定群组"
+    }
 }

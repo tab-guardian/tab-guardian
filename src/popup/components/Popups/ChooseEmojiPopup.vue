@@ -32,7 +32,7 @@ async function chooseEmoji(e: CustomEvent): Promise<void> {
     const data = e.detail as EmojiClickEventDetail
 
     if (data.unicode) {
-        emoji.value = data.unicode 
+        emoji.value = data.unicode
     }
 }
 
@@ -61,10 +61,7 @@ function submit(): void {
         <emoji-picker v-on:emoji-click="chooseEmoji"></emoji-picker>
 
         <template #buttons>
-            <PopupButton
-                @click="closePopup('chooseEmoji')"
-                :is-secondary="true"
-            >
+            <PopupButton @click="closePopup('chooseEmoji')" :is-secondary="true">
                 {{ trans('cancel') }}
             </PopupButton>
 

@@ -13,5 +13,6 @@ defineProps<Props>()
             'border rounded-full w-4 h-4 text-center ml-1 cursor-pointer inline-flex items-center',
             'justify-center border-gray-500 text-xs font-heading',
         ]"
-    >?</span>
+        >?</span
+    >
 </template>

@@ -30,5 +30,5 @@ const tooltip = computed<string>(() => {
         :disabled
         :tip="tooltip"
         @click="appStore.pasteLink(group.id)"
-    />  
+    />
 </template>

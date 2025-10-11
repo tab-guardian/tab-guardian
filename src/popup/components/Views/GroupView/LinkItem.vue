@@ -20,7 +20,9 @@ async function openTab(): Promise<void> {
     if (groupStore.selectedGroup) {
         await groupStore.save(groupStore.selectedGroup)
     } else {
-        console.error(`Group with id ${props.groupId} is not selected as selectedGroup`)
+        console.error(
+            `Group with id ${props.groupId} is not selected as selectedGroup`,
+        )
     }
 
     await restoreTabs([props.link])

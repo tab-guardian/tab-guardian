@@ -10,8 +10,14 @@ export async function restoreTabs(links: Link[]): Promise<void> {
         // It's a limitation of Firefox, you cannot open about: pages.
         // Exclude opening links that start from `about:` keyword.
         // The only exception is `about:blank` which can be open.
-        if (isFirefox && link.url !== 'about:blank' && link.url.startsWith('about:')) {
-            console.info(`Can't open ${link.url}. Firefox doesn't allow to open links that start with 'about:' keyword`)
+        if (
+            isFirefox &&
+            link.url !== 'about:blank' &&
+            link.url.startsWith('about:')
+        ) {
+            console.info(
+                `Can't open ${link.url}. Firefox doesn't allow to open links that start with 'about:' keyword`,
+            )
             continue
         }
 

@@ -47,5 +47,5 @@ async function makePublic(): Promise<void> {
         :label="trans('make_group_open')"
         :icon="LockOpenIcon"
         @click="makePublic"
-    />  
+    />
 </template>

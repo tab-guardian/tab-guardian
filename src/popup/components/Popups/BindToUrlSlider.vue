@@ -46,11 +46,7 @@ function attachBindURL(checked: boolean): void {
 </script>
 
 <template>
-    <SlideSwitch
-        v-tippy="bindTip"
-        :disabled="!currURL"
-        @changed="attachBindURL"
-    >
+    <SlideSwitch v-tippy="bindTip" :disabled="!currURL" @changed="attachBindURL">
         <div class="flex items-center gap-1">
             {{ trans('bind_to_this_url') }}
         </div>

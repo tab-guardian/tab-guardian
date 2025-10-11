@@ -36,7 +36,8 @@ export function getFakeLinks(): Link[] {
             id: 5 + rand,
             url: 'https://shobar.com.ua/',
             title: 'Shobar',
-            favIconUrl: 'https://shobar.com.ua/wp-content/uploads/2020/02/placeholder-1.png',
+            favIconUrl:
+                'https://shobar.com.ua/wp-content/uploads/2020/02/placeholder-1.png',
             isPinned: false,
         },
     ]

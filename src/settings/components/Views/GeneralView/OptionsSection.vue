@@ -17,8 +17,7 @@ const incognitoWarningMessage = computed<string | null>(() => {
 })
 
 onMounted(async () => {
-    incognitoModeAllowed.value =
-        await runtime.extension.isAllowedIncognitoAccess()
+    incognitoModeAllowed.value = await runtime.extension.isAllowedIncognitoAccess()
 })
 
 function updateSettings(): void {

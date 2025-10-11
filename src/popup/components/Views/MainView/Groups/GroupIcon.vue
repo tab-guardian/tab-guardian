@@ -14,7 +14,7 @@ const allowedIconStart = [
 ]
 
 const showGroupIcon = computed<boolean>(() =>
-    allowedIconStart.some(prefix => group.icon && group.icon.startsWith(prefix))
+    allowedIconStart.some(prefix => group.icon && group.icon.startsWith(prefix)),
 )
 </script>
 

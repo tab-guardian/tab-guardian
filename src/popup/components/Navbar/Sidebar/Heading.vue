@@ -22,7 +22,9 @@ const storageUsage = computed(() => {
 </script>
 
 <template>
-    <div class="flex items-center h-36 bg-slate-200 dark:bg-slate-800 relative overflow-hidden">
+    <div
+        class="flex items-center h-36 bg-slate-200 dark:bg-slate-800 relative overflow-hidden"
+    >
         <img
             :src="runtime.getURL('images/icons/icon-128.png')"
             class="absolute top-1/2 -translate-y-1/2 -right-14 drop-shadow-md"
@@ -32,12 +34,22 @@ const storageUsage = computed(() => {
             <h2 class="mb-1 text-md">{{ trans('storage_usage') }}</h2>
 
             <ul class="text-xs mt-1 mb-2">
-                <li>Used: <b class="text-primary">{{ formatNumber(currentBytesUsage / 1024) }}</b> KB</li>
-                <li>Max: &nbsp;<b class="text-primary">{{ formatNumber(maxBytes / 1024) }}</b> KB</li>
+                <li>
+                    Used:
+                    <b class="text-primary">{{
+                        formatNumber(currentBytesUsage / 1024)
+                    }}</b>
+                    KB
+                </li>
+                <li>
+                    Max: &nbsp;<b class="text-primary">{{
+                        formatNumber(maxBytes / 1024)
+                    }}</b>
+                    KB
+                </li>
             </ul>
 
             <ProgressBar :current="storageUsage" :max="100" />
         </ul>
     </div>
 </template>
-

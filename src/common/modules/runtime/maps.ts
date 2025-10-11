@@ -24,7 +24,9 @@ export function mapToTab(tab: chrome.tabs.Tab | browser.tabs.Tab): tabs.Tab {
     }
 }
 
-export function mapToWindow(win: chrome.windows.Window | browser.windows.Window): windows.Window {
+export function mapToWindow(
+    win: chrome.windows.Window | browser.windows.Window,
+): windows.Window {
     return {
         focused: win.focused,
         alwaysOnTop: win.alwaysOnTop,
@@ -42,7 +44,7 @@ export function mapToWindow(win: chrome.windows.Window | browser.windows.Window)
 }
 
 export function mapToWindowState(
-    state: chrome.windows.Window['state'] | browser.windows.Window['state']
+    state: chrome.windows.Window['state'] | browser.windows.Window['state'],
 ): windows.Window['state'] {
     return state === 'docked' ? 'locked-fullscreen' : state
 }

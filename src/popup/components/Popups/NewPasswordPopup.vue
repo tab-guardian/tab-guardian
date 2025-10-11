@@ -32,14 +32,10 @@ function updatePassword(): void {
                 v-model:pass="pass"
                 v-model:confirm="confirmPass"
                 @loaded="el => el.focus()"
-                @has-error="hasErr => preventSubmit = hasErr"
+                @has-error="hasErr => (preventSubmit = hasErr)"
             />
 
-            <Button
-                type="submit"
-                :disabled="preventSubmit"
-                :icon="ChevronRightIcon"
-            >
+            <Button type="submit" :disabled="preventSubmit" :icon="ChevronRightIcon">
                 {{ trans('confirm') }}
             </Button>
         </form>

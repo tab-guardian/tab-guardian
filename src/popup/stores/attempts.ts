@@ -61,7 +61,8 @@ export const useAttemptsStore = defineStore('attempts', () => {
 
         if (attempts.value.amount > env.PASS_MAX_ATTEMPTS) {
             attempts.value.isLocked = true
-            attempts.value.lockEndTime = Date.now() + env.PASS_LOCK_DURATION * 60 * 1000
+            attempts.value.lockEndTime =
+                Date.now() + env.PASS_LOCK_DURATION * 60 * 1000
 
             lockedMessageToast()
 
@@ -76,7 +77,10 @@ export const useAttemptsStore = defineStore('attempts', () => {
     }
 
     function lockedMessageToast(): void {
-        const msg = trans('many_attempts_locked_for', env.PASS_LOCK_DURATION.toString())
+        const msg = trans(
+            'many_attempts_locked_for',
+            env.PASS_LOCK_DURATION.toString(),
+        )
         showToast(msg, 'error', 5000)
     }
 

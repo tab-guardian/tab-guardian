@@ -1,6 +1,10 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import { countUnlockedGroups, deleteHasUnlockedGroupsFlag, setHasUnlockedGroupsFlag } from '@common/modules/storage/unlockedGroups'
+import {
+    countUnlockedGroups,
+    deleteHasUnlockedGroupsFlag,
+    setHasUnlockedGroupsFlag,
+} from '@common/modules/storage/unlockedGroups'
 import { renderWarningBadge, clearWarningBadge } from '@common/modules/badge'
 import { trans } from '@common/modules/utils'
 
@@ -20,7 +24,10 @@ export const useNotificationStore = defineStore('notification', () => {
         await renderWarningBadge()
         await setHasUnlockedGroupsFlag()
 
-        notification.value = trans('you_have_unlocked_groups', unlockedCount.toString())
+        notification.value = trans(
+            'you_have_unlocked_groups',
+            unlockedCount.toString(),
+        )
     }
 
     return {

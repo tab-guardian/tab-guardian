@@ -7,7 +7,7 @@ export const env = {
     CURR_ENCRYPT_ALGO: toStr('VITE_CURR_ENCRYPT_ALGO') as EncryptionAlgo,
     MIN_PASS_LENGTH: toNum('VITE_MIN_PASS_LENGTH'),
     PASS_MAX_ATTEMPTS: toNum('VITE_PASS_MAX_ATTEMPTS'),
-    PASS_LOCK_DURATION: toNum('VITE_PASS_LOCK_DURATION')
+    PASS_LOCK_DURATION: toNum('VITE_PASS_LOCK_DURATION'),
 }
 
 function toStr(inpKey: string): string {

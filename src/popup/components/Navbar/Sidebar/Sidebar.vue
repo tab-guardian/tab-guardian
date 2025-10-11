@@ -74,8 +74,13 @@ const links = [
                     />
                 </div>
 
-                <small class="justify-end pr-2 mb-2 text-font-gray text-xs flex gap-2 w-full">
-                    <img :src="runtime.getURL('images/icons/icon-32.png')" class="w-4 h-4" />
+                <small
+                    class="justify-end pr-2 mb-2 text-font-gray text-xs flex gap-2 w-full"
+                >
+                    <img
+                        :src="runtime.getURL('images/icons/icon-32.png')"
+                        class="w-4 h-4"
+                    />
                     {{ trans('ext_name') }} {{ __APP_VERSION__ }}
                 </small>
             </aside>

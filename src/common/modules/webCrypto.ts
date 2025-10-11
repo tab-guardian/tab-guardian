@@ -1,4 +1,4 @@
-import { EncryptionAlgo } from "@common/types"
+import { EncryptionAlgo } from '@common/types'
 
 const KEY_BITS = 256 // bits
 const KEY_BYTES_LENGTH = 16
@@ -24,7 +24,6 @@ export async function createDecryptKey(
     }
 
     return await createCryptoKey(pass, salt, encryptAlgo, ['decrypt'])
-
 }
 
 export async function decrypt(
@@ -41,7 +40,7 @@ export async function decrypt(
         { name: encryptAlgo, iv },
         key,
         encrypted,
-    );
+    )
 
     return new TextDecoder().decode(decrypted)
 }
@@ -52,9 +51,8 @@ export async function encrypt(
     iv: Uint8Array,
     encryptAlgo: EncryptionAlgo,
 ): Promise<Uint8Array> {
-    const textBytes = typeof text === 'string'
-        ? new TextEncoder().encode(text)
-        : text
+    const textBytes =
+        typeof text === 'string' ? new TextEncoder().encode(text) : text
 
     const encrypted = await crypto.subtle.encrypt(
         { name: encryptAlgo, iv },

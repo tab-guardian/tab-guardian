@@ -42,17 +42,19 @@ function handleDarkThem(): void {
         </RouterView>
     </main>
 
-    <Popups :popups="[
-        {comp: DeleteGroupPopup, name: 'deleteGroup'},
-        {comp: NewGroupNamePopup, name: 'newGroupName'},
-        {comp: NewPasswordPopup, name: 'newPassword'},
-        {comp: RebindGroupPopup, name: 'rebindGroup'},
-        {comp: ChooseEmojiPopup, name: 'chooseEmoji'},
-        {comp: ChooseImageIconPopup, name: 'chooseImageIcon'},
-        {comp: LinkMenuPopup, name: 'linkMenuView'},
-        {comp: GroupMenuPopup, name: 'groupMenuView'},
-        {comp: EditGroupNamePopup, name: 'editGroupName'},
-    ]" />
+    <Popups
+        :popups="[
+            { comp: DeleteGroupPopup, name: 'deleteGroup' },
+            { comp: NewGroupNamePopup, name: 'newGroupName' },
+            { comp: NewPasswordPopup, name: 'newPassword' },
+            { comp: RebindGroupPopup, name: 'rebindGroup' },
+            { comp: ChooseEmojiPopup, name: 'chooseEmoji' },
+            { comp: ChooseImageIconPopup, name: 'chooseImageIcon' },
+            { comp: LinkMenuPopup, name: 'linkMenuView' },
+            { comp: GroupMenuPopup, name: 'groupMenuView' },
+            { comp: EditGroupNamePopup, name: 'editGroupName' },
+        ]"
+    />
 </template>
 
 <style>

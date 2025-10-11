@@ -12,5 +12,3 @@ describe('app store', () => {
         expect(store.linkBuffer).toBeNull()
     })
 })
-
-

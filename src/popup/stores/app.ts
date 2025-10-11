@@ -8,7 +8,7 @@ import { usePopupStore } from '@/stores/popup'
 import { cloneDeep } from 'lodash'
 
 type LinkBuffer = {
-    action: 'copy' | 'cut',
+    action: 'copy' | 'cut'
     groupId: number
     link: Link
 }
@@ -40,10 +40,7 @@ export const useAppStore = defineStore('app', () => {
         await saveLinksTo(groupId, [link])
 
         if (linkBuffer.value.action === 'cut') {
-            await deleteLinkFrom(
-                linkBuffer.value.groupId,
-                linkBuffer.value.link.id,
-            )
+            await deleteLinkFrom(linkBuffer.value.groupId, linkBuffer.value.link.id)
         }
 
         linkBuffer.value = null

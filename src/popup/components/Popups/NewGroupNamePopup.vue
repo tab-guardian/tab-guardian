@@ -47,10 +47,7 @@ function submitName(): void {
 </script>
 
 <template>
-    <Popup
-        @cancel="closePopup('newGroupName')"
-        :content="trans('enter_group_name')"
-    >
+    <Popup @cancel="closePopup('newGroupName')" :content="trans('enter_group_name')">
         <form @submit.prevent="submitName" class="flex flex-col gap-3">
             <NameInput
                 v-model:name="newGroupStore.choices.name"
@@ -61,12 +58,13 @@ function submitName(): void {
                 v-if="newGroupStore.choices.isPrivate"
                 v-model:pass="newGroupStore.choices.password"
                 v-model:confirm="newGroupStore.choices.confirmPassword"
-                @has-error="hasErr => preventSubmit = hasErr"
+                @has-error="hasErr => (preventSubmit = hasErr)"
             />
 
             <div class="flex items-end gap-3 justify-between">
                 <BindToUrlSlider v-if="newGroupStore.choices.isPrivate" />
-                <div v-else></div> <!-- keep this for flex justify between -->
+                <div v-else></div>
+                <!-- keep this for flex justify between -->
 
                 <Button
                     type="submit"
