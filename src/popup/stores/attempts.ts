@@ -1,5 +1,5 @@
 import type { Attempts } from '@common/types'
-import { onMounted, ref } from 'vue'
+import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import { trans } from '@common/modules/utils'
 import { runtime } from '@common/modules/runtime'
@@ -12,8 +12,6 @@ export const useAttemptsStore = defineStore('attempts', () => {
         lockEndTime: null,
         isLocked: false,
     })
-
-    onMounted(loadAttemptsFromStorage)
 
     async function loadAttemptsFromStorage(): Promise<void> {
         const attemptsValue = await runtime.storage.get<Attempts>('attempts')

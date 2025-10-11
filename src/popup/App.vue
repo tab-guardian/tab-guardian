@@ -2,6 +2,7 @@
 import { onMounted } from 'vue'
 import { useSettingsStore } from '@/stores/settings'
 import { useNotificationStore } from '@/stores/notification'
+import { useAttemptsStore } from '@/stores/attempts'
 import Navbar from '@/components/Navbar/Navbar.vue'
 import AppearTransition from '@common/components/Transitions/AppearTransition.vue'
 import Popups from '@/components/Popups/Popups.vue'
@@ -15,13 +16,11 @@ import LinkMenuPopup from '@/components/Popups/LinkMenuPopup.vue'
 import GroupMenuPopup from '@/components/Popups/GroupMenuPopup.vue'
 import EditGroupNamePopup from '@/components/Popups/EditGroupNamePopup.vue'
 
-const { loadSettingsFromStorage } = useSettingsStore()
-const { recalculateNotification } = useNotificationStore()
-
 onMounted(async () => {
     handleDarkThem()
-    await loadSettingsFromStorage()
-    await recalculateNotification()
+    await useSettingsStore().loadSettingsFromStorage()
+    await useNotificationStore().recalculateNotification()
+    await useAttemptsStore().loadAttemptsFromStorage()
 })
 
 function handleDarkThem(): void {
