@@ -93,6 +93,7 @@ export const useAttemptsStore = defineStore('attempts', () => {
     }
 
     return {
+        loadAttemptsFromStorage,
         incrementAttempts,
         hasMaxAttempts,
         lockedMessageToast,
