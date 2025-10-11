@@ -1,16 +1,16 @@
 import type { PlatformRuntime, RuntimeType } from '@common/types/runtime'
-import { webRuntimeAdapter } from "@common/modules/runtime/webRuntimeAdapter"
-import { chromeRuntimeAdapter } from "@common/modules/runtime/chromeRuntimeAdapter"
-import { firefoxRuntimeAdapter } from "@common/modules/runtime/firefoxRuntimeAdapter"
+import { getWebRuntimeAdapter } from "@common/modules/runtime/webRuntimeAdapter"
+import { getChromeRuntimeAdapter } from "@common/modules/runtime/chromeRuntimeAdapter"
+import { getFirefoxRuntimeAdapter } from "@common/modules/runtime/firefoxRuntimeAdapter"
 
 let adapter: PlatformRuntime | null = null
 
 if (isRuntime('chrome')) {
-    adapter = chromeRuntimeAdapter
+    adapter = getChromeRuntimeAdapter()
 } else if (isRuntime('firefox')) {
-    adapter = firefoxRuntimeAdapter
+    adapter = getFirefoxRuntimeAdapter()
 } else {
-    adapter = webRuntimeAdapter
+    adapter = getWebRuntimeAdapter()
 }
 
 export const runtime = adapter!
