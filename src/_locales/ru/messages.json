@@ -23,10 +23,6 @@
         "message": "Нельзя превышать квоту хранения. Максимальная квота составляет $n$ МБ, вы используете $n$ МБ",
         "placeholders": { "n": { "content": "$1" } }
     },
-    "many_attempts_locked_for": {
-        "message": "Слишком много попыток. Заблокировано на $n$ минут",
-        "placeholders": { "n": { "content": "$1" } }
-    },
     "many_attempts_next_attempt_in": {
         "message": "Слишком много попыток. Следующая попытка через $n$ минут",
         "placeholders": { "n": { "content": "$1" } }

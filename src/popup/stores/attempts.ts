@@ -1,16 +1,29 @@
 import type { Attempts } from '@common/types'
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import { trans } from '@common/modules/utils'
 import { runtime } from '@common/modules/runtime'
-import { showToast } from '@common/modules/toast'
 import { env } from '@common/env'
+
+type Attempt = { success: false; error: string } | { success: true; error: null }
 
 export const useAttemptsStore = defineStore('attempts', () => {
     const attempts = ref<Attempts>({
         amount: 0,
-        lockEndTime: null,
+        lockEndTime: 0,
         isLocked: false,
+    })
+
+    const isLocked = computed<boolean>(() => {
+        return attempts.value.isLocked
+    })
+
+    const isLockExpired = computed<boolean>(() => {
+        return Date.now() >= attempts.value.lockEndTime
+    })
+
+    const hasNoAttempts = computed<boolean>(() => {
+        return attempts.value.amount >= env.PASS_MAX_ATTEMPTS
     })
 
     async function loadAttemptsFromStorage(): Promise<void> {
@@ -30,75 +43,55 @@ export const useAttemptsStore = defineStore('attempts', () => {
         await runtime.storage.set('attempts', attempts.value)
     }
 
-    async function incrementAttempts(): Promise<void> {
+    async function makeAttempt(): Promise<Attempt> {
+        if (isLocked.value && isLockExpired.value) {
+            await unlock()
+        }
+
+        if (hasNoAttempts.value) {
+            await lock()
+
+            return {
+                success: false,
+                error: isLockedErrorMessage(),
+            }
+        }
+
         attempts.value.amount++
         await saveAttemptsToStorage()
+
+        return { success: true, error: null }
     }
 
-    async function isAllowedToTry(): Promise<boolean> {
-        const isLockExpired = Date.now() >= (attempts.value.lockEndTime || 0)
-
-        if (attempts.value.isLocked && isLockExpired) {
-            await resetAttempts()
-        }
-
-        if (attempts.value.isLocked) {
-            const durationLeft = Math.ceil(
-                (attempts.value.lockEndTime! - Date.now()) / 1000 / 60,
-            )
-
-            const msg = trans(
-                'many_attempts_next_attempt_in',
-                durationLeft.toString(),
-            )
-
-            showToast(msg, 'error', 5000)
-
-            return false
-        }
-
-        if (attempts.value.amount > env.PASS_MAX_ATTEMPTS) {
-            attempts.value.isLocked = true
-            attempts.value.lockEndTime =
-                Date.now() + env.PASS_LOCK_DURATION * 60 * 1000
-
-            lockedMessageToast()
-
-            await saveAttemptsToStorage()
-
-            return false
-        }
-
-        await saveAttemptsToStorage()
-
-        return true
-    }
-
-    function lockedMessageToast(): void {
-        const msg = trans(
-            'many_attempts_locked_for',
-            env.PASS_LOCK_DURATION.toString(),
+    function isLockedErrorMessage(): string {
+        const durationLeft = Math.ceil(
+            (attempts.value.lockEndTime - Date.now()) / 1000 / 60,
         )
-        showToast(msg, 'error', 5000)
+
+        return trans('many_attempts_next_attempt_in', durationLeft.toString())
     }
 
-    async function resetAttempts(): Promise<void> {
+    async function lock(): Promise<void> {
+        if (isLocked.value) {
+            return
+        }
+
+        attempts.value.isLocked = true
+        attempts.value.lockEndTime = Date.now() + env.PASS_LOCK_DURATION * 60 * 1000
+        await saveAttemptsToStorage()
+    }
+
+    async function unlock(): Promise<void> {
         attempts.value.amount = 0
         attempts.value.isLocked = false
         await saveAttemptsToStorage()
     }
 
-    function hasMaxAttempts(): boolean {
-        return attempts.value.amount >= env.PASS_MAX_ATTEMPTS
-    }
-
     return {
+        isLocked,
         loadAttemptsFromStorage,
-        incrementAttempts,
-        hasMaxAttempts,
-        lockedMessageToast,
+        makeAttempt,
         saveAttemptsToStorage,
-        isAllowedToTry,
-        resetAttempts,
+        resetAttempts: unlock,
     }
 })

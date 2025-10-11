@@ -39,11 +39,10 @@ async function submitPass(): Promise<void> {
         return
     }
 
-    await attemptsStore.incrementAttempts()
+    const attempt = await attemptsStore.makeAttempt()
 
-    const allowed = await attemptsStore.isAllowedToTry()
-
-    if (!allowed) {
+    if (!attempt.success) {
+        showToast(attempt.error, 'error', 5000)
         password.value = ''
         return
     }

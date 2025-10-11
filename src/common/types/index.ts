@@ -82,6 +82,6 @@ export type Modals = {
 
 export type Attempts = {
     amount: number
-    lockEndTime: null | number
+    lockEndTime: number
     isLocked: boolean
 }
