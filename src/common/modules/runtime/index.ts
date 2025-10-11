@@ -6,10 +6,13 @@ import { getFirefoxRuntimeAdapter } from "@common/modules/runtime/firefoxRuntime
 let adapter: PlatformRuntime | null = null
 
 if (isRuntime('chrome')) {
+    console.info('Using Chrome runtime...')
     adapter = getChromeRuntimeAdapter()
 } else if (isRuntime('firefox')) {
+    console.info('Using Firefox runtime...')
     adapter = getFirefoxRuntimeAdapter()
 } else {
+    console.info('Using web runtime...')
     adapter = getWebRuntimeAdapter()
 }
 
@@ -20,9 +23,9 @@ export function isRuntime(runtime: RuntimeType): boolean {
         case 'firefox':
             return typeof browser !== 'undefined'
         case 'chrome':
-            return typeof chrome !== 'undefined'
+            return typeof browser === 'undefined' && typeof chrome !== 'undefined'
         case 'web':
-            return typeof window !== 'undefined'
+            return typeof window !== undefined
         default:
             throw new Error('Unknown runtime is used')
     }
