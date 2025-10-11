@@ -21,6 +21,16 @@ export const chromeRuntimeAdapter: PlatformRuntime = {
         },
     },
 
+    action: {
+        async setBadgeText(details) {
+            await chrome.action.setBadgeText(details)
+        },
+
+        async setBadgeBackgroundColor(details) {
+            await chrome.action.setBadgeBackgroundColor(details)
+        },
+    },
+
     storage: {
         MAX_BYTES_QUOTA: chrome.storage.local.QUOTA_BYTES,
 

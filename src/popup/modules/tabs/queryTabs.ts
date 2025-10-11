@@ -10,7 +10,7 @@ export async function queryTabs(queryInfo?: tabs.QueryInfo): Promise<tabs.Tab[]>
 
     const tabs = await runtime.tabs.query(queryInfo || {})
 
-    const err = runtime.lastError()
+    const err = runtime.extension.lastError()
 
     if (err) {
         throw new Error(err)

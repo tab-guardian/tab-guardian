@@ -21,6 +21,16 @@ export const firefoxRuntimeAdapter: PlatformRuntime = {
         },
     },
 
+    action: {
+        async setBadgeText(details) {
+            await browser.browserAction.setBadgeText(details)
+        },
+
+        async setBadgeBackgroundColor(details) {
+            await browser.browserAction.setBadgeBackgroundColor(details)
+        },
+    },
+
     storage: {
         MAX_BYTES_QUOTA: 5_242_880,
 

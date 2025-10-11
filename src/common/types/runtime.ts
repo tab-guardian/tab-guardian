@@ -21,6 +21,19 @@ export type PlatformRuntime = {
         isAllowedIncognitoAccess(): Promise<boolean>
     }
 
+    action: {
+        /**
+         * Sets the badge text for the action. The badge is displayed on top
+         * of the icon.
+         */
+        setBadgeText(details: action.BadgeTextDetails): Promise<void>
+
+        /**
+         * Sets the background color for the badge.
+         */
+        setBadgeBackgroundColor(details: action.BadgeColorDetails): Promise<void>
+    }
+
     storage: {
         MAX_BYTES_QUOTA: number
         get<T>(key: string): Promise<T | null>
@@ -498,6 +511,39 @@ export namespace windows {
          * in pixels. This value is ignored for panels.
          */
         left?: number
+    }
+}
 
+export namespace action {
+    export type BadgeTextDetails = {
+        /**
+         * Any number of characters can be passed, but only about four
+         * can fit in the space.
+         */
+        text: string
+
+        /**
+         * Limits the change to when a particular tab is selected.
+         * Automatically resets when the tab is closed.
+         */
+        tabId?: number
+    }
+
+    export type ColorArray = [number, number, number, number]
+
+    export type BadgeColorDetails = {
+        /**
+         * An array of four integers in the range [0,255] that make up the
+         * RGBA color of the badge. For example, opaque red is
+         * [255, 0, 0, 255]. Can also be a string with a CSS value, with
+         * opaque red being #FF0000 or #F00.
+         */
+        color: string | ColorArray
+
+        /**
+         * Limits the change to when a particular tab is selected.
+         * Automatically resets when the tab is closed.
+         */
+        tabId?: number
     }
 }

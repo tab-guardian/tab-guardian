@@ -2,11 +2,11 @@ import type { Group, Link } from '@common/types'
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import { trans } from '@common/modules/trans'
+import { isRuntime } from '@common/modules/runtime'
 import { useSettingsStore } from '@/stores/settings'
 import { useNotificationStore } from '@/stores/notification'
 import { useCryptoStore } from '@/stores/crypto'
 import { showToast } from '@common/modules/showToast'
-import { isDevelopment } from '@common/modules/isDevelopment'
 import { isIncognito } from '@common/modules/browser/windows'
 import { getCurrentURL } from '@/modules/getCurrentURL'
 import { generateGroupId } from '@common/modules/generateGroupId'
@@ -68,15 +68,6 @@ export const useGroupStore = defineStore('group', () => {
         loadingGroups.value = true
 
         const storageGroups = await getGroupsFromStorage()
-
-        // Disable hiding groups in incognito because we don't have
-        // incognito in a web app with Vite server
-        if (isDevelopment()) {
-            groups.value = storageGroups
-            groups.value.sort((a, b) => b.updatedAt - a.updatedAt)
-            loadingGroups.value = false
-            return
-        }
 
         displayGroups(storageGroups)
     }
@@ -263,6 +254,7 @@ export const useGroupStore = defineStore('group', () => {
         await saveGroupToStorage(group)
 
         const updatedGroups = groups.value.map(g => (g.id === group.id ? group : g))
+
         displayGroups(updatedGroups)
     }
 

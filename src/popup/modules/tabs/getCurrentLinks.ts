@@ -2,18 +2,16 @@ import type { Link } from '@common/types'
 import { queryTabs } from '@/modules/tabs/queryTabs'
 import { getFakeLinks } from '@common/modules/fake'
 import { convertTabsToLinks } from '@/modules/tabs/convertTabsToLinks'
-import { isDevelopment } from '@common/modules/isDevelopment'
+import { isRuntime } from '@common/modules/runtime'
 
 export async function getCurrentLinks(): Promise<Link[]> {
-    if (isDevelopment()) {
+    if (isRuntime('web')) {
         return getFakeLinks()
     }
 
     try {
         const tabs = await queryTabs()
-        const links = convertTabsToLinks(tabs)
-
-        return links
+        return convertTabsToLinks(tabs)
     } catch (err) {
         console.error(err)
         return []

@@ -34,14 +34,24 @@ export const webRuntimeAdapter: PlatformRuntime = {
         return path
     },
 
+    action: {
+        async setBadgeText() {
+            console.info('Cannot set badge text in web runtime')
+        },
+
+        async setBadgeBackgroundColor() {
+            console.info('Cannot set badge background color in web runtime')
+        },
+    },
+
     extension: {
         lastError() {
-            console.info('web runtime do not have last error implementation')
+            console.info('Web runtime do not have last error implementation')
             return null
         },
 
         async isAllowedIncognitoAccess() {
-            console.info("web runtime doesn't have incognito access")
+            console.info("Web runtime doesn't have incognito access")
             return false
         },
     },
