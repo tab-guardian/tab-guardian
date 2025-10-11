@@ -16,9 +16,9 @@ async function renderWarningBadgeIfNeeded(): Promise<void> {
     }
 }
 
-target.runtime.onMessage.addListener(request => {
+target.runtime.onMessage.addListener(async request => {
     if (request.type === 'closeTabs') {
-        closeTabs(request.payload)
+        await closeTabs(request.payload)
     }
 })
 
