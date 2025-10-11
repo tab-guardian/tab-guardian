@@ -16,7 +16,7 @@ const preventSubmit = ref<boolean>(true)
 
 function updatePassword(): void {
     if (preventSubmit.value) {
-        console.warn('Cannot submit because password error')
+        console.info('Cannot submit because password error')
         return
     }
 
