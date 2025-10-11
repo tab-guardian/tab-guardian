@@ -2,7 +2,7 @@
 import { trans } from '@common/modules/utils'
 import { computed } from 'vue'
 import { env } from '@common/env'
-import { passwordError } from '@/modules/groupValidation'
+import { passwordError } from '@common/modules/validation/group'
 import PasswordInput from '@common/components/Form/PasswordInput.vue'
 
 const emit = defineEmits<{

@@ -11,6 +11,10 @@ export const chromeRuntimeAdapter: PlatformRuntime = {
         return chrome.runtime.getURL(path)
     },
 
+    async sendMessage(message) {
+        await chrome.runtime.sendMessage(message)
+    },
+
     extension: {
         lastError() {
             return chrome.runtime.lastError?.message ?? null

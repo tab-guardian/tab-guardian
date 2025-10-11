@@ -3,7 +3,7 @@ import { onMounted, ref } from 'vue'
 import { defineStore } from 'pinia'
 import { trans } from '@common/modules/utils'
 import { runtime } from '@common/modules/runtime'
-import { showToast } from '@common/modules/showToast'
+import { showToast } from '@common/modules/toast'
 import { env } from '@common/env'
 
 export const useAttemptsStore = defineStore('attempts', () => {

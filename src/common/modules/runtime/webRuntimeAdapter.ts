@@ -30,6 +30,10 @@ export const webRuntimeAdapter: PlatformRuntime = {
         return output.replaceAll('$n$', args[0])
     },
 
+    async sendMessage(): Promise<void> {
+        console.info('Cannot send message in web runtime')
+    },
+
     getURL(path) {
         return path
     },

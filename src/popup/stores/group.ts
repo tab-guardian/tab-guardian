@@ -6,8 +6,8 @@ import { runtime } from '@common/modules/runtime'
 import { useSettingsStore } from '@/stores/settings'
 import { useNotificationStore } from '@/stores/notification'
 import { useCryptoStore } from '@/stores/crypto'
-import { showToast } from '@common/modules/showToast'
-import { getCurrentURL } from '@/modules/getCurrentURL'
+import { showToast } from '@common/modules/toast'
+import { getCurrentURL } from '@common/modules/utils/getCurrentURL'
 import { savePasswordToStorage } from '@common/modules/storage/password'
 import {
     deleteAllGroupsFromStorage,

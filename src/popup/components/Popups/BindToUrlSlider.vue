@@ -2,9 +2,9 @@
 import { ref, onMounted } from 'vue'
 import { trans } from '@common/modules/utils'
 import { useNewGroupStore } from '@/stores/newGroup'
-import { getCurrentURL } from '@/modules/getCurrentURL'
-import { showToast } from '@common/modules/showToast'
-import { hashURL } from '@/modules/url/hashURL'
+import { getCurrentURL } from '@common/modules/utils/getCurrentURL'
+import { showToast } from '@common/modules/toast'
+import { hashURL } from '@common/modules/url/hashURL'
 import SlideSwitch from '@common/components/Form/SlideSwitch.vue'
 
 const newGroupStore = useNewGroupStore()

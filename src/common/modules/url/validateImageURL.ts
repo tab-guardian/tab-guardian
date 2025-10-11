@@ -1,5 +1,5 @@
 import { trans } from '@common/modules/utils'
-import { validateURL } from '@/modules/url/validateURL'
+import { validateURL } from '@common/modules/url/validateURL'
 
 export function validateImageURL(url: string): string | null {
     const FORMATS = ['.png', '.webp', '.jpeg', '.jpg', '.svg', '.gif']

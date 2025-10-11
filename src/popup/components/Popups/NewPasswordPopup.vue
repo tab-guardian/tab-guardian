@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import { trans } from '@common/modules/utils'
 import { usePopupStore } from '@/stores/popup'
-import { showToast } from '@common/modules/showToast'
+import { showToast } from '@common/modules/toast'
 import Popup from '@/components/Popups/Popup.vue'
 import Button from '@common/components/Form/Button.vue'
 import ChevronRightIcon from '@common/components/Icons/ChevronRightIcon.vue'

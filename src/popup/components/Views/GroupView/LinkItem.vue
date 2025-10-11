@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Link } from '@common/types'
 import { useGroupStore } from '@/stores/group'
-import { restoreTabs } from '@/modules/tabs/restoreTabs'
+import { restoreTabs } from '@common/modules/tabs/restoreTabs'
 import { usePopupStore } from '@/stores/popup'
 import { useAppStore } from '@/stores/app'
 import DeleteLinkButton from '@/components/Views/GroupView/DeleteLinkButton.vue'

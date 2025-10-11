@@ -2,7 +2,7 @@
 import { trans } from '@common/modules/utils'
 import { useGroupStore } from '@/stores/group'
 import { useSettingsStore } from '@/stores/settings'
-import { showToast } from '@common/modules/showToast'
+import { showToast } from '@common/modules/toast'
 import Swal from 'sweetalert2'
 import Section from '@settings/components/Section.vue'
 import Button from '@common/components/Form/Button.vue'

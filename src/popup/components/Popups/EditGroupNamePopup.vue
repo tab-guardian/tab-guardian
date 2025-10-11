@@ -3,13 +3,13 @@ import { ref, computed } from 'vue'
 import { trans } from '@common/modules/utils'
 import { usePopupStore } from '@/stores/popup'
 import { useGroupStore } from '@/stores/group'
-import { showToast } from '@common/modules/showToast'
-import { isNameTooLong } from '@/modules/groupValidation'
+import { showToast } from '@common/modules/toast'
+import { isNameTooLong } from '@common/modules/validation/group'
 import Popup from '@/components/Popups/Popup.vue'
 import Button from '@common/components/Form/Button.vue'
 import ChevronRightIcon from '@common/components/Icons/ChevronRightIcon.vue'
 import NameInput from '@common/components/Form/NameInput.vue'
-import { getDefaultGroupName } from '@/modules/getDefaultGroupName'
+import { getDefaultGroupName } from '@common/modules/utils/getDefaultGroupName'
 
 const { closePopup } = usePopupStore()
 const groupStore = useGroupStore()

@@ -11,6 +11,10 @@ export const firefoxRuntimeAdapter: PlatformRuntime = {
         return browser.runtime.getURL(path)
     },
 
+    async sendMessage(message) {
+        await browser.runtime.sendMessage(message)
+    },
+
     extension: {
         lastError() {
             return browser.runtime.lastError?.message ?? null

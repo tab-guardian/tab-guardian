@@ -1,6 +1,6 @@
 import { hasUnlockedGroupsFlag } from '@common/modules/storage/unlockedGroups'
 import { renderWarningBadge } from '@common/modules/badge'
-import { countAllTabs } from '@/modules/tabs/countAllTabs'
+import { countAllTabs } from '@common/modules/tabs/countAllTabs'
 import { runtime, isRuntime } from '@common/modules/runtime'
 
 const target = isRuntime('firefox') ? browser : chrome

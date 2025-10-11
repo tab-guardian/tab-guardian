@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { trans } from '@common/modules/utils'
 import { computed } from 'vue'
-import { GROUP_NAME_MAX_LENGTH } from '@/modules/groupValidation'
+import { GROUP_NAME_MAX_LENGTH } from '@common/modules/validation/group'
 import Input from '@common/components/Form/Input.vue'
 
 const name = defineModel<string | null>('name')

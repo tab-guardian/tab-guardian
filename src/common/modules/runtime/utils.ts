@@ -1,4 +1,4 @@
-import { showToast } from '@common/modules/showToast'
+import { showToast } from '@common/modules/toast'
 import { formatNumber } from '@common/modules/utils'
 import { trans } from '@common/modules/utils'
 

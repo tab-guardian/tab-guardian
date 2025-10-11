@@ -1,4 +1,4 @@
-import { hashURL } from '@/modules/url/hashURL'
+import { hashURL } from '@common/modules/url/hashURL'
 import { runtime, isRuntime } from '@common/modules/runtime'
 
 export async function getCurrentURL(hash = false): Promise<string | null> {

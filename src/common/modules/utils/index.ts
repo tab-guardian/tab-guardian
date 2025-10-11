@@ -1,4 +1,5 @@
 import { runtime } from '@common/modules/runtime'
+import emojiRegex from 'emoji-regex'
 
 export function trans(msg: string, ...args: string[]): string {
     return runtime.trans(msg, ...args)
@@ -14,4 +15,12 @@ export function formatNumber(num: number): string {
 
 export function generateGroupId(): number {
     return Date.now() + Math.floor(Math.random() * 1000)
+}
+
+export function isEmoji(emoji: string): boolean {
+    const regex = emojiRegex()
+    const matches = [...emoji.matchAll(regex)]
+
+    // Ensure exactly one match, and no other characters
+    return matches.length === 1 && matches[0][0] === emoji.trim()
 }

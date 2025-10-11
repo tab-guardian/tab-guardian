@@ -1,4 +1,4 @@
-import { queryTabs } from '@/modules/tabs/queryTabs'
+import { queryTabs } from '@common/modules/tabs/queryTabs'
 import { isRuntime } from '@common/modules/runtime'
 import { getFakeLinks } from '@common/modules/fake'
 

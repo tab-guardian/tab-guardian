@@ -2,7 +2,7 @@
 import { useGroupStore } from '@/stores/group'
 import { usePopupStore } from '@/stores/popup'
 import { trans } from '@common/modules/utils'
-import { showToast } from '@common/modules/showToast'
+import { showToast } from '@common/modules/toast'
 import PencilSquareIcon from '@common/components/Icons/PencilSquareIcon.vue'
 import MenuItem from '@/components/MenuItem.vue'
 

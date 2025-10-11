@@ -1,7 +1,7 @@
 import type { Link } from '@common/types'
-import { queryTabs } from '@/modules/tabs/queryTabs'
+import { queryTabs } from '@common/modules/tabs/queryTabs'
 import { getFakeLinks } from '@common/modules/fake'
-import { convertTabsToLinks } from '@/modules/tabs/convertTabsToLinks'
+import { convertTabsToLinks } from '@common/modules/tabs/convertTabsToLinks'
 import { isRuntime } from '@common/modules/runtime'
 
 export async function getCurrentLinks(): Promise<Link[]> {

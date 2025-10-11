@@ -2,7 +2,7 @@
 import { useGroupStore } from '@/stores/group'
 import { ref, onMounted } from 'vue'
 import { trans } from '@common/modules/utils'
-import { showToast } from '@common/modules/showToast'
+import { showToast } from '@common/modules/toast'
 import { usePopupStore } from '@/stores/popup'
 import { encryptString, toBase64 } from '@common/modules/webCrypto'
 import { env } from "@common/env"

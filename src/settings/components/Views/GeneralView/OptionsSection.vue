@@ -3,7 +3,7 @@ import { ref, onMounted, computed } from 'vue'
 import { runtime } from '@common/modules/runtime'
 import { useSettingsStore } from '@/stores/settings'
 import { trans } from '@common/modules/utils'
-import { showToast } from '@common/modules/showToast'
+import { showToast } from '@common/modules/toast'
 import Section from '@settings/components/Section.vue'
 import SlideSwitch from '@common/components/Form/SlideSwitch.vue'
 

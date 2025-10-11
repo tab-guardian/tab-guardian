@@ -16,6 +16,17 @@ export type PlatformRuntime = {
      */
     getURL(path: string): string
 
+    /**
+     * Sends a single message to event listeners within your extension/app or
+     * a different extension/app. Similar to runtime.connect but only sends
+     * a single message, with an optional response. If sending to your
+     * extension, the runtime.onMessage event will be fired in each page,
+     * or runtime.onMessageExternal, if a different extension. Note that
+     * extensions cannot send messages to content scripts using this method.
+     * To send messages to content scripts, use tabs.sendMessage.
+     */
+    sendMessage<M = any>(message: M): Promise<void>
+
     extension: {
         lastError(): string | null
         isAllowedIncognitoAccess(): Promise<boolean>

@@ -1,5 +1,5 @@
 import type { Link } from '@common/types'
-import { queryTabs } from '@/modules/tabs/queryTabs'
+import { queryTabs } from '@common/modules/tabs/queryTabs'
 import { runtime, isRuntime } from '@common/modules/runtime'
 
 export async function restoreTabs(links: Link[]): Promise<void> {
