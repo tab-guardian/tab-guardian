@@ -1,5 +1,5 @@
 import { queryTabs } from '@common/modules/tabs/queryTabs'
-import { isRuntime } from '@common/modules/runtime'
+import { isRuntime } from '@common/modules/runtime/utils'
 import { getFakeLinks } from '@common/modules/fake'
 
 export async function countAllTabs(): Promise<number> {

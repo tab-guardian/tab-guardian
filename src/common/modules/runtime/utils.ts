@@ -1,6 +1,20 @@
+import type { RuntimeType } from '@common/types/runtime'
 import { showToast } from '@common/modules/toast'
 import { formatNumber } from '@common/modules/utils'
 import { trans } from '@common/modules/utils'
+
+export function isRuntime(runtime: RuntimeType): boolean {
+    switch (runtime) {
+        case 'firefox':
+            return typeof browser !== 'undefined'
+        case 'chrome':
+            return typeof browser === 'undefined' && typeof chrome !== 'undefined'
+        case 'web':
+            return typeof window !== undefined
+        default:
+            throw new Error('Unknown runtime is used')
+    }
+}
 
 export function throwIfQuotaExceeds(
     jsonStr: string,

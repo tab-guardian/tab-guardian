@@ -1,6 +1,7 @@
 import type { Link } from '@common/types'
 import { queryTabs } from '@common/modules/tabs/queryTabs'
-import { runtime, isRuntime } from '@common/modules/runtime'
+import { runtime } from '@common/modules/runtime'
+import { isRuntime } from '@common/modules/runtime/utils'
 
 export async function restoreTabs(links: Link[]): Promise<void> {
     const isFirefox = isRuntime('firefox')

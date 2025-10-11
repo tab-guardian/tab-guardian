@@ -1,5 +1,6 @@
 import { hashURL } from '@common/modules/url/hashURL'
-import { runtime, isRuntime } from '@common/modules/runtime'
+import { runtime } from '@common/modules/runtime'
+import { isRuntime } from '@common/modules/runtime/utils'
 
 export async function getCurrentURL(hash = false): Promise<string | null> {
     if (isRuntime('web')) {

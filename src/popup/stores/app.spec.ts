@@ -4,10 +4,10 @@ import { describe, it, expect, beforeEach } from 'vitest'
 import { useAppStore } from '@/stores/app'
 import { createPinia, setActivePinia } from 'pinia'
 
-describe('App store', () => {
+describe('app store', () => {
     beforeEach(() => setActivePinia(createPinia()))
 
-    it('Link buffer is null', () => {
+    it('linkBuffer is null', () => {
         const store = useAppStore()
         expect(store.linkBuffer).toBeNull()
     })

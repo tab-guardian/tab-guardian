@@ -1,7 +1,7 @@
-import type { PlatformRuntime } from "@common/types/runtime"
+import type { PlatformRuntime } from '@common/types/runtime'
 import type { Locale, LocaleMessageItem } from '@common/types'
-import { throwIfQuotaExceeds } from "@common/modules/runtime/utils"
-import { isRuntime } from "@common/modules/runtime"
+import { throwIfQuotaExceeds } from '@common/modules/runtime/utils'
+import { isRuntime } from '@common/modules/runtime/utils'
 import { env } from '@common/env'
 import enMessages from '@locales/en/messages.json'
 import ruMessages from '@locales/ru/messages.json'
