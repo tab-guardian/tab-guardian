@@ -13,11 +13,12 @@ import Section from '@settings/components/Section.vue'
 import FileInput from '@common/components/Form/FileInput.vue'
 import PasswordInput from '@common/components/Form/PasswordInput.vue'
 
+const groupStore = useGroupStore()
+
 const fileRawData = ref<string>('')
 const password = ref<string>('')
 const file = ref<File | null>(null)
 const fileInput = ref<HTMLInputElement | null>(null)
-const groupStore = useGroupStore()
 const importing = ref<boolean>(false)
 const isEncryptedFile = ref<boolean>(false)
 
@@ -30,8 +31,13 @@ async function importGroups(): Promise<void> {
     const reader = new FileReader()
 
     reader.onload = async e => {
+        if (!e.target) {
+            console.error(`e.target is null for reader.onload()`)
+            return
+        }
+
         try {
-            await processFileContent(e.target?.result as string)
+            await processFileContent(e.target.result as string)
         } catch (err) {
             console.error(err)
             showToast(trans('error_reading_file'), 'error')
