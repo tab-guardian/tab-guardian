@@ -34,7 +34,7 @@ export const useAttemptsStore = defineStore('attempts', () => {
         }
     }
 
-    async function saveAttemptsToStorage(): Promise<void> {
+    async function save(): Promise<void> {
         if (!attempts.value) {
             console.error('Attempts value is not set')
             return
@@ -57,10 +57,21 @@ export const useAttemptsStore = defineStore('attempts', () => {
             }
         }
 
-        attempts.value.amount++
-        await saveAttemptsToStorage()
+        await increment()
+
+        // Lock attempts if at the last attempt but still
+        // allow to make it. If they are on the 5th attempt,
+        // we lock it but allow to do the 5th attempt
+        if (hasNoAttempts.value) {
+            await lock()
+        }
 
         return { success: true, error: null }
+    }
+
+    async function increment(): Promise<void> {
+        attempts.value.amount++
+        await save()
     }
 
     function isLockedErrorMessage(): string {
@@ -78,13 +89,13 @@ export const useAttemptsStore = defineStore('attempts', () => {
 
         attempts.value.isLocked = true
         attempts.value.lockEndTime = Date.now() + env.PASS_LOCK_DURATION * 60 * 1000
-        await saveAttemptsToStorage()
+        await save()
     }
 
     async function unlock(): Promise<void> {
         attempts.value.amount = 0
         attempts.value.isLocked = false
-        await saveAttemptsToStorage()
+        await save()
     }
 
     return {
