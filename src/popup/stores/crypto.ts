@@ -4,11 +4,10 @@ import { defineStore } from 'pinia'
 import {
     encrypt,
     decrypt,
-    toBase64,
     createEncryptKey,
     createDecryptKey,
-    fromBase64,
 } from '@common/modules/webCrypto'
+import { fromBase64 } from '@common/modules/utils'
 import { env } from '@common/env'
 import CryptoJS from 'crypto-js'
 
