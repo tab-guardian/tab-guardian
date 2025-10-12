@@ -7,7 +7,7 @@ import {
     createEncryptKey,
     createDecryptKey,
 } from '@common/modules/webCrypto'
-import { fromBase64 } from '@common/modules/utils'
+import { toBase64, fromBase64 } from '@common/modules/utils'
 import { env } from '@common/env'
 import CryptoJS from 'crypto-js'
 
@@ -24,24 +24,24 @@ export const useCryptoStore = defineStore('crypto', () => {
 
     async function encryptGroup(group: Group, pass: string): Promise<Group> {
         const encryptedLinks: Link[] = []
-        const encryptAlgo = group.algo || env.CURR_ENCRYPT_ALGO
+        const algo = group.algo || env.CURR_ENCRYPT_ALGO
 
         progress.max = group.links.length
 
         for (const link of group.links) {
             const salt = crypto.getRandomValues(new Uint8Array(16))
             const iv = crypto.getRandomValues(new Uint8Array(16))
-            const key = await createEncryptKey(pass, salt, encryptAlgo)
+            const key = await createEncryptKey(pass, salt, algo)
 
-            const url = await encrypt(link.url, key, iv, encryptAlgo)
-            const title = await encrypt(link.title, key, iv, encryptAlgo)
-            const favIconUrl = await encrypt(link.favIconUrl, key, iv, encryptAlgo)
+            const urlBin = await encrypt(link.url, key, iv, algo)
+            const titleBin = await encrypt(link.title, key, iv, algo)
+            const favIconUrlBin = await encrypt(link.favIconUrl, key, iv, algo)
 
             encryptedLinks.push({
                 id: link.id,
-                url: toBase64(url),
-                title: toBase64(title),
-                favIconUrl: toBase64(favIconUrl),
+                url: toBase64(urlBin),
+                title: toBase64(titleBin),
+                favIconUrl: toBase64(favIconUrlBin),
                 isPinned: link.isPinned,
                 salt: toBase64(salt),
                 iv: toBase64(iv),
@@ -50,7 +50,7 @@ export const useCryptoStore = defineStore('crypto', () => {
             progress.current++
         }
 
-        group.algo = encryptAlgo
+        group.algo = algo
         group.links = encryptedLinks
         group.isEncrypted = true
 
