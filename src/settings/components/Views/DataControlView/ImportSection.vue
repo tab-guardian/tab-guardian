@@ -4,6 +4,7 @@ import { ref } from 'vue'
 import { trans } from '@common/modules/utils'
 import { useGroupStore } from '@/stores/group'
 import { decryptString, fromBase64 } from '@common/modules/webCrypto'
+import { useAttemptsStore } from '@/stores/attempts'
 import { showToast } from '@common/modules/toast'
 import { getDecryptionError } from '@/errors'
 import { env } from '@common/env'
@@ -14,6 +15,7 @@ import FileInput from '@common/components/Form/FileInput.vue'
 import PasswordInput from '@common/components/Form/PasswordInput.vue'
 
 const groupStore = useGroupStore()
+const attemptsStore = useAttemptsStore()
 
 const fileRawData = ref<string>('')
 const password = ref<string>('')
@@ -32,8 +34,7 @@ async function importGroups(): Promise<void> {
 
     reader.onload = async e => {
         if (!e.target) {
-            console.error(`e.target is null for reader.onload()`)
-            return
+            throw new Error('e.target is null for reader.onload()')
         }
 
         try {
@@ -53,18 +54,6 @@ async function importGroups(): Promise<void> {
     resetState()
 }
 
-function resetState(): void {
-    password.value = ''
-    file.value = null
-    importing.value = false
-    fileRawData.value = ''
-    isEncryptedFile.value = false
-
-    if (fileInput.value) {
-        fileInput.value.value = ''
-    }
-}
-
 async function handlePasswordSubmit(): Promise<void> {
     if (password.value.length < env.MIN_PASS_LENGTH) {
         const msg = trans('passwords_min_length', env.MIN_PASS_LENGTH.toString())
@@ -81,6 +70,14 @@ async function handlePasswordSubmit(): Promise<void> {
         throw new Error('Cannot get the encryption algorithm from the file')
     }
 
+    const attempt = await attemptsStore.makeAttempt()
+
+    if (!attempt.success) {
+        showToast(attempt.error, 'error', 5000)
+        password.value = ''
+        return
+    }
+
     importing.value = true
 
     const encrypted = rawData.replace(`algo(${algo})`, '')
@@ -88,11 +85,13 @@ async function handlePasswordSubmit(): Promise<void> {
     try {
         const decrypted = await decryptString(encrypted, password.value, algo)
         await processFileContent(decrypted)
+        attemptsStore.unlock()
+        resetState()
     } catch (err) {
         showToast(getDecryptionError(err), 'error')
+        importing.value = false
+        password.value = ''
     }
-
-    resetState()
 }
 
 async function processFileContent(rawData: string): Promise<void> {
@@ -150,6 +149,18 @@ async function fileChosen(f: File, elem: HTMLInputElement): Promise<void> {
     file.value = f
     fileInput.value = elem
     await importGroups()
+}
+
+function resetState(): void {
+    password.value = ''
+    file.value = null
+    importing.value = false
+    fileRawData.value = ''
+    isEncryptedFile.value = false
+
+    if (fileInput.value) {
+        fileInput.value.value = ''
+    }
 }
 </script>
 
