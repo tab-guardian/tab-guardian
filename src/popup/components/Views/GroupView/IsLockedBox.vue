@@ -15,9 +15,10 @@ const { unlockGroup } = useGroupUnlock()
 const encrypting = ref<boolean>(false)
 
 function promptEnterPassword(): void {
-    openPopup('enterPassword').withData({
+    openPopup('enterPassword', {
         decrypting: pass => unlockGroup(props.group, pass),
         algo: props.group.algo ?? null,
+        description: trans('enter_pass'),
     })
 }
 </script>

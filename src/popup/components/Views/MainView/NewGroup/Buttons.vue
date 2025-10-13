@@ -14,7 +14,7 @@ const newGroupStore = useNewGroupStore()
 
 function askForGroupName(isPrivate: boolean) {
     newGroupStore.choices.isPrivate = isPrivate
-    openPopup('newGroupName')
+    openPopup('newGroupName', {})
 }
 </script>
 

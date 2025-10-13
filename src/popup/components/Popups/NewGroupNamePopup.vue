@@ -47,7 +47,7 @@ function submitName(): void {
 </script>
 
 <template>
-    <Popup @cancel="closePopup('newGroupName')" :content="trans('enter_group_name')">
+    <Popup @cancel="closePopup('newGroupName', {})" :content="trans('enter_group_name')">
         <form @submit.prevent="submitName" class="flex flex-col gap-3">
             <NameInput
                 v-model:name="newGroupStore.choices.name"

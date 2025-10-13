@@ -7,8 +7,8 @@ import { usePopupStore } from '@/stores/popup'
 const { closePopup, openPopup } = usePopupStore()
 
 function rebind(): void {
-    closePopup('groupMenuView')
-    openPopup('rebindGroup')
+    closePopup('groupMenuView', {})
+    openPopup('rebindGroup', {})
 }
 </script>
 

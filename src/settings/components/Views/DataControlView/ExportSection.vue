@@ -41,7 +41,7 @@ async function exportGroups(): Promise<void> {
         return
     }
 
-    openPopup('newPassword').onClose(async data => {
+    openPopup('newPassword', {}).onClose(async data => {
         if (!data) {
             throw new Error("data must exist inside onClose hook in 'newPassword'")
         }

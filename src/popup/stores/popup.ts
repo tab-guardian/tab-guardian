@@ -33,13 +33,14 @@ export const usePopupStore = defineStore('popup', () => {
         }
     }
 
-    function openPopup<K extends keyof Popups>(key: K) {
+    function openPopup<K extends keyof Popups>(
+        key: K,
+        data: Popups[K]['dataOnOpen'],
+    ) {
         popups.value[key].open = true
+        popups.value[key].dataOnOpen = data
 
         return {
-            withData(data: Popups[K]['dataOnOpen']) {
-                popups.value[key].dataOnOpen = data
-            },
             onClose(callback: (data: Popups[K]['dataOnClose']) => void) {
                 onCloseCallback.value = callback
             },
@@ -53,13 +54,16 @@ export const usePopupStore = defineStore('popup', () => {
     /**
      * @param data Pass data that you want to pass to onClose callback
      */
-    function closePopup(key: keyof Popups, data?: any): void {
+    function closePopup<K extends keyof Popups>(
+        key: K,
+        onCloseData: Popups[K]['dataOnClose'],
+    ): void {
         popups.value[key].open = false
         popups.value[key].dataOnOpen = null
         popups.value[key].dataOnClose = null
 
-        if (data && onCloseCallback.value) {
-            onCloseCallback.value(data)
+        if (onCloseData && onCloseCallback.value) {
+            onCloseCallback.value(onCloseData)
         }
     }
 

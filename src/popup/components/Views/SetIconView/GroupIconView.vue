@@ -45,7 +45,7 @@ async function selectIcon(icon: string): Promise<void> {
 }
 
 function openEmojiPopup(): void {
-    openPopup('chooseEmoji').onClose(async data => {
+    openPopup('chooseEmoji', {}).onClose(async data => {
         if (!data) {
             throw new Error("data must exist inside onClose hook in 'newPassword'")
         }
@@ -55,7 +55,7 @@ function openEmojiPopup(): void {
 }
 
 function openImageIconPopup(): void {
-    openPopup('chooseImageIcon').onClose(async data => {
+    openPopup('chooseImageIcon', {}).onClose(async data => {
         if (!data) {
             throw new Error("data must exist inside onClose hook in 'newPassword'")
         }

@@ -55,7 +55,7 @@ async function exportGroup(): Promise<void> {
 
     loading.value = false
 
-    closePopup('groupMenuView')
+    closePopup('groupMenuView', {})
 }
 
 async function encryptPrivateGroup(group: Group): Promise<Group | null> {
@@ -63,7 +63,7 @@ async function encryptPrivateGroup(group: Group): Promise<Group | null> {
 
     if (!pass) {
         showToast(trans('cant_remember_pass'), 'error', 4000)
-        openPopup('newPassword')
+        openPopup('newPassword', {})
         return null
     }
 

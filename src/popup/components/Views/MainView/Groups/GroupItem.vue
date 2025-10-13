@@ -2,6 +2,7 @@
 import type { Group } from '@common/types'
 import { computed } from 'vue'
 import { useRouter } from 'vue-router'
+import { trans } from '@common/modules/utils'
 import { usePopupStore } from '@/stores/popup'
 import { useGroupUnlock } from '@/assets/composables/useGroupUnlock'
 import ChevronRightIcon from '@common/components/Icons/ChevronRightIcon.vue'
@@ -35,9 +36,10 @@ const groupClasses = computed(() => {
 
 async function navigateToGroupView(): Promise<void> {
     if (props.group.isPrivate && props.group.isEncrypted) {
-        openPopup('enterPassword').withData({
+        openPopup('enterPassword', {
             decrypting: pass => unlockGroup(props.group, pass),
             algo: props.group.algo ?? null,
+            description: trans('enter_pass'),
         })
 
         return

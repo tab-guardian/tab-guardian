@@ -21,12 +21,16 @@ function updatePassword(): void {
     }
 
     showToast(trans('pass_updated'))
-    closePopup('newPassword', pass.value)
+    closePasswordPopup()
+}
+
+function closePasswordPopup(): void {
+    closePopup('newPassword', { newPass: pass.value })
 }
 </script>
 
 <template>
-    <Popup @cancel="closePopup('newPassword')" :content="trans('enter_pass')">
+    <Popup @cancel="closePasswordPopup" :content="trans('enter_pass')">
         <form @submit.prevent="updatePassword" class="flex flex-col gap-3">
             <PasswordFields
                 v-model:pass="pass"

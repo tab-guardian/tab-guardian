@@ -12,7 +12,7 @@ const router = useRouter()
 function switchToSelectTabsView(): void {
     const operation: SelectTabsOperation = 'adding'
     router.push({ name: 'select-tabs', params: { operation } })
-    closePopup('groupMenuView')
+    closePopup('groupMenuView', {})
 }
 </script>
 

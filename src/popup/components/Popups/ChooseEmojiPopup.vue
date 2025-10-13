@@ -46,14 +46,18 @@ function submit(): void {
         return
     }
 
-    closePopup('chooseEmoji', emoji.value)
+    closeEmojiPopup()
+}
+
+function closeEmojiPopup(): void {
+    closePopup('chooseEmoji', { emo: emoji.value })
 }
 </script>
 
 <template>
     <Popup
         v-if="groupStore.selectedGroup"
-        @cancel="closePopup('chooseEmoji')"
+        @cancel="closeEmojiPopup"
         :content="trans('pick_any_emoji')"
     >
         <p v-if="emoji">{{ trans('your_emoji_is') }} {{ emoji }}</p>
@@ -61,7 +65,7 @@ function submit(): void {
         <emoji-picker v-on:emoji-click="chooseEmoji"></emoji-picker>
 
         <template #buttons>
-            <PopupButton @click="closePopup('chooseEmoji')" :is-secondary="true">
+            <PopupButton @click="closeEmojiPopup" :is-secondary="true">
                 {{ trans('cancel') }}
             </PopupButton>
 

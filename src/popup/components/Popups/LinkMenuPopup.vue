@@ -53,7 +53,7 @@ async function cutLink(): Promise<void> {
     <Popup
         v-if="group && sharedData"
         :content="limitString(sharedData.link.title, 25)"
-        @cancel="closePopup('linkMenuView')"
+        @cancel="closePopup('linkMenuView', {})"
     >
         <div class="flex flex-col gap-1 mt-3">
             <MenuItem
@@ -76,6 +76,6 @@ async function cutLink(): Promise<void> {
     <Popup
         v-else
         :content="trans('error_no_tab_selected')"
-        @cancel="closePopup('linkMenuView')"
+        @cancel="closePopup('linkMenuView', {})"
     />
 </template>

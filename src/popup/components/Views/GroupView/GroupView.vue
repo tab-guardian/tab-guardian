@@ -1,13 +1,15 @@
 <script setup lang="ts">
 import type { Group } from '@common/types'
 import { computed, watchEffect } from 'vue'
-import { useGroupStore } from '@/stores/group'
 import { trans } from '@common/modules/utils'
+import { useGroupStore } from '@/stores/group'
 import { useRoute } from 'vue-router'
+import { usePopupStore } from '@/stores/popup'
 import View from '@/components/Views/View.vue'
 import Links from '@/components/Views/GroupView/Links.vue'
-import MenuButton from '@/components/Views/GroupView/GroupControls/MenuButton.vue'
+import EllipsisVerticalIcon from '@common/components/Icons/EllipsisVerticalIcon.vue'
 import Actions from '@/components/Views/GroupView/GroupControls/Actions/Actions.vue'
+import Control from '@/components/Control.vue'
 import IsLockedBox from '@/components/Views/GroupView/IsLockedBox.vue'
 import IsUnlockedBox from '@/components/Views/GroupView/IsUnlockedBox.vue'
 import Message from '@common/components/Message.vue'
@@ -15,6 +17,7 @@ import GroupIcon from '@/components/Views/MainView/Groups/GroupIcon.vue'
 
 const route = useRoute()
 const groupStore = useGroupStore()
+const { openPopup } = usePopupStore()
 
 const group = computed<Group | null>(() => {
     const id = route.params.id
@@ -39,7 +42,10 @@ watchEffect(() => {
     <View :routeLocation="{ name: 'main' }">
         <template #controls>
             <Actions v-if="group && showButtons" :group />
-            <MenuButton />
+
+            <Control @click="openPopup('groupMenuView', {})">
+                <EllipsisVerticalIcon style="width: 100%" />
+            </Control>
         </template>
 
         <div v-if="group">

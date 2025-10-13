@@ -26,7 +26,7 @@ async function deleteGroup(): Promise<void> {
         await deletePasswordFromStorage(group.id)
     }
 
-    closePopup('deleteGroup')
+    closePopup('deleteGroup', {})
 
     groupStore.selectedGroup = null
 }
@@ -35,11 +35,11 @@ async function deleteGroup(): Promise<void> {
 <template>
     <Popup
         v-if="groupStore.selectedGroup"
-        @cancel="closePopup('deleteGroup')"
+        @cancel="closePopup('deleteGroup', {})"
         :content="trans('want_delete_group')"
     >
         <template #buttons>
-            <PopupButton @click="closePopup('deleteGroup')" :is-secondary="true">
+            <PopupButton @click="closePopup('deleteGroup', {})" :is-secondary="true">
                 {{ trans('no') }}
             </PopupButton>
 

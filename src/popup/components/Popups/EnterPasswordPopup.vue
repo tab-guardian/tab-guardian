@@ -47,7 +47,7 @@ async function submitPassword(): Promise<void> {
 
     if (success) {
         await attemptsStore.unlock()
-        closePopup('enterPassword')
+        closePopup('enterPassword', {})
     } else if (attemptsStore.isLocked) {
         showToast(attemptsStore.isLockedErrorMessage(), 'error', 5000)
     }
@@ -58,7 +58,7 @@ async function submitPassword(): Promise<void> {
 </script>
 
 <template>
-    <Popup @cancel="closePopup('enterPassword')" :content="trans('enter_pass')">
+    <Popup @cancel="closePopup('enterPassword', {})" :content="trans('enter_pass')">
         <p class="flex items-center gap-3 mb-2 text-sm leading-4">
             <ShieldCheckIcon width="45" height="45" />
             {{ trans('enter_pass_unlock_content') }}

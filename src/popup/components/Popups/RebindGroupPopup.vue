@@ -30,7 +30,7 @@ async function rebindGroup(): Promise<void> {
         return
     }
 
-    closePopup('rebindGroup')
+    closePopup('rebindGroup', {})
 
     await router.push({
         name: 'group',
@@ -49,7 +49,7 @@ async function rebindGroup(): Promise<void> {
 <template>
     <Popup
         v-if="groupStore.selectedGroup"
-        @cancel="closePopup('rebindGroup')"
+        @cancel="closePopup('rebindGroup', {})"
         :content="trans('enter_new_url_bind_to')"
         :description="trans('enter_new_url_bind_private_to_new_url')"
     >
