@@ -45,11 +45,11 @@ async function selectIcon(icon: string): Promise<void> {
 }
 
 function openEmojiPopup(): void {
-    openPopup('chooseEmoji').onClose((emo: string) => selectIcon(emo))
+    openPopup('chooseEmoji').onClose(({ emo }) => selectIcon(emo))
 }
 
 function openImageIconPopup(): void {
-    openPopup('chooseImageIcon').onClose((url: string) => selectIcon(url))
+    openPopup('chooseImageIcon').onClose(({ url }) => selectIcon(url))
 }
 </script>
 

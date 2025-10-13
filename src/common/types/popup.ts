@@ -1,8 +1,9 @@
 import { EncryptionAlgo, Link } from '@common/types'
 
-type PopupItem<T = any> = {
+type PopupItem<T = any, D = any> = {
     open: boolean
-    data: T | null
+    dataOnOpen: T | null
+    dataOnClose: D
 }
 
 export type EnterPasswordData = {
@@ -10,20 +11,16 @@ export type EnterPasswordData = {
     algo: EncryptionAlgo | null
 }
 
-export type LinkMenuData = {
-    link: Link
-}
-
 export type Popups = {
     groupMenuView: PopupItem
     deleteGroup: PopupItem
     groupName: PopupItem
     rebindGroup: PopupItem
-    chooseEmoji: PopupItem
-    chooseImageIcon: PopupItem
-    newPassword: PopupItem
+    chooseEmoji: PopupItem<null, { emo: string }>
+    chooseImageIcon: PopupItem<null, { url: string }>
+    newPassword: PopupItem<null, { newPass: string }>
     enterPassword: PopupItem<EnterPasswordData>
-    linkMenuView: PopupItem<LinkMenuData>
+    linkMenuView: PopupItem<{ link: Link }>
     newGroupName: PopupItem
     editGroupName: PopupItem
 }

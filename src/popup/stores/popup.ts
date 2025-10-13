@@ -3,23 +3,41 @@ import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import { cloneDeep } from 'lodash'
 
+const defaultEmptyPopup = {
+    open: false,
+    dataOnOpen: null,
+    dataOnClose: null,
+}
+
 const defaultPopups: Popups = {
-    groupMenuView: { open: false, data: null },
-    deleteGroup: { open: false, data: null },
-    groupName: { open: false, data: null },
-    rebindGroup: { open: false, data: null },
-    chooseEmoji: { open: false, data: null },
-    chooseImageIcon: { open: false, data: null },
-    newPassword: { open: false, data: null },
-    enterPassword: { open: false, data: null },
-    linkMenuView: { open: false, data: null },
-    newGroupName: { open: false, data: null },
-    editGroupName: { open: false, data: null },
+    groupMenuView: cloneDeep(defaultEmptyPopup),
+    deleteGroup: cloneDeep(defaultEmptyPopup),
+    groupName: cloneDeep(defaultEmptyPopup),
+    rebindGroup: cloneDeep(defaultEmptyPopup),
+    enterPassword: cloneDeep(defaultEmptyPopup),
+    linkMenuView: cloneDeep(defaultEmptyPopup),
+    newGroupName: cloneDeep(defaultEmptyPopup),
+    editGroupName: cloneDeep(defaultEmptyPopup),
+    newPassword: {
+        open: false,
+        dataOnOpen: null,
+        dataOnClose: { newPass: '' },
+    },
+    chooseEmoji: {
+        open: false,
+        dataOnOpen: null,
+        dataOnClose: { emo: '' },
+    },
+    chooseImageIcon: {
+        open: false,
+        dataOnOpen: null,
+        dataOnClose: { url: '' },
+    },
 }
 
 export const usePopupStore = defineStore('popup', () => {
     const popups = ref<Popups>(cloneDeep(defaultPopups))
-    const onCloseCallback = ref<null | ((data?: any) => void)>(null)
+    const onCloseCallback = ref<null | (<T>(data: T) => void)>(null)
 
     function closeAllPopups(): void {
         for (const key in popups.value) {
@@ -31,10 +49,10 @@ export const usePopupStore = defineStore('popup', () => {
         popups.value[key].open = true
 
         return {
-            withData(data: Popups[K]['data']) {
-                popups.value[key].data = data
+            withData(data: Popups[K]['dataOnOpen']) {
+                popups.value[key].dataOnOpen = data
             },
-            onClose(callback: (data?: any) => void) {
+            onClose(callback: (data: Popups[K]['dataOnClose']) => void) {
                 onCloseCallback.value = callback
             },
         }
@@ -49,7 +67,8 @@ export const usePopupStore = defineStore('popup', () => {
      */
     function closePopup(key: keyof Popups, data?: any): void {
         popups.value[key].open = false
-        popups.value[key].data = null
+        popups.value[key].dataOnOpen = null
+        popups.value[key].dataOnClose = null
 
         if (data && onCloseCallback.value) {
             onCloseCallback.value(data)
@@ -60,8 +79,8 @@ export const usePopupStore = defineStore('popup', () => {
         return popups.value[key].open
     }
 
-    function getSharedData<K extends keyof Popups>(key: K): Popups[K]['data'] {
-        return popups.value[key].data
+    function getSharedData<K extends keyof Popups>(key: K): Popups[K]['dataOnOpen'] {
+        return popups.value[key].dataOnOpen
     }
 
     return {

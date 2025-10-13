@@ -41,8 +41,8 @@ async function exportGroups(): Promise<void> {
         return
     }
 
-    openPopup('newPassword').onClose(async (pass: string) => {
-        const encrypted = await encryptJSON(compressed, pass)
+    openPopup('newPassword').onClose(async ({ newPass }) => {
+        const encrypted = await encryptJSON(compressed, newPass)
         downloadFile(encrypted)
     })
 }
