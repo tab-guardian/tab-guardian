@@ -14,11 +14,11 @@ const { unlockGroup } = useGroupUnlock()
 
 const encrypting = ref<boolean>(false)
 
-function promptEnterPassword(): void {
+async function promptEnterPassword(): Promise<void> {
     openPopup('enterPassword', {
-        decrypting: pass => unlockGroup(props.group, pass),
+        decrypting: async pass => await unlockGroup(props.group, pass),
         algo: props.group.algo ?? null,
-        description: trans('enter_pass'),
+        description: trans('enter_pass_unlock_content'),
     })
 }
 </script>

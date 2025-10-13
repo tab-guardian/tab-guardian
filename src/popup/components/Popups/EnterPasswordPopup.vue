@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import { usePopupStore } from '@/stores/popup'
 import { useAttemptsStore } from '@/stores/attempts'
 import { useCryptoStore } from '@/stores/crypto'
@@ -16,18 +16,18 @@ const attemptsStore = useAttemptsStore()
 const cryptoStore = useCryptoStore()
 
 const password = ref<string>('')
-const decrypting = ref<boolean>(false)
+const processing = ref<boolean>(false)
 
-const sharedData = computed(() => getSharedData('enterPassword'))
+const sharedData = getSharedData('enterPassword')
 
 async function submitPassword(): Promise<void> {
-    if (decrypting.value) {
+    if (processing.value) {
         return
     }
 
-    if (!sharedData.value) {
+    if (!sharedData) {
         showToast(trans('error_occurred'), 'error')
-        throw new Error('sharedData.value is null in EnterPasswordPopup.vue')
+        throw new Error('sharedData is null in EnterPasswordPopup.vue')
     }
 
     if (!password.value) {
@@ -43,7 +43,9 @@ async function submitPassword(): Promise<void> {
         return
     }
 
-    const success = await sharedData.value.decrypting(password.value)
+    processing.value = true
+
+    const success = await sharedData.decrypting(password.value)
 
     if (success) {
         await attemptsStore.unlock()
@@ -52,7 +54,7 @@ async function submitPassword(): Promise<void> {
         showToast(attemptsStore.isLockedErrorMessage(), 'error', 5000)
     }
 
-    decrypting.value = false
+    processing.value = false
     password.value = ''
 }
 </script>
@@ -61,7 +63,7 @@ async function submitPassword(): Promise<void> {
     <Popup @cancel="closePopup('enterPassword', {})" :content="trans('enter_pass')">
         <p class="flex items-center gap-3 mb-2 text-sm leading-4">
             <ShieldCheckIcon width="45" height="45" />
-            {{ trans('enter_pass_unlock_content') }}
+            {{ sharedData?.description }}
         </p>
 
         <form @submit.prevent="submitPassword">
@@ -71,12 +73,12 @@ async function submitPassword(): Promise<void> {
                 id="enter-password"
                 :label="trans('enter_pass')"
                 :with-button="true"
-                :loading="decrypting"
+                :loading="processing"
             />
         </form>
 
         <ProgressBar
-            v-if="decrypting"
+            v-if="processing"
             :current="cryptoStore.progress.current"
             :max="cryptoStore.progress.max"
             class="mt-3"
