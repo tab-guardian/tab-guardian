@@ -10,7 +10,6 @@ import { useCryptoStore } from '@/stores/crypto'
 import { useRoute, useRouter } from 'vue-router'
 import { showToast } from '@common/modules/toast'
 import { savePasswordToStorage } from '@common/modules/storage/password'
-import { useNotificationStore } from '@/stores/notification'
 import ShieldCheckIcon from '@common/components/Icons/ShieldCheckIcon.vue'
 import WarningBox from '@common/components/WarningBox.vue'
 import ProgressBar from '@common/components/ProgressBar.vue'
@@ -21,7 +20,6 @@ const props = defineProps<{ group: Group }>()
 const route = useRoute()
 const router = useRouter()
 const groupStore = useGroupStore()
-const notificationStore = useNotificationStore()
 const tabsStore = useTabsStore()
 const cryptoStore = useCryptoStore()
 const attemptsStore = useAttemptsStore()
@@ -65,9 +63,8 @@ async function unlockGroup(): Promise<void> {
         password.value,
     )
 
-    await groupStore.save(decryptedGroup)
+    await groupStore.saveGroup(decryptedGroup)
     await attemptsStore.unlock()
-    await notificationStore.recalculateNotification()
 
     // With this, we don't need to type password to lock the
     // group after just unlocking it

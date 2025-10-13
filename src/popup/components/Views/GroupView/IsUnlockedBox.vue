@@ -6,7 +6,6 @@ import { useGroupStore } from '@/stores/group'
 import { usePopupStore } from '@/stores/popup'
 import { useCryptoStore } from '@/stores/crypto'
 import { useSettingsStore } from '@/stores/settings'
-import { useNotificationStore } from '@/stores/notification'
 import { showToast } from '@common/modules/toast'
 import { getPasswordFromStorage, deletePasswordFromStorage } from '@common/modules/storage/password'
 import LockClosedIcon from '@common/components/Icons/LockClosedIcon.vue'
@@ -18,7 +17,6 @@ const { group } = defineProps<{ group: Group }>()
 const groupStore = useGroupStore()
 const cryptoStore = useCryptoStore()
 const settingsStore = useSettingsStore()
-const notificationStore = useNotificationStore()
 const { openPopup } = usePopupStore()
 
 const useNewPassword = ref<boolean>(false)
@@ -64,9 +62,8 @@ async function lockGroup(pass: string): Promise<void> {
         return
     }
 
-    await groupStore.save(encrypted)
+    await groupStore.saveGroup(encrypted)
     await deletePasswordFromStorage(group.id)
-    await notificationStore.recalculateNotification()
 
     encrypting.value = false
 

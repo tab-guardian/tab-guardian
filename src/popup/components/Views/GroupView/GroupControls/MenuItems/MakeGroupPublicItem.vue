@@ -36,7 +36,7 @@ async function makePublic(): Promise<void> {
         delete link.salt
     }
 
-    groupStore.save(group)
+    groupStore.saveGroup(group)
 
     showToast(trans('group_is_now_open'))
 }

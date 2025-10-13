@@ -69,7 +69,7 @@ async function handleCreateGroup(): Promise<void> {
 
     groupStore.groups.push(group)
 
-    await groupStore.save(group)
+    await groupStore.saveGroup(group)
 
     if (closeAllTabs.value) {
         await closeTabs(selectedLinks.value.map(l => l.id))
