@@ -18,21 +18,9 @@ const defaultPopups: Popups = {
     linkMenuView: cloneDeep(defaultEmptyPopup),
     newGroupName: cloneDeep(defaultEmptyPopup),
     editGroupName: cloneDeep(defaultEmptyPopup),
-    newPassword: {
-        open: false,
-        dataOnOpen: null,
-        dataOnClose: { newPass: '' },
-    },
-    chooseEmoji: {
-        open: false,
-        dataOnOpen: null,
-        dataOnClose: { emo: '' },
-    },
-    chooseImageIcon: {
-        open: false,
-        dataOnOpen: null,
-        dataOnClose: { url: '' },
-    },
+    newPassword: cloneDeep(defaultEmptyPopup),
+    chooseEmoji: cloneDeep(defaultEmptyPopup),
+    chooseImageIcon: cloneDeep(defaultEmptyPopup),
 }
 
 export const usePopupStore = defineStore('popup', () => {

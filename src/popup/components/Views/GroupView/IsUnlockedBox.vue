@@ -49,9 +49,13 @@ async function promptEnterPassword(): Promise<void> {
         showToast(trans('cant_remember_pass'), 'error', 4000)
     }
 
-    openPopup('newPassword').onClose(async ({ newPass }) => {
-        await groupStore.updatePassword(newPass)
-        await lockGroup(newPass)
+    openPopup('newPassword').onClose(async data => {
+        if (!data) {
+            throw new Error("data must exist inside onClose hook in 'newPassword'")
+        }
+
+        await groupStore.updatePassword(data.newPass)
+        await lockGroup(data.newPass)
     })
 }
 

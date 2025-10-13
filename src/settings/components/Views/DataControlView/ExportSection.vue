@@ -41,8 +41,12 @@ async function exportGroups(): Promise<void> {
         return
     }
 
-    openPopup('newPassword').onClose(async ({ newPass }) => {
-        const encrypted = await encryptJSON(compressed, newPass)
+    openPopup('newPassword').onClose(async data => {
+        if (!data) {
+            throw new Error("data must exist inside onClose hook in 'newPassword'")
+        }
+
+        const encrypted = await encryptJSON(compressed, data.newPass)
         downloadFile(encrypted)
     })
 }

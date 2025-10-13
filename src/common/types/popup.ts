@@ -3,7 +3,7 @@ import { EncryptionAlgo, Link } from '@common/types'
 type PopupItem<T = any, D = any> = {
     open: boolean
     dataOnOpen: T | null
-    dataOnClose: D
+    dataOnClose: D | null
 }
 
 export type EnterPasswordData = {

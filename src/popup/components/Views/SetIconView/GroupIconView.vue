@@ -45,11 +45,23 @@ async function selectIcon(icon: string): Promise<void> {
 }
 
 function openEmojiPopup(): void {
-    openPopup('chooseEmoji').onClose(({ emo }) => selectIcon(emo))
+    openPopup('chooseEmoji').onClose(async data => {
+        if (!data) {
+            throw new Error("data must exist inside onClose hook in 'newPassword'")
+        }
+
+        await selectIcon(data.emo)
+    })
 }
 
 function openImageIconPopup(): void {
-    openPopup('chooseImageIcon').onClose(({ url }) => selectIcon(url))
+    openPopup('chooseImageIcon').onClose(async data => {
+        if (!data) {
+            throw new Error("data must exist inside onClose hook in 'newPassword'")
+        }
+
+        await selectIcon(data.url)
+    })
 }
 </script>
 
