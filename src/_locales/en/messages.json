@@ -55,6 +55,7 @@
     "yes": { "message": "Yes" },
     "no": { "message": "No" },
     "lock": { "message": "Lock" },
+    "unlock": { "message": "Unlock" },
     "rebind": { "message": "Rebind" },
     "bound_to_url": { "message": "Bound to URL" },
     "opened_tabs_times": { "message": "Opened tabs times" },

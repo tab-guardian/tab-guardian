@@ -55,6 +55,7 @@
     "yes": { "message": "Да" },
     "no": { "message": "Нет" },
     "lock": { "message": "Закрыть" },
+    "unlock": { "message": "Открыть" },
     "rebind": { "message": "Отвязать" },
     "bound_to_url": { "message": "Привязана к URL" },
     "opened_tabs_times": { "message": "Открыто вкладок раз" },
