@@ -17,12 +17,12 @@ const { closePopup, closeAllPopups, getSharedData } = usePopupStore()
 const appStore = useAppStore()
 const groupStore = useGroupStore()
 const group = computed<Group | null>(() => groupStore.selectedGroup)
-const sharedData = computed(() => getSharedData('linkMenuView'))
+const sharedData = getSharedData('linkMenuView')
 
 async function yankLink(action: 'copy' | 'cut', successMsg: string): Promise<void> {
-    if (!sharedData.value) {
+    if (!sharedData) {
         showToast(trans('error_occurred'), 'error')
-        throw new Error('sharedData.value is null in LinkMenuPopup.vue')
+        throw new Error('sharedData is null in LinkMenuPopup.vue')
     }
 
     if (!group.value) {
@@ -33,7 +33,7 @@ async function yankLink(action: 'copy' | 'cut', successMsg: string): Promise<voi
     appStore.linkBuffer = {
         action,
         groupId: group.value.id,
-        link: sharedData.value.link,
+        link: sharedData.link,
     }
 
     closeAllPopups()
