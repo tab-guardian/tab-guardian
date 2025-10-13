@@ -75,12 +75,6 @@ export type Popups = {
     editGroupName: PopupItem
 }
 
-export type Modals = {
-    settings: boolean
-    group: boolean
-    selectTabs: boolean
-}
-
 export type Attempts = {
     amount: number
     lockEndTime: number
