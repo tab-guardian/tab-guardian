@@ -7,8 +7,8 @@ import { useRoute } from 'vue-router'
 import View from '@/components/Views/View.vue'
 import Links from '@/components/Views/GroupView/Links.vue'
 import MenuButton from '@/components/Views/GroupView/GroupControls/MenuButton.vue'
-import EnterPassword from '@/components/Views/GroupView/EnterPassword.vue'
 import Actions from '@/components/Views/GroupView/GroupControls/Actions/Actions.vue'
+import IsLockedBox from '@/components/Views/GroupView/IsLockedBox.vue'
 import IsUnlockedBox from '@/components/Views/GroupView/IsUnlockedBox.vue'
 import Message from '@common/components/Message.vue'
 import GroupIcon from '@/components/Views/MainView/Groups/GroupIcon.vue'
@@ -48,10 +48,12 @@ watchEffect(() => {
                 <h2 class="text-lg my-1 px-2 py-0.5">{{ group.name }}</h2>
             </div>
 
-            <IsUnlockedBox v-if="group.isPrivate && !group.isEncrypted" :group />
+            <template v-if="group.isPrivate">
+                <IsLockedBox v-if="group.isEncrypted" :group />
+                <IsUnlockedBox v-else :group />
+            </template>
 
-            <EnterPassword v-if="group.isEncrypted" :group />
-            <Links v-else :group />
+            <Links v-if="!group.isEncrypted" :group />
         </div>
 
         <Message v-else>😢 {{ trans('error_no_group_selected') }}</Message>

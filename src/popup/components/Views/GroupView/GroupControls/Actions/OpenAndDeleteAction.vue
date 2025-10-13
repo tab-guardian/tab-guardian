@@ -17,7 +17,7 @@ async function openAndDeleteTabs(): Promise<void> {
     }
 
     await tabsStore.openAndDeleteTabs(props.group)
-    router.push({ name: 'main' })
+    await router.push({ name: 'main' })
 }
 </script>
 

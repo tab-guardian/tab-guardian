@@ -6,6 +6,7 @@ import Spinner from '@common/components/Spinner.vue'
 import SettingsSidebar from '@settings/components/SettingsSidebar.vue'
 import Popups from '@/components/Popups/Popups.vue'
 import NewPasswordPopup from '@/components/Popups/NewPasswordPopup.vue'
+import EnterPasswordPopup from '@/components/Popups/EnterPasswordPopup.vue'
 
 const settingsStore = useSettingsStore()
 
@@ -27,5 +28,10 @@ onMounted(async () => {
         </div>
     </div>
 
-    <Popups :popups="[{ comp: NewPasswordPopup, name: 'newPassword' }]" />
+    <Popups
+        :popups="[
+            { comp: NewPasswordPopup, name: 'newPassword' },
+            { comp: EnterPasswordPopup, name: 'enterPassword' },
+        ]"
+    />
 </template>

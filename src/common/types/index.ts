@@ -69,6 +69,7 @@ export type Popups = {
     chooseEmoji: PopupItem
     chooseImageIcon: PopupItem
     newPassword: PopupItem
+    enterPassword: PopupItem
     linkMenuView: PopupItem
     newGroupName: PopupItem
     editGroupName: PopupItem

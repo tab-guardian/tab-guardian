@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import type { Group } from '@common/types'
 import { isWrongPassError, getDecryptionError } from '@/errors'
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { trans } from '@common/modules/utils'
 import { useGroupStore } from '@/stores/group'
 import { useTabsStore } from '@/stores/tabs'
+import { usePopupStore } from '@/stores/popup'
 import { useAttemptsStore } from '@/stores/attempts'
 import { useCryptoStore } from '@/stores/crypto'
 import { useRoute, useRouter } from 'vue-router'
@@ -14,18 +15,21 @@ import ShieldCheckIcon from '@common/components/Icons/ShieldCheckIcon.vue'
 import WarningBox from '@common/components/WarningBox.vue'
 import ProgressBar from '@common/components/ProgressBar.vue'
 import PasswordInput from '@common/components/Form/PasswordInput.vue'
-
-const props = defineProps<{ group: Group }>()
+import Message from '@common/components/Message.vue'
+import Popup from '@/components/Popups/Popup.vue'
 
 const route = useRoute()
 const router = useRouter()
 const groupStore = useGroupStore()
+const { getSharedData, closePopup } = usePopupStore()
 const tabsStore = useTabsStore()
 const cryptoStore = useCryptoStore()
 const attemptsStore = useAttemptsStore()
 
 const password = ref<string>('')
 const decrypting = ref<boolean>(false)
+
+const group = computed<Group | null>(() => getSharedData<Group>('enterPassword'))
 
 async function submitPass(): Promise<void> {
     if (decrypting.value) {
@@ -56,10 +60,14 @@ async function submitPass(): Promise<void> {
 }
 
 async function unlockGroup(): Promise<void> {
+    if (!group.value) {
+        return
+    }
+
     decrypting.value = true
 
     const decryptedGroup = await cryptoStore.decryptGroup(
-        props.group,
+        group.value,
         password.value,
     )
 
@@ -68,11 +76,15 @@ async function unlockGroup(): Promise<void> {
 
     // With this, we don't need to type password to lock the
     // group after just unlocking it
-    await savePasswordToStorage(props.group.id, password.value)
+    await savePasswordToStorage(group.value.id, password.value)
 
     route.params.openTabs === 'true'
         ? openTabsAndEncryptGroup()
         : showToast(trans('group_unlocked'))
+
+    await router.push({ name: 'group', params: { id: group.value.id } })
+
+    closePopup('enterPassword')
 }
 
 function handleUnlockGroupError(err: any): void {
@@ -89,41 +101,50 @@ function handleUnlockGroupError(err: any): void {
 }
 
 async function openTabsAndEncryptGroup(): Promise<void> {
-    await tabsStore.openTabs(props.group, password.value)
+    if (!group.value) {
+        return
+    }
 
-    router.push({ name: 'main' })
+    await tabsStore.openTabs(group.value, password.value)
+    await router.push({ name: 'main' })
+
+    closePopup('enterPassword')
 }
 </script>
 
 <template>
-    <div class="px-2 mt-3">
-        <p class="flex items-center gap-3 mb-2 text-sm leading-4">
-            <ShieldCheckIcon width="45" height="45" />
-            {{ trans('enter_pass_unlock_content') }}
-        </p>
+    <Popup @cancel="closePopup('enterPassword')" :content="trans('enter_pass')">
+        <template v-if="group">
+            <p class="flex items-center gap-3 mb-2 text-sm leading-4">
+                <ShieldCheckIcon width="45" height="45" />
+                {{ trans('enter_pass_unlock_content') }}
+            </p>
 
-        <form @submit.prevent="submitPass">
-            <PasswordInput
-                @loaded="inp => inp.focus()"
-                v-model="password"
-                id="enter-password"
-                :label="trans('enter_pass')"
-                :with-button="true"
-                :loading="decrypting"
+            <form @submit.prevent="submitPass">
+                <PasswordInput
+                    @loaded="inp => inp.focus()"
+                    v-model="password"
+                    id="enter-password"
+                    :label="trans('enter_pass')"
+                    :with-button="true"
+                    :loading="decrypting"
+                />
+            </form>
+
+            <ProgressBar
+                v-if="decrypting"
+                :current="cryptoStore.progress.current"
+                :max="cryptoStore.progress.max"
+                class="mt-3"
             />
-        </form>
 
-        <ProgressBar
-            v-if="decrypting"
-            :current="cryptoStore.progress.current"
-            :max="cryptoStore.progress.max"
-            class="mt-3"
-        />
+            <WarningBox
+                v-if="!group.algo"
+                class="mt-4"
+                :message="trans('uses_old_encrypt_impl')"
+            />
+        </template>
 
-        <WarningBox
-            v-if="!group.algo"
-            class="mt-4"
-            :message="trans('uses_old_encrypt_impl')"
-        />
-    </div>
+        <Message v-else>😢 {{ trans('error_no_group_selected') }}</Message>
+    </Popup>
 </template>

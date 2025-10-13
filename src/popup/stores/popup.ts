@@ -10,6 +10,7 @@ const defaultPopups: Popups = {
     chooseEmoji: { open: false, data: null },
     chooseImageIcon: { open: false, data: null },
     newPassword: { open: false, data: null },
+    enterPassword: { open: false, data: null },
     linkMenuView: { open: false, data: null },
     newGroupName: { open: false, data: null },
     editGroupName: { open: false, data: null },

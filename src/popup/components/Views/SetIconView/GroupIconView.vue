@@ -41,7 +41,7 @@ async function selectIcon(icon: string): Promise<void> {
 
     showToast(trans('icon_is_set'))
 
-    router.push({ name: 'group', params: { id: group.value.id.toString() } })
+    await router.push({ name: 'group', params: { id: group.value.id.toString() } })
 }
 
 function openEmojiPopup(): void {
