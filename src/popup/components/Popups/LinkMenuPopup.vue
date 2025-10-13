@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Group, Link } from '@common/types'
+import type { Group } from '@common/types'
 import { computed } from 'vue'
 import { trans } from '@common/modules/utils'
 import { usePopupStore } from '@/stores/popup'
@@ -17,12 +17,12 @@ const { closePopup, closeAllPopups, getSharedData } = usePopupStore()
 const appStore = useAppStore()
 const groupStore = useGroupStore()
 const group = computed<Group | null>(() => groupStore.selectedGroup)
-const link = computed<Link | null>(() => getSharedData<Link>('linkMenuView'))
+const sharedData = computed(() => getSharedData('linkMenuView'))
 
 async function yankLink(action: 'copy' | 'cut', successMsg: string): Promise<void> {
-    if (!link.value) {
-        console.warn(`Cannot ${action} the link because link.value is null`)
-        return
+    if (!sharedData.value) {
+        showToast(trans('error_occurred'), 'error')
+        throw new Error('sharedData.value is null in LinkMenuPopup.vue')
     }
 
     if (!group.value) {
@@ -33,7 +33,7 @@ async function yankLink(action: 'copy' | 'cut', successMsg: string): Promise<voi
     appStore.linkBuffer = {
         action,
         groupId: group.value.id,
-        link: link.value,
+        link: sharedData.value.link,
     }
 
     closeAllPopups()
@@ -51,8 +51,8 @@ async function cutLink(): Promise<void> {
 
 <template>
     <Popup
-        v-if="group && link"
-        :content="limitString(link.title, 25)"
+        v-if="group && sharedData"
+        :content="limitString(sharedData.link.title, 25)"
         @cancel="closePopup('linkMenuView')"
     >
         <div class="flex flex-col gap-1 mt-3">

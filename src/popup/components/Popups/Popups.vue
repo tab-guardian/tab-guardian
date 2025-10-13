@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Component } from 'vue'
-import type { Popups } from '@common/types'
+import type { Popups } from '@common/types/popup'
 import { usePopupStore } from '@/stores/popup'
 import AppearTransition from '@common/components/Transitions/AppearTransition.vue'
 

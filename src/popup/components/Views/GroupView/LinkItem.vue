@@ -30,7 +30,7 @@ async function openTab(): Promise<void> {
 
 async function openTabLinkPopup(): Promise<void> {
     openPopup('linkMenuView')
-    setSharedData('linkMenuView', props.link)
+    setSharedData('linkMenuView', { link: props.link })
 }
 </script>
 

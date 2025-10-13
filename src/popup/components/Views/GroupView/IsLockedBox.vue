@@ -3,18 +3,24 @@ import type { Group } from '@common/types'
 import { ref } from 'vue'
 import { trans } from '@common/modules/utils'
 import { usePopupStore } from '@/stores/popup'
+import { useGroupUnlock } from '@/assets/composables/useGroupUnlock'
 import LockOpenIcon from '@common/components/Icons/LockOpenIcon.vue'
 import WarningBox from '@common/components/WarningBox.vue'
 import Button from '@common/components/Form/Button.vue'
 
 const props = defineProps<{ group: Group }>()
 const { setSharedData, openPopup } = usePopupStore()
+const { unlockGroup } = useGroupUnlock()
 
 const encrypting = ref<boolean>(false)
 
 function promptEnterPassword(): void {
     openPopup('enterPassword')
-    setSharedData('enterPassword', props.group)
+
+    setSharedData('enterPassword', {
+        decrypting: pass => unlockGroup(props.group, pass),
+        algo: props.group.algo ?? null,
+    })
 }
 </script>
 

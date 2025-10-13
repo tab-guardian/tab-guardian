@@ -106,7 +106,7 @@
     "group_name": { "message": "Имя группы" },
     "group_unlocked": { "message": "Группа разблокирована" },
     "group_locked": { "message": "Группа заблокирована" },
-    "error_occurred": { "message": "Произошла ошибка" },
+    "error_occurred": { "message": "Произошла неивестная ошибка" },
     "open_tabs": { "message": "Открыть вкладки" },
     "open_tabs_delete_group": { "message": "Открыть вкладки и удалить эту группу" },
     "copy_tabs_into_group": { "message": "Скопировать вкладки в эту группу" },

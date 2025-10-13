@@ -56,25 +56,6 @@ export type Settings = {
     rememberPasswordAfterUnlock: boolean
 }
 
-type PopupItem = {
-    open: boolean
-    data: any
-}
-
-export type Popups = {
-    groupMenuView: PopupItem
-    deleteGroup: PopupItem
-    groupName: PopupItem
-    rebindGroup: PopupItem
-    chooseEmoji: PopupItem
-    chooseImageIcon: PopupItem
-    newPassword: PopupItem
-    enterPassword: PopupItem
-    linkMenuView: PopupItem
-    newGroupName: PopupItem
-    editGroupName: PopupItem
-}
-
 export type Attempts = {
     amount: number
     lockEndTime: number

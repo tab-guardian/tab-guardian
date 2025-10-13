@@ -96,7 +96,7 @@
     "group_name": { "message": "组名称" },
     "group_unlocked": { "message": "组已解锁" },
     "group_locked": { "message": "组已锁定" },
-    "error_occurred": { "message": "发生错误" },
+    "error_occurred": { "message": "发生意外错误" },
     "open_tabs": { "message": "打开标签页" },
     "open_tabs_delete_group": { "message": "打开标签页并删除该组" },
     "copy_tabs_into_group": { "message": "复制标签页到该组" },

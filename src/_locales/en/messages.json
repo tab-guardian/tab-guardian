@@ -106,7 +106,7 @@
     "group_name": { "message": "Group name" },
     "group_unlocked": { "message": "Group is unlocked" },
     "group_locked": { "message": "Group is locked" },
-    "error_occurred": { "message": "Error occurred" },
+    "error_occurred": { "message": "Unexpected error occurred" },
     "open_tabs": { "message": "Open tabs" },
     "open_tabs_delete_group": { "message": "Open tabs and delete this group" },
     "copy_tabs_into_group": { "message": "Copy tabs into this group" },

@@ -3,6 +3,7 @@ import type { Group } from '@common/types'
 import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { usePopupStore } from '@/stores/popup'
+import { useGroupUnlock } from '@/assets/composables/useGroupUnlock'
 import ChevronRightIcon from '@common/components/Icons/ChevronRightIcon.vue'
 import ShieldCheckIcon from '@common/components/Icons/ShieldCheckIcon.vue'
 import ShieldExclamationIcon from '@common/components/Icons/ShieldExclamationIcon.vue'
@@ -11,8 +12,9 @@ import GroupIcon from '@/components/Views/MainView/Groups/GroupIcon.vue'
 
 const props = defineProps<{ group: Group }>()
 
-const { openPopup, setSharedData } = usePopupStore()
 const router = useRouter()
+const { openPopup, setSharedData } = usePopupStore()
+const { unlockGroup } = useGroupUnlock()
 
 const groupClasses = computed(() => {
     const commonClasses = [
@@ -34,7 +36,12 @@ const groupClasses = computed(() => {
 async function navigateToGroupView(): Promise<void> {
     if (props.group.isPrivate && props.group.isEncrypted) {
         openPopup('enterPassword')
-        setSharedData('enterPassword', props.group)
+
+        setSharedData('enterPassword', {
+            decrypting: pass => unlockGroup(props.group, pass),
+            algo: props.group.algo ?? null,
+        })
+
         return
     }
 

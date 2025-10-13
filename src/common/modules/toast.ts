@@ -3,7 +3,7 @@ import Toastify from 'toastify-js'
 export function showToast(
     text: string,
     type: 'error' | 'info' = 'info',
-    duration = 2000,
+    duration = 3000,
 ): void {
     Toastify({
         text,

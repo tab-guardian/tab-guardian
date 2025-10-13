@@ -1,6 +1,7 @@
-import type { Popups } from '@common/types'
+import type { Popups } from '@common/types/popup'
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
+import { cloneDeep } from 'lodash'
 
 const defaultPopups: Popups = {
     groupMenuView: { open: false, data: null },
@@ -17,7 +18,7 @@ const defaultPopups: Popups = {
 }
 
 export const usePopupStore = defineStore('popup', () => {
-    const popups = ref<Popups>(structuredClone(defaultPopups))
+    const popups = ref<Popups>(cloneDeep(defaultPopups))
     const onCloseCallback = ref<null | ((data?: any) => void)>(null)
 
     function closeAllPopups(): void {
@@ -35,7 +36,7 @@ export const usePopupStore = defineStore('popup', () => {
     }
 
     function resetGroups(): void {
-        popups.value = structuredClone(defaultPopups)
+        popups.value = cloneDeep(defaultPopups)
     }
 
     /**
@@ -54,11 +55,14 @@ export const usePopupStore = defineStore('popup', () => {
         return popups.value[key].open
     }
 
-    function getSharedData<T>(key: keyof Popups): T | null {
+    function getSharedData<K extends keyof Popups>(key: K): Popups[K]['data'] {
         return popups.value[key].data
     }
 
-    function setSharedData(key: keyof Popups, data: any): void {
+    function setSharedData<K extends keyof Popups>(
+        key: K,
+        data: Popups[K]['data'],
+    ): void {
         popups.value[key].data = data
     }
 
