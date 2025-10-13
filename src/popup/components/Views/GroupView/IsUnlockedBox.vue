@@ -49,7 +49,7 @@ async function promptEnterPassword(): Promise<void> {
         showToast(trans('cant_remember_pass'), 'error', 4000)
     }
 
-    openPopup('newPassword', {}).onClose(async data => {
+    openPopup('newPassword', {}, async data => {
         if (!data) {
             throw new Error("data must exist inside onClose hook in 'newPassword'")
         }

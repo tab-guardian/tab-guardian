@@ -36,14 +36,13 @@ export const usePopupStore = defineStore('popup', () => {
     function openPopup<K extends keyof Popups>(
         key: K,
         data: Popups[K]['dataOnOpen'],
-    ) {
+        onClose?: (data: Popups[K]['dataOnClose']) => void,
+    ): void {
         popups.value[key].open = true
         popups.value[key].dataOnOpen = data
 
-        return {
-            onClose(callback: (data: Popups[K]['dataOnClose']) => void) {
-                onCloseCallback.value = callback
-            },
+        if (onClose) {
+            onCloseCallback.value = onClose
         }
     }
 
