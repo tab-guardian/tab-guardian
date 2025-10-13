@@ -162,7 +162,7 @@
     },
     "export_tab_groups": { "message": "导出标签页组" },
     "export_tab_groups_desc": {
-        "message": "导出所有私人和公共群组。我们建议您为导出文件设置密码保护。"
+        "message": "导出所有私人和公开群组。我们建议您为导出文件设置密码保护。"
     },
     "no_groups_export": { "message": "没有组可导出" },
     "import_groups": { "message": "导入标签页组" },

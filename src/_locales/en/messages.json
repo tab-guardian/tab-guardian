@@ -184,7 +184,7 @@
     },
     "export_tab_groups": { "message": "Export Tab Groups" },
     "export_tab_groups_desc": {
-        "message": "Export all private and public groups. We recommend protecting your export with a password."
+        "message": "Export all private and open groups. We recommend protecting your export with a password."
     },
     "no_groups_export": { "message": "No groups to export" },
     "import_groups": { "message": "Import Tab Groups" },
