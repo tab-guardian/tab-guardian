@@ -7,11 +7,7 @@ import ShieldExclamationIcon from '@common/components/Icons/ShieldExclamationIco
 import OpenTabsButton from '@/components/Views/MainView/Groups/OpenTabsButton.vue'
 import GroupIcon from '@/components/Views/MainView/Groups/GroupIcon.vue'
 
-type Props = {
-    group: Group
-}
-
-const { group } = defineProps<Props>()
+const props = defineProps<{ group: Group }>()
 
 const groupClasses = computed(() => {
     const commonClasses = [
@@ -26,10 +22,10 @@ const groupClasses = computed(() => {
         'bg-page hover:bg-page-hover',
     ]
 
-    const privateGroup = group.isPrivate ? '!bg-safe hover:!bg-safe-hover' : ''
+    const privateGroup = props.group.isPrivate ? '!bg-safe hover:!bg-safe-hover' : ''
 
     const unsafeGroup =
-        group.isPrivate && !group.isEncrypted
+        props.group.isPrivate && !props.group.isEncrypted
             ? '!bg-unsafe hover:!bg-unsafe-hover'
             : ''
 
