@@ -9,15 +9,13 @@ import WarningBox from '@common/components/WarningBox.vue'
 import Button from '@common/components/Form/Button.vue'
 
 const props = defineProps<{ group: Group }>()
-const { setSharedData, openPopup } = usePopupStore()
+const { openPopup } = usePopupStore()
 const { unlockGroup } = useGroupUnlock()
 
 const encrypting = ref<boolean>(false)
 
 function promptEnterPassword(): void {
-    openPopup('enterPassword')
-
-    setSharedData('enterPassword', {
+    openPopup('enterPassword').withData({
         decrypting: pass => unlockGroup(props.group, pass),
         algo: props.group.algo ?? null,
     })

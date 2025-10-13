@@ -27,11 +27,16 @@ export const usePopupStore = defineStore('popup', () => {
         }
     }
 
-    function openPopup(key: keyof Popups, onClose?: (data?: any) => void): void {
+    function openPopup<K extends keyof Popups>(key: K) {
         popups.value[key].open = true
 
-        if (onClose) {
-            onCloseCallback.value = onClose
+        return {
+            withData(data: Popups[K]['data']) {
+                popups.value[key].data = data
+            },
+            onClose(callback: (data?: any) => void) {
+                onCloseCallback.value = callback
+            },
         }
     }
 
@@ -59,19 +64,11 @@ export const usePopupStore = defineStore('popup', () => {
         return popups.value[key].data
     }
 
-    function setSharedData<K extends keyof Popups>(
-        key: K,
-        data: Popups[K]['data'],
-    ): void {
-        popups.value[key].data = data
-    }
-
     return {
         popups,
         openPopup,
         closePopup,
         closeAllPopups,
-        setSharedData,
         getSharedData,
         isOpenPopup,
         resetGroups,
