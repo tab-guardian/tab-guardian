@@ -1,5 +1,5 @@
 import type { EncryptionAlgo, Group, Link } from '@common/types'
-import { reactive, readonly } from 'vue'
+import { useProgressStore } from '@/stores/progress'
 import { defineStore } from 'pinia'
 import {
     encrypt,
@@ -12,21 +12,13 @@ import { env } from '@common/env'
 import CryptoJS from 'crypto-js'
 
 export const useCryptoStore = defineStore('crypto', () => {
-    const progress = reactive({
-        max: 0,
-        current: 0,
-    })
-
-    function resetProgress(): void {
-        progress.max = 0
-        progress.current = 0
-    }
+    const progressStore = useProgressStore()
 
     async function encryptGroup(group: Group, pass: string): Promise<Group> {
         const encryptedLinks: Link[] = []
         const algo = group.algo || env.CURR_ENCRYPT_ALGO
 
-        progress.max = group.links.length
+        progressStore.max = group.links.length
 
         for (const link of group.links) {
             const salt = crypto.getRandomValues(new Uint8Array(16))
@@ -47,14 +39,14 @@ export const useCryptoStore = defineStore('crypto', () => {
                 iv: toBase64(iv),
             })
 
-            progress.current++
+            progressStore.current++
         }
 
         group.algo = algo
         group.links = encryptedLinks
         group.isEncrypted = true
 
-        resetProgress()
+        progressStore.reset()
 
         return group
     }
@@ -62,18 +54,18 @@ export const useCryptoStore = defineStore('crypto', () => {
     async function decryptGroup(group: Group, pass: string): Promise<Group> {
         const decryptedLinks: Link[] = []
 
-        progress.max = group.links.length
+        progressStore.max = group.links.length
 
         for (const link of group.links) {
             const decryptedLink = await decryptLink(group, link, pass)
-            progress.current++
+            progressStore.current++
             decryptedLinks.push(decryptedLink)
         }
 
         group.links = decryptedLinks
         group.isEncrypted = false
 
-        resetProgress()
+        progressStore.reset()
 
         return group
     }
@@ -135,7 +127,6 @@ export const useCryptoStore = defineStore('crypto', () => {
     }
 
     return {
-        progress: readonly(progress),
         encryptGroup,
         decryptGroup,
     }
