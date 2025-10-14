@@ -2,7 +2,6 @@
 import { ref } from 'vue'
 import { usePopupStore } from '@/stores/popup'
 import { useAttemptsStore } from '@/stores/attempts'
-import { useProgressStore } from '@/stores/progress'
 import { trans } from '@common/modules/utils'
 import { showToast } from '@common/modules/toast'
 import ShieldCheckIcon from '@common/components/Icons/ShieldCheckIcon.vue'
@@ -13,7 +12,6 @@ import Popup from '@/components/Popups/Popup.vue'
 
 const popupStore = usePopupStore()
 const attemptsStore = useAttemptsStore()
-const progressStore = useProgressStore()
 
 const pass = ref<string>('')
 const processing = ref<boolean>(false)
