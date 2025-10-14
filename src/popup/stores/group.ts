@@ -6,6 +6,7 @@ import { runtime } from '@common/modules/runtime'
 import { useSettingsStore } from '@/stores/settings'
 import { useNotificationStore } from '@/stores/notification'
 import { useCryptoStore } from '@/stores/crypto'
+import { useProgressStore } from '@/stores/progress'
 import { showToast } from '@common/modules/toast'
 import { getCurrentURL } from '@common/modules/utils/getCurrentURL'
 import { savePasswordToStorage } from '@common/modules/storage/password'
@@ -20,6 +21,7 @@ export const useGroupStore = defineStore('group', () => {
     const cryptoStore = useCryptoStore()
     const settingsStore = useSettingsStore()
     const notificationStore = useNotificationStore()
+    const progressStore = useProgressStore()
 
     const groups = ref<Group[]>([])
     const loadingGroups = ref<boolean>(false)
@@ -161,6 +163,8 @@ export const useGroupStore = defineStore('group', () => {
         groups: Group[],
         replace: boolean,
     ): Promise<void> {
+        progressStore.start(groups.length)
+
         for (const group of groups) {
             group.id = generateGroupId()
 
@@ -173,9 +177,13 @@ export const useGroupStore = defineStore('group', () => {
             }
 
             await saveGroup(group, false)
+
+            progressStore.advance()
         }
 
         await loadGroupsFromStorage()
+
+        progressStore.finish()
     }
 
     async function setIcon(groupId: number, icon: string): Promise<void> {

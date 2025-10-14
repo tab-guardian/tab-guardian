@@ -16,7 +16,7 @@ import WarningBox from '@common/components/WarningBox.vue'
 import ProgressBar from '@common/components/ProgressBar.vue'
 import Button from '@common/components/Form/Button.vue'
 
-const { group } = defineProps<{ group: Group }>()
+const props = defineProps<{ group: Group }>()
 const groupStore = useGroupStore()
 const progressStore = useProgressStore()
 const settingsStore = useSettingsStore()
@@ -35,10 +35,10 @@ async function promptEnterPassword(): Promise<void> {
     }
 
     if (useNewPassword.value) {
-        await deletePasswordFromStorage(group.id)
+        await deletePasswordFromStorage(props.group.id)
     }
 
-    const pass = await getPasswordFromStorage(group.id)
+    const pass = await getPasswordFromStorage(props.group.id)
 
     if (pass) {
         await lockGroup(pass)
@@ -62,15 +62,15 @@ async function promptEnterPassword(): Promise<void> {
 async function lockGroup(pass: string): Promise<void> {
     encrypting.value = true
 
-    const encrypted = await groupStore.encrypt(group, pass)
+    const encrypted = await groupStore.encrypt(props.group, pass)
 
     if (!encrypted) {
-        console.info(`Group ${group.id} wasn't encrypted`)
+        console.info(`Group ${props.group.id} wasn't encrypted`)
         return
     }
 
     await groupStore.saveGroup(encrypted)
-    await deletePasswordFromStorage(group.id)
+    await deletePasswordFromStorage(props.group.id)
 
     encrypting.value = false
 

@@ -16,7 +16,7 @@ defineProps<{
         <Overlay @click="emit('cancel')" />
 
         <div
-            class="absolute top-1/2 left-1/2 -translate-x-1/2 bg-secondary rounded-md -translate-y-1/2 p-4 z-20 w-[90%] max-w-96"
+            class="fixed top-1/2 left-1/2 -translate-x-1/2 bg-secondary rounded-md -translate-y-1/2 p-4 z-20 w-[90%] max-w-96"
         >
             <span class="text-lg mb-3 block">{{ content }}</span>
 

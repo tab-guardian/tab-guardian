@@ -18,7 +18,7 @@ export const useCryptoStore = defineStore('crypto', () => {
         const encryptedLinks: Link[] = []
         const algo = group.algo || env.CURR_ENCRYPT_ALGO
 
-        progressStore.max = group.links.length
+        progressStore.start(group.links.length)
 
         for (const link of group.links) {
             const salt = crypto.getRandomValues(new Uint8Array(16))
@@ -39,14 +39,14 @@ export const useCryptoStore = defineStore('crypto', () => {
                 iv: toBase64(iv),
             })
 
-            progressStore.current++
+            progressStore.advance()
         }
 
         group.algo = algo
         group.links = encryptedLinks
         group.isEncrypted = true
 
-        progressStore.reset()
+        progressStore.finish()
 
         return group
     }
@@ -54,18 +54,18 @@ export const useCryptoStore = defineStore('crypto', () => {
     async function decryptGroup(group: Group, pass: string): Promise<Group> {
         const decryptedLinks: Link[] = []
 
-        progressStore.max = group.links.length
+        progressStore.start(group.links.length)
 
         for (const link of group.links) {
             const decryptedLink = await decryptLink(group, link, pass)
-            progressStore.current++
+            progressStore.advance()
             decryptedLinks.push(decryptedLink)
         }
 
         group.links = decryptedLinks
         group.isEncrypted = false
 
-        progressStore.reset()
+        progressStore.finish()
 
         return group
     }
