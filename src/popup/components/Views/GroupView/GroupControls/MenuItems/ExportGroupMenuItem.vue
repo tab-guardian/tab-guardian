@@ -7,8 +7,10 @@ import { trans } from '@common/modules/utils'
 import { useCryptoStore } from '@/stores/crypto'
 import { getPasswordFromStorage } from '@common/modules/storage/password'
 import { showToast } from '@common/modules/toast'
+import { toBase64 } from '@common/modules/utils'
 import { cloneDeep } from 'lodash'
 import slug from 'slug'
+import pako from 'pako'
 import ArrowDownTrayIcon from '@common/components/Icons/ArrowDownTrayIcon.vue'
 import MenuItem from '@/components/MenuItem.vue'
 
@@ -42,8 +44,9 @@ async function exportGroup(): Promise<void> {
     }
 
     const json = JSON.stringify(group)
+    const compressed = toBase64(pako.gzip(json))
 
-    const blob = new Blob([json], { type: 'application/json' })
+    const blob = new Blob([compressed], { type: 'application/json' })
     const url = URL.createObjectURL(blob)
 
     const a = document.createElement('a')

@@ -6,6 +6,7 @@
 - 🐛 Fixed restoring tabs would not recalculate showing notification that you have unlocked groups [#79](https://github.com/tab-guardian/tab-guardian/issues/79)
 - ✨ Improved export/import functionality. Now, you can export all groups with a password protection [#77](https://github.com/tab-guardian/tab-guardian/issues/77)
 - ✨ Exported files are now compressed with Gzip
+- ✨ Add Gzip compression when exporting individual groups
 - 🧑‍💻 Huge refactoring of the core logic
 - 🧑‍💻 Improve performance of "Erase all groups" functionality
 
