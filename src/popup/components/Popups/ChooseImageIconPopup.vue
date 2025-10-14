@@ -10,7 +10,7 @@ import PopupButton from '@/components/Popups/PopupButton.vue'
 import Input from '@common/components/Form/Input.vue'
 import CheckIcon from '@common/components/Icons/CheckIcon.vue'
 
-const { closePopup } = usePopupStore()
+const popupStore = usePopupStore()
 const groupStore = useGroupStore()
 const url = ref<string>('')
 const errorMessage = computed<string | null>(() => validateImageURL(url.value))
@@ -42,7 +42,7 @@ async function chooseImageIcon(): Promise<void> {
 }
 
 function closeImageIconPopup(): void {
-    closePopup('chooseImageIcon', { url: url.value })
+    popupStore.hide('chooseImageIcon', { url: url.value })
 }
 </script>
 

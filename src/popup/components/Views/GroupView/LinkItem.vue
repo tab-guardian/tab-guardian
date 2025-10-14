@@ -14,7 +14,7 @@ const props = defineProps<{
 
 const { linkIsCut } = useAppStore()
 const groupStore = useGroupStore()
-const { openPopup } = usePopupStore()
+const popupStore = usePopupStore()
 
 async function openTab(): Promise<void> {
     if (groupStore.selectedGroup) {
@@ -28,15 +28,15 @@ async function openTab(): Promise<void> {
     await restoreTabs([props.link])
 }
 
-async function openTabLinkPopup(): Promise<void> {
-    openPopup('linkMenuView', { link: props.link })
+async function showTabLinkPopup(): Promise<void> {
+    popupStore.show('linkMenuView', { link: props.link })
 }
 </script>
 
 <template>
     <LinkElement
         @click="openTab"
-        @click.prevent.right="openTabLinkPopup"
+        @click.prevent.right="showTabLinkPopup"
         :class-name="linkIsCut(link.id) ? 'opacity-50' : ''"
         :link
     >

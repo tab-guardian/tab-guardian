@@ -17,8 +17,8 @@ export const useAppStore = defineStore('app', () => {
     const linkBuffer = ref<LinkBuffer | null>(null)
     const bufferIsEmpty = computed<boolean>(() => linkBuffer.value === null)
 
-    const { saveLinksTo, deleteLinkFrom } = useGroupStore()
-    const { closeAllPopups } = usePopupStore()
+    const groupStore = useGroupStore()
+    const popupStore = usePopupStore()
 
     function linkIsCut(linkId: number): boolean {
         if (!linkBuffer.value || linkBuffer.value.action !== 'cut') {
@@ -37,16 +37,20 @@ export const useAppStore = defineStore('app', () => {
         const link = cloneDeep(linkBuffer.value.link)
         link.id = Date.now()
 
-        await saveLinksTo(groupId, [link])
+        await groupStore.saveLinksTo(groupId, [link])
 
         if (linkBuffer.value.action === 'cut') {
-            await deleteLinkFrom(linkBuffer.value.groupId, linkBuffer.value.link.id)
+            await groupStore.deleteLinkFrom(
+                linkBuffer.value.groupId,
+                linkBuffer.value.link.id,
+            )
         }
 
         linkBuffer.value = null
 
         showToast(trans('tab_pasted'))
-        closeAllPopups()
+
+        popupStore.hideAll()
     }
 
     return {

@@ -11,7 +11,7 @@ import ChevronRightIcon from '@common/components/Icons/ChevronRightIcon.vue'
 import NameInput from '@common/components/Form/NameInput.vue'
 import { getDefaultGroupName } from '@common/modules/utils/getDefaultGroupName'
 
-const { closePopup } = usePopupStore()
+const popupStore = usePopupStore()
 const groupStore = useGroupStore()
 
 const name = ref<string>(groupStore.selectedGroup?.name || '')
@@ -31,7 +31,7 @@ async function saveName(): Promise<void> {
         return
     }
 
-    closePopup('editGroupName', {})
+    popupStore.hide('editGroupName', {})
 
     if (name.value === '') {
         name.value = getDefaultGroupName()
@@ -47,7 +47,7 @@ async function saveName(): Promise<void> {
 
 <template>
     <Popup
-        @cancel="closePopup('editGroupName', {})"
+        @cancel="popupStore.hide('editGroupName', {})"
         :content="trans('enter_group_name')"
     >
         <form @submit.prevent="saveName" class="flex flex-col gap-3">

@@ -27,13 +27,13 @@ export const usePopupStore = defineStore('popup', () => {
     const popups = ref<Popups>(cloneDeep(defaultPopups))
     const onCloseCallback = ref<null | (<T>(data: T) => void)>(null)
 
-    function closeAllPopups(): void {
+    function hideAll(): void {
         for (const key in popups.value) {
             popups.value[key as keyof Popups].open = false
         }
     }
 
-    function openPopup<K extends keyof Popups>(
+    function show<K extends keyof Popups>(
         key: K,
         data: Popups[K]['dataOnOpen'],
         onClose?: (data: Popups[K]['dataOnClose']) => void,
@@ -53,7 +53,7 @@ export const usePopupStore = defineStore('popup', () => {
     /**
      * @param data Pass data that you want to pass to onClose callback
      */
-    function closePopup<K extends keyof Popups>(
+    function hide<K extends keyof Popups>(
         key: K,
         onCloseData: Popups[K]['dataOnClose'],
     ): void {
@@ -66,7 +66,7 @@ export const usePopupStore = defineStore('popup', () => {
         }
     }
 
-    function isOpenPopup(key: keyof Popups): boolean {
+    function isPopupVisible(key: keyof Popups): boolean {
         return popups.value[key].open
     }
 
@@ -76,11 +76,11 @@ export const usePopupStore = defineStore('popup', () => {
 
     return {
         popups,
-        openPopup,
-        closePopup,
-        closeAllPopups,
+        show,
+        hide,
+        hideAll,
         getSharedData,
-        isOpenPopup,
+        isPopupVisible,
         resetGroups,
     }
 })

@@ -14,7 +14,7 @@ import ArrowDownTrayIcon from '@common/components/Icons/ArrowDownTrayIcon.vue'
 import SlideSwitch from '@common/components/Form/SlideSwitch.vue'
 
 const groupStore = useGroupStore()
-const { openPopup } = usePopupStore()
+const popupStore = usePopupStore()
 
 const exporting = ref<boolean>(false)
 const usePassword = ref<boolean>(false)
@@ -41,7 +41,7 @@ async function exportGroups(): Promise<void> {
         return
     }
 
-    openPopup('newPassword', {}, async data => {
+    popupStore.show('newPassword', {}, async data => {
         if (!data) {
             throw new Error("data must exist inside onClose hook in 'newPassword'")
         }

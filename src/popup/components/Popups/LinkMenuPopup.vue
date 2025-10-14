@@ -13,11 +13,11 @@ import ScissorsIcon from '@common/components/Icons/ScissorsIcon.vue'
 import CopyIcon from '@common/components/Icons/CopyIcon.vue'
 import PasteLinkMenuItem from '@/components//Views/GroupView/GroupControls/MenuItems/PasteLinkMenuItem.vue'
 
-const { closePopup, closeAllPopups, getSharedData } = usePopupStore()
+const popupStore = usePopupStore()
 const appStore = useAppStore()
 const groupStore = useGroupStore()
 const group = computed<Group | null>(() => groupStore.selectedGroup)
-const sharedData = getSharedData('linkMenuView')
+const sharedData = popupStore.getSharedData('linkMenuView')
 
 async function yankLink(action: 'copy' | 'cut', successMsg: string): Promise<void> {
     if (!sharedData) {
@@ -36,7 +36,7 @@ async function yankLink(action: 'copy' | 'cut', successMsg: string): Promise<voi
         link: sharedData.link,
     }
 
-    closeAllPopups()
+    popupStore.hideAll()
     showToast(successMsg)
 }
 
@@ -53,7 +53,7 @@ async function cutLink(): Promise<void> {
     <Popup
         v-if="group && sharedData"
         :content="limitString(sharedData.link.title, 25)"
-        @cancel="closePopup('linkMenuView', {})"
+        @cancel="popupStore.hide('linkMenuView', {})"
     >
         <div class="flex flex-col gap-1 mt-3">
             <MenuItem
@@ -76,6 +76,6 @@ async function cutLink(): Promise<void> {
     <Popup
         v-else
         :content="trans('error_no_tab_selected')"
-        @cancel="closePopup('linkMenuView', {})"
+        @cancel="popupStore.hide('linkMenuView', {})"
     />
 </template>

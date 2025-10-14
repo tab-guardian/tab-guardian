@@ -9,12 +9,12 @@ import NewGroupButton from '@/components/Views/MainView/NewGroup/NewGroupButton.
 
 onMounted(() => newGroupStore.resetChoices())
 
-const { openPopup } = usePopupStore()
+const popupStore = usePopupStore()
 const newGroupStore = useNewGroupStore()
 
 function askForGroupName(isPrivate: boolean) {
     newGroupStore.choices.isPrivate = isPrivate
-    openPopup('newGroupName', {})
+    popupStore.show('newGroupName', {})
 }
 </script>
 

@@ -14,7 +14,7 @@ import MenuItem from '@/components/MenuItem.vue'
 
 const store = useGroupStore()
 const cryptoStore = useCryptoStore()
-const { openPopup, closePopup } = usePopupStore()
+const popupStore = usePopupStore()
 
 const loading = ref<boolean>(false)
 
@@ -55,7 +55,7 @@ async function exportGroup(): Promise<void> {
 
     loading.value = false
 
-    closePopup('groupMenuView', {})
+    popupStore.hide('groupMenuView', {})
 }
 
 async function encryptPrivateGroup(group: Group): Promise<Group | null> {
@@ -63,7 +63,7 @@ async function encryptPrivateGroup(group: Group): Promise<Group | null> {
 
     if (!pass) {
         showToast(trans('cant_remember_pass'), 'error', 4000)
-        openPopup('newPassword', {})
+        popupStore.show('newPassword', {})
         return null
     }
 

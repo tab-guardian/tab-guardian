@@ -14,7 +14,7 @@ import GroupIcon from '@/components/Views/MainView/Groups/GroupIcon.vue'
 const props = defineProps<{ group: Group }>()
 
 const router = useRouter()
-const { openPopup } = usePopupStore()
+const popupStore = usePopupStore()
 const { unlockGroup } = useGroupUnlock()
 
 const groupClasses = computed(() => {
@@ -36,7 +36,7 @@ const groupClasses = computed(() => {
 
 async function navigateToGroupView(): Promise<void> {
     if (props.group.isPrivate && props.group.isEncrypted) {
-        openPopup('enterPassword', {
+        popupStore.show('enterPassword', {
             decrypting: async pass => await unlockGroup(props.group, pass),
             algo: props.group.algo ?? null,
             description: trans('enter_pass_unlock_content'),

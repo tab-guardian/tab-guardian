@@ -7,7 +7,7 @@ import { deletePasswordFromStorage } from '@common/modules/storage/password'
 import Popup from '@/components/Popups/Popup.vue'
 import PopupButton from '@/components/Popups/PopupButton.vue'
 
-const { closePopup } = usePopupStore()
+const popupStore = usePopupStore()
 const groupStore = useGroupStore()
 const router = useRouter()
 
@@ -26,7 +26,7 @@ async function deleteGroup(): Promise<void> {
         await deletePasswordFromStorage(group.id)
     }
 
-    closePopup('deleteGroup', {})
+    popupStore.hide('deleteGroup', {})
 
     groupStore.selectedGroup = null
 }
@@ -35,11 +35,14 @@ async function deleteGroup(): Promise<void> {
 <template>
     <Popup
         v-if="groupStore.selectedGroup"
-        @cancel="closePopup('deleteGroup', {})"
+        @cancel="popupStore.hide('deleteGroup', {})"
         :content="trans('want_delete_group')"
     >
         <template #buttons>
-            <PopupButton @click="closePopup('deleteGroup', {})" :is-secondary="true">
+            <PopupButton
+                @click="popupStore.hide('deleteGroup', {})"
+                :is-secondary="true"
+            >
                 {{ trans('no') }}
             </PopupButton>
 

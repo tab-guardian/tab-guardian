@@ -6,13 +6,13 @@ import { usePopupStore } from '@/stores/popup'
 import MenuItem from '@/components/MenuItem.vue'
 import PlusCircleIcon from '@common/components/Icons/PlusCircleIcon.vue'
 
-const { closePopup } = usePopupStore()
+const popupStore = usePopupStore()
 const router = useRouter()
 
 function switchToSelectTabsView(): void {
     const operation: SelectTabsOperation = 'adding'
     router.push({ name: 'select-tabs', params: { operation } })
-    closePopup('groupMenuView', {})
+    popupStore.hide('groupMenuView', {})
 }
 </script>
 

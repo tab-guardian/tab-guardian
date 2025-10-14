@@ -20,7 +20,7 @@ const { group } = defineProps<{ group: Group }>()
 const groupStore = useGroupStore()
 const cryptoStore = useCryptoStore()
 const settingsStore = useSettingsStore()
-const { openPopup } = usePopupStore()
+const popupStore = usePopupStore()
 
 const useNewPassword = ref<boolean>(false)
 const encrypting = ref<boolean>(false)
@@ -49,7 +49,7 @@ async function promptEnterPassword(): Promise<void> {
         showToast(trans('cant_remember_pass'), 'error', 4000)
     }
 
-    openPopup('newPassword', {}, async data => {
+    popupStore.show('newPassword', {}, async data => {
         if (!data) {
             throw new Error("data must exist inside onClose hook in 'newPassword'")
         }

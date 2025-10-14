@@ -8,7 +8,7 @@ import Button from '@common/components/Form/Button.vue'
 import ChevronRightIcon from '@common/components/Icons/ChevronRightIcon.vue'
 import PasswordFields from '@/components/PasswordFields.vue'
 
-const { closePopup } = usePopupStore()
+const popupStore = usePopupStore()
 
 const pass = ref<string>('')
 const confirmPass = ref<string>('')
@@ -25,7 +25,7 @@ function updatePassword(): void {
 }
 
 function closePasswordPopup(): void {
-    closePopup('newPassword', { newPass: pass.value })
+    popupStore.hide('newPassword', { newPass: pass.value })
 }
 </script>
 

@@ -9,13 +9,13 @@ import WarningBox from '@common/components/WarningBox.vue'
 import Button from '@common/components/Form/Button.vue'
 
 const props = defineProps<{ group: Group }>()
-const { openPopup } = usePopupStore()
+const popupStore = usePopupStore()
 const { unlockGroup } = useGroupUnlock()
 
 const encrypting = ref<boolean>(false)
 
 async function promptEnterPassword(): Promise<void> {
-    openPopup('enterPassword', {
+    popupStore.show('enterPassword', {
         decrypting: async pass => await unlockGroup(props.group, pass),
         algo: props.group.algo ?? null,
         description: trans('enter_pass_unlock_content'),

@@ -17,7 +17,7 @@ const store = useGroupStore()
 const router = useRouter()
 const groupId = Number(router.currentRoute.value.params.id)
 
-const { openPopup, closeAllPopups } = usePopupStore()
+const popupStore = usePopupStore()
 const group = computed<Group | null>(() => store.getGroupById(groupId))
 
 const favIcons = computed<string[]>(() => {
@@ -30,7 +30,7 @@ const favIcons = computed<string[]>(() => {
     return Array.from(new Set(icons))
 })
 
-onMounted(closeAllPopups)
+onMounted(() => popupStore.hideAll())
 
 async function selectIcon(icon: string): Promise<void> {
     if (!group.value || icon === '' || group.value.icon === icon) {
@@ -45,7 +45,7 @@ async function selectIcon(icon: string): Promise<void> {
 }
 
 function openEmojiPopup(): void {
-    openPopup('chooseEmoji', {}, async data => {
+    popupStore.show('chooseEmoji', {}, async data => {
         if (!data) {
             throw new Error("data must exist inside onClose hook in 'newPassword'")
         }
@@ -55,7 +55,7 @@ function openEmojiPopup(): void {
 }
 
 function openImageIconPopup(): void {
-    openPopup('chooseImageIcon', {}, async data => {
+    popupStore.show('chooseImageIcon', {}, async data => {
         if (!data) {
             throw new Error("data must exist inside onClose hook in 'newPassword'")
         }

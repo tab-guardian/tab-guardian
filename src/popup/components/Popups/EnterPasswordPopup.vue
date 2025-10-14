@@ -11,14 +11,14 @@ import ProgressBar from '@common/components/ProgressBar.vue'
 import PasswordInput from '@common/components/Form/PasswordInput.vue'
 import Popup from '@/components/Popups/Popup.vue'
 
-const { getSharedData, closePopup } = usePopupStore()
+const popupStore = usePopupStore()
 const attemptsStore = useAttemptsStore()
 const cryptoStore = useCryptoStore()
 
 const password = ref<string>('')
 const processing = ref<boolean>(false)
 
-const sharedData = getSharedData('enterPassword')
+const sharedData = popupStore.getSharedData('enterPassword')
 
 async function submitPassword(): Promise<void> {
     if (processing.value) {
@@ -49,7 +49,7 @@ async function submitPassword(): Promise<void> {
 
     if (success) {
         await attemptsStore.unlock()
-        closePopup('enterPassword', {})
+        popupStore.hide('enterPassword', {})
     } else if (attemptsStore.isLocked) {
         showToast(attemptsStore.isLockedErrorMessage(), 'error', 5000)
     }
@@ -60,7 +60,7 @@ async function submitPassword(): Promise<void> {
 </script>
 
 <template>
-    <Popup @cancel="closePopup('enterPassword', {})" :content="trans('enter_pass')">
+    <Popup @cancel="popupStore.hide('enterPassword', {})" :content="trans('enter_pass')">
         <p class="flex items-center gap-3 mb-2 text-sm leading-4">
             <ShieldCheckIcon width="45" height="45" />
             {{ sharedData?.description }}

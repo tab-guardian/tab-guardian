@@ -17,7 +17,7 @@ import GroupIcon from '@/components/Views/MainView/Groups/GroupIcon.vue'
 
 const route = useRoute()
 const groupStore = useGroupStore()
-const { openPopup } = usePopupStore()
+const popupStore = usePopupStore()
 
 const group = computed<Group | null>(() => {
     const id = route.params.id
@@ -43,7 +43,7 @@ watchEffect(() => {
         <template #controls>
             <Actions v-if="group && showButtons" :group />
 
-            <Control @click="openPopup('groupMenuView', {})">
+            <Control @click="popupStore.show('groupMenuView', {})">
                 <EllipsisVerticalIcon style="width: 100%" />
             </Control>
         </template>

@@ -11,7 +11,7 @@ const props = defineProps<{ group: Group }>()
 
 const tabsStore = useTabsStore()
 const groupStore = useGroupStore()
-const { openPopup } = usePopupStore()
+const popupStore = usePopupStore()
 const { unlockGroup } = useGroupUnlock()
 
 async function openTabs(): Promise<void> {
@@ -30,7 +30,7 @@ async function openTabs(): Promise<void> {
         return
     }
 
-    openPopup('enterPassword', {
+    popupStore.show('enterPassword', {
         decrypting: async pass => await unlockGroup(props.group, pass, true),
         algo: props.group.algo ?? null,
         description: trans('enter_pass_unlock_content'),

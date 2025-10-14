@@ -12,7 +12,7 @@ import Button from '@common/components/Form/Button.vue'
 import Input from '@common/components/Form/Input.vue'
 import CheckIcon from '@common/components/Icons/CheckIcon.vue'
 
-const { closePopup } = usePopupStore()
+const popupStore = usePopupStore()
 const groupStore = useGroupStore()
 const router = useRouter()
 const url = ref<string>('')
@@ -30,7 +30,7 @@ async function rebindGroup(): Promise<void> {
         return
     }
 
-    closePopup('rebindGroup', {})
+    popupStore.hide('rebindGroup', {})
 
     await router.push({
         name: 'group',
@@ -49,7 +49,7 @@ async function rebindGroup(): Promise<void> {
 <template>
     <Popup
         v-if="groupStore.selectedGroup"
-        @cancel="closePopup('rebindGroup', {})"
+        @cancel="popupStore.hide('rebindGroup', {})"
         :content="trans('enter_new_url_bind_to')"
         :description="trans('enter_new_url_bind_private_to_new_url')"
     >

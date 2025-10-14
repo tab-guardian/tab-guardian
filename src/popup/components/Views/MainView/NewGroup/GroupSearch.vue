@@ -13,7 +13,7 @@ const tabsStore = useTabsStore()
 const initialGroups = ref<Group[]>([])
 const inpElem = ref<HTMLInputElement | null>(null)
 const query = ref<string>('')
-const { openPopup } = usePopupStore()
+const popupStore = usePopupStore()
 const { unlockGroup } = useGroupUnlock()
 const placeholder =
     navigator.userAgent.indexOf('Mac OS X') != -1 ? '⌃⌘k' : 'ctrl+alt+k'
@@ -54,7 +54,7 @@ async function openFirstGroup(e: KeyboardEvent): Promise<void> {
         return
     }
 
-    openPopup('enterPassword', {
+    popupStore.show('enterPassword', {
         decrypting: async pass => await unlockGroup(group, pass, true),
         algo: group.algo ?? null,
         description: trans('enter_pass_unlock_content'),

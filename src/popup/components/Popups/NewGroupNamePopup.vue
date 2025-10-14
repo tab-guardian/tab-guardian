@@ -14,7 +14,7 @@ import BindToUrlSlider from '@/components/Popups/BindToUrlSlider.vue'
 import NameInput from '@common/components/Form/NameInput.vue'
 import PasswordFields from '@/components/PasswordFields.vue'
 
-const { closePopup, closeAllPopups } = usePopupStore()
+const popupStore = usePopupStore()
 const newGroupStore = useNewGroupStore()
 const router = useRouter()
 
@@ -38,7 +38,7 @@ function submitName(): void {
 
     newGroupStore.choices.wantsSelectAllLinks = true
 
-    closeAllPopups()
+    popupStore.hideAll()
 
     const operation: SelectTabsOperation = 'creating'
 
@@ -48,7 +48,7 @@ function submitName(): void {
 
 <template>
     <Popup
-        @cancel="closePopup('newGroupName', {})"
+        @cancel="popupStore.hide('newGroupName', {})"
         :content="trans('enter_group_name')"
     >
         <form @submit.prevent="submitName" class="flex flex-col gap-3">

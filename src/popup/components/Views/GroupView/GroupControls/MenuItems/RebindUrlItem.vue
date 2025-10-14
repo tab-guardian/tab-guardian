@@ -4,11 +4,11 @@ import LinkIcon from '@common/components/Icons/LinkIcon.vue'
 import { trans } from '@common/modules/utils'
 import { usePopupStore } from '@/stores/popup'
 
-const { closePopup, openPopup } = usePopupStore()
+const popupStore = usePopupStore()
 
 function rebind(): void {
-    closePopup('groupMenuView', {})
-    openPopup('rebindGroup', {})
+    popupStore.hide('groupMenuView', {})
+    popupStore.show('rebindGroup', {})
 }
 </script>
 

@@ -1,14 +1,15 @@
 <script setup lang="ts">
 import type { EncryptionAlgo, Group } from '@common/types'
 import { ref } from 'vue'
+import { env } from '@common/env'
 import { trans } from '@common/modules/utils'
 import { useGroupStore } from '@/stores/group'
 import { decryptString } from '@common/modules/webCrypto'
 import { fromBase64 } from '@common/modules/utils'
 import { useAttemptsStore } from '@/stores/attempts'
 import { showToast } from '@common/modules/toast'
+import { usePopupStore } from '@/stores/popup'
 import { getDecryptionError } from '@/errors'
-import { env } from '@common/env'
 import pako from 'pako'
 import Swal from 'sweetalert2'
 import Section from '@settings/components/Section.vue'
@@ -17,6 +18,7 @@ import PasswordInput from '@common/components/Form/PasswordInput.vue'
 
 const groupStore = useGroupStore()
 const attemptsStore = useAttemptsStore()
+const { show: showPopup } = usePopupStore()
 
 const fileRawData = ref<string>('')
 const password = ref<string>('')

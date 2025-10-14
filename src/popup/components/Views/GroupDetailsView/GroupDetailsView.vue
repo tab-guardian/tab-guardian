@@ -15,9 +15,9 @@ const router = useRouter()
 const store = useGroupStore()
 
 const groupId = Number(router.currentRoute.value.params.id)
-const { closeAllPopups } = usePopupStore()
+const popupStore = usePopupStore()
 
-onMounted(closeAllPopups)
+onMounted(() => popupStore.hideAll())
 
 const DATE_FORMAT = 'DD.MM.YYYY HH:mm'
 const group = computed<Group | null>(() => store.getGroupById(groupId))
