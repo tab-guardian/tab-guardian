@@ -46,6 +46,10 @@ async function exportGroups(): Promise<void> {
             throw new Error("data must exist inside onClose hook in 'newPassword'")
         }
 
+        if (data.newPass === '') {
+            return
+        }
+
         const encrypted = await encryptJSON(compressed, data.newPass)
         downloadFile(encrypted)
     })

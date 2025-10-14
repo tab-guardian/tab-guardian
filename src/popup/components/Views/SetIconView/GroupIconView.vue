@@ -50,6 +50,10 @@ function openEmojiPopup(): void {
             throw new Error("data must exist inside onClose hook in 'newPassword'")
         }
 
+        if (data.emo === '') {
+            return
+        }
+
         await selectIcon(data.emo)
     })
 }
@@ -58,6 +62,10 @@ function openImageIconPopup(): void {
     popupStore.show('chooseImageIcon', {}, async data => {
         if (!data) {
             throw new Error("data must exist inside onClose hook in 'newPassword'")
+        }
+
+        if (data.url === '') {
+            return
         }
 
         await selectIcon(data.url)

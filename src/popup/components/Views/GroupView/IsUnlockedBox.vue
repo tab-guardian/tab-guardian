@@ -52,6 +52,10 @@ async function promptEnterPassword(): Promise<void> {
             throw new Error("data must exist inside onClose hook in 'newPassword'")
         }
 
+        if (data.newPass === '') {
+            return
+        }
+
         await groupStore.updatePassword(data.newPass)
         await lockGroup(data.newPass)
     })
