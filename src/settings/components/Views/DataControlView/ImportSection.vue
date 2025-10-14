@@ -14,6 +14,7 @@ import pako from 'pako'
 import Swal from 'sweetalert2'
 import Section from '@settings/components/Section.vue'
 import FileInput from '@common/components/Form/FileInput.vue'
+import Progress from '@common/components/Progress.vue'
 
 const groupStore = useGroupStore()
 const attemptsStore = useAttemptsStore()
@@ -114,7 +115,7 @@ async function processFileContent(rawData: string): Promise<void> {
     }, 0)
 
     if (groupsWithSameName === 0) {
-        groupStore.addAndSaveGroups(groups, false)
+        await groupStore.addAndSaveGroups(groups, false)
         showSuccessMessage(groups)
         return
     }
@@ -165,6 +166,8 @@ function resetState(): void {
                 :label="file ? trans('file_chosen') : trans('choose_exported_file')"
                 id="choose-file"
             />
+
+            <Progress />
         </div>
     </Section>
 </template>

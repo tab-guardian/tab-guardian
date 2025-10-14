@@ -6,9 +6,5 @@ const progressStore = useProgressStore()
 </script>
 
 <template>
-    <ProgressBar
-        :current="progressStore.current"
-        :max="progressStore.max"
-        class="mt-3"
-    />
+    <ProgressBar :current="progressStore.current" :max="progressStore.max" />
 </template>
