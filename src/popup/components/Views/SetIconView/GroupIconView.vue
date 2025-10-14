@@ -46,11 +46,7 @@ async function selectIcon(icon: string): Promise<void> {
 
 function openEmojiPopup(): void {
     popupStore.show('chooseEmoji', {}, async data => {
-        if (!data) {
-            throw new Error("data must exist inside onClose hook in 'newPassword'")
-        }
-
-        if (data.emo === '') {
+        if (!data || data.emo === '') {
             return
         }
 

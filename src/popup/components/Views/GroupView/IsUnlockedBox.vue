@@ -48,11 +48,8 @@ async function promptEnterPassword(): Promise<void> {
     }
 
     popupStore.show('newPassword', {}, async data => {
-        if (!data) {
-            throw new Error("data must exist inside onClose hook in 'newPassword'")
-        }
-
-        if (data.newPass === '') {
+        if (!data || data.newPass === '') {
+            encrypting.value = false
             return
         }
 
