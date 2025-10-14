@@ -15,7 +15,7 @@ const popupStore = usePopupStore()
 const attemptsStore = useAttemptsStore()
 const cryptoStore = useCryptoStore()
 
-const password = ref<string>('')
+const pass = ref<string>('')
 const processing = ref<boolean>(false)
 
 const sharedData = popupStore.getSharedData('enterPassword')
@@ -30,7 +30,7 @@ async function submitPassword(): Promise<void> {
         throw new Error('sharedData is null in EnterPasswordPopup.vue')
     }
 
-    if (!password.value) {
+    if (!pass.value) {
         showToast(trans('enter_pass'), 'error')
         return
     }
@@ -39,13 +39,13 @@ async function submitPassword(): Promise<void> {
 
     if (!attempt.success) {
         showToast(attempt.error, 'error', 5000)
-        password.value = ''
+        pass.value = ''
         return
     }
 
     processing.value = true
 
-    const success = await sharedData.decrypting(password.value)
+    const success = await sharedData.decrypting(pass.value)
 
     if (success) {
         await attemptsStore.unlock()
@@ -55,7 +55,7 @@ async function submitPassword(): Promise<void> {
     }
 
     processing.value = false
-    password.value = ''
+    pass.value = ''
 }
 </script>
 
@@ -69,7 +69,7 @@ async function submitPassword(): Promise<void> {
         <form @submit.prevent="submitPassword">
             <PasswordInput
                 @loaded="inp => inp.focus()"
-                v-model="password"
+                v-model="pass"
                 id="enter-password"
                 :label="trans('enter_pass')"
                 :with-button="true"
