@@ -4,7 +4,7 @@ import { ref } from 'vue'
 import { trans } from '@common/modules/utils'
 import { useGroupStore } from '@/stores/group'
 import { usePopupStore } from '@/stores/popup'
-import { useCryptoStore } from '@/stores/crypto'
+import { useProgressStore } from '@/stores/progress'
 import { useSettingsStore } from '@/stores/settings'
 import { showToast } from '@common/modules/toast'
 import {
@@ -18,7 +18,7 @@ import Button from '@common/components/Form/Button.vue'
 
 const { group } = defineProps<{ group: Group }>()
 const groupStore = useGroupStore()
-const cryptoStore = useCryptoStore()
+const progressStore = useProgressStore()
 const settingsStore = useSettingsStore()
 const popupStore = usePopupStore()
 
@@ -81,8 +81,8 @@ async function lockGroup(pass: string): Promise<void> {
 <template>
     <ProgressBar
         v-if="encrypting"
-        :current="cryptoStore.progress.current"
-        :max="cryptoStore.progress.max"
+        :current="progressStore.current"
+        :max="progressStore.max"
     />
 
     <WarningBox :message="trans('private_group_unlocked')">
