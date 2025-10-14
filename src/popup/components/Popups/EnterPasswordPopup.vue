@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import { usePopupStore } from '@/stores/popup'
 import { useAttemptsStore } from '@/stores/attempts'
-import { useCryptoStore } from '@/stores/crypto'
+import { useProgressStore } from '@/stores/progress'
 import { trans } from '@common/modules/utils'
 import { showToast } from '@common/modules/toast'
 import ShieldCheckIcon from '@common/components/Icons/ShieldCheckIcon.vue'
@@ -13,7 +13,7 @@ import Popup from '@/components/Popups/Popup.vue'
 
 const popupStore = usePopupStore()
 const attemptsStore = useAttemptsStore()
-const cryptoStore = useCryptoStore()
+const progressStore = useProgressStore()
 
 const pass = ref<string>('')
 const processing = ref<boolean>(false)
@@ -79,8 +79,8 @@ async function submitPassword(): Promise<void> {
 
         <ProgressBar
             v-if="processing"
-            :current="cryptoStore.progress.current"
-            :max="cryptoStore.progress.max"
+            :current="progressStore.current"
+            :max="progressStore.max"
             class="mt-3"
         />
 
