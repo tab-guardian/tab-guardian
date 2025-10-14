@@ -6,7 +6,7 @@
 }
 
 .swal2-container {
-    position: absolute !important;
+    position: fixed !important;
 }
 
 [data-tippy-root] {
