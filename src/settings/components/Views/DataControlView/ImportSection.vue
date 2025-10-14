@@ -2,13 +2,14 @@
 import type { EncryptionAlgo, Group } from '@common/types'
 import { ref } from 'vue'
 import { trans } from '@common/modules/utils'
-import { useGroupStore } from '@/stores/group'
 import { decryptString } from '@common/modules/webCrypto'
 import { fromBase64 } from '@common/modules/utils'
-import { useAttemptsStore } from '@/stores/attempts'
 import { showToast } from '@common/modules/toast'
-import { usePopupStore } from '@/stores/popup'
 import { getDecryptionError } from '@/errors'
+import { useAttemptsStore } from '@/stores/attempts'
+import { useGroupStore } from '@/stores/group'
+import { usePopupStore } from '@/stores/popup'
+import { useProgressStore } from '@/stores/progress'
 import pako from 'pako'
 import Swal from 'sweetalert2'
 import Section from '@settings/components/Section.vue'
@@ -17,6 +18,7 @@ import FileInput from '@common/components/Form/FileInput.vue'
 const groupStore = useGroupStore()
 const attemptsStore = useAttemptsStore()
 const popupStore = usePopupStore()
+const progressStore = useProgressStore()
 
 const file = ref<File | null>(null)
 const fileInput = ref<HTMLInputElement | null>(null)

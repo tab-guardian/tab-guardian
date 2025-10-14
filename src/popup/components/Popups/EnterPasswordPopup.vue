@@ -7,7 +7,7 @@ import { trans } from '@common/modules/utils'
 import { showToast } from '@common/modules/toast'
 import ShieldCheckIcon from '@common/components/Icons/ShieldCheckIcon.vue'
 import WarningBox from '@common/components/WarningBox.vue'
-import ProgressBar from '@common/components/ProgressBar.vue'
+import Progress from '@common/components/Progress.vue'
 import PasswordInput from '@common/components/Form/PasswordInput.vue'
 import Popup from '@/components/Popups/Popup.vue'
 
@@ -77,12 +77,7 @@ async function submitPassword(): Promise<void> {
             />
         </form>
 
-        <ProgressBar
-            v-if="processing"
-            :current="progressStore.current"
-            :max="progressStore.max"
-            class="mt-3"
-        />
+        <Progress v-if="processing" class="mt-3" />
 
         <WarningBox
             v-if="sharedData && !sharedData.algo"

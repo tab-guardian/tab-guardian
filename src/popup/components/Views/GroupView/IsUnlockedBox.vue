@@ -4,7 +4,6 @@ import { ref } from 'vue'
 import { trans } from '@common/modules/utils'
 import { useGroupStore } from '@/stores/group'
 import { usePopupStore } from '@/stores/popup'
-import { useProgressStore } from '@/stores/progress'
 import { useSettingsStore } from '@/stores/settings'
 import { showToast } from '@common/modules/toast'
 import {
@@ -13,12 +12,11 @@ import {
 } from '@common/modules/storage/password'
 import LockClosedIcon from '@common/components/Icons/LockClosedIcon.vue'
 import WarningBox from '@common/components/WarningBox.vue'
-import ProgressBar from '@common/components/ProgressBar.vue'
+import Progress from '@common/components/Progress.vue'
 import Button from '@common/components/Form/Button.vue'
 
 const props = defineProps<{ group: Group }>()
 const groupStore = useGroupStore()
-const progressStore = useProgressStore()
 const settingsStore = useSettingsStore()
 const popupStore = usePopupStore()
 
@@ -79,11 +77,7 @@ async function lockGroup(pass: string): Promise<void> {
 </script>
 
 <template>
-    <ProgressBar
-        v-if="encrypting"
-        :current="progressStore.current"
-        :max="progressStore.max"
-    />
+    <Progress v-if="encrypting" />
 
     <WarningBox :message="trans('private_group_unlocked')">
         <div class="w-52 flex flex-col items-end gap-1.5">
