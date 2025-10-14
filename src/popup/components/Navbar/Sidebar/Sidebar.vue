@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { useSidebarStore } from '@/stores/sidebar'
-import { trans } from '@common/modules/trans'
+import { trans } from '@common/modules/utils'
 import { openSettingsPage } from '@/modules/openSettingsPage'
-import { isFirefox } from '@common/modules/browser/isFirefox'
-import { getImageURL } from '@common/modules/browser/url'
+import { runtime } from '@common/modules/runtime'
+import { isRuntime } from '@common/modules/runtime/utils'
 import Control from '@/components/Control.vue'
 import RightSlideTransition from '@common/components/Transitions/RightSlideTransition.vue'
 import Overlay from '@/components/Navbar/Sidebar/Overlay.vue'
@@ -16,7 +16,7 @@ import GitHubIcon from '@common/components/Icons/GitHubIcon.vue'
 import DocumentIcon from '@common/components/Icons/DocumentIcon.vue'
 
 const sidebarStore = useSidebarStore()
-const rateUsLink = isFirefox()
+const rateUsLink = isRuntime('firefox')
     ? 'https://addons.mozilla.org/firefox/addon/tab-guardian/'
     : 'https://chromewebstore.google.com/detail/tab-guardian/kjdklkfpliphcbnphmfhalllclfieojp'
 
@@ -74,8 +74,13 @@ const links = [
                     />
                 </div>
 
-                <small class="justify-end pr-2 mb-2 text-font-gray text-xs flex gap-2 w-full">
-                    <img :src="getImageURL('icons/icon-32.png')" class="w-4 h-4" />
+                <small
+                    class="justify-end pr-2 mb-2 text-font-gray text-xs flex gap-2 w-full"
+                >
+                    <img
+                        :src="runtime.getURL('images/icons/icon-32.png')"
+                        class="w-4 h-4"
+                    />
                     {{ trans('ext_name') }} {{ __APP_VERSION__ }}
                 </small>
             </aside>

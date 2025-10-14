@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { useGroupStore } from '@/stores/group'
-import { trans } from '@common/modules/trans'
+import { trans } from '@common/modules/utils'
 import { usePopupStore } from '@/stores/popup'
 import { useRouter } from 'vue-router'
 import { deletePasswordFromStorage } from '@common/modules/storage/password'
 import Popup from '@/components/Popups/Popup.vue'
 import PopupButton from '@/components/Popups/PopupButton.vue'
 
-const { closePopup } = usePopupStore()
+const popupStore = usePopupStore()
 const groupStore = useGroupStore()
 const router = useRouter()
 
@@ -26,7 +26,7 @@ async function deleteGroup(): Promise<void> {
         await deletePasswordFromStorage(group.id)
     }
 
-    closePopup('deleteGroup')
+    popupStore.hide('deleteGroup', {})
 
     groupStore.selectedGroup = null
 }
@@ -35,12 +35,12 @@ async function deleteGroup(): Promise<void> {
 <template>
     <Popup
         v-if="groupStore.selectedGroup"
-        @cancel="closePopup('deleteGroup')"
+        @cancel="popupStore.hide('deleteGroup', {})"
         :content="trans('want_delete_group')"
     >
         <template #buttons>
             <PopupButton
-                @click="closePopup('deleteGroup')"
+                @click="popupStore.hide('deleteGroup', {})"
                 :is-secondary="true"
             >
                 {{ trans('no') }}

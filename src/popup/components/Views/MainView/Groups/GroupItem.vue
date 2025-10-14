@@ -1,47 +1,56 @@
 <script setup lang="ts">
-import type { Group } from '@/types'
+import type { Group } from '@common/types'
 import { computed } from 'vue'
+import { useRouter } from 'vue-router'
+import { trans } from '@common/modules/utils'
+import { usePopupStore } from '@/stores/popup'
+import { useGroupUnlock } from '@/assets/composables/useGroupUnlock'
 import ChevronRightIcon from '@common/components/Icons/ChevronRightIcon.vue'
 import ShieldCheckIcon from '@common/components/Icons/ShieldCheckIcon.vue'
 import ShieldExclamationIcon from '@common/components/Icons/ShieldExclamationIcon.vue'
 import OpenTabsButton from '@/components/Views/MainView/Groups/OpenTabsButton.vue'
 import GroupIcon from '@/components/Views/MainView/Groups/GroupIcon.vue'
 
-type Props = {
-    group: Group
-}
+const props = defineProps<{ group: Group }>()
 
-const { group } = defineProps<Props>()
+const router = useRouter()
+const popupStore = usePopupStore()
+const { unlockGroup } = useGroupUnlock()
 
 const groupClasses = computed(() => {
     const commonClasses = [
-        'p-2',
-        'flex',
-        'justify-between',
-        'items-center',
-        'gap-3',
-        'transition-colors',
-        'border-b',
-        'border-border',
-        'bg-page hover:bg-page-hover',
+        'p-2 flex justify-between items-center gap-3',
+        'transition-colors border-b border-border',
+        'cursor-pointer bg-page hover:bg-page-hover',
     ]
 
-    const privateGroup = group.isPrivate ? '!bg-safe hover:!bg-safe-hover' : ''
+    const privateGroup = props.group.isPrivate ? '!bg-safe hover:!bg-safe-hover' : ''
 
     const unsafeGroup =
-        group.isPrivate && !group.isEncrypted
+        props.group.isPrivate && !props.group.isEncrypted
             ? '!bg-unsafe hover:!bg-unsafe-hover'
             : ''
 
     return [privateGroup, unsafeGroup, ...commonClasses]
 })
+
+async function navigateToGroupView(): Promise<void> {
+    if (props.group.isPrivate && props.group.isEncrypted) {
+        popupStore.show('enterPassword', {
+            decrypting: async pass => await unlockGroup(props.group, pass),
+            algo: props.group.algo ?? null,
+            description: trans('enter_pass_unlock_content'),
+        })
+
+        return
+    }
+
+    await router.push({ name: 'group', params: { id: props.group.id } })
+}
 </script>
 
 <template>
-    <RouterLink
-        :to="{ name: 'group', params: { id: group.id } }"
-        :class="groupClasses"
-    >
+    <div @click="navigateToGroupView" :class="groupClasses">
         <div class="flex items-center gap-2">
             <div v-if="group.isPrivate" class="w-6 h-6">
                 <ShieldCheckIcon
@@ -69,5 +78,5 @@ const groupClasses = computed(() => {
             <OpenTabsButton :group />
             <ChevronRightIcon class="w-4 h-4" />
         </div>
-    </RouterLink>
+    </div>
 </template>

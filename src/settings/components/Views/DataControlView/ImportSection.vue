@@ -1,17 +1,28 @@
 <script setup lang="ts">
-import type { Group } from '@/types'
+import type { EncryptionAlgo, Group } from '@common/types'
 import { ref } from 'vue'
-import { trans } from '@common/modules/trans'
+import { trans } from '@common/modules/utils'
+import { decryptString } from '@common/modules/webCrypto'
+import { fromBase64 } from '@common/modules/utils'
+import { showToast } from '@common/modules/toast'
+import { getDecryptionError } from '@/errors'
+import { useAttemptsStore } from '@/stores/attempts'
 import { useGroupStore } from '@/stores/group'
-import { showToast } from '@common/modules/showToast'
+import { usePopupStore } from '@/stores/popup'
+import { useProgressStore } from '@/stores/progress'
+import pako from 'pako'
 import Swal from 'sweetalert2'
 import Section from '@settings/components/Section.vue'
 import FileInput from '@common/components/Form/FileInput.vue'
+import Progress from '@common/components/Progress.vue'
 
-const password = ref<string>('')
+const groupStore = useGroupStore()
+const attemptsStore = useAttemptsStore()
+const popupStore = usePopupStore()
+const progressStore = useProgressStore()
+
 const file = ref<File | null>(null)
 const fileInput = ref<HTMLInputElement | null>(null)
-const groupStore = useGroupStore()
 
 async function importGroups(): Promise<void> {
     if (!file.value) {
@@ -22,14 +33,15 @@ async function importGroups(): Promise<void> {
     const reader = new FileReader()
 
     reader.onload = async e => {
-        try {
-            const rawData = e.target?.result as string
-            const json = JSON.parse(rawData) as Group[] | Group
+        if (!e.target) {
+            throw new Error('e.target is null for reader.onload()')
+        }
 
-            await prependGroups(Array.isArray(json) ? json : [json])
+        try {
+            await processFileContent(e.target.result as string)
         } catch (err) {
             console.error(err)
-            showToast(trans('failed_decrypt_file'), 'error')
+            showToast(trans('error_reading_file'), 'error')
         }
     }
 
@@ -39,15 +51,63 @@ async function importGroups(): Promise<void> {
     }
 
     reader.readAsText(file.value)
-    password.value = ''
-    file.value = null
 
-    if (fileInput.value) {
-        fileInput.value.value = ''
-    }
+    resetState()
 }
 
-async function prependGroups(groups: Group[]): Promise<void> {
+async function requestPassword(rawData: string): Promise<void> {
+    const algo = /^algo\(([A-z-]+)\)/.exec(rawData)?.[1] as
+        | EncryptionAlgo
+        | undefined
+
+    if (!algo) {
+        throw new Error('Cannot get the encryption algorithm from the file')
+    }
+
+    const encrypted = rawData.replace(`algo(${algo})`, '')
+
+    popupStore.show('enterPassword', {
+        decrypting: pass => decryptFile(encrypted, pass, algo),
+        algo,
+        description: trans('enter_pass_unlock_file'),
+    })
+}
+
+async function decryptFile(
+    encrypted: string,
+    pass: string,
+    algo: EncryptionAlgo,
+): Promise<boolean> {
+    try {
+        const decrypted = await decryptString(encrypted, pass, algo)
+        await processFileContent(decrypted)
+        attemptsStore.unlock()
+    } catch (err) {
+        showToast(getDecryptionError(err), 'error')
+        return false
+    }
+
+    resetState()
+
+    return true
+}
+
+async function processFileContent(rawData: string): Promise<void> {
+    if (rawData.startsWith('algo(')) {
+        await requestPassword(rawData)
+        return
+    }
+
+    const isCompressed = !rawData.startsWith('{') && !rawData.startsWith('[{')
+
+    if (isCompressed) {
+        const compressedBytes = fromBase64(rawData)
+        rawData = pako.ungzip(compressedBytes, { to: 'string' })
+    }
+
+    const json = JSON.parse(rawData) as Group[] | Group
+    const groups = Array.isArray(json) ? json : [json]
+
     await groupStore.loadGroupsFromStorage()
 
     const groupsWithSameName = groups.reduce((acc, group) => {
@@ -55,7 +115,7 @@ async function prependGroups(groups: Group[]): Promise<void> {
     }, 0)
 
     if (groupsWithSameName === 0) {
-        groupStore.addAndSaveGroups(groups, false)
+        await groupStore.addAndSaveGroups(groups, false)
         showSuccessMessage(groups)
         return
     }
@@ -84,6 +144,14 @@ async function fileChosen(f: File, elem: HTMLInputElement): Promise<void> {
     fileInput.value = elem
     await importGroups()
 }
+
+function resetState(): void {
+    file.value = null
+
+    if (fileInput.value) {
+        fileInput.value.value = ''
+    }
+}
 </script>
 
 <template>
@@ -98,6 +166,8 @@ async function fileChosen(f: File, elem: HTMLInputElement): Promise<void> {
                 :label="file ? trans('file_chosen') : trans('choose_exported_file')"
                 id="choose-file"
             />
+
+            <Progress v-if="progressStore.loading" />
         </div>
     </Section>
 </template>

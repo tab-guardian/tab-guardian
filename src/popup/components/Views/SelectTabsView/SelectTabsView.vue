@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import type { Group, Link, SelectTabsOperation } from '@/types'
+import type { Group, Link, SelectTabsOperation } from '@common/types'
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useNewGroupStore } from '@/stores/newGroup'
-import { trans } from '@common/modules/trans'
+import { trans } from '@common/modules/utils'
 import { useGroupStore } from '@/stores/group'
-import { getCurrentLinks } from '@/modules/tabs/getCurrentLinks'
-import { showToast } from '@common/modules/showToast'
-import { closeTabs } from '@/modules/tabs/closeTabs'
+import { getCurrentLinks } from '@common/modules/tabs/getCurrentLinks'
+import { showToast } from '@common/modules/toast'
+import { closeTabs } from '@common/modules/tabs/closeTabs'
 import { VueDraggableNext } from 'vue-draggable-next'
 import View from '@/components/Views/View.vue'
 import TabItem from '@/components/Views/SelectTabsView/TabItem.vue'
@@ -30,7 +30,7 @@ const links = ref<Link[]>([])
 const selectedLinks = ref<Link[]>([])
 
 const operation = computed<SelectTabsOperation>(() => {
-    return route.params.operation as SelectTabsOperation || 'creating'
+    return (route.params.operation as SelectTabsOperation) || 'creating'
 })
 
 onUnmounted(() => removeEventListener('keydown', saveTabsAfterEnter))
@@ -69,7 +69,7 @@ async function handleCreateGroup(): Promise<void> {
 
     groupStore.groups.push(group)
 
-    await groupStore.save(group)
+    await groupStore.saveGroup(group)
 
     if (closeAllTabs.value) {
         await closeTabs(selectedLinks.value.map(l => l.id))

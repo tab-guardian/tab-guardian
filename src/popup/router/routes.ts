@@ -6,7 +6,7 @@ import GroupDetailsView from '@/components/Views/GroupDetailsView/GroupDetailsVi
 
 export const routes = [
     { path: '/', name: 'main', component: MainView },
-    { path: '/group/:id/:openTabs?', name: 'group', component: GroupView },
+    { path: '/group/:id', name: 'group', component: GroupView },
     { path: '/group-icon/:id', name: 'groupIcon', component: GroupIconView },
     {
         path: '/group-details/:id',

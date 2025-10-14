@@ -1,18 +1,18 @@
 <script setup lang="ts">
-import type { SelectTabsOperation } from '@/types'
-import { trans } from '@common/modules/trans'
+import type { SelectTabsOperation } from '@common/types'
+import { trans } from '@common/modules/utils'
 import { useRouter } from 'vue-router'
 import { usePopupStore } from '@/stores/popup'
 import MenuItem from '@/components/MenuItem.vue'
 import PlusCircleIcon from '@common/components/Icons/PlusCircleIcon.vue'
 
-const { closePopup } = usePopupStore()
+const popupStore = usePopupStore()
 const router = useRouter()
 
 function switchToSelectTabsView(): void {
     const operation: SelectTabsOperation = 'adding'
     router.push({ name: 'select-tabs', params: { operation } })
-    closePopup('groupMenuView')
+    popupStore.hide('groupMenuView', {})
 }
 </script>
 

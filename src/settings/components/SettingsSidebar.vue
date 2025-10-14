@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { RouteLocationRaw } from 'vue-router'
 import type { Component } from 'vue'
-import { trans } from '@common/modules/trans'
+import { trans } from '@common/modules/utils'
 import CogIcon from '@common/components/Icons/CogIcon.vue'
 import CircleStackIcon from '@common/components/Icons/CircleStackIcon.vue'
 

@@ -1,20 +1,22 @@
 <script setup lang="ts">
-import type { Group } from '@/types'
+import type { Group } from '@common/types'
 import { ref } from 'vue'
 import { useGroupStore } from '@/stores/group'
 import { usePopupStore } from '@/stores/popup'
-import { trans } from '@common/modules/trans'
+import { trans } from '@common/modules/utils'
 import { useCryptoStore } from '@/stores/crypto'
 import { getPasswordFromStorage } from '@common/modules/storage/password'
-import { showToast } from '@common/modules/showToast'
+import { showToast } from '@common/modules/toast'
+import { toBase64 } from '@common/modules/utils'
 import { cloneDeep } from 'lodash'
 import slug from 'slug'
+import pako from 'pako'
 import ArrowDownTrayIcon from '@common/components/Icons/ArrowDownTrayIcon.vue'
 import MenuItem from '@/components/MenuItem.vue'
 
-const store = useGroupStore()
+const groupStore = useGroupStore()
 const cryptoStore = useCryptoStore()
-const { openPopup, closePopup } = usePopupStore()
+const popupStore = usePopupStore()
 
 const loading = ref<boolean>(false)
 
@@ -24,14 +26,14 @@ async function exportGroup(): Promise<void> {
         return
     }
 
-    if (!store.selectedGroup) {
+    if (!groupStore.selectedGroup) {
         console.error('No group selected to export')
         return
     }
 
     loading.value = true
 
-    let group = cloneDeep(store.selectedGroup)
+    let group = cloneDeep(groupStore.selectedGroup)
 
     if (group.isPrivate) {
         const encrypted = await encryptPrivateGroup(group)
@@ -42,8 +44,9 @@ async function exportGroup(): Promise<void> {
     }
 
     const json = JSON.stringify(group)
+    const compressed = toBase64(pako.gzip(json))
 
-    const blob = new Blob([json], { type: 'application/json' })
+    const blob = new Blob([compressed], { type: 'application/json' })
     const url = URL.createObjectURL(blob)
 
     const a = document.createElement('a')
@@ -55,7 +58,7 @@ async function exportGroup(): Promise<void> {
 
     loading.value = false
 
-    closePopup('groupMenuView')
+    popupStore.hide('groupMenuView', {})
 }
 
 async function encryptPrivateGroup(group: Group): Promise<Group | null> {
@@ -63,7 +66,7 @@ async function encryptPrivateGroup(group: Group): Promise<Group | null> {
 
     if (!pass) {
         showToast(trans('cant_remember_pass'), 'error', 4000)
-        openPopup('newPassword')
+        popupStore.show('newPassword', {})
         return null
     }
 

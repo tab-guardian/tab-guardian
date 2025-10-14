@@ -1,104 +1,108 @@
-import type { Attempts } from '@/types'
-import { onMounted, ref } from 'vue'
+import type { Attempts } from '@common/types'
+import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
-import { trans } from '@common/modules/trans'
-import { saveToStorage, getFromStorage } from '@common/modules/storage'
-import { showToast } from '@common/modules/showToast'
+import { trans } from '@common/modules/utils'
+import { runtime } from '@common/modules/runtime'
 import { env } from '@common/env'
+
+type Attempt = { success: false; error: string } | { success: true; error: null }
 
 export const useAttemptsStore = defineStore('attempts', () => {
     const attempts = ref<Attempts>({
         amount: 0,
-        lockEndTime: null,
+        lockEndTime: 0,
         isLocked: false,
     })
 
-    onMounted(loadAttemptsFromStorage)
+    const isLocked = computed<boolean>(() => {
+        return attempts.value.isLocked
+    })
+
+    const isLockExpired = computed<boolean>(() => {
+        return Date.now() >= attempts.value.lockEndTime
+    })
+
+    const hasNoAttempts = computed<boolean>(() => {
+        return attempts.value.amount >= env.PASS_MAX_ATTEMPTS
+    })
 
     async function loadAttemptsFromStorage(): Promise<void> {
-        const attemptsValue = await getFromStorage<Attempts>('attempts')
+        const attemptsValue = await runtime.storage.get<Attempts>('attempts')
 
         if (attemptsValue) {
             attempts.value = attemptsValue
         }
     }
 
-    function saveAttemptsToStorage(): void {
+    async function save(): Promise<void> {
         if (!attempts.value) {
             console.error('Attempts value is not set')
             return
         }
 
-        saveToStorage('attempts', attempts.value)
+        await runtime.storage.set('attempts', attempts.value)
     }
 
-    function isAllowedToTry(): boolean {
-        const isLockExpired = Date.now() >= (attempts.value.lockEndTime || 0)
-
-        if (attempts.value.isLocked && isLockExpired) {
-            resetAttempts()
+    async function makeAttempt(): Promise<Attempt> {
+        if (isLocked.value && isLockExpired.value) {
+            await unlock()
         }
 
-        if (attempts.value.isLocked) {
-            const durationLeft = Math.ceil(
-                (attempts.value.lockEndTime! - Date.now()) / 1000 / 60,
-            )
+        if (hasNoAttempts.value) {
+            await lock()
 
-            const msg = trans(
-                'many_attempts_next_attempt_in',
-                durationLeft.toString(),
-            )
-
-            showToast(msg, 'error', 5000)
-
-            return false
+            return {
+                success: false,
+                error: isLockedErrorMessage(),
+            }
         }
 
+        await increment()
+
+        // Lock attempts if at the last attempt but still
+        // allow to make it. If they are on the 5th attempt,
+        // we lock it but allow to do the 5th attempt
+        if (hasNoAttempts.value) {
+            await lock()
+        }
+
+        return { success: true, error: null }
+    }
+
+    async function increment(): Promise<void> {
         attempts.value.amount++
+        await save()
+    }
 
-        if (attempts.value.amount > env.PASS_MAX_ATTEMPTS) {
-            attempts.value.isLocked = true
-            attempts.value.lockEndTime = Date.now() + env.PASS_LOCK_DURATION * 60 * 1000
+    function isLockedErrorMessage(): string {
+        const durationLeft = Math.ceil(
+            (attempts.value.lockEndTime - Date.now()) / 1000 / 60,
+        )
 
-            lockedMessageToast()
-            saveAttemptsToStorage()
+        return trans('many_attempts_next_attempt_in', durationLeft.toString())
+    }
 
-            return false
+    async function lock(): Promise<void> {
+        if (isLocked.value) {
+            return
         }
 
-        saveAttemptsToStorage()
-
-        return true
+        attempts.value.isLocked = true
+        attempts.value.lockEndTime = Date.now() + env.PASS_LOCK_DURATION * 60 * 1000
+        await save()
     }
 
-    function lockedMessageToast(): void {
-        const msg = trans('many_attempts_locked_for', env.PASS_LOCK_DURATION.toString())
-        showToast(msg, 'error', 5000)
-    }
-
-    function incrementAttempts(): void {
-        attempts.value.amount++
-        attempts.value.lockEndTime = Date.now()
-
-        saveAttemptsToStorage()
-    }
-
-    function resetAttempts(): void {
+    async function unlock(): Promise<void> {
         attempts.value.amount = 0
         attempts.value.isLocked = false
-        saveAttemptsToStorage()
-    }
-
-    function hasMaxAttempts(): boolean {
-        return attempts.value.amount >= env.PASS_MAX_ATTEMPTS
+        await save()
     }
 
     return {
-        hasMaxAttempts,
-        lockedMessageToast,
-        saveAttemptsToStorage,
-        isAllowedToTry,
-        resetAttempts,
-        incrementAttempts,
+        isLocked,
+        loadAttemptsFromStorage,
+        isLockedErrorMessage,
+        makeAttempt,
+        unlock,
     }
 })

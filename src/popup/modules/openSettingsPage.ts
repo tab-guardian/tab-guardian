@@ -1,23 +1,18 @@
-import type { Tab } from '@common/types'
-import { isDevelopment } from '@common/modules/isDevelopment'
-import { getPublicURL } from '@common/modules/browser/url'
-import { targetBrowser } from '@common/modules/browser/targetBrowser'
+import type { tabs } from '@common/types/runtime'
+import { runtime } from '@common/modules/runtime'
 
-export async function openSettingsPage(): Promise<Tab | null> {
-    if (isDevelopment()) {
-        window.open('settings.html')
-        return null
-    }
-
-    const target = targetBrowser()
-
-    const tab = await target.tabs.create({
-        url: getPublicURL('settings.html'),
+export async function openSettingsPage(): Promise<tabs.Tab | null> {
+    const tab = await runtime.tabs.create({
+        url: runtime.getURL('settings.html'),
         active: true,
     })
 
-    if (tab && tab.windowId) {
-        target.windows.update(tab.windowId, { focused: true })
+    if (!tab) {
+        return null
+    }
+
+    if (tab.windowId) {
+        runtime.windows.update(tab.windowId, { focused: true })
     }
 
     return tab

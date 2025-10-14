@@ -1,28 +1,28 @@
 <script setup lang="ts">
-import type { Group, Link } from '@/types'
+import type { Group } from '@common/types'
 import { computed } from 'vue'
-import { trans } from '@common/modules/trans'
+import { trans } from '@common/modules/utils'
 import { usePopupStore } from '@/stores/popup'
 import { useGroupStore } from '@/stores/group'
-import { showToast } from '@common/modules/showToast'
+import { showToast } from '@common/modules/toast'
 import { useAppStore } from '@/stores/app'
-import { limitString } from '@common/modules/limitString'
+import { limitString } from '@common/modules/utils'
 import Popup from '@/components/Popups/Popup.vue'
 import MenuItem from '@/components/MenuItem.vue'
 import ScissorsIcon from '@common/components/Icons/ScissorsIcon.vue'
 import CopyIcon from '@common/components/Icons/CopyIcon.vue'
 import PasteLinkMenuItem from '@/components//Views/GroupView/GroupControls/MenuItems/PasteLinkMenuItem.vue'
 
-const { closePopup, closeAllPopups, getSharedData } = usePopupStore()
+const popupStore = usePopupStore()
 const appStore = useAppStore()
 const groupStore = useGroupStore()
 const group = computed<Group | null>(() => groupStore.selectedGroup)
-const link = computed<Link | null>(() => getSharedData<Link>('linkMenuView'))
+const sharedData = popupStore.getSharedData('linkMenuView')
 
 async function yankLink(action: 'copy' | 'cut', successMsg: string): Promise<void> {
-    if (!link.value) {
-        console.warn(`Cannot ${action} the link because link.value is null`)
-        return
+    if (!sharedData) {
+        showToast(trans('error_occurred'), 'error')
+        throw new Error('sharedData is null in LinkMenuPopup.vue')
     }
 
     if (!group.value) {
@@ -33,10 +33,10 @@ async function yankLink(action: 'copy' | 'cut', successMsg: string): Promise<voi
     appStore.linkBuffer = {
         action,
         groupId: group.value.id,
-        link: link.value,
+        link: sharedData.link,
     }
 
-    closeAllPopups()
+    popupStore.hideAll()
     showToast(successMsg)
 }
 
@@ -51,9 +51,9 @@ async function cutLink(): Promise<void> {
 
 <template>
     <Popup
-        v-if="group && link"
-        :content="limitString(link.title, 25)"
-        @cancel="closePopup('linkMenuView')"
+        v-if="group && sharedData"
+        :content="limitString(sharedData.link.title, 25)"
+        @cancel="popupStore.hide('linkMenuView', {})"
     >
         <div class="flex flex-col gap-1 mt-3">
             <MenuItem
@@ -76,6 +76,6 @@ async function cutLink(): Promise<void> {
     <Popup
         v-else
         :content="trans('error_no_tab_selected')"
-        @cancel="closePopup('linkMenuView')"
+        @cancel="popupStore.hide('linkMenuView', {})"
     />
 </template>

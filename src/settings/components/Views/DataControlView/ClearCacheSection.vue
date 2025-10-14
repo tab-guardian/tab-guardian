@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import type { PasswordBytes } from '@common/types'
-import { trans } from '@common/modules/trans'
+import { trans } from '@common/modules/utils'
 import { ref, computed, onMounted } from 'vue'
-import { getPasswordsBytes, deletePasswordFromStorage } from '@common/modules/storage/password'
-import { showToast } from '@common/modules/showToast'
+import {
+    getPasswordsBytes,
+    deletePasswordFromStorage,
+} from '@common/modules/storage/password'
+import { showToast } from '@common/modules/toast'
 import Section from '@settings/components/Section.vue'
 import Button from '@common/components/Form/Button.vue'
 import TrashIcon from '@common/components/Icons/TrashIcon.vue'
@@ -32,7 +35,7 @@ async function clearCache(): Promise<void> {
 
     for (const pwd of passwordBytes.value) {
         await deletePasswordFromStorage(pwd.groupId)
-    } 
+    }
 
     deleting.value = false
 
@@ -48,11 +51,7 @@ async function clearCache(): Promise<void> {
         :title="trans('clear_cache')"
         :subtitle="trans('clear_cache_desc', bytes.toString())"
     >
-        <Button
-            @clicked="clearCache"
-            :icon="TrashIcon"
-            :loading="deleting"
-        >
+        <Button @clicked="clearCache" :icon="TrashIcon" :loading="deleting">
             {{ trans('clear_cache') }}
         </Button>
     </Section>

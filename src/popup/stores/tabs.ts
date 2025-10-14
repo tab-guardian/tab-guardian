@@ -1,12 +1,12 @@
-import type { Group } from '@/types'
+import type { Group } from '@common/types'
 import { defineStore } from 'pinia'
 import { useGroupStore } from '@/stores/group'
-import { trans } from '@common/modules/trans'
+import { trans } from '@common/modules/utils'
 import { useSettingsStore } from '@/stores/settings'
-import { showToast } from '@common/modules/showToast'
-import { getCurrentLinks } from '@/modules/tabs/getCurrentLinks'
-import { restoreTabs } from '@/modules/tabs/restoreTabs'
-import { closeTabs } from '@/modules/tabs/closeTabs'
+import { showToast } from '@common/modules/toast'
+import { getCurrentLinks } from '@common/modules/tabs/getCurrentLinks'
+import { restoreTabs } from '@common/modules/tabs/restoreTabs'
+import { closeTabs } from '@common/modules/tabs/closeTabs'
 import { getPasswordFromStorage } from '@common/modules/storage/password'
 
 export const useTabsStore = defineStore('tabs', () => {
@@ -33,11 +33,11 @@ export const useTabsStore = defineStore('tabs', () => {
         const encrypted = await groupStore.encrypt(group, userPass || pass)
 
         if (!encrypted) {
-            console.info(`Group ${group.id} wasn't encrypted`)
+            console.error(`Group ${group.id} wasn't encrypted`)
             return false
         }
 
-        await groupStore.save(encrypted)
+        await groupStore.saveGroup(encrypted)
 
         return true
     }

@@ -1,18 +1,20 @@
 <script setup lang="ts">
-import type { Group } from '@/types'
+import type { Group } from '@common/types'
 import { useGroupStore } from '@/stores/group'
 import { useTabsStore } from '@/stores/tabs'
-import { useRouter } from 'vue-router'
+import { useGroupUnlock } from '@/assets/composables/useGroupUnlock'
+import { usePopupStore } from '@/stores/popup'
 import { ref, onMounted, onUnmounted } from 'vue'
-import { trans } from '@common/modules/trans'
+import { trans } from '@common/modules/utils'
 import MagnifyingGlassIcon from '@common/components/Icons/MagnifyingGlassIcon.vue'
 
 const groupStore = useGroupStore()
 const tabsStore = useTabsStore()
-const router = useRouter()
 const initialGroups = ref<Group[]>([])
 const inpElem = ref<HTMLInputElement | null>(null)
 const query = ref<string>('')
+const popupStore = usePopupStore()
+const { unlockGroup } = useGroupUnlock()
 const placeholder =
     navigator.userAgent.indexOf('Mac OS X') != -1 ? '⌃⌘k' : 'ctrl+alt+k'
 
@@ -52,12 +54,10 @@ async function openFirstGroup(e: KeyboardEvent): Promise<void> {
         return
     }
 
-    await router.push({
-        name: 'group',
-        params: {
-            id: group.id,
-            openTabs: 'true',
-        },
+    popupStore.show('enterPassword', {
+        decrypting: async pass => await unlockGroup(group, pass, true),
+        algo: group.algo ?? null,
+        description: trans('enter_pass_unlock_content'),
     })
 }
 

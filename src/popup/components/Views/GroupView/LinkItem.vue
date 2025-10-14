@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { Link } from '@/types'
+import type { Link } from '@common/types'
 import { useGroupStore } from '@/stores/group'
-import { restoreTabs } from '@/modules/tabs/restoreTabs'
+import { restoreTabs } from '@common/modules/tabs/restoreTabs'
 import { usePopupStore } from '@/stores/popup'
 import { useAppStore } from '@/stores/app'
 import DeleteLinkButton from '@/components/Views/GroupView/DeleteLinkButton.vue'
@@ -14,28 +14,29 @@ const props = defineProps<{
 
 const { linkIsCut } = useAppStore()
 const groupStore = useGroupStore()
-const { openPopup, setSharedData } = usePopupStore()
+const popupStore = usePopupStore()
 
 async function openTab(): Promise<void> {
     if (groupStore.selectedGroup) {
-        await groupStore.save(groupStore.selectedGroup)
+        await groupStore.saveGroup(groupStore.selectedGroup)
     } else {
-        console.error(`Group with id ${props.groupId} is not selected as selectedGroup`)
+        console.error(
+            `Group with id ${props.groupId} is not selected as selectedGroup`,
+        )
     }
 
     await restoreTabs([props.link])
 }
 
-async function openTabLinkPopup(): Promise<void> {
-    openPopup('linkMenuView')
-    setSharedData('linkMenuView', props.link)
+async function showTabLinkPopup(): Promise<void> {
+    popupStore.show('linkMenuView', { link: props.link })
 }
 </script>
 
 <template>
     <LinkElement
         @click="openTab"
-        @click.prevent.right="openTabLinkPopup"
+        @click.prevent.right="showTabLinkPopup"
         :class-name="linkIsCut(link.id) ? 'opacity-50' : ''"
         :link
     >

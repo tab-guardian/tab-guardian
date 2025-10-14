@@ -1,53 +1,53 @@
 {
     "groups_imported": {
         "message": "$n$ групп успешно импортировано",
-        "placeholders": {"n": { "content": "$1" }}
+        "placeholders": { "n": { "content": "$1" } }
     },
     "passwords_min_length": {
         "message": "Пароль должен состоять как минимум из $n$ символов",
-        "placeholders": {"n": { "content": "$1" }}
+        "placeholders": { "n": { "content": "$1" } }
     },
     "you_have_unlocked_groups": {
         "message": "У вас есть $n$ разблокированных приватных групп. Не забудьте заблокировать их обратно, когда они вам больше не понадобятся.",
-        "placeholders": {"n": { "content": "$1" }}
+        "placeholders": { "n": { "content": "$1" } }
     },
     "clear_cache_desc": {
         "message": "Освободить $n$ байт кэша без потери данных. Это абсолютно безопасно и рекомендуется сделать.",
-        "placeholders": {"n": { "content": "$1" }}
+        "placeholders": { "n": { "content": "$1" } }
     },
     "cache_cleared_on": {
         "message": "Кеш был очищен на $n$ байт данных",
-        "placeholders": {"n": { "content": "$1" }}
+        "placeholders": { "n": { "content": "$1" } }
     },
     "not_enough_storage": {
         "message": "Нельзя превышать квоту хранения. Максимальная квота составляет $n$ МБ, вы используете $n$ МБ",
-        "placeholders": {"n": { "content": "$1" }}
-    },
-    "many_attempts_locked_for": {
-        "message": "Слишком много попыток. Заблокировано на $n$ минут",
-        "placeholders": {"n": { "content": "$1" }}
+        "placeholders": { "n": { "content": "$1" } }
     },
     "many_attempts_next_attempt_in": {
         "message": "Слишком много попыток. Следующая попытка через $n$ минут",
-        "placeholders": {"n": { "content": "$1" }}
+        "placeholders": { "n": { "content": "$1" } }
     },
     "bind_group_url": {
         "message": "Привяжите эту группу к URL ($n$). Это скроет группу отовсюду, кроме указанного URL, добавив дополнительный уровень безопасности",
-        "placeholders": {"n": { "content": "$1" }}
+        "placeholders": { "n": { "content": "$1" } }
     },
     "url_must_be_less_than": {
         "message": "URL должен содержать менее $n$ символов",
-        "placeholders": {"n": { "content": "$1" }}
+        "placeholders": { "n": { "content": "$1" } }
     },
     "url_must_be_at_least": {
         "message": "URL должен содержать не менее $n$ символов",
-        "placeholders": {"n": { "content": "$1" }}
+        "placeholders": { "n": { "content": "$1" } }
     },
     "ext_name": { "message": "Хранитель Вкладок" },
-    "ext_description": { "message": "Расширение для браузера, которое позволяет сохранять и восстанавливать ваши вкладки, включая их шифрование с использованием пароля" },
+    "ext_description": {
+        "message": "Расширение для браузера, которое позволяет сохранять и восстанавливать ваши вкладки, включая их шифрование с использованием пароля"
+    },
     "details": { "message": "Детали" },
     "group_details": { "message": "Детали Группы" },
-    "you_can_find_details_here": { "message": "Вы можете найти все детали группы здесь" },
+    "you_can_find_details_here": {
+        "message": "Вы можете найти все детали группы здесь"
+    },
     "tabs_count": { "message": "Кол-во вкладок" },
     "is_private": { "message": "Приватная" },
     "created_at": { "message": "Создано" },
@@ -55,30 +55,43 @@
     "yes": { "message": "Да" },
     "no": { "message": "Нет" },
     "lock": { "message": "Закрыть" },
+    "unlock": { "message": "Открыть" },
     "rebind": { "message": "Отвязать" },
     "bound_to_url": { "message": "Привязана к URL" },
     "opened_tabs_times": { "message": "Открыто вкладок раз" },
-    "opened_tabs_times_tip": { "message": "Общее количество одновременных открытий вкладок в этой группе. Не индивидуальное количество открытых вкладок" },
+    "opened_tabs_times_tip": {
+        "message": "Общее количество одновременных открытий вкладок в этой группе. Не индивидуальное количество открытых вкладок"
+    },
     "select": { "message": "Выбрать" },
     "cancel": { "message": "Отмена" },
     "export": { "message": "Экспортировать" },
     "new_group": { "message": "Новая группа" },
-    "error_no_group_selected": { "message": "Что-то пошло не так! Группа не выбрана" },
+    "error_no_group_selected": {
+        "message": "Что-то пошло не так! Группа не выбрана"
+    },
     "error_no_tab_selected": { "message": "Вкладка не выбрана" },
     "want_delete_group": { "message": "Вы хотите удалить группу?" },
     "no_tabs_this_group": { "message": "В этой группе нет вкладок" },
-    "click_on_each_tab": { "message": "Нажмите на каждую вкладку, чтобы выбрать или отменить выбор для сохранения" },
+    "click_on_each_tab": {
+        "message": "Нажмите на каждую вкладку, чтобы выбрать или отменить выбор для сохранения"
+    },
     "select_all": { "message": "Выбрать все" },
     "deselect_all": { "message": "Снять со всех" },
     "add_tabs": { "message": "Добавить вкладки" },
     "no_tabs_found": { "message": "Вкладки не найдены" },
     "no_groups_yet": { "message": "Группы пока отсутствуют" },
     "settings": { "message": "Настройки" },
-    "enter_new_pass": { "message": "Введите новый пароль" },
     "enter_pass": { "message": "Введите пароль" },
-    "enter_pass_unlock_content": { "message": "Введите пароль для разблокировки содержимого этой группы" },
+    "enter_pass_unlock_content": {
+        "message": "Введите пароль для разблокировки содержимого этой группы"
+    },
+    "enter_pass_unlock_file": {
+        "message": "Введите пароль для разблокировки содержимоe этого импортируемого файла"
+    },
     "wrong_pass": { "message": "Неверный пароль" },
-    "cant_remember_pass": { "message": "Что-то пошло не так! Не могу вспомнить ваш пароль. Пожалуйста, введите его снова" },
+    "cant_remember_pass": {
+        "message": "Что-то пошло не так! Не могу вспомнить ваш пароль. Пожалуйста, введите его снова"
+    },
     "repeat_pass": { "message": "Повторите пароль" },
     "pass_updated": { "message": "Пароль обновлен" },
     "pass_empty": { "message": "Пароль пуст" },
@@ -96,13 +109,15 @@
     "group_name": { "message": "Имя группы" },
     "group_unlocked": { "message": "Группа разблокирована" },
     "group_locked": { "message": "Группа заблокирована" },
-    "error_occurred": { "message": "Произошла ошибка" },
+    "error_occurred": { "message": "Произошла неивестная ошибка" },
     "open_tabs": { "message": "Открыть вкладки" },
     "open_tabs_delete_group": { "message": "Открыть вкладки и удалить эту группу" },
     "copy_tabs_into_group": { "message": "Скопировать вкладки в эту группу" },
     "move_tabs_into_group": { "message": "Переместить вкладки в эту группу" },
     "new_name_saved": { "message": "Новое имя сохранено" },
-    "group_private_unlock_it": { "message": "Эта группа приватная. Разблокируйте её, чтобы увидеть параметры" },
+    "group_private_unlock_it": {
+        "message": "Эта группа приватная. Разблокируйте её, чтобы увидеть параметры"
+    },
     "group_not_found": { "message": "Группа не найдена" },
     "group_already_locked": { "message": "Группа уже заблокирована" },
     "private_group_unlocked": { "message": "Эта приватная группа разблокирована" },
@@ -111,11 +126,15 @@
     "create": { "message": "Создать" },
     "you_not_selected_tabs": { "message": "Вы не выбрали ни одной вкладки" },
     "tabs_added_to_group": { "message": "Вкладки добавлены в группу" },
-    "group_created_without_tabs": { "message": "Группа создана без выбранных вкладок" },
+    "group_created_without_tabs": {
+        "message": "Группа создана без выбранных вкладок"
+    },
     "group_created_with_tabs": { "message": "Группа создана с вкладками" },
     "close_selected_tabs": { "message": "Закрыть выбранное" },
     "bind_to_this_url": { "message": "Привязать к URL" },
-    "private_groups_are_secure": { "message": "Приватные группы защищены и используют шифрование. Доступ к ним имеют только пользователи с паролем" },
+    "private_groups_are_secure": {
+        "message": "Приватные группы защищены и используют шифрование. Доступ к ним имеют только пользователи с паролем"
+    },
     "rate_us": { "message": "Оцените нас" },
     "storage_usage": { "message": "Хранилище" },
     "group_name_long": { "message": "Имя группы слишком длинное" },
@@ -126,52 +145,93 @@
     "icon_is_set": { "message": "Значок установлен" },
     "export_this_group": { "message": "Экспортировать" },
     "rebind_to_other_url": { "message": "Привязать к другому URL" },
-    "enter_new_url_bind_private_to_new_url": { "message": "Введите новый URL для привязки вашей приватной группы. Эта группа будет видна только при посещении указанного URL. Не забудьте заблокировать группу" },
+    "enter_new_url_bind_private_to_new_url": {
+        "message": "Введите новый URL для привязки вашей приватной группы. Эта группа будет видна только при посещении указанного URL. Не забудьте заблокировать группу"
+    },
     "enter_new_url_bind_to": { "message": "Введите новый URL для привязки" },
     "group_rebind_successful": { "message": "Группа успешно пере-привязана" },
-    "url_must_start_with_http": { "message": "URL должен начинаться с http:// или https://" },
+    "url_must_start_with_http": {
+        "message": "URL должен начинаться с http:// или https://"
+    },
     "select_emoji": { "message": "Эмодзи" },
     "select_image": { "message": "Изображение" },
     "pick_any_emoji": { "message": "Выберите любой эмодзи" },
     "enter_image_url": { "message": "Введите URL изображения" },
-    "type_any_image_url_to_set_it": { "message": "Введите URL изображения, чтобы установить его в качестве значка группы" },
-    "lock_group_after_restore": { "message": "Заблокировать группу после восстановления вкладок" },
+    "type_any_image_url_to_set_it": {
+        "message": "Введите URL изображения, чтобы установить его в качестве значка группы"
+    },
+    "lock_group_after_restore": {
+        "message": "Заблокировать группу после восстановления вкладок"
+    },
     "erase_all_groups": { "message": "Удалить все группы" },
-    "erase_all_groups_desc": { "message": "После удаления всех групп вы не сможете их восстановить. Это действие также приведет к удалению всех ваших приватных групп." },
-    "i_confirm_want_delete_groups": { "message": "Я подтверждаю, что хочу удалить все группы" },
-    "confirm_want_delete_groups": { "message": "Подтвердите, что хотите удалить все группы" },
+    "erase_all_groups_desc": {
+        "message": "После удаления всех групп вы не сможете их восстановить. Это действие также приведет к удалению всех ваших приватных групп."
+    },
+    "i_confirm_want_delete_groups": {
+        "message": "Я подтверждаю, что хочу удалить все группы"
+    },
+    "confirm_want_delete_groups": {
+        "message": "Подтвердите, что хотите удалить все группы"
+    },
+    "confirm": { "message": "Подтвердить" },
     "all_groups_deleted": { "message": "Все группы удалены" },
-    "show_private_groups_incognito": { "message": "Скрывать приватные группы везде, кроме окон в режиме инкогнито (приватных)" },
+    "show_private_groups_incognito": {
+        "message": "Скрывать приватные группы везде, кроме окон в режиме инкогнито (приватных)"
+    },
     "settings_saved": { "message": "Настройки сохранены" },
-    "go_to_settings_and_enable_allow_incognito": { "message": "Перейдите в настройки расширения и включите опцию «Разрешить в инкогнито», «Разрешить в приватном режиме» или «Запустить в приватном режиме Windows»." },
-    "override_existing_match": { "message": "Если имя новой группы совпадает с существующим, замените его" },
-    "only_private_groups_incognito": { "message": "Скрыть открытые группы из окон браузера в режиме инкогнито (приватном режиме)" },
+    "go_to_settings_and_enable_allow_incognito": {
+        "message": "Перейдите в настройки расширения и включите опцию «Разрешить в инкогнито», «Разрешить в приватном режиме» или «Запустить в приватном режиме Windows»."
+    },
+    "override_existing_match": {
+        "message": "Если имя новой группы совпадает с существующим, замените его"
+    },
+    "only_private_groups_incognito": {
+        "message": "Скрыть открытые группы из окон браузера в режиме инкогнито (приватном режиме)"
+    },
     "export_tab_groups": { "message": "Экспортировать группы вкладок" },
-    "export_tab_groups_desc": { "message": "Экспортируйте все группы вкладок. Приватные группы не будут экспортированы. Чтобы экспортировать их, сделайте это для каждой группы отдельно." },
+    "export_tab_groups_desc": {
+        "message": "Экспортируйте все приватные и открытые группы. Мы рекомендуем защитить экспорт паролем."
+    },
     "no_groups_export": { "message": "Нет групп для экспорта" },
     "import_groups": { "message": "Импортировать группы вкладок" },
-    "import_private_and_open_groups": { "message": "Импортировать приватные и открытые группы." },
+    "import_private_and_open_groups": {
+        "message": "Импортировать приватные и открытые группы."
+    },
     "choose_exported_file": { "message": "Выберите экспортированный файл" },
     "choose_file_import": { "message": "Пожалуйста, выберите файл для импорта" },
-    "failed_decrypt_file": { "message": "Не удалось расшифровать файл" },
     "error_reading_file": { "message": "Ошибка чтения файла" },
-    "some_groups_already_exist_same_name": { "message": "Некоторые группы, которые вы хотите импортировать, уже существуют с таким же именем. Вы хотите заменить их?" },
+    "some_groups_already_exist_same_name": {
+        "message": "Некоторые группы, которые вы хотите импортировать, уже существуют с таким же именем. Вы хотите заменить их?"
+    },
     "replace_groups": { "message": "Заменить группы?" },
     "file_chosen": { "message": "Файл выбран" },
     "save": { "message": "Сохранить" },
     "date_format_is": { "message": "Фортат даты" },
     "tab_pasted": { "message": "Вкладка вставлена в текущую группу" },
     "your_emoji_is": { "message": "Ваш эмодзи" },
-    "image_format_allowed": { "message": "Только изображения таких форматов разрешены" },
+    "image_format_allowed": {
+        "message": "Только изображения таких форматов разрешены"
+    },
     "new_password": { "message": "Новый пароль" },
-    "uses_old_encrypt_impl": { "message": "Эта группа использует старую реализацию шифрования. Вы можете исправить это, разблокировав эту группу и заблокировав ее обратно." },
+    "uses_old_encrypt_impl": {
+        "message": "Эта группа использует старую реализацию шифрования. Вы можете исправить это, разблокировав эту группу и заблокировав ее обратно."
+    },
     "nothing_to_paste": { "message": "Нет ничего, чтобы вставить" },
     "general": { "message": "Общее" },
     "data_control": { "message": "Управление Данными" },
     "clear_cache": { "message": "Удалить Кеш" },
-    "remember_pass_after_unlock": { "message": "Запомнить мой пароль после разблокировки" },
+    "remember_pass_after_unlock": {
+        "message": "Запомнить мой пароль после разблокировки"
+    },
     "make_group_open": { "message": "Сделать группу открытой" },
-    "are_you_sure_to_make_group_open": { "message": "Вы уверены, что хотите сделать эту группу открытой? Это означает, что для доступа к этой группе не нужно вводить пароль" },
+    "are_you_sure_to_make_group_open": {
+        "message": "Вы уверены, что хотите сделать эту группу открытой? Это означает, что для доступа к этой группе не нужно вводить пароль"
+    },
     "group_is_now_open": { "message": "Эта группа теперь открыта" },
-    "remember_pass_after_unlock_desc": { "message": "Если вы отключите эту опцию, вам нужно будет вводить пароль каждый раз, когда вы захотите заблокировать любую приватную группу. Если оставить эту опцию включенной, пароль будет сохранен во временном и безопасном хранилище, и вы сможете заблокировать группы, не вводя пароль" }
+    "protect_export_using_pass": {
+        "message": "Защитить экспорт паролем (рекомендуется)"
+    },
+    "remember_pass_after_unlock_desc": {
+        "message": "Если вы отключите эту опцию, вам нужно будет вводить пароль каждый раз, когда вы захотите заблокировать любую приватную группу. Если оставить эту опцию включенной, пароль будет сохранен во временном и безопасном хранилище, и вы сможете заблокировать группы, не вводя пароль"
+    }
 }

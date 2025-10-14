@@ -1,16 +1,16 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
 import { useGroupStore } from '@/stores/group'
-import { trans } from '@common/modules/trans'
+import { trans } from '@common/modules/utils'
 import { usePopupStore } from '@/stores/popup'
-import { isImageURL } from '@/modules/url/isImageURL'
-import { validateImageURL } from '@/modules/url/validateImageURL'
+import { isImageURL } from '@common/modules/url/isImageURL'
+import { validateImageURL } from '@common/modules/url/validateImageURL'
 import Popup from '@/components/Popups/Popup.vue'
 import PopupButton from '@/components/Popups/PopupButton.vue'
 import Input from '@common/components/Form/Input.vue'
 import CheckIcon from '@common/components/Icons/CheckIcon.vue'
 
-const { closePopup } = usePopupStore()
+const popupStore = usePopupStore()
 const groupStore = useGroupStore()
 const url = ref<string>('')
 const errorMessage = computed<string | null>(() => validateImageURL(url.value))
@@ -38,14 +38,18 @@ async function chooseImageIcon(): Promise<void> {
         return
     }
 
-    closePopup('chooseImageIcon', url.value)
+    closeImageIconPopup()
+}
+
+function closeImageIconPopup(): void {
+    popupStore.hide('chooseImageIcon', { url: url.value })
 }
 </script>
 
 <template>
     <Popup
         v-if="groupStore.selectedGroup"
-        @cancel="closePopup('chooseImageIcon')"
+        @cancel="closeImageIconPopup"
         :content="trans('enter_image_url')"
         :description="trans('type_any_image_url_to_set_it')"
     >
@@ -64,10 +68,7 @@ async function chooseImageIcon(): Promise<void> {
         />
 
         <template #buttons>
-            <PopupButton
-                @click="closePopup('chooseImageIcon')"
-                :is-secondary="true"
-            >
+            <PopupButton @click="closeImageIconPopup" :is-secondary="true">
                 {{ trans('cancel') }}
             </PopupButton>
 

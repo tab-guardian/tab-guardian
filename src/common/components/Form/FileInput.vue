@@ -1,17 +1,21 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-const inputRef = ref<HTMLInputElement | null>(null)
-
-defineProps<{
+type Props = {
     id: string
     label?: string
-}>()
+    disabled?: boolean
+}
+
+withDefaults(defineProps<Props>(), {
+    disabled: false,
+})
 
 const emit = defineEmits<{
     (e: 'chosen', f: File, elem: HTMLInputElement): void
 }>()
 
+const inputRef = ref<HTMLInputElement | null>(null)
 const drag = ref<boolean>(false)
 
 function onFileChange(e: Event): void {
@@ -59,6 +63,7 @@ async function dropFile(e: DragEvent): Promise<void> {
         <input
             class="hidden pointer-events-none"
             @change="onFileChange"
+            :disabled
             type="file"
             name="file"
             ref="inputRef"

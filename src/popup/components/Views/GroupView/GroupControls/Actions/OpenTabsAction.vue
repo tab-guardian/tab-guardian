@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import type { Group } from '@/types'
+import type { Group } from '@common/types'
 import Control from '@/components/Control.vue'
-import { getImageURL } from '@common/modules/browser/url'
+import { runtime } from '@common/modules/runtime'
 import { useTabsStore } from '@/stores/tabs'
-import { trans } from '@common/modules/trans'
+import { trans } from '@common/modules/utils'
 
 defineProps<{ group: Group }>()
 
@@ -20,7 +20,7 @@ const tabsStore = useTabsStore()
         }"
     >
         <img
-            :src="getImageURL('tab-icons/up.png')"
+            :src="runtime.getURL('images/tab-icons/up.png')"
             alt="Open tabs"
             class="dark:invert"
         />

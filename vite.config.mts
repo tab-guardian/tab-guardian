@@ -56,6 +56,7 @@ export default defineConfig({
             '@bg': '/src/background',
             '@settings': '/src/settings',
             '@common': '/src/common',
+            '@locales': '/src/_locales',
         },
     },
 

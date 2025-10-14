@@ -1,15 +1,14 @@
-import type { Group, Link } from '@/types'
+import type { Group, Link } from '@common/types'
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import { trans } from '@common/modules/trans'
+import { trans, generateGroupId } from '@common/modules/utils'
+import { runtime } from '@common/modules/runtime'
 import { useSettingsStore } from '@/stores/settings'
 import { useNotificationStore } from '@/stores/notification'
 import { useCryptoStore } from '@/stores/crypto'
-import { showToast } from '@common/modules/showToast'
-import { isDevelopment } from '@common/modules/isDevelopment'
-import { isIncognito } from '@common/modules/browser/windows'
-import { getCurrentURL } from '@/modules/getCurrentURL'
-import { generateGroupId } from '@common/modules/generateGroupId'
+import { useProgressStore } from '@/stores/progress'
+import { showToast } from '@common/modules/toast'
+import { getCurrentURL } from '@common/modules/utils/getCurrentURL'
 import { savePasswordToStorage } from '@common/modules/storage/password'
 import {
     deleteAllGroupsFromStorage,
@@ -22,6 +21,7 @@ export const useGroupStore = defineStore('group', () => {
     const cryptoStore = useCryptoStore()
     const settingsStore = useSettingsStore()
     const notificationStore = useNotificationStore()
+    const progressStore = useProgressStore()
 
     const groups = ref<Group[]>([])
     const loadingGroups = ref<boolean>(false)
@@ -61,7 +61,7 @@ export const useGroupStore = defineStore('group', () => {
             return
         }
 
-        savePasswordToStorage(selectedGroup.value.id, pass)
+        await savePasswordToStorage(selectedGroup.value.id, pass)
     }
 
     async function loadGroupsFromStorage(): Promise<void> {
@@ -69,16 +69,7 @@ export const useGroupStore = defineStore('group', () => {
 
         const storageGroups = await getGroupsFromStorage()
 
-        // Disable hiding groups in incognito because we don't have
-        // incognito in a web app with Vite server
-        if (isDevelopment()) {
-            groups.value = storageGroups
-            groups.value.sort((a, b) => b.updatedAt - a.updatedAt)
-            loadingGroups.value = false
-            return
-        }
-
-        displayGroups(storageGroups)
+        await displayGroups(storageGroups)
     }
 
     async function filterGroups(storageGroups: Group[]): Promise<Group[]> {
@@ -97,6 +88,11 @@ export const useGroupStore = defineStore('group', () => {
         }
 
         return result
+    }
+
+    async function isIncognito(): Promise<boolean> {
+        const currWindow = await runtime.windows.getCurrent()
+        return currWindow ? currWindow.incognito : false
     }
 
     async function shouldHideGroup(group: Group): Promise<boolean> {
@@ -127,7 +123,11 @@ export const useGroupStore = defineStore('group', () => {
         return false
     }
 
-    async function encrypt(group: Group, pass: string, confirm?: string): Promise<Group | null> {
+    async function encrypt(
+        group: Group,
+        pass: string,
+        confirm?: string,
+    ): Promise<Group | null> {
         if (group.isEncrypted) {
             showToast(trans('group_already_locked'), 'error')
             return null
@@ -159,7 +159,12 @@ export const useGroupStore = defineStore('group', () => {
     }
 
     // Add groups to memory and save them to storage
-    async function addAndSaveGroups(groups: Group[], replace: boolean): Promise<void> {
+    async function addAndSaveGroups(
+        groups: Group[],
+        replace: boolean,
+    ): Promise<void> {
+        progressStore.start(groups.length)
+
         for (const group of groups) {
             group.id = generateGroupId()
 
@@ -171,10 +176,14 @@ export const useGroupStore = defineStore('group', () => {
                 }
             }
 
-            await save(group, false)
+            await saveGroup(group, false)
+
+            progressStore.advance()
         }
 
         await loadGroupsFromStorage()
+
+        progressStore.finish()
     }
 
     async function setIcon(groupId: number, icon: string): Promise<void> {
@@ -186,7 +195,7 @@ export const useGroupStore = defineStore('group', () => {
 
         group.icon = icon
 
-        await save(group)
+        await saveGroup(group)
     }
 
     async function deleteGroup(groupId: number): Promise<void> {
@@ -210,7 +219,7 @@ export const useGroupStore = defineStore('group', () => {
 
         group.links = []
 
-        await save(group)
+        await saveGroup(group)
     }
 
     async function incrementOpenedTimes(group: Group): Promise<void> {
@@ -228,7 +237,7 @@ export const useGroupStore = defineStore('group', () => {
             return g
         })
 
-        await save(group)
+        await saveGroup(group)
     }
 
     async function deleteLinkFrom(groupId: number, linkId: number): Promise<void> {
@@ -240,7 +249,7 @@ export const useGroupStore = defineStore('group', () => {
 
         group.links = group.links.filter(link => link.id !== linkId)
 
-        await save(group)
+        await saveGroup(group)
     }
 
     async function saveLinksTo(groupId: number, links: Link[]): Promise<void> {
@@ -252,10 +261,10 @@ export const useGroupStore = defineStore('group', () => {
 
         group.links.push(...links)
 
-        await save(group)
+        await saveGroup(group)
     }
 
-    async function save(group: Group, updateTimestamp = true): Promise<void> {
+    async function saveGroup(group: Group, updateTimestamp = true): Promise<void> {
         if (updateTimestamp) {
             group.updatedAt = Date.now()
         }
@@ -263,7 +272,10 @@ export const useGroupStore = defineStore('group', () => {
         await saveGroupToStorage(group)
 
         const updatedGroups = groups.value.map(g => (g.id === group.id ? group : g))
-        displayGroups(updatedGroups)
+
+        await displayGroups(updatedGroups)
+
+        await notificationStore.recalculateNotification()
     }
 
     async function displayGroups(groupsToDisplay: Group[]): Promise<void> {
@@ -276,7 +288,7 @@ export const useGroupStore = defineStore('group', () => {
         groups,
         selectedGroup,
         loadingGroups,
-        save,
+        saveGroup,
         deleteGroup,
         deleteLinkFrom,
         saveLinksTo,

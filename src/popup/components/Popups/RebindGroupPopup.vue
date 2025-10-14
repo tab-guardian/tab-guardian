@@ -1,18 +1,18 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { useGroupStore } from '@/stores/group'
-import { trans } from '@common/modules/trans'
+import { trans } from '@common/modules/utils'
 import { usePopupStore } from '@/stores/popup'
 import { useRouter } from 'vue-router'
-import { validateURL } from '@/modules/url/validateURL'
-import { hashURL } from '@/modules/url/hashURL'
-import { showToast } from '@common/modules/showToast'
+import { validateURL } from '@common/modules/url/validateURL'
+import { hashURL } from '@common/modules/url/hashURL'
+import { showToast } from '@common/modules/toast'
 import Popup from '@/components/Popups/Popup.vue'
 import Button from '@common/components/Form/Button.vue'
 import Input from '@common/components/Form/Input.vue'
 import CheckIcon from '@common/components/Icons/CheckIcon.vue'
 
-const { closePopup } = usePopupStore()
+const popupStore = usePopupStore()
 const groupStore = useGroupStore()
 const router = useRouter()
 const url = ref<string>('')
@@ -30,7 +30,7 @@ async function rebindGroup(): Promise<void> {
         return
     }
 
-    closePopup('rebindGroup')
+    popupStore.hide('rebindGroup', {})
 
     await router.push({
         name: 'group',
@@ -40,7 +40,7 @@ async function rebindGroup(): Promise<void> {
     })
 
     groupStore.selectedGroup.bindURL = hashURL(url.value)
-    groupStore.save(groupStore.selectedGroup)
+    groupStore.saveGroup(groupStore.selectedGroup)
 
     showToast(trans('group_rebind_successful'))
 }
@@ -49,7 +49,7 @@ async function rebindGroup(): Promise<void> {
 <template>
     <Popup
         v-if="groupStore.selectedGroup"
-        @cancel="closePopup('rebindGroup')"
+        @cancel="popupStore.hide('rebindGroup', {})"
         :content="trans('enter_new_url_bind_to')"
         :description="trans('enter_new_url_bind_private_to_new_url')"
     >

@@ -1,50 +1,52 @@
-import type { EncryptionAlgo, Group, Link } from '@/types'
-import { reactive, readonly } from 'vue'
+import type { EncryptionAlgo, Group, Link } from '@common/types'
+import { useProgressStore } from '@/stores/progress'
 import { defineStore } from 'pinia'
-import { encrypt, decrypt, uint8ArrToString, createEncryptKey, createDecryptKey, stringToUint8Arr } from '@common/modules/webCrypto'
+import {
+    encrypt,
+    decrypt,
+    createEncryptKey,
+    createDecryptKey,
+} from '@common/modules/webCrypto'
+import { toBase64, fromBase64 } from '@common/modules/utils'
 import { env } from '@common/env'
 import CryptoJS from 'crypto-js'
 
 export const useCryptoStore = defineStore('crypto', () => {
-    const progress = reactive({
-        max: 0,
-        current: 0,
-    })
-
-    function resetProgress(): void {
-        progress.max = 0
-        progress.current = 0
-    }
+    const progressStore = useProgressStore()
 
     async function encryptGroup(group: Group, pass: string): Promise<Group> {
         const encryptedLinks: Link[] = []
-        const encryptAlgo = group.algo || env.CURR_ENCRYPT_ALGO
+        const algo = group.algo || env.CURR_ENCRYPT_ALGO
 
-        progress.max = group.links.length
+        progressStore.start(group.links.length)
 
         for (const link of group.links) {
             const salt = crypto.getRandomValues(new Uint8Array(16))
             const iv = crypto.getRandomValues(new Uint8Array(16))
-            const key = await createEncryptKey(pass, salt, encryptAlgo)
+            const key = await createEncryptKey(pass, salt, algo)
+
+            const urlBin = await encrypt(link.url, key, iv, algo)
+            const titleBin = await encrypt(link.title, key, iv, algo)
+            const favIconUrlBin = await encrypt(link.favIconUrl, key, iv, algo)
 
             encryptedLinks.push({
                 id: link.id,
-                url: await encrypt(link.url, key, iv, encryptAlgo),
-                title: await encrypt(link.title, key, iv, encryptAlgo),
-                favIconUrl: await encrypt(link.favIconUrl, key, iv, encryptAlgo),
+                url: toBase64(urlBin),
+                title: toBase64(titleBin),
+                favIconUrl: toBase64(favIconUrlBin),
                 isPinned: link.isPinned,
-                salt: uint8ArrToString(salt),
-                iv: uint8ArrToString(iv),
+                salt: toBase64(salt),
+                iv: toBase64(iv),
             })
 
-            progress.current++
+            progressStore.advance()
         }
 
-        group.algo = encryptAlgo
+        group.algo = algo
         group.links = encryptedLinks
         group.isEncrypted = true
 
-        resetProgress()
+        progressStore.finish()
 
         return group
     }
@@ -52,29 +54,35 @@ export const useCryptoStore = defineStore('crypto', () => {
     async function decryptGroup(group: Group, pass: string): Promise<Group> {
         const decryptedLinks: Link[] = []
 
-        progress.max = group.links.length
+        progressStore.start(group.links.length)
 
         for (const link of group.links) {
             const decryptedLink = await decryptLink(group, link, pass)
-            progress.current++
+            progressStore.advance()
             decryptedLinks.push(decryptedLink)
         }
 
         group.links = decryptedLinks
         group.isEncrypted = false
 
-        resetProgress()
+        progressStore.finish()
 
         return group
     }
 
-    async function decryptLink(group: Group, link: Link, pass: string): Promise<Link> {
+    async function decryptLink(
+        group: Group,
+        link: Link,
+        pass: string,
+    ): Promise<Link> {
         if (!group.algo) {
             return decryptLinkCryptoJS(link, pass)
         }
 
         if (!link.salt) {
-            throw new Error(`Link ${link.id} doesn't have salt attached. Which should not happen`)
+            throw new Error(
+                `Link ${link.id} doesn't have salt attached. Which should not happen`,
+            )
         }
 
         const key = await createDecryptKey(pass, link.salt, group.algo)
@@ -88,10 +96,12 @@ export const useCryptoStore = defineStore('crypto', () => {
         algo: EncryptionAlgo,
     ): Promise<Link> {
         if (!link.iv) {
-            throw new Error(`Link ${link.id} doesn't have iv attached. Which should not happen`)
+            throw new Error(
+                `Link ${link.id} doesn't have iv attached. Which should not happen`,
+            )
         }
 
-        const ivBytes = stringToUint8Arr(link.iv)
+        const ivBytes = fromBase64(link.iv)
 
         const url = await decrypt(link.url, key, ivBytes, algo)
         const title = await decrypt(link.title, key, ivBytes, algo)
@@ -117,7 +127,6 @@ export const useCryptoStore = defineStore('crypto', () => {
     }
 
     return {
-        progress: readonly(progress),
         encryptGroup,
         decryptGroup,
     }

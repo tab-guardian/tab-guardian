@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import type { Group } from '@/types'
+import type { Group } from '@common/types'
 import { useTabsStore } from '@/stores/tabs'
 import { useRouter } from 'vue-router'
-import { trans } from '@common/modules/trans'
-import { getImageURL } from '@common/modules/browser/url'
+import { runtime } from '@common/modules/runtime'
+import { trans } from '@common/modules/utils'
 import Control from '@/components/Control.vue'
 
 const props = defineProps<{ group: Group }>()
@@ -17,7 +17,7 @@ async function openAndDeleteTabs(): Promise<void> {
     }
 
     await tabsStore.openAndDeleteTabs(props.group)
-    router.push({ name: 'main' })
+    await router.push({ name: 'main' })
 }
 </script>
 
@@ -31,7 +31,7 @@ async function openAndDeleteTabs(): Promise<void> {
         }"
     >
         <img
-            :src="getImageURL('tab-icons/up-remove.png')"
+            :src="runtime.getURL('images/tab-icons/up-remove.png')"
             alt="Open and delete tabs"
             class="dark:invert"
         />

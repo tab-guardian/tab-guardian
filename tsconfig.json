@@ -5,6 +5,7 @@
       "module": "ESNext",
       "moduleResolution": "Node",
       "strict": true,
+      "sourceMap": true,
       "jsx": "preserve",
       "resolveJsonModule": true,
       "isolatedModules": true,
@@ -15,15 +16,20 @@
       "baseUrl": "./src",
       "typeRoots": [
         "./node_modules/@types",
-        "./src/popup/globals.d.ts",
+        "./src/popup/globals.d.ts"
       ],
       "paths": {
           "@/*": ["popup/*"],
           "@bg/*": ["background/*"],
           "@settings/*": ["settings/*"],
-          "@common/*": ["common/*"]
-      },
+          "@common/*": ["common/*"],
+          "@locales/*": ["_locales/*"]
+      }
     },
-    "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.vue", "src/popup/components/Views/SetIconView/GroupIconView"],
+    "include": [
+        "src/**/*.ts",
+        "src/**/*.d.ts",
+        "src/**/*.vue"
+    ],
     "references": [{ "path": "./tsconfig.node.json" }]
   }

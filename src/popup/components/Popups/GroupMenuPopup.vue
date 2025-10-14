@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { Group } from '@/types'
+import type { Group } from '@common/types'
 import { computed } from 'vue'
-import { trans } from '@common/modules/trans'
+import { trans } from '@common/modules/utils'
 import { usePopupStore } from '@/stores/popup'
 import { useGroupStore } from '@/stores/group'
 import Popup from '@/components/Popups/Popup.vue'
@@ -17,7 +17,7 @@ import PasteLinkMenuItem from '@/components//Views/GroupView/GroupControls/MenuI
 import MakeGroupPublicItem from '@/components//Views/GroupView/GroupControls/MenuItems/MakeGroupPublicItem.vue'
 import Message from '@common/components/Message.vue'
 
-const { closePopup } = usePopupStore()
+const popupStore = usePopupStore()
 const groupStore = useGroupStore()
 const group = computed<Group | null>(() => groupStore.selectedGroup)
 
@@ -27,7 +27,10 @@ const isEncrypted = computed<boolean>(() => {
 </script>
 
 <template>
-    <Popup :content="trans('additional_options')" @cancel="closePopup('groupMenuView')">
+    <Popup
+        :content="trans('additional_options')"
+        @cancel="popupStore.hide('groupMenuView', {})"
+    >
         <div v-if="group">
             <p
                 v-if="isEncrypted"

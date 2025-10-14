@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { Group } from '@/types'
+import type { Group } from '@common/types'
 import { computed } from 'vue'
-import { trans } from '@common/modules/trans'
+import { trans } from '@common/modules/utils'
 import { useAppStore } from '@/stores/app'
 import MenuItem from '@/components/MenuItem.vue'
 import PasteIcon from '@common/components/Icons/PasteIcon.vue'
@@ -30,5 +30,5 @@ const tooltip = computed<string>(() => {
         :disabled
         :tip="tooltip"
         @click="appStore.pasteLink(group.id)"
-    />  
+    />
 </template>

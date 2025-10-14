@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import type { Group } from '@/types'
+import type { Group } from '@common/types'
 import { cloneDeep } from 'lodash'
-import { trans } from '@common/modules/trans'
+import { trans } from '@common/modules/utils'
 import { useGroupStore } from '@/stores/group'
-import { showToast } from '@common/modules/showToast'
+import { showToast } from '@common/modules/toast'
 import Swal from 'sweetalert2'
 import MenuItem from '@/components/MenuItem.vue'
 import LockOpenIcon from '@common/components/Icons/LockOpenIcon.vue'
@@ -36,7 +36,7 @@ async function makePublic(): Promise<void> {
         delete link.salt
     }
 
-    groupStore.save(group)
+    groupStore.saveGroup(group)
 
     showToast(trans('group_is_now_open'))
 }
@@ -47,5 +47,5 @@ async function makePublic(): Promise<void> {
         :label="trans('make_group_open')"
         :icon="LockOpenIcon"
         @click="makePublic"
-    />  
+    />
 </template>

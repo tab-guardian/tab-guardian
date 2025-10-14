@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { Group as GroupType } from '@/types'
+import type { Group as GroupType } from '@common/types'
 import { computed } from 'vue'
 import { getIcons } from '@/modules/getIcons'
-import { isEmoji } from '@/modules/isEmoji'
+import { isEmoji } from '@common/modules/utils'
 
 const { group } = defineProps<{ group: GroupType }>()
 
@@ -14,7 +14,7 @@ const allowedIconStart = [
 ]
 
 const showGroupIcon = computed<boolean>(() =>
-    allowedIconStart.some(prefix => group.icon && group.icon.startsWith(prefix))
+    allowedIconStart.some(prefix => group.icon && group.icon.startsWith(prefix)),
 )
 </script>
 

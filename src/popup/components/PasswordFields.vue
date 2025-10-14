@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { trans } from '@common/modules/trans'
-import { computed } from 'vue'
+import { trans } from '@common/modules/utils'
+import { computed, ref } from 'vue'
 import { env } from '@common/env'
-import { passwordError } from '@/modules/groupValidation'
+import { passwordError } from '@common/modules/validation/group'
 import PasswordInput from '@common/components/Form/PasswordInput.vue'
 
 const emit = defineEmits<{
@@ -13,12 +13,23 @@ const emit = defineEmits<{
 const pass = defineModel<string | null>('pass')
 const confirm = defineModel<string | null>('confirm')
 
-const passwordErr = computed<string | null>(() => {
+const errMsg = ref<string | null>(null)
+
+const passErr = computed<string | null>(() => {
     return passwordError(pass.value || null, confirm.value || null)
 })
 
-function emitHasErrorEvent(): void {
-    emit('hasError', passwordErr.value !== null && passwordErr.value !== '')
+function keyupEventHandler(): void {
+    const hasError = passErr.value !== null && passErr.value !== ''
+
+    emit('hasError', hasError)
+
+    if (!pass.value && !confirm.value) {
+        errMsg.value = null
+        return
+    }
+
+    errMsg.value = passErr.value
 }
 </script>
 
@@ -26,16 +37,16 @@ function emitHasErrorEvent(): void {
     <PasswordInput
         v-model="pass"
         @loaded="el => emit('loaded', el)"
-        @keyup="emitHasErrorEvent"
+        @keyup="keyupEventHandler"
         id="group-password"
-        :error="passwordErr"
+        :error="errMsg"
         :label="trans('enter_pass')"
         :minlength="env.MIN_PASS_LENGTH"
     />
 
     <PasswordInput
         v-model="confirm"
-        @keyup="emitHasErrorEvent"
+        @keyup="keyupEventHandler"
         id="group-confirm-password"
         :label="trans('repeat_pass')"
         :minlength="env.MIN_PASS_LENGTH"

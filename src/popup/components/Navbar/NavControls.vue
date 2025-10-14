@@ -14,7 +14,9 @@ const notificationStore = useNotificationStore()
             v-if="notificationStore.notification"
             v-tippy="notificationStore.notification"
         >
-            <div class="rounded-full bg-orange-400 size-3 absolute top-0 right-0"></div>
+            <div
+                class="rounded-full bg-orange-400 size-3 absolute top-0 right-0"
+            ></div>
             <BellIcon />
         </Control>
 

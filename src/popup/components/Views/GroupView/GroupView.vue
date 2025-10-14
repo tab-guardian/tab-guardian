@@ -1,20 +1,23 @@
 <script setup lang="ts">
-import type { Group } from '@/types'
+import type { Group } from '@common/types'
 import { computed, watchEffect } from 'vue'
+import { trans } from '@common/modules/utils'
 import { useGroupStore } from '@/stores/group'
-import { trans } from '@common/modules/trans'
 import { useRoute } from 'vue-router'
+import { usePopupStore } from '@/stores/popup'
 import View from '@/components/Views/View.vue'
 import Links from '@/components/Views/GroupView/Links.vue'
-import MenuButton from '@/components/Views/GroupView/GroupControls/MenuButton.vue'
-import EnterPassword from '@/components/Views/GroupView/EnterPassword.vue'
+import EllipsisVerticalIcon from '@common/components/Icons/EllipsisVerticalIcon.vue'
 import Actions from '@/components/Views/GroupView/GroupControls/Actions/Actions.vue'
+import Control from '@/components/Control.vue'
+import IsLockedBox from '@/components/Views/GroupView/IsLockedBox.vue'
 import IsUnlockedBox from '@/components/Views/GroupView/IsUnlockedBox.vue'
 import Message from '@common/components/Message.vue'
 import GroupIcon from '@/components/Views/MainView/Groups/GroupIcon.vue'
 
 const route = useRoute()
 const groupStore = useGroupStore()
+const popupStore = usePopupStore()
 
 const group = computed<Group | null>(() => {
     const id = route.params.id
@@ -39,7 +42,10 @@ watchEffect(() => {
     <View :routeLocation="{ name: 'main' }">
         <template #controls>
             <Actions v-if="group && showButtons" :group />
-            <MenuButton />
+
+            <Control @click="popupStore.show('groupMenuView', {})">
+                <EllipsisVerticalIcon style="width: 100%" />
+            </Control>
         </template>
 
         <div v-if="group">
@@ -48,10 +54,12 @@ watchEffect(() => {
                 <h2 class="text-lg my-1 px-2 py-0.5">{{ group.name }}</h2>
             </div>
 
-            <IsUnlockedBox v-if="group.isPrivate && !group.isEncrypted" :group />
+            <template v-if="group.isPrivate">
+                <IsLockedBox v-if="group.isEncrypted" :group />
+                <IsUnlockedBox v-else :group />
+            </template>
 
-            <EnterPassword v-if="group.isEncrypted" :group />
-            <Links v-else :group />
+            <Links v-if="!group.isEncrypted" :group />
         </div>
 
         <Message v-else>😢 {{ trans('error_no_group_selected') }}</Message>

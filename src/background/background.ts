@@ -1,11 +1,14 @@
-import { targetBrowser } from '@common/modules/browser/targetBrowser'
 import { hasUnlockedGroupsFlag } from '@common/modules/storage/unlockedGroups'
 import { renderWarningBadge } from '@common/modules/badge'
-import { countAllTabs } from '@/modules/tabs/countAllTabs'
+import { countAllTabs } from '@common/modules/tabs/countAllTabs'
+import { runtime } from '@common/modules/runtime'
+import { isRuntime } from '@common/modules/runtime/utils'
 
-const target = targetBrowser()
+const target = isRuntime('firefox') ? browser : chrome
 
-target.runtime.onInstalled.addListener(async () => await renderWarningBadgeIfNeeded())
+target.runtime.onInstalled.addListener(
+    async () => await renderWarningBadgeIfNeeded(),
+)
 target.runtime.onStartup.addListener(async () => await renderWarningBadgeIfNeeded())
 
 async function renderWarningBadgeIfNeeded(): Promise<void> {
@@ -16,9 +19,9 @@ async function renderWarningBadgeIfNeeded(): Promise<void> {
     }
 }
 
-target.runtime.onMessage.addListener(request => {
+target.runtime.onMessage.addListener(async request => {
     if (request.type === 'closeTabs') {
-        closeTabs(request.payload)
+        await closeTabs(request.payload)
     }
 })
 
@@ -27,10 +30,10 @@ async function closeTabs(ids: number[]): Promise<void> {
 
     // create a new tab to prevent closing the browser
     if (allTabsCount === ids.length) {
-        target.tabs.create({})
+        await runtime.tabs.create({})
     }
 
     for (const id of ids) {
-        await target.tabs.remove(id)
+        await runtime.tabs.remove(id)
     }
 }

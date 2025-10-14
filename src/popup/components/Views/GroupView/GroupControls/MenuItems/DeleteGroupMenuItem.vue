@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import MenuItem from '@/components/MenuItem.vue'
 import TrashIcon from '@common/components/Icons/TrashIcon.vue'
-import { trans } from '@common/modules/trans'
+import { trans } from '@common/modules/utils'
 import { usePopupStore } from '@/stores/popup'
 
-const { closePopup, openPopup } = usePopupStore()
+const popupStore = usePopupStore()
 
 async function deleteGroup(): Promise<void> {
-    closePopup('groupMenuView')
-    openPopup('deleteGroup')
+    popupStore.hide('groupMenuView', {})
+    popupStore.show('deleteGroup', {})
 }
 </script>
 

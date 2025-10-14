@@ -1,5 +1,5 @@
-import type { Group } from '@/types'
-import { saveToStorage, getFromStorage, deleteFromStorage } from '@common/modules/storage'
+import type { Group } from '@common/types'
+import { runtime } from '@common/modules/runtime'
 import { cloneDeep } from 'lodash'
 import {
     getGroupIdsFromStorage,
@@ -8,17 +8,12 @@ import {
 } from '@common/modules/storage/groupIds'
 
 export async function deleteGroupFromStorage(groupId: number): Promise<void> {
-    await deleteFromStorage(groupId.toString())
+    await runtime.storage.remove(groupId.toString())
     await deleteGroupIdFromStorage(groupId)
 }
 
 export async function deleteAllGroupsFromStorage(): Promise<void> {
-    const ids = await getGroupIdsFromStorage()
-
-    for (let id of ids) {
-        await deleteGroupFromStorage(id)
-    }
-
+    await runtime.storage.clear()
     await saveGroupIdsToStorage([])
 }
 
@@ -27,7 +22,7 @@ export async function getGroupsFromStorage(): Promise<Group[]> {
     const groups: Group[] = []
 
     for (let groupId of groupIds) {
-        const group = await getFromStorage<Group>(groupId.toString())
+        const group = await runtime.storage.get<Group>(groupId.toString())
 
         if (!group) {
             console.error(`Group ${groupId} not found in storage, deleting it...`)
@@ -56,15 +51,20 @@ export async function saveGroupToStorage(group: Group): Promise<void> {
     const ids = await getGroupIdsFromStorage()
 
     if (ids.includes(newGroup.id)) {
-        await deleteFromStorage(newGroup.id.toString()) // delete old group
-        await saveToStorage<Group>(newGroup.id.toString(), newGroup) // save new group
+        // delete old group
+        await runtime.storage.remove(newGroup.id.toString())
+
+        // save new group
+        await runtime.storage.set<Group>(newGroup.id.toString(), newGroup)
         return
     }
 
     ids.push(newGroup.id)
 
     await saveGroupIdsToStorage(ids) // save new group id
-    await saveToStorage<Group>(newGroup.id.toString(), newGroup) // save new group
+
+    // save new group
+    await runtime.storage.set<Group>(newGroup.id.toString(), newGroup)
 }
 
 function decodeGroup(group: Group): Group {

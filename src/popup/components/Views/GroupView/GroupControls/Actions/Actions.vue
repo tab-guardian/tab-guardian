@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Group } from '@/types'
+import type { Group } from '@common/types'
 import OpenTabsAction from '@/components/Views/GroupView/GroupControls/Actions/OpenTabsAction.vue'
 import OpenAndDeleteAction from '@/components/Views/GroupView/GroupControls/Actions/OpenAndDeleteAction.vue'
 import StashAndCloseTabsAction from '@/components/Views/GroupView/GroupControls/Actions/StashAndCloseTabsAction.vue'

@@ -1,8 +1,8 @@
-import type { Group, UserChoices, Link } from '@/types'
+import type { Group, UserChoices, Link } from '@common/types'
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
-import { getDefaultGroupName } from '@/modules/getDefaultGroupName'
-import { generateGroupId } from '@common/modules/generateGroupId'
+import { getDefaultGroupName } from '@common/modules/utils/getDefaultGroupName'
+import { generateGroupId } from '@common/modules/utils'
 
 export const useNewGroupStore = defineStore('newGroup', () => {
     // null suggest that there was no choice yet

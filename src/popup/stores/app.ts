@@ -1,14 +1,14 @@
-import { Link } from '@/types'
+import { Link } from '@common/types'
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
-import { trans } from '@common/modules/trans'
-import { showToast } from '@common/modules/showToast'
+import { trans } from '@common/modules/utils'
+import { showToast } from '@common/modules/toast'
 import { useGroupStore } from '@/stores/group'
 import { usePopupStore } from '@/stores/popup'
 import { cloneDeep } from 'lodash'
 
 type LinkBuffer = {
-    action: 'copy' | 'cut',
+    action: 'copy' | 'cut'
     groupId: number
     link: Link
 }
@@ -17,8 +17,8 @@ export const useAppStore = defineStore('app', () => {
     const linkBuffer = ref<LinkBuffer | null>(null)
     const bufferIsEmpty = computed<boolean>(() => linkBuffer.value === null)
 
-    const { saveLinksTo, deleteLinkFrom } = useGroupStore()
-    const { closeAllPopups } = usePopupStore()
+    const groupStore = useGroupStore()
+    const popupStore = usePopupStore()
 
     function linkIsCut(linkId: number): boolean {
         if (!linkBuffer.value || linkBuffer.value.action !== 'cut') {
@@ -37,10 +37,10 @@ export const useAppStore = defineStore('app', () => {
         const link = cloneDeep(linkBuffer.value.link)
         link.id = Date.now()
 
-        await saveLinksTo(groupId, [link])
+        await groupStore.saveLinksTo(groupId, [link])
 
         if (linkBuffer.value.action === 'cut') {
-            await deleteLinkFrom(
+            await groupStore.deleteLinkFrom(
                 linkBuffer.value.groupId,
                 linkBuffer.value.link.id,
             )
@@ -49,7 +49,8 @@ export const useAppStore = defineStore('app', () => {
         linkBuffer.value = null
 
         showToast(trans('tab_pasted'))
-        closeAllPopups()
+
+        popupStore.hideAll()
     }
 
     return {

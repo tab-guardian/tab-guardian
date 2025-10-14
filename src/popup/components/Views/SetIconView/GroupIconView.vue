@@ -1,24 +1,24 @@
 <script setup lang="ts">
-import type { Group } from '@/types'
+import type { Group } from '@common/types'
 import { onMounted, computed } from 'vue'
 import { usePopupStore } from '@/stores/popup'
-import { trans } from '@common/modules/trans'
+import { trans } from '@common/modules/utils'
 import { useGroupStore } from '@/stores/group'
 import { useRouter } from 'vue-router'
 import { getIcons } from '@/modules/getIcons'
-import { showToast } from '@common/modules/showToast'
+import { showToast } from '@common/modules/toast'
 import IconItem from '@/components/Views/SetIconView/IconItem.vue'
 import View from '@/components/Views/View.vue'
 import Btn from '@/components/Views/SetIconView/Btn.vue'
 import FaceSmileIcon from '@common/components/Icons/FaceSmileIcon.vue'
 import PhotoIcon from '@common/components/Icons/PhotoIcon.vue'
 
-const store = useGroupStore()
+const groupStore = useGroupStore()
 const router = useRouter()
 const groupId = Number(router.currentRoute.value.params.id)
 
 const popupStore = usePopupStore()
-const group = computed<Group | null>(() => store.getGroupById(groupId))
+const group = computed<Group | null>(() => groupStore.getGroupById(groupId))
 
 const favIcons = computed<string[]>(() => {
     if (!group.value) {
@@ -30,28 +30,42 @@ const favIcons = computed<string[]>(() => {
     return Array.from(new Set(icons))
 })
 
-onMounted(popupStore.closeAllPopups)
+onMounted(() => popupStore.hideAll())
 
 async function selectIcon(icon: string): Promise<void> {
     if (!group.value || icon === '' || group.value.icon === icon) {
         return
     }
 
-    await store.setIcon(group.value.id, icon)
+    await groupStore.setIcon(group.value.id, icon)
 
     showToast(trans('icon_is_set'))
 
-    router.push({ name: 'group', params: { id: group.value.id.toString() } })
+    await router.push({ name: 'group', params: { id: group.value.id.toString() } })
 }
 
 function openEmojiPopup(): void {
-    popupStore.openPopup('chooseEmoji')
-    popupStore.onClose((emo: string) => selectIcon(emo))
+    popupStore.show('chooseEmoji', {}, async data => {
+        if (!data || data.emo === '') {
+            return
+        }
+
+        await selectIcon(data.emo)
+    })
 }
 
 function openImageIconPopup(): void {
-    popupStore.openPopup('chooseImageIcon')
-    popupStore.onClose((url: string) => selectIcon(url))
+    popupStore.show('chooseImageIcon', {}, async data => {
+        if (!data) {
+            throw new Error("data must exist inside onClose hook in 'newPassword'")
+        }
+
+        if (data.url === '') {
+            return
+        }
+
+        await selectIcon(data.url)
+    })
 }
 </script>
 

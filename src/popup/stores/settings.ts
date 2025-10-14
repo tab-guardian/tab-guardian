@@ -1,7 +1,7 @@
-import type { Settings } from '@/types'
+import type { Settings } from '@common/types'
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import { getFromStorage, saveToStorage } from '@common/modules/storage'
+import { runtime } from '@common/modules/runtime'
 
 export const useSettingsStore = defineStore('settings', () => {
     const settings = ref<Settings>({
@@ -17,7 +17,7 @@ export const useSettingsStore = defineStore('settings', () => {
     async function loadSettingsFromStorage(): Promise<void> {
         loading.value = true
 
-        const data = await getFromStorage<Settings | null>('settings')
+        const data = await runtime.storage.get<Settings | null>('settings')
 
         if (data) {
             settings.value = {
@@ -30,7 +30,7 @@ export const useSettingsStore = defineStore('settings', () => {
     }
 
     function updateSettings(): void {
-        saveToStorage<Settings>('settings', settings.value)
+        runtime.storage.set<Settings>('settings', settings.value)
     }
 
     return {

@@ -1,26 +1,26 @@
 <script setup lang="ts">
-import type { Group } from '@/types'
+import type { Group } from '@common/types'
 import { computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { usePopupStore } from '@/stores/popup'
 import { useGroupStore } from '@/stores/group'
 import moment from 'moment'
-import { trans } from '@common/modules/trans'
+import { trans } from '@common/modules/utils'
 import View from '@/components/Views/View.vue'
 import Message from '@common/components/Message.vue'
 import ListItem from '@/components/Views/GroupDetailsView/ListItem.vue'
 import Tip from '@common/components/Tip.vue'
 
 const router = useRouter()
-const store = useGroupStore()
+const groupStore = useGroupStore()
 
 const groupId = Number(router.currentRoute.value.params.id)
-const { closeAllPopups } = usePopupStore()
+const popupStore = usePopupStore()
 
-onMounted(closeAllPopups)
+onMounted(() => popupStore.hideAll())
 
 const DATE_FORMAT = 'DD.MM.YYYY HH:mm'
-const group = computed<Group | null>(() => store.getGroupById(groupId))
+const group = computed<Group | null>(() => groupStore.getGroupById(groupId))
 </script>
 
 <template>

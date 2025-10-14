@@ -1,26 +1,24 @@
 <script setup lang="ts">
-import type { Group } from '@/types'
+import type { Group } from '@common/types'
 import { ref } from 'vue'
-import { trans } from '@common/modules/trans'
+import { trans } from '@common/modules/utils'
 import { useGroupStore } from '@/stores/group'
 import { usePopupStore } from '@/stores/popup'
-import { useCryptoStore } from '@/stores/crypto'
 import { useSettingsStore } from '@/stores/settings'
-import { useNotificationStore } from '@/stores/notification'
-import { showToast } from '@common/modules/showToast'
-import { getPasswordFromStorage, deletePasswordFromStorage } from '@common/modules/storage/password'
+import { showToast } from '@common/modules/toast'
+import {
+    getPasswordFromStorage,
+    deletePasswordFromStorage,
+} from '@common/modules/storage/password'
 import LockClosedIcon from '@common/components/Icons/LockClosedIcon.vue'
 import WarningBox from '@common/components/WarningBox.vue'
-import SmallSpinner from '@common/components/SmallSpinner.vue'
-import ProgressBar from '@common/components/ProgressBar.vue'
+import Progress from '@common/components/Progress.vue'
 import Button from '@common/components/Form/Button.vue'
 
-const { group } = defineProps<{ group: Group }>()
+const props = defineProps<{ group: Group }>()
 const groupStore = useGroupStore()
-const cryptoStore = useCryptoStore()
 const settingsStore = useSettingsStore()
-const notificationStore = useNotificationStore()
-const { openPopup, onClose } = usePopupStore()
+const popupStore = usePopupStore()
 
 const useNewPassword = ref<boolean>(false)
 const encrypting = ref<boolean>(false)
@@ -35,10 +33,10 @@ async function promptEnterPassword(): Promise<void> {
     }
 
     if (useNewPassword.value) {
-        await deletePasswordFromStorage(group.id)
+        await deletePasswordFromStorage(props.group.id)
     }
 
-    const pass = await getPasswordFromStorage(group.id)
+    const pass = await getPasswordFromStorage(props.group.id)
 
     if (pass) {
         await lockGroup(pass)
@@ -49,23 +47,29 @@ async function promptEnterPassword(): Promise<void> {
         showToast(trans('cant_remember_pass'), 'error', 4000)
     }
 
-    openPopup('newPassword')
-    onClose(async (newPass: string) => await lockGroup(newPass))
+    popupStore.show('newPassword', {}, async data => {
+        if (!data || data.newPass === '') {
+            encrypting.value = false
+            return
+        }
+
+        await groupStore.updatePassword(data.newPass)
+        await lockGroup(data.newPass)
+    })
 }
 
 async function lockGroup(pass: string): Promise<void> {
     encrypting.value = true
 
-    const encrypted = await groupStore.encrypt(group, pass)
+    const encrypted = await groupStore.encrypt(props.group, pass)
 
     if (!encrypted) {
-        console.info(`Group ${group.id} wasn't encrypted`)
+        console.info(`Group ${props.group.id} wasn't encrypted`)
         return
     }
 
-    await groupStore.save(encrypted)
-    await deletePasswordFromStorage(group.id)
-    await notificationStore.recalculateNotification()
+    await groupStore.saveGroup(encrypted)
+    await deletePasswordFromStorage(props.group.id)
 
     encrypting.value = false
 
@@ -74,11 +78,7 @@ async function lockGroup(pass: string): Promise<void> {
 </script>
 
 <template>
-    <ProgressBar
-        v-if="encrypting"
-        :current="cryptoStore.progress.current"
-        :max="cryptoStore.progress.max"
-    />
+    <Progress v-if="encrypting" />
 
     <WarningBox :message="trans('private_group_unlocked')">
         <div class="w-52 flex flex-col items-end gap-1.5">

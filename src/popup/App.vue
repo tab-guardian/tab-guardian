@@ -2,17 +2,26 @@
 import { onMounted } from 'vue'
 import { useSettingsStore } from '@/stores/settings'
 import { useNotificationStore } from '@/stores/notification'
+import { useAttemptsStore } from '@/stores/attempts'
 import Navbar from '@/components/Navbar/Navbar.vue'
 import AppearTransition from '@common/components/Transitions/AppearTransition.vue'
 import Popups from '@/components/Popups/Popups.vue'
-
-const { loadSettingsFromStorage } = useSettingsStore()
-const { recalculateNotification } = useNotificationStore()
+import NewGroupNamePopup from '@/components/Popups/NewGroupNamePopup.vue'
+import DeleteGroupPopup from '@/components/Popups/DeleteGroupPopup.vue'
+import NewPasswordPopup from '@/components/Popups/NewPasswordPopup.vue'
+import EnterPasswordPopup from '@/components/Popups/EnterPasswordPopup.vue'
+import RebindGroupPopup from '@/components/Popups/RebindGroupPopup.vue'
+import ChooseEmojiPopup from '@/components/Popups/ChooseEmojiPopup.vue'
+import ChooseImageIconPopup from '@/components/Popups/ChooseImageIconPopup.vue'
+import LinkMenuPopup from '@/components/Popups/LinkMenuPopup.vue'
+import GroupMenuPopup from '@/components/Popups/GroupMenuPopup.vue'
+import EditGroupNamePopup from '@/components/Popups/EditGroupNamePopup.vue'
 
 onMounted(async () => {
     handleDarkThem()
-    await loadSettingsFromStorage()
-    await recalculateNotification()
+    await useSettingsStore().loadSettingsFromStorage()
+    await useNotificationStore().recalculateNotification()
+    await useAttemptsStore().loadAttemptsFromStorage()
 })
 
 function handleDarkThem(): void {
@@ -33,7 +42,20 @@ function handleDarkThem(): void {
         </RouterView>
     </main>
 
-    <Popups />
+    <Popups
+        :popups="[
+            { comp: DeleteGroupPopup, name: 'deleteGroup' },
+            { comp: NewGroupNamePopup, name: 'newGroupName' },
+            { comp: NewPasswordPopup, name: 'newPassword' },
+            { comp: EnterPasswordPopup, name: 'enterPassword' },
+            { comp: RebindGroupPopup, name: 'rebindGroup' },
+            { comp: ChooseEmojiPopup, name: 'chooseEmoji' },
+            { comp: ChooseImageIconPopup, name: 'chooseImageIcon' },
+            { comp: LinkMenuPopup, name: 'linkMenuView' },
+            { comp: GroupMenuPopup, name: 'groupMenuView' },
+            { comp: EditGroupNamePopup, name: 'editGroupName' },
+        ]"
+    />
 </template>
 
 <style>
