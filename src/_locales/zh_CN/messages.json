@@ -78,6 +78,7 @@
     "pass_updated": { "message": "密码已更新" },
     "enter_pass": { "message": "输入密码" },
     "enter_pass_unlock_content": { "message": "输入密码以解锁该组内容" },
+    "enter_pass_unlock_file": { "message": "输入密码以解锁导入文件的内容" },
     "wrong_pass": { "message": "密码错误" },
     "cant_remember_pass": { "message": "出了点问题！无法记住您的密码。请重新输入" },
     "pass_empty": { "message": "密码为空" },

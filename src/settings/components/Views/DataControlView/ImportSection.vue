@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { EncryptionAlgo, Group } from '@common/types'
 import { ref } from 'vue'
-import { env } from '@common/env'
 import { trans } from '@common/modules/utils'
 import { useGroupStore } from '@/stores/group'
 import { decryptString } from '@common/modules/webCrypto'
@@ -14,18 +13,13 @@ import pako from 'pako'
 import Swal from 'sweetalert2'
 import Section from '@settings/components/Section.vue'
 import FileInput from '@common/components/Form/FileInput.vue'
-import PasswordInput from '@common/components/Form/PasswordInput.vue'
 
 const groupStore = useGroupStore()
 const attemptsStore = useAttemptsStore()
-const { show: showPopup } = usePopupStore()
+const popupStore = usePopupStore()
 
-const fileRawData = ref<string>('')
-const password = ref<string>('')
 const file = ref<File | null>(null)
 const fileInput = ref<HTMLInputElement | null>(null)
-const importing = ref<boolean>(false)
-const isEncryptedFile = ref<boolean>(false)
 
 async function importGroups(): Promise<void> {
     if (!file.value) {
@@ -54,17 +48,11 @@ async function importGroups(): Promise<void> {
     }
 
     reader.readAsText(file.value)
+
     resetState()
 }
 
-async function handlePasswordSubmit(): Promise<void> {
-    if (password.value.length < env.MIN_PASS_LENGTH) {
-        const msg = trans('passwords_min_length', env.MIN_PASS_LENGTH.toString())
-        showToast(msg, 'error')
-        return
-    }
-
-    const rawData = fileRawData.value
+async function requestPassword(rawData: string): Promise<void> {
     const algo = /^algo\(([A-z-]+)\)/.exec(rawData)?.[1] as
         | EncryptionAlgo
         | undefined
@@ -73,39 +61,39 @@ async function handlePasswordSubmit(): Promise<void> {
         throw new Error('Cannot get the encryption algorithm from the file')
     }
 
-    const attempt = await attemptsStore.makeAttempt()
-
-    if (!attempt.success) {
-        showToast(attempt.error, 'error', 5000)
-        password.value = ''
-        return
-    }
-
-    importing.value = true
-
     const encrypted = rawData.replace(`algo(${algo})`, '')
 
+    popupStore.show('enterPassword', {
+        decrypting: pass => decryptFile(encrypted, pass, algo),
+        algo,
+        description: trans('enter_pass_unlock_file'),
+    })
+}
+
+async function decryptFile(
+    encrypted: string,
+    pass: string,
+    algo: EncryptionAlgo,
+): Promise<boolean> {
     try {
-        const decrypted = await decryptString(encrypted, password.value, algo)
+        const decrypted = await decryptString(encrypted, pass, algo)
         await processFileContent(decrypted)
         attemptsStore.unlock()
-        resetState()
     } catch (err) {
         showToast(getDecryptionError(err), 'error')
-        importing.value = false
-        password.value = ''
+        return false
     }
+
+    resetState()
+
+    return true
 }
 
 async function processFileContent(rawData: string): Promise<void> {
-    fileRawData.value = rawData
-
     if (rawData.startsWith('algo(')) {
-        isEncryptedFile.value = true
+        await requestPassword(rawData)
         return
     }
-
-    importing.value = true
 
     const isCompressed = !rawData.startsWith('{') && !rawData.startsWith('[{')
 
@@ -155,11 +143,7 @@ async function fileChosen(f: File, elem: HTMLInputElement): Promise<void> {
 }
 
 function resetState(): void {
-    password.value = ''
     file.value = null
-    importing.value = false
-    fileRawData.value = ''
-    isEncryptedFile.value = false
 
     if (fileInput.value) {
         fileInput.value.value = ''
@@ -180,20 +164,5 @@ function resetState(): void {
                 id="choose-file"
             />
         </div>
-
-        <form
-            v-if="isEncryptedFile"
-            @submit.prevent="handlePasswordSubmit"
-            class="mt-5 mx-auto max-w-96"
-        >
-            <PasswordInput
-                @loaded="inp => inp.focus()"
-                v-model="password"
-                id="enter-password"
-                :label="trans('enter_pass')"
-                :with-button="true"
-                :loading="importing"
-            />
-        </form>
     </Section>
 </template>

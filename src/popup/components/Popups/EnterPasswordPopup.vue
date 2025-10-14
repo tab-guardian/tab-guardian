@@ -68,7 +68,7 @@ async function submitPassword(): Promise<void> {
 
         <form @submit.prevent="submitPassword">
             <PasswordInput
-                @loaded="inp => inp.focus()"
+                @loaded="el => el.focus()"
                 v-model="pass"
                 id="enter-password"
                 :label="trans('enter_pass')"

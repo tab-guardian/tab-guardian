@@ -86,6 +86,9 @@
     "enter_pass_unlock_content": {
         "message": "Enter a password to unlock the content of this group"
     },
+    "enter_pass_unlock_file": {
+        "message": "Enter a password to unlock the content of the import file"
+    },
     "wrong_pass": { "message": "Incorrect password" },
     "cant_remember_pass": {
         "message": "Something went wrong! Cannot remember your password. Please, enter it again"
