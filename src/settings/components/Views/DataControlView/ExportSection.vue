@@ -33,8 +33,8 @@ async function exportGroups(): Promise<void> {
 
     exporting.value = true
 
-    const jsonStr = JSON.stringify(groups)
-    const compressed = toBase64(pako.gzip(jsonStr))
+    const json = JSON.stringify(groups)
+    const compressed = toBase64(pako.gzip(json))
 
     if (!usePassword.value) {
         downloadFile(compressed)
