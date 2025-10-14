@@ -13,12 +13,7 @@ export async function deleteGroupFromStorage(groupId: number): Promise<void> {
 }
 
 export async function deleteAllGroupsFromStorage(): Promise<void> {
-    const ids = await getGroupIdsFromStorage()
-
-    for (let id of ids) {
-        await deleteGroupFromStorage(id)
-    }
-
+    await runtime.storage.clear()
     await saveGroupIdsToStorage([])
 }
 

@@ -100,6 +100,13 @@ export function getWebRuntimeAdapter(): PlatformRuntime {
                 return result
             },
 
+            /**
+             * Remove all items from storage
+             */
+            async clear() {
+                localStorage.clear()
+            },
+
             async get<T>(key: string) {
                 const strValue: string | null = localStorage.getItem(key)
 

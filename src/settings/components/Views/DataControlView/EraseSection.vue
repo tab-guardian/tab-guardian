@@ -1,18 +1,19 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import { trans } from '@common/modules/utils'
 import { useGroupStore } from '@/stores/group'
-import { useSettingsStore } from '@/stores/settings'
 import { showToast } from '@common/modules/toast'
 import Swal from 'sweetalert2'
 import Section from '@settings/components/Section.vue'
 import Button from '@common/components/Form/Button.vue'
 import TrashIcon from '@common/components/Icons/TrashIcon.vue'
 
-const store = useSettingsStore()
 const groupStore = useGroupStore()
 
+const loading = ref<boolean>(false)
+
 async function deleteGroups(): Promise<void> {
-    if (store.loading) {
+    if (loading.value) {
         return
     }
 
@@ -28,12 +29,13 @@ async function deleteGroups(): Promise<void> {
         return
     }
 
-    store.loading = true
+    loading.value = true
+
     await groupStore.deleteAllGroups()
 
     showToast(trans('all_groups_deleted'))
 
-    store.loading = false
+    loading.value = false
 }
 </script>
 
@@ -45,6 +47,7 @@ async function deleteGroups(): Promise<void> {
         <Button
             @clicked="deleteGroups"
             :icon="TrashIcon"
+            :loading
             class-name="bg-red-600 dark:bg-red-400"
         >
             {{ trans('erase_all_groups') }}

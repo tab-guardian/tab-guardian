@@ -53,6 +53,13 @@ export function getChromeRuntimeAdapter(): PlatformRuntime {
                 return result
             },
 
+            /**
+             * Remove all items from storage
+             */
+            async clear() {
+                await chrome.storage.local.clear()
+            },
+
             async get<T>(key: string) {
                 return new Promise<T | null>(resolve => {
                     chrome.storage.local.get(key, result => {

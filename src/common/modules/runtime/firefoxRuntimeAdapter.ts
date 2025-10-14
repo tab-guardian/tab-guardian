@@ -53,6 +53,13 @@ export function getFirefoxRuntimeAdapter(): PlatformRuntime {
                 return result
             },
 
+            /**
+             * Remove all items from storage
+             */
+            async clear() {
+                await browser.storage.local.clear()
+            },
+
             async get<T>(key: string) {
                 return new Promise<T | null>(resolve => {
                     browser.storage.local.get(key).then(result => {
