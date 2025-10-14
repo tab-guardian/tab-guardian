@@ -12,7 +12,7 @@ import slug from 'slug'
 import ArrowDownTrayIcon from '@common/components/Icons/ArrowDownTrayIcon.vue'
 import MenuItem from '@/components/MenuItem.vue'
 
-const store = useGroupStore()
+const groupStore = useGroupStore()
 const cryptoStore = useCryptoStore()
 const popupStore = usePopupStore()
 
@@ -24,14 +24,14 @@ async function exportGroup(): Promise<void> {
         return
     }
 
-    if (!store.selectedGroup) {
+    if (!groupStore.selectedGroup) {
         console.error('No group selected to export')
         return
     }
 
     loading.value = true
 
-    let group = cloneDeep(store.selectedGroup)
+    let group = cloneDeep(groupStore.selectedGroup)
 
     if (group.isPrivate) {
         const encrypted = await encryptPrivateGroup(group)

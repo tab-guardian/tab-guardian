@@ -12,7 +12,7 @@ import ListItem from '@/components/Views/GroupDetailsView/ListItem.vue'
 import Tip from '@common/components/Tip.vue'
 
 const router = useRouter()
-const store = useGroupStore()
+const groupStore = useGroupStore()
 
 const groupId = Number(router.currentRoute.value.params.id)
 const popupStore = usePopupStore()
@@ -20,7 +20,7 @@ const popupStore = usePopupStore()
 onMounted(() => popupStore.hideAll())
 
 const DATE_FORMAT = 'DD.MM.YYYY HH:mm'
-const group = computed<Group | null>(() => store.getGroupById(groupId))
+const group = computed<Group | null>(() => groupStore.getGroupById(groupId))
 </script>
 
 <template>

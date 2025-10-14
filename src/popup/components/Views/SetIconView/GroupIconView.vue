@@ -13,12 +13,12 @@ import Btn from '@/components/Views/SetIconView/Btn.vue'
 import FaceSmileIcon from '@common/components/Icons/FaceSmileIcon.vue'
 import PhotoIcon from '@common/components/Icons/PhotoIcon.vue'
 
-const store = useGroupStore()
+const groupStore = useGroupStore()
 const router = useRouter()
 const groupId = Number(router.currentRoute.value.params.id)
 
 const popupStore = usePopupStore()
-const group = computed<Group | null>(() => store.getGroupById(groupId))
+const group = computed<Group | null>(() => groupStore.getGroupById(groupId))
 
 const favIcons = computed<string[]>(() => {
     if (!group.value) {
@@ -37,7 +37,7 @@ async function selectIcon(icon: string): Promise<void> {
         return
     }
 
-    await store.setIcon(group.value.id, icon)
+    await groupStore.setIcon(group.value.id, icon)
 
     showToast(trans('icon_is_set'))
 
