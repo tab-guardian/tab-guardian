@@ -28,9 +28,9 @@ export async function createDecryptKey(
 }
 
 export async function decrypt(
-    encrypted: string | Uint8Array,
+    encrypted: string | Uint8Array<ArrayBuffer>,
     key: CryptoKey,
-    iv: Uint8Array,
+    iv: Uint8Array<ArrayBuffer>,
     encryptAlgo: EncryptionAlgo,
 ): Promise<string> {
     if (typeof encrypted === 'string') {
@@ -47,9 +47,9 @@ export async function decrypt(
 }
 
 export async function encrypt(
-    text: string | Uint8Array,
+    text: string | Uint8Array<ArrayBuffer>,
     cryptoKey: CryptoKey,
-    iv: Uint8Array,
+    iv: Uint8Array<ArrayBuffer>,
     encryptAlgo: EncryptionAlgo,
 ): Promise<Uint8Array> {
     const textBytes =
