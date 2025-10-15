@@ -93,9 +93,11 @@ To build the image, run this command:
 podman-compose build
 ```
 
-#### Create node_modules locally
+#### Create `node_modules`
+Run this command to install npm packages and generate a `node_modules` directory on your local machine:
+
 ```bash
-docker compose run --rm app npm i
+podman-compose run --rm app npm i
 ```
 
 #### Run the Container
