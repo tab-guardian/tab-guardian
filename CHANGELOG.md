@@ -1,5 +1,7 @@
 # Release Notes
 
+## v1.14.1 (2025-10-16)
+
 ## v1.14.0 (2025-10-14)
 - 🐛 Fixed potential bugs with encryption/decryption
 - 🐛 Fixed showing password validation error when password and confirmation passwords are empty. Now, it doesn't show error
