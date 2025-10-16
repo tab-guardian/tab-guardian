@@ -1,16 +1,17 @@
 # Release Notes
 
 ## v1.14.1 (2025-10-16)
+- 🐛 Fixed development environment. App wasn't working on Chrome-based browsers.
 
 ## v1.14.0 (2025-10-14)
-- 🐛 Fixed potential bugs with encryption/decryption
-- 🐛 Fixed showing password validation error when password and confirmation passwords are empty. Now, it doesn't show error
-- 🐛 Fixed restoring tabs would not recalculate showing notification that you have unlocked groups [#79](https://github.com/tab-guardian/tab-guardian/issues/79)
-- ✨ Improved export/import functionality. Now, you can export all groups with a password protection [#77](https://github.com/tab-guardian/tab-guardian/issues/77)
-- ✨ Exported files are now compressed with Gzip
-- ✨ Add Gzip compression when exporting individual groups
-- 🧑‍💻 Huge refactoring of the core logic
-- 🧑‍💻 Improve performance of "Erase all groups" functionality
+- 🐛 Fixed potential bugs with encryption/decryption.
+- 🐛 Fixed showing password validation error when password and confirmation passwords are empty. Now, it doesn't show error.
+- 🐛 Fixed restoring tabs would not recalculate showing notification that you have unlocked groups [#79](https://github.com/tab-guardian/tab-guardian/issues/79).
+- ✨ Improved export/import functionality. Now, you can export all groups with a password protection [#77](https://github.com/tab-guardian/tab-guardian/issues/77).
+- ✨ Exported files are now compressed with Gzip.
+- ✨ Add Gzip compression when exporting individual groups.
+- 🧑‍💻 Huge refactoring of the core logic.
+- 🧑‍💻 Improve performance of "Erase all groups" functionality.
 
 ## v1.13.2 (2025-10-03)
 - 🐛 Fixed a bug where tabs would not close when you create a new group or adding more tabs to existing group
