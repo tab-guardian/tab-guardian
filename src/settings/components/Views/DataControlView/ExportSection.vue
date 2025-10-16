@@ -4,9 +4,8 @@ import { ref, onMounted } from 'vue'
 import { trans } from '@common/modules/utils'
 import { showToast } from '@common/modules/toast'
 import { usePopupStore } from '@/stores/popup'
-import { encryptString } from '@common/modules/webCrypto'
-import { toBase64 } from '@common/modules/utils'
-import { env } from '@common/env'
+import { encryptExport } from '@common/modules/webCrypto'
+import { toBase64, downloadFile } from '@common/modules/utils'
 import pako from 'pako'
 import Section from '@settings/components/Section.vue'
 import Button from '@common/components/Form/Button.vue'
@@ -37,7 +36,8 @@ async function exportGroups(): Promise<void> {
     const compressed = toBase64(pako.gzip(json))
 
     if (!usePassword.value) {
-        downloadFile(compressed)
+        downloadFile(compressed, 'tab-groups-export')
+        exporting.value = false
         return
     }
 
@@ -47,30 +47,10 @@ async function exportGroups(): Promise<void> {
             return
         }
 
-        const encrypted = await encryptJSON(compressed, data.newPass)
-        downloadFile(encrypted)
+        const encrypted = await encryptExport(compressed, data.newPass)
+        downloadFile(encrypted, 'tab-groups-export')
+        exporting.value = false
     })
-}
-
-function downloadFile(jsonStr: string): void {
-    const blob = new Blob([jsonStr], { type: 'application/json' })
-    const url = URL.createObjectURL(blob)
-
-    const a = document.createElement('a')
-    a.href = url
-    a.download = 'tab-groups-export.json'
-    a.click()
-
-    URL.revokeObjectURL(url)
-
-    exporting.value = false
-}
-
-async function encryptJSON(json: string, pass: string): Promise<string> {
-    const encrypted = await encryptString(json, pass, env.CURR_ENCRYPT_ALGO)
-    const header = `algo(${env.CURR_ENCRYPT_ALGO})`
-
-    return `${header}${encrypted}`
 }
 </script>
 

@@ -1,5 +1,6 @@
-import { EncryptionAlgo } from '@common/types'
+import type { EncryptionAlgo } from '@common/types'
 import { toBase64, fromBase64 } from '@common/modules/utils'
+import { env } from '@common/env'
 
 const KEY_BITS = 256 // bits
 const KEY_BYTES_LENGTH = 16
@@ -28,9 +29,9 @@ export async function createDecryptKey(
 }
 
 export async function decrypt(
-    encrypted: string | Uint8Array,
+    encrypted: string | Uint8Array<ArrayBuffer>,
     key: CryptoKey,
-    iv: Uint8Array,
+    iv: Uint8Array<ArrayBuffer>,
     encryptAlgo: EncryptionAlgo,
 ): Promise<string> {
     if (typeof encrypted === 'string') {
@@ -47,9 +48,9 @@ export async function decrypt(
 }
 
 export async function encrypt(
-    text: string | Uint8Array,
+    text: string | Uint8Array<ArrayBuffer>,
     cryptoKey: CryptoKey,
-    iv: Uint8Array,
+    iv: Uint8Array<ArrayBuffer>,
     encryptAlgo: EncryptionAlgo,
 ): Promise<Uint8Array> {
     const textBytes =
@@ -92,7 +93,45 @@ async function createCryptoKey(
     )
 }
 
-export async function encryptString(
+export async function encryptExport(text: string, pass: string): Promise<string> {
+    const encrypted = await encryptString(text, pass, env.CURR_ENCRYPT_ALGO)
+    const header = `algo(${env.CURR_ENCRYPT_ALGO})`
+
+    return `${header}${encrypted}`
+}
+
+export async function decryptExport(rawData: string, pass: string): Promise<string> {
+    const algo = /^algo\(([A-z-]+)\)/.exec(rawData)?.[1] as
+        | EncryptionAlgo
+        | undefined
+
+    if (!algo) {
+        throw new Error('Cannot get the encryption algorithm from the file')
+    }
+
+    const encrypted = rawData.replace(`algo(${algo})`, '')
+
+    return await decryptString(encrypted, pass, algo)
+}
+
+async function decryptString(
+    encrypted: string,
+    pass: string,
+    algo: EncryptionAlgo,
+): Promise<string> {
+    const encryptedBytes = fromBase64(encrypted)
+
+    // Extract the pieces
+    const salt = encryptedBytes.slice(0, KEY_BYTES_LENGTH)
+    const iv = encryptedBytes.slice(KEY_BYTES_LENGTH, KEY_BYTES_LENGTH * 2)
+    const encryptedTextBytes = encryptedBytes.slice(KEY_BYTES_LENGTH * 2)
+
+    const key = await createDecryptKey(pass, salt, algo)
+
+    return await decrypt(encryptedTextBytes, key, iv, algo)
+}
+
+async function encryptString(
     str: string,
     pass: string,
     algo: EncryptionAlgo,
@@ -112,21 +151,4 @@ export async function encryptString(
     uint8Arr.set(new Uint8Array(encrypted), salt.length + iv.length)
 
     return toBase64(uint8Arr)
-}
-
-export async function decryptString(
-    encrypted: string,
-    pass: string,
-    algo: EncryptionAlgo,
-): Promise<string> {
-    const encryptedBytes = fromBase64(encrypted)
-
-    // Extract the pieces
-    const salt = encryptedBytes.slice(0, KEY_BYTES_LENGTH)
-    const iv = encryptedBytes.slice(KEY_BYTES_LENGTH, KEY_BYTES_LENGTH * 2)
-    const encryptedTextBytes = encryptedBytes.slice(KEY_BYTES_LENGTH * 2)
-
-    const key = await createDecryptKey(pass, salt, algo)
-
-    return await decrypt(encryptedTextBytes, key, iv, algo)
 }

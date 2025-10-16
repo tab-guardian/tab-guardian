@@ -43,11 +43,14 @@ export const useGroupStore = defineStore('group', () => {
         return group
     }
 
-    function getGroupByName(name: string): Group | null {
+    function getGroupByName(name: string, silent: boolean = false): Group | null {
         const group = groups.value.find(group => group.name === name)
 
-        if (!group) {
+        if (!group && !silent) {
             console.error(`Group with name ${name} not found`)
+        }
+
+        if (!group) {
             return null
         }
 
@@ -169,11 +172,7 @@ export const useGroupStore = defineStore('group', () => {
             group.id = generateGroupId()
 
             if (replace) {
-                const existingGroup = getGroupByName(group.name)
-
-                if (existingGroup) {
-                    await deleteGroup(existingGroup.id)
-                }
+                await replaceGroup(group)
             }
 
             await saveGroup(group, false)
@@ -184,6 +183,14 @@ export const useGroupStore = defineStore('group', () => {
         await loadGroupsFromStorage()
 
         progressStore.finish()
+    }
+
+    async function replaceGroup(group: Group): Promise<void> {
+        const existingGroup = getGroupByName(group.name, true)
+
+        if (existingGroup) {
+            await deleteGroup(existingGroup.id)
+        }
     }
 
     async function setIcon(groupId: number, icon: string): Promise<void> {

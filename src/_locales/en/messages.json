@@ -81,7 +81,6 @@
     "no_tabs_found": { "message": "No tabs found" },
     "no_groups_yet": { "message": "There are no groups yet" },
     "settings": { "message": "Settings" },
-    "pass_updated": { "message": "Password has been updated" },
     "enter_pass": { "message": "Enter a password" },
     "enter_pass_unlock_content": {
         "message": "Enter a password to unlock the content of this group"
@@ -91,7 +90,7 @@
     },
     "wrong_pass": { "message": "Incorrect password" },
     "cant_remember_pass": {
-        "message": "Something went wrong! Cannot remember your password. Please, enter it again"
+        "message": "Please, enter your group password to lock this group"
     },
     "pass_empty": { "message": "Password is empty" },
     "passwords_not_match": { "message": "Passwords do not match" },
@@ -201,7 +200,6 @@
     "some_groups_already_exist_same_name": {
         "message": "Some groups that you want to import already exist with the same name. Do you want to replace them?"
     },
-    "replace_groups": { "message": "Replace groups?" },
     "file_chosen": { "message": "File chosen" },
     "save": { "message": "Save" },
     "date_format_is": { "message": "Date format is" },
@@ -211,9 +209,6 @@
         "message": "Images are only allowed with these formats"
     },
     "new_password": { "message": "New password" },
-    "uses_old_encrypt_impl": {
-        "message": "This group uses the old encryption implementation. You can fix it by unlocking this group and locking it back"
-    },
     "nothing_to_paste": { "message": "There is nothing to paste" },
     "general": { "message": "General" },
     "data_control": { "message": "Data Control" },

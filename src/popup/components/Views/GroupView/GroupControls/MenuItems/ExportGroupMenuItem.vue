@@ -4,10 +4,10 @@ import { ref } from 'vue'
 import { useGroupStore } from '@/stores/group'
 import { usePopupStore } from '@/stores/popup'
 import { trans } from '@common/modules/utils'
-import { useCryptoStore } from '@/stores/crypto'
+import { encryptExport } from '@common/modules/webCrypto'
 import { getPasswordFromStorage } from '@common/modules/storage/password'
 import { showToast } from '@common/modules/toast'
-import { toBase64 } from '@common/modules/utils'
+import { toBase64, downloadFile } from '@common/modules/utils'
 import { cloneDeep } from 'lodash'
 import slug from 'slug'
 import pako from 'pako'
@@ -15,7 +15,6 @@ import ArrowDownTrayIcon from '@common/components/Icons/ArrowDownTrayIcon.vue'
 import MenuItem from '@/components/MenuItem.vue'
 
 const groupStore = useGroupStore()
-const cryptoStore = useCryptoStore()
 const popupStore = usePopupStore()
 
 const loading = ref<boolean>(false)
@@ -35,42 +34,38 @@ async function exportGroup(): Promise<void> {
 
     let group = cloneDeep(groupStore.selectedGroup)
 
-    if (group.isPrivate) {
-        const encrypted = await encryptPrivateGroup(group)
-
-        if (encrypted) {
-            group = encrypted
-        }
-    }
-
     const json = JSON.stringify(group)
     const compressed = toBase64(pako.gzip(json))
 
-    const blob = new Blob([compressed], { type: 'application/json' })
-    const url = URL.createObjectURL(blob)
+    if (!group.isPrivate) {
+        await downloadExportFile(compressed, group)
+        return
+    }
 
-    const a = document.createElement('a')
-    a.href = url
-    a.download = `tg-${slug(group.name)}.json`
-    a.click()
+    const pass = await getPasswordFromStorage(group.id)
 
-    URL.revokeObjectURL(url)
+    if (pass) {
+        const encrypted = await encryptExport(compressed, pass)
+        await downloadExportFile(encrypted, group)
+        return
+    }
+
+    showToast(trans('cant_remember_pass'), 'error', 4000)
+
+    popupStore.show('newPassword', {}, async resp => {
+        if (resp && resp.newPass) {
+            const encrypted = await encryptExport(compressed, resp.newPass)
+            await downloadExportFile(encrypted, group)
+        }
+    })
+}
+
+async function downloadExportFile(compressed: string, group: Group): Promise<void> {
+    downloadFile(compressed, slug(group.name))
 
     loading.value = false
 
     popupStore.hide('groupMenuView', {})
-}
-
-async function encryptPrivateGroup(group: Group): Promise<Group | null> {
-    const pass = await getPasswordFromStorage(group.id)
-
-    if (!pass) {
-        showToast(trans('cant_remember_pass'), 'error', 4000)
-        popupStore.show('newPassword', {})
-        return null
-    }
-
-    return await cryptoStore.encryptGroup(group, pass)
 }
 </script>
 

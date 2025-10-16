@@ -1,20 +1,24 @@
-import { EncryptionAlgo, Link } from '@common/types'
+import { Link } from '@common/types'
 
 type PopupItem<T = any, D = any> = {
     open: boolean
     dataOnOpen: T | null
     dataOnClose: D | null
+    onClose: ((data: D) => void) | null
 }
 
 export type EnterPasswordData = {
     decrypting: (password: string) => Promise<boolean>
-    algo: EncryptionAlgo | null
-    description: string
+    text: string
+}
+
+export type ConfirmData = {
+    text: string
 }
 
 export type Popups = {
     groupMenuView: PopupItem
-    deleteGroup: PopupItem
+    confirm: PopupItem<ConfirmData, { isConfirmed: boolean }>
     groupName: PopupItem
     rebindGroup: PopupItem
     chooseEmoji: PopupItem<{}, { emo: string }>

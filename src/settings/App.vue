@@ -4,6 +4,7 @@ import { useSettingsStore } from '@/stores/settings'
 import { useAttemptsStore } from '@/stores/attempts'
 import Spinner from '@common/components/Spinner.vue'
 import SettingsSidebar from '@settings/components/SettingsSidebar.vue'
+import ConfirmPopup from '@/components/Popups/ConfirmPopup.vue'
 import Popups from '@/components/Popups/Popups.vue'
 import NewPasswordPopup from '@/components/Popups/NewPasswordPopup.vue'
 import EnterPasswordPopup from '@/components/Popups/EnterPasswordPopup.vue'
@@ -32,6 +33,7 @@ onMounted(async () => {
         :popups="[
             { comp: NewPasswordPopup, name: 'newPassword' },
             { comp: EnterPasswordPopup, name: 'enterPassword' },
+            { comp: ConfirmPopup, name: 'confirm' },
         ]"
     />
 </template>

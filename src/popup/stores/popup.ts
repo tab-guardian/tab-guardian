@@ -7,11 +7,12 @@ const defaultEmptyPopup = {
     open: false,
     dataOnOpen: null,
     dataOnClose: null,
+    onClose: null,
 }
 
 const defaultPopups: Popups = {
     groupMenuView: cloneDeep(defaultEmptyPopup),
-    deleteGroup: cloneDeep(defaultEmptyPopup),
+    confirm: cloneDeep(defaultEmptyPopup),
     groupName: cloneDeep(defaultEmptyPopup),
     rebindGroup: cloneDeep(defaultEmptyPopup),
     enterPassword: cloneDeep(defaultEmptyPopup),
@@ -25,7 +26,6 @@ const defaultPopups: Popups = {
 
 export const usePopupStore = defineStore('popup', () => {
     const popups = ref<Popups>(cloneDeep(defaultPopups))
-    const onCloseCallback = ref<null | (<T>(data: T) => void)>(null)
 
     function hideAll(): void {
         for (const key in popups.value) {
@@ -42,7 +42,7 @@ export const usePopupStore = defineStore('popup', () => {
         popups.value[key].dataOnOpen = data
 
         if (onClose) {
-            onCloseCallback.value = onClose
+            popups.value[key].onClose = onClose
         }
     }
 
@@ -61,8 +61,10 @@ export const usePopupStore = defineStore('popup', () => {
         popups.value[key].dataOnOpen = null
         popups.value[key].dataOnClose = null
 
-        if (onCloseData && onCloseCallback.value) {
-            onCloseCallback.value(onCloseData)
+        const onClose = popups.value[key].onClose
+
+        if (onCloseData && onClose) {
+            onClose(onCloseData)
         }
     }
 

@@ -44,6 +44,18 @@ export function toBase64(arr: Uint8Array): string {
  * Decodes Base64 string back to bytes.
  * Use new TextDecoder().decode() to turn it to a UTF-8 string
  */
-export function fromBase64(str: string): Uint8Array {
+export function fromBase64(str: string): Uint8Array<ArrayBuffer> {
     return Uint8Array.from(atob(str), c => c.charCodeAt(0))
+}
+
+export function downloadFile(text: string, name: string): void {
+    const blob = new Blob([text], { type: 'text/plain' })
+    const url = URL.createObjectURL(blob)
+
+    const a = document.createElement('a')
+    a.href = url
+    a.download = `${name}.bak`
+    a.click()
+
+    URL.revokeObjectURL(url)
 }

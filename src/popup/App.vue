@@ -7,7 +7,7 @@ import Navbar from '@/components/Navbar/Navbar.vue'
 import AppearTransition from '@common/components/Transitions/AppearTransition.vue'
 import Popups from '@/components/Popups/Popups.vue'
 import NewGroupNamePopup from '@/components/Popups/NewGroupNamePopup.vue'
-import DeleteGroupPopup from '@/components/Popups/DeleteGroupPopup.vue'
+import ConfirmPopup from '@/components/Popups/ConfirmPopup.vue'
 import NewPasswordPopup from '@/components/Popups/NewPasswordPopup.vue'
 import EnterPasswordPopup from '@/components/Popups/EnterPasswordPopup.vue'
 import RebindGroupPopup from '@/components/Popups/RebindGroupPopup.vue'
@@ -44,7 +44,7 @@ function handleDarkThem(): void {
 
     <Popups
         :popups="[
-            { comp: DeleteGroupPopup, name: 'deleteGroup' },
+            { comp: GroupMenuPopup, name: 'groupMenuView' },
             { comp: NewGroupNamePopup, name: 'newGroupName' },
             { comp: NewPasswordPopup, name: 'newPassword' },
             { comp: EnterPasswordPopup, name: 'enterPassword' },
@@ -52,8 +52,8 @@ function handleDarkThem(): void {
             { comp: ChooseEmojiPopup, name: 'chooseEmoji' },
             { comp: ChooseImageIconPopup, name: 'chooseImageIcon' },
             { comp: LinkMenuPopup, name: 'linkMenuView' },
-            { comp: GroupMenuPopup, name: 'groupMenuView' },
             { comp: EditGroupNamePopup, name: 'editGroupName' },
+            { comp: ConfirmPopup, name: 'confirm' },
         ]"
     />
 </template>

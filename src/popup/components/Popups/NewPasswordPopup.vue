@@ -2,7 +2,6 @@
 import { ref } from 'vue'
 import { trans } from '@common/modules/utils'
 import { usePopupStore } from '@/stores/popup'
-import { showToast } from '@common/modules/toast'
 import Popup from '@/components/Popups/Popup.vue'
 import Button from '@common/components/Form/Button.vue'
 import ChevronRightIcon from '@common/components/Icons/ChevronRightIcon.vue'
@@ -20,17 +19,16 @@ function updatePassword(): void {
         return
     }
 
-    showToast(trans('pass_updated'))
-    closePasswordPopup()
+    hidePasswordPopup()
 }
 
-function closePasswordPopup(): void {
+function hidePasswordPopup(): void {
     popupStore.hide('newPassword', { newPass: pass.value })
 }
 </script>
 
 <template>
-    <Popup @cancel="closePasswordPopup" :content="trans('enter_pass')">
+    <Popup @cancel="hidePasswordPopup" :content="trans('enter_pass')">
         <form @submit.prevent="updatePassword" class="flex flex-col gap-3">
             <PasswordFields
                 v-model:pass="pass"

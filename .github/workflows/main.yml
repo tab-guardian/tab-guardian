@@ -1,0 +1,38 @@
+name: Main
+
+on:
+    push:
+        branches: [ master ]
+    pull_request:
+        branches: [ master ]
+
+jobs:
+    test:
+        runs-on: ubuntu-latest
+
+        steps:
+        - name: Checkout Code
+          uses: actions/checkout@v4
+
+        - name: Set up Node.js
+          uses: actions/setup-node@v3
+          with:
+            node-version: 20.x
+
+        - name: Create .env File
+          run: cp .env.example .env
+
+        - name: Install Dependencies
+          run: npm install
+
+        - name: Run Vitest Tests
+          run: npm run test run
+
+        - name: Run TypeScript Check
+          run: npm run check
+
+        - name: Run Prettier Check
+          run: npm run prettier
+
+        - name: Run Vulnerabilities
+          run: npm audit

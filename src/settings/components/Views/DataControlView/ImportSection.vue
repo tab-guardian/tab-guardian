@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { EncryptionAlgo, Group } from '@common/types'
+import type { Group } from '@common/types'
 import { ref } from 'vue'
 import { trans } from '@common/modules/utils'
-import { decryptString } from '@common/modules/webCrypto'
+import { decryptExport } from '@common/modules/webCrypto'
 import { fromBase64 } from '@common/modules/utils'
 import { showToast } from '@common/modules/toast'
 import { getDecryptionError } from '@/errors'
@@ -10,19 +10,22 @@ import { useAttemptsStore } from '@/stores/attempts'
 import { useGroupStore } from '@/stores/group'
 import { usePopupStore } from '@/stores/popup'
 import { useProgressStore } from '@/stores/progress'
+import { useCryptoStore } from '@/stores/crypto'
 import pako from 'pako'
-import Swal from 'sweetalert2'
 import Section from '@settings/components/Section.vue'
 import FileInput from '@common/components/Form/FileInput.vue'
 import Progress from '@common/components/Progress.vue'
+import { ConfirmData } from '@common/types/popup'
 
 const groupStore = useGroupStore()
 const attemptsStore = useAttemptsStore()
 const popupStore = usePopupStore()
 const progressStore = useProgressStore()
+const cryptoStore = useCryptoStore()
 
 const file = ref<File | null>(null)
 const fileInput = ref<HTMLInputElement | null>(null)
+const groupPassword = ref<string | null>(null)
 
 async function importGroups(): Promise<void> {
     if (!file.value) {
@@ -55,31 +58,11 @@ async function importGroups(): Promise<void> {
     resetState()
 }
 
-async function requestPassword(rawData: string): Promise<void> {
-    const algo = /^algo\(([A-z-]+)\)/.exec(rawData)?.[1] as
-        | EncryptionAlgo
-        | undefined
+async function decryptFile(encrypted: string, pass: string): Promise<boolean> {
+    groupPassword.value = pass
 
-    if (!algo) {
-        throw new Error('Cannot get the encryption algorithm from the file')
-    }
-
-    const encrypted = rawData.replace(`algo(${algo})`, '')
-
-    popupStore.show('enterPassword', {
-        decrypting: pass => decryptFile(encrypted, pass, algo),
-        algo,
-        description: trans('enter_pass_unlock_file'),
-    })
-}
-
-async function decryptFile(
-    encrypted: string,
-    pass: string,
-    algo: EncryptionAlgo,
-): Promise<boolean> {
     try {
-        const decrypted = await decryptString(encrypted, pass, algo)
+        const decrypted = await decryptExport(encrypted, pass)
         await processFileContent(decrypted)
         attemptsStore.unlock()
     } catch (err) {
@@ -94,7 +77,10 @@ async function decryptFile(
 
 async function processFileContent(rawData: string): Promise<void> {
     if (rawData.startsWith('algo(')) {
-        await requestPassword(rawData)
+        popupStore.show('enterPassword', {
+            decrypting: pass => decryptFile(rawData, pass),
+            text: trans('enter_pass_unlock_file'),
+        })
         return
     }
 
@@ -106,7 +92,13 @@ async function processFileContent(rawData: string): Promise<void> {
     }
 
     const json = JSON.parse(rawData) as Group[] | Group
+
     const groups = Array.isArray(json) ? json : [json]
+
+    // Lock (encrypt) the private group
+    if (groupPassword.value && groups.length === 1) {
+        groups[0] = await cryptoStore.encryptGroup(groups[0], groupPassword.value)
+    }
 
     await groupStore.loadGroupsFromStorage()
 
@@ -120,18 +112,16 @@ async function processFileContent(rawData: string): Promise<void> {
         return
     }
 
-    const answer = await Swal.fire({
-        title: trans('replace_groups'),
+    const confirmData: ConfirmData = {
         text: trans('some_groups_already_exist_same_name'),
-        showDenyButton: true,
-        confirmButtonText: trans('yes'),
-        denyButtonText: trans('no'),
-    })
-
-    if (answer.isConfirmed) {
-        await groupStore.addAndSaveGroups(groups, true)
-        showSuccessMessage(groups)
     }
+
+    popupStore.show('confirm', confirmData, async answer => {
+        if (answer) {
+            await groupStore.addAndSaveGroups(groups, answer.isConfirmed)
+            showSuccessMessage(groups)
+        }
+    })
 }
 
 function showSuccessMessage(groups: Group[]): void {
