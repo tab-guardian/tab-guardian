@@ -93,7 +93,6 @@
         "message": "Введите пароль группы, чтобы заблокировать эту группу"
     },
     "repeat_pass": { "message": "Повторите пароль" },
-    "pass_updated": { "message": "Пароль обновлен" },
     "pass_empty": { "message": "Пароль пуст" },
     "passwords_not_match": { "message": "Пароли не совпадают" },
     "add_more_tabs": { "message": "Добавить больше вкладок" },
