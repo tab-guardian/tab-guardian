@@ -17,9 +17,3 @@ emoji-picker {
     --border-size: 0;
     --input-padding: 5px 7px;
 }
-
-/* Scrollbar for Firefox */
-* {
-    scrollbar-width: thin;
-    scrollbar-color: rgba(255, 255, 255, 0.5) #f0f0f0;
-}
