@@ -54,7 +54,7 @@ export function downloadFile(text: string, name: string): void {
 
     const a = document.createElement('a')
     a.href = url
-    a.download = `${name}.tab-guardian`
+    a.download = `${name}.bak`
     a.click()
 
     URL.revokeObjectURL(url)
