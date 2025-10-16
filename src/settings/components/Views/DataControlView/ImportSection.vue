@@ -11,10 +11,10 @@ import { useGroupStore } from '@/stores/group'
 import { usePopupStore } from '@/stores/popup'
 import { useProgressStore } from '@/stores/progress'
 import pako from 'pako'
-import Swal from 'sweetalert2'
 import Section from '@settings/components/Section.vue'
 import FileInput from '@common/components/Form/FileInput.vue'
 import Progress from '@common/components/Progress.vue'
+import { ConfirmData } from '@common/types/popup'
 
 const groupStore = useGroupStore()
 const attemptsStore = useAttemptsStore()
@@ -23,6 +23,7 @@ const progressStore = useProgressStore()
 
 const file = ref<File | null>(null)
 const fileInput = ref<HTMLInputElement | null>(null)
+
 
 async function importGroups(): Promise<void> {
     if (!file.value) {
@@ -120,18 +121,16 @@ async function processFileContent(rawData: string): Promise<void> {
         return
     }
 
-    const answer = await Swal.fire({
-        title: trans('replace_groups'),
-        text: trans('some_groups_already_exist_same_name'),
-        showDenyButton: true,
-        confirmButtonText: trans('yes'),
-        denyButtonText: trans('no'),
-    })
-
-    if (answer.isConfirmed) {
-        await groupStore.addAndSaveGroups(groups, true)
-        showSuccessMessage(groups)
+    const confirmData: ConfirmData = {
+        text: trans('some_groups_already_exist_same_name')
     }
+
+    popupStore.show('confirm', confirmData, async answer => {
+        if (answer && answer.isConfirmed) {
+            await groupStore.addAndSaveGroups(groups, true)
+            showSuccessMessage(groups)
+        }
+    })
 }
 
 function showSuccessMessage(groups: Group[]): void {

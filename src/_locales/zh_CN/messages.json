@@ -175,7 +175,6 @@
     "some_groups_already_exist_same_name": {
         "message": "要导入的某些组已存在相同名称。您想替换它们吗？"
     },
-    "replace_groups": { "message": "替换组？" },
     "file_chosen": { "message": "文件已选择" },
     "save": { "message": "保存" },
     "date_format_is": { "message": "日期格式是" },
