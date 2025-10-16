@@ -64,7 +64,7 @@ async function submitPassword(): Promise<void> {
     >
         <p class="flex items-center gap-3 mb-2 text-sm leading-4">
             <ShieldCheckIcon width="45" height="45" />
-            {{ sharedData?.description }}
+            {{ sharedData?.text }}
         </p>
 
         <form @submit.prevent="submitPassword">

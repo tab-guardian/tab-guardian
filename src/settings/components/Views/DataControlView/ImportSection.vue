@@ -69,7 +69,7 @@ async function requestPassword(rawData: string): Promise<void> {
     popupStore.show('enterPassword', {
         decrypting: pass => decryptFile(encrypted, pass, algo),
         algo,
-        description: trans('enter_pass_unlock_file'),
+        text: trans('enter_pass_unlock_file'),
     })
 }
 

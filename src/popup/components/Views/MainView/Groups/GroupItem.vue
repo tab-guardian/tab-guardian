@@ -39,7 +39,7 @@ async function navigateToGroupView(): Promise<void> {
         popupStore.show('enterPassword', {
             decrypting: async pass => await unlockGroup(props.group, pass),
             algo: props.group.algo ?? null,
-            description: trans('enter_pass_unlock_content'),
+            text: trans('enter_pass_unlock_content'),
         })
 
         return
