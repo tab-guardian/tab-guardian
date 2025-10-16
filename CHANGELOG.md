@@ -2,6 +2,8 @@
 
 ## v1.14.1 (2025-10-16)
 - 🐛 Fixed development environment. App wasn't working on Chrome-based browsers.
+- 🧑‍💻 Replaced `Sweetalert 2` confirmation modals with custom popup for consistency.
+- 🧑‍💻 Remove `sweetalert2` dependency.
 
 ## v1.14.0 (2025-10-14)
 - 🐛 Fixed potential bugs with encryption/decryption.
