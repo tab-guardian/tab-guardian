@@ -9,12 +9,16 @@ type PopupItem<T = any, D = any> = {
 export type EnterPasswordData = {
     decrypting: (password: string) => Promise<boolean>
     algo: EncryptionAlgo | null
-    description: string
+    text: string
+}
+
+export type ConfirmData = {
+    text: string
 }
 
 export type Popups = {
     groupMenuView: PopupItem
-    deleteGroup: PopupItem
+    confirm: PopupItem<ConfirmData, { isConfirmed: boolean }>
     groupName: PopupItem
     rebindGroup: PopupItem
     chooseEmoji: PopupItem<{}, { emo: string }>
