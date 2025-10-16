@@ -6,9 +6,13 @@ import { trans } from '@common/modules/utils'
 export function isRuntime(runtime: RuntimeType): boolean {
     switch (runtime) {
         case 'firefox':
-            return typeof browser !== 'undefined'
+            return typeof browser !== 'undefined' && typeof window === 'undefined'
         case 'chrome':
-            return typeof browser === 'undefined' && typeof chrome !== 'undefined'
+            return (
+                typeof browser === 'undefined' &&
+                typeof chrome !== 'undefined' &&
+                typeof window === 'undefined'
+            )
         case 'web':
             return typeof browser === 'undefined' && typeof chrome === 'undefined'
         default:
