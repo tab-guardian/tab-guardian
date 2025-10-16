@@ -1,5 +1,6 @@
-import { EncryptionAlgo } from '@common/types'
+import type { EncryptionAlgo } from '@common/types'
 import { toBase64, fromBase64 } from '@common/modules/utils'
+import { env } from '@common/env'
 
 const KEY_BITS = 256 // bits
 const KEY_BYTES_LENGTH = 16
@@ -129,4 +130,11 @@ export async function decryptString(
     const key = await createDecryptKey(pass, salt, algo)
 
     return await decrypt(encryptedTextBytes, key, iv, algo)
+}
+
+export async function encryptJSON(json: string, pass: string): Promise<string> {
+    const encrypted = await encryptString(json, pass, env.CURR_ENCRYPT_ALGO)
+    const header = `algo(${env.CURR_ENCRYPT_ALGO})`
+
+    return `${header}${encrypted}`
 }

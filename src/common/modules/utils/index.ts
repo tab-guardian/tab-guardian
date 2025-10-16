@@ -47,3 +47,15 @@ export function toBase64(arr: Uint8Array): string {
 export function fromBase64(str: string): Uint8Array<ArrayBuffer> {
     return Uint8Array.from(atob(str), c => c.charCodeAt(0))
 }
+
+export function downloadFile(text: string, name: string): void {
+    const blob = new Blob([text])
+    const url = URL.createObjectURL(blob)
+
+    const a = document.createElement('a')
+    a.href = url
+    a.download = `${name}.tab-guardian`
+    a.click()
+
+    URL.revokeObjectURL(url)
+}
