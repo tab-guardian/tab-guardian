@@ -49,7 +49,7 @@ export function fromBase64(str: string): Uint8Array<ArrayBuffer> {
 }
 
 export function downloadFile(text: string, name: string): void {
-    const blob = new Blob([text])
+    const blob = new Blob([text], { type: 'text/plain' })
     const url = URL.createObjectURL(blob)
 
     const a = document.createElement('a')
