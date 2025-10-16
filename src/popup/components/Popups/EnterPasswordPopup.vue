@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { usePopupStore } from '@/stores/popup'
 import { useAttemptsStore } from '@/stores/attempts'
 import { trans } from '@common/modules/utils'
@@ -16,16 +16,20 @@ const attemptsStore = useAttemptsStore()
 const pass = ref<string>('')
 const processing = ref<boolean>(false)
 
-const sharedData = popupStore.getSharedData('enterPassword')
+const sharedData = computed(() => {
+    const data = popupStore.getSharedData('enterPassword')
+
+    if (!data) {
+        showToast(trans('error_occurred'), 'error')
+        throw new Error('sharedData must not be nullable in EnterPasswordPopup.vue')
+    }
+
+    return data
+})
 
 async function submitPassword(): Promise<void> {
     if (processing.value) {
         return
-    }
-
-    if (!sharedData) {
-        showToast(trans('error_occurred'), 'error')
-        throw new Error('sharedData is null in EnterPasswordPopup.vue')
     }
 
     if (!pass.value) {
@@ -43,7 +47,7 @@ async function submitPassword(): Promise<void> {
 
     processing.value = true
 
-    const success = await sharedData.decrypting(pass.value)
+    const success = await sharedData.value.decrypting(pass.value)
 
     if (success) {
         await attemptsStore.unlock()
@@ -64,7 +68,7 @@ async function submitPassword(): Promise<void> {
     >
         <p class="flex items-center gap-3 mb-2 text-sm leading-4">
             <ShieldCheckIcon width="45" height="45" />
-            {{ sharedData?.text }}
+            {{ sharedData.text }}
         </p>
 
         <form @submit.prevent="submitPassword">
@@ -81,7 +85,7 @@ async function submitPassword(): Promise<void> {
         <Progress v-if="processing" class="mt-3" />
 
         <WarningBox
-            v-if="sharedData && !sharedData.algo"
+            v-if="!sharedData.algo"
             class="mt-4"
             :message="trans('uses_old_encrypt_impl')"
         />
