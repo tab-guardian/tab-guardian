@@ -29,7 +29,18 @@ build_source_zip_archive () {
 
     echo "⏳ LOADING: archiving $ZIP_NAME..."
 
-    zip -r "$ZIP_NAME" . -x "node_modules/*" ".git/*" "*.zip" >/dev/null 2>&1
+    exclude_patterns=(
+        "node_modules/*"
+        "cmd/*"
+        "*config.json"
+        "*config.js"
+        ".env.example"
+        ".git/*"
+        "Session.vim"
+        "*.zip"
+    )
+
+    zip -r "$ZIP_NAME" . -x "${exclude_patterns[@]}" >/dev/null 2>&1
 
     echo "✅ SUCCESS: archived: $ZIP_NAME"
 }
