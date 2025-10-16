@@ -172,11 +172,7 @@ export const useGroupStore = defineStore('group', () => {
             group.id = generateGroupId()
 
             if (replace) {
-                const existingGroup = getGroupByName(group.name, true)
-
-                if (existingGroup) {
-                    await deleteGroup(existingGroup.id)
-                }
+                await replaceGroup(group)
             }
 
             await saveGroup(group, false)
@@ -187,6 +183,14 @@ export const useGroupStore = defineStore('group', () => {
         await loadGroupsFromStorage()
 
         progressStore.finish()
+    }
+
+    async function replaceGroup(group: Group): Promise<void> {
+        const existingGroup = getGroupByName(group.name, true)
+
+        if (existingGroup) {
+            await deleteGroup(existingGroup.id)
+        }
     }
 
     async function setIcon(groupId: number, icon: string): Promise<void> {
