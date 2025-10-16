@@ -43,11 +43,14 @@ export const useGroupStore = defineStore('group', () => {
         return group
     }
 
-    function getGroupByName(name: string): Group | null {
+    function getGroupByName(name: string, silent: boolean = false): Group | null {
         const group = groups.value.find(group => group.name === name)
 
-        if (!group) {
+        if (!group && !silent) {
             console.error(`Group with name ${name} not found`)
+        }
+
+        if (!group) {
             return null
         }
 
@@ -169,7 +172,7 @@ export const useGroupStore = defineStore('group', () => {
             group.id = generateGroupId()
 
             if (replace) {
-                const existingGroup = getGroupByName(group.name)
+                const existingGroup = getGroupByName(group.name, true)
 
                 if (existingGroup) {
                     await deleteGroup(existingGroup.id)

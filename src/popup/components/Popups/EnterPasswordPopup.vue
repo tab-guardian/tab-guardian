@@ -5,7 +5,6 @@ import { useAttemptsStore } from '@/stores/attempts'
 import { trans } from '@common/modules/utils'
 import { showToast } from '@common/modules/toast'
 import ShieldCheckIcon from '@common/components/Icons/ShieldCheckIcon.vue'
-import WarningBox from '@common/components/WarningBox.vue'
 import Progress from '@common/components/Progress.vue'
 import PasswordInput from '@common/components/Form/PasswordInput.vue'
 import Popup from '@/components/Popups/Popup.vue'
@@ -83,11 +82,5 @@ async function submitPassword(): Promise<void> {
         </form>
 
         <Progress v-if="processing" class="mt-3" />
-
-        <WarningBox
-            v-if="!sharedData.algo"
-            class="mt-4"
-            :message="trans('uses_old_encrypt_impl')"
-        />
     </Popup>
 </template>

@@ -3,7 +3,9 @@
 ## v1.14.1 (2025-10-16)
 - 🐛 Fixed development environment. App wasn't working on Chrome-based browsers.
 - 🧑‍💻 Replaced `Sweetalert 2` confirmation modals with custom popup for consistency.
-- 🧑‍💻 Remove `sweetalert2` dependency.
+- 🧑‍💻 Removed `sweetalert2` dependency.
+- 🧑‍💻 When you export a private group, it will now will be encrypted with 2 layers. First layer encrypts only JSON fields, the second encryption layer encrypts the whole JSON export file.
+- 🧑‍💻 Changed named of exported files to not include `.json` extension, since we don't use JSON for exports anymore.
 
 ## v1.14.0 (2025-10-14)
 - 🐛 Fixed potential bugs with encryption/decryption.

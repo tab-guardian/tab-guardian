@@ -91,7 +91,7 @@
     },
     "wrong_pass": { "message": "Incorrect password" },
     "cant_remember_pass": {
-        "message": "Something went wrong! Cannot remember your password. Please, enter it again"
+        "message": "Please, enter your group password to lock this group"
     },
     "pass_empty": { "message": "Password is empty" },
     "passwords_not_match": { "message": "Passwords do not match" },
@@ -210,9 +210,6 @@
         "message": "Images are only allowed with these formats"
     },
     "new_password": { "message": "New password" },
-    "uses_old_encrypt_impl": {
-        "message": "This group uses the old encryption implementation. You can fix it by unlocking this group and locking it back"
-    },
     "nothing_to_paste": { "message": "There is nothing to paste" },
     "general": { "message": "General" },
     "data_control": { "message": "Data Control" },

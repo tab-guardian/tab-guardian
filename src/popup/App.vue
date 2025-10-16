@@ -44,7 +44,7 @@ function handleDarkThem(): void {
 
     <Popups
         :popups="[
-            { comp: ConfirmPopup, name: 'confirm' },
+            { comp: GroupMenuPopup, name: 'groupMenuView' },
             { comp: NewGroupNamePopup, name: 'newGroupName' },
             { comp: NewPasswordPopup, name: 'newPassword' },
             { comp: EnterPasswordPopup, name: 'enterPassword' },
@@ -52,8 +52,8 @@ function handleDarkThem(): void {
             { comp: ChooseEmojiPopup, name: 'chooseEmoji' },
             { comp: ChooseImageIconPopup, name: 'chooseImageIcon' },
             { comp: LinkMenuPopup, name: 'linkMenuView' },
-            { comp: GroupMenuPopup, name: 'groupMenuView' },
             { comp: EditGroupNamePopup, name: 'editGroupName' },
+            { comp: ConfirmPopup, name: 'confirm' },
         ]"
     />
 </template>

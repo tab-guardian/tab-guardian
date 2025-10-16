@@ -4,7 +4,7 @@ import { ref, onMounted } from 'vue'
 import { trans } from '@common/modules/utils'
 import { showToast } from '@common/modules/toast'
 import { usePopupStore } from '@/stores/popup'
-import { encryptJSON } from '@common/modules/webCrypto'
+import { encryptExport } from '@common/modules/webCrypto'
 import { toBase64, downloadFile } from '@common/modules/utils'
 import pako from 'pako'
 import Section from '@settings/components/Section.vue'
@@ -47,7 +47,7 @@ async function exportGroups(): Promise<void> {
             return
         }
 
-        const encrypted = await encryptJSON(compressed, data.newPass)
+        const encrypted = await encryptExport(compressed, data.newPass)
         downloadFile(encrypted, 'tab-groups-export')
         exporting.value = false
     })

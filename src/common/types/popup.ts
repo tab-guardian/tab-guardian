@@ -1,14 +1,14 @@
-import { EncryptionAlgo, Link } from '@common/types'
+import { Link } from '@common/types'
 
 type PopupItem<T = any, D = any> = {
     open: boolean
     dataOnOpen: T | null
     dataOnClose: D | null
+    onClose: ((data: D) => void) | null
 }
 
 export type EnterPasswordData = {
     decrypting: (password: string) => Promise<boolean>
-    algo: EncryptionAlgo | null
     text: string
 }
 
