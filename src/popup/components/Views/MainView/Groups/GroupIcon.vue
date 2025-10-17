@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import type { Group as GroupType } from '@common/types'
+import type { Group } from '@common/types'
 import { computed } from 'vue'
 import { getIcons } from '@/modules/getIcons'
 import { isEmoji } from '@common/modules/utils'
 import { config } from '@common/config'
 
-const props = defineProps<{ group: GroupType }>()
+const props = defineProps<{ group: Group }>()
 
 const showGroupIcon = computed<boolean>(() =>
     config.GROUP_ICON_START.some(prefix => {
@@ -15,13 +15,16 @@ const showGroupIcon = computed<boolean>(() =>
 </script>
 
 <template>
-    <div v-if="group.icon" class="w-6 h-6 flex items-center justify-center">
-        <img v-if="showGroupIcon" :src="group.icon" class="w-5 h-5" />
+    <div
+        v-if="!group.isPrivate && group.icon"
+        class="w-6 h-6 flex items-center justify-center rounded-md"
+    >
+        <img v-if="showGroupIcon" :src="group.icon" class="size-5" />
 
-        <span v-else-if="isEmoji(group.icon)">
+        <span v-else-if="isEmoji(group.icon)" class="text-lg mt-1">
             {{ group.icon }}
         </span>
 
-        <component v-else :is="getIcons(group.icon)" class="w-5 h-5" />
+        <component v-else :is="getIcons(group.icon)" class="size-5" />
     </div>
 </template>

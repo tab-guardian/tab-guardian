@@ -49,9 +49,15 @@ watchEffect(() => {
         </template>
 
         <div v-if="group">
-            <div class="flex items-center gap-1 relative">
-                <GroupIcon v-if="group.icon" :group />
-                <h2 class="text-lg my-1 px-2 py-0.5">{{ group.name }}</h2>
+            <div class="flex items-center gap-2 relative my-2 px-2">
+                <RouterLink
+                    :to="{ name: 'groupIcon', params: { id: group.id } }"
+                    class="rounded-md hover:bg-border p-0.5"
+                >
+                    <GroupIcon v-if="group.icon" :group />
+                </RouterLink>
+
+                <h2 class="text-lg mt-0.5">{{ group.name }}</h2>
             </div>
 
             <template v-if="group.isPrivate">
