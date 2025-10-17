@@ -5,13 +5,6 @@ export function trans(msg: string, ...args: string[]): string {
     return runtime.trans(msg, ...args)
 }
 
-export const GROUP_ICON_START = [
-    'http', // http and https images
-    'data:image', // base64 images
-    'chrome-extension', // images from chrome storage
-    'moz-extension', // images from chrome storage
-]
-
 export function limitString(str: string, maxLength = 20) {
     return str.length > maxLength ? str.substring(0, maxLength) + '...' : str
 }

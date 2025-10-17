@@ -2,12 +2,13 @@
 import type { Group as GroupType } from '@common/types'
 import { computed } from 'vue'
 import { getIcons } from '@/modules/getIcons'
-import { isEmoji, GROUP_ICON_START } from '@common/modules/utils'
+import { isEmoji } from '@common/modules/utils'
+import { config } from '@common/config'
 
 const props = defineProps<{ group: GroupType }>()
 
 const showGroupIcon = computed<boolean>(() =>
-    GROUP_ICON_START.some(prefix => {
+    config.GROUP_ICON_START.some(prefix => {
         return props.group.icon && props.group.icon.startsWith(prefix)
     }),
 )
