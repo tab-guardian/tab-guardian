@@ -22,6 +22,6 @@ const showGroupIcon = computed<boolean>(() =>
             {{ group.icon }}
         </span>
 
-        <component v-else :is="getIcons()[group.icon]" class="w-5 h-5" />
+        <component v-else :is="getIcons(group.icon)" class="w-5 h-5" />
     </div>
 </template>
