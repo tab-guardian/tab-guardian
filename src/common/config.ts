@@ -2,7 +2,7 @@ import type { EncryptionAlgo, Locale } from '@common/types'
 
 // Look into .env and .env.example files in the root of the project
 
-export const env = {
+export const config = {
     DEV_LOCALE: toStr('VITE_DEV_LOCALE') as Locale,
     CURR_ENCRYPT_ALGO: toStr('VITE_CURR_ENCRYPT_ALGO') as EncryptionAlgo,
     MIN_PASS_LENGTH: toNum('VITE_MIN_PASS_LENGTH'),

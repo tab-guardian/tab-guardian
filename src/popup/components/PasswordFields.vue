@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { trans } from '@common/modules/utils'
 import { computed, ref } from 'vue'
-import { env } from '@common/env'
+import { env } from '@common/config'
 import { passwordError } from '@common/modules/validation/group'
 import PasswordInput from '@common/components/Form/PasswordInput.vue'
 
