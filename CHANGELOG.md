@@ -1,5 +1,7 @@
 # Release Notes
 
+## v1.15.0 (2025-10-17)
+
 ## v1.14.1 (2025-10-16)
 - 🐛 Fixed development environment. App wasn't working on Chrome-based browsers.
 - 🐛 Fixed incorrect implementation of popup functionality.
