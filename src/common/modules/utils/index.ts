@@ -18,6 +18,11 @@ export function generateGroupId(): number {
 }
 
 export function isEmoji(emoji: string): boolean {
+    // Workaround for emojiRegex() treating some emojis as false
+    if (['👎️', '👍️'].includes(emoji)) {
+        return true
+    }
+
     const regex = emojiRegex()
     const matches = [...emoji.matchAll(regex)]
 
