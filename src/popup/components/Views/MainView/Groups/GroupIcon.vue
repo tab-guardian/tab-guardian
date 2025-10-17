@@ -2,19 +2,14 @@
 import type { Group as GroupType } from '@common/types'
 import { computed } from 'vue'
 import { getIcons } from '@/modules/getIcons'
-import { isEmoji } from '@common/modules/utils'
+import { isEmoji, GROUP_ICON_START } from '@common/modules/utils'
 
-const { group } = defineProps<{ group: GroupType }>()
-
-const allowedIconStart = [
-    'http', // http and https images
-    'data:image', // base64 images
-    'chrome-extension', // images from chrome storage
-    'moz-extension', // images from chrome storage
-]
+const props = defineProps<{ group: GroupType }>()
 
 const showGroupIcon = computed<boolean>(() =>
-    allowedIconStart.some(prefix => group.icon && group.icon.startsWith(prefix)),
+    GROUP_ICON_START.some(prefix => {
+        return props.group.icon && props.group.icon.startsWith(prefix)
+    }),
 )
 </script>
 
