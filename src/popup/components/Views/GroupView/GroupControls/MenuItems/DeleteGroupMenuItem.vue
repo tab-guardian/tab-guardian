@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { ConfirmData } from '@common/types/popup'
+import type { Group } from '@common/types'
 import MenuItem from '@/components/MenuItem.vue'
 import TrashIcon from '@common/components/Icons/TrashIcon.vue'
 import { trans } from '@common/modules/utils'
@@ -7,6 +8,8 @@ import { deletePasswordFromStorage } from '@common/modules/storage/password'
 import { useRouter } from 'vue-router'
 import { usePopupStore } from '@/stores/popup'
 import { useGroupStore } from '@/stores/group'
+
+const props = defineProps<{ group: Group }>()
 
 const router = useRouter()
 const popupStore = usePopupStore()
@@ -27,18 +30,11 @@ async function promptToDeleteGroup(): Promise<void> {
 }
 
 async function deleteGroup(): Promise<void> {
-    const group = groupStore.selectedGroup
-
-    if (!group) {
-        console.warn('No group selected for deletion')
-        return
-    }
-
-    await groupStore.deleteGroup(group.id)
+    await groupStore.deleteGroup(props.group.id)
     await router.push({ name: 'main' })
 
-    if (group.isPrivate) {
-        await deletePasswordFromStorage(group.id)
+    if (props.group.isPrivate) {
+        await deletePasswordFromStorage(props.group.id)
     }
 
     groupStore.selectedGroup = null

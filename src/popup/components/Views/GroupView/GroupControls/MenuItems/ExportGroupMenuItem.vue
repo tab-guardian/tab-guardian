@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { Group } from '@common/types'
 import { ref } from 'vue'
-import { useGroupStore } from '@/stores/group'
 import { usePopupStore } from '@/stores/popup'
 import { trans } from '@common/modules/utils'
 import { encryptExport } from '@common/modules/webCrypto'
@@ -14,7 +13,8 @@ import pako from 'pako'
 import ArrowDownTrayIcon from '@common/components/Icons/ArrowDownTrayIcon.vue'
 import MenuItem from '@/components/MenuItem.vue'
 
-const groupStore = useGroupStore()
+const props = defineProps<{ group: Group }>()
+
 const popupStore = usePopupStore()
 
 const loading = ref<boolean>(false)
@@ -25,14 +25,9 @@ async function exportGroup(): Promise<void> {
         return
     }
 
-    if (!groupStore.selectedGroup) {
-        console.error('No group selected to export')
-        return
-    }
-
     loading.value = true
 
-    let group = cloneDeep(groupStore.selectedGroup)
+    let group = cloneDeep(props.group)
 
     const json = JSON.stringify(group)
     const compressed = toBase64(pako.gzip(json))

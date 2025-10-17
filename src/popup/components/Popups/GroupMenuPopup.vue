@@ -48,7 +48,7 @@ const isEncrypted = computed<boolean>(() => {
                 <MakeGroupPublicItem v-if="group.isPrivate" :group />
                 <AddLinkMenuItem />
                 <RenameGroupMenuItem />
-                <ExportGroupMenuItem />
+                <ExportGroupMenuItem :group />
 
                 <RouterLink
                     v-if="!group.isPrivate"
@@ -58,7 +58,7 @@ const isEncrypted = computed<boolean>(() => {
                 </RouterLink>
 
                 <RebindUrlItem v-if="group.isPrivate && group.bindURL" />
-                <DeleteGroupMenuItem />
+                <DeleteGroupMenuItem :group />
             </div>
         </div>
 
