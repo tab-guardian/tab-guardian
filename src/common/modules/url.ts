@@ -2,7 +2,11 @@ import { hashURL } from '@common/modules/url/hashURL'
 import { runtime } from '@common/modules/runtime'
 import { isRuntime } from '@common/modules/runtime/utils'
 
-export async function getCurrentURL(hash = false): Promise<string | null> {
+type Params = {
+    hash: boolean
+}
+
+export async function getCurrentURL(params?: Params): Promise<string | null> {
     if (isRuntime('web')) {
         return window.location.href
     }
@@ -22,8 +26,8 @@ export async function getCurrentURL(hash = false): Promise<string | null> {
         return null
     }
 
-    if (hash) {
-        return hashURL(url)
+    if (params && params.hash) {
+        return await hashURL(url)
     }
 
     return url

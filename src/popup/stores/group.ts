@@ -8,7 +8,7 @@ import { useNotificationStore } from '@/stores/notification'
 import { useCryptoStore } from '@/stores/crypto'
 import { useProgressStore } from '@/stores/progress'
 import { showToast } from '@common/modules/toast'
-import { getCurrentURL } from '@common/modules/utils/getCurrentURL'
+import { getCurrentURL } from '@common/modules/url'
 import { savePasswordToStorage } from '@common/modules/storage/password'
 import {
     deleteAllGroupsFromStorage,

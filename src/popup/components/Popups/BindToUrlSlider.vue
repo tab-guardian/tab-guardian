@@ -2,7 +2,7 @@
 import { ref, onMounted } from 'vue'
 import { trans } from '@common/modules/utils'
 import { useNewGroupStore } from '@/stores/newGroup'
-import { getCurrentURL } from '@common/modules/utils/getCurrentURL'
+import { getCurrentURL } from '@common/modules/url'
 import { showToast } from '@common/modules/toast'
 import { hashURL } from '@common/modules/url/hashURL'
 import SlideSwitch from '@common/components/Form/SlideSwitch.vue'
