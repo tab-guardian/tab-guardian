@@ -80,11 +80,7 @@ async function rebindGroup(): Promise<void> {
                     </ControlButton>
                 </div>
 
-                <Button
-                    type="submit"
-                    :disabled="preventSubmit"
-                    :icon="CheckIcon"
-                >
+                <Button type="submit" :disabled="preventSubmit" :icon="CheckIcon">
                     {{ trans('rebind') }}
                 </Button>
             </div>

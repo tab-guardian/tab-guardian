@@ -19,14 +19,17 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const buttonStyles = new Map<Props['is'], string>()
-buttonStyles.set('outline', '!text-font border border-border hover:border-border-hover')
+buttonStyles.set(
+    'outline',
+    '!text-font border border-border hover:border-border-hover',
+)
 buttonStyles.set('danger', 'bg-unsafe hover:bg-unsafe-hover !text-font')
 buttonStyles.set('success', 'bg-safe hover:bg-safe-hover !text-font')
 
 const className = computed<string[]>(() => {
     const classes = [
         'text-page px-6 py-2 rounded-lg text-md inline-flex hover:opacity-90',
-        'justify-center items-center gap-3 transition-opacity'
+        'justify-center items-center gap-3 transition-opacity',
     ]
 
     if (props.loading || props.disabled) {
