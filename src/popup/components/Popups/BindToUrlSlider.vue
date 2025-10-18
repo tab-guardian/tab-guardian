@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, watchEffect } from 'vue'
-import { trans } from '@common/modules/utils'
+import { trans } from '@common/modules'
 import { useNewGroupStore } from '@/stores/newGroup'
 import { getCurrentURL, hashURL } from '@common/modules/url'
 import { showToast } from '@common/modules/toast'
-import { validateURL } from '@common/modules/url/validateURL'
+import { validateURL } from '@common/modules/validation/url'
 import SlideSwitch from '@common/components/Form/SlideSwitch.vue'
 import Input from '@common/components/Form/Input.vue'
 import Tip from '@common/components/Tip.vue'
@@ -27,9 +27,7 @@ const urlError = computed<string | null>(() => {
 })
 
 const tooltip = computed<string>(() => {
-    return currURL.value
-        ? trans('bind_group_url')
-        : trans('cannot_bind_to_this_url')
+    return currURL.value ? trans('bind_group_url') : trans('cannot_bind_to_this_url')
 })
 
 watchEffect(() => {

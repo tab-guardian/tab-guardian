@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { useGroupStore } from '@/stores/group'
-import { trans } from '@common/modules/utils'
+import { trans } from '@common/modules'
 import { usePopupStore } from '@/stores/popup'
 import { useRouter } from 'vue-router'
-import { validateURL } from '@common/modules/url/validateURL'
+import { validateURL } from '@common/modules/validation/url'
 import { hashURL } from '@common/modules/url'
 import { showToast } from '@common/modules/toast'
 import Popup from '@/components/Popups/Popup.vue'

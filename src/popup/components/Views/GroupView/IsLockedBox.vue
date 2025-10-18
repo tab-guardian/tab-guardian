@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Group } from '@common/types'
 import { ref } from 'vue'
-import { trans } from '@common/modules/utils'
+import { trans } from '@common/modules'
 import { usePopupStore } from '@/stores/popup'
 import { useGroupUnlock } from '@/assets/composables/useGroupUnlock'
 import LockOpenIcon from '@common/components/Icons/LockOpenIcon.vue'

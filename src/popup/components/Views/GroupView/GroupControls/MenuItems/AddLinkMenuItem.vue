@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { SelectTabsOperation } from '@common/types'
-import { trans } from '@common/modules/utils'
+import { trans } from '@common/modules'
 import { useRouter } from 'vue-router'
 import { usePopupStore } from '@/stores/popup'
 import MenuItem from '@/components/MenuItem.vue'

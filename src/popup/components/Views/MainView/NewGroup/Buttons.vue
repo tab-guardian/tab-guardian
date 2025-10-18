@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useNewGroupStore } from '@/stores/newGroup'
-import { trans } from '@common/modules/utils'
+import { trans } from '@common/modules'
 import { usePopupStore } from '@/stores/popup'
 import { onMounted } from 'vue'
 import ShieldCheckIcon from '@common/components/Icons/ShieldCheckIcon.vue'

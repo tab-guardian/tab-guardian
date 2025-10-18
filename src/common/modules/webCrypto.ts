@@ -1,5 +1,5 @@
 import type { EncryptionAlgo } from '@common/types'
-import { toBase64, fromBase64 } from '@common/modules/utils'
+import { toBase64, fromBase64 } from '@common/modules/base64'
 import { config } from '@common/config'
 
 const KEY_BITS = 256 // bits

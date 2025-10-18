@@ -1,7 +1,7 @@
 import type { RuntimeType } from '@common/types/runtime'
 import { showToast } from '@common/modules/toast'
-import { formatNumber } from '@common/modules/utils'
-import { trans } from '@common/modules/utils'
+import { formatNumber } from '@common/modules'
+import { trans } from '@common/modules'
 
 export function isRuntime(runtime: RuntimeType): boolean {
     switch (runtime) {

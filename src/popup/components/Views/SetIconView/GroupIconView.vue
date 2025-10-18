@@ -2,7 +2,7 @@
 import type { Group } from '@common/types'
 import { onMounted, computed } from 'vue'
 import { usePopupStore } from '@/stores/popup'
-import { trans } from '@common/modules/utils'
+import { trans } from '@common/modules'
 import { useGroupStore } from '@/stores/group'
 import { useRouter } from 'vue-router'
 import { getIcons } from '@/modules/getIcons'

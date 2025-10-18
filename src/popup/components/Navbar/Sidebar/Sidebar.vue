@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useSidebarStore } from '@/stores/sidebar'
-import { trans } from '@common/modules/utils'
+import { trans } from '@common/modules'
 import { openSettingsPage } from '@/modules/openSettingsPage'
 import { runtime } from '@common/modules/runtime'
 import { isRuntime } from '@common/modules/runtime/utils'

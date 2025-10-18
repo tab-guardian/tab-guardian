@@ -2,7 +2,7 @@
 import type { Group } from '@common/types'
 import { computed } from 'vue'
 import { useRouter } from 'vue-router'
-import { trans } from '@common/modules/utils'
+import { trans } from '@common/modules'
 import { usePopupStore } from '@/stores/popup'
 import { useGroupUnlock } from '@/assets/composables/useGroupUnlock'
 import ChevronRightIcon from '@common/components/Icons/ChevronRightIcon.vue'

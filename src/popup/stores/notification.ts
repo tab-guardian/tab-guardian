@@ -6,7 +6,7 @@ import {
     setHasUnlockedGroupsFlag,
 } from '@common/modules/storage/unlockedGroups'
 import { renderWarningBadge, clearWarningBadge } from '@common/modules/badge'
-import { trans } from '@common/modules/utils'
+import { trans } from '@common/modules'
 
 export const useNotificationStore = defineStore('notification', () => {
     const notification = ref<string | null>(null)

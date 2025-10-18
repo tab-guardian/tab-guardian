@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { ConfirmData } from '@common/types/popup'
 import { ref } from 'vue'
-import { trans } from '@common/modules/utils'
+import { trans } from '@common/modules'
 import { showToast } from '@common/modules/toast'
 import { useGroupStore } from '@/stores/group'
 import { usePopupStore } from '@/stores/popup'

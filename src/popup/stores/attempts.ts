@@ -1,7 +1,7 @@
 import type { Attempts } from '@common/types'
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
-import { trans } from '@common/modules/utils'
+import { trans } from '@common/modules'
 import { runtime } from '@common/modules/runtime'
 import { config } from '@common/config'
 

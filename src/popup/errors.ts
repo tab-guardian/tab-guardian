@@ -1,4 +1,4 @@
-import { trans } from '@common/modules/utils'
+import { trans } from '@common/modules'
 
 export const CRYPTO_JS_DECRYPTION_FAILED = 'Malformed UTF-8 data'
 export const WEB_CRYPTO_DECRYPTION_FAILED =

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { usePopupStore } from '@/stores/popup'
-import { trans } from '@common/modules/utils'
+import { trans } from '@common/modules'
 import PencilSquareIcon from '@common/components/Icons/PencilSquareIcon.vue'
 import MenuItem from '@/components/MenuItem.vue'
 

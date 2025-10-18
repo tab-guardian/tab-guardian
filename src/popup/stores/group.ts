@@ -1,7 +1,7 @@
 import type { Group, Link } from '@common/types'
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import { trans, generateGroupId, removeTrail } from '@common/modules/utils'
+import { trans, generateGroupId, removeTrail } from '@common/modules'
 import { runtime } from '@common/modules/runtime'
 import { useSettingsStore } from '@/stores/settings'
 import { useNotificationStore } from '@/stores/notification'

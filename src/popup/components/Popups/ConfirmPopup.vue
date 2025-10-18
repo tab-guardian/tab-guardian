@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { trans } from '@common/modules/utils'
+import { trans } from '@common/modules'
 import { computed } from 'vue'
 import { usePopupStore } from '@/stores/popup'
 import { showToast } from '@common/modules/toast'

@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import { trans } from '@common/modules/utils'
+import { trans } from '@common/modules'
 import { usePopupStore } from '@/stores/popup'
 import { useGroupStore } from '@/stores/group'
 import { showToast } from '@common/modules/toast'
 import { isNameTooLong } from '@common/modules/validation/group'
+import { getDefaultGroupName } from '@common/modules/group'
 import Popup from '@/components/Popups/Popup.vue'
 import Button from '@common/components/Form/Button.vue'
 import ChevronRightIcon from '@common/components/Icons/ChevronRightIcon.vue'
 import NameInput from '@common/components/Form/NameInput.vue'
-import { getDefaultGroupName } from '@common/modules/utils/getDefaultGroupName'
 
 const popupStore = usePopupStore()
 const groupStore = useGroupStore()

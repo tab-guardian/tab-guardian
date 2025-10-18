@@ -1,7 +1,7 @@
 import type { Group } from '@common/types'
 import { defineStore } from 'pinia'
 import { useGroupStore } from '@/stores/group'
-import { trans } from '@common/modules/utils'
+import { trans } from '@common/modules'
 import { useSettingsStore } from '@/stores/settings'
 import { showToast } from '@common/modules/toast'
 import { getCurrentLinks } from '@common/modules/tabs/getCurrentLinks'

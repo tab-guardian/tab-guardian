@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
 import { useGroupStore } from '@/stores/group'
-import { trans } from '@common/modules/utils'
+import { trans } from '@common/modules'
 import { usePopupStore } from '@/stores/popup'
 import { isImageURL } from '@common/modules/url'
-import { validateImageURL } from '@common/modules/url/validateImageURL'
+import { validateImageURL } from '@common/modules/validation/url'
 import Popup from '@/components/Popups/Popup.vue'
 import PopupButton from '@/components/Popups/PopupButton.vue'
 import Input from '@common/components/Form/Input.vue'

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Group } from '@common/types'
 import { computed } from 'vue'
-import { trans } from '@common/modules/utils'
+import { trans } from '@common/modules'
 import { useAppStore } from '@/stores/app'
 import MenuItem from '@/components/MenuItem.vue'
 import PasteIcon from '@common/components/Icons/PasteIcon.vue'

@@ -2,7 +2,7 @@
 import type { ConfirmData } from '@common/types/popup'
 import type { Group } from '@common/types'
 import { cloneDeep } from 'lodash'
-import { trans } from '@common/modules/utils'
+import { trans } from '@common/modules'
 import { useGroupStore } from '@/stores/group'
 import { usePopupStore } from '@/stores/popup'
 import { showToast } from '@common/modules/toast'

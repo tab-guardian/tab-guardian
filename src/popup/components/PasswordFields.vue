@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { trans } from '@common/modules/utils'
+import { trans } from '@common/modules'
 import { computed, ref } from 'vue'
 import { config } from '@common/config'
 import { passwordError } from '@common/modules/validation/group'

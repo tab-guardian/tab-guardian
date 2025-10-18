@@ -5,7 +5,7 @@ import { useTabsStore } from '@/stores/tabs'
 import { useGroupUnlock } from '@/assets/composables/useGroupUnlock'
 import { usePopupStore } from '@/stores/popup'
 import { ref, onMounted, onUnmounted } from 'vue'
-import { trans } from '@common/modules/utils'
+import { trans } from '@common/modules'
 import MagnifyingGlassIcon from '@common/components/Icons/MagnifyingGlassIcon.vue'
 
 const groupStore = useGroupStore()

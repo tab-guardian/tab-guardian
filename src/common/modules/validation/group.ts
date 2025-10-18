@@ -1,4 +1,4 @@
-import { trans } from '@common/modules/utils'
+import { trans } from '@common/modules'
 import { config } from '@common/config'
 
 export const GROUP_NAME_MAX_LENGTH = 45

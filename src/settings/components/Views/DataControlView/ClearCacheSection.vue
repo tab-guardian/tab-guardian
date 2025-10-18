@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { PasswordBytes } from '@common/types'
-import { trans } from '@common/modules/utils'
+import { trans } from '@common/modules'
 import { ref, computed, onMounted } from 'vue'
 import {
     getPasswordsBytes,

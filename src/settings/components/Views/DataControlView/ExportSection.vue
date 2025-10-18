@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { useGroupStore } from '@/stores/group'
 import { ref, onMounted } from 'vue'
-import { trans } from '@common/modules/utils'
+import { trans, downloadFile } from '@common/modules'
 import { showToast } from '@common/modules/toast'
 import { usePopupStore } from '@/stores/popup'
 import { encryptExport } from '@common/modules/webCrypto'
-import { toBase64, downloadFile } from '@common/modules/utils'
+import { toBase64 } from '@common/modules/base64'
 import pako from 'pako'
 import Section from '@settings/components/Section.vue'
 import Button from '@common/components/Form/Button.vue'

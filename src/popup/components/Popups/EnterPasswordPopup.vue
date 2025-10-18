@@ -2,7 +2,7 @@
 import { ref, computed } from 'vue'
 import { usePopupStore } from '@/stores/popup'
 import { useAttemptsStore } from '@/stores/attempts'
-import { trans } from '@common/modules/utils'
+import { trans } from '@common/modules'
 import { showToast } from '@common/modules/toast'
 import ShieldCheckIcon from '@common/components/Icons/ShieldCheckIcon.vue'
 import Progress from '@common/components/Progress.vue'

@@ -1,7 +1,7 @@
 import { runtime } from '@common/modules/runtime'
 import { isRuntime } from '@common/modules/runtime/utils'
-import { removeTrail } from '@common/modules/utils'
-import { validateImageURL } from '@common/modules/url/validateImageURL'
+import { removeTrail } from '@common/modules'
+import { validateImageURL } from '@common/modules/validation/url'
 
 export async function hashURL(url: string): Promise<string> {
     const trimmedURL = removeTrail(url, '/')

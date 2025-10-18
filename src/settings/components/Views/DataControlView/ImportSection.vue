@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import type { Group } from '@common/types'
 import { ref } from 'vue'
-import { trans } from '@common/modules/utils'
+import { trans } from '@common/modules'
 import { decryptExport } from '@common/modules/webCrypto'
-import { fromBase64 } from '@common/modules/utils'
+import { fromBase64 } from '@common/modules/base64'
 import { showToast } from '@common/modules/toast'
 import { getDecryptionError } from '@/errors'
 import { useAttemptsStore } from '@/stores/attempts'

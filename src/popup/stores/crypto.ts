@@ -7,7 +7,7 @@ import {
     createEncryptKey,
     createDecryptKey,
 } from '@common/modules/webCrypto'
-import { toBase64, fromBase64 } from '@common/modules/utils'
+import { toBase64, fromBase64 } from '@common/modules/base64'
 import { config } from '@common/config'
 import CryptoJS from 'crypto-js'
 

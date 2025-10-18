@@ -2,7 +2,7 @@
 import type { Group } from '@common/types'
 import { computed } from 'vue'
 import { getIcons } from '@/modules/getIcons'
-import { isEmoji } from '@common/modules/utils'
+import { isEmoji } from '@common/modules'
 import { config } from '@common/config'
 
 const props = defineProps<{ group: Group }>()

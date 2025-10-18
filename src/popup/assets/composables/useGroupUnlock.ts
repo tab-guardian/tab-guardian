@@ -1,5 +1,5 @@
 import type { Group } from '@common/types'
-import { trans } from '@common/modules/utils'
+import { trans } from '@common/modules'
 import { showToast } from '@common/modules/toast'
 import { savePasswordToStorage } from '@common/modules/storage/password'
 import { isWrongPassError, getDecryptionError } from '@/errors'
