@@ -1,9 +1,5 @@
 <script setup lang="ts">
-type Props = {
-    tip: string
-}
-
-defineProps<Props>()
+defineProps<{ tip: string }>()
 </script>
 
 <template>
