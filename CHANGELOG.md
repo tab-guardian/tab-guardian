@@ -1,10 +1,11 @@
 # Release Notes
 
 ## v1.15.0 (2025-10-18)
-- 🐛 Fixed issue where you couldn't use 2 emojis (👎️👍️) as your group icon.
 - ✨ Now you can click on a group icon in a group view to select an icon [#53](https://github.com/tab-guardian/tab-guardian/issues/53).
+- 🐛 Fixed issue where you couldn't use 2 emojis (👎️👍️) as your group icon.
 - 🐛 Fixed the font contrast on a lock/unlock group button.
 - 🧑‍💻 Now you can modify the bound URL when creating a private group.
+- ✨ You can now bind an already existing private group to any URL [#65](https://github.com/tab-guardian/tab-guardian/issues/65).
 
 ## v1.14.1 (2025-10-16)
 - 🐛 Fixed development environment. App wasn't working on Chrome-based browsers.

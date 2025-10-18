@@ -224,6 +224,7 @@
     "cannot_bind_to_this_url": {
         "message": "You cannot bind your private group to this URL."
     },
+    "use_current_url": { "message": "Use current URL" },
     "remember_pass_after_unlock_desc": {
         "message": "If you disable this option, you will need to enter a password everytime when you want to lock any private group. Keeping this option enabled saves password in temporary and secure storage and allows you to lock groups back without entering your password"
     }

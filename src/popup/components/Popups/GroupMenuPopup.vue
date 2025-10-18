@@ -8,7 +8,7 @@ import Popup from '@/components/Popups/Popup.vue'
 import AddLinkMenuItem from '@/components/Views/GroupView/GroupControls/MenuItems/AddLinkMenuItem.vue'
 import DeleteGroupMenuItem from '@/components/Views/GroupView/GroupControls/MenuItems/DeleteGroupMenuItem.vue'
 import RenameGroupMenuItem from '@/components/Views/GroupView/GroupControls/MenuItems/RenameGroupMenuItem.vue'
-import RebindUrlItem from '@/components/Views/GroupView/GroupControls/MenuItems/RebindUrlItem.vue'
+import BindToURLItem from '@/components/Views/GroupView/GroupControls/MenuItems/BindToURLItem.vue'
 import ExportGroupMenuItem from '@/components/Views/GroupView/GroupControls/MenuItems/ExportGroupMenuItem.vue'
 import MenuItem from '@/components/MenuItem.vue'
 import PhotoIcon from '@common/components/Icons/PhotoIcon.vue'
@@ -57,7 +57,7 @@ const isEncrypted = computed<boolean>(() => {
                     <MenuItem :label="trans('change_icon')" :icon="PhotoIcon" />
                 </RouterLink>
 
-                <RebindUrlItem v-if="group.isPrivate && group.bindURL" />
+                <BindToURLItem :group />
                 <DeleteGroupMenuItem :group />
             </div>
         </div>

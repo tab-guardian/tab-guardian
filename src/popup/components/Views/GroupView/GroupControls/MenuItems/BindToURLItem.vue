@@ -1,8 +1,13 @@
 <script setup lang="ts">
+import type { Group } from '@common/types'
 import MenuItem from '@/components/MenuItem.vue'
 import LinkIcon from '@common/components/Icons/LinkIcon.vue'
 import { trans } from '@common/modules'
 import { usePopupStore } from '@/stores/popup'
+
+const props = defineProps<{
+    group: Group
+}>()
 
 const popupStore = usePopupStore()
 
@@ -15,7 +20,7 @@ function rebind(): void {
 <template>
     <MenuItem
         @click="rebind"
-        :label="trans('rebind_to_other_url')"
+        :label="group.bindURL ? trans('rebind_to_other_url') : trans('bind_to_url')"
         :icon="LinkIcon"
     />
 </template>
