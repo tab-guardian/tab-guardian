@@ -16,13 +16,7 @@ export async function hashURL(url: string): Promise<string> {
         .join('')
 }
 
-type GetCurrentURLParams = {
-    hash: boolean
-}
-
-export async function getCurrentURL(
-    params?: GetCurrentURLParams,
-): Promise<string | null> {
+export async function getCurrentURL(): Promise<string | null> {
     if (isRuntime('web')) {
         return window.location.href
     }
@@ -42,11 +36,12 @@ export async function getCurrentURL(
         return null
     }
 
-    if (params && params.hash) {
-        return await hashURL(url)
-    }
-
     return url
+}
+
+export async function getHashedCurrentURL(): Promise<string | null> {
+    const url = await getCurrentURL()
+    return url ? await hashURL(url) : null
 }
 
 export function isImageURL(url: string | null | undefined): boolean {
