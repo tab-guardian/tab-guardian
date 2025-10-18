@@ -3,7 +3,7 @@ import { ref, computed, onMounted } from 'vue'
 import { useGroupStore } from '@/stores/group'
 import { trans } from '@common/modules/utils'
 import { usePopupStore } from '@/stores/popup'
-import { isImageURL } from '@common/modules/url/isImageURL'
+import { isImageURL } from '@common/modules/url'
 import { validateImageURL } from '@common/modules/url/validateImageURL'
 import Popup from '@/components/Popups/Popup.vue'
 import PopupButton from '@/components/Popups/PopupButton.vue'
@@ -12,7 +12,9 @@ import CheckIcon from '@common/components/Icons/CheckIcon.vue'
 
 const popupStore = usePopupStore()
 const groupStore = useGroupStore()
+
 const url = ref<string>('')
+
 const errorMessage = computed<string | null>(() => validateImageURL(url.value))
 const preventSubmit = computed<boolean>(() => validateImageURL(url.value) !== null)
 

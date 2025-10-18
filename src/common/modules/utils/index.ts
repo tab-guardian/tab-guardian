@@ -5,6 +5,10 @@ export function trans(msg: string, ...args: string[]): string {
     return runtime.trans(msg, ...args)
 }
 
+export function removeTrail(str: string, tail: string): string {
+    return str.endsWith(tail) ? str.slice(0, -tail.length) : str
+}
+
 export function limitString(str: string, maxLength = 20) {
     return str.length > maxLength ? str.substring(0, maxLength) + '...' : str
 }
