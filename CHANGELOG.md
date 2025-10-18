@@ -1,8 +1,9 @@
 # Release Notes
 
-## v1.15.0 (2025-10-17)
+## v1.15.0 (2025-10-18)
 - 🐛 Fixed issue where you couldn't use 2 emojis (👎️👍️) as your group icon.
 - ✨ Now you can click on a group icon in a group view to select an icon [#53](https://github.com/tab-guardian/tab-guardian/issues/53).
+- 🐛 Fixed the font contrast on a lock/unlock group button.
 
 ## v1.14.1 (2025-10-16)
 - 🐛 Fixed development environment. App wasn't working on Chrome-based browsers.

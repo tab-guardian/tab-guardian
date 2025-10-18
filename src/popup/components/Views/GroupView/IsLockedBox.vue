@@ -29,7 +29,7 @@ async function promptEnterPassword(): Promise<void> {
                 :icon="LockOpenIcon"
                 :loading="encrypting"
                 @click="promptEnterPassword"
-                class-name="bg-safe hover:bg-safe-hover text-white"
+                class-name="bg-safe hover:bg-safe-hover !text-font"
             >
                 {{ trans('unlock') }}
             </Button>
