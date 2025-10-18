@@ -26,10 +26,10 @@ async function promptEnterPassword(): Promise<void> {
     <WarningBox :message="trans('group_locked')" :success="true">
         <div class="w-52 flex flex-col items-end gap-1.5">
             <Button
+                @click="promptEnterPassword"
+                is="success"
                 :icon="LockOpenIcon"
                 :loading="encrypting"
-                @click="promptEnterPassword"
-                class-name="bg-safe hover:bg-safe-hover !text-font"
             >
                 {{ trans('unlock') }}
             </Button>

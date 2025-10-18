@@ -83,10 +83,10 @@ async function lockGroup(pass: string): Promise<void> {
     <WarningBox :message="trans('private_group_unlocked')">
         <div class="w-52 flex flex-col items-end gap-1.5">
             <Button
+                is="danger"
                 :icon="LockClosedIcon"
                 :loading="encrypting"
                 @click="promptEnterPassword"
-                class-name="bg-unsafe hover:bg-unsafe-hover !text-font"
             >
                 {{ trans('lock') }}
             </Button>

@@ -4,7 +4,7 @@ import { computed } from 'vue'
 import { usePopupStore } from '@/stores/popup'
 import { showToast } from '@common/modules/toast'
 import Popup from '@/components/Popups/Popup.vue'
-import PopupButton from '@/components/Popups/PopupButton.vue'
+import Button from '@common/components/Form/Button.vue'
 
 const popupStore = usePopupStore()
 
@@ -31,13 +31,13 @@ async function handleDeny(): Promise<void> {
 <template>
     <Popup @cancel="handleDeny" :content="sharedData.text">
         <template #buttons>
-            <PopupButton @click="handleDeny" :is-secondary="true">
+            <Button @click="handleDeny" is="outline">
                 {{ trans('no') }}
-            </PopupButton>
+            </Button>
 
-            <PopupButton @click="handleConfirm">
+            <Button @click="handleConfirm">
                 {{ trans('yes') }}
-            </PopupButton>
+            </Button>
         </template>
     </Popup>
 </template>
