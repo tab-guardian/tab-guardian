@@ -1,4 +1,4 @@
-import { Link } from '@common/types'
+import { Group, Link } from '@common/types'
 
 type PopupItem<T = any, D = any> = {
     open: boolean
@@ -20,7 +20,7 @@ export type Popups = {
     groupMenuView: PopupItem
     confirm: PopupItem<ConfirmData, { isConfirmed: boolean }>
     groupName: PopupItem
-    rebindGroup: PopupItem
+    bindGroup: PopupItem
     chooseEmoji: PopupItem<{}, { emo: string }>
     chooseImageIcon: PopupItem<{}, { url: string }>
     newPassword: PopupItem<{}, { newPass: string }>

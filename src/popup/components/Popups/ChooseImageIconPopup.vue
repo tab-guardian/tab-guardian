@@ -6,7 +6,7 @@ import { usePopupStore } from '@/stores/popup'
 import { isImageURL } from '@common/modules/url'
 import { validateImageURL } from '@common/modules/validation/url'
 import Popup from '@/components/Popups/Popup.vue'
-import PopupButton from '@/components/Popups/PopupButton.vue'
+import Button from '@common/components/Form/Button.vue'
 import Input from '@common/components/Form/Input.vue'
 import CheckIcon from '@common/components/Icons/CheckIcon.vue'
 
@@ -70,14 +70,14 @@ function closeImageIconPopup(): void {
         />
 
         <template #buttons>
-            <PopupButton @click="closeImageIconPopup" :is-secondary="true">
+            <Button @click="closeImageIconPopup" is="outline">
                 {{ trans('cancel') }}
-            </PopupButton>
+            </Button>
 
-            <PopupButton @click="chooseImageIcon" :disabled="preventSubmit">
+            <Button @click="chooseImageIcon" :disabled="preventSubmit">
                 <CheckIcon width="20" height="20" />
                 {{ trans('select') }}
-            </PopupButton>
+            </Button>
         </template>
     </Popup>
 </template>

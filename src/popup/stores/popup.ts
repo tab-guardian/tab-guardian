@@ -14,7 +14,7 @@ const defaultPopups: Popups = {
     groupMenuView: cloneDeep(defaultEmptyPopup),
     confirm: cloneDeep(defaultEmptyPopup),
     groupName: cloneDeep(defaultEmptyPopup),
-    rebindGroup: cloneDeep(defaultEmptyPopup),
+    bindGroup: cloneDeep(defaultEmptyPopup),
     enterPassword: cloneDeep(defaultEmptyPopup),
     linkMenuView: cloneDeep(defaultEmptyPopup),
     newGroupName: cloneDeep(defaultEmptyPopup),

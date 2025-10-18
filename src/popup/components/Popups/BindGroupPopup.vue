@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed } from 'vue'
 import { useGroupStore } from '@/stores/group'
 import { trans } from '@common/modules'
 import { usePopupStore } from '@/stores/popup'
@@ -12,7 +12,6 @@ import Button from '@common/components/Form/Button.vue'
 import Input from '@common/components/Form/Input.vue'
 import CheckIcon from '@common/components/Icons/CheckIcon.vue'
 import ControlButton from '@/components/Views/SelectTabsView/ControlButton.vue'
-import LinkIcon from '@common/components/Icons/LinkIcon.vue'
 
 const popupStore = usePopupStore()
 const groupStore = useGroupStore()
@@ -40,7 +39,7 @@ async function rebindGroup(): Promise<void> {
         return
     }
 
-    popupStore.hide('rebindGroup', {})
+    popupStore.hide('bindGroup', {})
 
     await router.push({
         name: 'group',
@@ -59,7 +58,7 @@ async function rebindGroup(): Promise<void> {
 <template>
     <Popup
         v-if="groupStore.selectedGroup"
-        @cancel="popupStore.hide('rebindGroup', {})"
+        @cancel="popupStore.hide('bindGroup', {})"
         :content="trans('enter_new_url_bind_to')"
         :description="trans('enter_new_url_bind_private_to_new_url')"
     >
