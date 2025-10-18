@@ -39,6 +39,7 @@ watch(modelValue, () => {
 
         <small class="text-sm text-font-gray ml-3">
             <slot />
+
             <span v-if="description" class="opacity-75 block text-xs">
                 {{ description }}
             </span>

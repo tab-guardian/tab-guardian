@@ -4,7 +4,7 @@ import { trans } from '@common/modules/utils'
 import { usePopupStore } from '@/stores/popup'
 import { useNewGroupStore } from '@/stores/newGroup'
 import { showToast } from '@common/modules/toast'
-import { ref } from 'vue'
+import { computed, reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import { isNameTooLong } from '@common/modules/validation/group'
 import Popup from '@/components/Popups/Popup.vue'
@@ -18,7 +18,14 @@ const popupStore = usePopupStore()
 const newGroupStore = useNewGroupStore()
 const router = useRouter()
 
-const preventSubmit = ref<boolean>(newGroupStore.choices.isPrivate || false)
+const errors = reactive({
+    password: false,
+    url: false,
+})
+
+const preventSubmit = computed<boolean>(() => {
+    return errors.password || errors.url
+})
 
 function submitName(): void {
     if (preventSubmit.value) {
@@ -61,11 +68,15 @@ function submitName(): void {
                 v-if="newGroupStore.choices.isPrivate"
                 v-model:pass="newGroupStore.choices.password"
                 v-model:confirm="newGroupStore.choices.confirmPassword"
-                @has-error="hasErr => (preventSubmit = hasErr)"
+                @has-error="hasErr => (errors.password = hasErr)"
             />
 
             <div class="flex items-end gap-3 justify-between">
-                <BindToUrlSlider v-if="newGroupStore.choices.isPrivate" />
+                <BindToUrlSlider
+                    v-if="newGroupStore.choices.isPrivate"
+                    @url-error="hasErr => (errors.url = hasErr)"
+                />
+
                 <div v-else></div>
                 <!-- keep this for flex justify between -->
 

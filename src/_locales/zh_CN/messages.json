@@ -27,10 +27,6 @@
         "message": "尝试次数过多。下一次尝试在 $n$ 分钟后",
         "placeholders": { "n": { "content": "$1" } }
     },
-    "bind_group_url": {
-        "message": "将该组绑定到 URL ($n$)。此操作会将该组隐藏在其他地方，仅在此 URL 可见，增加一层额外的安全性",
-        "placeholders": { "n": { "content": "$1" } }
-    },
     "url_must_be_less_than": {
         "message": "URL 必须少于 $n$ 个字符",
         "placeholders": { "n": { "content": "$1" } }
@@ -114,7 +110,7 @@
     "group_created_without_tabs": { "message": "创建的组没有任何标签页" },
     "group_created_with_tabs": { "message": "创建的组包含标签页" },
     "close_selected_tabs": { "message": "关闭选中的标签页" },
-    "bind_to_this_url": { "message": "绑定到此 URL" },
+    "bind_to_url": { "message": "绑定到URL" },
     "private_groups_are_secure": {
         "message": "私有组是安全的并使用加密。只有知道密码的用户可以访问"
     },
@@ -192,6 +188,12 @@
     },
     "group_is_now_open": { "message": "该小组现已开放" },
     "protect_export_using_pass": { "message": "使用密码保护导出（推荐）" },
+    "bind_group_url": {
+        "message": "将此组绑定至指定网址。此操作将隐藏该组，除您提供的网址外，其他任何位置均无法查看。仅当在指定网址上打开Tab Guardian时，隐藏组才会显示。"
+    },
+    "cannot_bind_to_this_url": {
+        "message": "您无法将您的私人群组绑定到此网址。"
+    },
     "remember_pass_after_unlock_desc": {
         "message": "若禁用此选项，每次锁定私人群组时均需输入密码。保持此选项启用状态，系统会将密码存储在临时且安全的存储空间中，您无需再次输入密码即可重新锁定群组"
     }

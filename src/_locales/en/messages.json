@@ -27,10 +27,6 @@
         "message": "Too many attempts. Next attempt in $n$ minutes",
         "placeholders": { "n": { "content": "$1" } }
     },
-    "bind_group_url": {
-        "message": "Bind this group to the ($n$) URL. This will hide the group from everywhere else except this URL. It adds an extra layer of security",
-        "placeholders": { "n": { "content": "$1" } }
-    },
     "url_must_be_less_than": {
         "message": "URL must be less than $n$ character",
         "placeholders": { "n": { "content": "$1" } }
@@ -130,7 +126,7 @@
     },
     "group_created_with_tabs": { "message": "Group created with tabs" },
     "close_selected_tabs": { "message": "Close selected tabs" },
-    "bind_to_this_url": { "message": "Bind to this URL" },
+    "bind_to_url": { "message": "Bind to URL" },
     "private_groups_are_secure": {
         "message": "Private groups are secure and use encryption. Only users with the password can access them"
     },
@@ -221,6 +217,12 @@
     "group_is_now_open": { "message": "This group is now open" },
     "protect_export_using_pass": {
         "message": "Protect export with a password (recommended)"
+    },
+    "bind_group_url": {
+        "message": "Bind this group to the URL. This will hide the group from everywhere else except the URL you provide. Only opening Tab Guardian on provided URL will show you the hidden group."
+    },
+    "cannot_bind_to_this_url": {
+        "message": "You cannot bind your private group to this URL."
     },
     "remember_pass_after_unlock_desc": {
         "message": "If you disable this option, you will need to enter a password everytime when you want to lock any private group. Keeping this option enabled saves password in temporary and secure storage and allows you to lock groups back without entering your password"

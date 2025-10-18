@@ -1,14 +1,14 @@
 import type { Group, Link } from '@common/types'
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import { trans, generateGroupId } from '@common/modules/utils'
+import { trans, generateGroupId, removeTrail } from '@common/modules/utils'
 import { runtime } from '@common/modules/runtime'
 import { useSettingsStore } from '@/stores/settings'
 import { useNotificationStore } from '@/stores/notification'
 import { useCryptoStore } from '@/stores/crypto'
 import { useProgressStore } from '@/stores/progress'
 import { showToast } from '@common/modules/toast'
-import { getCurrentURL } from '@common/modules/url'
+import { getHashedCurrentURL } from '@common/modules/url'
 import { savePasswordToStorage } from '@common/modules/storage/password'
 import {
     deleteAllGroupsFromStorage,
@@ -102,9 +102,9 @@ export const useGroupStore = defineStore('group', () => {
         const isPrivate = await isIncognito()
 
         if (group.bindURL) {
-            const hashedURL = await getCurrentURL(true)
+            const currHashedURL = await getHashedCurrentURL()
 
-            if (hashedURL !== group.bindURL) {
+            if (currHashedURL !== group.bindURL) {
                 return true
             }
         }

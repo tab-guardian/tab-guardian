@@ -1,35 +1,42 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, computed, onMounted, watchEffect } from 'vue'
 import { trans } from '@common/modules/utils'
 import { useNewGroupStore } from '@/stores/newGroup'
 import { getCurrentURL, hashURL } from '@common/modules/url'
 import { showToast } from '@common/modules/toast'
 import { validateURL } from '@common/modules/url/validateURL'
 import SlideSwitch from '@common/components/Form/SlideSwitch.vue'
+import Input from '@common/components/Form/Input.vue'
+import Tip from '@common/components/Tip.vue'
+
+const emit = defineEmits<{
+    (e: 'urlError', hasError: boolean): void
+}>()
+
+onMounted(async () => {
+    currURL.value = await getCurrentURL()
+})
 
 const newGroupStore = useNewGroupStore()
 
 const currURL = ref<string | null>(null)
-const bindTip = ref<string>(trans('bind_group_url', 'unknown'))
+const checked = ref<boolean>(false)
 
-onMounted(async () => {
-    await setBindTip()
+const urlError = computed<string | null>(() => {
+    return validateURL(currURL.value)
 })
 
-async function setBindTip(): Promise<void> {
-    const url = await getCurrentURL()
+const tooltip = computed<string>(() => {
+    return currURL.value
+        ? trans('bind_group_url')
+        : trans('cannot_bind_to_this_url')
+})
 
-    if (url) {
-        currURL.value = url
-        bindTip.value = trans('bind_group_url', url)
-        return
-    }
+watchEffect(() => {
+    emit('urlError', urlError.value !== null)
+})
 
-    currURL.value = null
-    bindTip.value = trans('feature_does_not_work_this_url')
-}
-
-function attachBindURL(checked: boolean): void {
+async function attachBindURL(checked: boolean): Promise<void> {
     if (!checked) {
         newGroupStore.choices.bindURL = null
         return
@@ -41,14 +48,32 @@ function attachBindURL(checked: boolean): void {
         return
     }
 
-    newGroupStore.choices.bindURL = hashURL(currURL.value)
+    newGroupStore.choices.bindURL = await hashURL(currURL.value)
 }
 </script>
 
 <template>
-    <SlideSwitch v-tippy="bindTip" :disabled="!currURL" @changed="attachBindURL">
-        <div class="flex items-center gap-1">
-            {{ trans('bind_to_this_url') }}
+    <div class="flex flex-col gap-3">
+        <div class="flex items-center">
+            <SlideSwitch
+                :disabled="!currURL"
+                @changed="attachBindURL"
+                v-model="checked"
+            >
+                {{ trans('bind_to_url') }}
+            </SlideSwitch>
+
+            <Tip :tip="tooltip" />
         </div>
-    </SlideSwitch>
+
+        <Input
+            v-if="checked"
+            v-model="currURL"
+            id="bind-url"
+            :error="urlError"
+            type="text"
+            placeholder="https://example.com"
+            @loaded="inp => inp.focus()"
+        />
+    </div>
 </template>
