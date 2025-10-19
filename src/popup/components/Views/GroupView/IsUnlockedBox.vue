@@ -45,8 +45,7 @@ async function promptEnterPassword(): Promise<void> {
 
     if (!useNewPassword.value) {
         showToast({
-            text: trans('cant_remember_pass'),
-            type: 'error',
+            text: trans('enter_your_password'),
             duration: 4000,
         })
     }

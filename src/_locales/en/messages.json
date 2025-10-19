@@ -86,7 +86,7 @@
         "message": "Enter a password to unlock the content of the import file"
     },
     "wrong_pass": { "message": "Incorrect password" },
-    "cant_remember_pass": {
+    "enter_your_password": {
         "message": "Please, enter your group password to lock this group"
     },
     "pass_empty": { "message": "Password is empty" },
