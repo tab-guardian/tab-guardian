@@ -2,7 +2,6 @@
 import type { Group } from '@common/types'
 import { trans } from '@common/modules'
 import { useTabsStore } from '@/stores/tabs'
-import { useGroupStore } from '@/stores/group'
 import { usePopupStore } from '@/stores/popup'
 import { useGroupUnlock } from '@/assets/composables/useGroupUnlock'
 import { runtime } from '@common/modules/runtime'
@@ -10,7 +9,6 @@ import { runtime } from '@common/modules/runtime'
 const props = defineProps<{ group: Group }>()
 
 const tabsStore = useTabsStore()
-const groupStore = useGroupStore()
 const popupStore = usePopupStore()
 const { unlockGroup } = useGroupUnlock()
 
@@ -25,7 +23,6 @@ async function openTabs(): Promise<void> {
     }
 
     if (!props.group.isEncrypted) {
-        groupStore.selectedGroup = props.group
         await tabsStore.openTabs(props.group)
         return
     }
