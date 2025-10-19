@@ -5,6 +5,7 @@ import { trans } from '@common/modules'
 import { useGroupStore } from '@/stores/group'
 import { usePopupStore } from '@/stores/popup'
 import { showToast } from '@common/modules/toast'
+import { deletePasswordFromStorage } from '@common/modules/storage/password'
 import MenuItem from '@/components/MenuItem.vue'
 import LockOpenIcon from '@common/components/Icons/LockOpenIcon.vue'
 
@@ -37,6 +38,9 @@ async function makeOpen(): Promise<void> {
         delete link.iv
         delete link.salt
     }
+
+    // Delete cached password if exists
+    await deletePasswordFromStorage(group.id)
 
     await groupStore.save(group)
 
