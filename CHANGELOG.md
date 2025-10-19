@@ -3,6 +3,7 @@
 ## v1.15.0 (2025-10-19)
 - ✨ Group icon on a group page is now clickable. It will open "Choose Icon" interface [#53](https://github.com/tab-guardian/tab-guardian/issues/53).
 - ✨ Private groups can now be bound to any URL that you provide for additional security [#65](https://github.com/tab-guardian/tab-guardian/issues/65).
+- ✨ Public groups can now be changed into private groups with a simple button click in group popup menu [#73](https://github.com/tab-guardian/tab-guardian/issues/73).
 - 🐛 Fixed issue where you couldn't use 👎️ and 👍️ emojis as your group icon.
 - 🐛 Fixed the font contrast on a lock/unlock group button.
 - 🐛 Fixed not working tooltip helper on the `Paste tabs here` button.

@@ -99,6 +99,7 @@
     "tab_copied": { "message": "Tab has been copied" },
     "tab_cut": { "message": "Tab has been cut" },
     "delete_this_group": { "message": "Delete this group" },
+    "group_is_now_private": { "message": "This group is now private. Don't forget to lock it." },
     "rename": { "message": "Rename" },
     "additional_options": { "message": "Additional options" },
     "enter_group_name": { "message": "Enter a group name" },

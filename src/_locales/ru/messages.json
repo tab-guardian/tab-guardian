@@ -67,7 +67,6 @@
     },
     "error_no_tab_selected": { "message": "Вкладка не выбрана" },
     "want_delete_group": { "message": "Вы хотите удалить группу?" },
-    "no_tabs_this_group": { "message": "В этой группе нет вкладок" },
     "click_on_each_tab": {
         "message": "Нажмите на каждую вкладку, чтобы выбрать или отменить выбор для сохранения"
     },
@@ -99,6 +98,7 @@
     "tab_copied": { "message": "Вкладка скопирована" },
     "tab_cut": { "message": "Вкладка вырезана" },
     "delete_this_group": { "message": "Удалить" },
+    "group_is_now_private": { "message": "Эта группа теперь является закрытой. Не забудьте заблокировать ее." },
     "rename": { "message": "Переименовать" },
     "additional_options": { "message": "Дополнительные параметры" },
     "enter_group_name": { "message": "Введите имя группы" },

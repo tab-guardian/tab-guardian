@@ -87,6 +87,7 @@
     "tab_copied": { "message": "标签已复制" },
     "tab_cut": { "message": "标签已被剪切" },
     "delete_this_group": { "message": "删除该组" },
+    "group_is_now_private": { "message": "该群组现已设为私密。请记得将其锁定。" },
     "rename": { "message": "重命名" },
     "additional_options": { "message": "附加选项" },
     "enter_group_name": { "message": "输入组名称" },
