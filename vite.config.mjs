@@ -6,16 +6,18 @@ import { viteStaticCopy } from 'vite-plugin-static-copy'
 
 const manifestPath = fs.existsSync(path.resolve(__dirname, 'public/manifest2.json'))
     ? path.resolve(__dirname, 'public/manifest2.json')
-    : path.resolve(__dirname, 'public/manifest.json');
+    : path.resolve(__dirname, 'public/manifest.json')
 
 const manifestContent = JSON.parse(fs.readFileSync(manifestPath, 'utf-8'))
 
 export default defineConfig({
+    logLevel: 'silent',
+
     plugins: [
         vue({
             template: {
                 compilerOptions: {
-                    isCustomElement: (tag) => ['emoji-picker'].includes(tag)
+                    isCustomElement: tag => ['emoji-picker'].includes(tag),
                 },
                 transformAssetUrls: {
                     base: null,
