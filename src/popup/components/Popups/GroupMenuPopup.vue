@@ -46,20 +46,23 @@ const isEncrypted = computed<boolean>(() => {
                 </RouterLink>
 
                 <PasteLinkMenuItem :group />
-                <MakeGroupOpenItem v-if="group.isPrivate" :group />
                 <AddLinkMenuItem />
                 <RenameGroupMenuItem />
                 <ExportGroupMenuItem :group />
 
-                <RouterLink
-                    v-if="!group.isPrivate"
-                    :to="{ name: 'groupIcon', params: { id: group.id } }"
-                >
-                    <MenuItem :label="trans('change_icon')" :icon="PhotoIcon" />
-                </RouterLink>
+                <template v-if="group.isPrivate">
+                    <BindToURLItem :group />
+                    <MakeGroupOpenItem :group />
+                </template>
 
-                <BindToURLItem v-if="group.isPrivate" :group />
-                <MakeGroupPrivateItem v-if="!group.isPrivate" :group />
+                <template v-else>
+                    <MakeGroupPrivateItem :group />
+
+                    <RouterLink :to="{ name: 'groupIcon', params: { id: group.id } }">
+                        <MenuItem :label="trans('change_icon')" :icon="PhotoIcon" />
+                    </RouterLink>
+                </template>
+
                 <DeleteGroupMenuItem :group />
             </div>
         </div>
