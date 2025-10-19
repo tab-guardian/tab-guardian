@@ -78,6 +78,7 @@
     "no_groups_yet": { "message": "There are no groups yet" },
     "settings": { "message": "Settings" },
     "enter_pass": { "message": "Enter a password" },
+    "enter_new_pass": { "message": "Enter a new password" },
     "enter_pass_unlock_content": {
         "message": "Enter a password to unlock the content of this group"
     },

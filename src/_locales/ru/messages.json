@@ -78,6 +78,7 @@
     "no_groups_yet": { "message": "Группы пока отсутствуют" },
     "settings": { "message": "Настройки" },
     "enter_pass": { "message": "Введите пароль" },
+    "enter_new_pass": { "message": "Введите новый пароль" },
     "enter_pass_unlock_content": {
         "message": "Введите пароль для разблокировки содержимого этой группы"
     },
