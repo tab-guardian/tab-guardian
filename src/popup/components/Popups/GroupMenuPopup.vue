@@ -56,7 +56,9 @@ const isEncrypted = computed<boolean>(() => {
                 </template>
 
                 <template v-else>
-                    <RouterLink :to="{ name: 'groupIcon', params: { id: group.id } }">
+                    <RouterLink
+                        :to="{ name: 'groupIcon', params: { id: group.id } }"
+                    >
                         <MenuItem :label="trans('change_icon')" :icon="PhotoIcon" />
                     </RouterLink>
 
