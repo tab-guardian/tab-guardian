@@ -94,11 +94,11 @@
     "add_more_tabs": { "message": "Add more tabs" },
     "cut_tab": { "message": "Cut this tab" },
     "copy_tab": { "message": "Copy this tab" },
-    "paste_tabs_here": { "message": "Paste tabs here" },
+    "paste_tabs": { "message": "Paste tabs" },
     "tab_copied": { "message": "Tab has been copied" },
     "tab_cut": { "message": "Tab has been cut" },
     "delete_this_group": { "message": "Delete this group" },
-    "rename_this_group": { "message": "Rename this group" },
+    "rename": { "message": "Rename" },
     "additional_options": { "message": "Additional options" },
     "enter_group_name": { "message": "Enter a group name" },
     "group_name": { "message": "Group name" },
@@ -138,7 +138,6 @@
     "change_icon": { "message": "Change Icon" },
     "choose_group_icon": { "message": "Choose a group icon" },
     "icon_is_set": { "message": "Icon has been set" },
-    "export_this_group": { "message": "Export this group" },
     "rebind_to_other_url": { "message": "Rebind to other URL" },
     "enter_new_url_bind_private_to_new_url": {
         "message": "Enter a new URL to bind your private group to this new URL. This group will be only visible in the list of groups only when you visit this specific URL. Do not forget to lock the group"
@@ -225,6 +224,7 @@
         "message": "You cannot bind your private group to this URL."
     },
     "use_current_url": { "message": "Use current URL" },
+    "make_private": { "message": "Make private" },
     "remember_pass_after_unlock_desc": {
         "message": "If you disable this option, you will need to enter a password everytime when you want to lock any private group. Keeping this option enabled saves password in temporary and secure storage and allows you to lock groups back without entering your password"
     }

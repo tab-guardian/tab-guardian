@@ -67,7 +67,7 @@ async function downloadExportFile(compressed: string, group: Group): Promise<voi
 <template>
     <MenuItem
         @click="exportGroup"
-        :label="trans('export_this_group')"
+        :label="trans('export')"
         :icon="ArrowDownTrayIcon"
         :loading
     />

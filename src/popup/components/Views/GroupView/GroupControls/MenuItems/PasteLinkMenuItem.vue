@@ -25,7 +25,7 @@ const tooltip = computed<string>(() => {
 
 <template>
     <MenuItem
-        :label="trans('paste_tabs_here')"
+        :label="trans('paste_tabs')"
         :icon="PasteIcon"
         :disabled
         :tip="tooltip"

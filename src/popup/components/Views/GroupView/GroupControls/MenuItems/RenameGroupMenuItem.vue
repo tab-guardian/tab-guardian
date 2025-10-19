@@ -15,7 +15,7 @@ function startGroupRenaming(): void {
 <template>
     <MenuItem
         @click="startGroupRenaming"
-        :label="trans('rename_this_group')"
+        :label="trans('rename')"
         :icon="PencilSquareIcon"
     />
 </template>

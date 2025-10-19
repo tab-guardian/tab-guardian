@@ -82,11 +82,11 @@
     "add_more_tabs": { "message": "添加更多标签页" },
     "cut_tab": { "message": "剪下这个标签" },
     "copy_tab": { "message": "复制此标签页" },
-    "paste_tabs_here": { "message": "在此粘贴标签" },
+    "paste_tabs": { "message": "粘贴标签页" },
     "tab_copied": { "message": "标签已复制" },
     "tab_cut": { "message": "标签已被剪切" },
     "delete_this_group": { "message": "删除该组" },
-    "rename_this_group": { "message": "重命名该组" },
+    "rename": { "message": "重命名" },
     "additional_options": { "message": "附加选项" },
     "enter_group_name": { "message": "输入组名称" },
     "group_name": { "message": "组名称" },
@@ -122,7 +122,6 @@
     "change_icon": { "message": "更改图标" },
     "choose_group_icon": { "message": "选择组图标" },
     "icon_is_set": { "message": "图标已设置" },
-    "export_this_group": { "message": "导出该组" },
     "rebind_to_other_url": { "message": "重新绑定到其他 URL" },
     "enter_new_url_bind_private_to_new_url": {
         "message": "输入一个新 URL 将您的私有组绑定到此新 URL。只有在访问该 URL 时该组才会可见。不要忘记锁定该组"
@@ -195,6 +194,7 @@
         "message": "您无法将您的私人群组绑定到此网址。"
     },
     "use_current_url": { "message": "使用当前网址" },
+    "make_private": { "message": "设为私密" },
     "remember_pass_after_unlock_desc": {
         "message": "若禁用此选项，每次锁定私人群组时均需输入密码。保持此选项启用状态，系统会将密码存储在临时且安全的存储空间中，您无需再次输入密码即可重新锁定群组"
     }
