@@ -2,6 +2,7 @@ import type { Link } from '@common/types'
 import { queryTabs } from '@common/modules/tabs/queryTabs'
 import { runtime } from '@common/modules/runtime'
 import { isRuntime } from '@common/modules/runtime/utils'
+import { config } from '@common/config'
 
 export async function restoreTabs(links: Link[]): Promise<void> {
     const isFirefox = isRuntime('firefox')
@@ -32,15 +33,8 @@ export async function restoreTabs(links: Link[]): Promise<void> {
 }
 
 async function closeEmptyTab(): Promise<void> {
-    const closeTabsWithURLs = [
-        'about:newtab',
-        'about:blank',
-        'about:privatebrowsing',
-        'chrome://newtab/',
-    ]
-
     const tabs = await queryTabs({
-        url: closeTabsWithURLs,
+        url: config.NEW_TAB_URLS,
         currentWindow: true,
         active: true,
     })

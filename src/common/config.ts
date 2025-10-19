@@ -14,6 +14,13 @@ export const config = {
         'chrome-extension', // images from chrome storage
         'moz-extension', // images from chrome storage
     ],
+    NEW_TAB_URLS: [
+        'about:newtab',
+        'about:blank',
+        'about:home',
+        'about:privatebrowsing',
+        'chrome://newtab/',
+    ],
 }
 
 function toStr(inpKey: string): string {
