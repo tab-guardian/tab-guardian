@@ -17,6 +17,8 @@ import {
     saveGroupToStorage,
 } from '@common/modules/storage/group'
 
+let isIncognitoCache: boolean | null = null
+
 export const useGroupStore = defineStore('group', () => {
     const cryptoStore = useCryptoStore()
     const settingsStore = useSettingsStore()
@@ -94,8 +96,18 @@ export const useGroupStore = defineStore('group', () => {
     }
 
     async function isIncognito(): Promise<boolean> {
+        if (isIncognitoCache !== null) {
+            return isIncognitoCache
+        }
+
         const currWindow = await runtime.windows.getCurrent()
-        return currWindow ? currWindow.incognito : false
+
+        if (currWindow) {
+            isIncognitoCache = currWindow.incognito
+            return currWindow.incognito
+        }
+
+        return false
     }
 
     async function shouldHideGroup(group: Group): Promise<boolean> {

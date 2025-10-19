@@ -1,5 +1,8 @@
 # Release Notes
 
+## v1.16.0 (2025-10-20)
+- 🧑‍💻 Improved performance for the main (home) page with loading groups.
+
 ## v1.15.0 (2025-10-19)
 - ✨ Group icon on a group page is now clickable. It will open "Choose Icon" interface [#53](https://github.com/tab-guardian/tab-guardian/issues/53).
 - ✨ Private groups can now be bound to any URL that you provide for additional security [#65](https://github.com/tab-guardian/tab-guardian/issues/65).
