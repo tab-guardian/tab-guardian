@@ -58,7 +58,7 @@ const isEncrypted = computed<boolean>(() => {
                     <MenuItem :label="trans('change_icon')" :icon="PhotoIcon" />
                 </RouterLink>
 
-                <BindToURLItem :group />
+                <BindToURLItem v-if="group.isPrivate" :group />
                 <MakeGroupPrivateItem v-if="!group.isPrivate" :group />
                 <DeleteGroupMenuItem :group />
             </div>
