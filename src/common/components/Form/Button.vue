@@ -59,8 +59,8 @@ const className = computed<string[]>(() => {
                     : '',
             ]"
         >
-            <SmallSpinner v-if="loading" class="w-5" />
-            <component v-else :is="icon" class="w-5" />
+            <SmallSpinner v-if="loading" class="size-5" />
+            <component v-else :is="icon" class="size-5" />
             <slot />
         </button>
     </div>

@@ -8,7 +8,7 @@ type Props = {
 const { to } = defineProps<Props>()
 
 const className = [
-    'w-7 h-7 flex items-center justify-center border border-transparent',
+    'size-7 flex items-center justify-center border border-transparent',
     'rounded-md color-font p-0.5 transition-all opacity-90',
     'hover:opacity-100 hover:border-border relative',
 ]

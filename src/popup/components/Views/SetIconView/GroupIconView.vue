@@ -82,7 +82,7 @@ async function openImageIconPopup(): Promise<void> {
                 @click="selectIcon(icon)"
                 :selected="group!.icon === icon"
             >
-                <img :src="icon" class="w-8 h-8" />
+                <img :src="icon" class="size-8" />
             </IconItem>
 
             <IconItem
@@ -91,7 +91,7 @@ async function openImageIconPopup(): Promise<void> {
                 @click="selectIcon(name)"
                 :selected="group!.icon === name"
             >
-                <component :is="icon" class="w-8 h-8" />
+                <component :is="icon" class="size-8" />
             </IconItem>
         </ul>
     </View>

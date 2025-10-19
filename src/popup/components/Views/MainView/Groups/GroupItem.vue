@@ -55,7 +55,7 @@ async function navigateToGroupView(): Promise<void> {
 
         <div class="flex items-center gap-3">
             <OpenTabsButton :group />
-            <ChevronRightIcon class="w-4 h-4" />
+            <ChevronRightIcon class="size-4" />
         </div>
     </div>
 </template>

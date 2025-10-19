@@ -8,6 +8,7 @@
 - 🐛 Fixed the font contrast on a lock/unlock group button.
 - 🐛 Fixed not working tooltip helper on the `Paste tabs here` button.
 - 🐛 When you make a private group open (public), cached password now will be deleted as well.
+- 🐛 Fixed bug where tabs would not open for private locked groups when you try to do it on the main screen with all the groups listed.
 - 🧑‍💻 The "Bound URL" can now be modified when you create a new private group.
 - 🧑‍💻 The `about:home` Firefox's page will be also closed when you restore tabs from a group.
 - 🧑‍💻 Refactoring of the codebase;

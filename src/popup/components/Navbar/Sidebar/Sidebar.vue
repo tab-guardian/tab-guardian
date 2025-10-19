@@ -79,7 +79,7 @@ const links = [
                 >
                     <img
                         :src="runtime.getURL('images/icons/icon-32.png')"
-                        class="w-4 h-4"
+                        class="size-4"
                     />
 
                     {{ trans('ext_name') }} {{ __APP_VERSION__ }}

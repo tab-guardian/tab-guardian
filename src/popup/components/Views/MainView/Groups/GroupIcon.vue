@@ -42,7 +42,7 @@ const showGroupIcon = computed<boolean>(() =>
 
         <div
             v-else
-            class="flex items-center justify-center w-6 h-6 text-primary text-sm"
+            class="flex items-center justify-center size-6 text-primary text-sm"
         >
             {{ group.links.length }}
         </div>
