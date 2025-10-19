@@ -56,11 +56,11 @@ const isEncrypted = computed<boolean>(() => {
                 </template>
 
                 <template v-else>
-                    <MakeGroupPrivateItem :group />
-
                     <RouterLink :to="{ name: 'groupIcon', params: { id: group.id } }">
                         <MenuItem :label="trans('change_icon')" :icon="PhotoIcon" />
                     </RouterLink>
+
+                    <MakeGroupPrivateItem :group />
                 </template>
 
                 <DeleteGroupMenuItem :group />
