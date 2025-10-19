@@ -39,7 +39,7 @@ async function saveName(): Promise<void> {
 
     group.name = name.value
 
-    await groupStore.saveGroup(group)
+    await groupStore.save(group)
 
     showToast(trans('new_name_saved'))
 }

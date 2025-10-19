@@ -175,7 +175,7 @@ export const useGroupStore = defineStore('group', () => {
                 await replaceGroup(group)
             }
 
-            await saveGroup(group, false)
+            await save(group, false)
 
             progressStore.advance()
         }
@@ -202,7 +202,7 @@ export const useGroupStore = defineStore('group', () => {
 
         group.icon = icon
 
-        await saveGroup(group)
+        await save(group)
     }
 
     async function deleteGroup(groupId: number): Promise<void> {
@@ -226,7 +226,7 @@ export const useGroupStore = defineStore('group', () => {
 
         group.links = []
 
-        await saveGroup(group)
+        await save(group)
     }
 
     async function incrementOpenedTimes(group: Group): Promise<void> {
@@ -244,7 +244,7 @@ export const useGroupStore = defineStore('group', () => {
             return g
         })
 
-        await saveGroup(group)
+        await save(group)
     }
 
     async function deleteLinkFrom(groupId: number, linkId: number): Promise<void> {
@@ -256,7 +256,7 @@ export const useGroupStore = defineStore('group', () => {
 
         group.links = group.links.filter(link => link.id !== linkId)
 
-        await saveGroup(group)
+        await save(group)
     }
 
     async function saveLinksTo(groupId: number, links: Link[]): Promise<void> {
@@ -268,10 +268,10 @@ export const useGroupStore = defineStore('group', () => {
 
         group.links.push(...links)
 
-        await saveGroup(group)
+        await save(group)
     }
 
-    async function saveGroup(group: Group, updateTimestamp = true): Promise<void> {
+    async function save(group: Group, updateTimestamp = true): Promise<void> {
         if (updateTimestamp) {
             group.updatedAt = Date.now()
         }
@@ -295,7 +295,7 @@ export const useGroupStore = defineStore('group', () => {
         groups,
         selectedGroup,
         loadingGroups,
-        saveGroup,
+        save,
         deleteGroup,
         deleteLinkFrom,
         saveLinksTo,

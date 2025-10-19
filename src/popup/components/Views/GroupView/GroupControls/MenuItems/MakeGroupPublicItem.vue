@@ -38,7 +38,7 @@ async function makeOpen(): Promise<void> {
         delete link.salt
     }
 
-    await groupStore.saveGroup(group)
+    await groupStore.save(group)
 
     showToast(trans('group_is_now_open'))
 }

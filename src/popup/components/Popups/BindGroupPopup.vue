@@ -49,7 +49,7 @@ async function rebindGroup(): Promise<void> {
     })
 
     groupStore.selectedGroup.bindURL = await hashURL(currURL.value)
-    groupStore.saveGroup(groupStore.selectedGroup)
+    groupStore.save(groupStore.selectedGroup)
 
     showToast(trans('group_rebind_successful'))
 }

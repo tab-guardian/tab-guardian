@@ -23,7 +23,7 @@ export function useGroupUnlock() {
     ): Promise<boolean> {
         try {
             const decryptedGroup = await cryptoStore.decryptGroup(group, password)
-            await groupStore.saveGroup(decryptedGroup)
+            await groupStore.save(decryptedGroup)
         } catch (err: any) {
             handleUnlockGroupError(err)
             return false
