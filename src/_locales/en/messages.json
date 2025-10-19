@@ -213,7 +213,7 @@
     "data_control": { "message": "Data Control" },
     "clear_cache": { "message": "Clear Cache" },
     "remember_pass_after_unlock": { "message": "Remember my password after unlock" },
-    "make_group_open": { "message": "Make group open" },
+    "make_open": { "message": "Make open" },
     "are_you_sure_to_make_group_open": {
         "message": "Are you sure you want to make this group open? It means that you don't need to enter a password to access this group"
     },

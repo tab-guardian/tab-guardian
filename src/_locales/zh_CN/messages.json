@@ -183,7 +183,7 @@
     "data_control": { "message": "数据控制" },
     "clear_cache": { "message": "清除缓存" },
     "remember_pass_after_unlock": { "message": "解锁后记住我的密码" },
-    "make_group_open": { "message": "设置为公开群组" },
+    "make_open": { "message": "公开" },
     "are_you_sure_to_make_group_open": {
         "message": "您确定要将此群组设为公开吗？这意味着访问该群组时无需输入密码"
     },

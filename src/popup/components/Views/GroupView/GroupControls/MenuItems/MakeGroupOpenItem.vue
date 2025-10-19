@@ -48,7 +48,7 @@ async function makeOpen(): Promise<void> {
 
 <template>
     <MenuItem
-        :label="trans('make_group_open')"
+        :label="trans('make_open')"
         :icon="LockOpenIcon"
         @click="promptToMakeOpen"
     />
