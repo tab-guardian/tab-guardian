@@ -5,6 +5,7 @@
 - ✨ Private groups can now be bound to any URL that you provide for additional security [#65](https://github.com/tab-guardian/tab-guardian/issues/65).
 - 🐛 Fixed issue where you couldn't use 👎️ and 👍️ emojis as your group icon.
 - 🐛 Fixed the font contrast on a lock/unlock group button.
+- 🐛 Fixed not working tooltip helper on the `Paste tabs here` button.
 - 🧑‍💻 The "Bound URL" can now be modified when you create a new private group.
 - 🧑‍💻 The `about:home` Firefox's page will be also closed when you restore tabs from a group.
 
