@@ -28,16 +28,9 @@ const showGroupIcon = computed<boolean>(() =>
             <ShieldExclamationIcon v-else class="size-6 text-red-400" />
         </div>
 
-        <img
-            v-else-if="showGroupIcon"
-            :src="group.icon"
-            class="size-5"
-        />
+        <img v-else-if="showGroupIcon" :src="group.icon" class="size-5" />
 
-        <span
-            v-else-if="group.icon && isEmoji(group.icon)"
-            class="text-lg mt-1"
-        >
+        <span v-else-if="group.icon && isEmoji(group.icon)" class="text-lg mt-1">
             {{ group.icon }}
         </span>
 
