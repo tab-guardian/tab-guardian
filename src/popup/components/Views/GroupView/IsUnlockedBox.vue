@@ -47,14 +47,14 @@ async function promptEnterPassword(): Promise<void> {
         showToast(trans('cant_remember_pass'), 'error', 4000)
     }
 
-    popupStore.show('newPassword', {}, async data => {
-        if (!data || data.newPass === '') {
+    popupStore.show('newPassword', {}, async resp => {
+        if (!resp || resp.newPass === '') {
             encrypting.value = false
             return
         }
 
-        await groupStore.updatePassword(data.newPass)
-        await lockGroup(data.newPass)
+        await groupStore.updatePassword(resp.newPass)
+        await lockGroup(resp.newPass)
     })
 }
 

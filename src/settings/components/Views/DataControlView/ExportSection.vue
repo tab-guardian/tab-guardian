@@ -41,13 +41,13 @@ async function exportGroups(): Promise<void> {
         return
     }
 
-    popupStore.show('newPassword', {}, async data => {
-        if (!data || data.newPass === '') {
+    popupStore.show('newPassword', {}, async resp => {
+        if (!resp || resp.newPass === '') {
             exporting.value = false
             return
         }
 
-        const encrypted = await encryptExport(compressed, data.newPass)
+        const encrypted = await encryptExport(compressed, resp.newPass)
         downloadFile(encrypted, 'tab-groups-export')
         exporting.value = false
     })
