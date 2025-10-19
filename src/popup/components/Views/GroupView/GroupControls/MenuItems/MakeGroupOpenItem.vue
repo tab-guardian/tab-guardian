@@ -15,8 +15,6 @@ const groupStore = useGroupStore()
 const popupStore = usePopupStore()
 
 async function promptToMakeOpen(): Promise<void> {
-    popupStore.hide('groupMenuView', {})
-
     const resp = await popupStore.show('confirm', {
         text: trans('are_you_sure_to_make_group_open'),
     })
