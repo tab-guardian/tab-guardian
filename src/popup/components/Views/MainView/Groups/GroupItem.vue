@@ -47,7 +47,7 @@ async function navigateToGroupView(): Promise<void> {
 </script>
 
 <template>
-    <div @click="navigateToGroupView" :class="groupClasses">
+    <div @click.self="navigateToGroupView" :class="groupClasses">
         <div class="flex items-center gap-2">
             <GroupIcon :group />
             <h2 class="text-sm">{{ group.name }}</h2>
