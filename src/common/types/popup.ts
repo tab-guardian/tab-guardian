@@ -1,4 +1,4 @@
-import { Group, Link } from '@common/types'
+import { Link } from '@common/types'
 
 type PopupItem<T = any, D = any> = {
     open: boolean
@@ -7,18 +7,14 @@ type PopupItem<T = any, D = any> = {
     onClose: ((data: D) => void) | null
 }
 
-export type EnterPasswordData = {
+type EnterPasswordData = {
     decrypting: (password: string) => Promise<boolean>
-    text: string
-}
-
-export type ConfirmData = {
     text: string
 }
 
 export type Popups = {
     groupMenuView: PopupItem
-    confirm: PopupItem<ConfirmData, { isConfirmed: boolean }>
+    confirm: PopupItem<{ text: string }, { isConfirmed: boolean }>
     groupName: PopupItem
     bindGroup: PopupItem
     chooseEmoji: PopupItem<{}, { emo: string }>

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import type { ConfirmData } from '@common/types/popup'
 import type { Group } from '@common/types'
 import MenuItem from '@/components/MenuItem.vue'
 import TrashIcon from '@common/components/Icons/TrashIcon.vue'
@@ -18,15 +17,13 @@ const groupStore = useGroupStore()
 async function promptToDeleteGroup(): Promise<void> {
     popupStore.hide('groupMenuView', {})
 
-    const popupData: ConfirmData = {
+    const resp = await popupStore.show('confirm', {
         text: trans('want_delete_group'),
-    }
-
-    popupStore.show('confirm', popupData, async answer => {
-        if (answer && answer.isConfirmed) {
-            await deleteGroup()
-        }
     })
+
+    if (resp && resp.isConfirmed) {
+        await deleteGroup()
+    }
 }
 
 async function deleteGroup(): Promise<void> {

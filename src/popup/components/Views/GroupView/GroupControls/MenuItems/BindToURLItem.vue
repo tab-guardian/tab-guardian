@@ -9,9 +9,9 @@ defineProps<{ group: Group }>()
 
 const popupStore = usePopupStore()
 
-function rebind(): void {
+async function rebind(): Promise<void> {
     popupStore.hide('groupMenuView', {})
-    popupStore.show('bindGroup', {})
+    await popupStore.show('bindGroup', {})
 }
 </script>
 

@@ -15,7 +15,6 @@ import pako from 'pako'
 import Section from '@settings/components/Section.vue'
 import FileInput from '@common/components/Form/FileInput.vue'
 import Progress from '@common/components/Progress.vue'
-import { ConfirmData } from '@common/types/popup'
 
 const groupStore = useGroupStore()
 const attemptsStore = useAttemptsStore()
@@ -77,7 +76,7 @@ async function decryptFile(encrypted: string, pass: string): Promise<boolean> {
 
 async function processFileContent(rawData: string): Promise<void> {
     if (rawData.startsWith('algo(')) {
-        popupStore.show('enterPassword', {
+        await popupStore.show('enterPassword', {
             decrypting: pass => decryptFile(rawData, pass),
             text: trans('enter_pass_unlock_file'),
         })
@@ -112,16 +111,14 @@ async function processFileContent(rawData: string): Promise<void> {
         return
     }
 
-    const confirmData: ConfirmData = {
+    const resp = await popupStore.show('confirm', {
         text: trans('some_groups_already_exist_same_name'),
-    }
-
-    popupStore.show('confirm', confirmData, async answer => {
-        if (answer) {
-            await groupStore.addAndSaveGroups(groups, answer.isConfirmed)
-            showSuccessMessage(groups)
-        }
     })
+
+    if (resp) {
+        await groupStore.addAndSaveGroups(groups, resp.isConfirmed)
+        showSuccessMessage(groups)
+    }
 }
 
 function showSuccessMessage(groups: Group[]): void {

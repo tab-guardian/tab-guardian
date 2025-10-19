@@ -44,28 +44,22 @@ async function selectIcon(icon: string): Promise<void> {
     await router.push({ name: 'group', params: { id: group.value.id.toString() } })
 }
 
-function openEmojiPopup(): void {
-    popupStore.show('chooseEmoji', {}, async data => {
-        if (!data || data.emo === '') {
-            return
-        }
+async function openEmojiPopup(): Promise<void> {
+    const resp = await popupStore.show('chooseEmoji', {})
+    const emo = resp?.emo
 
-        await selectIcon(data.emo)
-    })
+    if (emo) {
+        await selectIcon(emo)
+    }
 }
 
-function openImageIconPopup(): void {
-    popupStore.show('chooseImageIcon', {}, async data => {
-        if (!data) {
-            throw new Error("data must exist inside onClose hook in 'newPassword'")
-        }
+async function openImageIconPopup(): Promise<void> {
+    const resp = await popupStore.show('chooseImageIcon', {})
+    const url = resp?.url
 
-        if (data.url === '') {
-            return
-        }
-
-        await selectIcon(data.url)
-    })
+    if (url) {
+        await selectIcon(url)
+    }
 }
 </script>
 

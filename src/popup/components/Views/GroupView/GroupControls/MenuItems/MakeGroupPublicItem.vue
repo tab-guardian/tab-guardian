@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import type { ConfirmData } from '@common/types/popup'
 import type { Group } from '@common/types'
 import { cloneDeep } from 'lodash'
 import { trans } from '@common/modules'
@@ -17,15 +16,13 @@ const popupStore = usePopupStore()
 async function promptToMakeOpen(): Promise<void> {
     popupStore.hide('groupMenuView', {})
 
-    const popupData: ConfirmData = {
+    const resp = await popupStore.show('confirm', {
         text: trans('are_you_sure_to_make_group_open'),
-    }
-
-    popupStore.show('confirm', popupData, async answer => {
-        if (answer && answer.isConfirmed) {
-            await makeOpen()
-        }
     })
+
+    if (resp && resp.isConfirmed) {
+        await makeOpen()
+    }
 }
 
 async function makeOpen(): Promise<void> {

@@ -8,6 +8,7 @@ import Popup from '@/components/Popups/Popup.vue'
 import AddLinkMenuItem from '@/components/Views/GroupView/GroupControls/MenuItems/AddLinkMenuItem.vue'
 import DeleteGroupMenuItem from '@/components/Views/GroupView/GroupControls/MenuItems/DeleteGroupMenuItem.vue'
 import RenameGroupMenuItem from '@/components/Views/GroupView/GroupControls/MenuItems/RenameGroupMenuItem.vue'
+import MakeGroupPrivateItem from '@/components/Views/GroupView/GroupControls/MenuItems/MakeGroupPrivateItem.vue'
 import BindToURLItem from '@/components/Views/GroupView/GroupControls/MenuItems/BindToURLItem.vue'
 import ExportGroupMenuItem from '@/components/Views/GroupView/GroupControls/MenuItems/ExportGroupMenuItem.vue'
 import MenuItem from '@/components/MenuItem.vue'
@@ -58,6 +59,7 @@ const isEncrypted = computed<boolean>(() => {
                 </RouterLink>
 
                 <BindToURLItem :group />
+                <MakeGroupPrivateItem v-if="!group.isPrivate" :group />
                 <DeleteGroupMenuItem :group />
             </div>
         </div>

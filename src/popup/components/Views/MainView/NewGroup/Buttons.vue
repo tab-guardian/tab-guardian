@@ -12,9 +12,9 @@ onMounted(() => newGroupStore.resetChoices())
 const popupStore = usePopupStore()
 const newGroupStore = useNewGroupStore()
 
-function askForGroupName(isPrivate: boolean) {
+async function askForGroupName(isPrivate: boolean) {
     newGroupStore.choices.isPrivate = isPrivate
-    popupStore.show('newGroupName', {})
+    await popupStore.show('newGroupName', {})
 }
 </script>
 

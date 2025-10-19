@@ -30,7 +30,7 @@ async function openTabs(): Promise<void> {
         return
     }
 
-    popupStore.show('enterPassword', {
+    await popupStore.show('enterPassword', {
         decrypting: async pass => await unlockGroup(props.group, pass, true),
         text: trans('enter_pass_unlock_content'),
     })

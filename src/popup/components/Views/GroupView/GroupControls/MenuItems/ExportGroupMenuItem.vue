@@ -47,12 +47,13 @@ async function exportGroup(): Promise<void> {
 
     showToast(trans('cant_remember_pass'), 'error', 4000)
 
-    popupStore.show('newPassword', {}, async resp => {
-        if (resp && resp.newPass) {
-            const encrypted = await encryptExport(compressed, resp.newPass)
-            await downloadExportFile(encrypted, group)
-        }
-    })
+    const resp = await popupStore.show('newPassword', {})
+    const newPass = resp?.newPass
+
+    if (newPass) {
+        const encrypted = await encryptExport(compressed, newPass)
+        await downloadExportFile(encrypted, group)
+    }
 }
 
 async function downloadExportFile(compressed: string, group: Group): Promise<void> {

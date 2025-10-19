@@ -36,7 +36,7 @@ const groupClasses = computed(() => {
 
 async function navigateToGroupView(): Promise<void> {
     if (props.group.isPrivate && props.group.isEncrypted) {
-        popupStore.show('enterPassword', {
+        await popupStore.show('enterPassword', {
             decrypting: async pass => await unlockGroup(props.group, pass),
             text: trans('enter_pass_unlock_content'),
         })

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import type { ConfirmData } from '@common/types/popup'
 import { ref } from 'vue'
 import { trans } from '@common/modules'
 import { showToast } from '@common/modules/toast'
@@ -19,15 +18,13 @@ async function promptToDeleteGroups(): Promise<void> {
         return
     }
 
-    const confirmData: ConfirmData = {
+    const resp = await popupStore.show('confirm', {
         text: trans('i_confirm_want_delete_groups'),
-    }
-
-    popupStore.show('confirm', confirmData, async answer => {
-        if (answer && answer.isConfirmed) {
-            await deleteGroups()
-        }
     })
+
+    if (resp && resp.isConfirmed) {
+        await deleteGroups()
+    }
 }
 
 async function deleteGroups(): Promise<void> {
