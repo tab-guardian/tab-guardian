@@ -6,8 +6,6 @@ import { trans } from '@common/modules'
 import { usePopupStore } from '@/stores/popup'
 import { useGroupUnlock } from '@/assets/composables/useGroupUnlock'
 import ChevronRightIcon from '@common/components/Icons/ChevronRightIcon.vue'
-import ShieldCheckIcon from '@common/components/Icons/ShieldCheckIcon.vue'
-import ShieldExclamationIcon from '@common/components/Icons/ShieldExclamationIcon.vue'
 import OpenTabsButton from '@/components/Views/MainView/Groups/OpenTabsButton.vue'
 import GroupIcon from '@/components/Views/MainView/Groups/GroupIcon.vue'
 
@@ -51,25 +49,7 @@ async function navigateToGroupView(): Promise<void> {
 <template>
     <div @click="navigateToGroupView" :class="groupClasses">
         <div class="flex items-center gap-2">
-            <div v-if="group.isPrivate" class="w-6 h-6">
-                <ShieldCheckIcon
-                    v-if="group.isEncrypted"
-                    class="w-6 h-6 text-private"
-                    :class="{ 'text-red-400': !group.algo }"
-                />
-
-                <ShieldExclamationIcon v-else class="w-6 h-6 text-red-400" />
-            </div>
-
-            <GroupIcon v-else-if="group.icon" :group />
-
-            <div
-                v-else
-                class="flex items-center justify-center w-6 h-6 text-primary text-sm"
-            >
-                {{ group.links.length }}
-            </div>
-
+            <GroupIcon :group />
             <h2 class="text-sm">{{ group.name }}</h2>
         </div>
 

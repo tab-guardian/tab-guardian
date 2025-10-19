@@ -19,15 +19,15 @@ const boxClassName = computed<string>(() => {
 
 <template>
     <div
-        class="flex items-center justify-between mb-4 mt-1 p-3 rounded-lg gap-4"
+        class="flex items-center justify-between mb-4 mt-1 p-3 rounded-lg gap-3"
         :class="boxClassName"
     >
         <ShieldCheckIcon
             v-if="success"
-            class="text-green-400 w-8 h-8 flex-shrink-0"
+            class="text-green-400 size-7 flex-shrink-0"
         />
 
-        <ShieldExclamationIcon v-else class="text-red-400 w-8 h-8 flex-shrink-0" />
+        <ShieldExclamationIcon v-else class="text-red-400 size-7 flex-shrink-0" />
 
         <span class="text-sm w-full">{{ message }}</span>
         <slot />

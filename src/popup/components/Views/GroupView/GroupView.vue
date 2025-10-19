@@ -54,7 +54,7 @@ watchEffect(() => {
                     :to="{ name: 'groupIcon', params: { id: group.id } }"
                     class="rounded-md hover:bg-border p-0.5"
                 >
-                    <GroupIcon v-if="group.icon" :group />
+                    <GroupIcon :group />
                 </RouterLink>
 
                 <h2 class="text-lg mt-0.5">{{ group.name }}</h2>

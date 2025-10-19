@@ -10,6 +10,7 @@
 - 🧑‍💻 The "Bound URL" can now be modified when you create a new private group.
 - 🧑‍💻 The `about:home` Firefox's page will be also closed when you restore tabs from a group.
 - 🧑‍💻 Refactoring of the codebase;
+- 🧑‍💻 Added a shield icon to private groups when you open them. It's on the left of the group name.
 
 ## v1.14.1 (2025-10-16)
 - 🐛 Fixed development environment. App wasn't working on Chrome-based browsers.
