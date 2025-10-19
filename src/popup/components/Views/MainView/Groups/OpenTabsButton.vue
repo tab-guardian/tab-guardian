@@ -3,7 +3,7 @@ import type { Group } from '@common/types'
 import { trans } from '@common/modules'
 import { useTabsStore } from '@/stores/tabs'
 import { usePopupStore } from '@/stores/popup'
-import { useGroupUnlock } from '@/assets/composables/useGroupUnlock'
+import { useGroupUnlock } from '@/composables/useGroupUnlock'
 import { runtime } from '@common/modules/runtime'
 
 const props = defineProps<{ group: Group }>()

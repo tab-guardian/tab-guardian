@@ -2,7 +2,7 @@
 import type { Group } from '@common/types'
 import { useGroupStore } from '@/stores/group'
 import { useTabsStore } from '@/stores/tabs'
-import { useGroupUnlock } from '@/assets/composables/useGroupUnlock'
+import { useGroupUnlock } from '@/composables/useGroupUnlock'
 import { usePopupStore } from '@/stores/popup'
 import { ref, onMounted, onUnmounted } from 'vue'
 import { trans } from '@common/modules'
