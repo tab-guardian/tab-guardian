@@ -50,7 +50,10 @@ watchEffect(() => {
 
         <div v-if="group">
             <div class="flex items-center gap-2 relative my-2 px-2">
+                <GroupIcon v-if="group.isPrivate" :group />
+
                 <RouterLink
+                    v-else
                     :to="{ name: 'groupIcon', params: { id: group.id } }"
                     class="rounded-md hover:bg-border p-0.5"
                 >
