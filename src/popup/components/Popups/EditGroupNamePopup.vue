@@ -22,12 +22,18 @@ async function saveName(): Promise<void> {
     const group = groupStore.selectedGroup
 
     if (!group) {
-        showToast(trans('error_no_group_selected'), 'error')
+        showToast({
+            text: trans('error_no_group_selected'),
+            type: 'error',
+        })
         return
     }
 
     if (tooLongName.value) {
-        showToast(trans('group_name_long'), 'error')
+        showToast({
+            text: trans('group_name_long'),
+            type: 'error',
+        })
         return
     }
 
@@ -41,7 +47,7 @@ async function saveName(): Promise<void> {
 
     await groupStore.save(group)
 
-    showToast(trans('new_name_saved'))
+    showToast({ text: trans('new_name_saved') })
 }
 </script>
 

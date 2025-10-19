@@ -31,7 +31,7 @@ async function deleteGroups(): Promise<void> {
     loading.value = true
 
     await groupStore.deleteAllGroups()
-    showToast(trans('all_groups_deleted'))
+    showToast({ text: trans('all_groups_deleted') })
 
     loading.value = false
 }

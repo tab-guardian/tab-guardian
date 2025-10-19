@@ -37,7 +37,7 @@ export function throwIfQuotaExceeds(
         const used = formatNumber(usedBytes / MB)
         const msg = trans('not_enough_storage', max, used)
 
-        showToast(msg, 'error', 5000)
+        showToast({ text: msg, type: 'error', duration: 5000 })
 
         throw new Error(msg)
     }

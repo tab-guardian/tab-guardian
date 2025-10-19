@@ -44,7 +44,11 @@ async function promptEnterPassword(): Promise<void> {
     }
 
     if (!useNewPassword.value) {
-        showToast(trans('cant_remember_pass'), 'error', 4000)
+        showToast({
+            text: trans('cant_remember_pass'),
+            type: 'error',
+            duration: 4000,
+        })
     }
 
     const resp = await popupStore.show('newPassword', {})
@@ -74,7 +78,7 @@ async function lockGroup(pass: string): Promise<void> {
 
     encrypting.value = false
 
-    showToast(trans('group_locked'))
+    showToast({ text: trans('group_locked') })
 }
 </script>
 

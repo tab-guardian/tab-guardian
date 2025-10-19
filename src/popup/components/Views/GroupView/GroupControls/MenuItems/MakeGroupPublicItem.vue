@@ -40,7 +40,7 @@ async function makeOpen(): Promise<void> {
 
     await groupStore.save(group)
 
-    showToast(trans('group_is_now_open'))
+    showToast({ text: trans('group_is_now_open') })
 }
 </script>
 

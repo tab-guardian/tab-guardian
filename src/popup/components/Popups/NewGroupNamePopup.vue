@@ -34,12 +34,12 @@ function submitName(): void {
     }
 
     if (newGroupStore.isPasswordEmpty()) {
-        showToast(trans('password_empty'), 'error')
+        showToast({ text: trans('password_empty'), type: 'error' })
         return
     }
 
     if (isNameTooLong(newGroupStore.choices.name)) {
-        showToast(trans('group_name_long'), 'error')
+        showToast({ text: trans('group_name_long'), type: 'error' })
         return
     }
 

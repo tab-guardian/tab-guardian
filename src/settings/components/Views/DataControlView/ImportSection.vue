@@ -28,7 +28,7 @@ const groupPassword = ref<string | null>(null)
 
 async function importGroups(): Promise<void> {
     if (!file.value) {
-        showToast(trans('choose_file_import'), 'error')
+        showToast({ text: trans('choose_file_import'), type: 'error' })
         return
     }
 
@@ -43,13 +43,13 @@ async function importGroups(): Promise<void> {
             await processFileContent(e.target.result as string)
         } catch (err) {
             console.error(err)
-            showToast(trans('error_reading_file'), 'error')
+            showToast({ text: trans('error_reading_file'), type: 'error' })
         }
     }
 
     reader.onerror = e => {
         console.error('Error reading file:', e)
-        showToast(trans('error_reading_file'), 'error')
+        showToast({ text: trans('error_reading_file'), type: 'error' })
     }
 
     reader.readAsText(file.value)
@@ -65,7 +65,7 @@ async function decryptFile(encrypted: string, pass: string): Promise<boolean> {
         await processFileContent(decrypted)
         attemptsStore.unlock()
     } catch (err) {
-        showToast(getDecryptionError(err), 'error')
+        showToast({ text: getDecryptionError(err), type: 'error' })
         return false
     }
 
@@ -122,8 +122,9 @@ async function processFileContent(rawData: string): Promise<void> {
 }
 
 function showSuccessMessage(groups: Group[]): void {
-    const msg = trans('groups_imported', groups.length.toString())
-    showToast(msg)
+    showToast({
+        text: trans('groups_imported', groups.length.toString()),
+    })
 }
 
 async function fileChosen(f: File, elem: HTMLInputElement): Promise<void> {

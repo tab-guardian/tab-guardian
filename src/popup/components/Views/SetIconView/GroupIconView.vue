@@ -39,7 +39,7 @@ async function selectIcon(icon: string): Promise<void> {
 
     await groupStore.setIcon(group.value.id, icon)
 
-    showToast(trans('icon_is_set'))
+    showToast({ text: trans('icon_is_set') })
 
     await router.push({ name: 'group', params: { id: group.value.id.toString() } })
 }

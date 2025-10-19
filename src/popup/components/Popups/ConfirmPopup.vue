@@ -12,7 +12,7 @@ const sharedData = computed(() => {
     const data = popupStore.getSharedData('confirm')
 
     if (!data) {
-        showToast(trans('error_occurred'), 'error')
+        showToast({ text: trans('error_occurred'), type: 'error' })
         throw new Error('sharedData must not be nullable in ConfirmPopup.vue')
     }
 

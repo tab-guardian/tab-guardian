@@ -26,7 +26,7 @@ async function exportGroups(): Promise<void> {
     const groups = groupStore.groups
 
     if (groups.length === 0) {
-        showToast(trans('no_groups_export'), 'error')
+        showToast({ text: trans('no_groups_export'), type: 'error' })
         return
     }
 

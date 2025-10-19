@@ -22,7 +22,7 @@ onMounted(async () => {
 
 function updateSettings(): void {
     settingsStore.updateSettings()
-    showToast(trans('settings_saved'))
+    showToast({ text: trans('settings_saved') })
 }
 </script>
 

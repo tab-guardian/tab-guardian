@@ -1,7 +1,7 @@
 import type { Group, Link } from '@common/types'
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import { trans, generateGroupId, removeTrail } from '@common/modules'
+import { trans, generateGroupId } from '@common/modules'
 import { runtime } from '@common/modules/runtime'
 import { useSettingsStore } from '@/stores/settings'
 import { useNotificationStore } from '@/stores/notification'
@@ -60,7 +60,7 @@ export const useGroupStore = defineStore('group', () => {
     async function updatePassword(pass: string): Promise<void> {
         if (!selectedGroup.value) {
             console.error('No group selected to update password')
-            showToast(trans('error_occurred'), 'error')
+            showToast({ text: trans('error_occurred'), type: 'error' })
             return
         }
 
@@ -132,17 +132,26 @@ export const useGroupStore = defineStore('group', () => {
         confirm?: string,
     ): Promise<Group | null> {
         if (group.isEncrypted) {
-            showToast(trans('group_already_locked'), 'error')
+            showToast({
+                text: trans('group_already_locked'),
+                type: 'error',
+            })
             return null
         }
 
         if (pass === '') {
-            showToast(trans('pass_empty'), 'error')
+            showToast({
+                text: trans('pass_empty'),
+                type: 'error',
+            })
             return null
         }
 
         if (confirm && pass !== confirm) {
-            showToast(trans('passwords_not_match'), 'error')
+            showToast({
+                text: trans('passwords_not_match'),
+                type: 'error',
+            })
             return null
         }
 
@@ -154,7 +163,7 @@ export const useGroupStore = defineStore('group', () => {
 
             return encrypted
         } catch (err) {
-            showToast(trans('error_occurred'), 'error')
+            showToast({ text: trans('error_occurred'), type: 'error' })
             console.error(err)
         }
 

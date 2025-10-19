@@ -48,7 +48,7 @@ export const useAppStore = defineStore('app', () => {
 
         linkBuffer.value = null
 
-        showToast(trans('tab_pasted'))
+        showToast({ text: trans('tab_pasted') })
 
         popupStore.hideAll()
     }

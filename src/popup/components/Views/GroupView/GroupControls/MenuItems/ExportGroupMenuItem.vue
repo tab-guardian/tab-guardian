@@ -45,7 +45,7 @@ async function exportGroup(): Promise<void> {
         return
     }
 
-    showToast(trans('cant_remember_pass'), 'error', 4000)
+    showToast({ text: trans('cant_remember_pass'), type: 'error', duration: 4000 })
 
     const resp = await popupStore.show('newPassword', {})
     const newPass = resp?.newPass

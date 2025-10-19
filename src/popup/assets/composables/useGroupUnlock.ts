@@ -39,7 +39,7 @@ export function useGroupUnlock() {
             return true
         }
 
-        showToast(trans('group_unlocked'))
+        showToast({ text: trans('group_unlocked') })
 
         await router.push({ name: 'group', params: { id: group.id } })
 
@@ -48,11 +48,11 @@ export function useGroupUnlock() {
 
     function handleUnlockGroupError(err: any): void {
         if (!isWrongPassError(err)) {
-            showToast(getDecryptionError(err), 'error')
+            showToast({ text: getDecryptionError(err), type: 'error' })
             return
         }
 
-        showToast(getDecryptionError(err), 'error')
+        showToast({ text: getDecryptionError(err), type: 'error' })
     }
 
     return { unlockGroup }

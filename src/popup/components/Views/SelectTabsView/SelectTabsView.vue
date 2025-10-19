@@ -88,7 +88,10 @@ async function handleSaveGroup(): Promise<void> {
     const group = groupStore.selectedGroup
 
     if (!group) {
-        showToast(trans('error_no_group_selected'), 'error')
+        showToast({
+            text: trans('error_no_group_selected'),
+            type: 'error',
+        })
         return
     }
 
@@ -145,13 +148,13 @@ function showToastMessage(): void {
     const length = selectedLinks.value.length
 
     if (operation.value === 'adding' && length === 0) {
-        showToast(trans('you_not_selected_tabs'))
+        showToast({ text: trans('you_not_selected_tabs') })
     } else if (operation.value === 'adding') {
-        showToast(trans('tabs_added_to_group'))
+        showToast({ text: trans('tabs_added_to_group') })
     } else if (operation.value === 'creating' && length === 0) {
-        showToast(trans('group_created_without_tabs'))
+        showToast({ text: trans('group_created_without_tabs') })
     } else {
-        showToast(trans('group_created_with_tabs'))
+        showToast({ text: trans('group_created_with_tabs') })
     }
 }
 
