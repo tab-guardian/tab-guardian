@@ -8,6 +8,7 @@
 - 🐛 Fixed not working tooltip helper on the `Paste tabs here` button.
 - 🧑‍💻 The "Bound URL" can now be modified when you create a new private group.
 - 🧑‍💻 The `about:home` Firefox's page will be also closed when you restore tabs from a group.
+- 🧑‍💻 Refactoring of the codebase;
 
 ## v1.14.1 (2025-10-16)
 - 🐛 Fixed development environment. App wasn't working on Chrome-based browsers.
