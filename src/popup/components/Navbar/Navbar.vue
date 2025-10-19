@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { trans } from '@common/modules/utils'
+import { trans } from '@common/modules'
 import NavControls from '@/components/Navbar/NavControls.vue'
 import Sidebar from '@/components/Navbar/Sidebar/Sidebar.vue'
 </script>

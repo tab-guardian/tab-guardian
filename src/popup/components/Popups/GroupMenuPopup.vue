@@ -1,20 +1,21 @@
 <script setup lang="ts">
 import type { Group } from '@common/types'
 import { computed } from 'vue'
-import { trans } from '@common/modules/utils'
+import { trans } from '@common/modules'
 import { usePopupStore } from '@/stores/popup'
 import { useGroupStore } from '@/stores/group'
 import Popup from '@/components/Popups/Popup.vue'
 import AddLinkMenuItem from '@/components/Views/GroupView/GroupControls/MenuItems/AddLinkMenuItem.vue'
 import DeleteGroupMenuItem from '@/components/Views/GroupView/GroupControls/MenuItems/DeleteGroupMenuItem.vue'
 import RenameGroupMenuItem from '@/components/Views/GroupView/GroupControls/MenuItems/RenameGroupMenuItem.vue'
-import RebindUrlItem from '@/components/Views/GroupView/GroupControls/MenuItems/RebindUrlItem.vue'
+import MakeGroupPrivateItem from '@/components/Views/GroupView/GroupControls/MenuItems/MakeGroupPrivateItem.vue'
+import BindToURLItem from '@/components/Views/GroupView/GroupControls/MenuItems/BindToURLItem.vue'
 import ExportGroupMenuItem from '@/components/Views/GroupView/GroupControls/MenuItems/ExportGroupMenuItem.vue'
 import MenuItem from '@/components/MenuItem.vue'
 import PhotoIcon from '@common/components/Icons/PhotoIcon.vue'
 import InfoCircleIcon from '@common/components/Icons/InfoCircleIcon.vue'
 import PasteLinkMenuItem from '@/components//Views/GroupView/GroupControls/MenuItems/PasteLinkMenuItem.vue'
-import MakeGroupPublicItem from '@/components//Views/GroupView/GroupControls/MenuItems/MakeGroupPublicItem.vue'
+import MakeGroupOpenItem from '@/components//Views/GroupView/GroupControls/MenuItems/MakeGroupOpenItem.vue'
 import Message from '@common/components/Message.vue'
 
 const popupStore = usePopupStore()
@@ -45,20 +46,26 @@ const isEncrypted = computed<boolean>(() => {
                 </RouterLink>
 
                 <PasteLinkMenuItem :group />
-                <MakeGroupPublicItem v-if="group.isPrivate" :group />
                 <AddLinkMenuItem />
                 <RenameGroupMenuItem />
-                <ExportGroupMenuItem />
+                <ExportGroupMenuItem :group />
 
-                <RouterLink
-                    v-if="!group.isPrivate"
-                    :to="{ name: 'groupIcon', params: { id: group.id } }"
-                >
-                    <MenuItem :label="trans('change_icon')" :icon="PhotoIcon" />
-                </RouterLink>
+                <template v-if="group.isPrivate">
+                    <BindToURLItem :group />
+                    <MakeGroupOpenItem :group />
+                </template>
 
-                <RebindUrlItem v-if="group.isPrivate && group.bindURL" />
-                <DeleteGroupMenuItem />
+                <template v-else>
+                    <RouterLink
+                        :to="{ name: 'groupIcon', params: { id: group.id } }"
+                    >
+                        <MenuItem :label="trans('change_icon')" :icon="PhotoIcon" />
+                    </RouterLink>
+
+                    <MakeGroupPrivateItem :group />
+                </template>
+
+                <DeleteGroupMenuItem :group />
             </div>
         </div>
 

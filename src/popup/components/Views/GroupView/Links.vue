@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Group } from '@common/types'
-import { trans } from '@common/modules/utils'
+import { trans } from '@common/modules'
 import { useGroupStore } from '@/stores/group'
 import { VueDraggableNext } from 'vue-draggable-next'
 import LinkItem from '@/components/Views/GroupView/LinkItem.vue'
@@ -23,7 +23,7 @@ const groupStore = useGroupStore()
         <VueDraggableNext
             v-model="group.links"
             class="space-y-2"
-            @change="groupStore.saveGroup(group)"
+            @change="groupStore.save(group)"
         >
             <LinkItem
                 v-for="link in group.links"

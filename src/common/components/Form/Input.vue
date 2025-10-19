@@ -8,8 +8,6 @@ const emit = defineEmits<{
     (e: 'loaded', input: HTMLInputElement): void
 }>()
 
-const inputRef = ref<HTMLInputElement | null>(null)
-
 type Props = {
     id: string
     type: 'text' | 'password'
@@ -31,6 +29,7 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const modelValue = defineModel()
+const inputRef = ref<HTMLInputElement | null>(null)
 
 const className = computed(() => {
     return [

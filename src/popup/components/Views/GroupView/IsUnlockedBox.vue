@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Group } from '@common/types'
 import { ref } from 'vue'
-import { trans } from '@common/modules/utils'
+import { trans } from '@common/modules'
 import { useGroupStore } from '@/stores/group'
 import { usePopupStore } from '@/stores/popup'
 import { useSettingsStore } from '@/stores/settings'
@@ -44,18 +44,22 @@ async function promptEnterPassword(): Promise<void> {
     }
 
     if (!useNewPassword.value) {
-        showToast(trans('cant_remember_pass'), 'error', 4000)
+        showToast({
+            text: trans('enter_your_password'),
+            duration: 4000,
+        })
     }
 
-    popupStore.show('newPassword', {}, async data => {
-        if (!data || data.newPass === '') {
-            encrypting.value = false
-            return
-        }
+    const resp = await popupStore.show('newPassword', {})
+    const newPass = resp?.newPass
 
-        await groupStore.updatePassword(data.newPass)
-        await lockGroup(data.newPass)
-    })
+    if (!newPass) {
+        encrypting.value = false
+        return
+    }
+
+    await groupStore.updatePassword(newPass)
+    await lockGroup(newPass)
 }
 
 async function lockGroup(pass: string): Promise<void> {
@@ -68,12 +72,12 @@ async function lockGroup(pass: string): Promise<void> {
         return
     }
 
-    await groupStore.saveGroup(encrypted)
+    await groupStore.save(encrypted)
     await deletePasswordFromStorage(props.group.id)
 
     encrypting.value = false
 
-    showToast(trans('group_locked'))
+    showToast({ text: trans('group_locked') })
 }
 </script>
 
@@ -83,10 +87,10 @@ async function lockGroup(pass: string): Promise<void> {
     <WarningBox :message="trans('private_group_unlocked')">
         <div class="w-52 flex flex-col items-end gap-1.5">
             <Button
+                is="danger"
                 :icon="LockClosedIcon"
                 :loading="encrypting"
                 @click="promptEnterPassword"
-                class-name="bg-unsafe hover:bg-unsafe-hover text-white"
             >
                 {{ trans('lock') }}
             </Button>

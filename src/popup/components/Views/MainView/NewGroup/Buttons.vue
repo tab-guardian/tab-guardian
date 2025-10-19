@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useNewGroupStore } from '@/stores/newGroup'
-import { trans } from '@common/modules/utils'
+import { trans } from '@common/modules'
 import { usePopupStore } from '@/stores/popup'
 import { onMounted } from 'vue'
 import ShieldCheckIcon from '@common/components/Icons/ShieldCheckIcon.vue'
@@ -12,9 +12,9 @@ onMounted(() => newGroupStore.resetChoices())
 const popupStore = usePopupStore()
 const newGroupStore = useNewGroupStore()
 
-function askForGroupName(isPrivate: boolean) {
+async function askForGroupName(isPrivate: boolean) {
     newGroupStore.choices.isPrivate = isPrivate
-    popupStore.show('newGroupName', {})
+    await popupStore.show('newGroupName', {})
 }
 </script>
 
@@ -24,7 +24,7 @@ function askForGroupName(isPrivate: boolean) {
             @click="askForGroupName(false)"
             class="w-full bg-primary hover:bg-primary-hover"
         >
-            <PlusCircleIcon class="w-6 h-6" />
+            <PlusCircleIcon class="size-6" />
             <span>{{ trans('new_group') }}</span>
         </NewGroupButton>
 
@@ -33,7 +33,7 @@ function askForGroupName(isPrivate: boolean) {
             @click="askForGroupName(true)"
             class="w-24 bg-private hover:bg-private-hover"
         >
-            <ShieldCheckIcon class="w-8 h-8" />
+            <ShieldCheckIcon class="size-8" />
         </NewGroupButton>
     </div>
 </template>

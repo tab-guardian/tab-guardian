@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { trans } from '@common/modules/utils'
+import { trans } from '@common/modules'
 import { computed, ref } from 'vue'
-import { env } from '@common/env'
+import { config } from '@common/config'
 import { passwordError } from '@common/modules/validation/group'
 import PasswordInput from '@common/components/Form/PasswordInput.vue'
 
@@ -41,7 +41,7 @@ function keyupEventHandler(): void {
         id="group-password"
         :error="errMsg"
         :label="trans('enter_pass')"
-        :minlength="env.MIN_PASS_LENGTH"
+        :minlength="config.MIN_PASS_LENGTH"
     />
 
     <PasswordInput
@@ -49,6 +49,6 @@ function keyupEventHandler(): void {
         @keyup="keyupEventHandler"
         id="group-confirm-password"
         :label="trans('repeat_pass')"
-        :minlength="env.MIN_PASS_LENGTH"
+        :minlength="config.MIN_PASS_LENGTH"
     />
 </template>

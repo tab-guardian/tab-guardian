@@ -14,7 +14,7 @@ const defaultPopups: Popups = {
     groupMenuView: cloneDeep(defaultEmptyPopup),
     confirm: cloneDeep(defaultEmptyPopup),
     groupName: cloneDeep(defaultEmptyPopup),
-    rebindGroup: cloneDeep(defaultEmptyPopup),
+    bindGroup: cloneDeep(defaultEmptyPopup),
     enterPassword: cloneDeep(defaultEmptyPopup),
     linkMenuView: cloneDeep(defaultEmptyPopup),
     newGroupName: cloneDeep(defaultEmptyPopup),
@@ -36,23 +36,20 @@ export const usePopupStore = defineStore('popup', () => {
     function show<K extends keyof Popups>(
         key: K,
         data: Popups[K]['dataOnOpen'],
-        onClose?: (data: Popups[K]['dataOnClose']) => void,
-    ): void {
-        popups.value[key].open = true
-        popups.value[key].dataOnOpen = data
+    ): Promise<Popups[K]['dataOnClose']> {
+        return new Promise(resolve => {
+            popups.value[key].open = true
+            popups.value[key].dataOnOpen = data
 
-        if (onClose) {
-            popups.value[key].onClose = onClose
-        }
+            // Resolve the promise when closed
+            popups.value[key].onClose = resolve
+        })
     }
 
     function resetGroups(): void {
         popups.value = cloneDeep(defaultPopups)
     }
 
-    /**
-     * @param data Pass data that you want to pass to onClose callback
-     */
     function hide<K extends keyof Popups>(
         key: K,
         onCloseData: Popups[K]['dataOnClose'],

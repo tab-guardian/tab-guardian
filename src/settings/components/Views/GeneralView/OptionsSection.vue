@@ -2,7 +2,7 @@
 import { ref, onMounted, computed } from 'vue'
 import { runtime } from '@common/modules/runtime'
 import { useSettingsStore } from '@/stores/settings'
-import { trans } from '@common/modules/utils'
+import { trans } from '@common/modules'
 import { showToast } from '@common/modules/toast'
 import Section from '@settings/components/Section.vue'
 import SlideSwitch from '@common/components/Form/SlideSwitch.vue'
@@ -22,7 +22,7 @@ onMounted(async () => {
 
 function updateSettings(): void {
     settingsStore.updateSettings()
-    showToast(trans('settings_saved'))
+    showToast({ text: trans('settings_saved') })
 }
 </script>
 

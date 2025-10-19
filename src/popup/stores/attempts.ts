@@ -1,9 +1,9 @@
 import type { Attempts } from '@common/types'
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
-import { trans } from '@common/modules/utils'
+import { trans } from '@common/modules'
 import { runtime } from '@common/modules/runtime'
-import { env } from '@common/env'
+import { config } from '@common/config'
 
 type Attempt = { success: false; error: string } | { success: true; error: null }
 
@@ -23,7 +23,7 @@ export const useAttemptsStore = defineStore('attempts', () => {
     })
 
     const hasNoAttempts = computed<boolean>(() => {
-        return attempts.value.amount >= env.PASS_MAX_ATTEMPTS
+        return attempts.value.amount >= config.PASS_MAX_ATTEMPTS
     })
 
     async function loadAttemptsFromStorage(): Promise<void> {
@@ -88,7 +88,8 @@ export const useAttemptsStore = defineStore('attempts', () => {
         }
 
         attempts.value.isLocked = true
-        attempts.value.lockEndTime = Date.now() + env.PASS_LOCK_DURATION * 60 * 1000
+        attempts.value.lockEndTime =
+            Date.now() + config.PASS_LOCK_DURATION * 60 * 1000
         await save()
     }
 

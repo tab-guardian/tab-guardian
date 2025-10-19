@@ -2,7 +2,7 @@ import type { PlatformRuntime } from '@common/types/runtime'
 import type { Locale, LocaleMessageItem } from '@common/types'
 import { throwIfQuotaExceeds } from '@common/modules/runtime/utils'
 import { isRuntime } from '@common/modules/runtime/utils'
-import { env } from '@common/env'
+import { config } from '@common/config'
 import enMessages from '@locales/en/messages.json'
 import ruMessages from '@locales/ru/messages.json'
 import zhMessages from '@locales/zh_CN/messages.json'
@@ -15,7 +15,7 @@ messageMap.set('zh_CN', zhMessages)
 let translationMessages: null | LocaleMessageItem = null
 
 if (!translationMessages && isRuntime('web')) {
-    translationMessages = messageMap.get(env.DEV_LOCALE)!
+    translationMessages = messageMap.get(config.DEV_LOCALE)!
 }
 
 export function getWebRuntimeAdapter(): PlatformRuntime {

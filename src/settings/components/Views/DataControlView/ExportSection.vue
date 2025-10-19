@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { useGroupStore } from '@/stores/group'
 import { ref, onMounted } from 'vue'
-import { trans } from '@common/modules/utils'
+import { trans, downloadFile } from '@common/modules'
 import { showToast } from '@common/modules/toast'
 import { usePopupStore } from '@/stores/popup'
 import { encryptExport } from '@common/modules/webCrypto'
-import { toBase64, downloadFile } from '@common/modules/utils'
+import { toBase64 } from '@common/modules/base64'
 import pako from 'pako'
 import Section from '@settings/components/Section.vue'
 import Button from '@common/components/Form/Button.vue'
@@ -26,7 +26,7 @@ async function exportGroups(): Promise<void> {
     const groups = groupStore.groups
 
     if (groups.length === 0) {
-        showToast(trans('no_groups_export'), 'error')
+        showToast({ text: trans('no_groups_export'), type: 'error' })
         return
     }
 
@@ -41,16 +41,16 @@ async function exportGroups(): Promise<void> {
         return
     }
 
-    popupStore.show('newPassword', {}, async data => {
-        if (!data || data.newPass === '') {
-            exporting.value = false
-            return
-        }
+    const resp = await popupStore.show('newPassword', {})
 
-        const encrypted = await encryptExport(compressed, data.newPass)
-        downloadFile(encrypted, 'tab-groups-export')
+    if (!resp || resp.newPass === '') {
         exporting.value = false
-    })
+        return
+    }
+
+    const encrypted = await encryptExport(compressed, resp.newPass)
+    downloadFile(encrypted, 'tab-groups-export')
+    exporting.value = false
 }
 </script>
 

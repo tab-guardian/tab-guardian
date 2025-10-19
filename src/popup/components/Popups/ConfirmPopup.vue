@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { trans } from '@common/modules/utils'
+import { trans } from '@common/modules'
 import { computed } from 'vue'
 import { usePopupStore } from '@/stores/popup'
 import { showToast } from '@common/modules/toast'
 import Popup from '@/components/Popups/Popup.vue'
-import PopupButton from '@/components/Popups/PopupButton.vue'
+import Button from '@common/components/Form/Button.vue'
 
 const popupStore = usePopupStore()
 
@@ -12,7 +12,7 @@ const sharedData = computed(() => {
     const data = popupStore.getSharedData('confirm')
 
     if (!data) {
-        showToast(trans('error_occurred'), 'error')
+        showToast({ text: trans('error_occurred'), type: 'error' })
         throw new Error('sharedData must not be nullable in ConfirmPopup.vue')
     }
 
@@ -31,13 +31,13 @@ async function handleDeny(): Promise<void> {
 <template>
     <Popup @cancel="handleDeny" :content="sharedData.text">
         <template #buttons>
-            <PopupButton @click="handleDeny" :is-secondary="true">
+            <Button @click="handleDeny" is="outline">
                 {{ trans('no') }}
-            </PopupButton>
+            </Button>
 
-            <PopupButton @click="handleConfirm">
+            <Button @click="handleConfirm">
                 {{ trans('yes') }}
-            </PopupButton>
+            </Button>
         </template>
     </Popup>
 </template>

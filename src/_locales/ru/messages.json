@@ -27,10 +27,6 @@
         "message": "Слишком много попыток. Следующая попытка через $n$ минут",
         "placeholders": { "n": { "content": "$1" } }
     },
-    "bind_group_url": {
-        "message": "Привяжите эту группу к URL ($n$). Это скроет группу отовсюду, кроме указанного URL, добавив дополнительный уровень безопасности",
-        "placeholders": { "n": { "content": "$1" } }
-    },
     "url_must_be_less_than": {
         "message": "URL должен содержать менее $n$ символов",
         "placeholders": { "n": { "content": "$1" } }
@@ -71,7 +67,6 @@
     },
     "error_no_tab_selected": { "message": "Вкладка не выбрана" },
     "want_delete_group": { "message": "Вы хотите удалить группу?" },
-    "no_tabs_this_group": { "message": "В этой группе нет вкладок" },
     "click_on_each_tab": {
         "message": "Нажмите на каждую вкладку, чтобы выбрать или отменить выбор для сохранения"
     },
@@ -82,6 +77,7 @@
     "no_groups_yet": { "message": "Группы пока отсутствуют" },
     "settings": { "message": "Настройки" },
     "enter_pass": { "message": "Введите пароль" },
+    "enter_new_pass": { "message": "Введите новый пароль" },
     "enter_pass_unlock_content": {
         "message": "Введите пароль для разблокировки содержимого этой группы"
     },
@@ -89,7 +85,7 @@
         "message": "Введите пароль для разблокировки содержимоe этого импортируемого файла"
     },
     "wrong_pass": { "message": "Неверный пароль" },
-    "cant_remember_pass": {
+    "enter_your_password": {
         "message": "Введите пароль группы, чтобы заблокировать эту группу"
     },
     "repeat_pass": { "message": "Повторите пароль" },
@@ -98,11 +94,14 @@
     "add_more_tabs": { "message": "Добавить больше вкладок" },
     "cut_tab": { "message": "Вырезать эту вкладку" },
     "copy_tab": { "message": "Скопировать эту вкладку" },
-    "paste_tabs_here": { "message": "Вставить вкладки здесь" },
+    "paste_tabs": { "message": "Вставить вкладки" },
     "tab_copied": { "message": "Вкладка скопирована" },
     "tab_cut": { "message": "Вкладка вырезана" },
     "delete_this_group": { "message": "Удалить" },
-    "rename_this_group": { "message": "Переименовать" },
+    "group_is_now_private": {
+        "message": "Эта группа теперь является закрытой. Не забудьте заблокировать ее."
+    },
+    "rename": { "message": "Переименовать" },
     "additional_options": { "message": "Дополнительные параметры" },
     "enter_group_name": { "message": "Введите имя группы" },
     "group_name": { "message": "Имя группы" },
@@ -130,7 +129,7 @@
     },
     "group_created_with_tabs": { "message": "Группа создана с вкладками" },
     "close_selected_tabs": { "message": "Закрыть выбранное" },
-    "bind_to_this_url": { "message": "Привязать к URL" },
+    "bind_to_url": { "message": "Привязать к URL" },
     "private_groups_are_secure": {
         "message": "Приватные группы защищены и используют шифрование. Доступ к ним имеют только пользователи с паролем"
     },
@@ -142,7 +141,6 @@
     "change_icon": { "message": "Изменить значок" },
     "choose_group_icon": { "message": "Выберите значок группы" },
     "icon_is_set": { "message": "Значок установлен" },
-    "export_this_group": { "message": "Экспортировать" },
     "rebind_to_other_url": { "message": "Привязать к другому URL" },
     "enter_new_url_bind_private_to_new_url": {
         "message": "Введите новый URL для привязки вашей приватной группы. Эта группа будет видна только при посещении указанного URL. Не забудьте заблокировать группу"
@@ -218,7 +216,7 @@
     "remember_pass_after_unlock": {
         "message": "Запомнить мой пароль после разблокировки"
     },
-    "make_group_open": { "message": "Сделать группу открытой" },
+    "make_open": { "message": "Сделать открытой" },
     "are_you_sure_to_make_group_open": {
         "message": "Вы уверены, что хотите сделать эту группу открытой? Это означает, что для доступа к этой группе не нужно вводить пароль"
     },
@@ -226,6 +224,14 @@
     "protect_export_using_pass": {
         "message": "Защитить экспорт паролем (рекомендуется)"
     },
+    "bind_group_url": {
+        "message": "Привяжите эту группу к URL-адресу. Это скроет группу от всех, кроме указанного вами URL-адреса. Только при открытии Tab Guardian по указанному URL-адресу вам будет показана скрытая группа."
+    },
+    "cannot_bind_to_this_url": {
+        "message": "Вы не можете привязать свою приватную группу к этому URL-адресу."
+    },
+    "use_current_url": { "message": "Использовать текущий URL" },
+    "make_private": { "message": "Сделать приватной" },
     "remember_pass_after_unlock_desc": {
         "message": "Если вы отключите эту опцию, вам нужно будет вводить пароль каждый раз, когда вы захотите заблокировать любую приватную группу. Если оставить эту опцию включенной, пароль будет сохранен во временном и безопасном хранилище, и вы сможете заблокировать группы, не вводя пароль"
     }

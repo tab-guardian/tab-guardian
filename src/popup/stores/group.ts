@@ -1,14 +1,14 @@
 import type { Group, Link } from '@common/types'
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import { trans, generateGroupId } from '@common/modules/utils'
+import { trans, generateGroupId } from '@common/modules'
 import { runtime } from '@common/modules/runtime'
 import { useSettingsStore } from '@/stores/settings'
 import { useNotificationStore } from '@/stores/notification'
 import { useCryptoStore } from '@/stores/crypto'
 import { useProgressStore } from '@/stores/progress'
 import { showToast } from '@common/modules/toast'
-import { getCurrentURL } from '@common/modules/utils/getCurrentURL'
+import { getHashedCurrentURL } from '@common/modules/url'
 import { savePasswordToStorage } from '@common/modules/storage/password'
 import {
     deleteAllGroupsFromStorage,
@@ -60,7 +60,7 @@ export const useGroupStore = defineStore('group', () => {
     async function updatePassword(pass: string): Promise<void> {
         if (!selectedGroup.value) {
             console.error('No group selected to update password')
-            showToast(trans('error_occurred'), 'error')
+            showToast({ text: trans('error_occurred'), type: 'error' })
             return
         }
 
@@ -102,9 +102,9 @@ export const useGroupStore = defineStore('group', () => {
         const isPrivate = await isIncognito()
 
         if (group.bindURL) {
-            const hashedURL = await getCurrentURL(true)
+            const currHashedURL = await getHashedCurrentURL()
 
-            if (hashedURL !== group.bindURL) {
+            if (currHashedURL !== group.bindURL) {
                 return true
             }
         }
@@ -132,17 +132,26 @@ export const useGroupStore = defineStore('group', () => {
         confirm?: string,
     ): Promise<Group | null> {
         if (group.isEncrypted) {
-            showToast(trans('group_already_locked'), 'error')
+            showToast({
+                text: trans('group_already_locked'),
+                type: 'error',
+            })
             return null
         }
 
         if (pass === '') {
-            showToast(trans('pass_empty'), 'error')
+            showToast({
+                text: trans('pass_empty'),
+                type: 'error',
+            })
             return null
         }
 
         if (confirm && pass !== confirm) {
-            showToast(trans('passwords_not_match'), 'error')
+            showToast({
+                text: trans('passwords_not_match'),
+                type: 'error',
+            })
             return null
         }
 
@@ -154,7 +163,7 @@ export const useGroupStore = defineStore('group', () => {
 
             return encrypted
         } catch (err) {
-            showToast(trans('error_occurred'), 'error')
+            showToast({ text: trans('error_occurred'), type: 'error' })
             console.error(err)
         }
 
@@ -175,7 +184,7 @@ export const useGroupStore = defineStore('group', () => {
                 await replaceGroup(group)
             }
 
-            await saveGroup(group, false)
+            await save(group, false)
 
             progressStore.advance()
         }
@@ -202,7 +211,7 @@ export const useGroupStore = defineStore('group', () => {
 
         group.icon = icon
 
-        await saveGroup(group)
+        await save(group)
     }
 
     async function deleteGroup(groupId: number): Promise<void> {
@@ -226,7 +235,7 @@ export const useGroupStore = defineStore('group', () => {
 
         group.links = []
 
-        await saveGroup(group)
+        await save(group)
     }
 
     async function incrementOpenedTimes(group: Group): Promise<void> {
@@ -244,7 +253,7 @@ export const useGroupStore = defineStore('group', () => {
             return g
         })
 
-        await saveGroup(group)
+        await save(group)
     }
 
     async function deleteLinkFrom(groupId: number, linkId: number): Promise<void> {
@@ -256,7 +265,7 @@ export const useGroupStore = defineStore('group', () => {
 
         group.links = group.links.filter(link => link.id !== linkId)
 
-        await saveGroup(group)
+        await save(group)
     }
 
     async function saveLinksTo(groupId: number, links: Link[]): Promise<void> {
@@ -268,10 +277,10 @@ export const useGroupStore = defineStore('group', () => {
 
         group.links.push(...links)
 
-        await saveGroup(group)
+        await save(group)
     }
 
-    async function saveGroup(group: Group, updateTimestamp = true): Promise<void> {
+    async function save(group: Group, updateTimestamp = true): Promise<void> {
         if (updateTimestamp) {
             group.updatedAt = Date.now()
         }
@@ -295,7 +304,7 @@ export const useGroupStore = defineStore('group', () => {
         groups,
         selectedGroup,
         loadingGroups,
-        saveGroup,
+        save,
         deleteGroup,
         deleteLinkFrom,
         saveLinksTo,

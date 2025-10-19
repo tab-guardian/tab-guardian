@@ -1,7 +1,7 @@
 import { Link } from '@common/types'
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
-import { trans } from '@common/modules/utils'
+import { trans } from '@common/modules'
 import { showToast } from '@common/modules/toast'
 import { useGroupStore } from '@/stores/group'
 import { usePopupStore } from '@/stores/popup'
@@ -48,7 +48,7 @@ export const useAppStore = defineStore('app', () => {
 
         linkBuffer.value = null
 
-        showToast(trans('tab_pasted'))
+        showToast({ text: trans('tab_pasted') })
 
         popupStore.hideAll()
     }

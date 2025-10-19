@@ -2,11 +2,11 @@
 import type { EmojiClickEventDetail } from 'emoji-picker-element/shared.js'
 import { ref, computed, onMounted } from 'vue'
 import { useGroupStore } from '@/stores/group'
-import { trans, isEmoji } from '@common/modules/utils'
+import { trans, isEmoji } from '@common/modules'
 import { usePopupStore } from '@/stores/popup'
 import 'emoji-picker-element'
 import Popup from '@/components/Popups/Popup.vue'
-import PopupButton from '@/components/Popups/PopupButton.vue'
+import Button from '@common/components/Form/Button.vue'
 import CheckIcon from '@common/components/Icons/CheckIcon.vue'
 
 const popupStore = usePopupStore()
@@ -65,14 +65,14 @@ function hideEmojiPopup(): void {
         <emoji-picker v-on:emoji-click="chooseEmoji"></emoji-picker>
 
         <template #buttons>
-            <PopupButton @click="hideEmojiPopup" :is-secondary="true">
+            <Button @click="hideEmojiPopup" is="outline">
                 {{ trans('cancel') }}
-            </PopupButton>
+            </Button>
 
-            <PopupButton @click="submit" :disabled="preventSubmit">
+            <Button @click="submit" :disabled="preventSubmit">
                 <CheckIcon width="20" height="20" />
                 {{ trans('select') }}
-            </PopupButton>
+            </Button>
         </template>
     </Popup>
 </template>

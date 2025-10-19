@@ -18,7 +18,7 @@ const popupStore = usePopupStore()
 
 async function openTab(): Promise<void> {
     if (groupStore.selectedGroup) {
-        await groupStore.saveGroup(groupStore.selectedGroup)
+        await groupStore.save(groupStore.selectedGroup)
     } else {
         console.error(
             `Group with id ${props.groupId} is not selected as selectedGroup`,
@@ -29,7 +29,7 @@ async function openTab(): Promise<void> {
 }
 
 async function showTabLinkPopup(): Promise<void> {
-    popupStore.show('linkMenuView', { link: props.link })
+    await popupStore.show('linkMenuView', { link: props.link })
 }
 </script>
 

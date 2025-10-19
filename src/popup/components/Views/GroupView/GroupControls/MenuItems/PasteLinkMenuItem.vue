@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Group } from '@common/types'
 import { computed } from 'vue'
-import { trans } from '@common/modules/utils'
+import { trans } from '@common/modules'
 import { useAppStore } from '@/stores/app'
 import MenuItem from '@/components/MenuItem.vue'
 import PasteIcon from '@common/components/Icons/PasteIcon.vue'
@@ -25,7 +25,7 @@ const tooltip = computed<string>(() => {
 
 <template>
     <MenuItem
-        :label="trans('paste_tabs_here')"
+        :label="trans('paste_tabs')"
         :icon="PasteIcon"
         :disabled
         :tip="tooltip"

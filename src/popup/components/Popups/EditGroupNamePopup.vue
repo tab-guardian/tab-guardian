@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import { trans } from '@common/modules/utils'
+import { trans } from '@common/modules'
 import { usePopupStore } from '@/stores/popup'
 import { useGroupStore } from '@/stores/group'
 import { showToast } from '@common/modules/toast'
 import { isNameTooLong } from '@common/modules/validation/group'
+import { getDefaultGroupName } from '@common/modules/group'
 import Popup from '@/components/Popups/Popup.vue'
 import Button from '@common/components/Form/Button.vue'
 import ChevronRightIcon from '@common/components/Icons/ChevronRightIcon.vue'
 import NameInput from '@common/components/Form/NameInput.vue'
-import { getDefaultGroupName } from '@common/modules/utils/getDefaultGroupName'
 
 const popupStore = usePopupStore()
 const groupStore = useGroupStore()
@@ -22,12 +22,18 @@ async function saveName(): Promise<void> {
     const group = groupStore.selectedGroup
 
     if (!group) {
-        showToast(trans('error_no_group_selected'), 'error')
+        showToast({
+            text: trans('error_no_group_selected'),
+            type: 'error',
+        })
         return
     }
 
     if (tooLongName.value) {
-        showToast(trans('group_name_long'), 'error')
+        showToast({
+            text: trans('group_name_long'),
+            type: 'error',
+        })
         return
     }
 
@@ -39,9 +45,9 @@ async function saveName(): Promise<void> {
 
     group.name = name.value
 
-    await groupStore.saveGroup(group)
+    await groupStore.save(group)
 
-    showToast(trans('new_name_saved'))
+    showToast({ text: trans('new_name_saved') })
 }
 </script>
 

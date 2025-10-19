@@ -2,10 +2,10 @@
 import type { Group } from '@common/types'
 import { useGroupStore } from '@/stores/group'
 import { useTabsStore } from '@/stores/tabs'
-import { useGroupUnlock } from '@/assets/composables/useGroupUnlock'
+import { useGroupUnlock } from '@/composables/useGroupUnlock'
 import { usePopupStore } from '@/stores/popup'
 import { ref, onMounted, onUnmounted } from 'vue'
-import { trans } from '@common/modules/utils'
+import { trans } from '@common/modules'
 import MagnifyingGlassIcon from '@common/components/Icons/MagnifyingGlassIcon.vue'
 
 const groupStore = useGroupStore()
@@ -54,7 +54,7 @@ async function openFirstGroup(e: KeyboardEvent): Promise<void> {
         return
     }
 
-    popupStore.show('enterPassword', {
+    await popupStore.show('enterPassword', {
         decrypting: async pass => await unlockGroup(group, pass, true),
         text: trans('enter_pass_unlock_content'),
     })

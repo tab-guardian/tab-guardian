@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { PasswordBytes } from '@common/types'
-import { trans } from '@common/modules/utils'
+import { trans } from '@common/modules'
 import { ref, computed, onMounted } from 'vue'
 import {
     getPasswordsBytes,
@@ -39,7 +39,11 @@ async function clearCache(): Promise<void> {
 
     deleting.value = false
 
-    showToast(trans('cache_cleared_on', bytes.value.toString()), 'info', 5000)
+    showToast({
+        text: trans('cache_cleared_on', bytes.value.toString()),
+        type: 'info',
+        duration: 5000,
+    })
 
     await calculateBytes()
 }

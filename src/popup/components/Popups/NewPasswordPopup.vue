@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { trans } from '@common/modules/utils'
+import { trans } from '@common/modules'
 import { usePopupStore } from '@/stores/popup'
 import Popup from '@/components/Popups/Popup.vue'
 import Button from '@common/components/Form/Button.vue'
@@ -28,7 +28,7 @@ function hidePasswordPopup(): void {
 </script>
 
 <template>
-    <Popup @cancel="hidePasswordPopup" :content="trans('enter_pass')">
+    <Popup @cancel="hidePasswordPopup" :content="trans('enter_new_pass')">
         <form @submit.prevent="updatePassword" class="flex flex-col gap-3">
             <PasswordFields
                 v-model:pass="pass"

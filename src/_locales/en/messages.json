@@ -27,10 +27,6 @@
         "message": "Too many attempts. Next attempt in $n$ minutes",
         "placeholders": { "n": { "content": "$1" } }
     },
-    "bind_group_url": {
-        "message": "Bind this group to the ($n$) URL. This will hide the group from everywhere else except this URL. It adds an extra layer of security",
-        "placeholders": { "n": { "content": "$1" } }
-    },
     "url_must_be_less_than": {
         "message": "URL must be less than $n$ character",
         "placeholders": { "n": { "content": "$1" } }
@@ -82,6 +78,7 @@
     "no_groups_yet": { "message": "There are no groups yet" },
     "settings": { "message": "Settings" },
     "enter_pass": { "message": "Enter a password" },
+    "enter_new_pass": { "message": "Enter a new password" },
     "enter_pass_unlock_content": {
         "message": "Enter a password to unlock the content of this group"
     },
@@ -89,7 +86,7 @@
         "message": "Enter a password to unlock the content of the import file"
     },
     "wrong_pass": { "message": "Incorrect password" },
-    "cant_remember_pass": {
+    "enter_your_password": {
         "message": "Please, enter your group password to lock this group"
     },
     "pass_empty": { "message": "Password is empty" },
@@ -98,11 +95,14 @@
     "add_more_tabs": { "message": "Add more tabs" },
     "cut_tab": { "message": "Cut this tab" },
     "copy_tab": { "message": "Copy this tab" },
-    "paste_tabs_here": { "message": "Paste tabs here" },
+    "paste_tabs": { "message": "Paste tabs" },
     "tab_copied": { "message": "Tab has been copied" },
     "tab_cut": { "message": "Tab has been cut" },
     "delete_this_group": { "message": "Delete this group" },
-    "rename_this_group": { "message": "Rename this group" },
+    "group_is_now_private": {
+        "message": "This group is now private. Don't forget to lock it."
+    },
+    "rename": { "message": "Rename" },
     "additional_options": { "message": "Additional options" },
     "enter_group_name": { "message": "Enter a group name" },
     "group_name": { "message": "Group name" },
@@ -130,7 +130,7 @@
     },
     "group_created_with_tabs": { "message": "Group created with tabs" },
     "close_selected_tabs": { "message": "Close selected tabs" },
-    "bind_to_this_url": { "message": "Bind to this URL" },
+    "bind_to_url": { "message": "Bind to URL" },
     "private_groups_are_secure": {
         "message": "Private groups are secure and use encryption. Only users with the password can access them"
     },
@@ -142,7 +142,6 @@
     "change_icon": { "message": "Change Icon" },
     "choose_group_icon": { "message": "Choose a group icon" },
     "icon_is_set": { "message": "Icon has been set" },
-    "export_this_group": { "message": "Export this group" },
     "rebind_to_other_url": { "message": "Rebind to other URL" },
     "enter_new_url_bind_private_to_new_url": {
         "message": "Enter a new URL to bind your private group to this new URL. This group will be only visible in the list of groups only when you visit this specific URL. Do not forget to lock the group"
@@ -214,7 +213,7 @@
     "data_control": { "message": "Data Control" },
     "clear_cache": { "message": "Clear Cache" },
     "remember_pass_after_unlock": { "message": "Remember my password after unlock" },
-    "make_group_open": { "message": "Make group open" },
+    "make_open": { "message": "Make open" },
     "are_you_sure_to_make_group_open": {
         "message": "Are you sure you want to make this group open? It means that you don't need to enter a password to access this group"
     },
@@ -222,6 +221,14 @@
     "protect_export_using_pass": {
         "message": "Protect export with a password (recommended)"
     },
+    "bind_group_url": {
+        "message": "Bind this group to the URL. This will hide the group from everywhere else except the URL you provide. Only opening Tab Guardian on provided URL will show you the hidden group."
+    },
+    "cannot_bind_to_this_url": {
+        "message": "You cannot bind your private group to this URL."
+    },
+    "use_current_url": { "message": "Use current URL" },
+    "make_private": { "message": "Make private" },
     "remember_pass_after_unlock_desc": {
         "message": "If you disable this option, you will need to enter a password everytime when you want to lock any private group. Keeping this option enabled saves password in temporary and secure storage and allows you to lock groups back without entering your password"
     }

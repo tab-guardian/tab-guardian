@@ -1,5 +1,19 @@
 # Release Notes
 
+## v1.15.0 (2025-10-19)
+- ✨ Group icon on a group page is now clickable. It will open "Choose Icon" interface [#53](https://github.com/tab-guardian/tab-guardian/issues/53).
+- ✨ Private groups can now be bound to any URL that you provide for additional security [#65](https://github.com/tab-guardian/tab-guardian/issues/65).
+- ✨ Public groups can now be changed into private groups with a simple button click in group popup menu [#73](https://github.com/tab-guardian/tab-guardian/issues/73).
+- 🐛 Fixed issue where you couldn't use 👎️ and 👍️ emojis as your group icon.
+- 🐛 Fixed the font contrast on a lock/unlock group button.
+- 🐛 Fixed not working tooltip helper on the `Paste tabs here` button.
+- 🐛 When you make a private group open (public), cached password now will be deleted as well.
+- 🐛 Fixed bug where tabs would not open for private locked groups when you try to do it on the main screen with all the groups listed.
+- 🧑‍💻 The "Bound URL" can now be modified when you create a new private group.
+- 🧑‍💻 The `about:home` Firefox's page will be also closed when you restore tabs from a group.
+- 🧑‍💻 Refactoring of the codebase;
+- 🧑‍💻 Added a shield icon to private groups when you open them. It's on the left of the group name.
+
 ## v1.14.1 (2025-10-16)
 - 🐛 Fixed development environment. App wasn't working on Chrome-based browsers.
 - 🐛 Fixed incorrect implementation of popup functionality.

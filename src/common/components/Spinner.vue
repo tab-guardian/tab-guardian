@@ -1,6 +1,6 @@
 <template>
     <div class="text-center mt-5">
-        <div class="inline-flex content-center items-center h-14 w-14">
+        <div class="inline-flex content-center items-center size-14">
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="44"

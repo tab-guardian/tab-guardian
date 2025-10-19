@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import type { Group } from '@common/types'
 import { ref } from 'vue'
-import { trans } from '@common/modules/utils'
+import { trans } from '@common/modules'
 import { decryptExport } from '@common/modules/webCrypto'
-import { fromBase64 } from '@common/modules/utils'
+import { fromBase64 } from '@common/modules/base64'
 import { showToast } from '@common/modules/toast'
 import { getDecryptionError } from '@/errors'
 import { useAttemptsStore } from '@/stores/attempts'
@@ -15,7 +15,6 @@ import pako from 'pako'
 import Section from '@settings/components/Section.vue'
 import FileInput from '@common/components/Form/FileInput.vue'
 import Progress from '@common/components/Progress.vue'
-import { ConfirmData } from '@common/types/popup'
 
 const groupStore = useGroupStore()
 const attemptsStore = useAttemptsStore()
@@ -29,7 +28,7 @@ const groupPassword = ref<string | null>(null)
 
 async function importGroups(): Promise<void> {
     if (!file.value) {
-        showToast(trans('choose_file_import'), 'error')
+        showToast({ text: trans('choose_file_import'), type: 'error' })
         return
     }
 
@@ -44,13 +43,13 @@ async function importGroups(): Promise<void> {
             await processFileContent(e.target.result as string)
         } catch (err) {
             console.error(err)
-            showToast(trans('error_reading_file'), 'error')
+            showToast({ text: trans('error_reading_file'), type: 'error' })
         }
     }
 
     reader.onerror = e => {
         console.error('Error reading file:', e)
-        showToast(trans('error_reading_file'), 'error')
+        showToast({ text: trans('error_reading_file'), type: 'error' })
     }
 
     reader.readAsText(file.value)
@@ -66,7 +65,7 @@ async function decryptFile(encrypted: string, pass: string): Promise<boolean> {
         await processFileContent(decrypted)
         attemptsStore.unlock()
     } catch (err) {
-        showToast(getDecryptionError(err), 'error')
+        showToast({ text: getDecryptionError(err), type: 'error' })
         return false
     }
 
@@ -77,7 +76,7 @@ async function decryptFile(encrypted: string, pass: string): Promise<boolean> {
 
 async function processFileContent(rawData: string): Promise<void> {
     if (rawData.startsWith('algo(')) {
-        popupStore.show('enterPassword', {
+        await popupStore.show('enterPassword', {
             decrypting: pass => decryptFile(rawData, pass),
             text: trans('enter_pass_unlock_file'),
         })
@@ -112,21 +111,20 @@ async function processFileContent(rawData: string): Promise<void> {
         return
     }
 
-    const confirmData: ConfirmData = {
+    const resp = await popupStore.show('confirm', {
         text: trans('some_groups_already_exist_same_name'),
-    }
-
-    popupStore.show('confirm', confirmData, async answer => {
-        if (answer) {
-            await groupStore.addAndSaveGroups(groups, answer.isConfirmed)
-            showSuccessMessage(groups)
-        }
     })
+
+    if (resp) {
+        await groupStore.addAndSaveGroups(groups, resp.isConfirmed)
+        showSuccessMessage(groups)
+    }
 }
 
 function showSuccessMessage(groups: Group[]): void {
-    const msg = trans('groups_imported', groups.length.toString())
-    showToast(msg)
+    showToast({
+        text: trans('groups_imported', groups.length.toString()),
+    })
 }
 
 async function fileChosen(f: File, elem: HTMLInputElement): Promise<void> {

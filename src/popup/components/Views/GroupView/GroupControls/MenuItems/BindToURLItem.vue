@@ -1,21 +1,24 @@
 <script setup lang="ts">
+import type { Group } from '@common/types'
 import MenuItem from '@/components/MenuItem.vue'
 import LinkIcon from '@common/components/Icons/LinkIcon.vue'
-import { trans } from '@common/modules/utils'
+import { trans } from '@common/modules'
 import { usePopupStore } from '@/stores/popup'
+
+defineProps<{ group: Group }>()
 
 const popupStore = usePopupStore()
 
-function rebind(): void {
+async function rebind(): Promise<void> {
     popupStore.hide('groupMenuView', {})
-    popupStore.show('rebindGroup', {})
+    await popupStore.show('bindGroup', {})
 }
 </script>
 
 <template>
     <MenuItem
         @click="rebind"
-        :label="trans('rebind_to_other_url')"
+        :label="group.bindURL ? trans('rebind_to_other_url') : trans('bind_to_url')"
         :icon="LinkIcon"
     />
 </template>

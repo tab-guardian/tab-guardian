@@ -1,7 +1,7 @@
 import type { Group } from '@common/types'
 import { defineStore } from 'pinia'
 import { useGroupStore } from '@/stores/group'
-import { trans } from '@common/modules/utils'
+import { trans } from '@common/modules'
 import { useSettingsStore } from '@/stores/settings'
 import { showToast } from '@common/modules/toast'
 import { getCurrentLinks } from '@common/modules/tabs/getCurrentLinks'
@@ -37,7 +37,7 @@ export const useTabsStore = defineStore('tabs', () => {
             return false
         }
 
-        await groupStore.saveGroup(encrypted)
+        await groupStore.save(encrypted)
 
         return true
     }
@@ -57,7 +57,10 @@ export const useTabsStore = defineStore('tabs', () => {
         const links = await getCurrentLinks()
 
         if (!links.length) {
-            showToast(trans('no_tabs_to_save'), 'error')
+            showToast({
+                text: trans('no_tabs_to_save'),
+                type: 'error',
+            })
             return
         }
 
@@ -70,7 +73,7 @@ export const useTabsStore = defineStore('tabs', () => {
             await closeTabs(links.map(l => l.id))
         }
 
-        showToast(trans('tabs_now_saved'))
+        showToast({ text: trans('tabs_now_saved') })
     }
 
     return {

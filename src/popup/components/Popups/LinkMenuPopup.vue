@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import type { Group } from '@common/types'
 import { computed } from 'vue'
-import { trans } from '@common/modules/utils'
+import { trans } from '@common/modules'
 import { usePopupStore } from '@/stores/popup'
 import { useGroupStore } from '@/stores/group'
 import { showToast } from '@common/modules/toast'
 import { useAppStore } from '@/stores/app'
-import { limitString } from '@common/modules/utils'
+import { limitString } from '@common/modules'
 import Popup from '@/components/Popups/Popup.vue'
 import MenuItem from '@/components/MenuItem.vue'
 import ScissorsIcon from '@common/components/Icons/ScissorsIcon.vue'
@@ -21,7 +21,7 @@ const sharedData = computed(() => {
     const data = popupStore.getSharedData('linkMenuView')
 
     if (!data) {
-        showToast(trans('error_occurred'), 'error')
+        showToast({ text: trans('error_occurred'), type: 'error' })
         throw new Error('sharedData must not be nullable in LinkMenuPopup.vue')
     }
 
@@ -41,7 +41,7 @@ async function yankLink(action: 'copy' | 'cut', successMsg: string): Promise<voi
     }
 
     popupStore.hideAll()
-    showToast(successMsg)
+    showToast({ text: successMsg })
 }
 
 async function copyLink(): Promise<void> {

@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import type { ConfirmData } from '@common/types/popup'
 import { ref } from 'vue'
-import { trans } from '@common/modules/utils'
+import { trans } from '@common/modules'
 import { showToast } from '@common/modules/toast'
 import { useGroupStore } from '@/stores/group'
 import { usePopupStore } from '@/stores/popup'
@@ -19,22 +18,20 @@ async function promptToDeleteGroups(): Promise<void> {
         return
     }
 
-    const confirmData: ConfirmData = {
+    const resp = await popupStore.show('confirm', {
         text: trans('i_confirm_want_delete_groups'),
-    }
-
-    popupStore.show('confirm', confirmData, async answer => {
-        if (answer && answer.isConfirmed) {
-            await deleteGroups()
-        }
     })
+
+    if (resp && resp.isConfirmed) {
+        await deleteGroups()
+    }
 }
 
 async function deleteGroups(): Promise<void> {
     loading.value = true
 
     await groupStore.deleteAllGroups()
-    showToast(trans('all_groups_deleted'))
+    showToast({ text: trans('all_groups_deleted') })
 
     loading.value = false
 }
@@ -47,9 +44,9 @@ async function deleteGroups(): Promise<void> {
     >
         <Button
             @clicked="promptToDeleteGroups"
+            is="danger"
             :icon="TrashIcon"
             :loading
-            class-name="bg-red-600 dark:bg-red-400"
         >
             {{ trans('erase_all_groups') }}
         </Button>

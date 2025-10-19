@@ -1,5 +1,5 @@
-import { trans } from '@common/modules/utils'
-import { env } from '@common/env'
+import { trans } from '@common/modules'
+import { config } from '@common/config'
 
 export const GROUP_NAME_MAX_LENGTH = 45
 
@@ -14,10 +14,10 @@ export function passwordError(
         return trans('passwords_not_match')
     }
 
-    const tooShort = pass.length < env.MIN_PASS_LENGTH
+    const tooShort = pass.length < config.MIN_PASS_LENGTH
 
     if (tooShort) {
-        return trans('passwords_min_length', env.MIN_PASS_LENGTH.toString())
+        return trans('passwords_min_length', config.MIN_PASS_LENGTH.toString())
     }
 
     return ''

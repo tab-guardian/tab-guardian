@@ -2,7 +2,7 @@
 import type { Group } from '@common/types'
 import { onMounted, computed } from 'vue'
 import { usePopupStore } from '@/stores/popup'
-import { trans } from '@common/modules/utils'
+import { trans } from '@common/modules'
 import { useGroupStore } from '@/stores/group'
 import { useRouter } from 'vue-router'
 import { getIcons } from '@/modules/getIcons'
@@ -39,33 +39,27 @@ async function selectIcon(icon: string): Promise<void> {
 
     await groupStore.setIcon(group.value.id, icon)
 
-    showToast(trans('icon_is_set'))
+    showToast({ text: trans('icon_is_set') })
 
     await router.push({ name: 'group', params: { id: group.value.id.toString() } })
 }
 
-function openEmojiPopup(): void {
-    popupStore.show('chooseEmoji', {}, async data => {
-        if (!data || data.emo === '') {
-            return
-        }
+async function openEmojiPopup(): Promise<void> {
+    const resp = await popupStore.show('chooseEmoji', {})
+    const emo = resp?.emo
 
-        await selectIcon(data.emo)
-    })
+    if (emo) {
+        await selectIcon(emo)
+    }
 }
 
-function openImageIconPopup(): void {
-    popupStore.show('chooseImageIcon', {}, async data => {
-        if (!data) {
-            throw new Error("data must exist inside onClose hook in 'newPassword'")
-        }
+async function openImageIconPopup(): Promise<void> {
+    const resp = await popupStore.show('chooseImageIcon', {})
+    const url = resp?.url
 
-        if (data.url === '') {
-            return
-        }
-
-        await selectIcon(data.url)
-    })
+    if (url) {
+        await selectIcon(url)
+    }
 }
 </script>
 
@@ -88,7 +82,7 @@ function openImageIconPopup(): void {
                 @click="selectIcon(icon)"
                 :selected="group!.icon === icon"
             >
-                <img :src="icon" class="w-8 h-8" />
+                <img :src="icon" class="size-8" />
             </IconItem>
 
             <IconItem
@@ -97,7 +91,7 @@ function openImageIconPopup(): void {
                 @click="selectIcon(name)"
                 :selected="group!.icon === name"
             >
-                <component :is="icon" class="w-8 h-8" />
+                <component :is="icon" class="size-8" />
             </IconItem>
         </ul>
     </View>

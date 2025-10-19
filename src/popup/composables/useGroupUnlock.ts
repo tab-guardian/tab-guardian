@@ -1,5 +1,5 @@
 import type { Group } from '@common/types'
-import { trans } from '@common/modules/utils'
+import { trans } from '@common/modules'
 import { showToast } from '@common/modules/toast'
 import { savePasswordToStorage } from '@common/modules/storage/password'
 import { isWrongPassError, getDecryptionError } from '@/errors'
@@ -23,7 +23,7 @@ export function useGroupUnlock() {
     ): Promise<boolean> {
         try {
             const decryptedGroup = await cryptoStore.decryptGroup(group, password)
-            await groupStore.saveGroup(decryptedGroup)
+            await groupStore.save(decryptedGroup)
         } catch (err: any) {
             handleUnlockGroupError(err)
             return false
@@ -39,7 +39,7 @@ export function useGroupUnlock() {
             return true
         }
 
-        showToast(trans('group_unlocked'))
+        showToast({ text: trans('group_unlocked') })
 
         await router.push({ name: 'group', params: { id: group.id } })
 
@@ -48,11 +48,11 @@ export function useGroupUnlock() {
 
     function handleUnlockGroupError(err: any): void {
         if (!isWrongPassError(err)) {
-            showToast(getDecryptionError(err), 'error')
+            showToast({ text: getDecryptionError(err), type: 'error' })
             return
         }
 
-        showToast(getDecryptionError(err), 'error')
+        showToast({ text: getDecryptionError(err), type: 'error' })
     }
 
     return { unlockGroup }

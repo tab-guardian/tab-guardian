@@ -1,31 +1,50 @@
 <script setup lang="ts">
-import type { Group as GroupType } from '@common/types'
+import type { Group } from '@common/types'
 import { computed } from 'vue'
 import { getIcons } from '@/modules/getIcons'
-import { isEmoji } from '@common/modules/utils'
+import { isEmoji } from '@common/modules'
+import { config } from '@common/config'
+import ShieldCheckIcon from '@common/components/Icons/ShieldCheckIcon.vue'
+import ShieldExclamationIcon from '@common/components/Icons/ShieldExclamationIcon.vue'
 
-const { group } = defineProps<{ group: GroupType }>()
-
-const allowedIconStart = [
-    'http', // http and https images
-    'data:image', // base64 images
-    'chrome-extension', // images from chrome storage
-    'moz-extension', // images from chrome storage
-]
+const props = defineProps<{ group: Group }>()
 
 const showGroupIcon = computed<boolean>(() =>
-    allowedIconStart.some(prefix => group.icon && group.icon.startsWith(prefix)),
+    config.GROUP_ICON_START.some(prefix => {
+        return props.group.icon && props.group.icon.startsWith(prefix)
+    }),
 )
 </script>
 
 <template>
-    <div v-if="group.icon" class="w-6 h-6 flex items-center justify-center">
-        <img v-if="showGroupIcon" :src="group.icon" class="w-5 h-5" />
+    <div class="size-6 flex items-center justify-center">
+        <div v-if="group.isPrivate">
+            <ShieldCheckIcon
+                v-if="group.isEncrypted"
+                class="size-6 text-private"
+                :class="{ 'text-red-400': !group.algo }"
+            />
 
-        <span v-else-if="isEmoji(group.icon)">
+            <ShieldExclamationIcon v-else class="size-6 text-red-400" />
+        </div>
+
+        <img v-else-if="showGroupIcon" :src="group.icon" class="size-5" />
+
+        <span v-else-if="group.icon && isEmoji(group.icon)" class="text-lg mt-1">
             {{ group.icon }}
         </span>
 
-        <component v-else :is="getIcons()[group.icon]" class="w-5 h-5" />
+        <component
+            v-else-if="group.icon"
+            :is="getIcons(group.icon)"
+            class="size-5"
+        />
+
+        <div
+            v-else
+            class="flex items-center justify-center size-6 text-primary text-sm"
+        >
+            {{ group.links.length }}
+        </div>
     </div>
 </template>

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useSidebarStore } from '@/stores/sidebar'
-import { trans } from '@common/modules/utils'
+import { trans } from '@common/modules'
 import { openSettingsPage } from '@/modules/openSettingsPage'
 import { runtime } from '@common/modules/runtime'
 import { isRuntime } from '@common/modules/runtime/utils'
@@ -79,7 +79,7 @@ const links = [
                 >
                     <img
                         :src="runtime.getURL('images/icons/icon-32.png')"
-                        class="w-4 h-4"
+                        class="size-4"
                     />
 
                     {{ trans('ext_name') }} {{ __APP_VERSION__ }}

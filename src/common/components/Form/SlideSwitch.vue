@@ -22,7 +22,7 @@ watch(modelValue, () => {
     <label class="relative inline-flex items-center p-1">
         <input
             type="checkbox"
-            class="absolute left-1/2 -translate-x-1/2 w-full h-full peer appearance-none rounded-md"
+            class="absolute left-1/2 -translate-x-1/2 size-full peer appearance-none rounded-md"
             v-model="modelValue"
             :disabled="disabled"
         />
@@ -31,7 +31,7 @@ watch(modelValue, () => {
             :class="[
                 disabled ? 'opacity-50' : '',
                 'w-10 h-6 flex items-center flex-shrink-0 p-1 dark:bg-zinc-600',
-                'duration-300 ease-in-out peer-checked:bg-private after:w-4 after:h-4',
+                'duration-300 ease-in-out peer-checked:bg-private after:size-4',
                 'after:bg-white after:rounded-full after:shadow-sm after:duration-300',
                 'peer-checked:after:translate-x-4 border border-border bg-zinc-200 rounded-full',
             ]"
@@ -39,6 +39,7 @@ watch(modelValue, () => {
 
         <small class="text-sm text-font-gray ml-3">
             <slot />
+
             <span v-if="description" class="opacity-75 block text-xs">
                 {{ description }}
             </span>

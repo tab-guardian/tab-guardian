@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import { useGroupStore } from '@/stores/group'
-import { trans } from '@common/modules/utils'
+import { trans } from '@common/modules'
 import GroupItem from '@/components/Views/MainView/Groups/GroupItem.vue'
 import Message from '@common/components/Message.vue'
 import Spinner from '@common/components/Spinner.vue'

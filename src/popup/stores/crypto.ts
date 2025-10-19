@@ -7,8 +7,8 @@ import {
     createEncryptKey,
     createDecryptKey,
 } from '@common/modules/webCrypto'
-import { toBase64, fromBase64 } from '@common/modules/utils'
-import { env } from '@common/env'
+import { toBase64, fromBase64 } from '@common/modules/base64'
+import { config } from '@common/config'
 import CryptoJS from 'crypto-js'
 
 export const useCryptoStore = defineStore('crypto', () => {
@@ -16,7 +16,7 @@ export const useCryptoStore = defineStore('crypto', () => {
 
     async function encryptGroup(group: Group, pass: string): Promise<Group> {
         const encryptedLinks: Link[] = []
-        const algo = group.algo || env.CURR_ENCRYPT_ALGO
+        const algo = group.algo || config.CURR_ENCRYPT_ALGO
 
         progressStore.start(group.links.length)
 
