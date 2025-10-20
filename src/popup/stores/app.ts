@@ -37,7 +37,7 @@ export const useAppStore = defineStore('app', () => {
         const link = cloneDeep(linkBuffer.value.link)
         link.id = Date.now()
 
-        await groupStore.saveLinksTo(groupId, [link])
+        await groupStore.insertLinksInto(groupId, [link])
 
         if (linkBuffer.value.action === 'cut') {
             await groupStore.deleteLinkFrom(

@@ -97,7 +97,7 @@ async function handleSaveGroup(): Promise<void> {
 
     saving.value = true
 
-    await groupStore.saveLinksTo(group.id, selectedLinks.value)
+    await groupStore.insertLinksInto(group.id, selectedLinks.value)
     showToastMessage()
 
     if (closeAllTabs.value) {
@@ -134,7 +134,7 @@ async function createPrivateGroup(group: Group): Promise<Group | null> {
         return null
     }
 
-    const encryptedGroup = await groupStore.encrypt(group, pass, confirm)
+    const encryptedGroup = await groupStore.lock(group, pass, confirm)
 
     if (!encryptedGroup) {
         console.info(`Group ${group.id} wasn't encrypted`)

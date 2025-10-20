@@ -30,7 +30,7 @@ export const useTabsStore = defineStore('tabs', () => {
         }
 
         await restore(group)
-        const encrypted = await groupStore.encrypt(group, userPass || pass)
+        const encrypted = await groupStore.lock(group, userPass || pass)
 
         if (!encrypted) {
             console.error(`Group ${group.id} wasn't encrypted`)
@@ -66,7 +66,7 @@ export const useTabsStore = defineStore('tabs', () => {
 
         if (links.length > 0) {
             await groupStore.deleteAllLinks(group.id)
-            await groupStore.saveLinksTo(group.id, links)
+            await groupStore.insertLinksInto(group.id, links)
         }
 
         if (closeAllTabs) {

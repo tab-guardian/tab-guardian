@@ -65,7 +65,7 @@ async function promptEnterPassword(): Promise<void> {
 async function lockGroup(pass: string): Promise<void> {
     encrypting.value = true
 
-    const encrypted = await groupStore.encrypt(props.group, pass)
+    const encrypted = await groupStore.lock(props.group, pass)
 
     if (!encrypted) {
         console.info(`Group ${props.group.id} wasn't encrypted`)

@@ -74,7 +74,10 @@ export const useGroupStore = defineStore('group', () => {
 
         const storageGroups = await getGroupsFromStorage()
 
-        await displayGroups(storageGroups)
+        groups.value = await filterGroups(storageGroups)
+        groups.value.sort((a, b) => b.updatedAt - a.updatedAt)
+
+        loadingGroups.value = false
     }
 
     async function filterGroups(storageGroups: Group[]): Promise<Group[]> {
@@ -138,7 +141,7 @@ export const useGroupStore = defineStore('group', () => {
         return false
     }
 
-    async function encrypt(
+    async function lock(
         group: Group,
         pass: string,
         confirm?: string,
@@ -214,14 +217,15 @@ export const useGroupStore = defineStore('group', () => {
         }
     }
 
-    async function setIcon(groupId: number, icon: string): Promise<void> {
-        const group = getGroupById(groupId)
+    async function update(id: number, updates: Partial<Group>): Promise<void> {
+        const group = getGroupById(id)
 
         if (!group) {
+            groupNotFoundLog(id, 'update')
             return
         }
 
-        group.icon = icon
+        Object.assign(group, updates)
 
         await save(group)
     }
@@ -280,10 +284,11 @@ export const useGroupStore = defineStore('group', () => {
         await save(group)
     }
 
-    async function saveLinksTo(groupId: number, links: Link[]): Promise<void> {
-        const group = getGroupById(groupId)
+    async function insertLinksInto(id: number, links: Link[]): Promise<void> {
+        const group = getGroupById(id)
 
         if (!group) {
+            groupNotFoundLog(id, 'insertLinksInto')
             return
         }
 
@@ -298,18 +303,13 @@ export const useGroupStore = defineStore('group', () => {
         }
 
         await saveGroupToStorage(group)
-
-        const updatedGroups = groups.value.map(g => (g.id === group.id ? group : g))
-
-        await displayGroups(updatedGroups)
+        await loadGroupsFromStorage()
 
         await notificationStore.recalculateNotification()
     }
 
-    async function displayGroups(groupsToDisplay: Group[]): Promise<void> {
-        groups.value = await filterGroups(groupsToDisplay)
-        groups.value.sort((a, b) => b.updatedAt - a.updatedAt)
-        loadingGroups.value = false
+    function groupNotFoundLog(id: number, operation: string): void {
+        console.info(`Group "${id}" not found for "${operation}" operation`)
     }
 
     return {
@@ -317,16 +317,16 @@ export const useGroupStore = defineStore('group', () => {
         selectedGroup,
         loadingGroups,
         save,
+        update,
         deleteGroup,
         deleteLinkFrom,
-        saveLinksTo,
-        encrypt,
+        insertLinksInto,
+        lock,
         getGroupById,
         deleteAllLinks,
         deleteAllGroups,
         incrementOpenedTimes,
         loadGroupsFromStorage,
-        setIcon,
         updatePassword,
         addAndSaveGroups,
     }
