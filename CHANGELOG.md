@@ -2,9 +2,10 @@
 
 ## v1.16.0 (2025-10-20)
 - 🧑‍💻 Improved performance for the main (home) page with loading groups.
-- 🧑‍💻 Improved "Add tabs" and "Create" buttons visibility [#84](https://github.com/tab-guardian/tab-guardian/issues/84)
-- 🧑‍💻 Added showing small pin icon on the tab icon in a group if the tab is pinned [#83](https://github.com/tab-guardian/tab-guardian/issues/83)
-- 🧑‍💻 Improve styles for tab icons in a group
+- 🧑‍💻 Improved "Add tabs" and "Create" buttons visibility [#84](https://github.com/tab-guardian/tab-guardian/issues/84).
+- 🧑‍💻 Added showing small pin icon on the tab icon in a group if the tab is pinned [#83](https://github.com/tab-guardian/tab-guardian/issues/83).
+- 🧑‍💻 Improve styles for tab icons in a group.
+- 🧑‍💻 Added 1 more "Pin" icon to choose for a group.
 
 ## v1.15.0 (2025-10-19)
 - ✨ Group icon on a group page is now clickable. It will open "Choose Icon" interface [#53](https://github.com/tab-guardian/tab-guardian/issues/53).

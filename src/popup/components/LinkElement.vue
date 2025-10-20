@@ -44,7 +44,7 @@ const classes = computed(() => {
                 <PinIcon
                     v-if="link.isPinned"
                     :class="[
-                        'size-4 absolute -top-1.5 -right-2 bg-white rounded-full',
+                        'size-4 absolute -top-1.5 -right-2 bg-page rounded-full',
                         'p-[1px] border border-border',
                     ]"
                 />
