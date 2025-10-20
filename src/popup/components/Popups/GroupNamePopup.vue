@@ -55,7 +55,7 @@ function submitName(): void {
 
 <template>
     <Popup
-        @cancel="popupStore.hide('newGroupName', {})"
+        @cancel="popupStore.hide('groupName', {})"
         :content="trans('enter_group_name')"
     >
         <form @submit.prevent="submitName" class="flex flex-col gap-3">

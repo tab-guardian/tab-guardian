@@ -17,7 +17,6 @@ const defaultPopups: Popups = {
     bindGroup: cloneDeep(defaultEmptyPopup),
     enterPassword: cloneDeep(defaultEmptyPopup),
     linkMenuView: cloneDeep(defaultEmptyPopup),
-    newGroupName: cloneDeep(defaultEmptyPopup),
     editGroupName: cloneDeep(defaultEmptyPopup),
     newPassword: cloneDeep(defaultEmptyPopup),
     chooseEmoji: cloneDeep(defaultEmptyPopup),

@@ -14,7 +14,7 @@ const newGroupStore = useNewGroupStore()
 
 async function askForGroupName(isPrivate: boolean) {
     newGroupStore.choices.isPrivate = isPrivate
-    await popupStore.show('newGroupName', {})
+    await popupStore.show('groupName', {})
 }
 </script>
 

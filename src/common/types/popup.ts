@@ -22,6 +22,5 @@ export type Popups = {
     newPassword: PopupItem<{}, { newPass: string }>
     enterPassword: PopupItem<EnterPasswordData>
     linkMenuView: PopupItem<{ link: Link }>
-    newGroupName: PopupItem
     editGroupName: PopupItem
 }

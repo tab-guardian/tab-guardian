@@ -6,7 +6,7 @@ import { useAttemptsStore } from '@/stores/attempts'
 import Navbar from '@/components/Navbar/Navbar.vue'
 import AppearTransition from '@common/components/Transitions/AppearTransition.vue'
 import Popups from '@/components/Popups/Popups.vue'
-import NewGroupNamePopup from '@/components/Popups/NewGroupNamePopup.vue'
+import GroupNamePopup from '@/components/Popups/GroupNamePopup.vue'
 import ConfirmPopup from '@/components/Popups/ConfirmPopup.vue'
 import NewPasswordPopup from '@/components/Popups/NewPasswordPopup.vue'
 import EnterPasswordPopup from '@/components/Popups/EnterPasswordPopup.vue'
@@ -45,7 +45,7 @@ function handleDarkThem(): void {
     <Popups
         :popups="[
             { comp: GroupMenuPopup, name: 'groupMenuView' },
-            { comp: NewGroupNamePopup, name: 'newGroupName' },
+            { comp: GroupNamePopup, name: 'groupName' },
             { comp: NewPasswordPopup, name: 'newPassword' },
             { comp: EnterPasswordPopup, name: 'enterPassword' },
             { comp: BindGroupPopup, name: 'bindGroup' },
