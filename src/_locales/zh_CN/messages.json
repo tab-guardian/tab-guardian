@@ -86,7 +86,6 @@
     "paste_tabs": { "message": "粘贴标签页" },
     "tab_copied": { "message": "标签已复制" },
     "tab_cut": { "message": "标签已被剪切" },
-    "delete_this_group": { "message": "删除该组" },
     "group_is_now_private": { "message": "该群组现已设为私密。请记得将其锁定。" },
     "rename": { "message": "重命名" },
     "additional_options": { "message": "附加选项" },
@@ -144,7 +143,6 @@
         "message": "删除所有群组后，您将无法以任何方式恢复它们。此操作还将移除您所有的私人群组。"
     },
     "i_confirm_want_delete_groups": { "message": "我确认要删除所有组" },
-    "confirm_want_delete_groups": { "message": "确认要删除所有组" },
     "confirm": { "message": "确认" },
     "all_groups_deleted": { "message": "所有组已被删除" },
     "show_private_groups_incognito": {
@@ -197,6 +195,8 @@
     },
     "use_current_url": { "message": "使用当前网址" },
     "make_private": { "message": "设为私密" },
+    "delete_url_lock": { "message": "解除私人群组的URL锁定" },
+    "delete": { "message": "删除" },
     "remember_pass_after_unlock_desc": {
         "message": "若禁用此选项，每次锁定私人群组时均需输入密码。保持此选项启用状态，系统会将密码存储在临时且安全的存储空间中，您无需再次输入密码即可重新锁定群组"
     }

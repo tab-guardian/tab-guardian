@@ -98,7 +98,6 @@
     "paste_tabs": { "message": "Paste tabs" },
     "tab_copied": { "message": "Tab has been copied" },
     "tab_cut": { "message": "Tab has been cut" },
-    "delete_this_group": { "message": "Delete this group" },
     "group_is_now_private": {
         "message": "This group is now private. Don't forget to lock it."
     },
@@ -166,9 +165,6 @@
     "i_confirm_want_delete_groups": {
         "message": "I confirm that I want to delete all groups"
     },
-    "confirm_want_delete_groups": {
-        "message": "Confirm that you want to delete all groups"
-    },
     "confirm": { "message": "Confirm" },
     "all_groups_deleted": { "message": "All the groups have been deleted" },
     "show_private_groups_incognito": {
@@ -229,6 +225,9 @@
     },
     "use_current_url": { "message": "Use current URL" },
     "make_private": { "message": "Make private" },
+    "delete_url_lock": { "message": "Delete URL lock from a private group" },
+    "delete": { "message": "Delete" },
+    "rebind_to_other_url": { "message": "Rebind to other URL" },
     "remember_pass_after_unlock_desc": {
         "message": "If you disable this option, you will need to enter a password everytime when you want to lock any private group. Keeping this option enabled saves password in temporary and secure storage and allows you to lock groups back without entering your password"
     }
