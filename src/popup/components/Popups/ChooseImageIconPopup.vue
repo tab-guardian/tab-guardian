@@ -44,7 +44,7 @@ async function chooseImageIcon(): Promise<void> {
 }
 
 function closeImageIconPopup(): void {
-    popupStore.hide('chooseImageIcon', { url: url.value })
+    popupStore.hide('chooseImageIcon', { url: null })
 }
 </script>
 
@@ -74,7 +74,7 @@ function closeImageIconPopup(): void {
                 {{ trans('cancel') }}
             </Button>
 
-            <Button @click="chooseImageIcon" :disabled="preventSubmit">
+            <Button is="success" @click="chooseImageIcon" :disabled="preventSubmit">
                 <CheckIcon width="20" height="20" />
                 {{ trans('select') }}
             </Button>
