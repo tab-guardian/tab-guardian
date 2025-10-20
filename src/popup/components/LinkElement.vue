@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { Link } from '@common/types'
 import { computed } from 'vue'
+import PinIcon from '@common/components/Icons/PinIcon.vue'
 
 const props = defineProps<{
     link: Link
@@ -30,7 +31,24 @@ const classes = computed(() => {
 <template>
     <div :class="classes">
         <div class="flex gap-3 items-center">
-            <img :src="link.favIconUrl" alt="icon" class="size-7 rounded-md" />
+            <div class="relative">
+                <img
+                    :src="link.favIconUrl"
+                    alt="icon"
+                    :class="[
+                        'size-8 rounded-md border border-border bg-secondary',
+                        'text-xs flex items-center justify-center p-1',
+                    ]"
+                />
+
+                <PinIcon
+                    v-if="link.isPinned"
+                    :class="[
+                        'size-4 absolute -top-1.5 -right-2 bg-white rounded-full',
+                        'p-[1px] border border-border',
+                    ]"
+                />
+            </div>
 
             <div class="flex flex-col w-72 min-w-0">
                 <h2
