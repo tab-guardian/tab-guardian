@@ -34,7 +34,7 @@ function submitName(): void {
     }
 
     if (newGroupStore.isPasswordEmpty()) {
-        showToast({ text: trans('password_empty'), type: 'error' })
+        showToast({ text: trans('pass_empty'), type: 'error' })
         return
     }
 
@@ -45,7 +45,7 @@ function submitName(): void {
 
     newGroupStore.choices.wantsSelectAllLinks = true
 
-    popupStore.hideAll()
+    popupStore.hide('groupName', {})
 
     const operation: SelectTabsOperation = 'creating'
 
@@ -64,17 +64,15 @@ function submitName(): void {
                 @loaded="inp => inp.focus()"
             />
 
-            <PasswordFields
-                v-if="newGroupStore.choices.isPrivate"
-                v-model:pass="newGroupStore.choices.password"
-                v-model:confirm="newGroupStore.choices.confirmPassword"
-                @has-error="hasErr => (errors.password = hasErr)"
-            />
+            <template v-if="newGroupStore.choices.isPrivate">
+                <PasswordFields
+                    v-model:pass="newGroupStore.choices.password"
+                    v-model:confirm="newGroupStore.choices.confirmPassword"
+                    @has-error="hasErr => (errors.password = hasErr)"
+                />
 
-            <BindToURL
-                v-if="newGroupStore.choices.isPrivate"
-                @url-error="hasErr => (errors.url = hasErr)"
-            />
+                <BindToURL @url-error="hasErr => (errors.url = hasErr)" />
+            </template>
 
             <div class="flex justify-end">
                 <Button
