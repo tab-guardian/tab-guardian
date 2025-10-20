@@ -44,7 +44,14 @@ export const useTabsStore = defineStore('tabs', () => {
 
     async function restore(group: Group): Promise<void> {
         group.updatedAt = Date.now()
-        await groupStore.incrementOpenedTimes(group)
+
+        let openedTimes = 1
+
+        if (group.openedTimes) {
+            openedTimes = group.openedTimes + 1
+        }
+
+        await groupStore.update(group.id, { openedTimes })
         await restoreTabs(group.links)
     }
 
@@ -65,7 +72,7 @@ export const useTabsStore = defineStore('tabs', () => {
         }
 
         if (links.length > 0) {
-            await groupStore.deleteAllLinks(group.id)
+            await groupStore.update(group.id, { links: [] })
             await groupStore.insertLinksInto(group.id, links)
         }
 

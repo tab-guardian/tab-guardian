@@ -20,7 +20,7 @@ const popupStore = usePopupStore()
 onMounted(() => popupStore.hideAll())
 
 const DATE_FORMAT = 'DD.MM.YYYY HH:mm'
-const group = computed<Group | null>(() => groupStore.getGroupById(groupId))
+const group = computed<Group | null>(() => groupStore.getGroup(groupId))
 </script>
 
 <template>

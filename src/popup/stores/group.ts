@@ -9,7 +9,6 @@ import { useCryptoStore } from '@/stores/crypto'
 import { useProgressStore } from '@/stores/progress'
 import { showToast } from '@common/modules/toast'
 import { getHashedCurrentURL } from '@common/modules/url'
-import { savePasswordToStorage } from '@common/modules/storage/password'
 import {
     deleteAllGroupsFromStorage,
     deleteGroupFromStorage,
@@ -29,44 +28,23 @@ export const useGroupStore = defineStore('group', () => {
     const loadingGroups = ref<boolean>(false)
     const selectedGroup = ref<Group | null>(null)
 
-    function getGroupById(groupId: number | undefined): Group | null {
-        if (!groupId) {
-            console.warn('No group id provided when trying to get group by id')
-            return null
-        }
+    /**
+     * @param {string|number} id Group ID or name
+     */
+    function getGroup(id: number | string): Group | null {
+        const group = groups.value.find(group => {
+            if (typeof id === 'string') {
+                return group.name === id
+            }
 
-        const group = groups.value.find(group => group.id === groupId)
-
-        if (!group) {
-            console.warn(`Group with id ${groupId} not found`)
-            return null
-        }
-
-        return group
-    }
-
-    function getGroupByName(name: string, silent: boolean = false): Group | null {
-        const group = groups.value.find(group => group.name === name)
-
-        if (!group && !silent) {
-            console.error(`Group with name ${name} not found`)
-        }
+            return group.id === id
+        })
 
         if (!group) {
             return null
         }
 
         return group
-    }
-
-    async function updatePassword(pass: string): Promise<void> {
-        if (!selectedGroup.value) {
-            console.error('No group selected to update password')
-            showToast({ text: trans('error_occurred'), type: 'error' })
-            return
-        }
-
-        await savePasswordToStorage(selectedGroup.value.id, pass)
     }
 
     async function loadGroupsFromStorage(): Promise<void> {
@@ -80,24 +58,6 @@ export const useGroupStore = defineStore('group', () => {
         loadingGroups.value = false
     }
 
-    async function filterGroups(storageGroups: Group[]): Promise<Group[]> {
-        const result: Group[] = []
-
-        for (const group of storageGroups) {
-            const hide = await shouldHideGroup(group)
-
-            if (hide) {
-                group.hide = true
-            } else {
-                delete group.hide
-            }
-
-            result.push(group)
-        }
-
-        return result
-    }
-
     async function isIncognito(): Promise<boolean> {
         if (isIncognitoCache !== null) {
             return isIncognitoCache
@@ -108,34 +68,6 @@ export const useGroupStore = defineStore('group', () => {
         if (currWindow) {
             isIncognitoCache = currWindow.incognito
             return currWindow.incognito
-        }
-
-        return false
-    }
-
-    async function shouldHideGroup(group: Group): Promise<boolean> {
-        const isPrivate = await isIncognito()
-
-        if (group.bindURL) {
-            const currHashedURL = await getHashedCurrentURL()
-
-            if (currHashedURL !== group.bindURL) {
-                return true
-            }
-        }
-
-        const showOnlyPrivateGroupsInIncognito =
-            settingsStore.settings.showOnlyPrivateGroupsInIncognito
-
-        if (!group.isPrivate && isPrivate && showOnlyPrivateGroupsInIncognito) {
-            return true
-        }
-
-        const showPrivateGroupsOnlyInIncognito =
-            settingsStore.settings.showPrivateGroupsOnlyInIncognito
-
-        if (group.isPrivate && !isPrivate && showPrivateGroupsOnlyInIncognito) {
-            return true
         }
 
         return false
@@ -210,15 +142,15 @@ export const useGroupStore = defineStore('group', () => {
     }
 
     async function replaceGroup(group: Group): Promise<void> {
-        const existingGroup = getGroupByName(group.name, true)
+        const existing = getGroup(group.name)
 
-        if (existingGroup) {
-            await deleteGroup(existingGroup.id)
+        if (existing) {
+            await deleteGroup(existing.id)
         }
     }
 
     async function update(id: number, updates: Partial<Group>): Promise<void> {
-        const group = getGroupById(id)
+        const group = getGroup(id)
 
         if (!group) {
             groupNotFoundLog(id, 'update')
@@ -230,9 +162,9 @@ export const useGroupStore = defineStore('group', () => {
         await save(group)
     }
 
-    async function deleteGroup(groupId: number): Promise<void> {
-        groups.value = groups.value.filter(g => g.id !== groupId)
-        await deleteGroupFromStorage(groupId)
+    async function deleteGroup(id: number): Promise<void> {
+        groups.value = groups.value.filter(g => g.id !== id)
+        await deleteGroupFromStorage(id)
         await notificationStore.recalculateNotification()
     }
 
@@ -242,40 +174,11 @@ export const useGroupStore = defineStore('group', () => {
         await notificationStore.recalculateNotification()
     }
 
-    async function deleteAllLinks(groupId: number): Promise<void> {
-        const group = getGroupById(groupId)
+    async function deleteLinkFrom(id: number, linkId: number): Promise<void> {
+        const group = getGroup(id)
 
         if (!group) {
-            return
-        }
-
-        group.links = []
-
-        await save(group)
-    }
-
-    async function incrementOpenedTimes(group: Group): Promise<void> {
-        if (group.openedTimes) {
-            group.openedTimes++
-        } else {
-            group.openedTimes = 1
-        }
-
-        groups.value = groups.value.map(g => {
-            if (g.id === group.id) {
-                g.openedTimes = group.openedTimes
-            }
-
-            return g
-        })
-
-        await save(group)
-    }
-
-    async function deleteLinkFrom(groupId: number, linkId: number): Promise<void> {
-        const group = getGroupById(groupId)
-
-        if (!group) {
+            groupNotFoundLog(id, 'deleteLinkFrom')
             return
         }
 
@@ -285,7 +188,7 @@ export const useGroupStore = defineStore('group', () => {
     }
 
     async function insertLinksInto(id: number, links: Link[]): Promise<void> {
-        const group = getGroupById(id)
+        const group = getGroup(id)
 
         if (!group) {
             groupNotFoundLog(id, 'insertLinksInto')
@@ -308,6 +211,52 @@ export const useGroupStore = defineStore('group', () => {
         await notificationStore.recalculateNotification()
     }
 
+    async function shouldHideGroup(group: Group): Promise<boolean> {
+        const isPrivate = await isIncognito()
+
+        if (group.bindURL) {
+            const currHashedURL = await getHashedCurrentURL()
+
+            if (currHashedURL !== group.bindURL) {
+                return true
+            }
+        }
+
+        const showOnlyPrivateGroupsInIncognito =
+            settingsStore.settings.showOnlyPrivateGroupsInIncognito
+
+        if (!group.isPrivate && isPrivate && showOnlyPrivateGroupsInIncognito) {
+            return true
+        }
+
+        const showPrivateGroupsOnlyInIncognito =
+            settingsStore.settings.showPrivateGroupsOnlyInIncognito
+
+        if (group.isPrivate && !isPrivate && showPrivateGroupsOnlyInIncognito) {
+            return true
+        }
+
+        return false
+    }
+
+    async function filterGroups(storageGroups: Group[]): Promise<Group[]> {
+        const result: Group[] = []
+
+        for (const group of storageGroups) {
+            const hide = await shouldHideGroup(group)
+
+            if (hide) {
+                group.hide = true
+            } else {
+                delete group.hide
+            }
+
+            result.push(group)
+        }
+
+        return result
+    }
+
     function groupNotFoundLog(id: number, operation: string): void {
         console.info(`Group "${id}" not found for "${operation}" operation`)
     }
@@ -322,12 +271,9 @@ export const useGroupStore = defineStore('group', () => {
         deleteLinkFrom,
         insertLinksInto,
         lock,
-        getGroupById,
-        deleteAllLinks,
+        getGroup,
         deleteAllGroups,
-        incrementOpenedTimes,
         loadGroupsFromStorage,
-        updatePassword,
         addAndSaveGroups,
     }
 })

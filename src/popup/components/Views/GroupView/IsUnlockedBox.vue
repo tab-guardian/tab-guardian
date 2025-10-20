@@ -7,6 +7,7 @@ import { usePopupStore } from '@/stores/popup'
 import { useSettingsStore } from '@/stores/settings'
 import { showToast } from '@common/modules/toast'
 import {
+    savePasswordToStorage,
     getPasswordFromStorage,
     deletePasswordFromStorage,
 } from '@common/modules/storage/password'
@@ -58,7 +59,7 @@ async function promptEnterPassword(): Promise<void> {
         return
     }
 
-    await groupStore.updatePassword(newPass)
+    await savePasswordToStorage(props.group.id, newPass)
     await lockGroup(newPass)
 }
 

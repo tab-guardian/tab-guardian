@@ -18,7 +18,7 @@ const router = useRouter()
 const groupId = Number(router.currentRoute.value.params.id)
 
 const popupStore = usePopupStore()
-const group = computed<Group | null>(() => groupStore.getGroupById(groupId))
+const group = computed<Group | null>(() => groupStore.getGroup(groupId))
 
 const favIcons = computed<string[]>(() => {
     if (!group.value) {
