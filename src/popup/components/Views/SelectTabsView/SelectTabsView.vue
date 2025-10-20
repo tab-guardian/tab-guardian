@@ -211,7 +211,12 @@ function toggleSelect(link: Link): void {
             </VueDraggableNext>
         </div>
 
-        <div class="flex items-center justify-between gap-3 mt-3">
+        <div
+            :class="[
+                'flex items-center justify-between gap-3 pt-3',
+                'sticky bottom-0 inset-x-0 bg-page',
+            ]"
+        >
             <div class="text-right">
                 <SlideSwitch v-model="closeAllTabs">
                     {{ trans('close_selected_tabs') }}
