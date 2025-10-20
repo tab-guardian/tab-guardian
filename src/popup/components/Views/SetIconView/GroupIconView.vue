@@ -9,7 +9,7 @@ import { getIcons } from '@/modules/getIcons'
 import { showToast } from '@common/modules/toast'
 import IconItem from '@/components/Views/SetIconView/IconItem.vue'
 import View from '@/components/Views/View.vue'
-import Btn from '@/components/Views/SetIconView/Btn.vue'
+import Button from '@common/components/Form/Button.vue'
 import FaceSmileIcon from '@common/components/Icons/FaceSmileIcon.vue'
 import PhotoIcon from '@common/components/Icons/PhotoIcon.vue'
 
@@ -65,14 +65,14 @@ async function openImageIconPopup(): Promise<void> {
 
 <template>
     <View :title="trans('choose_group_icon')">
-        <div class="flex gap-2 mt-2">
-            <Btn @click="openImageIconPopup">
+        <div class="flex justify-center gap-2 mt-2">
+            <Button is="outline" @click="openImageIconPopup">
                 <PhotoIcon class="size-5" /> {{ trans('select_image') }}
-            </Btn>
+            </Button>
 
-            <Btn @click="openEmojiPopup">
+            <Button is="outline" @click="openEmojiPopup">
                 <FaceSmileIcon class="size-5" /> {{ trans('select_emoji') }}
-            </Btn>
+            </Button>
         </div>
 
         <ul class="grid grid-cols-6 gap-2 mt-3">
