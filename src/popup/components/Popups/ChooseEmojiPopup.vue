@@ -46,11 +46,11 @@ function submit(): void {
         return
     }
 
-    hideEmojiPopup()
+    popupStore.hide('chooseEmoji', { emo: emoji.value })
 }
 
 function hideEmojiPopup(): void {
-    popupStore.hide('chooseEmoji', { emo: emoji.value })
+    popupStore.hide('chooseEmoji', { emo: null })
 }
 </script>
 

@@ -19,11 +19,11 @@ function updatePassword(): void {
         return
     }
 
-    hidePasswordPopup()
+    popupStore.hide('newPassword', { newPass: pass.value })
 }
 
 function hidePasswordPopup(): void {
-    popupStore.hide('newPassword', { newPass: pass.value })
+    popupStore.hide('newPassword', { newPass: null })
 }
 </script>
 

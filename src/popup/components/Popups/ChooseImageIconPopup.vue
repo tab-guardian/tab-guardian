@@ -40,10 +40,10 @@ async function chooseImageIcon(): Promise<void> {
         return
     }
 
-    closeImageIconPopup()
+    hideImageIconPopup()
 }
 
-function closeImageIconPopup(): void {
+function hideImageIconPopup(): void {
     popupStore.hide('chooseImageIcon', { url: null })
 }
 </script>
@@ -51,7 +51,7 @@ function closeImageIconPopup(): void {
 <template>
     <Popup
         v-if="groupStore.selectedGroup"
-        @cancel="closeImageIconPopup"
+        @cancel="hideImageIconPopup"
         :content="trans('enter_image_url')"
         :description="trans('type_any_image_url_to_set_it')"
     >
@@ -70,7 +70,7 @@ function closeImageIconPopup(): void {
         />
 
         <template #buttons>
-            <Button @click="closeImageIconPopup" is="outline">
+            <Button @click="hideImageIconPopup" is="outline">
                 {{ trans('cancel') }}
             </Button>
 
