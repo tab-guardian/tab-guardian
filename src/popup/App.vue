@@ -9,7 +9,7 @@ import Popups from '@/components/Popups/Popups.vue'
 import GroupNamePopup from '@/components/Popups/GroupNamePopup.vue'
 import ConfirmPopup from '@/components/Popups/ConfirmPopup.vue'
 import NewPasswordPopup from '@/components/Popups/NewPasswordPopup.vue'
-import EnterPasswordPopup from '@/components/Popups/EnterPasswordPopup.vue'
+import PasswordPopup from '@/components/Popups/PasswordPopup.vue'
 import BindGroupPopup from '@/components/Popups/BindGroupPopup.vue'
 import ChooseEmojiPopup from '@/components/Popups/ChooseEmojiPopup.vue'
 import ChooseImageIconPopup from '@/components/Popups/ChooseImageIconPopup.vue'
@@ -47,7 +47,7 @@ function handleDarkThem(): void {
             { comp: GroupMenuPopup, name: 'groupMenuView' },
             { comp: GroupNamePopup, name: 'groupName' },
             { comp: NewPasswordPopup, name: 'newPassword' },
-            { comp: EnterPasswordPopup, name: 'enterPassword' },
+            { comp: PasswordPopup, name: 'password' },
             { comp: BindGroupPopup, name: 'bindGroup' },
             { comp: ChooseEmojiPopup, name: 'chooseEmoji' },
             { comp: ChooseImageIconPopup, name: 'chooseImageIcon' },

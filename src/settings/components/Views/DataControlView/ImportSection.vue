@@ -76,7 +76,7 @@ async function decryptFile(encrypted: string, pass: string): Promise<boolean> {
 
 async function processFileContent(rawData: string): Promise<void> {
     if (rawData.startsWith('algo(')) {
-        await popupStore.show('enterPassword', {
+        await popupStore.show('password', {
             decrypting: pass => decryptFile(rawData, pass),
             text: trans('enter_pass_unlock_file'),
         })

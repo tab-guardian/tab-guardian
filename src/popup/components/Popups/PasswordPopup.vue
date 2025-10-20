@@ -16,11 +16,11 @@ const pass = ref<string>('')
 const processing = ref<boolean>(false)
 
 const sharedData = computed(() => {
-    const data = popupStore.getSharedData('enterPassword')
+    const data = popupStore.getSharedData('password')
 
     if (!data) {
         showToast({ text: trans('error_occurred'), type: 'error' })
-        throw new Error('sharedData must not be nullable in EnterPasswordPopup.vue')
+        throw new Error('sharedData must not be nullable in PasswordPopup.vue')
     }
 
     return data
@@ -50,7 +50,7 @@ async function submitPassword(): Promise<void> {
 
     if (success) {
         await attemptsStore.unlock()
-        popupStore.hide('enterPassword', {})
+        popupStore.hide('password', {})
     } else if (attemptsStore.isLocked) {
         showToast({
             text: attemptsStore.isLockedErrorMessage(),
@@ -66,7 +66,7 @@ async function submitPassword(): Promise<void> {
 
 <template>
     <Popup
-        @cancel="popupStore.hide('enterPassword', {})"
+        @cancel="popupStore.hide('password', {})"
         :content="trans('enter_pass')"
     >
         <p class="flex items-center gap-3 mb-2 text-sm leading-4">

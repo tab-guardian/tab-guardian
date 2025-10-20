@@ -54,7 +54,7 @@ async function openFirstGroup(e: KeyboardEvent): Promise<void> {
         return
     }
 
-    await popupStore.show('enterPassword', {
+    await popupStore.show('password', {
         decrypting: async pass => await unlockGroup(group, pass, true),
         text: trans('enter_pass_unlock_content'),
     })

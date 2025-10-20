@@ -7,7 +7,7 @@ type PopupItem<T = any, D = any> = {
     onClose: ((data: D) => void) | null
 }
 
-type EnterPasswordData = {
+type PasswordData = {
     decrypting: (password: string) => Promise<boolean>
     text: string
 }
@@ -20,7 +20,7 @@ export type Popups = {
     chooseEmoji: PopupItem<{}, { emo: string }>
     chooseImageIcon: PopupItem<{}, { url: string }>
     newPassword: PopupItem<{}, { newPass: string }>
-    enterPassword: PopupItem<EnterPasswordData>
+    password: PopupItem<PasswordData>
     linkMenuView: PopupItem<{ link: Link }>
     editGroupName: PopupItem
 }
