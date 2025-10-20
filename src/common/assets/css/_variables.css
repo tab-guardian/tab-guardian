@@ -10,8 +10,10 @@
     --tg-color-font-gray: theme('colors.gray.500');
     --tg-color-primary: theme('colors.cyan.700');
     --tg-color-primary-hover: theme('colors.cyan.800');
-    --tg-color-private: #377f7c;
-    --tg-color-private-hover: #2d6e6b;
+    --tg-color-danger: #aa4848;
+    --tg-color-danger-hover: #aa4848;
+    --tg-color-success: #377f7c;
+    --tg-color-success-hover: #2d6e6b;
     --tg-color-secondary-scrollbar: #dcdcdc;
     --tg-color-secondary-scrollbar-thumb: #afafaf;
     --tg-color-safe: rgb(78 220 208 / 15%);
@@ -33,8 +35,10 @@
         --tg-color-font-gray: theme('colors.gray.400');
         --tg-color-primary: theme('colors.cyan.400');
         --tg-color-primary-hover: theme('colors.cyan.500');
-        --tg-color-private: theme('colors.emerald.400');
-        --tg-color-private-hover: theme('colors.emerald.500');
+        --tg-color-danger: #692525;
+        --tg-color-danger-hover: #591414;
+        --tg-color-success: theme('colors.emerald.400');
+        --tg-color-success-hover: theme('colors.emerald.500');
         --tg-color-secondary-scrollbar: #222;
         --tg-color-secondary-scrollbar-thumb: #555;
         --tg-color-safe: rgb(46 225 209 / 10%);

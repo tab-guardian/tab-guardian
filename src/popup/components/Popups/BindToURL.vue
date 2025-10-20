@@ -51,7 +51,7 @@ async function attachBindURL(checked: boolean): Promise<void> {
 </script>
 
 <template>
-    <div class="flex flex-col gap-3">
+    <div class="flex flex-col gap-3 mb-3">
         <div class="flex items-center">
             <SlideSwitch
                 :disabled="!currURL"

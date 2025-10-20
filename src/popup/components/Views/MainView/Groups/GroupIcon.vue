@@ -21,7 +21,7 @@ const showGroupIcon = computed<boolean>(() =>
         <div v-if="group.isPrivate">
             <ShieldCheckIcon
                 v-if="group.isEncrypted"
-                class="size-6 text-private"
+                class="size-6 text-success"
                 :class="{ 'text-red-400': !group.algo }"
             />
 

@@ -31,7 +31,7 @@ async function askForGroupName(isPrivate: boolean) {
         <NewGroupButton
             v-tippy="trans('private_groups_are_secure')"
             @click="askForGroupName(true)"
-            class="w-24 bg-private hover:bg-private-hover"
+            class="w-24 bg-success hover:bg-success-hover"
         >
             <ShieldCheckIcon class="size-8" />
         </NewGroupButton>

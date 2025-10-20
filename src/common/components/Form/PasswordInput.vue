@@ -30,7 +30,7 @@ const modelValue = defineModel()
         v-model="modelValue"
         :label
         :id
-        :withButton
+        :with-button="withButton"
         :loading
         :error
         :minlength

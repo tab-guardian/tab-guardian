@@ -22,7 +22,7 @@ defineProps<{
         >
             <input @change="emit('toggle')" type="checkbox" class="hidden" />
 
-            <div v-if="isSelected" class="size-3 bg-private rounded-full"></div>
+            <div v-if="isSelected" class="size-3 bg-success rounded-full"></div>
         </label>
     </LinkElement>
 </template>

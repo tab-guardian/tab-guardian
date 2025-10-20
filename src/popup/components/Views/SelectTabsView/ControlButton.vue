@@ -2,8 +2,8 @@
     <a
         href="javascript:"
         :class="[
-            'text-private text-sm border border-border px-2 py-1 flex-1',
-            'text-center transition-colors rounded-md hover:border-private',
+            'text-success text-sm border border-border px-2 py-1 flex-1',
+            'text-center transition-colors rounded-md hover:border-success',
         ]"
     >
         <slot />

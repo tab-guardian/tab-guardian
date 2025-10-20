@@ -64,24 +64,28 @@ function submitName(): void {
                 @loaded="inp => inp.focus()"
             />
 
-            <template v-if="newGroupStore.choices.isPrivate">
-                <PasswordFields
-                    v-model:pass="newGroupStore.choices.password"
-                    v-model:confirm="newGroupStore.choices.confirmPassword"
-                    @has-error="hasErr => (errors.password = hasErr)"
+            <PasswordFields
+                v-if="newGroupStore.choices.isPrivate"
+                v-model:pass="newGroupStore.choices.password"
+                v-model:confirm="newGroupStore.choices.confirmPassword"
+                @has-error="hasErr => (errors.password = hasErr)"
+            />
+
+            <div>
+                <BindToURL
+                    v-if="newGroupStore.choices.isPrivate"
+                    @url-error="hasErr => (errors.url = hasErr)"
                 />
 
-                <BindToURL @url-error="hasErr => (errors.url = hasErr)" />
-            </template>
-
-            <div class="flex justify-end">
-                <Button
-                    type="submit"
-                    :disabled="preventSubmit"
-                    :icon="ChevronRightIcon"
-                >
-                    {{ trans('select') }}
-                </Button>
+                <div class="flex justify-end">
+                    <Button
+                        type="submit"
+                        :disabled="preventSubmit"
+                        :icon="ChevronRightIcon"
+                    >
+                        {{ trans('select') }}
+                    </Button>
+                </div>
             </div>
         </form>
     </Popup>
