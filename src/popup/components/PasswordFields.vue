@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { trans } from '@common/modules'
-import { computed, ref } from 'vue'
-import { config } from '@common/config'
-import { passwordError } from '@common/modules/validation/group'
+import { computed } from 'vue'
 import PasswordInput from '@common/components/Form/PasswordInput.vue'
 
 const emit = defineEmits<{
@@ -13,42 +11,28 @@ const emit = defineEmits<{
 const pass = defineModel<string | null>('pass')
 const confirm = defineModel<string | null>('confirm')
 
-const errMsg = ref<string | null>(null)
-
-const passErr = computed<string | null>(() => {
-    return passwordError(pass.value || null, confirm.value || null)
+const confirmErr = computed<string>(() => {
+    return pass.value === confirm.value
+        ? ''
+        : trans('passwords_not_match')
 })
-
-function keyupEventHandler(): void {
-    const hasError = passErr.value !== null && passErr.value !== ''
-
-    emit('hasError', hasError)
-
-    if (!pass.value && !confirm.value) {
-        errMsg.value = null
-        return
-    }
-
-    errMsg.value = passErr.value
-}
 </script>
 
 <template>
     <PasswordInput
         v-model="pass"
-        @loaded="el => emit('loaded', el)"
-        @keyup="keyupEventHandler"
+        @loaded="emit('loaded', $event)"
+        @has-error="emit('hasError', $event)"
         id="group-password"
-        :error="errMsg"
+        :error="confirmErr"
         :label="trans('enter_pass')"
-        :minlength="config.MIN_PASS_LENGTH"
+        :with-min-length="true"
     />
 
     <PasswordInput
         v-model="confirm"
-        @keyup="keyupEventHandler"
+        @has-error="emit('hasError', $event)"
         id="group-confirm-password"
         :label="trans('repeat_pass')"
-        :minlength="config.MIN_PASS_LENGTH"
     />
 </template>
