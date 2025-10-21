@@ -11,7 +11,7 @@ export function getFirefoxRuntimeAdapter(): PlatformRuntime {
             return browser.i18n.getMessage(msg, args)
         },
 
-        getURL(path) {
+        getUrl(path) {
             return browser.runtime.getURL(path)
         },
 

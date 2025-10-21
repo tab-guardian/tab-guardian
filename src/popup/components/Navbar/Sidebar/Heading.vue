@@ -26,7 +26,7 @@ const storageUsage = computed(() => {
         class="flex items-center h-36 bg-slate-200 dark:bg-slate-800 relative overflow-hidden"
     >
         <img
-            :src="runtime.getURL('images/icons/icon-128.png')"
+            :src="runtime.getUrl('images/icons/icon-128.png')"
             class="absolute top-1/2 -translate-y-1/2 -right-14 drop-shadow-md"
         />
 

@@ -34,10 +34,10 @@ function getFaviconIconUrl(tab: tabs.Tab): string {
     if (tab.url) {
         for (const [prefix, icon] of icons) {
             if (tab.url.startsWith(prefix)) {
-                return runtime.getURL(`images/${icon}`)
+                return runtime.getUrl(`images/${icon}`)
             }
         }
     }
 
-    return tab.favIconUrl || runtime.getURL('images/no-image.png')
+    return tab.favIconUrl || runtime.getUrl('images/no-image.png')
 }

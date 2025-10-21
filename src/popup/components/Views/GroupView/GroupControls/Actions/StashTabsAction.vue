@@ -20,7 +20,7 @@ function stashTabs(): void {
         class="bg-slate-300 dark:bg-slate-700"
     >
         <img
-            :src="runtime.getURL('images/tab-icons/down.png')"
+            :src="runtime.getUrl('images/tab-icons/down.png')"
             alt="Stash tabs"
             class="dark:invert"
         />

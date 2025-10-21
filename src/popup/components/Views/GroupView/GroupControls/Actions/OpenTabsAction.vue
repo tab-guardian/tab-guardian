@@ -20,7 +20,7 @@ const tabsStore = useTabsStore()
         }"
     >
         <img
-            :src="runtime.getURL('images/tab-icons/up.png')"
+            :src="runtime.getUrl('images/tab-icons/up.png')"
             alt="Open tabs"
             class="dark:invert"
         />

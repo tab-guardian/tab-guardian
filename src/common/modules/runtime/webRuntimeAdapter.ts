@@ -43,7 +43,7 @@ export function getWebRuntimeAdapter(): PlatformRuntime {
             console.info('Cannot send message in web runtime')
         },
 
-        getURL(path) {
+        getUrl(path) {
             return path
         },
 

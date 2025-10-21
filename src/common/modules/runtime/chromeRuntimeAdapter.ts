@@ -11,7 +11,7 @@ export function getChromeRuntimeAdapter(): PlatformRuntime {
             return chrome.i18n.getMessage(msg, args)
         },
 
-        getURL(path) {
+        getUrl(path) {
             return chrome.runtime.getURL(path)
         },
 

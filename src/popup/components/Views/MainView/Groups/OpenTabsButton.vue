@@ -48,7 +48,7 @@ async function decryptCallback(pass: string): Promise<boolean> {
 
 <template>
     <img
-        :src="runtime.getURL('images/tab-icons/up.png')"
+        :src="runtime.getUrl('images/tab-icons/up.png')"
         alt="Open tabs"
         @click.prevent="openTabs"
         v-tippy="trans('open_tabs')"

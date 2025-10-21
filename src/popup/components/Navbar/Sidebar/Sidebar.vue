@@ -78,7 +78,7 @@ const links = [
                     class="justify-end pr-2 mb-2 text-font-gray text-xs flex gap-2 w-full"
                 >
                     <img
-                        :src="runtime.getURL('images/icons/icon-32.png')"
+                        :src="runtime.getUrl('images/icons/icon-32.png')"
                         class="size-4"
                     />
 
