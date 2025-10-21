@@ -23,7 +23,7 @@ const meta = computed<string>(() => {
     <Input
         v-model="name"
         :label="trans('group_name')"
-        @loaded="inp => emit('loaded', inp)"
+        @loaded="emit('loaded', $event)"
         :meta
         :maxlength="GROUP_NAME_MAX_LENGTH"
         type="text"
