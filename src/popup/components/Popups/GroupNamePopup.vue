@@ -6,7 +6,6 @@ import { useNewGroupStore } from '@/stores/newGroup'
 import { showToast } from '@common/modules/toast'
 import { computed, reactive } from 'vue'
 import { useRouter } from 'vue-router'
-import { isNameTooLong } from '@common/modules/validation/group'
 import Popup from '@/components/Popups/Popup.vue'
 import Button from '@common/components/Form/Button.vue'
 import ChevronRightIcon from '@common/components/Icons/ChevronRightIcon.vue'
@@ -19,12 +18,13 @@ const newGroupStore = useNewGroupStore()
 const router = useRouter()
 
 const errors = reactive({
+    name: false,
     password: false,
     url: false,
 })
 
 const preventSubmit = computed<boolean>(() => {
-    return errors.password || errors.url
+    return errors.password || errors.url || errors.name
 })
 
 function submitName(): void {
@@ -35,11 +35,6 @@ function submitName(): void {
 
     if (newGroupStore.isPasswordEmpty()) {
         showToast({ text: trans('pass_empty'), type: 'error' })
-        return
-    }
-
-    if (isNameTooLong(newGroupStore.choices.name)) {
-        showToast({ text: trans('group_name_long'), type: 'error' })
         return
     }
 
@@ -62,6 +57,7 @@ function submitName(): void {
             <NameInput
                 v-model:name="newGroupStore.choices.name"
                 @loaded="inp => inp.focus()"
+                @has-error="hasErr => (errors.name = hasErr)"
             />
 
             <PasswordInputs
@@ -74,7 +70,7 @@ function submitName(): void {
             <div>
                 <BindToURL
                     v-if="newGroupStore.choices.isPrivate"
-                    @url-error="hasErr => (errors.url = hasErr)"
+                    @has-error="hasErr => (errors.url = hasErr)"
                 />
 
                 <div class="flex justify-end">

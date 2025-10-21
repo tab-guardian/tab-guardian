@@ -41,7 +41,7 @@ async function deleteGroup(): Promise<void> {
 <template>
     <MenuItem
         @click="promptToDeleteGroup"
-        :label="trans('delete_this_group')"
+        :label="trans('delete')"
         :icon="TrashIcon"
         :class="[
             'text-red-500 !border-red-500',

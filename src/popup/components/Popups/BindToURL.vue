@@ -10,7 +10,7 @@ import Input from '@common/components/Form/Input.vue'
 import Tip from '@common/components/Tip.vue'
 
 const emit = defineEmits<{
-    (e: 'urlError', hasError: boolean): void
+    (e: 'hasError', has: boolean): void
 }>()
 
 onMounted(async () => {
@@ -31,7 +31,7 @@ const tooltip = computed<string>(() => {
 })
 
 watchEffect(() => {
-    emit('urlError', urlError.value !== null)
+    emit('hasError', urlError.value !== null)
 })
 
 async function attachBindURL(checked: boolean): Promise<void> {

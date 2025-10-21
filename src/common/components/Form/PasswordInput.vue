@@ -33,7 +33,7 @@ const passErr = computed<string>(() => {
         return ''
     }
 
-    return pass.length < config.MIN_PASS_LENGTH
+    return pass.value && pass.value.length < config.MIN_PASS_LENGTH
         ? trans('passwords_min_length', config.MIN_PASS_LENGTH.toString())
         : ''
 })
