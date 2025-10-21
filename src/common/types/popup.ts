@@ -16,6 +16,7 @@ export type Popups = {
     groupMenuView: PopupItem
     confirm: PopupItem<{ text: string }, { isConfirmed: boolean }>
     groupName: PopupItem
+    removeURLLock: PopupItem
     bindGroup: PopupItem
     chooseEmoji: PopupItem<{}, { emo: string | null }>
     chooseImageIcon: PopupItem<{}, { url: string | null }>

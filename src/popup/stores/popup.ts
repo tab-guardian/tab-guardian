@@ -13,6 +13,7 @@ const defaultEmptyPopup = {
 const defaultPopups: Popups = {
     groupMenuView: cloneDeep(defaultEmptyPopup),
     confirm: cloneDeep(defaultEmptyPopup),
+    removeURLLock: cloneDeep(defaultEmptyPopup),
     groupName: cloneDeep(defaultEmptyPopup),
     bindGroup: cloneDeep(defaultEmptyPopup),
     password: cloneDeep(defaultEmptyPopup),

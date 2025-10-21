@@ -225,8 +225,10 @@
     },
     "use_current_url": { "message": "Use current URL" },
     "make_private": { "message": "Make private" },
-    "delete_url_lock": { "message": "Delete URL lock from a private group" },
+    "remove_url_lock": { "message": "Remove URL lock from a private group" },
+    "remove_url_lock_desc": { "message": "If you've lost a private group that is bound to the specific URL and want to restore it, you can enter a group name and a password to remove attached URL from that group. You'll be able to access it if your provided credentials were correct." },
     "delete": { "message": "Delete" },
+    "enter_credentials": { "message": "Enter credentials" },
     "rebind_to_other_url": { "message": "Rebind to other URL" },
     "remember_pass_after_unlock_desc": {
         "message": "If you disable this option, you will need to enter a password everytime when you want to lock any private group. Keeping this option enabled saves password in temporary and secure storage and allows you to lock groups back without entering your password"
