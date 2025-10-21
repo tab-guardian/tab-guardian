@@ -52,7 +52,7 @@ export const useGroupStore = defineStore('group', () => {
 
         const storageGroups = await getGroupsFromStorage()
 
-        groups.value = await filterGroups(storageGroups)
+        groups.value = await hideGroups(storageGroups)
         groups.value.sort((a, b) => b.updatedAt - a.updatedAt)
 
         loadingGroups.value = false
@@ -239,7 +239,7 @@ export const useGroupStore = defineStore('group', () => {
         return false
     }
 
-    async function filterGroups(storageGroups: Group[]): Promise<Group[]> {
+    async function hideGroups(storageGroups: Group[]): Promise<Group[]> {
         const result: Group[] = []
 
         for (const group of storageGroups) {
