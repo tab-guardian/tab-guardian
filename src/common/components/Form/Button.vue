@@ -36,9 +36,7 @@ const className = computed<string[]>(() => {
         classes.push('opacity-50 cursor-not-allowed pointer-events-none')
     }
 
-    props.is
-        ? classes.push(buttonStyles.get(props.is)!)
-        : classes.push('bg-primary')
+    props.is ? classes.push(buttonStyles.get(props.is)!) : classes.push('bg-primary')
 
     return classes
 })

@@ -12,9 +12,7 @@ const pass = defineModel<string | null>('pass')
 const confirm = defineModel<string | null>('confirm')
 
 const confirmErr = computed<string>(() => {
-    return pass.value === confirm.value
-        ? ''
-        : trans('passwords_not_match')
+    return pass.value === confirm.value ? '' : trans('passwords_not_match')
 })
 </script>
 

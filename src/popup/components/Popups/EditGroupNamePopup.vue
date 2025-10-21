@@ -57,11 +57,7 @@ async function saveName(): Promise<void> {
                 @has-error="hasErr => (preventSubmit = hasErr)"
             />
 
-            <Button
-                type="submit"
-                :disabled="preventSubmit"
-                :icon="ChevronRightIcon"
-            >
+            <Button type="submit" :disabled="preventSubmit" :icon="ChevronRightIcon">
                 {{ trans('save') }}
             </Button>
         </form>

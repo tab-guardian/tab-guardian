@@ -130,7 +130,11 @@ export const useGroupStore = defineStore('group', () => {
             const decryptedGroup = await cryptoStore.decryptGroup(group, password)
             await save(decryptedGroup)
         } catch (err: any) {
-            showToast({ text: getDecryptionError(err), type: 'error' })
+            showToast({
+                text: getDecryptionError(err),
+                type: 'error',
+                duration: 5000,
+            })
             return false
         }
 
