@@ -54,7 +54,7 @@ async function saveName(): Promise<void> {
             <NameInput
                 v-model:name="name"
                 @loaded="inp => inp.focus()"
-                @has-error="hasErr => (preventSubmit = hasErr)"
+                @has-error="preventSubmit = $event"
             />
 
             <Button type="submit" :disabled="preventSubmit" :icon="ChevronRightIcon">

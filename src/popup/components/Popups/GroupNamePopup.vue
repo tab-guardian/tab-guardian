@@ -19,12 +19,12 @@ const router = useRouter()
 
 const errors = reactive({
     name: false,
-    password: false,
+    pass: false,
     url: false,
 })
 
 const preventSubmit = computed<boolean>(() => {
-    return errors.password || errors.url || errors.name
+    return errors.pass || errors.url || errors.name
 })
 
 function submitName(): void {
@@ -57,20 +57,20 @@ function submitName(): void {
             <NameInput
                 v-model:name="newGroupStore.choices.name"
                 @loaded="inp => inp.focus()"
-                @has-error="hasErr => (errors.name = hasErr)"
+                @has-error="errors.name = $event"
             />
 
             <PasswordInputs
                 v-if="newGroupStore.choices.isPrivate"
                 v-model:pass="newGroupStore.choices.password"
                 v-model:confirm="newGroupStore.choices.confirmPassword"
-                @has-error="hasErr => (errors.password = hasErr)"
+                @has-error="errors.pass = $event"
             />
 
             <div>
                 <BindToUrl
                     v-if="newGroupStore.choices.isPrivate"
-                    @has-error="hasErr => (errors.url = hasErr)"
+                    @has-error="errors.url = $event"
                 />
 
                 <div class="flex justify-end">

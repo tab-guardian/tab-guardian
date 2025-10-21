@@ -109,7 +109,7 @@ function hidePopup(): void {
                 v-model:name="formData.name"
                 :loading="processing"
                 @loaded="inp => inp.focus()"
-                @has-error="hasErr => (errors.name = hasErr)"
+                @has-error="errors.name = $event"
             />
 
             <PasswordInput
@@ -117,7 +117,7 @@ function hidePopup(): void {
                 id="enter-password"
                 :label="trans('enter_pass')"
                 :loading="processing"
-                @has-error="hasErr => (errors.pass = hasErr)"
+                @has-error="errors.pass = $event"
             />
 
             <Progress v-if="processing" />

@@ -34,7 +34,7 @@ function hidePasswordPopup(): void {
                 v-model:pass="pass"
                 v-model:confirm="confirmPass"
                 @loaded="el => el.focus()"
-                @has-error="hasErr => (preventSubmit = hasErr)"
+                @has-error="preventSubmit = $event"
             />
 
             <Button type="submit" :disabled="preventSubmit" :icon="ChevronRightIcon">
