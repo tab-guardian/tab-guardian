@@ -1,13 +1,11 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { trans } from '@common/modules'
-import { useGroupStore } from '@/stores/group'
 import { usePopupStore } from '@/stores/popup'
 import Section from '@settings/components/Section.vue'
 import Button from '@common/components/Form/Button.vue'
 import PencilSquareIcon from '@common/components/Icons/PencilSquareIcon.vue'
 
-const groupStore = useGroupStore()
 const popupStore = usePopupStore()
 
 const loading = ref<boolean>(false)
@@ -17,7 +15,9 @@ async function promptToDeleteURLLock(): Promise<void> {
         return
     }
 
-    const resp = await popupStore.show('removeURLLock', {})
+    loading.value = true
+    await popupStore.show('removeURLLock', {})
+    loading.value = false
 }
 </script>
 
