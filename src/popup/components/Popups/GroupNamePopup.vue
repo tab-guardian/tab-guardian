@@ -12,7 +12,7 @@ import Button from '@common/components/Form/Button.vue'
 import ChevronRightIcon from '@common/components/Icons/ChevronRightIcon.vue'
 import BindToURL from '@/components/Popups/BindToURL.vue'
 import NameInput from '@common/components/Form/NameInput.vue'
-import PasswordFields from '@/components/PasswordFields.vue'
+import PasswordInputs from '@/components/PasswordInputs.vue'
 
 const popupStore = usePopupStore()
 const newGroupStore = useNewGroupStore()
@@ -64,7 +64,7 @@ function submitName(): void {
                 @loaded="inp => inp.focus()"
             />
 
-            <PasswordFields
+            <PasswordInputs
                 v-if="newGroupStore.choices.isPrivate"
                 v-model:pass="newGroupStore.choices.password"
                 v-model:confirm="newGroupStore.choices.confirmPassword"

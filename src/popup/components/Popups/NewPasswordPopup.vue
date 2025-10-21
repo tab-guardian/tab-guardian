@@ -5,7 +5,7 @@ import { usePopupStore } from '@/stores/popup'
 import Popup from '@/components/Popups/Popup.vue'
 import Button from '@common/components/Form/Button.vue'
 import ChevronRightIcon from '@common/components/Icons/ChevronRightIcon.vue'
-import PasswordFields from '@/components/PasswordFields.vue'
+import PasswordInputs from '@/components/PasswordInputs.vue'
 
 const popupStore = usePopupStore()
 
@@ -30,7 +30,7 @@ function hidePasswordPopup(): void {
 <template>
     <Popup @cancel="hidePasswordPopup" :content="trans('enter_new_pass')">
         <form @submit.prevent="updatePassword" class="flex flex-col gap-3">
-            <PasswordFields
+            <PasswordInputs
                 v-model:pass="pass"
                 v-model:confirm="confirmPass"
                 @loaded="el => el.focus()"
