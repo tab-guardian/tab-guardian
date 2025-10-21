@@ -5,7 +5,6 @@ import ShieldCheckIcon from '@common/components/Icons/ShieldCheckIcon.vue'
 import { trans } from '@common/modules'
 import { config } from '@common/config'
 import { useGroupStore } from '@/stores/group'
-import { cloneDeep } from 'lodash'
 import { showToast } from '@common/modules/toast'
 
 const props = defineProps<{ group: Group }>()
@@ -13,7 +12,7 @@ const props = defineProps<{ group: Group }>()
 const groupStore = useGroupStore()
 
 async function makeGroupPrivate(): Promise<void> {
-    const group = cloneDeep(props.group)
+    const group = structuredClone(props.group)
     group.isPrivate = true
     group.algo = config.CURR_ENCRYPT_ALGO
 

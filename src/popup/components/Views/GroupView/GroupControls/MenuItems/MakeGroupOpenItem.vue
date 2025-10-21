@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { Group } from '@common/types'
-import { cloneDeep } from 'lodash'
 import { trans } from '@common/modules'
 import { useGroupStore } from '@/stores/group'
 import { usePopupStore } from '@/stores/popup'
@@ -25,7 +24,7 @@ async function promptToMakeOpen(): Promise<void> {
 }
 
 async function makeOpen(): Promise<void> {
-    const group = cloneDeep(props.group)
+    const group = structuredClone(props.group)
 
     group.isPrivate = false
     delete group.algo

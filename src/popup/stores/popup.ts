@@ -1,7 +1,6 @@
 import type { Popups } from '@common/types/popup'
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import { cloneDeep } from 'lodash'
 
 const defaultEmptyPopup = {
     open: false,
@@ -11,21 +10,21 @@ const defaultEmptyPopup = {
 }
 
 const defaultPopups: Popups = {
-    groupMenuView: cloneDeep(defaultEmptyPopup),
-    confirm: cloneDeep(defaultEmptyPopup),
-    removeURLLock: cloneDeep(defaultEmptyPopup),
-    groupName: cloneDeep(defaultEmptyPopup),
-    bindGroup: cloneDeep(defaultEmptyPopup),
-    password: cloneDeep(defaultEmptyPopup),
-    linkMenuView: cloneDeep(defaultEmptyPopup),
-    editGroupName: cloneDeep(defaultEmptyPopup),
-    newPassword: cloneDeep(defaultEmptyPopup),
-    chooseEmoji: cloneDeep(defaultEmptyPopup),
-    chooseImageIcon: cloneDeep(defaultEmptyPopup),
+    groupMenuView: structuredClone(defaultEmptyPopup),
+    confirm: structuredClone(defaultEmptyPopup),
+    removeURLLock: structuredClone(defaultEmptyPopup),
+    groupName: structuredClone(defaultEmptyPopup),
+    bindGroup: structuredClone(defaultEmptyPopup),
+    password: structuredClone(defaultEmptyPopup),
+    linkMenuView: structuredClone(defaultEmptyPopup),
+    editGroupName: structuredClone(defaultEmptyPopup),
+    newPassword: structuredClone(defaultEmptyPopup),
+    chooseEmoji: structuredClone(defaultEmptyPopup),
+    chooseImageIcon: structuredClone(defaultEmptyPopup),
 }
 
 export const usePopupStore = defineStore('popup', () => {
-    const popups = ref<Popups>(cloneDeep(defaultPopups))
+    const popups = ref<Popups>(structuredClone(defaultPopups))
 
     function hideAll(): void {
         for (const key in popups.value) {
@@ -47,7 +46,7 @@ export const usePopupStore = defineStore('popup', () => {
     }
 
     function resetGroups(): void {
-        popups.value = cloneDeep(defaultPopups)
+        popups.value = structuredClone(defaultPopups)
     }
 
     function hide<K extends keyof Popups>(
