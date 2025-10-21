@@ -46,9 +46,9 @@ async function submitPassword(): Promise<void> {
 
     processing.value = true
 
-    const success = await sharedData.value.decrypting(pass.value)
+    const isSuccess = await sharedData.value.decrypting(pass.value)
 
-    if (success) {
+    if (isSuccess) {
         await attemptsStore.unlock()
         popupStore.hide('password', {})
     } else if (attemptsStore.isLocked) {

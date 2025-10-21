@@ -3,14 +3,16 @@ import type { Group } from '@common/types'
 import { trans } from '@common/modules'
 import { useTabsStore } from '@/stores/tabs'
 import { usePopupStore } from '@/stores/popup'
-import { useGroupUnlock } from '@/composables/useGroupUnlock'
+import { useGroupStore } from '@/stores/group'
+import { useRouter } from 'vue-router'
 import { runtime } from '@common/modules/runtime'
 
 const props = defineProps<{ group: Group }>()
 
 const tabsStore = useTabsStore()
 const popupStore = usePopupStore()
-const { unlockGroup } = useGroupUnlock()
+const groupStore = useGroupStore()
+const router = useRouter()
 
 async function openTabs(): Promise<void> {
     if (props.group.links.length === 0) {
@@ -28,9 +30,19 @@ async function openTabs(): Promise<void> {
     }
 
     await popupStore.show('password', {
-        decrypting: async pass => await unlockGroup(props.group, pass, true),
+        decrypting: decryptCallback,
         text: trans('enter_pass_unlock_content'),
     })
+}
+
+async function decryptCallback(pass: string): Promise<boolean> {
+    const isSuccess = await groupStore.unlock(props.group, pass, true)
+
+    if (isSuccess) {
+        await router.push({ name: 'main' })
+    }
+
+    return isSuccess
 }
 </script>
 

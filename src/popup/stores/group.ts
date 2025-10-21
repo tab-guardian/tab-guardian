@@ -7,8 +7,11 @@ import { useSettingsStore } from '@/stores/settings'
 import { useNotificationStore } from '@/stores/notification'
 import { useCryptoStore } from '@/stores/crypto'
 import { useProgressStore } from '@/stores/progress'
+import { useTabsStore } from '@/stores/tabs'
+import { getDecryptionError } from '@/errors'
 import { showToast } from '@common/modules/toast'
 import { getHashedCurrentURL } from '@common/modules/url'
+import { savePasswordToStorage } from '@common/modules/storage/password'
 import {
     deleteAllGroupsFromStorage,
     deleteGroupFromStorage,
@@ -23,6 +26,7 @@ export const useGroupStore = defineStore('group', () => {
     const settingsStore = useSettingsStore()
     const notificationStore = useNotificationStore()
     const progressStore = useProgressStore()
+    const tabsStore = useTabsStore()
 
     const groups = ref<Group[]>([])
     const loadingGroups = ref<boolean>(false)
@@ -115,6 +119,33 @@ export const useGroupStore = defineStore('group', () => {
         }
 
         return null
+    }
+
+    async function unlock(
+        group: Group,
+        password: string,
+        openTabs: boolean = false,
+    ): Promise<boolean> {
+        try {
+            const decryptedGroup = await cryptoStore.decryptGroup(group, password)
+            await save(decryptedGroup)
+        } catch (err: any) {
+            showToast({ text: getDecryptionError(err), type: 'error' })
+            return false
+        }
+
+        if (settingsStore.settings.rememberPasswordAfterUnlock) {
+            await savePasswordToStorage(group.id, password)
+        }
+
+        if (openTabs) {
+            await tabsStore.openTabs(group, password)
+            return true
+        }
+
+        showToast({ text: trans('group_unlocked') })
+
+        return true
     }
 
     // Add groups to memory and save them to storage
@@ -271,6 +302,7 @@ export const useGroupStore = defineStore('group', () => {
         deleteLinkFrom,
         insertLinksInto,
         lock,
+        unlock,
         getGroup,
         deleteAllGroups,
         loadGroupsFromStorage,
