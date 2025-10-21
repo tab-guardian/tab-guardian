@@ -10,7 +10,7 @@ import { useProgressStore } from '@/stores/progress'
 import { useTabsStore } from '@/stores/tabs'
 import { getDecryptionError } from '@/errors'
 import { showToast } from '@common/modules/toast'
-import { getHashedCurrentURL } from '@common/modules/url'
+import { getHashedCurrentUrl } from '@common/modules/url'
 import { savePasswordToStorage } from '@common/modules/storage/password'
 import {
     deleteAllGroupsFromStorage,
@@ -250,9 +250,9 @@ export const useGroupStore = defineStore('group', () => {
         const isPrivate = await isIncognito()
 
         if (group.bindUrl) {
-            const currHashedURL = await getHashedCurrentURL()
+            const currHashedUrl = await getHashedCurrentUrl()
 
-            if (currHashedURL !== group.bindUrl) {
+            if (currHashedUrl !== group.bindUrl) {
                 return true
             }
         }

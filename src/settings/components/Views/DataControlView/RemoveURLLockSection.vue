@@ -10,13 +10,13 @@ const popupStore = usePopupStore()
 
 const loading = ref<boolean>(false)
 
-async function promptToDeleteURLLock(): Promise<void> {
+async function promptToDeleteUrlLock(): Promise<void> {
     if (loading.value) {
         return
     }
 
     loading.value = true
-    await popupStore.show('removeURLLock', {})
+    await popupStore.show('removeUrlLock', {})
     loading.value = false
 }
 </script>
@@ -27,7 +27,7 @@ async function promptToDeleteURLLock(): Promise<void> {
         :subtitle="trans('remove_url_lock_desc')"
     >
         <Button
-            @clicked="promptToDeleteURLLock"
+            @clicked="promptToDeleteUrlLock"
             :icon="PencilSquareIcon"
             :disabled="loading"
         >

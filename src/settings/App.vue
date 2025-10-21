@@ -8,7 +8,7 @@ import ConfirmPopup from '@/components/Popups/ConfirmPopup.vue'
 import Popups from '@/components/Popups/Popups.vue'
 import NewPasswordPopup from '@/components/Popups/NewPasswordPopup.vue'
 import PasswordPopup from '@/components/Popups/PasswordPopup.vue'
-import RemoveURLLockPopup from '@/components/Popups/RemoveURLLockPopup.vue'
+import RemoveUrlLockPopup from '@/components/Popups/RemoveUrlLockPopup.vue'
 
 const settingsStore = useSettingsStore()
 
@@ -32,7 +32,7 @@ onMounted(async () => {
 
     <Popups
         :popups="[
-            { comp: RemoveURLLockPopup, name: 'removeURLLock' },
+            { comp: RemoveUrlLockPopup, name: 'removeUrlLock' },
             { comp: NewPasswordPopup, name: 'newPassword' },
             { comp: PasswordPopup, name: 'password' },
             { comp: ConfirmPopup, name: 'confirm' },

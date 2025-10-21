@@ -9,7 +9,7 @@ import { useRouter } from 'vue-router'
 import Popup from '@/components/Popups/Popup.vue'
 import Button from '@common/components/Form/Button.vue'
 import ChevronRightIcon from '@common/components/Icons/ChevronRightIcon.vue'
-import BindToURL from '@/components/Popups/BindToURL.vue'
+import BindToUrl from '@/components/Popups/BindToUrl.vue'
 import NameInput from '@common/components/Form/NameInput.vue'
 import PasswordInputs from '@/components/PasswordInputs.vue'
 
@@ -68,7 +68,7 @@ function submitName(): void {
             />
 
             <div>
-                <BindToURL
+                <BindToUrl
                     v-if="newGroupStore.choices.isPrivate"
                     @has-error="hasErr => (errors.url = hasErr)"
                 />

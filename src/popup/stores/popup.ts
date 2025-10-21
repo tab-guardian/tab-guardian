@@ -13,7 +13,7 @@ const defaultEmptyPopup = {
 const defaultPopups: Popups = {
     groupMenuView: structuredClone(defaultEmptyPopup),
     confirm: structuredClone(defaultEmptyPopup),
-    removeURLLock: structuredClone(defaultEmptyPopup),
+    removeUrlLock: structuredClone(defaultEmptyPopup),
     groupName: structuredClone(defaultEmptyPopup),
     bindGroup: structuredClone(defaultEmptyPopup),
     password: structuredClone(defaultEmptyPopup),

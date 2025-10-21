@@ -55,7 +55,7 @@ async function submit(): Promise<void> {
     }
 
     try {
-        await removeBindURL(group)
+        await removeBindUrl(group)
         await attemptsStore.unlock()
     } catch (err: any) {
         showToast({
@@ -77,7 +77,7 @@ async function submit(): Promise<void> {
     hidePopup()
 }
 
-async function removeBindURL(g: Group): Promise<void> {
+async function removeBindUrl(g: Group): Promise<void> {
     let group = cloneDeep(g)
 
     if (group.isEncrypted) {
@@ -95,13 +95,13 @@ function hidePopup(): void {
     formData.name = ''
     processing.value = false
 
-    popupStore.hide('removeURLLock', {})
+    popupStore.hide('removeUrlLock', {})
 }
 </script>
 
 <template>
     <Popup
-        @cancel="popupStore.hide('removeURLLock', {})"
+        @cancel="popupStore.hide('removeUrlLock', {})"
         :content="trans('enter_credentials')"
     >
         <form @submit.prevent="submit" class="space-y-3">

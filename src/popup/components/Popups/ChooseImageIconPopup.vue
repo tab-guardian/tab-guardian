@@ -3,8 +3,8 @@ import { ref, computed, onMounted } from 'vue'
 import { useGroupStore } from '@/stores/group'
 import { trans } from '@common/modules'
 import { usePopupStore } from '@/stores/popup'
-import { isImageURL } from '@common/modules/url'
-import { validateImageURL } from '@common/modules/validation/url'
+import { isImageUrl } from '@common/modules/url'
+import { validateImageUrl } from '@common/modules/validation/url'
 import Popup from '@/components/Popups/Popup.vue'
 import Button from '@common/components/Form/Button.vue'
 import Input from '@common/components/Form/Input.vue'
@@ -15,15 +15,15 @@ const groupStore = useGroupStore()
 
 const url = ref<string>('')
 
-const errorMessage = computed<string | null>(() => validateImageURL(url.value))
-const preventSubmit = computed<boolean>(() => validateImageURL(url.value) !== null)
+const errorMessage = computed<string | null>(() => validateImageUrl(url.value))
+const preventSubmit = computed<boolean>(() => validateImageUrl(url.value) !== null)
 
 onMounted(setImageIcon)
 
 function setImageIcon(): void {
     const group = groupStore.selectedGroup
 
-    if (!group || !isImageURL(group.icon)) {
+    if (!group || !isImageUrl(group.icon)) {
         return
     }
 

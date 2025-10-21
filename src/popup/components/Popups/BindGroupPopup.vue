@@ -4,8 +4,8 @@ import { useGroupStore } from '@/stores/group'
 import { trans } from '@common/modules'
 import { usePopupStore } from '@/stores/popup'
 import { useRouter } from 'vue-router'
-import { validateURL } from '@common/modules/validation/url'
-import { hashURL, getCurrentURL } from '@common/modules/url'
+import { validateUrl } from '@common/modules/validation/url'
+import { hashUrl, getCurrentUrl } from '@common/modules/url'
 import { showToast } from '@common/modules/toast'
 import Popup from '@/components/Popups/Popup.vue'
 import Button from '@common/components/Form/Button.vue'
@@ -18,11 +18,11 @@ const groupStore = useGroupStore()
 const router = useRouter()
 const currUrl = ref<string>('')
 
-const errorMessage = computed<string | null>(() => validateURL(currUrl.value))
-const preventSubmit = computed<boolean>(() => validateURL(currUrl.value) !== null)
+const errorMessage = computed<string | null>(() => validateUrl(currUrl.value))
+const preventSubmit = computed<boolean>(() => validateUrl(currUrl.value) !== null)
 
-async function setCurrentURL(): Promise<void> {
-    const url = await getCurrentURL()
+async function setCurrentUrl(): Promise<void> {
+    const url = await getCurrentUrl()
 
     if (url) {
         currUrl.value = url
@@ -48,7 +48,7 @@ async function rebindGroup(): Promise<void> {
         },
     })
 
-    groupStore.selectedGroup.bindUrl = await hashURL(currUrl.value)
+    groupStore.selectedGroup.bindUrl = await hashUrl(currUrl.value)
     groupStore.save(groupStore.selectedGroup)
 
     showToast({ text: trans('group_rebind_successful') })
@@ -75,7 +75,7 @@ async function rebindGroup(): Promise<void> {
 
             <div class="flex items-center justify-between gap-5 mt-3">
                 <div>
-                    <ControlButton @click="setCurrentURL">
+                    <ControlButton @click="setCurrentUrl">
                         {{ trans('use_current_url') }}
                     </ControlButton>
                 </div>
