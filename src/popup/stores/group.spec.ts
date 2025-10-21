@@ -2,7 +2,7 @@
 
 import { describe, it, expect, beforeEach, suite } from 'vitest'
 import { createPinia, setActivePinia } from 'pinia'
-import { useGroupStore } from './group'
+import { useGroupStore } from '@/stores/group'
 import { getFakeGroup } from '@common/modules/fake'
 
 describe('groupStore', () => {
