@@ -45,7 +45,7 @@ const group = computed<Group | null>(() => groupStore.getGroup(groupId))
                 <ListItem
                     v-if="group.isPrivate"
                     :field="trans('bound_to_url')"
-                    :value="group.bindURL ? trans('yes') : trans('no')"
+                    :value="group.bindUrl ? trans('yes') : trans('no')"
                 />
 
                 <ListItem

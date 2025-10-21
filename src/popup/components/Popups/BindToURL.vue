@@ -36,7 +36,7 @@ watchEffect(() => {
 
 async function attachBindURL(checked: boolean): Promise<void> {
     if (!checked) {
-        newGroupStore.choices.bindURL = null
+        newGroupStore.choices.bindUrl = null
         return
     }
 
@@ -46,7 +46,7 @@ async function attachBindURL(checked: boolean): Promise<void> {
         return
     }
 
-    newGroupStore.choices.bindURL = await hashURL(currURL.value)
+    newGroupStore.choices.bindUrl = await hashURL(currURL.value)
 }
 </script>
 

@@ -29,7 +29,7 @@ async function makeOpen(): Promise<void> {
 
     group.isPrivate = false
     delete group.algo
-    delete group.bindURL
+    delete group.bindUrl
     delete group.hide
 
     for (const link of group.links) {

@@ -249,10 +249,10 @@ export const useGroupStore = defineStore('group', () => {
     async function shouldHideGroup(group: Group): Promise<boolean> {
         const isPrivate = await isIncognito()
 
-        if (group.bindURL) {
+        if (group.bindUrl) {
             const currHashedURL = await getHashedCurrentURL()
 
-            if (currHashedURL !== group.bindURL) {
+            if (currHashedURL !== group.bindUrl) {
                 return true
             }
         }

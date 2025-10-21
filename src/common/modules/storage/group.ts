@@ -30,6 +30,11 @@ export async function getGroupsFromStorage(): Promise<Group[]> {
             continue
         }
 
+        if (group.bindURL) {
+            group.bindUrl = group.bindURL
+            delete group.bindURL
+        }
+
         groups.unshift(group)
     }
 

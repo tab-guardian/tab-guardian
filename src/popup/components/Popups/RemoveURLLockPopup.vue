@@ -85,7 +85,7 @@ async function removeBindURL(g: Group): Promise<void> {
         group = await cryptoStore.decryptGroup(group, formData.pass)
     }
 
-    delete group.bindURL
+    delete group.bindUrl
     const encrypted = await cryptoStore.encryptGroup(group, formData.pass)
     await groupStore.save(encrypted)
 }

@@ -16,7 +16,7 @@ export type UserChoices = {
     password: string | null
     confirmPassword: string | null
     wantsSelectAllLinks: boolean | null
-    bindURL: string | null
+    bindUrl: string | null
 }
 
 export type SelectTabsOperation = 'adding' | 'creating'
@@ -43,7 +43,9 @@ export type Group = {
     openedTimes?: number
     createdAt?: number
     hide?: boolean
+    /** @deprecated bindURL is deprecated Delete it eventually */
     bindURL?: string
+    bindUrl?: string
     icon?: string
     algo?: EncryptionAlgo
 }

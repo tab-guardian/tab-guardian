@@ -16,16 +16,16 @@ import ControlButton from '@/components/Views/SelectTabsView/ControlButton.vue'
 const popupStore = usePopupStore()
 const groupStore = useGroupStore()
 const router = useRouter()
-const currURL = ref<string>('')
+const currUrl = ref<string>('')
 
-const errorMessage = computed<string | null>(() => validateURL(currURL.value))
-const preventSubmit = computed<boolean>(() => validateURL(currURL.value) !== null)
+const errorMessage = computed<string | null>(() => validateURL(currUrl.value))
+const preventSubmit = computed<boolean>(() => validateURL(currUrl.value) !== null)
 
 async function setCurrentURL(): Promise<void> {
     const url = await getCurrentURL()
 
     if (url) {
-        currURL.value = url
+        currUrl.value = url
     }
 }
 
@@ -48,7 +48,7 @@ async function rebindGroup(): Promise<void> {
         },
     })
 
-    groupStore.selectedGroup.bindURL = await hashURL(currURL.value)
+    groupStore.selectedGroup.bindUrl = await hashURL(currUrl.value)
     groupStore.save(groupStore.selectedGroup)
 
     showToast({ text: trans('group_rebind_successful') })
@@ -64,7 +64,7 @@ async function rebindGroup(): Promise<void> {
     >
         <form @submit.prevent="rebindGroup">
             <Input
-                v-model="currURL"
+                v-model="currUrl"
                 label="URL"
                 @loaded="inp => inp.focus()"
                 type="text"
