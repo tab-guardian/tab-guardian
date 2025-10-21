@@ -28,9 +28,8 @@ async function promptToDeleteURLLock(): Promise<void> {
     >
         <Button
             @clicked="promptToDeleteURLLock"
-            is="danger"
             :icon="PencilSquareIcon"
-            :loading
+            :disabled="loading"
         >
             {{ trans('enter_credentials') }}
         </Button>
