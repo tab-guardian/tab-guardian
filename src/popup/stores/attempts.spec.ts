@@ -4,7 +4,7 @@ import { describe, it, expect, beforeEach } from 'vitest'
 import { createPinia, setActivePinia } from 'pinia'
 import { useAttemptsStore } from '@/stores/attempts'
 
-describe('attempts store', () => {
+describe('attemptsStore', () => {
     beforeEach(() => setActivePinia(createPinia()))
 
     it('can do 1 attempt', async () => {

@@ -45,7 +45,7 @@ export function getFakeLinks(): Link[] {
 
 export function getFakeGroup(name: string = 'Test Group'): Group {
     return {
-        id: 1,
+        id: Math.floor(Date.now() + Math.random() * 1000),
         name,
         links: getFakeLinks(),
         isPrivate: false,
