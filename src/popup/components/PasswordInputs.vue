@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { trans } from '@common/modules'
-import { computed } from 'vue'
+import { computed, reactive } from 'vue'
 import PasswordInput from '@common/components/Form/PasswordInput.vue'
 
 const emit = defineEmits<{
@@ -11,25 +11,35 @@ const emit = defineEmits<{
 const pass = defineModel<string | null>('pass')
 const confirm = defineModel<string | null>('confirm')
 
-const confirmErr = computed<string>(() => {
+const errors = reactive({
+    pass: false,
+    confirm: false,
+})
+
+const matchErr = computed<string>(() => {
     return pass.value === confirm.value ? '' : trans('passwords_not_match')
 })
+
+function emitErrorEvent(hasErr: boolean, field: 'pass' | 'confirm'): void {
+    errors[field] = hasErr
+    emit('hasError', errors.pass || errors.confirm || matchErr.value !== '')
+}
 </script>
 
 <template>
     <PasswordInput
         v-model="pass"
         @loaded="emit('loaded', $event)"
-        @has-error="emit('hasError', $event)"
+        @has-error="emitErrorEvent($event, 'pass')"
         id="group-password"
-        :error="confirmErr"
+        :error="matchErr"
         :label="trans('enter_pass')"
         :with-min-length="true"
     />
 
     <PasswordInput
         v-model="confirm"
-        @has-error="emit('hasError', $event)"
+        @has-error="emitErrorEvent($event, 'confirm')"
         id="group-confirm-password"
         :label="trans('repeat_pass')"
     />
