@@ -15,12 +15,13 @@ export const useCryptoStore = defineStore('crypto', () => {
     const progressStore = useProgressStore()
 
     async function encryptGroup(group: Group, pass: string): Promise<Group> {
+        const encrypted = structuredClone(group)
         const encryptedLinks: Link[] = []
-        const algo = group.algo || config.CURR_ENCRYPT_ALGO
+        const algo = encrypted.algo || config.CURR_ENCRYPT_ALGO
 
-        progressStore.start(group.links.length)
+        progressStore.start(encrypted.links.length)
 
-        for (const link of group.links) {
+        for (const link of encrypted.links) {
             const salt = crypto.getRandomValues(new Uint8Array(16))
             const iv = crypto.getRandomValues(new Uint8Array(16))
             const key = await createEncryptKey(pass, salt, algo)
@@ -42,16 +43,17 @@ export const useCryptoStore = defineStore('crypto', () => {
             progressStore.advance()
         }
 
-        group.algo = algo
-        group.links = encryptedLinks
-        group.isEncrypted = true
+        encrypted.algo = algo
+        encrypted.links = encryptedLinks
+        encrypted.isEncrypted = true
 
         progressStore.finish()
 
-        return group
+        return encrypted
     }
 
-    async function decryptGroup(group: Group, pass: string): Promise<Group> {
+    async function decryptGroup(encrypted: Group, pass: string): Promise<Group> {
+        const group = structuredClone(encrypted)
         const decryptedLinks: Link[] = []
 
         progressStore.start(group.links.length)
