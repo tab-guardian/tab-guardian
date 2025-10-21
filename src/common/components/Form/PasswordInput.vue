@@ -43,7 +43,7 @@ const passErr = computed<string>(() => {
     <Input
         v-model="pass"
         @loaded="emit('loaded', $event)"
-        @keyup="emit('hasError', passErr !== '')"
+        @keyup="emit('hasError', passErr !== '' || !pass)"
         type="password"
         :error="passErr || error"
         :with-button="withButton"
