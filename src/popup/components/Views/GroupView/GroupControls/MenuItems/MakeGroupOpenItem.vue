@@ -5,6 +5,7 @@ import { useGroupStore } from '@/stores/group'
 import { usePopupStore } from '@/stores/popup'
 import { showToast } from '@common/modules/toast'
 import { deletePasswordFromStorage } from '@common/modules/storage/password'
+import { cloneDeep } from 'lodash'
 import MenuItem from '@/components/MenuItem.vue'
 import LockOpenIcon from '@common/components/Icons/LockOpenIcon.vue'
 
@@ -24,7 +25,7 @@ async function promptToMakeOpen(): Promise<void> {
 }
 
 async function makeOpen(): Promise<void> {
-    const group = structuredClone(props.group)
+    const group = cloneDeep(props.group)
 
     group.isPrivate = false
     delete group.algo

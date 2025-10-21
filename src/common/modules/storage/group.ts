@@ -1,5 +1,6 @@
 import type { Group } from '@common/types'
 import { runtime } from '@common/modules/runtime'
+import { cloneDeep } from 'lodash'
 import {
     getGroupIdsFromStorage,
     saveGroupIdsToStorage,
@@ -44,7 +45,7 @@ export async function saveGroupToStorage(group: Group): Promise<void> {
         }
     })
 
-    const newGroup = structuredClone(group)
+    const newGroup = cloneDeep(group)
     newGroup.links = links
 
     const ids = await getGroupIdsFromStorage()

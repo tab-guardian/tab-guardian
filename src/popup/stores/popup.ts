@@ -1,6 +1,7 @@
 import type { Popups } from '@common/types/popup'
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
+import { cloneDeep } from 'lodash'
 
 const defaultEmptyPopup = {
     open: false,
@@ -46,7 +47,7 @@ export const usePopupStore = defineStore('popup', () => {
     }
 
     function resetGroups(): void {
-        popups.value = structuredClone(defaultPopups)
+        popups.value = cloneDeep(defaultPopups)
     }
 
     function hide<K extends keyof Popups>(

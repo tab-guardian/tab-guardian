@@ -7,6 +7,7 @@ import { encryptExport } from '@common/modules/webCrypto'
 import { getPasswordFromStorage } from '@common/modules/storage/password'
 import { showToast } from '@common/modules/toast'
 import { toBase64 } from '@common/modules/base64'
+import { cloneDeep } from 'lodash'
 import slug from 'slug'
 import pako from 'pako'
 import ArrowDownTrayIcon from '@common/components/Icons/ArrowDownTrayIcon.vue'
@@ -26,7 +27,7 @@ async function exportGroup(): Promise<void> {
 
     loading.value = true
 
-    let group = structuredClone(props.group)
+    let group = cloneDeep(props.group)
 
     const json = JSON.stringify(group)
     const compressed = toBase64(pako.gzip(json))

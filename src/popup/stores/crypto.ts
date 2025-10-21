@@ -9,13 +9,14 @@ import {
 } from '@common/modules/webCrypto'
 import { toBase64, fromBase64 } from '@common/modules/base64'
 import { config } from '@common/config'
+import { cloneDeep } from 'lodash'
 import CryptoJS from 'crypto-js'
 
 export const useCryptoStore = defineStore('crypto', () => {
     const progressStore = useProgressStore()
 
     async function encryptGroup(group: Group, pass: string): Promise<Group> {
-        const encrypted = structuredClone(group)
+        const encrypted = cloneDeep(group)
         const encryptedLinks: Link[] = []
         const algo = encrypted.algo || config.CURR_ENCRYPT_ALGO
 
@@ -53,7 +54,7 @@ export const useCryptoStore = defineStore('crypto', () => {
     }
 
     async function decryptGroup(encrypted: Group, pass: string): Promise<Group> {
-        const group = structuredClone(encrypted)
+        const group = cloneDeep(encrypted)
         const decryptedLinks: Link[] = []
 
         progressStore.start(group.links.length)
