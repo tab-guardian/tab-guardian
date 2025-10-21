@@ -24,9 +24,7 @@ const props = withDefaults(defineProps<Props>(), {
     withMinLength: false,
 })
 
-onMounted(() => {
-    emit('hasError', !pass.value)
-})
+onMounted(() => emit('hasError', !pass.value))
 
 const pass = defineModel<string | null>()
 
@@ -39,17 +37,13 @@ const passErr = computed<string>(() => {
         ? trans('passwords_min_length', config.MIN_PASS_LENGTH.toString())
         : ''
 })
-
-function emitHasErrorEvent(): void {
-    emit('hasError', passErr.value !== '')
-}
 </script>
 
 <template>
     <Input
         v-model="pass"
         @loaded="emit('loaded', $event)"
-        @keyup="emitHasErrorEvent"
+        @keyup="emit('hasError', passErr !== '')"
         type="password"
         :error="passErr || error"
         :with-button="withButton"

@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, watchEffect } from 'vue'
 import Tip from '@common/components/Tip.vue'
-import SmallSpinner from '@common/components/SmallSpinner.vue'
 import ArrowRightIcon from '@common/components/Icons/ArrowRightIcon.vue'
 import Button from '@common/components/Form/Button.vue'
 
