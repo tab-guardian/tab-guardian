@@ -2,7 +2,6 @@ import type { Group, Link } from '@common/types'
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import { trans, generateGroupId } from '@common/modules'
-import { config } from '@common/config'
 import { runtime } from '@common/modules/runtime'
 import { useSettingsStore } from '@/stores/settings'
 import { useNotificationStore } from '@/stores/notification'
@@ -12,6 +11,7 @@ import { useTabsStore } from '@/stores/tabs'
 import { getDecryptionError } from '@/errors'
 import { showToast } from '@common/modules/toast'
 import { getHashedCurrentUrl } from '@common/modules/url'
+import { validatePassword } from '@common/modules/validation/group'
 import { savePasswordToStorage } from '@common/modules/storage/password'
 import {
     deleteAllGroupsFromStorage,
@@ -80,30 +80,13 @@ export const useGroupStore = defineStore('group', () => {
             }
         }
 
-        if (pass === '') {
-            return {
-                failed: true,
-                message: trans('pass_empty'),
-                group: null,
-            }
-        }
+        const validationError = validatePassword(pass, confirm)
 
-        if (pass.length < config.MIN_PASS_LENGTH) {
+        if (validationError) {
             return {
-                failed: true,
-                message: trans(
-                    'passwords_min_length',
-                    config.MIN_PASS_LENGTH.toString(),
-                ),
                 group: null,
-            }
-        }
-
-        if (confirm && pass !== confirm) {
-            return {
+                message: validationError,
                 failed: true,
-                message: trans('passwords_not_match'),
-                group: null,
             }
         }
 
