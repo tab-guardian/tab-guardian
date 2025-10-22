@@ -106,7 +106,7 @@ async function processFileContent(rawData: string): Promise<void> {
     }, 0)
 
     if (groupsWithSameName === 0) {
-        await groupStore.addAndSaveGroups(groups, false)
+        await groupStore.saveMany(groups, false)
         showSuccessMessage(groups)
         return
     }
@@ -116,7 +116,7 @@ async function processFileContent(rawData: string): Promise<void> {
     })
 
     if (resp) {
-        await groupStore.addAndSaveGroups(groups, resp.isConfirmed)
+        await groupStore.saveMany(groups, resp.isConfirmed)
         showSuccessMessage(groups)
     }
 }
