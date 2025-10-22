@@ -2,6 +2,7 @@ import type { Group, Link } from '@common/types'
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import { trans, generateGroupId } from '@common/modules'
+import { config } from '@common/config'
 import { runtime } from '@common/modules/runtime'
 import { useSettingsStore } from '@/stores/settings'
 import { useNotificationStore } from '@/stores/notification'
@@ -62,48 +63,48 @@ export const useGroupStore = defineStore('group', () => {
         loadingGroups.value = false
     }
 
-    async function isIncognito(): Promise<boolean> {
-        if (isIncognitoCache !== null) {
-            return isIncognitoCache
-        }
-
-        const currWindow = await runtime.windows.getCurrent()
-
-        if (currWindow) {
-            isIncognitoCache = currWindow.incognito
-            return currWindow.incognito
-        }
-
-        return false
-    }
+    type LockFuncReturnValue =
+        | { group: null; message: string; failed: true }
+        | { group: Group; message: string; failed: false }
 
     async function lock(
         group: Group,
         pass: string,
         confirm?: string,
-    ): Promise<Group | null> {
+    ): Promise<LockFuncReturnValue> {
         if (group.isEncrypted) {
-            showToast({
-                text: trans('group_already_locked'),
-                type: 'error',
-            })
-            return null
+            return {
+                group: null,
+                message: trans('group_already_locked'),
+                failed: true,
+            }
         }
 
         if (pass === '') {
-            showToast({
-                text: trans('pass_empty'),
-                type: 'error',
-            })
-            return null
+            return {
+                failed: true,
+                message: trans('pass_empty'),
+                group: null,
+            }
+        }
+
+        if (pass.length < config.MIN_PASS_LENGTH) {
+            return {
+                failed: true,
+                message: trans(
+                    'passwords_min_length',
+                    config.MIN_PASS_LENGTH.toString(),
+                ),
+                group: null,
+            }
         }
 
         if (confirm && pass !== confirm) {
-            showToast({
-                text: trans('passwords_not_match'),
-                type: 'error',
-            })
-            return null
+            return {
+                failed: true,
+                message: trans('passwords_not_match'),
+                group: null,
+            }
         }
 
         try {
@@ -112,13 +113,20 @@ export const useGroupStore = defineStore('group', () => {
             encrypted.isEncrypted = true
             encrypted.isPrivate = true
 
-            return encrypted
+            return {
+                failed: false,
+                group: encrypted,
+                message: trans('group_locked'),
+            }
         } catch (err) {
-            showToast({ text: trans('error_occurred'), type: 'error' })
             console.error(err)
         }
 
-        return null
+        return {
+            failed: true,
+            message: trans('error_occurred'),
+            group: null,
+        }
     }
 
     async function unlock(
@@ -246,6 +254,7 @@ export const useGroupStore = defineStore('group', () => {
         await notificationStore.recalculateNotification()
     }
 
+    // Private function
     async function shouldHideGroup(group: Group): Promise<boolean> {
         const isPrivate = await isIncognito()
 
@@ -274,6 +283,7 @@ export const useGroupStore = defineStore('group', () => {
         return false
     }
 
+    // Private function
     async function hideGroups(storageGroups: Group[]): Promise<Group[]> {
         const result: Group[] = []
 
@@ -292,6 +302,23 @@ export const useGroupStore = defineStore('group', () => {
         return result
     }
 
+    // Private function
+    async function isIncognito(): Promise<boolean> {
+        if (isIncognitoCache !== null) {
+            return isIncognitoCache
+        }
+
+        const currWindow = await runtime.windows.getCurrent()
+
+        if (currWindow) {
+            isIncognitoCache = currWindow.incognito
+            return currWindow.incognito
+        }
+
+        return false
+    }
+
+    // Private function
     function groupNotFoundLog(id: number, operation: string): void {
         console.info(`Group "${id}" not found for "${operation}" operation`)
     }

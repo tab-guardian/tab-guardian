@@ -5,7 +5,7 @@ import { createPinia, setActivePinia } from 'pinia'
 import { mount } from '@vue/test-utils'
 import { trans } from '@common/modules'
 import { useSettingsStore } from '@/stores/settings'
-import { getFakeGroup } from '@common/modules/fake'
+import { fakeGroup } from '@common/modules/fake'
 import IsUnlockedBox from '@/components/Views/GroupView/IsUnlockedBox.vue'
 
 describe('IsUnlockedBox', () => {
@@ -17,7 +17,7 @@ describe('IsUnlockedBox', () => {
 
         const wrapper = mount(IsUnlockedBox, {
             props: {
-                group: getFakeGroup(),
+                group: fakeGroup(),
             },
         })
 
@@ -30,7 +30,7 @@ describe('IsUnlockedBox', () => {
 
         const wrapper = mount(IsUnlockedBox, {
             props: {
-                group: getFakeGroup(),
+                group: fakeGroup(),
             },
         })
 

@@ -30,14 +30,18 @@ export const useTabsStore = defineStore('tabs', () => {
         }
 
         await restore(group)
-        const encrypted = await groupStore.lock(group, userPass || pass)
+        const encryption = await groupStore.lock(group, userPass || pass)
 
-        if (!encrypted) {
-            console.error(`Group ${group.id} wasn't encrypted`)
+        showToast({
+            text: encryption.message,
+            type: encryption.failed ? 'error' : 'info',
+        })
+
+        if (encryption.failed) {
             return false
         }
 
-        await groupStore.save(encrypted)
+        await groupStore.save(encryption.group)
 
         return true
     }
