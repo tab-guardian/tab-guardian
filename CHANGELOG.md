@@ -1,11 +1,12 @@
 # Release Notes
 
-## v1.16.0 (2025-10-21)
+## v1.16.0 (2025-10-22)
 - 🧑‍💻 Improved performance for the main (home) page with loading groups.
 - 🧑‍💻 Improved "Add tabs" and "Create" buttons visibility [#84](https://github.com/tab-guardian/tab-guardian/issues/84).
 - 🧑‍💻 Added showing small pin icon on the tab icon in a group if the tab is pinned [#83](https://github.com/tab-guardian/tab-guardian/issues/83).
 - 🧑‍💻 Improve styles for tab icons in a group.
 - 🧑‍💻 Added 1 more "Pin" icon to choose for a group.
+- 🧑‍💻 Added more tests to the codebase.
 - 🐛 Fixed validation error message text when password is empty. It was `password_empty`.
 - 🐛 Fixed not working "Cancel" button when choosing group icon.
 - ✨ Added "Detach URL Lock" functionality to settings [#61](https://github.com/tab-guardian/tab-guardian/issues/61).
