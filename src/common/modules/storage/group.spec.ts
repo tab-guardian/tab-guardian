@@ -3,14 +3,14 @@
 import { describe, it, expect, suite, beforeEach } from 'vitest'
 import { createPinia, setActivePinia } from 'pinia'
 import { saveGroupToStorage } from '@common/modules/storage/group'
-import { getFakeGroup } from '@common/modules/fake'
+import { fakeGroup } from '@common/modules/fake'
 
 describe('storage/group', () => {
     beforeEach(() => setActivePinia(createPinia()))
 
     suite('saveGroupToStorage()', () => {
         it('saves group into storage', async () => {
-            const group = getFakeGroup()
+            const group = fakeGroup()
             await saveGroupToStorage(group)
 
             const itemStr = localStorage.getItem(group.id.toString())

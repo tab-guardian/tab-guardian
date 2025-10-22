@@ -1,55 +1,33 @@
 import type { Link, Group } from '@common/types'
 
-export function getFakeLinks(): Link[] {
+export function fakeLink(fields?: Partial<Link>): Link {
+    fields ??= {}
     const rand = Date.now() + Math.floor(Math.random() * 1000)
 
-    return [
-        {
-            id: 1 + rand,
-            url: 'https://duckduckgo.com/',
-            title: 'DuckDuckGo — Privacy, simplified',
-            favIconUrl: 'https://duckduckgo.com/favicon.ico',
-            isPinned: true,
-        },
-        {
-            id: 2 + rand,
-            url: 'https://serhii.io/',
-            title: 'Блог для программистов 👍 | {S} Serhii',
-            favIconUrl: 'https://serhii.io/favicon.png',
-            isPinned: false,
-        },
-        {
-            id: 3 + rand,
-            url: 'https://telegram.org/',
-            title: 'Telegram Messenger',
-            favIconUrl: 'https://telegram.org/img/favicon.ico',
-            isPinned: false,
-        },
-        {
-            id: 4 + rand,
-            url: 'https://jiskelo.dev/',
-            title: 'Jiskelo',
-            favIconUrl: 'https://jiskelo.dev/favicon.png',
-            isPinned: false,
-        },
-        {
-            id: 5 + rand,
-            url: 'https://shobar.com.ua/',
-            title: 'Shobar',
-            favIconUrl:
-                'https://shobar.com.ua/wp-content/uploads/2020/02/placeholder-1.png',
-            isPinned: false,
-        },
-    ]
+    return {
+        id: fields.id || rand,
+        url: 'https://duckduck.com',
+        title: 'Telegram Messenger',
+        favIconUrl: 'https://placehold.co/50',
+        isPinned: false,
+        ...fields,
+    }
 }
 
-export function getFakeGroup(name: string = 'Test Group'): Group {
+export function fakeLinks(): Link[] {
+    return [fakeLink(), fakeLink(), fakeLink(), fakeLink(), fakeLink()]
+}
+
+export function fakeGroup(fields?: Partial<Group>): Group {
+    fields ??= {}
+
     return {
         id: Math.floor(Date.now() + Math.random() * 1000),
-        name,
-        links: getFakeLinks(),
+        name: fields.name ?? 'Test group',
+        links: fakeLinks(),
         isPrivate: false,
         isEncrypted: false,
         updatedAt: Date.now(),
+        ...fields,
     }
 }
