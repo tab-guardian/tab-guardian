@@ -10,14 +10,14 @@ import { fakeGroup, fakeLink } from '@common/modules/fake'
 describe('groupStore', () => {
     beforeEach(() => setActivePinia(createPinia()))
 
-    suite('getGroup()', () => {
+    suite('get()', () => {
         it('returns group with the right group ID', () => {
             const groupStore = useGroupStore()
 
             const group = fakeGroup()
             groupStore.groups.push(group)
 
-            const result = groupStore.getGroup(group.id)
+            const result = groupStore.get(group.id)
 
             expect(result).not.toBeNull()
             expect(group.id).equal(result!.id)
@@ -29,7 +29,7 @@ describe('groupStore', () => {
             const group = fakeGroup()
             groupStore.groups.push(group)
 
-            const result = groupStore.getGroup(group.name)
+            const result = groupStore.get(group.name)
 
             expect(result).not.toBeNull()
             expect(group.name).equal(result!.name)
@@ -41,7 +41,7 @@ describe('groupStore', () => {
             const group = fakeGroup()
             groupStore.groups.push(group)
 
-            const result = groupStore.getGroup(0)
+            const result = groupStore.get(0)
 
             expect(result).toBeNull()
         })
@@ -51,7 +51,7 @@ describe('groupStore', () => {
             const group = fakeGroup()
             groupStore.groups.push(group)
 
-            const result = groupStore.getGroup('some')
+            const result = groupStore.get('some')
 
             expect(result).toBeNull()
         })

@@ -66,19 +66,19 @@ async function promptEnterPassword(): Promise<void> {
 async function lockGroup(pass: string): Promise<void> {
     encrypting.value = true
 
-    const encryption = await groupStore.lock(props.group, pass)
+    const locking = await groupStore.lock(props.group, pass)
 
     showToast({
-        text: encryption.message,
-        type: encryption.failed ? 'error' : 'info',
+        text: locking.message,
+        type: locking.failed ? 'error' : 'info',
     })
 
-    if (encryption.failed) {
+    if (locking.failed) {
         console.info(`Group ${props.group.id} wasn't encrypted`)
         return
     }
 
-    await groupStore.save(encryption.group)
+    await groupStore.save(locking.group)
     await deletePasswordFromStorage(props.group.id)
 
     encrypting.value = false

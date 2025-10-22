@@ -6,6 +6,7 @@ import { usePopupStore } from '@/stores/popup'
 import { useGroupStore } from '@/stores/group'
 import { useRouter } from 'vue-router'
 import { runtime } from '@common/modules/runtime'
+import { showToast } from '@common/modules/toast'
 
 const props = defineProps<{ group: Group }>()
 
@@ -30,19 +31,27 @@ async function openTabs(): Promise<void> {
     }
 
     await popupStore.show('password', {
-        decrypting: decryptCallback,
+        decrypting: unlockCallback,
         text: trans('enter_pass_unlock_content'),
     })
 }
 
-async function decryptCallback(pass: string): Promise<boolean> {
-    const isSuccess = await groupStore.unlock(props.group, pass, true)
+async function unlockCallback(pass: string): Promise<boolean> {
+    const unlocking = await groupStore.unlock(props.group, pass, true)
 
-    if (isSuccess) {
-        await router.push({ name: 'main' })
+    showToast({
+        text: unlocking.message,
+        type: unlocking.failed ? 'error' : 'info',
+        duration: 5000,
+    })
+
+    if (unlocking.failed) {
+        return false
     }
 
-    return isSuccess
+    await router.push({ name: 'main' })
+
+    return  true
 }
 </script>
 

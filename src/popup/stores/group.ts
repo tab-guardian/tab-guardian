@@ -9,7 +9,6 @@ import { useCryptoStore } from '@/stores/crypto'
 import { useProgressStore } from '@/stores/progress'
 import { useTabsStore } from '@/stores/tabs'
 import { getDecryptionError } from '@/errors'
-import { showToast } from '@common/modules/toast'
 import { getHashedCurrentUrl } from '@common/modules/url'
 import { validatePassword } from '@common/modules/validation/group'
 import { savePasswordToStorage } from '@common/modules/storage/password'
@@ -36,7 +35,7 @@ export const useGroupStore = defineStore('group', () => {
     /**
      * @param {string|number} id Group ID or name
      */
-    function getGroup(id: number | string): Group | null {
+    function get(id: number | string): Group | null {
         const group = groups.value.find(group => {
             if (typeof id === 'string') {
                 return group.name === id
@@ -64,8 +63,8 @@ export const useGroupStore = defineStore('group', () => {
     }
 
     type LockFuncReturnValue =
-        | { group: null; message: string; failed: true }
-        | { group: Group; message: string; failed: false }
+        | { message: string; failed: true; group: null }
+        | { message: string; failed: false; group: Group }
 
     async function lock(
         group: Group,
@@ -74,9 +73,9 @@ export const useGroupStore = defineStore('group', () => {
     ): Promise<LockFuncReturnValue> {
         if (group.isEncrypted) {
             return {
-                group: null,
                 message: trans('group_already_locked'),
                 failed: true,
+                group: null,
             }
         }
 
@@ -84,9 +83,9 @@ export const useGroupStore = defineStore('group', () => {
 
         if (validationError) {
             return {
-                group: null,
                 message: validationError,
                 failed: true,
+                group: null,
             }
         }
 
@@ -96,10 +95,12 @@ export const useGroupStore = defineStore('group', () => {
             encrypted.isEncrypted = true
             encrypted.isPrivate = true
 
+            await save(encrypted)
+
             return {
                 failed: false,
-                group: encrypted,
                 message: trans('group_locked'),
+                group: encrypted,
             }
         } catch (err) {
             console.error(err)
@@ -107,40 +108,44 @@ export const useGroupStore = defineStore('group', () => {
 
         return {
             failed: true,
-            message: trans('error_occurred'),
             group: null,
+            message: trans('error_occurred'),
         }
     }
+
+    type UnlockFuncReturnValue =
+        | { message: string; failed: true; group: null }
+        | { message: string; failed: false; group: Group }
 
     async function unlock(
         group: Group,
         password: string,
         openTabs: boolean = false,
-    ): Promise<boolean> {
+    ): Promise<UnlockFuncReturnValue> {
         try {
             const decryptedGroup = await cryptoStore.decryptGroup(group, password)
             await save(decryptedGroup)
+
+            if (settingsStore.settings.rememberPasswordAfterUnlock) {
+                await savePasswordToStorage(group.id, password)
+            }
+
+            if (openTabs) {
+                await tabsStore.openTabs(group, password)
+            }
+
+            return {
+                failed: false,
+                message: trans('group_unlocked'),
+                group: decryptedGroup,
+            }
         } catch (err: any) {
-            showToast({
-                text: getDecryptionError(err),
-                type: 'error',
-                duration: 5000,
-            })
-            return false
+            return {
+                message: getDecryptionError(err),
+                failed: true,
+                group: null,
+            }
         }
-
-        if (settingsStore.settings.rememberPasswordAfterUnlock) {
-            await savePasswordToStorage(group.id, password)
-        }
-
-        if (openTabs) {
-            await tabsStore.openTabs(group, password)
-            return true
-        }
-
-        showToast({ text: trans('group_unlocked') })
-
-        return true
     }
 
     // Add groups to memory and save them to storage
@@ -168,7 +173,7 @@ export const useGroupStore = defineStore('group', () => {
     }
 
     async function replaceGroup(group: Group): Promise<void> {
-        const existing = getGroup(group.name)
+        const existing = get(group.name)
 
         if (existing) {
             await deleteGroup(existing.id)
@@ -176,7 +181,7 @@ export const useGroupStore = defineStore('group', () => {
     }
 
     async function update(id: number, updates: Partial<Group>): Promise<void> {
-        const group = getGroup(id)
+        const group = get(id)
 
         if (!group) {
             groupNotFoundLog(id, 'update')
@@ -201,7 +206,7 @@ export const useGroupStore = defineStore('group', () => {
     }
 
     async function deleteLinkFrom(id: number, linkId: number): Promise<void> {
-        const group = getGroup(id)
+        const group = get(id)
 
         if (!group) {
             groupNotFoundLog(id, 'deleteLinkFrom')
@@ -214,7 +219,7 @@ export const useGroupStore = defineStore('group', () => {
     }
 
     async function insertLinksInto(id: number, links: Link[]): Promise<void> {
-        const group = getGroup(id)
+        const group = get(id)
 
         if (!group) {
             groupNotFoundLog(id, 'insertLinksInto')
@@ -317,7 +322,7 @@ export const useGroupStore = defineStore('group', () => {
         insertLinksInto,
         lock,
         unlock,
-        getGroup,
+        get,
         deleteAllGroups,
         loadGroupsFromStorage,
         addAndSaveGroups,

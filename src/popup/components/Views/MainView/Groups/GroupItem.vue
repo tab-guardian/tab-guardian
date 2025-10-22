@@ -5,6 +5,7 @@ import { useRouter } from 'vue-router'
 import { trans } from '@common/modules'
 import { usePopupStore } from '@/stores/popup'
 import { useGroupStore } from '@/stores/group'
+import { showToast } from '@common/modules/toast'
 import ChevronRightIcon from '@common/components/Icons/ChevronRightIcon.vue'
 import OpenTabsButton from '@/components/Views/MainView/Groups/OpenTabsButton.vue'
 import GroupIcon from '@/components/Views/MainView/Groups/GroupIcon.vue'
@@ -35,7 +36,7 @@ const groupClasses = computed(() => {
 async function navigateToGroupView(): Promise<void> {
     if (props.group.isPrivate && props.group.isEncrypted) {
         await popupStore.show('password', {
-            decrypting: decryptCallback,
+            decrypting: unlockCallback,
             text: trans('enter_pass_unlock_content'),
         })
 
@@ -45,17 +46,25 @@ async function navigateToGroupView(): Promise<void> {
     await router.push({ name: 'group', params: { id: props.group.id } })
 }
 
-async function decryptCallback(pass: string): Promise<boolean> {
-    const isSuccess = await groupStore.unlock(props.group, pass)
+async function unlockCallback(pass: string): Promise<boolean> {
+    const unlocking = await groupStore.unlock(props.group, pass)
 
-    if (isSuccess) {
-        await router.push({
-            name: 'group',
-            params: { id: props.group.id },
-        })
+    showToast({
+        text: unlocking.message,
+        type: unlocking.failed ? 'error' : 'info',
+        duration: 5000,
+    })
+
+    if (unlocking.failed) {
+        return false
     }
 
-    return isSuccess
+    await router.push({
+        name: 'group',
+        params: { id: props.group.id },
+    })
+
+    return true
 }
 </script>
 

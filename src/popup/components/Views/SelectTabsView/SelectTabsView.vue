@@ -134,19 +134,19 @@ async function createPrivateGroup(group: Group): Promise<Group | null> {
         return null
     }
 
-    const encryption = await groupStore.lock(group, pass, confirm)
+    const locking = await groupStore.lock(group, pass, confirm)
 
     showToast({
-        text: encryption.message,
-        type: encryption.failed ? 'error' : 'info',
+        text: locking.message,
+        type: locking.failed ? 'error' : 'info',
     })
 
-    if (encryption.failed) {
+    if (locking.failed) {
         console.info(`Group ${group.id} wasn't encrypted`)
         return null
     }
 
-    return encryption.group
+    return locking.group
 }
 
 function showToastMessage(): void {

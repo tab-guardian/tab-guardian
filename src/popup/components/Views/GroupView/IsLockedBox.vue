@@ -5,6 +5,7 @@ import { trans } from '@common/modules'
 import { usePopupStore } from '@/stores/popup'
 import { useGroupStore } from '@/stores/group'
 import { useRouter } from 'vue-router'
+import { showToast } from '@common/modules/toast'
 import LockOpenIcon from '@common/components/Icons/LockOpenIcon.vue'
 import WarningBox from '@common/components/WarningBox.vue'
 import Button from '@common/components/Form/Button.vue'
@@ -18,22 +19,30 @@ const encrypting = ref<boolean>(false)
 
 async function promptEnterPassword(): Promise<void> {
     await popupStore.show('password', {
-        decrypting: decryptCallback,
+        decrypting: unlockCallback,
         text: trans('enter_pass_unlock_content'),
     })
 }
 
-async function decryptCallback(pass: string): Promise<boolean> {
-    const isSuccess = await groupStore.unlock(props.group, pass)
+async function unlockCallback(pass: string): Promise<boolean> {
+    const unlocking = await groupStore.unlock(props.group, pass)
 
-    if (isSuccess) {
-        await router.push({
-            name: 'group',
-            params: { id: props.group.id },
-        })
+    showToast({
+        text: unlocking.message,
+        type: unlocking.failed ? 'error' : 'info',
+        duration: 5000,
+    })
+
+    if (unlocking.failed) {
+        return false
     }
 
-    return isSuccess
+    await router.push({
+        name: 'group',
+        params: { id: props.group.id },
+    })
+
+    return true
 }
 </script>
 

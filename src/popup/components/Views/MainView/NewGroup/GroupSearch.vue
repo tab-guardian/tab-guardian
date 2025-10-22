@@ -6,6 +6,7 @@ import { usePopupStore } from '@/stores/popup'
 import { useRouter } from 'vue-router'
 import { ref, onMounted, onUnmounted } from 'vue'
 import { trans } from '@common/modules'
+import { showToast } from '@common/modules/toast'
 import MagnifyingGlassIcon from '@common/components/Icons/MagnifyingGlassIcon.vue'
 
 const groupStore = useGroupStore()
@@ -56,19 +57,27 @@ async function openFirstGroup(e: KeyboardEvent): Promise<void> {
     }
 
     await popupStore.show('password', {
-        decrypting: async pass => await decryptCallback(group, pass),
+        decrypting: async pass => await unlockCallback(group, pass),
         text: trans('enter_pass_unlock_content'),
     })
 }
 
-async function decryptCallback(group: Group, pass: string): Promise<boolean> {
-    const isSuccess = await groupStore.unlock(group, pass, true)
+async function unlockCallback(group: Group, pass: string): Promise<boolean> {
+    const unlocking = await groupStore.unlock(group, pass, true)
 
-    if (isSuccess) {
-        await router.push({ name: 'main' })
+    showToast({
+        text: unlocking.message,
+        type: unlocking.failed ? 'error' : 'info',
+        duration: 5000,
+    })
+
+    if (unlocking.failed) {
+        return false
     }
 
-    return isSuccess
+    await router.push({ name: 'main' })
+
+    return true
 }
 
 function focusOnSearch(e: KeyboardEvent): void {
