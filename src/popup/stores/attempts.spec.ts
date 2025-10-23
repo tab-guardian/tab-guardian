@@ -5,7 +5,10 @@ import { createPinia, setActivePinia } from 'pinia'
 import { useAttemptsStore } from '@/stores/attempts'
 
 describe('attemptsStore', () => {
-    beforeEach(() => setActivePinia(createPinia()))
+    beforeEach(() => {
+        localStorage.clear()
+        setActivePinia(createPinia())
+    })
 
     it('can do 1 attempt', async () => {
         const attempt = await useAttemptsStore().makeAttempt() // 1

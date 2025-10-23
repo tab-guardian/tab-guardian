@@ -5,7 +5,10 @@ import { useAppStore } from '@/stores/app'
 import { createPinia, setActivePinia } from 'pinia'
 
 describe('appStore', () => {
-    beforeEach(() => setActivePinia(createPinia()))
+    beforeEach(() => {
+        localStorage.clear()
+        setActivePinia(createPinia())
+    })
 
     it('linkBuffer is null', () => {
         const store = useAppStore()

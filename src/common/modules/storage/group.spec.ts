@@ -6,7 +6,10 @@ import { saveGroupToStorage } from '@common/modules/storage/group'
 import { fakeGroup } from '@common/modules/fake'
 
 describe('storage/group', () => {
-    beforeEach(() => setActivePinia(createPinia()))
+    beforeEach(() => {
+        localStorage.clear()
+        setActivePinia(createPinia())
+    })
 
     suite('saveGroupToStorage()', () => {
         it('saves group into storage', async () => {

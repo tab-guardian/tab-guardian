@@ -9,7 +9,10 @@ import { fakeGroup } from '@common/modules/fake'
 import IsUnlockedBox from '@/components/Views/GroupView/IsUnlockedBox.vue'
 
 describe('IsUnlockedBox', () => {
-    beforeEach(() => setActivePinia(createPinia()))
+    beforeEach(() => {
+        localStorage.clear()
+        setActivePinia(createPinia())
+    })
 
     it('"New password" checkbox is visible when password is set to cached', () => {
         const settingsStore = useSettingsStore()
