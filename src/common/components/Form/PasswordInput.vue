@@ -1,8 +1,12 @@
 <script setup lang="ts">
+import { config } from '@common/config'
+import { computed, onMounted } from 'vue'
+import { trans } from '@common/modules'
 import Input from '@common/components/Form/Input.vue'
 
 const emit = defineEmits<{
     (e: 'loaded', input: HTMLInputElement): void
+    (e: 'hasError', has: boolean): void
 }>()
 
 type Props = {
@@ -11,29 +15,41 @@ type Props = {
     withButton?: boolean
     loading?: boolean
     error?: string | null
-    minlength?: number
-    maxlength?: number
+    withMinLength?: boolean
 }
 
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
     loading: false,
     withButton: false,
+    withMinLength: false,
 })
 
-const modelValue = defineModel()
+onMounted(() => emit('hasError', !pass.value))
+
+const pass = defineModel<string | null>()
+
+const passErr = computed<string>(() => {
+    if (!props.withMinLength) {
+        return ''
+    }
+
+    return pass.value && pass.value.length < config.MIN_PASS_LENGTH
+        ? trans('passwords_min_length', config.MIN_PASS_LENGTH.toString())
+        : ''
+})
 </script>
 
 <template>
     <Input
-        @loaded="el => emit('loaded', el)"
+        v-model="pass"
+        @loaded="emit('loaded', $event)"
+        @keyup="emit('hasError', passErr !== '' || !pass)"
         type="password"
-        v-model="modelValue"
+        :error="passErr || error"
+        :with-button="withButton"
+        :minlength="withMinLength ? config.MIN_PASS_LENGTH : undefined"
         :label
         :id
-        :withButton
         :loading
-        :error
-        :minlength
-        :maxlength
     />
 </template>

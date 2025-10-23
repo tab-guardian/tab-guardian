@@ -3,7 +3,7 @@ import { runtime } from '@common/modules/runtime'
 
 export async function openSettingsPage(): Promise<tabs.Tab | null> {
     const tab = await runtime.tabs.create({
-        url: runtime.getURL('settings.html'),
+        url: runtime.getUrl('settings.html'),
         active: true,
     })
 

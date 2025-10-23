@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
 import { useGroupStore } from '@/stores/group'
-import { trans } from '@common/modules'
+import { logger, trans } from '@common/modules'
 import { usePopupStore } from '@/stores/popup'
-import { isImageURL } from '@common/modules/url'
-import { validateImageURL } from '@common/modules/validation/url'
+import { isImageUrl } from '@common/modules/url'
+import { validateImageUrl } from '@common/modules/validation/url'
 import Popup from '@/components/Popups/Popup.vue'
 import Button from '@common/components/Form/Button.vue'
 import Input from '@common/components/Form/Input.vue'
@@ -15,15 +15,15 @@ const groupStore = useGroupStore()
 
 const url = ref<string>('')
 
-const errorMessage = computed<string | null>(() => validateImageURL(url.value))
-const preventSubmit = computed<boolean>(() => validateImageURL(url.value) !== null)
+const errorMessage = computed<string | null>(() => validateImageUrl(url.value))
+const preventSubmit = computed<boolean>(() => validateImageUrl(url.value) !== null)
 
 onMounted(setImageIcon)
 
 function setImageIcon(): void {
     const group = groupStore.selectedGroup
 
-    if (!group || !isImageURL(group.icon)) {
+    if (!group || !isImageUrl(group.icon)) {
         return
     }
 
@@ -36,22 +36,22 @@ async function chooseImageIcon(): Promise<void> {
     }
 
     if (!groupStore.selectedGroup) {
-        console.warn('No group selected rebinding URL')
+        logger().warn('No group selected for choosing image icon')
         return
     }
 
-    closeImageIconPopup()
+    hideImageIconPopup()
 }
 
-function closeImageIconPopup(): void {
-    popupStore.hide('chooseImageIcon', { url: url.value })
+function hideImageIconPopup(): void {
+    popupStore.hide('chooseImageIcon', { url: null })
 }
 </script>
 
 <template>
     <Popup
         v-if="groupStore.selectedGroup"
-        @cancel="closeImageIconPopup"
+        @cancel="hideImageIconPopup"
         :content="trans('enter_image_url')"
         :description="trans('type_any_image_url_to_set_it')"
     >
@@ -70,11 +70,11 @@ function closeImageIconPopup(): void {
         />
 
         <template #buttons>
-            <Button @click="closeImageIconPopup" is="outline">
+            <Button @click="hideImageIconPopup" is="outline">
                 {{ trans('cancel') }}
             </Button>
 
-            <Button @click="chooseImageIcon" :disabled="preventSubmit">
+            <Button is="success" @click="chooseImageIcon" :disabled="preventSubmit">
                 <CheckIcon width="20" height="20" />
                 {{ trans('select') }}
             </Button>

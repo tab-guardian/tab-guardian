@@ -43,7 +43,7 @@ async function exportGroups(): Promise<void> {
 
     const resp = await popupStore.show('newPassword', {})
 
-    if (!resp || resp.newPass === '') {
+    if (!resp || !resp.newPass) {
         exporting.value = false
         return
     }

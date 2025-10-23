@@ -3,7 +3,7 @@ import type { Group, Link, SelectTabsOperation } from '@common/types'
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useNewGroupStore } from '@/stores/newGroup'
-import { trans } from '@common/modules'
+import { logger, trans } from '@common/modules'
 import { useGroupStore } from '@/stores/group'
 import { getCurrentLinks } from '@common/modules/tabs/getCurrentLinks'
 import { showToast } from '@common/modules/toast'
@@ -61,7 +61,7 @@ async function handleCreateGroup(): Promise<void> {
     const group = await createGroup()
 
     if (!group) {
-        console.warn(`Can't save group because it wasn't created`)
+        logger().warn(`Can't save group because it wasn't created`)
         return
     }
 
@@ -97,7 +97,7 @@ async function handleSaveGroup(): Promise<void> {
 
     saving.value = true
 
-    await groupStore.saveLinksTo(group.id, selectedLinks.value)
+    await groupStore.insertLinksInto(group.id, selectedLinks.value)
     showToastMessage()
 
     if (closeAllTabs.value) {
@@ -130,18 +130,23 @@ async function createPrivateGroup(group: Group): Promise<Group | null> {
     const confirm = newGroupStore.choices.confirmPassword
 
     if (!pass || !confirm) {
-        console.error(`Password and confirm must not be empty`)
+        logger().error(`Password and confirm must not be empty`)
         return null
     }
 
-    const encryptedGroup = await groupStore.encrypt(group, pass, confirm)
+    const locking = await groupStore.lock(group, pass, confirm)
 
-    if (!encryptedGroup) {
-        console.info(`Group ${group.id} wasn't encrypted`)
+    showToast({
+        text: locking.message,
+        type: locking.failed ? 'error' : 'info',
+    })
+
+    if (locking.failed) {
+        logger().info(`Group ${group.id} wasn't encrypted`)
         return null
     }
 
-    return group
+    return locking.group
 }
 
 function showToastMessage(): void {
@@ -211,7 +216,12 @@ function toggleSelect(link: Link): void {
             </VueDraggableNext>
         </div>
 
-        <div class="flex items-center justify-between gap-3 mt-3">
+        <div
+            :class="[
+                'flex items-center justify-between gap-3 pt-3',
+                'sticky bottom-0 inset-x-0 bg-page',
+            ]"
+        >
             <div class="text-right">
                 <SlideSwitch v-model="closeAllTabs">
                     {{ trans('close_selected_tabs') }}

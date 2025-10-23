@@ -14,7 +14,7 @@ const newGroupStore = useNewGroupStore()
 
 async function askForGroupName(isPrivate: boolean) {
     newGroupStore.choices.isPrivate = isPrivate
-    await popupStore.show('newGroupName', {})
+    await popupStore.show('groupName', {})
 }
 </script>
 
@@ -31,7 +31,7 @@ async function askForGroupName(isPrivate: boolean) {
         <NewGroupButton
             v-tippy="trans('private_groups_are_secure')"
             @click="askForGroupName(true)"
-            class="w-24 bg-private hover:bg-private-hover"
+            class="w-24 bg-success hover:bg-success-hover"
         >
             <ShieldCheckIcon class="size-8" />
         </NewGroupButton>

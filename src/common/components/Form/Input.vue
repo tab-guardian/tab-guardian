@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref, computed, watchEffect } from 'vue'
 import Tip from '@common/components/Tip.vue'
-import SmallSpinner from '@common/components/SmallSpinner.vue'
 import ArrowRightIcon from '@common/components/Icons/ArrowRightIcon.vue'
+import Button from '@common/components/Form/Button.vue'
 
 const emit = defineEmits<{
     (e: 'loaded', input: HTMLInputElement): void
@@ -85,19 +85,13 @@ watchEffect(() => {
                 </small>
             </div>
 
-            <button
+            <Button
                 v-if="withButton"
                 type="submit"
-                :disabled="loading"
-                :class="[
-                    'bg-private transition-colors w-14 h-9 rounded-md',
-                    'flex items-center justify-center text-secondary',
-                    loading ? 'opacity-70' : 'hover:bg-private-hover',
-                ]"
-            >
-                <SmallSpinner v-if="loading" width="20" />
-                <ArrowRightIcon v-else width="20" />
-            </button>
+                :loading
+                is="success"
+                :icon="ArrowRightIcon"
+            />
         </div>
     </div>
 </template>

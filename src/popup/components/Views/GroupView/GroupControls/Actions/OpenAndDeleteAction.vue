@@ -31,7 +31,7 @@ async function openAndDeleteTabs(): Promise<void> {
         }"
     >
         <img
-            :src="runtime.getURL('images/tab-icons/up-remove.png')"
+            :src="runtime.getUrl('images/tab-icons/up-remove.png')"
             alt="Open and delete tabs"
             class="dark:invert"
         />

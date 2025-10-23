@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import type { Group } from '@common/types'
-import { cloneDeep } from 'lodash'
 import { trans } from '@common/modules'
 import { useGroupStore } from '@/stores/group'
 import { usePopupStore } from '@/stores/popup'
 import { showToast } from '@common/modules/toast'
 import { deletePasswordFromStorage } from '@common/modules/storage/password'
+import { cloneDeep } from 'lodash'
 import MenuItem from '@/components/MenuItem.vue'
 import LockOpenIcon from '@common/components/Icons/LockOpenIcon.vue'
 
@@ -29,7 +29,7 @@ async function makeOpen(): Promise<void> {
 
     group.isPrivate = false
     delete group.algo
-    delete group.bindURL
+    delete group.bindUrl
     delete group.hide
 
     for (const link of group.links) {

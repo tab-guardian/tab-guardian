@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import type { Group } from '@common/types'
 import { ref } from 'vue'
-import { trans } from '@common/modules'
+import { logger, trans } from '@common/modules'
 import { useGroupStore } from '@/stores/group'
 import { usePopupStore } from '@/stores/popup'
 import { useSettingsStore } from '@/stores/settings'
 import { showToast } from '@common/modules/toast'
 import {
+    savePasswordToStorage,
     getPasswordFromStorage,
     deletePasswordFromStorage,
 } from '@common/modules/storage/password'
@@ -58,26 +59,29 @@ async function promptEnterPassword(): Promise<void> {
         return
     }
 
-    await groupStore.updatePassword(newPass)
+    await savePasswordToStorage(props.group.id, newPass)
     await lockGroup(newPass)
 }
 
 async function lockGroup(pass: string): Promise<void> {
     encrypting.value = true
 
-    const encrypted = await groupStore.encrypt(props.group, pass)
+    const locking = await groupStore.lock(props.group, pass)
 
-    if (!encrypted) {
-        console.info(`Group ${props.group.id} wasn't encrypted`)
+    showToast({
+        text: locking.message,
+        type: locking.failed ? 'error' : 'info',
+    })
+
+    if (locking.failed) {
+        logger().info(`Group ${props.group.id} wasn't encrypted`)
         return
     }
 
-    await groupStore.save(encrypted)
+    await groupStore.save(locking.group)
     await deletePasswordFromStorage(props.group.id)
 
     encrypting.value = false
-
-    showToast({ text: trans('group_locked') })
 }
 </script>
 

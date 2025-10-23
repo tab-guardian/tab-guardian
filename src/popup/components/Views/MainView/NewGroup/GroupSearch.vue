@@ -2,19 +2,21 @@
 import type { Group } from '@common/types'
 import { useGroupStore } from '@/stores/group'
 import { useTabsStore } from '@/stores/tabs'
-import { useGroupUnlock } from '@/composables/useGroupUnlock'
 import { usePopupStore } from '@/stores/popup'
+import { useRouter } from 'vue-router'
 import { ref, onMounted, onUnmounted } from 'vue'
-import { trans } from '@common/modules'
+import { logger, trans } from '@common/modules'
+import { showToast } from '@common/modules/toast'
 import MagnifyingGlassIcon from '@common/components/Icons/MagnifyingGlassIcon.vue'
 
 const groupStore = useGroupStore()
 const tabsStore = useTabsStore()
+const router = useRouter()
+
 const initialGroups = ref<Group[]>([])
 const inpElem = ref<HTMLInputElement | null>(null)
 const query = ref<string>('')
 const popupStore = usePopupStore()
-const { unlockGroup } = useGroupUnlock()
 const placeholder =
     navigator.userAgent.indexOf('Mac OS X') != -1 ? '⌃⌘k' : 'ctrl+alt+k'
 
@@ -54,15 +56,33 @@ async function openFirstGroup(e: KeyboardEvent): Promise<void> {
         return
     }
 
-    await popupStore.show('enterPassword', {
-        decrypting: async pass => await unlockGroup(group, pass, true),
+    await popupStore.show('password', {
+        decrypting: async pass => await unlockCallback(group, pass),
         text: trans('enter_pass_unlock_content'),
     })
 }
 
+async function unlockCallback(group: Group, pass: string): Promise<boolean> {
+    const unlocking = await groupStore.unlock(group, pass, true)
+
+    showToast({
+        text: unlocking.message,
+        type: unlocking.failed ? 'error' : 'info',
+        duration: 5000,
+    })
+
+    if (unlocking.failed) {
+        return false
+    }
+
+    await router.push({ name: 'main' })
+
+    return true
+}
+
 function focusOnSearch(e: KeyboardEvent): void {
     if (!inpElem.value) {
-        console.warn('Input element is not defined')
+        logger().warn('Input element is not defined')
         return
     }
 
@@ -83,7 +103,7 @@ function focusOnSearch(e: KeyboardEvent): void {
 
 function filterGroups(): void {
     if (!inpElem.value) {
-        console.warn('Input element is not defined')
+        logger().warn('Input element is not defined')
         return
     }
 

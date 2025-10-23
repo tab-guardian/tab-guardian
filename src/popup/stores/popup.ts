@@ -11,21 +11,21 @@ const defaultEmptyPopup = {
 }
 
 const defaultPopups: Popups = {
-    groupMenuView: cloneDeep(defaultEmptyPopup),
-    confirm: cloneDeep(defaultEmptyPopup),
-    groupName: cloneDeep(defaultEmptyPopup),
-    bindGroup: cloneDeep(defaultEmptyPopup),
-    enterPassword: cloneDeep(defaultEmptyPopup),
-    linkMenuView: cloneDeep(defaultEmptyPopup),
-    newGroupName: cloneDeep(defaultEmptyPopup),
-    editGroupName: cloneDeep(defaultEmptyPopup),
-    newPassword: cloneDeep(defaultEmptyPopup),
-    chooseEmoji: cloneDeep(defaultEmptyPopup),
-    chooseImageIcon: cloneDeep(defaultEmptyPopup),
+    groupMenuView: structuredClone(defaultEmptyPopup),
+    confirm: structuredClone(defaultEmptyPopup),
+    removeUrlLock: structuredClone(defaultEmptyPopup),
+    groupName: structuredClone(defaultEmptyPopup),
+    bindGroup: structuredClone(defaultEmptyPopup),
+    password: structuredClone(defaultEmptyPopup),
+    linkMenuView: structuredClone(defaultEmptyPopup),
+    editGroupName: structuredClone(defaultEmptyPopup),
+    newPassword: structuredClone(defaultEmptyPopup),
+    chooseEmoji: structuredClone(defaultEmptyPopup),
+    chooseImageIcon: structuredClone(defaultEmptyPopup),
 }
 
 export const usePopupStore = defineStore('popup', () => {
-    const popups = ref<Popups>(cloneDeep(defaultPopups))
+    const popups = ref<Popups>(structuredClone(defaultPopups))
 
     function hideAll(): void {
         for (const key in popups.value) {

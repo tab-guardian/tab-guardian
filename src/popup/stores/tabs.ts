@@ -30,21 +30,32 @@ export const useTabsStore = defineStore('tabs', () => {
         }
 
         await restore(group)
-        const encrypted = await groupStore.encrypt(group, userPass || pass)
+        const encryption = await groupStore.lock(group, userPass || pass)
 
-        if (!encrypted) {
-            console.error(`Group ${group.id} wasn't encrypted`)
+        showToast({
+            text: encryption.message,
+            type: encryption.failed ? 'error' : 'info',
+        })
+
+        if (encryption.failed) {
             return false
         }
 
-        await groupStore.save(encrypted)
+        await groupStore.save(encryption.group)
 
         return true
     }
 
     async function restore(group: Group): Promise<void> {
         group.updatedAt = Date.now()
-        await groupStore.incrementOpenedTimes(group)
+
+        let openedTimes = 1
+
+        if (group.openedTimes) {
+            openedTimes = group.openedTimes + 1
+        }
+
+        await groupStore.update(group.id, { openedTimes })
         await restoreTabs(group.links)
     }
 
@@ -65,8 +76,8 @@ export const useTabsStore = defineStore('tabs', () => {
         }
 
         if (links.length > 0) {
-            await groupStore.deleteAllLinks(group.id)
-            await groupStore.saveLinksTo(group.id, links)
+            await groupStore.update(group.id, { links: [] })
+            await groupStore.insertLinksInto(group.id, links)
         }
 
         if (closeAllTabs) {

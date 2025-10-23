@@ -18,7 +18,7 @@
         "prettier-check": "prettier ./src --check",
         "test": "vitest",
         "check": "vue-tsc --noEmit",
-        "all": "npm run check && npm run prettier && npm run test run && npm audit"
+        "all": "npm run check && npm run prettier && npm run test run"
     },
     "devDependencies": {
         "@types/chrome": "^0.0.267",

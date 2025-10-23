@@ -1,7 +1,7 @@
 import type { Attempts } from '@common/types'
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
-import { trans } from '@common/modules'
+import { logger, trans } from '@common/modules'
 import { runtime } from '@common/modules/runtime'
 import { config } from '@common/config'
 
@@ -36,7 +36,7 @@ export const useAttemptsStore = defineStore('attempts', () => {
 
     async function save(): Promise<void> {
         if (!attempts.value) {
-            console.error('Attempts value is not set')
+            logger().error('"attempts.value" is not set in "save" function')
             return
         }
 

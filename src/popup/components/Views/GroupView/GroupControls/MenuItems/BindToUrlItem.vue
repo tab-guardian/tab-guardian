@@ -18,7 +18,7 @@ async function rebind(): Promise<void> {
 <template>
     <MenuItem
         @click="rebind"
-        :label="group.bindURL ? trans('rebind_to_other_url') : trans('bind_to_url')"
+        :label="group.bindUrl ? trans('rebind_to_other_url') : trans('bind_to_url')"
         :icon="LinkIcon"
     />
 </template>

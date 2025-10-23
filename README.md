@@ -15,13 +15,14 @@ Here is what makes Tab Guardian a great tool for managing your tabs:
 - [x] Organize with drag-and-drop sorting
 - [x] Protect sensitive groups with encryption and password locks
 - [x] Privately export a single protected group into an encrypted file for later use or transfer
-- [x] Export and import all public groups across devices and browsers
+- [x] Export and import all open groups across devices and browsers
 - [x] Customize groups with icons or emojis for quick recognition
 - [x] Hide groups until needed by binding them to specific URLs
 - [x] User-friendly interface with tooltips and confirmation popups
 - [x] Highly configurable to suit your workflow
 - [x] Multi-language support 🇬🇧 🇷🇺 🇨🇳 based on your system language
 - [x] Works with all modern browsers: Chrome, Firefox, Edge, Brave, Zen, and more
+- [x] Convert open groups to private
 
 ## Links
 - [Firefox ADD-ONS](https://addons.mozilla.org/firefox/addon/tab-guardian/)
@@ -37,7 +38,7 @@ You can build the extension in 3 ways:
 It will generate `firefox.zip`, `chrome.zip` and `source.zip` files inside of your project's root.
 
 ## Start working on the source code
-All necessary scripts are in package.json file. You need to have [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/lang/en/) JavaScript package managers.
+All necessary scripts are in package.json file. You need to have [npm](https://www.npmjs.com/) JavaScript package managers (or other alternative).
 
 ### Installation
 **Clone the repo**
@@ -60,7 +61,7 @@ Check your `.env` file and set `VITE_DEV_LOCALE` to language that you prefer.
 
 
 ### Code style
-Don't worry about the code style. We use [Prettier](https://prettier.io/) to format the code. You can run it manually by executing `yarn prettier` or `npm run prettier` to format the code, or `yarn prettier-check` or `npm run prettier-check` to check if the code is formatted correctly.
+Don't worry about the code style. We use [Prettier](https://prettier.io/) to format the code. You can run it manually by executing `npm run prettier` to format the code, or `npm run prettier-check` to check if the code is formatted correctly.
 
 ## Contribute
 ### NPM Commands Available

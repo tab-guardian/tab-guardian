@@ -1,14 +1,14 @@
 import { runtime } from '@common/modules/runtime'
 import { isRuntime } from '@common/modules/runtime/utils'
 import { removeTrail } from '@common/modules'
-import { validateImageURL } from '@common/modules/validation/url'
+import { validateImageUrl } from '@common/modules/validation/url'
 
-export async function hashURL(url: string): Promise<string> {
-    const trimmedURL = removeTrail(url, '/')
+export async function hashUrl(url: string): Promise<string> {
+    const trimmed = removeTrail(url, '/')
 
     const arrBuffer = await crypto.subtle.digest(
         'SHA-256',
-        new TextEncoder().encode(trimmedURL),
+        new TextEncoder().encode(trimmed),
     )
 
     return Array.from(new Uint8Array(arrBuffer))
@@ -16,7 +16,7 @@ export async function hashURL(url: string): Promise<string> {
         .join('')
 }
 
-export async function getCurrentURL(): Promise<string | null> {
+export async function getCurrentUrl(): Promise<string | null> {
     if (isRuntime('web')) {
         return window.location.href
     }
@@ -39,11 +39,11 @@ export async function getCurrentURL(): Promise<string | null> {
     return url
 }
 
-export async function getHashedCurrentURL(): Promise<string | null> {
-    const url = await getCurrentURL()
-    return url ? await hashURL(url) : null
+export async function getHashedCurrentUrl(): Promise<string | null> {
+    const url = await getCurrentUrl()
+    return url ? await hashUrl(url) : null
 }
 
-export function isImageURL(url: string | null | undefined): boolean {
-    return url ? validateImageURL(url) === null : false
+export function isImageUrl(url: string | null | undefined): boolean {
+    return url ? validateImageUrl(url) === null : false
 }

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Group } from '@common/types'
 import { computed } from 'vue'
-import { trans } from '@common/modules'
+import { logger, trans } from '@common/modules'
 import { usePopupStore } from '@/stores/popup'
 import { useGroupStore } from '@/stores/group'
 import { showToast } from '@common/modules/toast'
@@ -30,7 +30,7 @@ const sharedData = computed(() => {
 
 async function yankLink(action: 'copy' | 'cut', successMsg: string): Promise<void> {
     if (!group.value) {
-        console.warn(`Cannot ${action} the link because group.value is null`)
+        logger().warn(`Cannot ${action} the link because group.value is null`)
         return
     }
 

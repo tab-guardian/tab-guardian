@@ -1,5 +1,6 @@
 import type { PlatformRuntime } from '@common/types/runtime'
 import { mapToTab, mapToWindow } from '@common/modules/runtime/maps'
+import { logger } from '@common/modules'
 import {
     getFromExtentionStorage,
     throwIfQuotaExceeds,
@@ -11,7 +12,7 @@ export function getChromeRuntimeAdapter(): PlatformRuntime {
             return chrome.i18n.getMessage(msg, args)
         },
 
-        getURL(path) {
+        getUrl(path) {
             return chrome.runtime.getURL(path)
         },
 
@@ -70,8 +71,7 @@ export function getChromeRuntimeAdapter(): PlatformRuntime {
 
             async set(key, value) {
                 if (!value) {
-                    const msg = `Failed to save "${key}" to storage because there is not value`
-                    console.error(msg)
+                    logger().error(`Failed to save "${key}" to storage, no value`)
                     return
                 }
 

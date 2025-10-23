@@ -9,7 +9,7 @@ import AddLinkMenuItem from '@/components/Views/GroupView/GroupControls/MenuItem
 import DeleteGroupMenuItem from '@/components/Views/GroupView/GroupControls/MenuItems/DeleteGroupMenuItem.vue'
 import RenameGroupMenuItem from '@/components/Views/GroupView/GroupControls/MenuItems/RenameGroupMenuItem.vue'
 import MakeGroupPrivateItem from '@/components/Views/GroupView/GroupControls/MenuItems/MakeGroupPrivateItem.vue'
-import BindToURLItem from '@/components/Views/GroupView/GroupControls/MenuItems/BindToURLItem.vue'
+import BindToUrlItem from '@/components/Views/GroupView/GroupControls/MenuItems/BindToUrlItem.vue'
 import ExportGroupMenuItem from '@/components/Views/GroupView/GroupControls/MenuItems/ExportGroupMenuItem.vue'
 import MenuItem from '@/components/MenuItem.vue'
 import PhotoIcon from '@common/components/Icons/PhotoIcon.vue'
@@ -51,7 +51,7 @@ const isEncrypted = computed<boolean>(() => {
                 <ExportGroupMenuItem :group />
 
                 <template v-if="group.isPrivate">
-                    <BindToURLItem :group />
+                    <BindToUrlItem :group />
                     <MakeGroupOpenItem :group />
                 </template>
 

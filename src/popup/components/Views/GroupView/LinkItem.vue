@@ -4,6 +4,7 @@ import { useGroupStore } from '@/stores/group'
 import { restoreTabs } from '@common/modules/tabs/restoreTabs'
 import { usePopupStore } from '@/stores/popup'
 import { useAppStore } from '@/stores/app'
+import { logger } from '@common/modules'
 import DeleteLinkButton from '@/components/Views/GroupView/DeleteLinkButton.vue'
 import LinkElement from '@/components/LinkElement.vue'
 
@@ -20,7 +21,7 @@ async function openTab(): Promise<void> {
     if (groupStore.selectedGroup) {
         await groupStore.save(groupStore.selectedGroup)
     } else {
-        console.error(
+        logger().error(
             `Group with id ${props.groupId} is not selected as selectedGroup`,
         )
     }

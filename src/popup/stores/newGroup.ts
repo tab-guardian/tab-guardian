@@ -13,7 +13,7 @@ export const useNewGroupStore = defineStore('newGroup', () => {
         password: null,
         confirmPassword: null,
         wantsSelectAllLinks: null,
-        bindURL: null,
+        bindUrl: null,
     })
 
     const nameLength = computed<number>(() => {
@@ -32,8 +32,8 @@ export const useNewGroupStore = defineStore('newGroup', () => {
             links,
         }
 
-        if (choices.value.bindURL) {
-            group.bindURL = choices.value.bindURL
+        if (choices.value.bindUrl) {
+            group.bindUrl = choices.value.bindUrl
         }
 
         return group

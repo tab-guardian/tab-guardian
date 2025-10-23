@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { useGroupStore } from '@/stores/group'
-import { trans } from '@common/modules'
+import { logger, trans } from '@common/modules'
 import { usePopupStore } from '@/stores/popup'
 import { useRouter } from 'vue-router'
-import { validateURL } from '@common/modules/validation/url'
-import { hashURL, getCurrentURL } from '@common/modules/url'
+import { validateUrl } from '@common/modules/validation/url'
+import { hashUrl, getCurrentUrl } from '@common/modules/url'
 import { showToast } from '@common/modules/toast'
 import Popup from '@/components/Popups/Popup.vue'
 import Button from '@common/components/Form/Button.vue'
@@ -16,16 +16,16 @@ import ControlButton from '@/components/Views/SelectTabsView/ControlButton.vue'
 const popupStore = usePopupStore()
 const groupStore = useGroupStore()
 const router = useRouter()
-const currURL = ref<string>('')
+const currUrl = ref<string>('')
 
-const errorMessage = computed<string | null>(() => validateURL(currURL.value))
-const preventSubmit = computed<boolean>(() => validateURL(currURL.value) !== null)
+const errorMessage = computed<string | null>(() => validateUrl(currUrl.value))
+const preventSubmit = computed<boolean>(() => validateUrl(currUrl.value) !== null)
 
-async function setCurrentURL(): Promise<void> {
-    const url = await getCurrentURL()
+async function setCurrentUrl(): Promise<void> {
+    const url = await getCurrentUrl()
 
     if (url) {
-        currURL.value = url
+        currUrl.value = url
     }
 }
 
@@ -35,7 +35,7 @@ async function rebindGroup(): Promise<void> {
     }
 
     if (!groupStore.selectedGroup) {
-        console.warn('No group selected rebinding URL')
+        logger().warn('No group selected rebinding URL')
         return
     }
 
@@ -48,7 +48,7 @@ async function rebindGroup(): Promise<void> {
         },
     })
 
-    groupStore.selectedGroup.bindURL = await hashURL(currURL.value)
+    groupStore.selectedGroup.bindUrl = await hashUrl(currUrl.value)
     groupStore.save(groupStore.selectedGroup)
 
     showToast({ text: trans('group_rebind_successful') })
@@ -64,7 +64,7 @@ async function rebindGroup(): Promise<void> {
     >
         <form @submit.prevent="rebindGroup">
             <Input
-                v-model="currURL"
+                v-model="currUrl"
                 label="URL"
                 @loaded="inp => inp.focus()"
                 type="text"
@@ -75,7 +75,7 @@ async function rebindGroup(): Promise<void> {
 
             <div class="flex items-center justify-between gap-5 mt-3">
                 <div>
-                    <ControlButton @click="setCurrentURL">
+                    <ControlButton @click="setCurrentUrl">
                         {{ trans('use_current_url') }}
                     </ControlButton>
                 </div>

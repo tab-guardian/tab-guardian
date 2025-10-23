@@ -1,6 +1,6 @@
 import type { RuntimeType } from '@common/types/runtime'
 import { showToast } from '@common/modules/toast'
-import { formatNumber } from '@common/modules'
+import { formatNumber, logger } from '@common/modules'
 import { trans } from '@common/modules'
 
 export function isRuntime(runtime: RuntimeType): boolean {
@@ -56,7 +56,7 @@ export function getFromExtentionStorage<T>(
     const value: T | null | undefined = JSON.parse(strValue)
 
     if (!value) {
-        console.error(`Failed to parse ${key} from storage`)
+        logger().error(`Failed to parse ${key} from storage`)
         return null
     }
 

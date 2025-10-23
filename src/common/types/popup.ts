@@ -1,13 +1,13 @@
 import { Link } from '@common/types'
 
-type PopupItem<T = any, D = any> = {
+type PopupItem<O = any, C = any> = {
     open: boolean
-    dataOnOpen: T | null
-    dataOnClose: D | null
-    onClose: ((data: D) => void) | null
+    dataOnOpen: O | null
+    dataOnClose: C | null
+    onClose: ((data: C) => void) | null
 }
 
-type EnterPasswordData = {
+type PasswordData = {
     decrypting: (password: string) => Promise<boolean>
     text: string
 }
@@ -16,12 +16,12 @@ export type Popups = {
     groupMenuView: PopupItem
     confirm: PopupItem<{ text: string }, { isConfirmed: boolean }>
     groupName: PopupItem
+    removeUrlLock: PopupItem
     bindGroup: PopupItem
-    chooseEmoji: PopupItem<{}, { emo: string }>
-    chooseImageIcon: PopupItem<{}, { url: string }>
-    newPassword: PopupItem<{}, { newPass: string }>
-    enterPassword: PopupItem<EnterPasswordData>
+    chooseEmoji: PopupItem<{}, { emo: string | null }>
+    chooseImageIcon: PopupItem<{}, { url: string | null }>
+    newPassword: PopupItem<{}, { newPass: string | null }>
+    password: PopupItem<PasswordData>
     linkMenuView: PopupItem<{ link: Link }>
-    newGroupName: PopupItem
     editGroupName: PopupItem
 }

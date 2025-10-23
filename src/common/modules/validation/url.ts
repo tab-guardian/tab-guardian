@@ -1,8 +1,8 @@
 import { trans } from '@common/modules'
 
-export function validateImageURL(url: string): string | null {
+export function validateImageUrl(url: string): string | null {
     const FORMATS = ['.png', '.webp', '.jpeg', '.jpg', '.svg', '.gif']
-    const msg = validateURL(url)
+    const msg = validateUrl(url)
 
     if (msg !== null) {
         return msg
@@ -24,7 +24,7 @@ export function validateImageURL(url: string): string | null {
     return null
 }
 
-export function validateURL(url: string | null): string | null {
+export function validateUrl(url: string | null): string | null {
     const MIN_URL_LENGTH = 11
     const MAX_URL_LENGTH = 1000
 

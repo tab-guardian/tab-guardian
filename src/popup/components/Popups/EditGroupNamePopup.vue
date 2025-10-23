@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import { trans } from '@common/modules'
 import { usePopupStore } from '@/stores/popup'
 import { useGroupStore } from '@/stores/group'
 import { showToast } from '@common/modules/toast'
-import { isNameTooLong } from '@common/modules/validation/group'
 import { getDefaultGroupName } from '@common/modules/group'
 import Popup from '@/components/Popups/Popup.vue'
 import Button from '@common/components/Form/Button.vue'
@@ -15,23 +14,18 @@ const popupStore = usePopupStore()
 const groupStore = useGroupStore()
 
 const name = ref<string>(groupStore.selectedGroup?.name || '')
-
-const tooLongName = computed<boolean>(() => isNameTooLong(name.value))
+const preventSubmit = ref<boolean>(false)
 
 async function saveName(): Promise<void> {
+    if (preventSubmit.value) {
+        return
+    }
+
     const group = groupStore.selectedGroup
 
     if (!group) {
         showToast({
             text: trans('error_no_group_selected'),
-            type: 'error',
-        })
-        return
-    }
-
-    if (tooLongName.value) {
-        showToast({
-            text: trans('group_name_long'),
             type: 'error',
         })
         return
@@ -57,9 +51,13 @@ async function saveName(): Promise<void> {
         :content="trans('enter_group_name')"
     >
         <form @submit.prevent="saveName" class="flex flex-col gap-3">
-            <NameInput v-model:name="name" @loaded="inp => inp.focus()" />
+            <NameInput
+                v-model:name="name"
+                @loaded="inp => inp.focus()"
+                @has-error="preventSubmit = $event"
+            />
 
-            <Button type="submit" :disabled="tooLongName" :icon="ChevronRightIcon">
+            <Button type="submit" :disabled="preventSubmit" :icon="ChevronRightIcon">
                 {{ trans('save') }}
             </Button>
         </form>

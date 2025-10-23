@@ -3,14 +3,17 @@ import type { Group } from '@common/types'
 import { trans } from '@common/modules'
 import { useTabsStore } from '@/stores/tabs'
 import { usePopupStore } from '@/stores/popup'
-import { useGroupUnlock } from '@/composables/useGroupUnlock'
+import { useGroupStore } from '@/stores/group'
+import { useRouter } from 'vue-router'
 import { runtime } from '@common/modules/runtime'
+import { showToast } from '@common/modules/toast'
 
 const props = defineProps<{ group: Group }>()
 
 const tabsStore = useTabsStore()
 const popupStore = usePopupStore()
-const { unlockGroup } = useGroupUnlock()
+const groupStore = useGroupStore()
+const router = useRouter()
 
 async function openTabs(): Promise<void> {
     if (props.group.links.length === 0) {
@@ -27,16 +30,34 @@ async function openTabs(): Promise<void> {
         return
     }
 
-    await popupStore.show('enterPassword', {
-        decrypting: async pass => await unlockGroup(props.group, pass, true),
+    await popupStore.show('password', {
+        decrypting: unlockCallback,
         text: trans('enter_pass_unlock_content'),
     })
+}
+
+async function unlockCallback(pass: string): Promise<boolean> {
+    const unlocking = await groupStore.unlock(props.group, pass, true)
+
+    showToast({
+        text: unlocking.message,
+        type: unlocking.failed ? 'error' : 'info',
+        duration: 5000,
+    })
+
+    if (unlocking.failed) {
+        return false
+    }
+
+    await router.push({ name: 'main' })
+
+    return true
 }
 </script>
 
 <template>
     <img
-        :src="runtime.getURL('images/tab-icons/up.png')"
+        :src="runtime.getUrl('images/tab-icons/up.png')"
         alt="Open tabs"
         @click.prevent="openTabs"
         v-tippy="trans('open_tabs')"

@@ -35,7 +35,7 @@ async function handleDeny(): Promise<void> {
                 {{ trans('no') }}
             </Button>
 
-            <Button @click="handleConfirm">
+            <Button @click="handleConfirm" is="success">
                 {{ trans('yes') }}
             </Button>
         </template>

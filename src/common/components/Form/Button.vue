@@ -23,12 +23,12 @@ buttonStyles.set(
     'outline',
     '!text-font border border-border hover:border-border-hover',
 )
-buttonStyles.set('danger', 'bg-unsafe hover:bg-unsafe-hover !text-font')
-buttonStyles.set('success', 'bg-safe hover:bg-safe-hover !text-font')
+buttonStyles.set('danger', 'bg-danger text-white')
+buttonStyles.set('success', 'bg-success')
 
 const className = computed<string[]>(() => {
     const classes = [
-        'text-page px-6 py-2 rounded-lg text-md inline-flex hover:opacity-90',
+        'text-page px-5 py-2 rounded-lg text-md inline-flex hover:opacity-85',
         'justify-center items-center gap-3 transition-opacity',
     ]
 
@@ -36,11 +36,7 @@ const className = computed<string[]>(() => {
         classes.push('opacity-50 cursor-not-allowed pointer-events-none')
     }
 
-    if (props.is) {
-        classes.push(buttonStyles.get(props.is)!)
-    } else {
-        classes.push('bg-primary')
-    }
+    props.is ? classes.push(buttonStyles.get(props.is)!) : classes.push('bg-primary')
 
     return classes
 })

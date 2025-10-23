@@ -1,32 +1,18 @@
-import { trans } from '@common/modules'
 import { config } from '@common/config'
+import { trans } from '@common/modules'
 
-export const GROUP_NAME_MAX_LENGTH = 45
-
-export function passwordError(
-    pass: string | null,
-    confirm: string | null,
-): string | null {
-    pass ??= ''
-    confirm ??= ''
-
-    if (pass !== confirm) {
-        return trans('passwords_not_match')
+export function validatePassword(pass: string, confirm?: string): string | null {
+    if (pass === '') {
+        return trans('pass_empty')
     }
 
-    const tooShort = pass.length < config.MIN_PASS_LENGTH
-
-    if (tooShort) {
+    if (pass.length < config.MIN_PASS_LENGTH) {
         return trans('passwords_min_length', config.MIN_PASS_LENGTH.toString())
     }
 
-    return ''
-}
-
-export function isNameTooLong(name: string | null): boolean {
-    if (!name) {
-        return false
+    if (confirm && pass !== confirm) {
+        return trans('passwords_not_match')
     }
 
-    return name.length > GROUP_NAME_MAX_LENGTH
+    return null
 }

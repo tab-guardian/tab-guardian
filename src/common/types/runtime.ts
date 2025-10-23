@@ -11,7 +11,7 @@ export type PlatformRuntime = {
      * @param path A path to a resource within an app/extension expressed relative to its install directory.
      * @returns The fully-qualified URL to the resource.
      */
-    getURL(path: string): string
+    getUrl(path: string): string
 
     /**
      * Sends a single message to event listeners within your extension/app or

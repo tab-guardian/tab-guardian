@@ -20,7 +20,7 @@ const popupStore = usePopupStore()
 onMounted(() => popupStore.hideAll())
 
 const DATE_FORMAT = 'DD.MM.YYYY HH:mm'
-const group = computed<Group | null>(() => groupStore.getGroupById(groupId))
+const group = computed<Group | null>(() => groupStore.get(groupId))
 </script>
 
 <template>
@@ -43,9 +43,9 @@ const group = computed<Group | null>(() => groupStore.getGroupById(groupId))
                 />
 
                 <ListItem
-                    v-if="group.bindURL"
+                    v-if="group.isPrivate"
                     :field="trans('bound_to_url')"
-                    :value="trans('yes')"
+                    :value="group.bindUrl ? trans('yes') : trans('no')"
                 />
 
                 <ListItem

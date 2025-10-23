@@ -1,5 +1,16 @@
 # Release Notes
 
+## v1.16.0 (2025-10-23)
+- 🧑‍💻 Improved performance for the main (home) page with loading groups.
+- 🧑‍💻 Improved "Add tabs" and "Create" buttons visibility [#84](https://github.com/tab-guardian/tab-guardian/issues/84).
+- 🧑‍💻 Added showing small pin icon on the tab icon in a group if the tab is pinned [#83](https://github.com/tab-guardian/tab-guardian/issues/83).
+- 🧑‍💻 Improve styles for tab icons in a group.
+- 🧑‍💻 Added 1 more "Pin" icon to choose for a group.
+- 🧑‍💻 Added more tests to the codebase.
+- 🐛 Fixed validation error message text when password is empty. It was `password_empty`.
+- 🐛 Fixed not working "Cancel" button when choosing group icon.
+- ✨ Added "Detach URL Lock" functionality to settings [#61](https://github.com/tab-guardian/tab-guardian/issues/61).
+
 ## v1.15.0 (2025-10-19)
 - ✨ Group icon on a group page is now clickable. It will open "Choose Icon" interface [#53](https://github.com/tab-guardian/tab-guardian/issues/53).
 - ✨ Private groups can now be bound to any URL that you provide for additional security [#65](https://github.com/tab-guardian/tab-guardian/issues/65).
@@ -7,7 +18,7 @@
 - 🐛 Fixed issue where you couldn't use 👎️ and 👍️ emojis as your group icon.
 - 🐛 Fixed the font contrast on a lock/unlock group button.
 - 🐛 Fixed not working tooltip helper on the `Paste tabs here` button.
-- 🐛 When you make a private group open (public), cached password now will be deleted as well.
+- 🐛 When you make a private group open, cached password now will be deleted as well.
 - 🐛 Fixed bug where tabs would not open for private locked groups when you try to do it on the main screen with all the groups listed.
 - 🧑‍💻 The "Bound URL" can now be modified when you create a new private group.
 - 🧑‍💻 The `about:home` Firefox's page will be also closed when you restore tabs from a group.
@@ -29,7 +40,6 @@
 - ✨ Improved export/import functionality. Now, you can export all groups with a password protection [#77](https://github.com/tab-guardian/tab-guardian/issues/77).
 - ✨ Exported files are now compressed with Gzip.
 - ✨ Add Gzip compression when exporting individual groups.
-- 🧑‍💻 Huge refactoring of the core logic.
 - 🧑‍💻 Improve performance of "Erase all groups" functionality.
 
 ## v1.13.2 (2025-10-03)
@@ -37,14 +47,13 @@
 
 ## v1.13.1 (2025-10-02)
 - 🐛 Fixed Chromium error for using badge on extension icon
-- 🐛 Fixed bug where you couldn't create a new public group
+- 🐛 Fixed bug where you couldn't create a new open (public) group
 
 ## v1.13.0 (2025-10-02)
 - 🐛 Fixed issue with creating private group and it wouldn't remember the password the user entered. Plus, this change improved the performance of creating a private group
 - 🐛 Fixed incorrect bytes calculation on Firefox-based browsers. It was showing used space a little bit more than it really was
 - 🐛 Fixed wrong groups sort order when you import all groups. Now, groups will be in the same order that they were when you exported them
 - 🧑‍💻 Remove "import" button from importing groups on settings page [#60](https://github.com/tab-guardian/tab-guardian/issues/60)
-- 🧑‍💻 A lot of refactoring and rewriting logic for creating a new group
 - 🧑‍💻 When you add a new tab to a group, it will be appended to the end instead of the list
 - 🧑‍💻 Now, when you open tabs, additional empty pages like `about:blank` and `about:privatebrowsing` will be automatically closed [#64](https://github.com/tab-guardian/tab-guardian/issues/64)
 - 🧑‍💻 Remove `Import` buttom from settings page. Now, when you select a file, it will be automatically uploaded [#60](https://github.com/tab-guardian/tab-guardian/issues/60)
@@ -195,6 +204,6 @@
 - ✨ Supports all the modern browsers: Brave, Edge, and Chrome
 - ✨ Tab Guardian is very configurable to suit your needs
 - ✨ You can privately export individual private tab group into an encrypted file and import it later or on another device or browser
-- ✨ You can export all of your public tab groups into a file and import them later or on another device or browser
+- ✨ You can export all of your open tab groups into a file and import them later or on another device or browser
 - ✨ You can set an icon for each group to make it easier to recognize
 - ✨ You can bind a Tab Group to a specific URL so that it visible in the group list only when you are on that URL. This is useful if you want to hide a group and access it only when you are on a specific web page
