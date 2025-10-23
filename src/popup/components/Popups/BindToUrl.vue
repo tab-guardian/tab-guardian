@@ -53,10 +53,7 @@ async function attachBindUrl(checked: boolean): Promise<void> {
 <template>
     <div class="flex flex-col gap-3 mb-3">
         <div class="flex items-center">
-            <SlideSwitch
-                @changed="attachBindUrl"
-                v-model="checked"
-            >
+            <SlideSwitch @changed="attachBindUrl" v-model="checked">
                 {{ trans('bind_to_url') }}
             </SlideSwitch>
 
