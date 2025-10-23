@@ -6,7 +6,6 @@ import { describe, it, expect, beforeEach, suite } from 'vitest'
 import { createPinia, setActivePinia } from 'pinia'
 import { useGroupStore } from '@/stores/group'
 import { fakeGroup, fakeLink } from '@common/modules/fake'
-import { GroupNotFoundError } from '@common/errors'
 
 describe('groupStore', () => {
     beforeEach(() => setActivePinia(createPinia()))
@@ -156,10 +155,12 @@ describe('groupStore', () => {
 
             await store.save(group)
 
-            await store.update(group.id, {
+            const result = await store.update(group.id, {
                 name: 'NAME',
                 bindUrl: 'BINDURL',
             })
+
+            expect(result).toBeTruthy()
 
             const updatedGroup = store.get(group.id)
 
@@ -169,14 +170,10 @@ describe('groupStore', () => {
             expect(updatedGroup?.bindUrl).equals('BINDURL')
         })
 
-        it('throws error when group not found', async () => {
+        it('returns false when group not found', async () => {
             const store = useGroupStore()
-
-            const expectErr = new GroupNotFoundError(0, 'update')
-
-            await expect(store.update(0, { name: 'NAME' })).rejects.toThrow(
-                expectErr,
-            )
+            const result = await store.update(0, { name: 'NAME' })
+            expect(result).toBeFalsy()
         })
     })
 

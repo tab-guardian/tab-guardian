@@ -47,7 +47,7 @@ export function downloadFile(text: string, name: string): void {
 }
 
 export function logger() {
-    if (import.meta.env.MODE === 'testing') {
+    if (import.meta.env?.TEST === 'true') {
         return {
             error: () => null,
             info: () => null,
