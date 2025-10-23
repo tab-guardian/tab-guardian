@@ -1,7 +1,7 @@
 import type { Group, Link } from '@common/types'
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import { trans, generateGroupId } from '@common/modules'
+import { trans, generateGroupId, logger } from '@common/modules'
 import { runtime } from '@common/modules/runtime'
 import { useSettingsStore } from '@/stores/settings'
 import { useNotificationStore } from '@/stores/notification'
@@ -103,7 +103,7 @@ export const useGroupStore = defineStore('group', () => {
                 group: encrypted,
             }
         } catch (err) {
-            console.error(err)
+            logger().error('Encryption:', err)
         }
 
         return {
@@ -177,17 +177,19 @@ export const useGroupStore = defineStore('group', () => {
         }
     }
 
-    async function update(id: number, updates: Partial<Group>): Promise<void> {
+    async function update(id: number, updates: Partial<Group>): Promise<boolean> {
         const group = get(id)
 
         if (!group) {
             groupNotFoundLog(id, 'update')
-            return
+            return false
         }
 
         Object.assign(group, updates)
 
         await save(group)
+
+        return true
     }
 
     async function deleteGroup(id: number): Promise<void> {
@@ -305,7 +307,7 @@ export const useGroupStore = defineStore('group', () => {
 
     // Private function
     function groupNotFoundLog(id: number, operation: string): void {
-        console.info(`Group "${id}" not found for "${operation}" operation`)
+        logger().info(`Group "${id}" not found for "${operation}" operation`)
     }
 
     return {

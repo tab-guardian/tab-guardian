@@ -6,52 +6,53 @@ import { describe, it, expect, beforeEach, suite } from 'vitest'
 import { createPinia, setActivePinia } from 'pinia'
 import { useGroupStore } from '@/stores/group'
 import { fakeGroup, fakeLink } from '@common/modules/fake'
+import { GroupNotFoundError } from '@common/errors'
 
 describe('groupStore', () => {
     beforeEach(() => setActivePinia(createPinia()))
 
     suite('get()', () => {
         it('returns group with the right group ID', () => {
-            const groupStore = useGroupStore()
+            const store = useGroupStore()
 
             const group = fakeGroup()
-            groupStore.groups.push(group)
+            store.groups.push(group)
 
-            const result = groupStore.get(group.id)
+            const result = store.get(group.id)
 
             expect(result).not.toBeNull()
             expect(group.id).equal(result!.id)
         })
 
         it('returns group with the right group name', () => {
-            const groupStore = useGroupStore()
+            const store = useGroupStore()
 
             const group = fakeGroup()
-            groupStore.groups.push(group)
+            store.groups.push(group)
 
-            const result = groupStore.get(group.name)
+            const result = store.get(group.name)
 
             expect(result).not.toBeNull()
             expect(group.name).equal(result!.name)
         })
 
         it('returns null with non-existent group ID', () => {
-            const groupStore = useGroupStore()
+            const store = useGroupStore()
 
             const group = fakeGroup()
-            groupStore.groups.push(group)
+            store.groups.push(group)
 
-            const result = groupStore.get(0)
+            const result = store.get(0)
 
             expect(result).toBeNull()
         })
 
         it('returns null with non-existent group name', () => {
-            const groupStore = useGroupStore()
+            const store = useGroupStore()
             const group = fakeGroup()
-            groupStore.groups.push(group)
+            store.groups.push(group)
 
-            const result = groupStore.get('some')
+            const result = store.get('some')
 
             expect(result).toBeNull()
         })
@@ -59,13 +60,13 @@ describe('groupStore', () => {
 
     suite('lock()', () => {
         it('encrypts public group and makes it private', async () => {
-            const groupStore = useGroupStore()
+            const store = useGroupStore()
             const group = fakeGroup()
 
             expect(group.isPrivate).toBeFalsy()
             expect(group.isEncrypted).toBeFalsy()
 
-            const encryption = await groupStore.lock(group, 'amyadams')
+            const encryption = await store.lock(group, 'amyadams')
 
             expect(encryption.failed).toBeFalsy()
             expect(encryption.group?.isPrivate).toBeTruthy()
@@ -73,12 +74,12 @@ describe('groupStore', () => {
         })
 
         it('encrypts private group', async () => {
-            const groupStore = useGroupStore()
+            const store = useGroupStore()
             const group = fakeGroup({ isPrivate: true })
 
             expect(group.isPrivate).toBeTruthy()
 
-            const encryption = await groupStore.lock(group, 'amyadams')
+            const encryption = await store.lock(group, 'amyadams')
 
             expect(encryption.failed).toBeFalsy()
             expect(encryption.group?.isPrivate).toBeTruthy()
@@ -86,7 +87,7 @@ describe('groupStore', () => {
         })
 
         it('encrypts link fields', async () => {
-            const groupStore = useGroupStore()
+            const store = useGroupStore()
             const link = fakeLink()
 
             const group = fakeGroup({
@@ -96,7 +97,7 @@ describe('groupStore', () => {
 
             expect(group.links).toHaveLength(1)
 
-            const encryption = await groupStore.lock(group, 'amyadams')
+            const encryption = await store.lock(group, 'amyadams')
 
             expect(encryption.failed).toBeFalsy()
             expect(encryption.group?.links).toHaveLength(1)
@@ -110,10 +111,10 @@ describe('groupStore', () => {
         })
 
         it('denies encryption when password and confirm do not match', async () => {
-            const groupStore = useGroupStore()
+            const store = useGroupStore()
             const group = fakeGroup()
 
-            const encryption = await groupStore.lock(group, 'amyadams', 'amyadam')
+            const encryption = await store.lock(group, 'amyadams', 'amyadam')
 
             expect(encryption.failed).toBeTruthy()
             expect(encryption.message).equal(trans('passwords_not_match'))
@@ -121,10 +122,10 @@ describe('groupStore', () => {
         })
 
         it('denies encryption when password is empty', async () => {
-            const groupStore = useGroupStore()
+            const store = useGroupStore()
             const group = fakeGroup()
 
-            const encryption = await groupStore.lock(group, '')
+            const encryption = await store.lock(group, '')
 
             expect(encryption.failed).toBeTruthy()
             expect(encryption.message).equal(trans('pass_empty'))
@@ -132,10 +133,10 @@ describe('groupStore', () => {
         })
 
         it('denies encryption when password is too short', async () => {
-            const groupStore = useGroupStore()
+            const store = useGroupStore()
             const group = fakeGroup()
 
-            const encryption = await groupStore.lock(group, 'amy')
+            const encryption = await store.lock(group, 'amy')
 
             const msg = trans(
                 'passwords_min_length',
@@ -145,6 +146,49 @@ describe('groupStore', () => {
             expect(encryption.failed).toBeTruthy()
             expect(encryption.message).equal(trans(msg))
             expect(encryption.group).toBeNull()
+        })
+    })
+
+    suite('update()', () => {
+        it('updates fields of a group', async () => {
+            const store = useGroupStore()
+            const group = fakeGroup()
+
+            await store.save(group)
+
+            await store.update(group.id, {
+                name: 'NAME',
+                bindUrl: 'BINDURL',
+            })
+
+            const updatedGroup = store.get(group.id)
+
+            expect(updatedGroup).not.toBeNull()
+            expect(updatedGroup?.id).equals(group.id)
+            expect(updatedGroup?.name).equals('NAME')
+            expect(updatedGroup?.bindUrl).equals('BINDURL')
+        })
+
+        it('throws error when group not found', async () => {
+            const store = useGroupStore()
+
+            const expectErr = new GroupNotFoundError(0, 'update')
+
+            await expect(store.update(0, { name: 'NAME' })).rejects.toThrow(
+                expectErr,
+            )
+        })
+    })
+
+    suite('deleteGroup()', () => {
+        it('deletes group', async () => {
+            const store = useGroupStore()
+            const group = fakeGroup()
+
+            await store.deleteGroup(group.id)
+            const result = store.get(group.id)
+
+            expect(result).toBeNull()
         })
     })
 })

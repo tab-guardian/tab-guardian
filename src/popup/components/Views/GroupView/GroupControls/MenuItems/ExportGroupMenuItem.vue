@@ -2,7 +2,7 @@
 import type { Group } from '@common/types'
 import { ref } from 'vue'
 import { usePopupStore } from '@/stores/popup'
-import { trans, downloadFile } from '@common/modules'
+import { trans, downloadFile, logger } from '@common/modules'
 import { encryptExport } from '@common/modules/webCrypto'
 import { getPasswordFromStorage } from '@common/modules/storage/password'
 import { showToast } from '@common/modules/toast'
@@ -21,7 +21,7 @@ const loading = ref<boolean>(false)
 
 async function exportGroup(): Promise<void> {
     if (loading.value) {
-        console.info('Cannot export because export in progress')
+        logger().info('Cannot export because export in progress')
         return
     }
 

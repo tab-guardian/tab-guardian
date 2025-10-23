@@ -3,6 +3,7 @@ import { queryTabs } from '@common/modules/tabs/queryTabs'
 import { runtime } from '@common/modules/runtime'
 import { isRuntime } from '@common/modules/runtime/utils'
 import { config } from '@common/config'
+import { logger } from '@common/modules'
 
 export async function restoreTabs(links: Link[]): Promise<void> {
     const isFirefox = isRuntime('firefox')
@@ -16,8 +17,8 @@ export async function restoreTabs(links: Link[]): Promise<void> {
             link.url !== 'about:blank' &&
             link.url.startsWith('about:')
         ) {
-            console.info(
-                `Can't open ${link.url}. Firefox doesn't allow to open links that start with 'about:' keyword`,
+            logger().info(
+                `Can't open ${link.url}. Firefox doesn't allow to open links that start with "about:" keyword`,
             )
             continue
         }

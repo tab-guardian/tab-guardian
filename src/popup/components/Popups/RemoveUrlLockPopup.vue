@@ -46,7 +46,7 @@ async function submit(): Promise<void> {
 
     processing.value = true
 
-    const group = groupStore.getGroup(formData.name)
+    const group = groupStore.get(formData.name)
 
     if (!group) {
         showToast({ text: trans('group_not_found'), type: 'error' })

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, watchEffect } from 'vue'
-import { trans } from '@common/modules'
+import { logger, trans } from '@common/modules'
 import { useNewGroupStore } from '@/stores/newGroup'
 import { getCurrentUrl, hashUrl } from '@common/modules/url'
 import { showToast } from '@common/modules/toast'
@@ -41,7 +41,7 @@ async function attachBindUrl(checked: boolean): Promise<void> {
     }
 
     if (!currUrl.value) {
-        console.error('No current URL found')
+        logger().error('No current URL found')
         showToast({ text: trans('error_occurred'), type: 'error' })
         return
     }

@@ -2,7 +2,7 @@
 import type { EmojiClickEventDetail } from 'emoji-picker-element/shared.js'
 import { ref, computed, onMounted } from 'vue'
 import { useGroupStore } from '@/stores/group'
-import { trans, isEmoji } from '@common/modules'
+import { trans, isEmoji, logger } from '@common/modules'
 import { usePopupStore } from '@/stores/popup'
 import 'emoji-picker-element'
 import Popup from '@/components/Popups/Popup.vue'
@@ -42,7 +42,7 @@ function submit(): void {
     }
 
     if (!groupStore.selectedGroup) {
-        console.warn('No group selected rebinding URL')
+        logger().warn('No group selected rebinding URL')
         return
     }
 

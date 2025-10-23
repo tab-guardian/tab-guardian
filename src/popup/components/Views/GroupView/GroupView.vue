@@ -26,7 +26,7 @@ const group = computed<Group | null>(() => {
         return null
     }
 
-    return groupStore.getGroup(Number(id))
+    return groupStore.get(Number(id))
 })
 
 const showButtons = computed<boolean>(() => {

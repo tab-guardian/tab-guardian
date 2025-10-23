@@ -6,6 +6,7 @@ import { config } from '@common/config'
 import enMessages from '@locales/en/messages.json'
 import ruMessages from '@locales/ru/messages.json'
 import zhMessages from '@locales/zh_CN/messages.json'
+import { logger } from '..'
 
 const messageMap = new Map<Locale, LocaleMessageItem>()
 messageMap.set('en', enMessages)
@@ -26,7 +27,7 @@ export function getWebRuntimeAdapter(): PlatformRuntime {
             }
 
             if (!translationMessages[msg]) {
-                console.warn(`English translation not found for key "${msg}"`)
+                logger().warn(`English translation not found for key "${msg}"`)
                 return msg
             }
 
@@ -40,7 +41,7 @@ export function getWebRuntimeAdapter(): PlatformRuntime {
         },
 
         async sendMessage(): Promise<void> {
-            console.info('Cannot send message in web runtime')
+            logger().info('Cannot send message in web runtime')
         },
 
         getUrl(path) {
@@ -49,22 +50,22 @@ export function getWebRuntimeAdapter(): PlatformRuntime {
 
         action: {
             async setBadgeText() {
-                console.info('Cannot set badge text in web runtime')
+                logger().info('Cannot set badge text in web runtime')
             },
 
             async setBadgeBackgroundColor() {
-                console.info('Cannot set badge background color in web runtime')
+                logger().info('Cannot set badge background color in web runtime')
             },
         },
 
         extension: {
             lastError() {
-                console.info('Web runtime do not have last error implementation')
+                logger().info('Web runtime do not have last error implementation')
                 return null
             },
 
             async isAllowedIncognitoAccess() {
-                console.info("Web runtime doesn't have incognito access")
+                logger().info("Web runtime doesn't have incognito access")
                 return false
             },
         },
@@ -79,7 +80,7 @@ export function getWebRuntimeAdapter(): PlatformRuntime {
                     const key = localStorage.key(i)
 
                     if (!key) {
-                        console.warn(
+                        logger().warn(
                             `Cannot get key with index ${i} from local storage`,
                         )
                         continue
@@ -88,7 +89,7 @@ export function getWebRuntimeAdapter(): PlatformRuntime {
                     const item = localStorage.getItem(key)
 
                     if (!item) {
-                        console.warn(
+                        logger().warn(
                             `Getting key ${key} from local storage returns null`,
                         )
                         continue
@@ -111,14 +112,14 @@ export function getWebRuntimeAdapter(): PlatformRuntime {
                 const strValue: string | null = localStorage.getItem(key)
 
                 if (!strValue) {
-                    console.info(`"${key}" key not found in local storage`)
+                    logger().info(`"${key}" key not found in local storage`)
                     return null
                 }
 
                 const value: T | null | undefined = JSON.parse(strValue)
 
                 if (!value) {
-                    console.error(`Failed to parse ${key} from local storage`)
+                    logger().error(`Failed to parse ${key} from local storage`)
                     return null
                 }
 
@@ -127,8 +128,7 @@ export function getWebRuntimeAdapter(): PlatformRuntime {
 
             async set(key, value) {
                 if (!value) {
-                    const msg = `Failed to save "${key}" to storage because there is not value`
-                    console.error(msg)
+                    logger().error(`Failed to save "${key}" to storage, no value`)
                     return
                 }
 
@@ -167,29 +167,29 @@ export function getWebRuntimeAdapter(): PlatformRuntime {
 
         tabs: {
             async query() {
-                console.info('Cannot query tabs in web runtime')
+                logger().info('Cannot query tabs in web runtime')
                 return []
             },
 
             async create(createProperties) {
                 window.open(createProperties.url, '_blank')
-                console.info('Cannot get tab info in web runtime')
+                logger().info('Cannot get tab info in web runtime')
                 return null
             },
 
             async remove(tabId) {
-                console.info(`Cannot remove tab with id ${tabId} in web runtime`)
+                logger().info(`Cannot remove tab with id ${tabId} in web runtime`)
             },
         },
 
         windows: {
             async getCurrent() {
-                console.info('Cannot get current window in web runtime')
+                logger().info('Cannot get current window in web runtime')
                 return null
             },
 
             async update() {
-                console.info('Cannot update window in web runtime')
+                logger().info('Cannot update window in web runtime')
                 return null
             },
         },

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Group } from '@common/types'
 import { ref } from 'vue'
-import { trans } from '@common/modules'
+import { logger, trans } from '@common/modules'
 import { useGroupStore } from '@/stores/group'
 import { usePopupStore } from '@/stores/popup'
 import { useSettingsStore } from '@/stores/settings'
@@ -74,7 +74,7 @@ async function lockGroup(pass: string): Promise<void> {
     })
 
     if (locking.failed) {
-        console.info(`Group ${props.group.id} wasn't encrypted`)
+        logger().info(`Group ${props.group.id} wasn't encrypted`)
         return
     }
 

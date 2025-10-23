@@ -45,3 +45,21 @@ export function downloadFile(text: string, name: string): void {
 
     URL.revokeObjectURL(url)
 }
+
+export function logger() {
+    if (import.meta.env.MODE === 'testing') {
+        return {
+            error: () => null,
+            info: () => null,
+            warn: () => null,
+            debug: () => null,
+        }
+    }
+
+    return {
+        error: (...err: any) => console.error('[ERROR]:', ...err),
+        info: (...err: any) => console.info('[INFO]:', ...err),
+        warn: (...err: any) => console.warn('[WARN]:', ...err),
+        debug: (...err: any) => console.debug('[DEBUG]:', ...err),
+    }
+}

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Group } from '@common/types'
 import { ref } from 'vue'
-import { trans } from '@common/modules'
+import { logger, trans } from '@common/modules'
 import { decryptExport } from '@common/modules/webCrypto'
 import { fromBase64 } from '@common/modules/base64'
 import { showToast } from '@common/modules/toast'
@@ -42,13 +42,13 @@ async function importGroups(): Promise<void> {
         try {
             await processFileContent(e.target.result as string)
         } catch (err) {
-            console.error(err)
+            logger().error('Process file content', err)
             showToast({ text: trans('error_reading_file'), type: 'error' })
         }
     }
 
     reader.onerror = e => {
-        console.error('Error reading file:', e)
+        logger().error('Reading file:', e)
         showToast({ text: trans('error_reading_file'), type: 'error' })
     }
 

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { SelectTabsOperation } from '@common/types'
-import { trans } from '@common/modules'
+import { logger, trans } from '@common/modules'
 import { usePopupStore } from '@/stores/popup'
 import { useNewGroupStore } from '@/stores/newGroup'
 import { showToast } from '@common/modules/toast'
@@ -29,7 +29,7 @@ const preventSubmit = computed<boolean>(() => {
 
 function submitName(): void {
     if (preventSubmit.value) {
-        console.warn('Cannot submit because has some errors')
+        logger().warn('Cannot submit because has some errors')
         return
     }
 

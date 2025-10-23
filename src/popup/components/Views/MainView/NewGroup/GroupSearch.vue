@@ -5,7 +5,7 @@ import { useTabsStore } from '@/stores/tabs'
 import { usePopupStore } from '@/stores/popup'
 import { useRouter } from 'vue-router'
 import { ref, onMounted, onUnmounted } from 'vue'
-import { trans } from '@common/modules'
+import { logger, trans } from '@common/modules'
 import { showToast } from '@common/modules/toast'
 import MagnifyingGlassIcon from '@common/components/Icons/MagnifyingGlassIcon.vue'
 
@@ -82,7 +82,7 @@ async function unlockCallback(group: Group, pass: string): Promise<boolean> {
 
 function focusOnSearch(e: KeyboardEvent): void {
     if (!inpElem.value) {
-        console.warn('Input element is not defined')
+        logger().warn('Input element is not defined')
         return
     }
 
@@ -103,7 +103,7 @@ function focusOnSearch(e: KeyboardEvent): void {
 
 function filterGroups(): void {
     if (!inpElem.value) {
-        console.warn('Input element is not defined')
+        logger().warn('Input element is not defined')
         return
     }
 

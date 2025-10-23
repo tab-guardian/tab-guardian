@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { trans } from '@common/modules'
+import { logger, trans } from '@common/modules'
 import { usePopupStore } from '@/stores/popup'
 import Popup from '@/components/Popups/Popup.vue'
 import Button from '@common/components/Form/Button.vue'
@@ -15,7 +15,7 @@ const preventSubmit = ref<boolean>(true)
 
 function updatePassword(): void {
     if (preventSubmit.value) {
-        console.info('Cannot submit because password error')
+        logger().info('Cannot submit because password error')
         return
     }
 

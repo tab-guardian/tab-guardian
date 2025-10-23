@@ -3,7 +3,7 @@ import type { Group, Link, SelectTabsOperation } from '@common/types'
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useNewGroupStore } from '@/stores/newGroup'
-import { trans } from '@common/modules'
+import { logger, trans } from '@common/modules'
 import { useGroupStore } from '@/stores/group'
 import { getCurrentLinks } from '@common/modules/tabs/getCurrentLinks'
 import { showToast } from '@common/modules/toast'
@@ -61,7 +61,7 @@ async function handleCreateGroup(): Promise<void> {
     const group = await createGroup()
 
     if (!group) {
-        console.warn(`Can't save group because it wasn't created`)
+        logger().warn(`Can't save group because it wasn't created`)
         return
     }
 
@@ -130,7 +130,7 @@ async function createPrivateGroup(group: Group): Promise<Group | null> {
     const confirm = newGroupStore.choices.confirmPassword
 
     if (!pass || !confirm) {
-        console.error(`Password and confirm must not be empty`)
+        logger().error(`Password and confirm must not be empty`)
         return null
     }
 
@@ -142,7 +142,7 @@ async function createPrivateGroup(group: Group): Promise<Group | null> {
     })
 
     if (locking.failed) {
-        console.info(`Group ${group.id} wasn't encrypted`)
+        logger().info(`Group ${group.id} wasn't encrypted`)
         return null
     }
 

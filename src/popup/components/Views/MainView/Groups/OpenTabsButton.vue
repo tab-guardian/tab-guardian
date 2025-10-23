@@ -51,7 +51,7 @@ async function unlockCallback(pass: string): Promise<boolean> {
 
     await router.push({ name: 'main' })
 
-    return  true
+    return true
 }
 </script>
 

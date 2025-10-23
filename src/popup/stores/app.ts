@@ -1,7 +1,7 @@
 import { Link } from '@common/types'
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
-import { trans } from '@common/modules'
+import { logger, trans } from '@common/modules'
 import { showToast } from '@common/modules/toast'
 import { useGroupStore } from '@/stores/group'
 import { usePopupStore } from '@/stores/popup'
@@ -30,7 +30,7 @@ export const useAppStore = defineStore('app', () => {
 
     async function pasteLink(groupId: number): Promise<void> {
         if (!linkBuffer.value) {
-            console.warn(`There is nothing to paste for group ${groupId}`)
+            logger().warn(`There is nothing to paste for group ${groupId}`)
             return
         }
 

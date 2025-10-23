@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { useGroupStore } from '@/stores/group'
-import { trans } from '@common/modules'
+import { logger, trans } from '@common/modules'
 import { usePopupStore } from '@/stores/popup'
 import { useRouter } from 'vue-router'
 import { validateUrl } from '@common/modules/validation/url'
@@ -35,7 +35,7 @@ async function rebindGroup(): Promise<void> {
     }
 
     if (!groupStore.selectedGroup) {
-        console.warn('No group selected rebinding URL')
+        logger().warn('No group selected rebinding URL')
         return
     }
 
