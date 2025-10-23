@@ -169,14 +169,6 @@ export const useGroupStore = defineStore('group', () => {
         progressStore.finish()
     }
 
-    async function replaceGroup(group: Group): Promise<void> {
-        const existing = get(group.name)
-
-        if (existing) {
-            await deleteGroup(existing.id)
-        }
-    }
-
     async function update(id: number, updates: Partial<Group>): Promise<boolean> {
         const group = get(id)
 
@@ -198,7 +190,7 @@ export const useGroupStore = defineStore('group', () => {
         await notificationStore.recalculateNotification()
     }
 
-    async function deleteAllGroups(): Promise<void> {
+    async function deleteAll(): Promise<void> {
         groups.value = []
         await deleteAllGroupsFromStorage()
         await notificationStore.recalculateNotification()
@@ -306,6 +298,15 @@ export const useGroupStore = defineStore('group', () => {
     }
 
     // Private function
+    async function replaceGroup(group: Group): Promise<void> {
+        const existing = get(group.name)
+
+        if (existing) {
+            await deleteGroup(existing.id)
+        }
+    }
+
+    // Private function
     function groupNotFoundLog(id: number, operation: string): void {
         logger().info(`Group "${id}" not found for "${operation}" operation`)
     }
@@ -322,7 +323,7 @@ export const useGroupStore = defineStore('group', () => {
         lock,
         unlock,
         get,
-        deleteAllGroups,
+        deleteAll,
         loadGroupsFromStorage,
         saveMany,
     }
