@@ -21,9 +21,11 @@ export function fakeLinks(): Link[] {
 export function fakeGroup(fields?: Partial<Group>): Group {
     fields ??= {}
 
+    const id = Math.floor(Date.now() + Math.random() * 1000)
+
     return {
-        id: Math.floor(Date.now() + Math.random() * 1000),
-        name: fields.name ?? 'Test group',
+        id,
+        name: fields.name ?? `Test group ${id}`,
         links: fakeLinks(),
         isPrivate: false,
         isEncrypted: false,

@@ -22,12 +22,12 @@ export async function getGroupsFromStorage(): Promise<Group[]> {
     const groupIds = await getGroupIdsFromStorage()
     const groups: Group[] = []
 
-    for (let groupId of groupIds) {
-        const group = await runtime.storage.get<Group>(groupId.toString())
+    for (let id of groupIds) {
+        const group = await runtime.storage.get<Group>(id.toString())
 
         if (!group) {
-            logger(`Group ${groupId} not found in storage, deleting it...`).error
-            await deleteGroupIdFromStorage(groupId)
+            logger().error(`Group ${id} not found in storage, deleting it`)
+            await deleteGroupIdFromStorage(id)
             continue
         }
 

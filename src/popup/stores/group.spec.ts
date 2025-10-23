@@ -8,7 +8,67 @@ import { useGroupStore } from '@/stores/group'
 import { fakeGroup, fakeLink } from '@common/modules/fake'
 
 describe('groupStore', () => {
-    beforeEach(() => setActivePinia(createPinia()))
+    beforeEach(() => {
+        localStorage.clear()
+        setActivePinia(createPinia())
+    })
+
+    suite('save()', () => {
+        it('saves group to groups state', async () => {
+            const store = useGroupStore()
+            const group = fakeGroup()
+
+            expect(store.groups).toHaveLength(0)
+
+            await store.save(group)
+
+            expect(store.groups).toHaveLength(1)
+        })
+
+        it('saves group to local storage', async () => {
+            const store = useGroupStore()
+            const group = fakeGroup()
+
+            await store.save(group)
+
+            const result = localStorage.getItem(group.id.toString())
+
+            expect(result).not.toBeNull()
+
+            const obj = JSON.parse(result!)
+
+            expect(obj.id).equal(group.id)
+        })
+
+        it('updates updatedAt timestamp', async () => {
+            const updatedAt = 444444
+            const currTimestamp = Date.now()
+
+            const store = useGroupStore()
+            const group = fakeGroup({ updatedAt })
+
+            expect(group.updatedAt).equal(updatedAt)
+
+            await store.save(group)
+
+            expect(store.groups).toHaveLength(1)
+            expect(store.groups[0]?.updatedAt).toBeGreaterThanOrEqual(currTimestamp)
+        })
+
+        it('does not update updatedAt timestamp when asked', async () => {
+            const updatedAt = 444444
+
+            const store = useGroupStore()
+            const group = fakeGroup({ updatedAt })
+
+            expect(group.updatedAt).equal(updatedAt)
+
+            await store.save(group, false)
+
+            expect(store.groups).toHaveLength(1)
+            expect(store.groups[0]?.updatedAt).equal(updatedAt)
+        })
+    })
 
     suite('get()', () => {
         it('returns group with the right group ID', () => {
@@ -182,10 +242,59 @@ describe('groupStore', () => {
             const store = useGroupStore()
             const group = fakeGroup()
 
+            await store.save(group)
+
             await store.deleteGroup(group.id)
             const result = store.get(group.id)
 
             expect(result).toBeNull()
+        })
+
+        it('silently handles deleting non existent group', async () => {
+            const store = useGroupStore()
+            const group = fakeGroup()
+
+            await store.save(group)
+            await store.deleteGroup(0)
+
+            expect(store.groups).toHaveLength(1)
+        })
+    })
+
+    suite('saveMany()', () => {
+        it('saves many groups', async () => {
+            const store = useGroupStore()
+
+            const group1 = fakeGroup()
+            const group2 = fakeGroup()
+
+            await store.saveMany([group1, group2], false)
+
+            expect(store.groups).toHaveLength(2)
+        })
+
+        it('saves many groups without replacing duplicates', async () => {
+            const store = useGroupStore()
+
+            const group1 = fakeGroup()
+            const group2 = fakeGroup()
+
+            await store.saveMany([group1, group2], false)
+            await store.saveMany([group1, group2], false)
+
+            expect(store.groups).toHaveLength(4)
+        })
+
+        it('saves many groups without replacing duplicates', async () => {
+            const store = useGroupStore()
+
+            const group1 = fakeGroup()
+            const group2 = fakeGroup()
+
+            await store.saveMany([group1, group2], true)
+            await store.saveMany([group1, group2], true)
+
+            expect(store.groups).toHaveLength(2)
         })
     })
 })
