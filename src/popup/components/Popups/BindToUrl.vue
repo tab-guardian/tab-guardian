@@ -42,7 +42,7 @@ async function attachBindUrl(checked: boolean): Promise<void> {
 
     if (!currUrl.value) {
         logger().error('No current URL found')
-        showToast({ text: trans('error_occurred'), type: 'error' })
+        showToast({ text: trans('cannot_bind_to_this_url'), type: 'error' })
         return
     }
 
