@@ -141,7 +141,6 @@
     "change_icon": { "message": "Change Icon" },
     "choose_group_icon": { "message": "Choose a group icon" },
     "icon_is_set": { "message": "Icon has been set" },
-    "rebind_to_other_url": { "message": "Rebind to other URL" },
     "enter_new_url_bind_private_to_new_url": {
         "message": "Enter a new URL to bind your private group to this new URL. This group will be only visible in the list of groups only when you visit this specific URL. Do not forget to lock the group"
     },
