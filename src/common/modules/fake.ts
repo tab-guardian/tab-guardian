@@ -2,12 +2,14 @@ import type { Link, Group } from '@common/types'
 
 export function fakeLink(fields?: Partial<Link>): Link {
     fields ??= {}
+
     const rand = Date.now() + Math.floor(Math.random() * 1000)
+    const id = fields.id || rand
 
     return {
-        id: fields.id || rand,
-        url: 'https://duckduck.com',
-        title: 'Telegram Messenger',
+        id,
+        url: 'https://duckduckgo.com',
+        title: `Link #${id}`,
         favIconUrl: 'https://placehold.co/50',
         isPinned: false,
         ...fields,

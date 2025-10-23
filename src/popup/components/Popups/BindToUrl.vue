@@ -31,7 +31,7 @@ onMounted(async () => {
 })
 
 watchEffect(() => {
-    emit('hasError', urlError.value !== null)
+    emit('hasError', checked && urlError.value !== null)
 })
 
 async function attachBindUrl(checked: boolean): Promise<void> {
@@ -54,7 +54,6 @@ async function attachBindUrl(checked: boolean): Promise<void> {
     <div class="flex flex-col gap-3 mb-3">
         <div class="flex items-center">
             <SlideSwitch
-                :disabled="!currUrl"
                 @changed="attachBindUrl"
                 v-model="checked"
             >
