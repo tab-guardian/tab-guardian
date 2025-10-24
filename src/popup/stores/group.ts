@@ -51,6 +51,10 @@ export const useGroupStore = defineStore('group', () => {
         return group
     }
 
+    function exist(id: number): boolean {
+        return groups.value.some(g => g.id === id)
+    }
+
     async function loadGroupsFromStorage(): Promise<void> {
         loadingGroups.value = true
 
@@ -333,6 +337,7 @@ export const useGroupStore = defineStore('group', () => {
         lock,
         unlock,
         get,
+        exist,
         deleteAll,
         loadGroupsFromStorage,
         saveMany,

@@ -36,9 +36,9 @@ async function yankLink(action: 'copy' | 'cut', successMsg: string): Promise<voi
         return
     }
 
-    linkStore.copyLink({
+    await linkStore.copyLink({
         action,
-        groupId: group.value.id,
+        initialGroupId: group.value.id,
         link: sharedData.value.link,
     })
 

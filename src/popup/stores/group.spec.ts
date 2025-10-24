@@ -457,4 +457,19 @@ describe('groupStore', () => {
             expect(foundGroup?.links).toHaveLength(1)
         })
     })
+
+    suite('exist()', () => {
+        it('returns true for existing group', async () => {
+            const store = useGroupStore()
+            const group = fakeGroup()
+
+            await store.save(group)
+
+            expect(store.exist(group.id)).toBeTruthy()
+        })
+
+        it('returns false for non-existing group', async () => {
+            expect(useGroupStore().exist(0)).toBeFalsy()
+        })
+    })
 })

@@ -2,7 +2,7 @@ export type Locale = 'ru' | 'zh_CN' | 'en'
 
 export type LinkBuffer = {
     action: 'copy' | 'cut'
-    groupId: number
+    initialGroupId: number
     link: Link
 }
 

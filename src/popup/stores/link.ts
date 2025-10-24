@@ -15,6 +15,16 @@ export const useLinkStore = defineStore('link', () => {
     const isEmptyBuffer = computed<boolean>(() => buffer.value === null)
 
     async function copyLink(buf: LinkBuffer): Promise<void> {
+        const groupExist = groupStore.exist(buf.initialGroupId)
+
+        if (!groupExist) {
+            const msg =
+                'Cannot create link buffer. ' +
+                `Group with id "${buf.initialGroupId}" does not exist`
+
+            throw new Error(msg)
+        }
+
         buffer.value = buf
     }
 
@@ -39,7 +49,7 @@ export const useLinkStore = defineStore('link', () => {
 
         if (buffer.value.action === 'cut') {
             await groupStore.deleteLinkFrom(
-                buffer.value.groupId,
+                buffer.value.initialGroupId,
                 buffer.value.link.id,
             )
         }
