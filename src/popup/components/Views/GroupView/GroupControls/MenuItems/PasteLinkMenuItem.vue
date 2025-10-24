@@ -2,24 +2,24 @@
 import type { Group } from '@common/types'
 import { computed } from 'vue'
 import { trans } from '@common/modules'
-import { useAppStore } from '@/stores/app'
+import { useLinkStore } from '@/stores/link'
 import MenuItem from '@/components/MenuItem.vue'
 import PasteIcon from '@common/components/Icons/PasteIcon.vue'
 
 defineProps<{ group: Group }>()
 
-const appStore = useAppStore()
+const linkStore = useLinkStore()
 
 const disabled = computed<boolean>(() => {
-    return !appStore.linkBuffer
+    return linkStore.isEmptyBuffer
 })
 
-const tooltip = computed<string>(() => {
-    if (appStore.linkBuffer) {
-        return ''
+const tip = computed<string>(() => {
+    if (linkStore.isEmptyBuffer) {
+        return trans('nothing_to_paste')
     }
 
-    return trans('nothing_to_paste')
+    return ''
 })
 </script>
 
@@ -28,7 +28,7 @@ const tooltip = computed<string>(() => {
         :label="trans('paste_tabs')"
         :icon="PasteIcon"
         :disabled
-        :tip="tooltip"
-        @click="appStore.pasteLink(group.id)"
+        :tip
+        @click="linkStore.pasteLink(group.id)"
     />
 </template>
