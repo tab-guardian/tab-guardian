@@ -51,4 +51,84 @@ describe('linkStore', () => {
             expect(store.isEmptyBuffer).toBeTruthy()
         })
     })
+
+    suite('isLinkCut()', () => {
+        it('returns true when link is cut', async () => {
+            const store = useLinkStore()
+            const groupStore = useGroupStore()
+
+            const link = fakeLink()
+            const group = fakeGroup({ links: [link] })
+
+            await groupStore.save(group)
+
+            const buf: LinkBuffer = {
+                action: 'cut',
+                initialGroupId: group.id,
+                link,
+            }
+
+            await store.copyLink(buf)
+
+            expect(store.isEmptyBuffer).toBeFalsy()
+            expect(store.isLinkCut(link.id)).toBeTruthy()
+        })
+
+        it('returns false when link is copied', async () => {
+            const store = useLinkStore()
+            const groupStore = useGroupStore()
+
+            const link = fakeLink()
+            const group = fakeGroup({ links: [link] })
+
+            await groupStore.save(group)
+
+            const buf: LinkBuffer = {
+                action: 'copy',
+                initialGroupId: group.id,
+                link,
+            }
+
+            await store.copyLink(buf)
+
+            expect(store.isEmptyBuffer).toBeFalsy()
+            expect(store.isLinkCut(link.id)).toBeFalsy()
+        })
+
+        it('returns false when buffer is empty', async () => {
+            const store = useLinkStore()
+            const groupStore = useGroupStore()
+
+            const link = fakeLink()
+            const group = fakeGroup({ links: [link] })
+
+            await groupStore.save(group)
+
+            expect(store.isEmptyBuffer).toBeTruthy()
+            expect(store.isLinkCut(link.id)).toBeFalsy()
+        })
+
+        it('returns false when link ID does not match', async () => {
+            const store = useLinkStore()
+            const groupStore = useGroupStore()
+
+            const link = fakeLink()
+            const group = fakeGroup({ links: [link] })
+
+            await groupStore.save(group)
+
+            const buf: LinkBuffer = {
+                action: 'copy',
+                initialGroupId: group.id,
+                link,
+            }
+
+            await store.copyLink(buf)
+
+            const newLink = fakeLink()
+
+            expect(store.isEmptyBuffer).toBeFalsy()
+            expect(store.isLinkCut(newLink.id)).toBeFalsy()
+        })
+    })
 })
