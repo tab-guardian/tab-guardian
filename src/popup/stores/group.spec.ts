@@ -342,8 +342,8 @@ describe('groupStore', () => {
         it('deletes a link from a group', async () => {
             const store = useGroupStore()
 
-            const link1 = fakeLink({ id: 1 })
-            const link2 = fakeLink({ id: 2 })
+            const link1 = fakeLink()
+            const link2 = fakeLink()
 
             const group = fakeGroup({
                 links: [link1, link2],
@@ -363,8 +363,8 @@ describe('groupStore', () => {
         it('returns false for non-existent group', async () => {
             const store = useGroupStore()
 
-            const link1 = fakeLink({ id: 1 })
-            const link2 = fakeLink({ id: 2 })
+            const link1 = fakeLink()
+            const link2 = fakeLink()
 
             const group = fakeGroup({
                 links: [link1, link2],
@@ -384,8 +384,8 @@ describe('groupStore', () => {
         it('returns false for non-existent link', async () => {
             const store = useGroupStore()
 
-            const link1 = fakeLink({ id: 1 })
-            const link2 = fakeLink({ id: 2 })
+            const link1 = fakeLink()
+            const link2 = fakeLink()
 
             const group = fakeGroup({
                 links: [link1, link2],
@@ -400,6 +400,61 @@ describe('groupStore', () => {
 
             expect(foundGroup).toBeDefined()
             expect(foundGroup?.links).toHaveLength(2)
+        })
+    })
+
+    suite('insertLinksInto()', () => {
+        it('adds links to the given group', async () => {
+            const store = useGroupStore()
+
+            const group = fakeGroup({
+                links: [fakeLink()],
+            })
+
+            await store.save(group)
+
+            expect(group.links).toHaveLength(1)
+
+            const newLink1 = fakeLink()
+            const newLink2 = fakeLink()
+
+            const inserted = await store.insertLinksInto(group.id, [
+                newLink1,
+                newLink2,
+            ])
+
+            expect(inserted).toBeTruthy()
+
+            const foundGroup = store.groups[0]
+
+            expect(store.groups).toHaveLength(1)
+            expect(foundGroup).toBeDefined()
+            expect(foundGroup?.links).toHaveLength(3)
+        })
+
+        it('returns false for non-existent group', async () => {
+            const store = useGroupStore()
+
+            const group = fakeGroup({
+                links: [fakeLink()],
+            })
+
+            await store.save(group)
+
+            expect(group.links).toHaveLength(1)
+
+            const newLink1 = fakeLink()
+            const newLink2 = fakeLink()
+
+            const inserted = await store.insertLinksInto(0, [newLink1, newLink2])
+
+            expect(inserted).toBeFalsy()
+
+            const foundGroup = store.groups[0]
+
+            expect(store.groups).toHaveLength(1)
+            expect(foundGroup).toBeDefined()
+            expect(foundGroup?.links).toHaveLength(1)
         })
     })
 })

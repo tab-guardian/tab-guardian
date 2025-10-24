@@ -217,17 +217,19 @@ export const useGroupStore = defineStore('group', () => {
         return true
     }
 
-    async function insertLinksInto(id: number, links: Link[]): Promise<void> {
+    async function insertLinksInto(id: number, links: Link[]): Promise<boolean> {
         const group = get(id)
 
         if (!group) {
             groupNotFoundLog(id, 'insertLinksInto')
-            return
+            return false
         }
 
         group.links.push(...links)
 
         await save(group)
+
+        return true
     }
 
     async function save(group: Group, updateTimestamp = true): Promise<void> {
