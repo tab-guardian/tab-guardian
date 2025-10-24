@@ -1,15 +1,12 @@
 import type { LinkBuffer } from '@common/types'
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
-import { logger, trans } from '@common/modules'
-import { showToast } from '@common/modules/toast'
+import { logger } from '@common/modules'
 import { useGroupStore } from '@/stores/group'
-import { usePopupStore } from '@/stores/popup'
 import { cloneDeep } from 'lodash'
 
 export const useLinkStore = defineStore('link', () => {
     const groupStore = useGroupStore()
-    const popupStore = usePopupStore()
 
     const buffer = ref<LinkBuffer | null>(null)
     const isEmptyBuffer = computed<boolean>(() => buffer.value === null)
@@ -43,6 +40,7 @@ export const useLinkStore = defineStore('link', () => {
         }
 
         const link = cloneDeep(buffer.value.link)
+
         link.id = Date.now()
 
         await groupStore.insertLinksInto(groupId, [link])
@@ -55,10 +53,6 @@ export const useLinkStore = defineStore('link', () => {
         }
 
         buffer.value = null
-
-        showToast({ text: trans('tab_pasted') })
-
-        popupStore.hideAll()
     }
 
     return {

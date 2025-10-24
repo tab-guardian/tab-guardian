@@ -106,7 +106,7 @@ async function processFileContent(rawData: string): Promise<void> {
     }, 0)
 
     if (groupsWithSameName === 0) {
-        await groupStore.saveMany(groups, false)
+        await groupStore.saveMany(groups)
         showSuccessMessage(groups)
         return
     }

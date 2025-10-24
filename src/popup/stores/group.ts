@@ -153,7 +153,10 @@ export const useGroupStore = defineStore('group', () => {
     }
 
     // Add groups to memory and save them to storage
-    async function saveMany(groups: Group[], replace: boolean): Promise<void> {
+    async function saveMany(
+        groups: Group[],
+        replace: boolean = false,
+    ): Promise<void> {
         progressStore.start(groups.length)
 
         for (const group of groups) {

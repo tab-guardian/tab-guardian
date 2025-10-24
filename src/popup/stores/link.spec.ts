@@ -117,18 +117,38 @@ describe('linkStore', () => {
 
             await groupStore.save(group)
 
-            const buf: LinkBuffer = {
+            await store.copyLink({
                 action: 'copy',
                 initialGroupId: group.id,
                 link,
-            }
-
-            await store.copyLink(buf)
+            })
 
             const newLink = fakeLink()
 
             expect(store.isEmptyBuffer).toBeFalsy()
             expect(store.isLinkCut(newLink.id)).toBeFalsy()
+        })
+    })
+
+    suite('pasteLink()', () => {
+        it('copies link to provided group', async () => {
+            const store = useLinkStore()
+            const groupStore = useGroupStore()
+
+            const link = fakeLink()
+
+            const initialGroup = fakeGroup({ links: [link] })
+            const destinationGroup = fakeGroup({ links: [] })
+
+            await groupStore.saveMany([initialGroup, destinationGroup])
+
+            await store.copyLink({
+                action: 'copy',
+                initialGroupId: initialGroup.id,
+                link,
+            })
+
+            await store.pasteLink(destinationGroup.id)
         })
     })
 })

@@ -215,7 +215,7 @@ describe('groupStore', () => {
             const group1 = fakeGroup()
             const group2 = fakeGroup()
 
-            await store.saveMany([group1, group2], false)
+            await store.saveMany([group1, group2])
 
             expect(store.groups).toHaveLength(2)
         })
@@ -226,8 +226,8 @@ describe('groupStore', () => {
             const group1 = fakeGroup()
             const group2 = fakeGroup()
 
-            await store.saveMany([group1, group2], false)
-            await store.saveMany([group1, group2], false)
+            await store.saveMany([group1, group2])
+            await store.saveMany([group1, group2])
 
             expect(store.groups).toHaveLength(4)
         })
@@ -251,7 +251,7 @@ describe('groupStore', () => {
             const group1 = fakeGroup({ updatedAt })
             const group2 = fakeGroup({ updatedAt })
 
-            await store.saveMany([group1, group2], false)
+            await store.saveMany([group1, group2])
 
             expect(store.groups).toHaveLength(2)
             expect(store.groups[0]!.updatedAt).equal(updatedAt)
