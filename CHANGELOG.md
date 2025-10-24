@@ -1,5 +1,8 @@
 # Release Notes
 
+## v1.16.1 (2025-10-24)
+- 🧑‍💻 Added more tests to the codebase.
+
 ## v1.16.0 (2025-10-23)
 - 🧑‍💻 Improved performance for the main (home) page with loading groups.
 - 🧑‍💻 Improved "Add tabs" and "Create" buttons visibility [#84](https://github.com/tab-guardian/tab-guardian/issues/84).

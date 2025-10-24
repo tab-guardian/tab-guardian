@@ -196,17 +196,25 @@ export const useGroupStore = defineStore('group', () => {
         await notificationStore.recalculateNotification()
     }
 
-    async function deleteLinkFrom(id: number, linkId: number): Promise<void> {
+    async function deleteLinkFrom(id: number, linkId: number): Promise<boolean> {
         const group = get(id)
 
         if (!group) {
             groupNotFoundLog(id, 'deleteLinkFrom')
-            return
+            return false
+        }
+
+        const linkExist = group.links.some(link => link.id === linkId)
+
+        if (!linkExist) {
+            return false
         }
 
         group.links = group.links.filter(link => link.id !== linkId)
 
         await save(group)
+
+        return true
     }
 
     async function insertLinksInto(id: number, links: Link[]): Promise<void> {

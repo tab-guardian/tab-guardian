@@ -208,6 +208,57 @@ describe('groupStore', () => {
         })
     })
 
+    suite('saveMany()', () => {
+        it('saves many groups', async () => {
+            const store = useGroupStore()
+
+            const group1 = fakeGroup()
+            const group2 = fakeGroup()
+
+            await store.saveMany([group1, group2], false)
+
+            expect(store.groups).toHaveLength(2)
+        })
+
+        it('saves many groups without replacing duplicates', async () => {
+            const store = useGroupStore()
+
+            const group1 = fakeGroup()
+            const group2 = fakeGroup()
+
+            await store.saveMany([group1, group2], false)
+            await store.saveMany([group1, group2], false)
+
+            expect(store.groups).toHaveLength(4)
+        })
+
+        it('saves many groups without replacing duplicates', async () => {
+            const store = useGroupStore()
+
+            const group1 = fakeGroup()
+            const group2 = fakeGroup()
+
+            await store.saveMany([group1, group2], true)
+            await store.saveMany([group1, group2], true)
+
+            expect(store.groups).toHaveLength(2)
+        })
+
+        it('does not update updatedAt field on groups', async () => {
+            const store = useGroupStore()
+            const updatedAt = Date.now()
+
+            const group1 = fakeGroup({ updatedAt })
+            const group2 = fakeGroup({ updatedAt })
+
+            await store.saveMany([group1, group2], false)
+
+            expect(store.groups).toHaveLength(2)
+            expect(store.groups[0]!.updatedAt).equal(updatedAt)
+            expect(store.groups[1]!.updatedAt).equal(updatedAt)
+        })
+    })
+
     suite('update()', () => {
         it('updates fields of a group', async () => {
             const store = useGroupStore()
@@ -248,6 +299,7 @@ describe('groupStore', () => {
             const result = store.get(group.id)
 
             expect(result).toBeNull()
+            expect(localStorage.getItem(group.id.toString())).toBeNull()
         })
 
         it('silently handles deleting non existent group', async () => {
@@ -261,8 +313,8 @@ describe('groupStore', () => {
         })
     })
 
-    suite('saveMany()', () => {
-        it('saves many groups', async () => {
+    suite('deleteAll', () => {
+        it('deletes all groups', async () => {
             const store = useGroupStore()
 
             const group1 = fakeGroup()
@@ -271,30 +323,83 @@ describe('groupStore', () => {
             await store.saveMany([group1, group2], false)
 
             expect(store.groups).toHaveLength(2)
+
+            await store.deleteAll()
+
+            expect(store.groups).toHaveLength(0)
+            expect(localStorage.getItem(group1.id.toString())).toBeNull()
+            expect(localStorage.getItem(group2.id.toString())).toBeNull()
         })
 
-        it('saves many groups without replacing duplicates', async () => {
+        it('works fine if no groups exist', async () => {
+            const store = useGroupStore()
+            await store.deleteAll()
+            expect(store.groups).toHaveLength(0)
+        })
+    })
+
+    suite('deleteLinkFrom()', () => {
+        it('deletes a link from a group', async () => {
             const store = useGroupStore()
 
-            const group1 = fakeGroup()
-            const group2 = fakeGroup()
+            const link1 = fakeLink({ id: 1 })
+            const link2 = fakeLink({ id: 2 })
 
-            await store.saveMany([group1, group2], false)
-            await store.saveMany([group1, group2], false)
+            const group = fakeGroup({
+                links: [link1, link2],
+            })
 
-            expect(store.groups).toHaveLength(4)
+            await store.save(group)
+            const deleted = await store.deleteLinkFrom(group.id, link2.id)
+
+            expect(deleted).toBeTruthy()
+
+            const foundGroup = store.groups[0]
+
+            expect(foundGroup).toBeDefined()
+            expect(foundGroup?.links).toHaveLength(1)
         })
 
-        it('saves many groups without replacing duplicates', async () => {
+        it('returns false for non-existent group', async () => {
             const store = useGroupStore()
 
-            const group1 = fakeGroup()
-            const group2 = fakeGroup()
+            const link1 = fakeLink({ id: 1 })
+            const link2 = fakeLink({ id: 2 })
 
-            await store.saveMany([group1, group2], true)
-            await store.saveMany([group1, group2], true)
+            const group = fakeGroup({
+                links: [link1, link2],
+            })
 
-            expect(store.groups).toHaveLength(2)
+            await store.save(group)
+            const deleted = await store.deleteLinkFrom(0, link2.id)
+
+            expect(deleted).toBeFalsy()
+
+            const foundGroup = store.groups[0]
+
+            expect(foundGroup).toBeDefined()
+            expect(foundGroup?.links).toHaveLength(2)
+        })
+
+        it('returns false for non-existent link', async () => {
+            const store = useGroupStore()
+
+            const link1 = fakeLink({ id: 1 })
+            const link2 = fakeLink({ id: 2 })
+
+            const group = fakeGroup({
+                links: [link1, link2],
+            })
+
+            await store.save(group)
+            const deleted = await store.deleteLinkFrom(group.id, 0)
+
+            expect(deleted).toBeFalsy()
+
+            const foundGroup = store.groups[0]
+
+            expect(foundGroup).toBeDefined()
+            expect(foundGroup?.links).toHaveLength(2)
         })
     })
 })

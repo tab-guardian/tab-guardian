@@ -28,7 +28,7 @@ export function fakeGroup(fields?: Partial<Group>): Group {
     return {
         id,
         name: fields.name ?? `Test group ${id}`,
-        links: fakeLinks(),
+        links: fields.links || fakeLinks(),
         isPrivate: false,
         isEncrypted: false,
         updatedAt: Date.now(),
