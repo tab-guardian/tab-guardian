@@ -149,6 +149,45 @@ describe('linkStore', () => {
             })
 
             await store.pasteLink(destinationGroup.id)
+
+            const destGroup = groupStore.get(destinationGroup.id)
+            expect(destGroup?.links).toHaveLength(1)
+            expect(destGroup?.links[0].id).not.equal(link.id)
+
+            const initGroup = groupStore.get(initialGroup.id)
+            expect(initGroup?.links).toHaveLength(1)
+            expect(initGroup?.links[0].id).equal(link.id)
+
+            expect(store.isEmptyBuffer).toBeTruthy()
+        })
+
+        it('cuts link from initial to provided group', async () => {
+            const store = useLinkStore()
+            const groupStore = useGroupStore()
+
+            const link = fakeLink()
+
+            const initialGroup = fakeGroup({ links: [link] })
+            const destinationGroup = fakeGroup({ links: [] })
+
+            await groupStore.saveMany([initialGroup, destinationGroup])
+
+            await store.copyLink({
+                action: 'cut',
+                initialGroupId: initialGroup.id,
+                link,
+            })
+
+            await store.pasteLink(destinationGroup.id)
+
+            const initGroup = groupStore.get(initialGroup.id)
+            expect(initGroup?.links).toHaveLength(0)
+
+            const destGroup = groupStore.get(destinationGroup.id)
+            expect(destGroup?.links).toHaveLength(1)
+            expect(destGroup?.links[0].id).equal(link.id)
+
+            expect(store.isEmptyBuffer).toBeTruthy()
         })
     })
 })
