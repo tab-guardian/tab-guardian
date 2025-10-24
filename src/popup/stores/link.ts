@@ -41,7 +41,9 @@ export const useLinkStore = defineStore('link', () => {
 
         const link = cloneDeep(buffer.value.link)
 
-        link.id = Date.now()
+        if (buffer.value.action === 'copy') {
+            link.id = Date.now()
+        }
 
         await groupStore.insertLinksInto(groupId, [link])
 
