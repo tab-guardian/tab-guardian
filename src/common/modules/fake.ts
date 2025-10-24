@@ -17,7 +17,7 @@ export function fakeLink(fields?: Partial<Link>): Link {
 }
 
 export function fakeLinks(): Link[] {
-    return [fakeLink(), fakeLink(), fakeLink(), fakeLink(), fakeLink()]
+    return [fakeLink(), fakeLink()]
 }
 
 export function fakeGroup(fields?: Partial<Group>): Group {

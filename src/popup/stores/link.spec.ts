@@ -13,9 +13,11 @@ describe('linkStore', () => {
         setActivePinia(createPinia())
     })
 
-    it('isEmptyBuffer is empty by default', () => {
-        const store = useLinkStore()
-        expect(store.isEmptyBuffer).toBeTruthy()
+    suite('isEmptyBuffer', () => {
+        it('is empty by default', () => {
+            const store = useLinkStore()
+            expect(store.isEmptyBuffer).toBeTruthy()
+        })
     })
 
     suite('copyLink()', () => {
@@ -47,7 +49,8 @@ describe('linkStore', () => {
                 link: fakeLink(),
             }
 
-            expect(store.copyLink(buf)).rejects.toThrowError()
+            await expect(store.copyLink(buf)).rejects.toThrowError()
+
             expect(store.isEmptyBuffer).toBeTruthy()
         })
     })

@@ -14,9 +14,7 @@ export const useAttemptsStore = defineStore('attempts', () => {
         isLocked: false,
     })
 
-    const isLocked = computed<boolean>(() => {
-        return attempts.value.isLocked
-    })
+    const isLocked = computed<boolean>(() => attempts.value.isLocked)
 
     const isLockExpired = computed<boolean>(() => {
         return Date.now() >= attempts.value.lockEndTime

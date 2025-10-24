@@ -16,6 +16,10 @@ export const useCryptoStore = defineStore('crypto', () => {
     const progressStore = useProgressStore()
 
     async function encryptGroup(group: Group, pass: string): Promise<Group> {
+        if (pass === '') {
+            throw new Error('password should not be empty when encryping group')
+        }
+
         const encrypted = cloneDeep(group)
         const encryptedLinks: Link[] = []
         const algo = encrypted.algo || config.CURR_ENCRYPT_ALGO
@@ -54,6 +58,10 @@ export const useCryptoStore = defineStore('crypto', () => {
     }
 
     async function decryptGroup(encrypted: Group, pass: string): Promise<Group> {
+        if (pass === '') {
+            throw new Error('password should not be empty when decrypting group')
+        }
+
         const group = cloneDeep(encrypted)
         const decryptedLinks: Link[] = []
 
