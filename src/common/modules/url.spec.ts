@@ -2,7 +2,13 @@
 
 import { describe, it, expect, suite, beforeEach } from 'vitest'
 import { createPinia, setActivePinia } from 'pinia'
-import { hashUrl } from '@common/modules/url'
+import {
+    getCurrentUrl,
+    getHashedCurrentUrl,
+    hashUrl,
+    isImageUrl,
+} from '@common/modules/url'
+import { fakeInvalidImageUrls, fakeValidImageUrls } from './fake'
 
 describe('url', () => {
     beforeEach(() => {
@@ -29,6 +35,31 @@ describe('url', () => {
 
             const hashed2 = await hashUrl('https://uknown.com')
             expect(hashed2.length).to.equal(64)
+        })
+    })
+
+    it('getCurrentUrl() returns current URL', async () => {
+        const url = await getCurrentUrl()
+        expect(url).equal('http://localhost:3000/')
+    })
+
+    it('getHashedCurrentUrl() returns current hashed URL', async () => {
+        const url = await getHashedCurrentUrl()
+        const hash = await hashUrl('http://localhost:3000/')
+        expect(url).equal(hash)
+    })
+
+    suite('isImageUrl()', () => {
+        it('returns true when input is a valid URL', () => {
+            for (const url of fakeValidImageUrls()) {
+                expect(isImageUrl(url), `${url} must be valid`).toBeTruthy()
+            }
+        })
+
+        it('returns false when input is an invalid URL', () => {
+            for (const url of fakeInvalidImageUrls()) {
+                expect(isImageUrl(url), `${url} must be invalid`).toBeFalsy()
+            }
         })
     })
 })

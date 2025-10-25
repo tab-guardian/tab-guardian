@@ -35,3 +35,27 @@ export function fakeGroup(fields?: Partial<Group>): Group {
         ...fields,
     }
 }
+
+export function fakeValidImageUrls(): string[] {
+    return [
+        'https://nice.com/nice_pic.jpg',
+        'https://duck.com/duck-photo.png',
+        'https://test.io/test.webp',
+        'https://test.io/some/path/here/test.webp',
+        'https://site.com/img.svg',
+        'https://amy.net/photo.gif',
+        'http://amy-adams.net/her-photo.png',
+    ]
+}
+
+export function fakeInvalidImageUrls(): string[] {
+    return [
+        'https://nice.com/nice_pic.jp',
+        'https://duck.com/duck-photo',
+        'https://test.io/test.com',
+        'https://site.com/',
+        '//amy.net/photo.gif',
+        'htt://amy-adams.net/her-photo.png',
+        'amy-adams-photo.png',
+    ]
+}
