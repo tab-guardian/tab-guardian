@@ -1,5 +1,6 @@
 // @vitest-environment happy-dom
 
+import type { UserChoices } from '@common/types'
 import { describe, it, expect, suite, beforeEach } from 'vitest'
 import { createPinia, setActivePinia } from 'pinia'
 import { useNewGroupStore } from '@/stores/newGroup'
@@ -15,8 +16,7 @@ describe('newGroupStore', () => {
         const store = useNewGroupStore()
 
         for (const key in store.choices) {
-            // @ts-ignore
-            expect(store.choices[key]).toBeNull()
+            expect(store.choices[key as keyof UserChoices]).toBeNull()
         }
     })
 
@@ -125,8 +125,7 @@ describe('newGroupStore', () => {
             store.resetChoices()
 
             for (const key in store.choices) {
-                // @ts-ignore
-                expect(store.choices[key]).toBeNull()
+                expect(store.choices[key as keyof UserChoices]).toBeNull()
             }
         })
     })

@@ -46,8 +46,7 @@ export const useNewGroupStore = defineStore('newGroup', () => {
 
     function resetChoices(): void {
         for (const key in choices) {
-            // @ts-ignore
-            choices[key] = null
+            choices[key as keyof UserChoices] = null
         }
     }
 
