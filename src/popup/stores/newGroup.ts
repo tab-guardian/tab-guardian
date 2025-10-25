@@ -1,12 +1,12 @@
 import type { Group, UserChoices, Link } from '@common/types'
-import { ref, computed } from 'vue'
+import { reactive, computed } from 'vue'
 import { defineStore } from 'pinia'
 import { getDefaultGroupName } from '@common/modules/group'
 import { generateGroupId } from '@common/modules'
 
 export const useNewGroupStore = defineStore('newGroup', () => {
     // null suggest that there was no choice yet
-    const choices = ref<UserChoices>({
+    const choices = reactive<UserChoices>({
         isPrivate: null,
         name: null,
         closeTabs: null,
@@ -17,43 +17,43 @@ export const useNewGroupStore = defineStore('newGroup', () => {
     })
 
     const nameLength = computed<number>(() => {
-        choices.value.name ??= ''
-        return choices.value.name.length
+        choices.name ??= ''
+        return choices.name.length
     })
 
     function createGroupFromChoices(links: Link[]): Group {
         const group: Group = {
             id: generateGroupId(),
-            name: choices.value.name || getDefaultGroupName(),
-            isPrivate: choices.value.isPrivate || false,
+            name: choices.name || getDefaultGroupName(),
+            isPrivate: choices.isPrivate || false,
             isEncrypted: false,
             updatedAt: Date.now(),
             createdAt: Date.now(),
             links,
         }
 
-        if (choices.value.bindUrl) {
-            group.bindUrl = choices.value.bindUrl
+        if (choices.bindUrl) {
+            group.bindUrl = choices.bindUrl
         }
 
         return group
     }
 
     function isPasswordEmpty(): boolean {
-        choices.value.isPrivate ??= false
-        return choices.value.isPrivate && !choices.value.password
+        choices.isPrivate ??= false
+        return choices.isPrivate && !choices.password
     }
 
     function resetChoices(): void {
-        for (const key in choices.value) {
+        for (const key in choices) {
             // @ts-ignore
-            choices.value[key] = null
+            choices[key] = null
         }
     }
 
     return {
-        nameLength,
         choices,
+        nameLength,
         createGroupFromChoices,
         isPasswordEmpty,
         resetChoices,
