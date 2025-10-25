@@ -5,8 +5,8 @@ import { cloneDeep } from 'lodash'
 
 const defaultEmptyPopup = {
     open: false,
-    dataOnOpen: null,
-    dataOnClose: null,
+    dataOnShow: null,
+    dataOnHide: null,
     onClose: null,
 }
 
@@ -35,11 +35,11 @@ export const usePopupStore = defineStore('popup', () => {
 
     function show<K extends keyof Popups>(
         key: K,
-        data: Popups[K]['dataOnOpen'],
-    ): Promise<Popups[K]['dataOnClose']> {
+        data: Popups[K]['dataOnShow'],
+    ): Promise<Popups[K]['dataOnHide']> {
         return new Promise(resolve => {
             popups.value[key].open = true
-            popups.value[key].dataOnOpen = data
+            popups.value[key].dataOnShow = data
 
             // Resolve the promise when closed
             popups.value[key].onClose = resolve
@@ -52,11 +52,11 @@ export const usePopupStore = defineStore('popup', () => {
 
     function hide<K extends keyof Popups>(
         key: K,
-        onCloseData: Popups[K]['dataOnClose'],
+        onCloseData: Popups[K]['dataOnHide'],
     ): void {
         popups.value[key].open = false
-        popups.value[key].dataOnOpen = null
-        popups.value[key].dataOnClose = null
+        popups.value[key].dataOnShow = null
+        popups.value[key].dataOnHide = null
 
         const onClose = popups.value[key].onClose
 
@@ -69,8 +69,8 @@ export const usePopupStore = defineStore('popup', () => {
         return popups.value[key].open
     }
 
-    function getSharedData<K extends keyof Popups>(key: K): Popups[K]['dataOnOpen'] {
-        return popups.value[key].dataOnOpen
+    function getSharedData<K extends keyof Popups>(key: K): Popups[K]['dataOnShow'] {
+        return popups.value[key].dataOnShow
     }
 
     return {
