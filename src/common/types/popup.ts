@@ -1,7 +1,7 @@
 import { Link } from '@common/types'
 
 type PopupItem<O = any, C = any> = {
-    open: boolean
+    shown: boolean
     dataOnShow: O | null
     dataOnHide: C | null
     onClose: ((data: C) => void) | null

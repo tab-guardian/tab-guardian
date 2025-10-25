@@ -1,10 +1,9 @@
 import type { Popups } from '@common/types/popup'
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import { cloneDeep } from 'lodash'
 
 const defaultEmptyPopup = {
-    open: false,
+    shown: false,
     dataOnShow: null,
     dataOnHide: null,
     onClose: null,
@@ -29,7 +28,7 @@ export const usePopupStore = defineStore('popup', () => {
 
     function hideAll(): void {
         for (const key in popups.value) {
-            popups.value[key as keyof Popups].open = false
+            popups.value[key as keyof Popups].shown = false
         }
     }
 
@@ -38,7 +37,7 @@ export const usePopupStore = defineStore('popup', () => {
         data: Popups[K]['dataOnShow'],
     ): Promise<Popups[K]['dataOnHide']> {
         return new Promise(resolve => {
-            popups.value[key].open = true
+            popups.value[key].shown = true
             popups.value[key].dataOnShow = data
 
             // Resolve the promise when closed
@@ -50,7 +49,7 @@ export const usePopupStore = defineStore('popup', () => {
         key: K,
         onCloseData: Popups[K]['dataOnHide'],
     ): void {
-        popups.value[key].open = false
+        popups.value[key].shown = false
         popups.value[key].dataOnShow = null
         popups.value[key].dataOnHide = null
 
@@ -62,7 +61,7 @@ export const usePopupStore = defineStore('popup', () => {
     }
 
     function isPopupVisible(key: keyof Popups): boolean {
-        return popups.value[key].open
+        return popups.value[key].shown
     }
 
     function getSharedData<K extends keyof Popups>(key: K): Popups[K]['dataOnShow'] {
