@@ -46,10 +46,6 @@ export const usePopupStore = defineStore('popup', () => {
         })
     }
 
-    function resetGroups(): void {
-        popups.value = cloneDeep(defaultPopups)
-    }
-
     function hide<K extends keyof Popups>(
         key: K,
         onCloseData: Popups[K]['dataOnHide'],
@@ -80,6 +76,5 @@ export const usePopupStore = defineStore('popup', () => {
         hideAll,
         getSharedData,
         isPopupVisible,
-        resetGroups,
     }
 })
