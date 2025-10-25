@@ -1,6 +1,6 @@
 # Release Notes
 
-## v1.16.1 (2025-10-24)
+## v1.16.1 (2025-10-25)
 - 🧑‍💻 Added more tests to the codebase.
 
 ## v1.16.0 (2025-10-23)

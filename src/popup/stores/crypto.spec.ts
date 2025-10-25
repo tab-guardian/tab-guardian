@@ -14,14 +14,14 @@ describe('cryptoStore', () => {
 
     suite('encryptGroup', () => {
         it('throws the error when password is empty', async () => {
-            const store = useCryptoStore()
+            const cryptoStore = useCryptoStore()
             const group = fakeGroup({ isPrivate: true })
 
-            await expect(store.encryptGroup(group, '')).rejects.toThrowError()
+            await expect(cryptoStore.encryptGroup(group, '')).rejects.toThrowError()
         })
 
         it('encrypts a given group with password', async () => {
-            const store = useCryptoStore()
+            const cryptoStore = useCryptoStore()
 
             const link = fakeLink()
 
@@ -32,7 +32,7 @@ describe('cryptoStore', () => {
 
             expect(group.isEncrypted).toBeFalsy()
 
-            const encrypted = await store.encryptGroup(group, 'password')
+            const encrypted = await cryptoStore.encryptGroup(group, 'password')
 
             expect(encrypted.isEncrypted).toBeTruthy()
             expect(encrypted.algo).equal(config.CURR_ENCRYPT_ALGO)
@@ -49,20 +49,22 @@ describe('cryptoStore', () => {
 
     suite('decryptGroup', () => {
         it('throws the error when password is empty', async () => {
-            const store = useCryptoStore()
+            const cryptoStore = useCryptoStore()
             const group = fakeGroup({ isPrivate: true })
-            const encrypted = await store.encryptGroup(group, 'password')
+            const encrypted = await cryptoStore.encryptGroup(group, 'password')
 
-            await expect(store.decryptGroup(encrypted, '')).rejects.toThrowError()
+            await expect(
+                cryptoStore.decryptGroup(encrypted, ''),
+            ).rejects.toThrowError()
         })
 
         it('decrypts a given group with password', async () => {
-            const store = useCryptoStore()
+            const cryptoStore = useCryptoStore()
             const initialGroup = fakeGroup({ isPrivate: true })
 
             const pass = 'password'
-            const encrypted = await store.encryptGroup(initialGroup, pass)
-            const group = await store.decryptGroup(encrypted, pass)
+            const encrypted = await cryptoStore.encryptGroup(initialGroup, pass)
+            const group = await cryptoStore.decryptGroup(encrypted, pass)
 
             expect(group.isEncrypted).toBeFalsy()
 
@@ -75,36 +77,42 @@ describe('cryptoStore', () => {
         })
 
         it('throws error with non-existent salt', async () => {
-            const store = useCryptoStore()
+            const cryptoStore = useCryptoStore()
             const group = fakeGroup({ isPrivate: true })
 
             const pass = 'password'
-            const encrypted = await store.encryptGroup(group, pass)
+            const encrypted = await cryptoStore.encryptGroup(group, pass)
             delete encrypted.links[0].salt
 
-            await expect(store.decryptGroup(encrypted, pass)).rejects.toThrowError()
+            await expect(
+                cryptoStore.decryptGroup(encrypted, pass),
+            ).rejects.toThrowError()
         })
 
         it('throws error with non-existent iv', async () => {
-            const store = useCryptoStore()
+            const cryptoStore = useCryptoStore()
             const group = fakeGroup({ isPrivate: true })
 
             const pass = 'password'
-            const encrypted = await store.encryptGroup(group, pass)
+            const encrypted = await cryptoStore.encryptGroup(group, pass)
             delete encrypted.links[0].iv
 
-            await expect(store.decryptGroup(encrypted, pass)).rejects.toThrowError()
+            await expect(
+                cryptoStore.decryptGroup(encrypted, pass),
+            ).rejects.toThrowError()
         })
 
         it('throws error with non-existent "algo" field', async () => {
-            const store = useCryptoStore()
+            const cryptoStore = useCryptoStore()
             const group = fakeGroup({ isPrivate: true })
 
             const pass = 'password'
-            const encrypted = await store.encryptGroup(group, pass)
+            const encrypted = await cryptoStore.encryptGroup(group, pass)
             delete encrypted.algo
 
-            await expect(store.decryptGroup(encrypted, pass)).rejects.toThrowError()
+            await expect(
+                cryptoStore.decryptGroup(encrypted, pass),
+            ).rejects.toThrowError()
         })
     })
 })

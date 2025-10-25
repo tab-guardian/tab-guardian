@@ -12,8 +12,8 @@ describe('attemptsStore', () => {
 
     suite('isLocked', () => {
         it('is false by default', () => {
-            const store = useAttemptsStore()
-            expect(store.isLocked).toBeFalsy()
+            const attemptsStore = useAttemptsStore()
+            expect(attemptsStore.isLocked).toBeFalsy()
         })
     })
 
@@ -24,78 +24,78 @@ describe('attemptsStore', () => {
         })
 
         it('can do 5 attempts', async () => {
-            const store = useAttemptsStore()
+            const attemptsStore = useAttemptsStore()
 
-            await store.makeAttempt() // 1
-            await store.makeAttempt() // 2
-            await store.makeAttempt() // 3
-            await store.makeAttempt() // 4
-            const attempt = await store.makeAttempt() // 5
+            await attemptsStore.makeAttempt() // 1
+            await attemptsStore.makeAttempt() // 2
+            await attemptsStore.makeAttempt() // 3
+            await attemptsStore.makeAttempt() // 4
+            const attempt = await attemptsStore.makeAttempt() // 5
 
             expect(attempt.success).toBeTruthy()
         })
 
         it('cannot do 6 attempts', async () => {
-            const store = useAttemptsStore()
+            const attemptsStore = useAttemptsStore()
 
-            await store.makeAttempt() // 1
-            await store.makeAttempt() // 2
-            await store.makeAttempt() // 3
-            await store.makeAttempt() // 4
-            await store.makeAttempt() // 5
-            const attempt = await store.makeAttempt() // 6 (too many)
+            await attemptsStore.makeAttempt() // 1
+            await attemptsStore.makeAttempt() // 2
+            await attemptsStore.makeAttempt() // 3
+            await attemptsStore.makeAttempt() // 4
+            await attemptsStore.makeAttempt() // 5
+            const attempt = await attemptsStore.makeAttempt() // 6 (too many)
 
             expect(attempt.success).toBeFalsy()
         })
 
         it('is not locked after 1 attempt', async () => {
-            const store = useAttemptsStore()
-            await store.makeAttempt() // 1
-            expect(store.isLocked).toBeFalsy()
+            const attemptsStore = useAttemptsStore()
+            await attemptsStore.makeAttempt() // 1
+            expect(attemptsStore.isLocked).toBeFalsy()
         })
 
         it('is not locked after 4 attempts', async () => {
-            const store = useAttemptsStore()
+            const attemptsStore = useAttemptsStore()
 
-            await store.makeAttempt() // 1
-            await store.makeAttempt() // 2
-            await store.makeAttempt() // 3
-            await store.makeAttempt() // 4
+            await attemptsStore.makeAttempt() // 1
+            await attemptsStore.makeAttempt() // 2
+            await attemptsStore.makeAttempt() // 3
+            await attemptsStore.makeAttempt() // 4
 
-            expect(store.isLocked).toBeFalsy()
+            expect(attemptsStore.isLocked).toBeFalsy()
         })
 
         it('is locked after 5 attempts but attempt is success', async () => {
-            const store = useAttemptsStore()
+            const attemptsStore = useAttemptsStore()
 
-            await store.makeAttempt() // 1
-            await store.makeAttempt() // 2
-            await store.makeAttempt() // 3
-            await store.makeAttempt() // 4
-            const attempt = await store.makeAttempt() // 5
+            await attemptsStore.makeAttempt() // 1
+            await attemptsStore.makeAttempt() // 2
+            await attemptsStore.makeAttempt() // 3
+            await attemptsStore.makeAttempt() // 4
+            const attempt = await attemptsStore.makeAttempt() // 5
 
             expect(attempt.success).toBeTruthy()
-            expect(store.isLocked).toBeTruthy()
+            expect(attemptsStore.isLocked).toBeTruthy()
         })
     })
 
     suite('unlock()', () => {
         it('removes lock with', async () => {
-            const store = useAttemptsStore()
+            const attemptsStore = useAttemptsStore()
 
             // Lock by making too many attempts
-            await store.makeAttempt() // 1
-            await store.makeAttempt() // 2
-            await store.makeAttempt() // 3
-            await store.makeAttempt() // 4
-            await store.makeAttempt() // 5
-            await store.makeAttempt() // 6 (too many, locked)
+            await attemptsStore.makeAttempt() // 1
+            await attemptsStore.makeAttempt() // 2
+            await attemptsStore.makeAttempt() // 3
+            await attemptsStore.makeAttempt() // 4
+            await attemptsStore.makeAttempt() // 5
+            await attemptsStore.makeAttempt() // 6 (too many, locked)
 
-            expect(store.isLocked).toBeTruthy()
+            expect(attemptsStore.isLocked).toBeTruthy()
 
-            await store.unlock()
+            await attemptsStore.unlock()
 
-            expect(store.isLocked).toBeFalsy()
+            expect(attemptsStore.isLocked).toBeFalsy()
         })
     })
 })

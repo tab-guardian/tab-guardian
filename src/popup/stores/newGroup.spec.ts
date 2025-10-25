@@ -13,46 +13,49 @@ describe('newGroupStore', () => {
     })
 
     it('choices are null by default', () => {
-        const store = useNewGroupStore()
+        const newGroupStore = useNewGroupStore()
 
-        for (const key in store.choices) {
-            expect(store.choices[key as keyof UserChoices]).toBeNull()
+        for (const key in newGroupStore.choices) {
+            expect(newGroupStore.choices[key as keyof UserChoices]).toBeNull()
         }
     })
 
     suite('nameLength', () => {
         it('returns the length of the group name', () => {
-            const store = useNewGroupStore()
+            const newGroupStore = useNewGroupStore()
             const groupName = 'Amy Adams Movies'
 
-            store.choices.name = groupName
+            newGroupStore.choices.name = groupName
 
-            expect(store.nameLength).equal(groupName.length)
+            expect(newGroupStore.nameLength).equal(groupName.length)
         })
 
         it('returns 0 when name is null', () => {
-            const store = useNewGroupStore()
-            expect(store.nameLength).equal(0)
+            const newGroupStore = useNewGroupStore()
+            expect(newGroupStore.nameLength).equal(0)
         })
 
         it('returns 0 for empty string', () => {
-            const store = useNewGroupStore()
-            store.choices.name = ''
-            expect(store.nameLength).equal(0)
+            const newGroupStore = useNewGroupStore()
+            newGroupStore.choices.name = ''
+            expect(newGroupStore.nameLength).equal(0)
         })
     })
 
     suite('createGroupFromChoices()', () => {
         it('creates group from provided choices', () => {
-            const store = useNewGroupStore()
+            const newGroupStore = useNewGroupStore()
             const name = 'Amy Adams Movies'
             const bindUrl = 'https://amy-adams.org'
 
-            store.choices.name = name
-            store.choices.isPrivate = true
-            store.choices.bindUrl = bindUrl
+            newGroupStore.choices.name = name
+            newGroupStore.choices.isPrivate = true
+            newGroupStore.choices.bindUrl = bindUrl
 
-            const group = store.createGroupFromChoices([fakeLink(), fakeLink()])
+            const group = newGroupStore.createGroupFromChoices([
+                fakeLink(),
+                fakeLink(),
+            ])
 
             expect(group.name).equal(name)
             expect(group.isPrivate).toBeTruthy()
@@ -63,13 +66,13 @@ describe('newGroupStore', () => {
         })
 
         it('does not add bindUrl field when not provided', () => {
-            const store = useNewGroupStore()
+            const newGroupStore = useNewGroupStore()
             const name = 'Sydney Sweeney Movies'
 
-            store.choices.name = name
-            store.choices.isPrivate = true
+            newGroupStore.choices.name = name
+            newGroupStore.choices.isPrivate = true
 
-            const group = store.createGroupFromChoices([fakeLink()])
+            const group = newGroupStore.createGroupFromChoices([fakeLink()])
 
             expect(group.name).equal(name)
             expect(group.isPrivate).toBeTruthy()
@@ -79,53 +82,53 @@ describe('newGroupStore', () => {
 
     suite('isPasswordEmpty()', () => {
         it('returns false for empty password for non-private group', () => {
-            const store = useNewGroupStore()
-            store.choices.password = ''
-            store.choices.isPrivate = false
+            const newGroupStore = useNewGroupStore()
+            newGroupStore.choices.password = ''
+            newGroupStore.choices.isPrivate = false
 
-            expect(store.isPasswordEmpty()).toBeFalsy()
+            expect(newGroupStore.isPasswordEmpty()).toBeFalsy()
         })
 
         it('returns false for empty password when isPrivate equal to null', () => {
-            const store = useNewGroupStore()
-            store.choices.password = ''
-            store.choices.isPrivate = null
+            const newGroupStore = useNewGroupStore()
+            newGroupStore.choices.password = ''
+            newGroupStore.choices.isPrivate = null
 
-            expect(store.isPasswordEmpty()).toBeFalsy()
+            expect(newGroupStore.isPasswordEmpty()).toBeFalsy()
         })
 
         it('returns true for empty password for private group', () => {
-            const store = useNewGroupStore()
-            store.choices.password = ''
-            store.choices.isPrivate = true
+            const newGroupStore = useNewGroupStore()
+            newGroupStore.choices.password = ''
+            newGroupStore.choices.isPrivate = true
 
-            expect(store.isPasswordEmpty()).toBeTruthy()
+            expect(newGroupStore.isPasswordEmpty()).toBeTruthy()
         })
 
         it('returns true for null password for private group', () => {
-            const store = useNewGroupStore()
-            store.choices.password = null
-            store.choices.isPrivate = true
+            const newGroupStore = useNewGroupStore()
+            newGroupStore.choices.password = null
+            newGroupStore.choices.isPrivate = true
 
-            expect(store.isPasswordEmpty()).toBeTruthy()
+            expect(newGroupStore.isPasswordEmpty()).toBeTruthy()
         })
     })
 
     suite('resetChoices()', () => {
         it('choices are null by default', () => {
-            const store = useNewGroupStore()
+            const newGroupStore = useNewGroupStore()
 
-            store.choices.name = 'Amy Adams Movies'
-            store.choices.isPrivate = true
-            store.choices.bindUrl = 'https://amy-adams.org'
-            store.choices.closeTabs = false
-            store.choices.password = 'sydney-sweeney'
-            store.choices.wantsSelectAllLinks = true
+            newGroupStore.choices.name = 'Amy Adams Movies'
+            newGroupStore.choices.isPrivate = true
+            newGroupStore.choices.bindUrl = 'https://amy-adams.org'
+            newGroupStore.choices.closeTabs = false
+            newGroupStore.choices.password = 'sydney-sweeney'
+            newGroupStore.choices.wantsSelectAllLinks = true
 
-            store.resetChoices()
+            newGroupStore.resetChoices()
 
-            for (const key in store.choices) {
-                expect(store.choices[key as keyof UserChoices]).toBeNull()
+            for (const key in newGroupStore.choices) {
+                expect(newGroupStore.choices[key as keyof UserChoices]).toBeNull()
             }
         })
     })
