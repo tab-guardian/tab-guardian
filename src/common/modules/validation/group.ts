@@ -7,7 +7,7 @@ export function validatePassword(pass: string, confirm?: string): string | null 
     }
 
     if (pass.length < config.MIN_PASS_LENGTH) {
-        return trans('passwords_min_length', config.MIN_PASS_LENGTH.toString())
+        return trans('password_min_length', config.MIN_PASS_LENGTH.toString())
     }
 
     if (confirm && pass !== confirm) {
