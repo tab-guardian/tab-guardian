@@ -6,7 +6,7 @@ export function trans(msg: string, ...args: string[]): string {
 }
 
 export function removeTrail(str: string, tail: string): string {
-    return str.endsWith(tail) ? str.slice(0, -tail.length) : str
+    return str.endsWith(tail) && tail !== '' ? str.slice(0, -tail.length) : str
 }
 
 export function limitString(str: string, maxLength = 20) {
