@@ -21,10 +21,6 @@ export function formatNumber(num: number): string {
     return num.toLocaleString(undefined, { maximumFractionDigits: 0 })
 }
 
-export function generateGroupId(): number {
-    return Date.now() + Math.floor(Math.random() * 1000)
-}
-
 export function isEmoji(emoji: string): boolean {
     // Workaround for emojiRegex() treating some emojis as false
     if (['👎️', '👍️'].includes(emoji)) {
