@@ -10,6 +10,10 @@ export function removeTrail(str: string, tail: string): string {
 }
 
 export function limitString(str: string, maxLength = 20) {
+    if (str.length <= 3) {
+        return str
+    }
+
     return str.length > maxLength ? str.substring(0, maxLength) + '...' : str
 }
 
