@@ -7,7 +7,7 @@ import { useGroupStore } from '@/stores/group'
 import { createPinia, setActivePinia } from 'pinia'
 import { fakeGroup, fakeLink } from '@common/modules/fake'
 
-describe('linkStore', () => {
+describe('link store', () => {
     beforeEach(() => {
         localStorage.clear()
         setActivePinia(createPinia())

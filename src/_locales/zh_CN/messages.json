@@ -3,7 +3,7 @@
         "message": "成功导入 $n$ 个组",
         "placeholders": { "n": { "content": "$1" } }
     },
-    "passwords_min_length": {
+    "password_min_length": {
         "message": "密码必须至少包含 $n$ 个字符",
         "placeholders": { "n": { "content": "$1" } }
     },

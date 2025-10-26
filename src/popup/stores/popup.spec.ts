@@ -5,7 +5,7 @@ import { describe, it, expect, suite, beforeEach } from 'vitest'
 import { createPinia, setActivePinia } from 'pinia'
 import { usePopupStore } from '@/stores/popup'
 
-describe('popupStore', () => {
+describe('popup store', () => {
     beforeEach(() => {
         localStorage.clear()
         setActivePinia(createPinia())

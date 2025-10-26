@@ -7,7 +7,7 @@ import { createPinia, setActivePinia } from 'pinia'
 import { useGroupStore } from '@/stores/group'
 import { fakeGroup, fakeLink } from '@common/modules/fake'
 
-describe('groupStore', () => {
+describe('group store', () => {
     beforeEach(() => {
         localStorage.clear()
         setActivePinia(createPinia())
@@ -200,7 +200,7 @@ describe('groupStore', () => {
             const encryption = await groupStore.lock(group, 'amy')
 
             const msg = trans(
-                'passwords_min_length',
+                'password_min_length',
                 config.MIN_PASS_LENGTH.toString(),
             )
 

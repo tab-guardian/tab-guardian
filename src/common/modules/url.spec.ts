@@ -10,7 +10,7 @@ import {
 } from '@common/modules/url'
 import { fakeInvalidImageUrls, fakeValidImageUrls } from './fake'
 
-describe('url module', () => {
+describe('url utilities module', () => {
     beforeEach(() => {
         localStorage.clear()
         setActivePinia(createPinia())

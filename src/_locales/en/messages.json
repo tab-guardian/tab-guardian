@@ -3,7 +3,7 @@
         "message": "$n$ groups imported successfully",
         "placeholders": { "n": { "content": "$1" } }
     },
-    "passwords_min_length": {
+    "password_min_length": {
         "message": "Password needs to be at least $n$ characters",
         "placeholders": { "n": { "content": "$1" } }
     },

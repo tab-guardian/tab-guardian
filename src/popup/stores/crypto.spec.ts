@@ -6,7 +6,7 @@ import { useCryptoStore } from '@/stores/crypto'
 import { fakeGroup, fakeLink } from '@common/modules/fake'
 import { config } from '@common/config'
 
-describe('cryptoStore', () => {
+describe('crypto store', () => {
     beforeEach(() => {
         localStorage.clear()
         setActivePinia(createPinia())

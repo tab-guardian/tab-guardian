@@ -4,7 +4,7 @@ import { describe, it, expect, beforeEach, suite } from 'vitest'
 import { createPinia, setActivePinia } from 'pinia'
 import { useAttemptsStore } from '@/stores/attempts'
 
-describe('attemptsStore', () => {
+describe('attempts store', () => {
     beforeEach(() => {
         localStorage.clear()
         setActivePinia(createPinia())

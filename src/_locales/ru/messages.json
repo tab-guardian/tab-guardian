@@ -3,7 +3,7 @@
         "message": "$n$ групп успешно импортировано",
         "placeholders": { "n": { "content": "$1" } }
     },
-    "passwords_min_length": {
+    "password_min_length": {
         "message": "Пароль должен состоять как минимум из $n$ символов",
         "placeholders": { "n": { "content": "$1" } }
     },

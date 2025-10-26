@@ -5,7 +5,7 @@ import { createPinia, setActivePinia } from 'pinia'
 import { fakeInvalidImageUrls, fakeValidImageUrls } from '../fake'
 import { validateImageUrl, validateUrl } from './url'
 
-describe('url module', () => {
+describe('url validation module', () => {
     beforeEach(() => {
         localStorage.clear()
         setActivePinia(createPinia())
