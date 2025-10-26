@@ -10,7 +10,7 @@ import {
 } from '@common/modules/url'
 import { fakeInvalidImageUrls, fakeValidImageUrls } from './fake'
 
-describe('url', () => {
+describe('url module', () => {
     beforeEach(() => {
         localStorage.clear()
         setActivePinia(createPinia())
@@ -50,13 +50,13 @@ describe('url', () => {
     })
 
     suite('isImageUrl()', () => {
-        it('returns true when input is a valid URL', () => {
+        it('returns true when input is a valid image URL', () => {
             for (const url of fakeValidImageUrls()) {
                 expect(isImageUrl(url), `${url} must be valid`).toBeTruthy()
             }
         })
 
-        it('returns false when input is an invalid URL', () => {
+        it('returns false when input is an invalid image URL', () => {
             for (const url of fakeInvalidImageUrls()) {
                 expect(isImageUrl(url), `${url} must be invalid`).toBeFalsy()
             }
