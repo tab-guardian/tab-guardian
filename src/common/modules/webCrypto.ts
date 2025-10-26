@@ -97,7 +97,7 @@ export async function encryptExport(text: string, pass: string): Promise<string>
     const encrypted = await encryptString(text, pass, config.CURR_ENCRYPT_ALGO)
     const header = `algo(${config.CURR_ENCRYPT_ALGO})`
 
-    return `${header}${encrypted} `
+    return `${header}${encrypted}`
 }
 
 export async function decryptExport(rawData: string, pass: string): Promise<string> {
