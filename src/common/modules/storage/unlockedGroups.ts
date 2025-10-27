@@ -1,9 +1,8 @@
-import { groupStorage } from '@common/modules/storage/group'
 import { runtime } from '@common/modules/runtime'
 
-const KEY = 'has-unlocked-groups'
+export const KEY = 'has-unlocked-groups'
 
-export const unlcokedGroupsStorage = {
+export const unlockedGroupsStorage = {
     async set(): Promise<void> {
         await runtime.storage.set<string>(KEY, '1')
     },
@@ -15,10 +14,5 @@ export const unlcokedGroupsStorage = {
 
     async delete(): Promise<void> {
         await runtime.storage.remove(KEY)
-    },
-
-    async count(): Promise<number> {
-        const groups = await groupStorage.getAll()
-        return groups.filter(g => g.isPrivate && !g.isEncrypted).length
     },
 }

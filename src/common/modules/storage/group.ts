@@ -60,6 +60,11 @@ export const groupStorage = {
         // save new group
         await runtime.storage.set<Group>(newGroup.id.toString(), newGroup)
     },
+
+    async countUnlocked(): Promise<number> {
+        const groups = await this.getAll()
+        return groups.filter(g => g.isPrivate && !g.isEncrypted).length
+    },
 }
 
 function decodeGroup(group: Group): Group {
