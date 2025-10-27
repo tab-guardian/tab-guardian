@@ -8,8 +8,8 @@ export async function setHasUnlockedGroupsFlag(): Promise<void> {
 }
 
 export async function hasUnlockedGroupsFlag(): Promise<boolean> {
-    const flag = await runtime.storage.get<string>(KEY)
-    return flag === '1'
+    const results = await runtime.storage.get<string>(KEY)
+    return results.length > 0 && results[0] === '1'
 }
 
 export async function deleteHasUnlockedGroupsFlag(): Promise<void> {

@@ -44,21 +44,30 @@ export function throwIfQuotaExceeds(
 }
 
 export function getFromExtentionStorage<T>(
-    key: string,
+    keys: string | string[] | number[],
     result: { [key: string]: any },
-): T | null {
-    const strValue: string = result[key]
+): T[] {
+    const get = function (key: string) {
+        const strValue: string = result[key]
 
-    if (!strValue) {
-        return null
+        if (!strValue) {
+            return null
+        }
+
+        const value: T | null | undefined = JSON.parse(strValue)
+
+        if (!value) {
+            logger().error(`Failed to parse ${key} from storage`)
+            return null
+        }
+
+        return value
     }
 
-    const value: T | null | undefined = JSON.parse(strValue)
-
-    if (!value) {
-        logger().error(`Failed to parse ${key} from storage`)
-        return null
+    if (typeof keys === 'string') {
+        const val = get(keys)
+        return val ? [val] : []
     }
 
-    return value
+    return keys.map(key => get(key.toString())).filter(item => item !== null)
 }

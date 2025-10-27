@@ -14,7 +14,8 @@ export async function savePasswordToStorage(
 export async function getPasswordFromStorage(
     groupId: number,
 ): Promise<string | null> {
-    return runtime.storage.get<string>(KEY_PREFIX + groupId)
+    const results = await runtime.storage.get<string>(KEY_PREFIX + groupId)
+    return results[0] ?? null
 }
 
 export async function deletePasswordFromStorage(groupId: number): Promise<void> {

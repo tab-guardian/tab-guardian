@@ -225,8 +225,8 @@ describe('group store', () => {
         it('saves many groups without replacing duplicates', async () => {
             const groupStore = useGroupStore()
 
-            const group1 = fakeGroup()
-            const group2 = fakeGroup()
+            const group1 = fakeGroup({ id: 1 })
+            const group2 = fakeGroup({ id: 2 })
 
             await groupStore.saveMany([group1, group2])
             await groupStore.saveMany([group1, group2])

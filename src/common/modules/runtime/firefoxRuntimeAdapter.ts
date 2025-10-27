@@ -61,11 +61,10 @@ export function getFirefoxRuntimeAdapter(): PlatformRuntime {
                 await browser.storage.local.clear()
             },
 
-            async get<T>(key: string) {
-                return new Promise<T | null>(resolve => {
-                    browser.storage.local.get(key).then(result => {
-                        resolve(getFromExtentionStorage<T>(key, result))
-                    })
+            async get<T>(keys: string | string[] | number[]) {
+                return new Promise<T[]>(async resolve => {
+                    const result = await browser.storage.local.get(keys)
+                    resolve(getFromExtentionStorage<T>(keys, result))
                 })
             },
 

@@ -61,10 +61,10 @@ export function getChromeRuntimeAdapter(): PlatformRuntime {
                 await chrome.storage.local.clear()
             },
 
-            async get<T>(key: string) {
-                return new Promise<T | null>(resolve => {
-                    chrome.storage.local.get(key, result => {
-                        resolve(getFromExtentionStorage<T>(key, result))
+            async get<T>(keys: string | string[] | number[]) {
+                return new Promise<T[]>(resolve => {
+                    chrome.storage.local.get(keys, result => {
+                        resolve(getFromExtentionStorage<T>(keys, result))
                     })
                 })
             },

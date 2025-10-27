@@ -1,8 +1,8 @@
 import { runtime } from '@common/modules/runtime'
 
 export async function getGroupIdsFromStorage(): Promise<number[]> {
-    const ids = await runtime.storage.get<number[]>('groupIds')
-    return ids || []
+    const results = await runtime.storage.get<number[]>('groupIds')
+    return results[0] ?? []
 }
 
 export async function saveGroupIdsToStorage(ids: number[]): Promise<void> {
