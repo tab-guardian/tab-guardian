@@ -1,12 +1,14 @@
 // @vitest-environment happy-dom
 
 import { describe, it, expect, suite, beforeEach } from 'vitest'
+import { fakeGroup, fakeLink } from '@common/modules/fake'
 import { createPinia, setActivePinia } from 'pinia'
 import {
+    deleteAllGroupsFromStorage,
     deleteGroupFromStorage,
+    getGroupsFromStorage,
     saveGroupToStorage,
 } from '@common/modules/storage/group'
-import { fakeGroup, fakeLink } from '@common/modules/fake'
 
 describe('group storage module', () => {
     beforeEach(() => {
@@ -69,6 +71,53 @@ describe('group storage module', () => {
 
             expect(idsParsed).toBeTypeOf('object')
             expect(idsParsed).toHaveLength(0)
+        })
+    })
+
+    suite('deleteAllGroupsFromStorage()', () => {
+        it('deletes all groups from storage', async () => {
+            const group = fakeGroup()
+            await saveGroupToStorage(group)
+
+            await deleteAllGroupsFromStorage()
+
+            const foundItem = localStorage.getItem(group.id.toString())
+
+            expect(foundItem).toBeNull()
+        })
+
+        it('deletes all group ids from groupIds', async () => {
+            const group = fakeGroup()
+            await saveGroupToStorage(group)
+
+            await deleteAllGroupsFromStorage()
+
+            const idsStr = localStorage.getItem('groupIds')
+            const idsParsed = JSON.parse(idsStr!)
+
+            expect(idsParsed).toBeTypeOf('object')
+            expect(idsParsed).toHaveLength(0)
+        })
+    })
+
+    suite('getGroupsFromStorage()', () => {
+        it('loads all groups from storage', async () => {
+            const group1 = fakeGroup()
+            const group2 = fakeGroup()
+
+            await saveGroupToStorage(group1)
+            await saveGroupToStorage(group2)
+
+            const groups = await getGroupsFromStorage()
+
+            expect(groups).toHaveLength(2)
+            expect(groups[0].id).equal(group1.id)
+            expect(groups[1].id).equal(group2.id)
+        })
+
+        it('returns empty array when there are not groups', async () => {
+            const groups = await getGroupsFromStorage()
+            expect(groups).toHaveLength(0)
         })
     })
 })
