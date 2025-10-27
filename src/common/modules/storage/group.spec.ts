@@ -115,4 +115,44 @@ describe('group storage module', () => {
             expect(groups).toHaveLength(0)
         })
     })
+
+    suite('countUnlocked()', () => {
+        it('returns 0 when no groups', async () => {
+            const counted = await groupStorage.countUnlocked()
+            expect(counted).equal(0)
+        })
+
+        it('returns 0 when no private groups', async () => {
+            await groupStorage.save(fakeGroup({ isPrivate: false }))
+            await groupStorage.save(fakeGroup({ isPrivate: false }))
+
+            const counted = await groupStorage.countUnlocked()
+
+            expect(counted).equal(0)
+        })
+
+        it('returns 0 when groups are encrypted', async () => {
+            const args = { isPrivate: true, isEncrypted: true }
+
+            await groupStorage.save(fakeGroup(args))
+            await groupStorage.save(fakeGroup(args))
+
+            const counted = await groupStorage.countUnlocked()
+
+            expect(counted).equal(0)
+        })
+
+        it('returns the number of unlocked groups', async () => {
+            const unlockedArgs = { isPrivate: true, isEncrypted: false }
+            const lockedArgs = { isPrivate: true, isEncrypted: true }
+
+            await groupStorage.save(fakeGroup(unlockedArgs))
+            await groupStorage.save(fakeGroup(lockedArgs))
+            await groupStorage.save(fakeGroup({ isPrivate: false }))
+
+            const counted = await groupStorage.countUnlocked()
+
+            expect(counted).equal(1)
+        })
+    })
 })
