@@ -63,7 +63,9 @@ async function openFirstGroup(e: KeyboardEvent): Promise<void> {
 }
 
 async function unlockCallback(group: Group, pass: string): Promise<boolean> {
-    const unlocking = await groupStore.unlock(group, pass, true)
+    const unlocking = await groupStore.unlock(group, pass)
+
+    await tabsStore.openTabs(group, pass)
 
     showToast({
         text: unlocking.message,

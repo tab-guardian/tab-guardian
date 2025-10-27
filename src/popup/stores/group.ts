@@ -8,7 +8,6 @@ import { useSettingsStore } from '@/stores/settings'
 import { useNotificationStore } from '@/stores/notification'
 import { useCryptoStore } from '@/stores/crypto'
 import { useProgressStore } from '@/stores/progress'
-import { useTabsStore } from '@/stores/tabs'
 import { getDecryptionError } from '@/errors'
 import { getHashedCurrentUrl } from '@common/modules/url'
 import { validatePassword } from '@common/modules/validation/group'
@@ -22,7 +21,6 @@ export const useGroupStore = defineStore('group', () => {
     const settingsStore = useSettingsStore()
     const notificationStore = useNotificationStore()
     const progressStore = useProgressStore()
-    const tabsStore = useTabsStore()
 
     const groups = ref<Group[]>([])
     const loadingGroups = ref<boolean>(false)
@@ -120,7 +118,6 @@ export const useGroupStore = defineStore('group', () => {
     async function unlock(
         group: Group,
         password: string,
-        openTabs: boolean = false,
     ): Promise<UnlockFuncReturnValue> {
         try {
             const decryptedGroup = await cryptoStore.decryptGroup(group, password)
@@ -128,10 +125,6 @@ export const useGroupStore = defineStore('group', () => {
 
             if (settingsStore.settings.rememberPasswordAfterUnlock) {
                 await passwordStorage.save(group.id, password)
-            }
-
-            if (openTabs) {
-                await tabsStore.openTabs(group, password)
             }
 
             return {
