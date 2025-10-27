@@ -25,7 +25,7 @@ export const useAttemptsStore = defineStore('attempts', () => {
     })
 
     async function loadAttemptsFromStorage(): Promise<void> {
-        const attemptsValue = await runtime.storage.get<Attempts>('attempts')
+        const results = await runtime.storage.get<Attempts>('attempts')
 
         if (attemptsValue) {
             attempts.value = attemptsValue

@@ -1,7 +1,6 @@
 import type { Group } from '@common/types'
 import { runtime } from '@common/modules/runtime'
 import { cloneDeep } from 'lodash'
-import { logger } from '@common/modules'
 import {
     getGroupIdsFromStorage,
     saveGroupIdsToStorage,
@@ -20,23 +19,13 @@ export async function deleteAllGroupsFromStorage(): Promise<void> {
 
 export async function getGroupsFromStorage(): Promise<Group[]> {
     const groupIds = await getGroupIdsFromStorage()
-    const groups: Group[] = []
+    const groups = await runtime.storage.get<Group>(groupIds)
 
-    for (let id of groupIds) {
-        const group = await runtime.storage.get<Group>(id.toString())
-
-        if (!group) {
-            logger().error(`Group ${id} not found in storage, deleting it`)
-            await deleteGroupIdFromStorage(id)
-            continue
-        }
-
+    for (let group of groups) {
         if (group.bindURL) {
             group.bindUrl = group.bindURL
             delete group.bindURL
         }
-
-        groups.unshift(group)
     }
 
     return groups.map(group => decodeGroup(group))
