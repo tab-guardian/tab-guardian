@@ -4,7 +4,7 @@ import { ref } from 'vue'
 import { usePopupStore } from '@/stores/popup'
 import { trans, downloadFile, logger } from '@common/modules'
 import { encryptExport } from '@common/modules/webCrypto'
-import { getPasswordFromStorage } from '@common/modules/storage/password'
+import { passwordStorage } from '@common/modules/storage/password'
 import { showToast } from '@common/modules/toast'
 import { toBase64 } from '@common/modules/base64'
 import { cloneDeep } from 'lodash'
@@ -37,7 +37,7 @@ async function exportGroup(): Promise<void> {
         return
     }
 
-    const pass = await getPasswordFromStorage(group.id)
+    const pass = await passwordStorage.get(group.id)
 
     if (pass) {
         const encrypted = await encryptExport(compressed, pass)

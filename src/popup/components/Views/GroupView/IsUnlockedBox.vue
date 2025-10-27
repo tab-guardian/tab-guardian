@@ -6,11 +6,7 @@ import { useGroupStore } from '@/stores/group'
 import { usePopupStore } from '@/stores/popup'
 import { useSettingsStore } from '@/stores/settings'
 import { showToast } from '@common/modules/toast'
-import {
-    savePasswordToStorage,
-    getPasswordFromStorage,
-    deletePasswordFromStorage,
-} from '@common/modules/storage/password'
+import { passwordStorage } from '@common/modules/storage/password'
 import LockClosedIcon from '@common/components/Icons/LockClosedIcon.vue'
 import WarningBox from '@common/components/WarningBox.vue'
 import Progress from '@common/components/Progress.vue'
@@ -34,10 +30,10 @@ async function promptEnterPassword(): Promise<void> {
     }
 
     if (useNewPassword.value) {
-        await deletePasswordFromStorage(props.group.id)
+        await passwordStorage.delete(props.group.id)
     }
 
-    const pass = await getPasswordFromStorage(props.group.id)
+    const pass = await passwordStorage.get(props.group.id)
 
     if (pass) {
         await lockGroup(pass)
@@ -59,7 +55,7 @@ async function promptEnterPassword(): Promise<void> {
         return
     }
 
-    await savePasswordToStorage(props.group.id, newPass)
+    await passwordStorage.save(props.group.id, newPass)
     await lockGroup(newPass)
 }
 
@@ -79,7 +75,7 @@ async function lockGroup(pass: string): Promise<void> {
     }
 
     await groupStore.save(locking.group)
-    await deletePasswordFromStorage(props.group.id)
+    await passwordStorage.delete(props.group.id)
 
     encrypting.value = false
 }

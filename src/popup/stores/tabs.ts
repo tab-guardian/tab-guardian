@@ -7,7 +7,7 @@ import { showToast } from '@common/modules/toast'
 import { getCurrentLinks } from '@common/modules/tabs/getCurrentLinks'
 import { restoreTabs } from '@common/modules/tabs/restoreTabs'
 import { closeTabs } from '@common/modules/tabs/closeTabs'
-import { getPasswordFromStorage } from '@common/modules/storage/password'
+import { passwordStorage } from '@common/modules/storage/password'
 
 export const useTabsStore = defineStore('tabs', () => {
     const groupStore = useGroupStore()
@@ -23,7 +23,7 @@ export const useTabsStore = defineStore('tabs', () => {
             return true
         }
 
-        const pass = await getPasswordFromStorage(group.id)
+        const pass = await passwordStorage.get(group.id)
 
         if (!pass) {
             return false

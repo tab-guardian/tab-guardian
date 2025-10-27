@@ -12,7 +12,7 @@ import { useTabsStore } from '@/stores/tabs'
 import { getDecryptionError } from '@/errors'
 import { getHashedCurrentUrl } from '@common/modules/url'
 import { validatePassword } from '@common/modules/validation/group'
-import { savePasswordToStorage } from '@common/modules/storage/password'
+import { passwordStorage } from '@common/modules/storage/password'
 import {
     deleteAllGroupsFromStorage,
     deleteGroupFromStorage,
@@ -132,7 +132,7 @@ export const useGroupStore = defineStore('group', () => {
             await save(decryptedGroup)
 
             if (settingsStore.settings.rememberPasswordAfterUnlock) {
-                await savePasswordToStorage(group.id, password)
+                await passwordStorage.save(group.id, password)
             }
 
             if (openTabs) {
