@@ -23,14 +23,14 @@ export const useTabsStore = defineStore('tabs', () => {
             return true
         }
 
-        const pass = await passwordStorage.get(group.id)
+        const pass = userPass || (await passwordStorage.get(group.id))
 
         if (!pass) {
             return false
         }
 
         await restore(group)
-        const encryption = await groupStore.lock(group, userPass || pass)
+        const encryption = await groupStore.lock(group, pass)
 
         showToast({
             text: encryption.message,
@@ -56,6 +56,7 @@ export const useTabsStore = defineStore('tabs', () => {
         }
 
         await groupStore.update(group.id, { openedTimes })
+
         await restoreTabs(group.links)
     }
 

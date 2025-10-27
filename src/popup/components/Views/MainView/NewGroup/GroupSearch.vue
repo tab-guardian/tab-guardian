@@ -65,8 +65,6 @@ async function openFirstGroup(e: KeyboardEvent): Promise<void> {
 async function unlockCallback(group: Group, pass: string): Promise<boolean> {
     const unlocking = await groupStore.unlock(group, pass)
 
-    await tabsStore.openTabs(group, pass)
-
     showToast({
         text: unlocking.message,
         type: unlocking.failed ? 'error' : 'info',
@@ -76,6 +74,8 @@ async function unlockCallback(group: Group, pass: string): Promise<boolean> {
     if (unlocking.failed) {
         return false
     }
+
+    await tabsStore.openTabs(unlocking.group, pass)
 
     await router.push({ name: 'main' })
 
