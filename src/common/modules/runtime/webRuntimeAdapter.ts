@@ -108,22 +108,33 @@ export function getWebRuntimeAdapter(): PlatformRuntime {
                 localStorage.clear()
             },
 
-            async get<T>(key: string) {
-                const strValue: string | null = localStorage.getItem(key)
+            async get<T>(keys: string | string[]) {
+                const getItem = function (key: string) {
+                    const strValue: string | null = localStorage.getItem(key)
 
-                if (!strValue) {
-                    logger().info(`"${key}" key not found in local storage`)
-                    return null
+                    if (!strValue) {
+                        logger().info(`"${key}" key not found in local storage`)
+                        return null
+                    }
+
+                    const value: T | null | undefined = JSON.parse(strValue)
+
+                    if (!value) {
+                        logger().error(`Failed to parse ${key} from local storage`)
+                        return null
+                    }
+
+                    return value
                 }
 
-                const value: T | null | undefined = JSON.parse(strValue)
-
-                if (!value) {
-                    logger().error(`Failed to parse ${key} from local storage`)
-                    return null
+                if (typeof keys === 'string') {
+                    const item = getItem(keys)
+                    return item ? [item] : []
                 }
 
-                return value
+                return keys
+                    .map(key => getItem(key.toString()))
+                    .filter(item => item !== null)
             },
 
             async set(key, value) {

@@ -17,12 +17,12 @@ export const useSettingsStore = defineStore('settings', () => {
     async function loadSettingsFromStorage(): Promise<void> {
         loading.value = true
 
-        const data = await runtime.storage.get<Settings | null>('settings')
+        const results = await runtime.storage.get<Settings>('settings')
 
-        if (data) {
+        if (results.length === 1) {
             settings.value = {
                 ...settings.value,
-                ...data,
+                ...results[0],
             }
         }
 

@@ -1,12 +1,11 @@
 import type { Popups } from '@common/types/popup'
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import { cloneDeep } from 'lodash'
 
 const defaultEmptyPopup = {
-    open: false,
-    dataOnOpen: null,
-    dataOnClose: null,
+    shown: false,
+    dataOnShow: null,
+    dataOnHide: null,
     onClose: null,
 }
 
@@ -29,34 +28,30 @@ export const usePopupStore = defineStore('popup', () => {
 
     function hideAll(): void {
         for (const key in popups.value) {
-            popups.value[key as keyof Popups].open = false
+            popups.value[key as keyof Popups].shown = false
         }
     }
 
     function show<K extends keyof Popups>(
         key: K,
-        data: Popups[K]['dataOnOpen'],
-    ): Promise<Popups[K]['dataOnClose']> {
+        data: Popups[K]['dataOnShow'],
+    ): Promise<Popups[K]['dataOnHide']> {
         return new Promise(resolve => {
-            popups.value[key].open = true
-            popups.value[key].dataOnOpen = data
+            popups.value[key].shown = true
+            popups.value[key].dataOnShow = data
 
             // Resolve the promise when closed
             popups.value[key].onClose = resolve
         })
     }
 
-    function resetGroups(): void {
-        popups.value = cloneDeep(defaultPopups)
-    }
-
     function hide<K extends keyof Popups>(
         key: K,
-        onCloseData: Popups[K]['dataOnClose'],
+        onCloseData: Popups[K]['dataOnHide'],
     ): void {
-        popups.value[key].open = false
-        popups.value[key].dataOnOpen = null
-        popups.value[key].dataOnClose = null
+        popups.value[key].shown = false
+        popups.value[key].dataOnShow = null
+        popups.value[key].dataOnHide = null
 
         const onClose = popups.value[key].onClose
 
@@ -66,11 +61,11 @@ export const usePopupStore = defineStore('popup', () => {
     }
 
     function isPopupVisible(key: keyof Popups): boolean {
-        return popups.value[key].open
+        return popups.value[key].shown
     }
 
-    function getSharedData<K extends keyof Popups>(key: K): Popups[K]['dataOnOpen'] {
-        return popups.value[key].dataOnOpen
+    function getSharedData<K extends keyof Popups>(key: K): Popups[K]['dataOnShow'] {
+        return popups.value[key].dataOnShow
     }
 
     return {
@@ -80,6 +75,5 @@ export const usePopupStore = defineStore('popup', () => {
         hideAll,
         getSharedData,
         isPopupVisible,
-        resetGroups,
     }
 })

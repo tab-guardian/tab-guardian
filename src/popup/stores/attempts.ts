@@ -14,9 +14,7 @@ export const useAttemptsStore = defineStore('attempts', () => {
         isLocked: false,
     })
 
-    const isLocked = computed<boolean>(() => {
-        return attempts.value.isLocked
-    })
+    const isLocked = computed<boolean>(() => attempts.value.isLocked)
 
     const isLockExpired = computed<boolean>(() => {
         return Date.now() >= attempts.value.lockEndTime
@@ -27,10 +25,10 @@ export const useAttemptsStore = defineStore('attempts', () => {
     })
 
     async function loadAttemptsFromStorage(): Promise<void> {
-        const attemptsValue = await runtime.storage.get<Attempts>('attempts')
+        const results = await runtime.storage.get<Attempts>('attempts')
 
-        if (attemptsValue) {
-            attempts.value = attemptsValue
+        if (results.length === 1) {
+            attempts.value = results[0]
         }
     }
 

@@ -37,7 +37,7 @@ async function openTabs(): Promise<void> {
 }
 
 async function unlockCallback(pass: string): Promise<boolean> {
-    const unlocking = await groupStore.unlock(props.group, pass, true)
+    const unlocking = await groupStore.unlock(props.group, pass)
 
     showToast({
         text: unlocking.message,
@@ -48,6 +48,8 @@ async function unlockCallback(pass: string): Promise<boolean> {
     if (unlocking.failed) {
         return false
     }
+
+    await tabsStore.openTabs(unlocking.group, pass)
 
     await router.push({ name: 'main' })
 

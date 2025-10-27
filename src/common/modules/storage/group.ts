@@ -1,76 +1,70 @@
 import type { Group } from '@common/types'
 import { runtime } from '@common/modules/runtime'
 import { cloneDeep } from 'lodash'
-import { logger } from '@common/modules'
-import {
-    getGroupIdsFromStorage,
-    saveGroupIdsToStorage,
-    deleteGroupIdFromStorage,
-} from '@common/modules/storage/groupIds'
+import { groupIdsStorage } from '@common/modules/storage/groupIds'
 
-export async function deleteGroupFromStorage(groupId: number): Promise<void> {
-    await runtime.storage.remove(groupId.toString())
-    await deleteGroupIdFromStorage(groupId)
-}
+export const groupStorage = {
+    async delete(groupId: number): Promise<void> {
+        await runtime.storage.remove(groupId.toString())
+        await groupIdsStorage.delete(groupId)
+    },
 
-export async function deleteAllGroupsFromStorage(): Promise<void> {
-    await runtime.storage.clear()
-    await saveGroupIdsToStorage([])
-}
+    async deleteAll(): Promise<void> {
+        await runtime.storage.clear()
+        await groupIdsStorage.save([])
+    },
 
-export async function getGroupsFromStorage(): Promise<Group[]> {
-    const groupIds = await getGroupIdsFromStorage()
-    const groups: Group[] = []
+    async getAll(): Promise<Group[]> {
+        const groupIds = await groupIdsStorage.getAll()
+        const groups = await runtime.storage.get<Group>(
+            groupIds.map(id => id.toString()),
+        )
 
-    for (let id of groupIds) {
-        const group = await runtime.storage.get<Group>(id.toString())
-
-        if (!group) {
-            logger().error(`Group ${id} not found in storage, deleting it`)
-            await deleteGroupIdFromStorage(id)
-            continue
+        for (let group of groups) {
+            if (group.bindURL) {
+                group.bindUrl = group.bindURL
+                delete group.bindURL
+            }
         }
 
-        if (group.bindURL) {
-            group.bindUrl = group.bindURL
-            delete group.bindURL
+        return groups.map(group => decodeGroup(group))
+    },
+
+    async save(group: Group): Promise<void> {
+        const links = group.links.map(link => {
+            return {
+                ...link,
+                favIconUrl: encodeURIComponent(link.favIconUrl),
+                url: encodeURIComponent(link.url),
+            }
+        })
+
+        const newGroup = cloneDeep(group)
+        newGroup.links = links
+
+        const ids = await groupIdsStorage.getAll()
+
+        if (ids.includes(newGroup.id)) {
+            // delete old group
+            await runtime.storage.remove(newGroup.id.toString())
+
+            // save new group
+            await runtime.storage.set<Group>(newGroup.id.toString(), newGroup)
+            return
         }
 
-        groups.unshift(group)
-    }
+        ids.push(newGroup.id)
 
-    return groups.map(group => decodeGroup(group))
-}
-
-export async function saveGroupToStorage(group: Group): Promise<void> {
-    const links = group.links.map(link => {
-        return {
-            ...link,
-            favIconUrl: encodeURIComponent(link.favIconUrl),
-            url: encodeURIComponent(link.url),
-        }
-    })
-
-    const newGroup = cloneDeep(group)
-    newGroup.links = links
-
-    const ids = await getGroupIdsFromStorage()
-
-    if (ids.includes(newGroup.id)) {
-        // delete old group
-        await runtime.storage.remove(newGroup.id.toString())
+        await groupIdsStorage.save(ids) // save new group id
 
         // save new group
         await runtime.storage.set<Group>(newGroup.id.toString(), newGroup)
-        return
-    }
+    },
 
-    ids.push(newGroup.id)
-
-    await saveGroupIdsToStorage(ids) // save new group id
-
-    // save new group
-    await runtime.storage.set<Group>(newGroup.id.toString(), newGroup)
+    async countUnlocked(): Promise<number> {
+        const groups = await this.getAll()
+        return groups.filter(g => g.isPrivate && !g.isEncrypted).length
+    },
 }
 
 function decodeGroup(group: Group): Group {

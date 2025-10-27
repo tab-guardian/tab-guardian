@@ -6,19 +6,19 @@ export function trans(msg: string, ...args: string[]): string {
 }
 
 export function removeTrail(str: string, tail: string): string {
-    return str.endsWith(tail) ? str.slice(0, -tail.length) : str
+    return str.endsWith(tail) && tail !== '' ? str.slice(0, -tail.length) : str
 }
 
 export function limitString(str: string, maxLength = 20) {
+    if (str.length <= 3) {
+        return str
+    }
+
     return str.length > maxLength ? str.substring(0, maxLength) + '...' : str
 }
 
 export function formatNumber(num: number): string {
     return num.toLocaleString(undefined, { maximumFractionDigits: 0 })
-}
-
-export function generateGroupId(): number {
-    return Date.now() + Math.floor(Math.random() * 1000)
 }
 
 export function isEmoji(emoji: string): boolean {

@@ -1,23 +1,18 @@
 import type { Group, Link } from '@common/types'
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import { trans, generateGroupId, logger } from '@common/modules'
+import { trans, logger } from '@common/modules'
+import { generateGroupId } from '@common/modules/group'
 import { runtime } from '@common/modules/runtime'
 import { useSettingsStore } from '@/stores/settings'
 import { useNotificationStore } from '@/stores/notification'
 import { useCryptoStore } from '@/stores/crypto'
 import { useProgressStore } from '@/stores/progress'
-import { useTabsStore } from '@/stores/tabs'
 import { getDecryptionError } from '@/errors'
 import { getHashedCurrentUrl } from '@common/modules/url'
 import { validatePassword } from '@common/modules/validation/group'
-import { savePasswordToStorage } from '@common/modules/storage/password'
-import {
-    deleteAllGroupsFromStorage,
-    deleteGroupFromStorage,
-    getGroupsFromStorage,
-    saveGroupToStorage,
-} from '@common/modules/storage/group'
+import { passwordStorage } from '@common/modules/storage/password'
+import { groupStorage } from '@common/modules/storage/group'
 
 let isIncognitoCache: boolean | null = null
 
@@ -26,7 +21,6 @@ export const useGroupStore = defineStore('group', () => {
     const settingsStore = useSettingsStore()
     const notificationStore = useNotificationStore()
     const progressStore = useProgressStore()
-    const tabsStore = useTabsStore()
 
     const groups = ref<Group[]>([])
     const loadingGroups = ref<boolean>(false)
@@ -51,10 +45,14 @@ export const useGroupStore = defineStore('group', () => {
         return group
     }
 
+    function exist(id: number): boolean {
+        return groups.value.some(g => g.id === id)
+    }
+
     async function loadGroupsFromStorage(): Promise<void> {
         loadingGroups.value = true
 
-        const storageGroups = await getGroupsFromStorage()
+        const storageGroups = await groupStorage.getAll()
 
         groups.value = await hideGroups(storageGroups)
         groups.value.sort((a, b) => b.updatedAt - a.updatedAt)
@@ -120,18 +118,13 @@ export const useGroupStore = defineStore('group', () => {
     async function unlock(
         group: Group,
         password: string,
-        openTabs: boolean = false,
     ): Promise<UnlockFuncReturnValue> {
         try {
             const decryptedGroup = await cryptoStore.decryptGroup(group, password)
             await save(decryptedGroup)
 
             if (settingsStore.settings.rememberPasswordAfterUnlock) {
-                await savePasswordToStorage(group.id, password)
-            }
-
-            if (openTabs) {
-                await tabsStore.openTabs(group, password)
+                await passwordStorage.save(group.id, password)
             }
 
             return {
@@ -149,7 +142,10 @@ export const useGroupStore = defineStore('group', () => {
     }
 
     // Add groups to memory and save them to storage
-    async function saveMany(groups: Group[], replace: boolean): Promise<void> {
+    async function saveMany(
+        groups: Group[],
+        replace: boolean = false,
+    ): Promise<void> {
         progressStore.start(groups.length)
 
         for (const group of groups) {
@@ -169,14 +165,6 @@ export const useGroupStore = defineStore('group', () => {
         progressStore.finish()
     }
 
-    async function replaceGroup(group: Group): Promise<void> {
-        const existing = get(group.name)
-
-        if (existing) {
-            await deleteGroup(existing.id)
-        }
-    }
-
     async function update(id: number, updates: Partial<Group>): Promise<boolean> {
         const group = get(id)
 
@@ -194,40 +182,54 @@ export const useGroupStore = defineStore('group', () => {
 
     async function deleteGroup(id: number): Promise<void> {
         groups.value = groups.value.filter(g => g.id !== id)
-        await deleteGroupFromStorage(id)
+        await groupStorage.delete(id)
         await notificationStore.recalculateNotification()
     }
 
-    async function deleteAllGroups(): Promise<void> {
+    async function deleteAll(): Promise<void> {
         groups.value = []
-        await deleteAllGroupsFromStorage()
+        await groupStorage.deleteAll()
         await notificationStore.recalculateNotification()
     }
 
-    async function deleteLinkFrom(id: number, linkId: number): Promise<void> {
+    async function deleteLinkFrom(id: number, linkId: number): Promise<boolean> {
         const group = get(id)
 
         if (!group) {
             groupNotFoundLog(id, 'deleteLinkFrom')
-            return
+            return false
         }
 
-        group.links = group.links.filter(link => link.id !== linkId)
+        const linkExist = group.links.some(link => link.id === linkId)
+
+        if (!linkExist) {
+            return false
+        }
+
+        const deleteIndex = group.links.findIndex(link => link.id === linkId)
+
+        if (deleteIndex !== -1) {
+            group.links.splice(deleteIndex, 1)
+        }
 
         await save(group)
+
+        return true
     }
 
-    async function insertLinksInto(id: number, links: Link[]): Promise<void> {
+    async function insertLinksInto(id: number, links: Link[]): Promise<boolean> {
         const group = get(id)
 
         if (!group) {
             groupNotFoundLog(id, 'insertLinksInto')
-            return
+            return false
         }
 
         group.links.push(...links)
 
         await save(group)
+
+        return true
     }
 
     async function save(group: Group, updateTimestamp = true): Promise<void> {
@@ -235,7 +237,7 @@ export const useGroupStore = defineStore('group', () => {
             group.updatedAt = Date.now()
         }
 
-        await saveGroupToStorage(group)
+        await groupStorage.save(group)
         await loadGroupsFromStorage()
 
         await notificationStore.recalculateNotification()
@@ -306,24 +308,34 @@ export const useGroupStore = defineStore('group', () => {
     }
 
     // Private function
+    async function replaceGroup(group: Group): Promise<void> {
+        const existing = get(group.name)
+
+        if (existing) {
+            await deleteGroup(existing.id)
+        }
+    }
+
+    // Private function
     function groupNotFoundLog(id: number, operation: string): void {
         logger().info(`Group "${id}" not found for "${operation}" operation`)
     }
 
     return {
-        groups,
         selectedGroup,
         loadingGroups,
+        groups,
+        get,
         save,
+        lock,
+        exist,
         update,
+        unlock,
+        saveMany,
+        deleteAll,
         deleteGroup,
         deleteLinkFrom,
         insertLinksInto,
-        lock,
-        unlock,
-        get,
-        deleteAllGroups,
         loadGroupsFromStorage,
-        saveMany,
     }
 })

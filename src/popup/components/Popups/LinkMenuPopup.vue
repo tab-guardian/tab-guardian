@@ -5,7 +5,7 @@ import { logger, trans } from '@common/modules'
 import { usePopupStore } from '@/stores/popup'
 import { useGroupStore } from '@/stores/group'
 import { showToast } from '@common/modules/toast'
-import { useAppStore } from '@/stores/app'
+import { useLinkStore } from '@/stores/link'
 import { limitString } from '@common/modules'
 import Popup from '@/components/Popups/Popup.vue'
 import MenuItem from '@/components/MenuItem.vue'
@@ -14,9 +14,11 @@ import CopyIcon from '@common/components/Icons/CopyIcon.vue'
 import PasteLinkMenuItem from '@/components//Views/GroupView/GroupControls/MenuItems/PasteLinkMenuItem.vue'
 
 const popupStore = usePopupStore()
-const appStore = useAppStore()
+const linkStore = useLinkStore()
 const groupStore = useGroupStore()
+
 const group = computed<Group | null>(() => groupStore.selectedGroup)
+
 const sharedData = computed(() => {
     const data = popupStore.getSharedData('linkMenuView')
 
@@ -34,11 +36,11 @@ async function yankLink(action: 'copy' | 'cut', successMsg: string): Promise<voi
         return
     }
 
-    appStore.linkBuffer = {
+    await linkStore.copyLink({
         action,
-        groupId: group.value.id,
+        initialGroupId: group.value.id,
         link: sharedData.value.link,
-    }
+    })
 
     popupStore.hideAll()
     showToast({ text: successMsg })

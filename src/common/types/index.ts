@@ -1,5 +1,11 @@
 export type Locale = 'ru' | 'zh_CN' | 'en'
 
+export type LinkBuffer = {
+    action: 'copy' | 'cut'
+    initialGroupId: number
+    link: Link
+}
+
 export type LocaleMessageItem = {
     [key: string]: { message: string }
 }

@@ -95,9 +95,13 @@ async function createCryptoKey(
 
 export async function encryptExport(text: string, pass: string): Promise<string> {
     const encrypted = await encryptString(text, pass, config.CURR_ENCRYPT_ALGO)
-    const header = `algo(${config.CURR_ENCRYPT_ALGO})`
+    const header = getEncryptionHeader()
 
-    return `${header}${encrypted} `
+    return `${header}${encrypted}`
+}
+
+export function getEncryptionHeader(algo?: EncryptionAlgo): string {
+    return `algo(${algo || config.CURR_ENCRYPT_ALGO})`
 }
 
 export async function decryptExport(rawData: string, pass: string): Promise<string> {
@@ -109,7 +113,8 @@ export async function decryptExport(rawData: string, pass: string): Promise<stri
         throw new Error('Cannot get the encryption algorithm from the file')
     }
 
-    const encrypted = rawData.replace(`algo(${algo})`, '')
+    const header = getEncryptionHeader(algo)
+    const encrypted = rawData.replace(header, '')
 
     return await decryptString(encrypted, pass, algo)
 }

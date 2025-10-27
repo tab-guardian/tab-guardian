@@ -2,10 +2,7 @@
 import type { PasswordBytes } from '@common/types'
 import { trans } from '@common/modules'
 import { ref, computed, onMounted } from 'vue'
-import {
-    getPasswordsBytes,
-    deletePasswordFromStorage,
-} from '@common/modules/storage/password'
+import { passwordStorage } from '@common/modules/storage/password'
 import { showToast } from '@common/modules/toast'
 import Section from '@settings/components/Section.vue'
 import Button from '@common/components/Form/Button.vue'
@@ -23,7 +20,7 @@ const bytes = computed<number>(() => {
 onMounted(async () => await calculateBytes())
 
 async function calculateBytes(): Promise<void> {
-    passwordBytes.value = await getPasswordsBytes()
+    passwordBytes.value = await passwordStorage.getBytes()
 }
 
 async function clearCache(): Promise<void> {
@@ -34,7 +31,7 @@ async function clearCache(): Promise<void> {
     deleting.value = true
 
     for (const pwd of passwordBytes.value) {
-        await deletePasswordFromStorage(pwd.groupId)
+        await passwordStorage.delete(pwd.groupId)
     }
 
     deleting.value = false

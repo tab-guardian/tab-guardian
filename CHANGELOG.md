@@ -1,5 +1,11 @@
 # Release Notes
 
+## v1.16.1 (2025-10-27)
+- 🧑‍💻 Added more tests to the codebase.
+- 🚀 Improved performance of fetching groups from storage.
+- 🐛 Fixed bug which was deleting multiple duplicate tabs when you wanted to remove only 1 [#87](https://github.com/tab-guardian/tab-guardian/issues/87).
+- 🐛 Fixed bug when you try to use quick open button for private groups.
+
 ## v1.16.0 (2025-10-23)
 - 🧑‍💻 Improved performance for the main (home) page with loading groups.
 - 🧑‍💻 Improved "Add tabs" and "Create" buttons visibility [#84](https://github.com/tab-guardian/tab-guardian/issues/84).
@@ -40,7 +46,7 @@
 - ✨ Improved export/import functionality. Now, you can export all groups with a password protection [#77](https://github.com/tab-guardian/tab-guardian/issues/77).
 - ✨ Exported files are now compressed with Gzip.
 - ✨ Add Gzip compression when exporting individual groups.
-- 🧑‍💻 Improve performance of "Erase all groups" functionality.
+- 🚀 Improve performance of "Erase all groups" functionality.
 
 ## v1.13.2 (2025-10-03)
 - 🐛 Fixed a bug where tabs would not close when you create a new group or adding more tabs to existing group
@@ -50,7 +56,7 @@
 - 🐛 Fixed bug where you couldn't create a new open (public) group
 
 ## v1.13.0 (2025-10-02)
-- 🐛 Fixed issue with creating private group and it wouldn't remember the password the user entered. Plus, this change improved the performance of creating a private group
+- 🚀 Fixed issue with creating private group and it wouldn't remember the password the user entered. Plus, this change improved the performance of creating a private group
 - 🐛 Fixed incorrect bytes calculation on Firefox-based browsers. It was showing used space a little bit more than it really was
 - 🐛 Fixed wrong groups sort order when you import all groups. Now, groups will be in the same order that they were when you exported them
 - 🧑‍💻 Remove "import" button from importing groups on settings page [#60](https://github.com/tab-guardian/tab-guardian/issues/60)

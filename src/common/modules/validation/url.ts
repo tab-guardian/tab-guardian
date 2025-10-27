@@ -32,7 +32,7 @@ export function validateUrl(url: string | null): string | null {
         return trans('url_must_be_at_least', MIN_URL_LENGTH.toString())
     }
 
-    if (!url.match(/^(http|https):\/\//)) {
+    if (!url.match(/^(http|https):\/\/[^/:-]/)) {
         return trans('url_must_start_with_http')
     }
 
