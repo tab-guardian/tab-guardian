@@ -213,7 +213,11 @@ export const useGroupStore = defineStore('group', () => {
             return false
         }
 
-        group.links = group.links.filter(link => link.id !== linkId)
+        const deleteIndex = group.links.findIndex(link => link.id === linkId)
+
+        if (deleteIndex !== -1) {
+            group.links.splice(deleteIndex, 1)
+        }
 
         await save(group)
 

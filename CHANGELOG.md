@@ -3,6 +3,7 @@
 ## v1.16.1 (2025-10-27)
 - 🧑‍💻 Added more tests to the codebase.
 - 🚀 Improved performance of fetching groups from storage.
+- 🐛 Fixed bug which was deleting multiple duplicate tabs when you wanted to remove only 1 [#87](https://github.com/tab-guardian/tab-guardian/issues/87)
 
 ## v1.16.0 (2025-10-23)
 - 🧑‍💻 Improved performance for the main (home) page with loading groups.

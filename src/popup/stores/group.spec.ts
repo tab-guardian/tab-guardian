@@ -362,6 +362,25 @@ describe('group store', () => {
             expect(foundGroup?.links).toHaveLength(1)
         })
 
+        it('deletes only 1 link if has duplicates', async () => {
+            const groupStore = useGroupStore()
+            const link = fakeLink()
+
+            const group = fakeGroup({
+                links: [link, link, link],
+            })
+
+            await groupStore.save(group)
+            const deleted = await groupStore.deleteLinkFrom(group.id, link.id)
+
+            expect(deleted).toBeTruthy()
+
+            const foundGroup = groupStore.groups[0]
+
+            expect(foundGroup).toBeDefined()
+            expect(foundGroup?.links).toHaveLength(2)
+        })
+
         it('returns false for non-existent group', async () => {
             const groupStore = useGroupStore()
 
