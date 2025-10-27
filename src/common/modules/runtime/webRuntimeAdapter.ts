@@ -108,7 +108,7 @@ export function getWebRuntimeAdapter(): PlatformRuntime {
                 localStorage.clear()
             },
 
-            async get<T>(keys: string | string[] | number[]) {
+            async get<T>(keys: string | string[]) {
                 const getItem = function (key: string) {
                     const strValue: string | null = localStorage.getItem(key)
 

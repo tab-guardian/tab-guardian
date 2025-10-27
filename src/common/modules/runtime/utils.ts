@@ -44,7 +44,7 @@ export function throwIfQuotaExceeds(
 }
 
 export function getFromExtentionStorage<T>(
-    keys: string | string[] | number[],
+    keys: string | string[],
     result: { [key: string]: any },
 ): T[] {
     const get = function (key: string) {

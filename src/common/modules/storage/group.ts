@@ -16,7 +16,9 @@ export const groupStorage = {
 
     async getAll(): Promise<Group[]> {
         const groupIds = await groupIdsStorage.getAll()
-        const groups = await runtime.storage.get<Group>(groupIds)
+        const groups = await runtime.storage.get<Group>(
+            groupIds.map(id => id.toString()),
+        )
 
         for (let group of groups) {
             if (group.bindURL) {
