@@ -3,12 +3,7 @@
 import { describe, it, expect, suite, beforeEach } from 'vitest'
 import { fakeGroup, fakeLink } from '@common/modules/fake'
 import { createPinia, setActivePinia } from 'pinia'
-import {
-    deleteAllGroupsFromStorage,
-    deleteGroupFromStorage,
-    getGroupsFromStorage,
-    saveGroupToStorage,
-} from '@common/modules/storage/group'
+import { groupStorage } from '@common/modules/storage/group'
 
 describe('group storage module', () => {
     beforeEach(() => {
@@ -16,10 +11,10 @@ describe('group storage module', () => {
         setActivePinia(createPinia())
     })
 
-    suite('saveGroupToStorage()', () => {
+    suite('save()', () => {
         it('saves group into storage', async () => {
             const group = fakeGroup({ links: [fakeLink()] })
-            await saveGroupToStorage(group)
+            await groupStorage.save(group)
 
             const itemStr = localStorage.getItem(group.id.toString())
 
@@ -34,7 +29,7 @@ describe('group storage module', () => {
 
         it('adds group ID to groupIds storage', async () => {
             const group = fakeGroup()
-            await saveGroupToStorage(group)
+            await groupStorage.save(group)
 
             const idsStr = localStorage.getItem('groupIds')
 
@@ -48,12 +43,12 @@ describe('group storage module', () => {
         })
     })
 
-    suite('deleteGroupFromStorage()', () => {
+    suite('delete()', () => {
         it('deletes group from storage', async () => {
             const group = fakeGroup()
-            await saveGroupToStorage(group)
+            await groupStorage.save(group)
 
-            await deleteGroupFromStorage(group.id)
+            await groupStorage.delete(group.id)
 
             const foundItem = localStorage.getItem(group.id.toString())
 
@@ -62,9 +57,9 @@ describe('group storage module', () => {
 
         it('deletes group ID from groupIds', async () => {
             const group = fakeGroup()
-            await saveGroupToStorage(group)
+            await groupStorage.save(group)
 
-            await deleteGroupFromStorage(group.id)
+            await groupStorage.delete(group.id)
 
             const idsStr = localStorage.getItem('groupIds')
             const idsParsed = JSON.parse(idsStr!)
@@ -74,12 +69,12 @@ describe('group storage module', () => {
         })
     })
 
-    suite('deleteAllGroupsFromStorage()', () => {
+    suite('deleteAll()', () => {
         it('deletes all groups from storage', async () => {
             const group = fakeGroup()
-            await saveGroupToStorage(group)
+            await groupStorage.save(group)
 
-            await deleteAllGroupsFromStorage()
+            await groupStorage.deleteAll()
 
             const foundItem = localStorage.getItem(group.id.toString())
 
@@ -88,9 +83,9 @@ describe('group storage module', () => {
 
         it('deletes all group ids from groupIds', async () => {
             const group = fakeGroup()
-            await saveGroupToStorage(group)
+            await groupStorage.save(group)
 
-            await deleteAllGroupsFromStorage()
+            await groupStorage.deleteAll()
 
             const idsStr = localStorage.getItem('groupIds')
             const idsParsed = JSON.parse(idsStr!)
@@ -100,15 +95,15 @@ describe('group storage module', () => {
         })
     })
 
-    suite('getGroupsFromStorage()', () => {
+    suite('getAll()', () => {
         it('loads all groups from storage', async () => {
             const group1 = fakeGroup()
             const group2 = fakeGroup()
 
-            await saveGroupToStorage(group1)
-            await saveGroupToStorage(group2)
+            await groupStorage.save(group1)
+            await groupStorage.save(group2)
 
-            const groups = await getGroupsFromStorage()
+            const groups = await groupStorage.getAll()
 
             expect(groups).toHaveLength(2)
             expect(groups[0].id).equal(group1.id)
@@ -116,7 +111,7 @@ describe('group storage module', () => {
         })
 
         it('returns empty array when there are not groups', async () => {
-            const groups = await getGroupsFromStorage()
+            const groups = await groupStorage.getAll()
             expect(groups).toHaveLength(0)
         })
     })

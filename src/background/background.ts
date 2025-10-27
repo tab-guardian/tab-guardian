@@ -1,4 +1,4 @@
-import { hasUnlockedGroupsFlag } from '@common/modules/storage/unlockedGroups'
+import { unlcokedGroupsStorage } from '@common/modules/storage/unlockedGroups'
 import { renderWarningBadge } from '@common/modules/badge'
 import { countAllTabs } from '@common/modules/tabs/countAllTabs'
 import { runtime } from '@common/modules/runtime'
@@ -12,7 +12,7 @@ target.runtime.onInstalled.addListener(
 target.runtime.onStartup.addListener(async () => await renderWarningBadgeIfNeeded())
 
 async function renderWarningBadgeIfNeeded(): Promise<void> {
-    const hasUnlocked = await hasUnlockedGroupsFlag()
+    const hasUnlocked = await unlcokedGroupsStorage.has()
 
     if (hasUnlocked) {
         await renderWarningBadge()

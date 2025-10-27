@@ -1,6 +1,6 @@
 import type { PasswordBytes } from '@common/types'
 import { runtime } from '@common/modules/runtime'
-import { getGroupsFromStorage } from '@common/modules/storage/group'
+import { groupStorage } from '@common/modules/storage/group'
 
 export const KEY_PREFIX = 'group-password-'
 
@@ -25,7 +25,7 @@ export const passwordStorage = {
     async getBytes(): Promise<PasswordBytes[]> {
         const pwdBytes: PasswordBytes[] = await getBytesExt()
 
-        const groups = await getGroupsFromStorage()
+        const groups = await groupStorage.getAll()
         const unlockedIds = groups
             .filter(g => g.isPrivate && !g.isEncrypted)
             .map(g => g.id)

@@ -13,12 +13,7 @@ import { getDecryptionError } from '@/errors'
 import { getHashedCurrentUrl } from '@common/modules/url'
 import { validatePassword } from '@common/modules/validation/group'
 import { passwordStorage } from '@common/modules/storage/password'
-import {
-    deleteAllGroupsFromStorage,
-    deleteGroupFromStorage,
-    getGroupsFromStorage,
-    saveGroupToStorage,
-} from '@common/modules/storage/group'
+import { groupStorage } from '@common/modules/storage/group'
 
 let isIncognitoCache: boolean | null = null
 
@@ -59,7 +54,7 @@ export const useGroupStore = defineStore('group', () => {
     async function loadGroupsFromStorage(): Promise<void> {
         loadingGroups.value = true
 
-        const storageGroups = await getGroupsFromStorage()
+        const storageGroups = await groupStorage.getAll()
 
         groups.value = await hideGroups(storageGroups)
         groups.value.sort((a, b) => b.updatedAt - a.updatedAt)
@@ -194,13 +189,13 @@ export const useGroupStore = defineStore('group', () => {
 
     async function deleteGroup(id: number): Promise<void> {
         groups.value = groups.value.filter(g => g.id !== id)
-        await deleteGroupFromStorage(id)
+        await groupStorage.delete(id)
         await notificationStore.recalculateNotification()
     }
 
     async function deleteAll(): Promise<void> {
         groups.value = []
-        await deleteAllGroupsFromStorage()
+        await groupStorage.deleteAll()
         await notificationStore.recalculateNotification()
     }
 
@@ -245,7 +240,7 @@ export const useGroupStore = defineStore('group', () => {
             group.updatedAt = Date.now()
         }
 
-        await saveGroupToStorage(group)
+        await groupStorage.save(group)
         await loadGroupsFromStorage()
 
         await notificationStore.recalculateNotification()
@@ -330,20 +325,20 @@ export const useGroupStore = defineStore('group', () => {
     }
 
     return {
-        groups,
         selectedGroup,
         loadingGroups,
+        groups,
+        get,
         save,
+        lock,
+        exist,
         update,
+        unlock,
+        saveMany,
+        deleteAll,
         deleteGroup,
         deleteLinkFrom,
         insertLinksInto,
-        lock,
-        unlock,
-        get,
-        exist,
-        deleteAll,
         loadGroupsFromStorage,
-        saveMany,
     }
 })

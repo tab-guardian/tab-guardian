@@ -1,17 +1,19 @@
 import { runtime } from '@common/modules/runtime'
 
-export async function getGroupIdsFromStorage(): Promise<number[]> {
-    const results = await runtime.storage.get<number[]>('groupIds')
-    return results[0] ?? []
-}
+export const groupIdsStorage = {
+    async getAll(): Promise<number[]> {
+        const results = await runtime.storage.get<number[]>('groupIds')
+        return results[0] ?? []
+    },
 
-export async function saveGroupIdsToStorage(ids: number[]): Promise<void> {
-    await runtime.storage.set<number[]>('groupIds', ids)
-}
+    async save(ids: number[]): Promise<void> {
+        await runtime.storage.set<number[]>('groupIds', ids)
+    },
 
-export async function deleteGroupIdFromStorage(groupId: number): Promise<void> {
-    const ids = await getGroupIdsFromStorage()
-    const newIds = ids.filter(id => id !== groupId)
+    async delete(groupId: number): Promise<void> {
+        const ids = await this.getAll()
+        const newIds = ids.filter(id => id !== groupId)
 
-    await saveGroupIdsToStorage(newIds)
+        await this.save(newIds)
+    },
 }
