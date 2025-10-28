@@ -15,5 +15,11 @@ update_json_version() {
     python3 cmd/utils/update_version.py "$1" "$new_version"
 }
 
+update_changelog() {
+    python3 cmd/utils/update_changelog.py "$1" "$new_version"
+}
+
 update_json_version "public/manifest2.json"
 update_json_version "public/manifest3.json"
+
+update_changelog "CHANGELOG.md"
