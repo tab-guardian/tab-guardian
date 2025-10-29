@@ -31,7 +31,7 @@ onMounted(async () => {
 })
 
 watchEffect(() => {
-    emit('hasError', checked && urlError.value !== null)
+    emit('hasError', checked.value && urlError.value !== null)
 })
 
 async function attachBindUrl(checked: boolean): Promise<void> {

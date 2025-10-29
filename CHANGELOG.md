@@ -1,7 +1,7 @@
 # Release Notes
 
 ## v1.16.2 (2025-10-29)
-- 🧑‍💻 Added more tests to the codebase.
+- 🐛 Fixed bug when creating a private group with attached URL. Sometimes, the `Select` button would be disabled and you couldn't proceed with creation.
 
 ## v1.16.1 (2025-10-27)
 - 🧑‍💻 Added more tests to the codebase.
