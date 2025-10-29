@@ -1,6 +1,7 @@
 import type { Link } from '@common/types'
 import type { tabs } from '@common/types/runtime'
 import { runtime } from '@common/modules/runtime'
+import { generateId } from '@common/modules/group'
 
 export function convertTabsToLinks(tabs: tabs.Tab[]): Link[] {
     const links: Link[] = []
@@ -11,7 +12,7 @@ export function convertTabsToLinks(tabs: tabs.Tab[]): Link[] {
         }
 
         links.push({
-            id: tab.id || Date.now(),
+            id: generateId(),
             title: tab.title || tab.url || '<no title>',
             url: tab.url,
             favIconUrl: getFaviconIconUrl(tab),
