@@ -8,8 +8,8 @@ import { trans } from '@common/modules'
 const props = defineProps<{ group: Group }>()
 const tabsStore = useTabsStore()
 
-function stashTabs(): void {
-    tabsStore.stashTabs(props.group, false)
+async function stashTabs(): Promise<void> {
+    await tabsStore.stashTabs(props.group, false)
 }
 </script>
 

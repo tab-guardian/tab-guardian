@@ -10,8 +10,8 @@ export function getDefaultGroupName(): string {
     return `Group ${day}.${month}.${year} ${hour}:${minute}:${second}`
 }
 
-export function generateGroupId(): number {
-    return Date.now() + Math.floor(Math.random() * 1000)
+export function generateId(): number {
+    return Math.floor(Math.random() * 1000000)
 }
 
 function addZeroWhenNeeded(value: number): string {
