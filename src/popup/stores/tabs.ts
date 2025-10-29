@@ -82,7 +82,7 @@ export const useTabsStore = defineStore('tabs', () => {
         }
 
         if (closeAllTabs) {
-            await closeTabs(links.map(l => l.id))
+            await closeTabs(links.map(l => l.tabId))
         }
 
         showToast({ text: trans('tabs_now_saved') })

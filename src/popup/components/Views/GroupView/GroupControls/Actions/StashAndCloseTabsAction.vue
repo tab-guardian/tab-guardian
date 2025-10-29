@@ -8,8 +8,8 @@ import Control from '@/components/Control.vue'
 const props = defineProps<{ group: Group }>()
 const tabsStore = useTabsStore()
 
-function stashTabs(): void {
-    tabsStore.stashTabs(props.group, true)
+async function stashTabs(): Promise<void> {
+    await tabsStore.stashTabs(props.group, true)
 }
 </script>
 

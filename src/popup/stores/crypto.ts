@@ -37,6 +37,7 @@ export const useCryptoStore = defineStore('crypto', () => {
 
             encryptedLinks.push({
                 id: link.id,
+                tabId: link.tabId,
                 url: toBase64(urlBin),
                 title: toBase64(titleBin),
                 favIconUrl: toBase64(favIconUrlBin),

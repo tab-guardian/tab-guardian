@@ -13,6 +13,7 @@ export function convertTabsToLinks(tabs: tabs.Tab[]): Link[] {
 
         links.push({
             id: generateId(),
+            tabId: tab.id || generateId(),
             title: tab.title || tab.url || '<no title>',
             url: tab.url,
             favIconUrl: getFaviconIconUrl(tab),

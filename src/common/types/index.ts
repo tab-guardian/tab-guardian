@@ -29,6 +29,7 @@ export type SelectTabsOperation = 'adding' | 'creating'
 
 export type Link = {
     id: number
+    tabId: number
     title: string
     url: string
     favIconUrl: string

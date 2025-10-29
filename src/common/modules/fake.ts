@@ -1,13 +1,14 @@
 import type { Link, Group } from '@common/types'
+import { generateId } from '@common/modules/group'
 
 export function fakeLink(fields?: Partial<Link>): Link {
     fields ??= {}
 
-    const rand = Date.now() + Math.floor(Math.random() * 1000)
-    const id = fields.id || rand
+    const id = fields.id || generateId()
 
     return {
         id,
+        tabId: id,
         url: 'https://duckduckgo.com',
         title: `Link #${id}`,
         favIconUrl: 'https://placehold.co/50',
