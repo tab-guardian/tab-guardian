@@ -2,7 +2,7 @@ import type { Group, Link } from '@common/types'
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import { trans, logger } from '@common/modules'
-import { generateGroupId } from '@common/modules/group'
+import { generateId } from '@common/modules/group'
 import { runtime } from '@common/modules/runtime'
 import { useSettingsStore } from '@/stores/settings'
 import { useNotificationStore } from '@/stores/notification'
@@ -149,7 +149,7 @@ export const useGroupStore = defineStore('group', () => {
         progressStore.start(groups.length)
 
         for (const group of groups) {
-            group.id = generateGroupId()
+            group.id = generateId()
 
             if (replace) {
                 await replaceGroup(group)

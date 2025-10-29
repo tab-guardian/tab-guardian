@@ -2,7 +2,7 @@
 
 import { describe, it, expect, suite, beforeEach } from 'vitest'
 import { createPinia, setActivePinia } from 'pinia'
-import { generateGroupId } from '@common/modules/group'
+import { generateId } from '@common/modules/group'
 
 describe('group utils module', () => {
     beforeEach(() => {
@@ -10,10 +10,10 @@ describe('group utils module', () => {
         setActivePinia(createPinia())
     })
 
-    suite('generateGroupId()', () => {
+    suite('generateId()', () => {
         it('generates random number', () => {
-            const num1 = generateGroupId()
-            const num2 = generateGroupId()
+            const num1 = generateId()
+            const num2 = generateId()
 
             expect(num1).toBeTypeOf('number')
             expect(num2).toBeTypeOf('number')
