@@ -1,5 +1,8 @@
 # Release Notes
 
+## v1.16.3 (2025-10-29)
+- 🐛 Fixed bug where tabs would not close.
+
 ## v1.16.2 (2025-10-29)
 - 🐛 Fixed bug when creating a private group with attached URL. Sometimes, the `Select` button would be disabled and you couldn't proceed with creation.
 - 🐛 Fixed bug with tab duplications when adding and sorting them [#37](https://github.com/tab-guardian/tab-guardian/issues/37).
