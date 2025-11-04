@@ -6,7 +6,7 @@ import Input from '@common/components/Form/Input.vue'
 
 const emit = defineEmits<{
     (e: 'loaded', input: HTMLInputElement): void
-    (e: 'hasError', has: boolean): void
+    (e: 'has-error', has: boolean): void
 }>()
 
 type Props = {
@@ -24,7 +24,7 @@ const props = withDefaults(defineProps<Props>(), {
     withMinLength: false,
 })
 
-onMounted(() => emit('hasError', !pass.value))
+onMounted(() => emit('has-error', !pass.value))
 
 const pass = defineModel<string | null>()
 
@@ -43,7 +43,7 @@ const passErr = computed<string>(() => {
     <Input
         v-model="pass"
         @loaded="emit('loaded', $event)"
-        @keyup="emit('hasError', passErr !== '' || !pass)"
+        @keyup="emit('has-error', passErr !== '' || !pass)"
         type="password"
         :error="passErr || error"
         :with-button="withButton"

@@ -10,7 +10,7 @@ import Input from '@common/components/Form/Input.vue'
 import Tip from '@common/components/Tip.vue'
 
 const emit = defineEmits<{
-    (e: 'hasError', has: boolean): void
+    (e: 'has-error', has: boolean): void
 }>()
 
 const newGroupStore = useNewGroupStore()
@@ -31,7 +31,7 @@ onMounted(async () => {
 })
 
 watchEffect(() => {
-    emit('hasError', checked.value && urlError.value !== null)
+    emit('has-error', checked.value && urlError.value !== null)
 })
 
 async function attachBindUrl(checked: boolean): Promise<void> {

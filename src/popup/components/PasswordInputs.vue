@@ -4,7 +4,7 @@ import { computed, reactive } from 'vue'
 import PasswordInput from '@common/components/Form/PasswordInput.vue'
 
 const emit = defineEmits<{
-    (e: 'hasError', has: boolean): void
+    (e: 'has-error', has: boolean): void
     (e: 'loaded', input: HTMLInputElement): void
 }>()
 
@@ -22,7 +22,7 @@ const matchErr = computed<string>(() => {
 
 function emitErrorEvent(hasErr: boolean, field: 'pass' | 'confirm'): void {
     errors[field] = hasErr
-    emit('hasError', errors.pass || errors.confirm || matchErr.value !== '')
+    emit('has-error', errors.pass || errors.confirm || matchErr.value !== '')
 }
 </script>
 
