@@ -12,18 +12,31 @@ describe('NameInput', () => {
         setActivePinia(createPinia())
     })
 
-    it('emits has-error event when name is too long', async () => {
-        const wrapper = mount(NameInput, { modelValue: 'Ana de Armas' })
+    it.each([
+        ['false for undefined name', undefined, false],
+        ['false for null name', null, false],
+        ['false for empty name', '', false],
+        ['false for short name', 'Hi', false],
+        ['false for exact length', 'a'.repeat(config.MAX_GROUP_NAME_LENGTH), false],
+        ['true  for long name', 'a'.repeat(config.MAX_GROUP_NAME_LENGTH + 1), true],
+    ])('emits has-error with %s', async (_, name, expectedError) => {
+        const wrapper = mount(NameInput)
         const input = wrapper.find('#group-name')
 
-        expect(input).not.toBeNull()
-
-        const longName = 'a'.repeat(config.MAX_GROUP_NAME_LENGTH + 1)
-
-        await input.setValue(longName)
+        await input.setValue(name)
         await input.trigger('keyup')
 
         expect(wrapper.emitted('has-error')).toBeTruthy()
-        expect(wrapper.emitted('has-error')![0]).toEqual([true])
+        expect(wrapper.emitted('has-error')![0]).toEqual([expectedError])
+    })
+
+    it('emits loaded event when loaded', async () => {
+        const wrapper = mount(NameInput)
+        const input = wrapper.find('#group-name')
+
+        await input.setValue('some name is here')
+
+        expect(input).not.toBeNull()
+        expect(wrapper.emitted('loaded')).toBeTruthy()
     })
 })
