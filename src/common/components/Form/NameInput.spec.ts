@@ -19,7 +19,7 @@ describe('NameInput', () => {
         ['false for short name', 'Hi', false],
         ['false for exact length', 'a'.repeat(config.MAX_GROUP_NAME_LENGTH), false],
         ['true  for long name', 'a'.repeat(config.MAX_GROUP_NAME_LENGTH + 1), true],
-    ])('emits has-error with %s', async (_, name, expectedError) => {
+    ])('emits has-error with %s', async (_, name, expected) => {
         const wrapper = mount(NameInput)
         const input = wrapper.find('#group-name')
 
@@ -27,7 +27,7 @@ describe('NameInput', () => {
         await input.trigger('keyup')
 
         expect(wrapper.emitted('has-error')).toBeTruthy()
-        expect(wrapper.emitted('has-error')![0]).toEqual([expectedError])
+        expect(wrapper.emitted('has-error')!.at(-1)).toEqual([expected])
     })
 
     it('emits loaded event when loaded', async () => {

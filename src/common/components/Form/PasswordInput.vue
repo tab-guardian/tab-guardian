@@ -24,19 +24,23 @@ const props = withDefaults(defineProps<Props>(), {
     withMinLength: false,
 })
 
-onMounted(() => emit('has-error', !pass.value))
-
 const pass = defineModel<string | null>()
+
+onMounted(() => emit('has-error', isTooShort()))
 
 const passErr = computed<string>(() => {
     if (!props.withMinLength) {
         return ''
     }
 
-    return pass.value && pass.value.length < config.MIN_PASS_LENGTH
+    return pass.value && isTooShort()
         ? trans('password_min_length', config.MIN_PASS_LENGTH.toString())
         : ''
 })
+
+function isTooShort(): boolean {
+    return !pass.value || pass.value.length < config.MIN_PASS_LENGTH
+}
 </script>
 
 <template>

@@ -1,7 +1,8 @@
 # Release Notes
 
-## v1.16.4 (2025-11-03)
+## v1.16.4 (2025-11-05)
 - 🧑‍💻 Changed tooltip from `?` to `!`.
+- 🧑‍💻 Added more tests to the codebase.
 
 ## v1.16.3 (2025-10-29)
 - 🐛 Fixed bug where tabs would not close.
