@@ -29,25 +29,26 @@ const pass = defineModel<string | null>()
 onMounted(() => emit('has-error', isTooShort()))
 
 const passErr = computed<string>(() => {
-    if (!props.withMinLength) {
-        return ''
-    }
-
     return pass.value && isTooShort()
         ? trans('password_min_length', config.MIN_PASS_LENGTH.toString())
         : ''
 })
 
 function isTooShort(): boolean {
+    if (!props.withMinLength) {
+        return false
+    }
+
     return !pass.value || pass.value.length < config.MIN_PASS_LENGTH
 }
+
 </script>
 
 <template>
     <Input
         v-model="pass"
         @loaded="emit('loaded', $event)"
-        @keyup="emit('has-error', passErr !== '' || !pass)"
+        @keyup="emit('has-error', isTooShort())"
         type="password"
         :error="passErr || error"
         :with-button="withButton"
