@@ -84,6 +84,7 @@
     "cut": { "message": "剪切" },
     "copy": { "message": "复制" },
     "pin": { "message": "别针" },
+    "unpin": { "message": "取消固定" },
     "paste_tabs": { "message": "粘贴标签页" },
     "tab_copied": { "message": "标签已复制" },
     "tab_cut": { "message": "标签已被剪切" },

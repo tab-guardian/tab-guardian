@@ -9,7 +9,7 @@ export function fakeLink(fields?: Partial<Link>): Link {
     return {
         id,
         tabId: id,
-        url: 'https://duckduckgo.com',
+        url: 'https://www.fake.com',
         title: `Link #${id}`,
         favIconUrl: 'https://placehold.co/50',
         isPinned: false,

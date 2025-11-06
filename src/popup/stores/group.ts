@@ -180,6 +180,31 @@ export const useGroupStore = defineStore('group', () => {
         return true
     }
 
+    async function updateLink(
+        groupId: number,
+        linkId: number,
+        updates: Partial<Link>,
+    ): Promise<boolean> {
+        const group = get(groupId)
+
+        if (!group) {
+            groupNotFoundLog(groupId, 'updateLink')
+            return false
+        }
+
+        const links = group.links.map(link => {
+            if (link.id === linkId) {
+                Object.assign(link, updates)
+            }
+
+            return link
+        })
+
+        await update(groupId, { links })
+
+        return true
+    }
+
     async function deleteGroup(id: number): Promise<void> {
         groups.value = groups.value.filter(g => g.id !== id)
         await groupStorage.delete(id)
@@ -333,6 +358,7 @@ export const useGroupStore = defineStore('group', () => {
         unlock,
         saveMany,
         deleteAll,
+        updateLink,
         deleteGroup,
         deleteLinkFrom,
         insertLinksInto,

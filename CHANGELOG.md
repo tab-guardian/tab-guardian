@@ -1,8 +1,9 @@
 # Release Notes
 
-## v1.16.4 (2025-11-05)
+## v1.16.4 (2025-11-07)
 - 🧑‍💻 Changed tooltip from `?` to `!`.
 - 🧑‍💻 Added more tests to the codebase.
+- ✨ Added ability to pin/unpin tabs [#92](https://github.com/tab-guardian/tab-guardian/issues/92).
 
 ## v1.16.3 (2025-10-29)
 - 🐛 Fixed bug where tabs would not close.

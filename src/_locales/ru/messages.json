@@ -95,6 +95,7 @@
     "cut": { "message": "Вырезать" },
     "copy": { "message": "Скопировать" },
     "pin": { "message": "Закрепить" },
+    "unpin": { "message": "Открепить" },
     "paste_tabs": { "message": "Вставить вкладки" },
     "tab_copied": { "message": "Вкладка скопирована" },
     "tab_cut": { "message": "Вкладка вырезана" },

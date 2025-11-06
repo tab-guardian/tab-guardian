@@ -96,6 +96,7 @@
     "cut": { "message": "Cut" },
     "copy": { "message": "Copy" },
     "pin": { "message": "Pin" },
+    "unpin": { "message": "Unpin" },
     "paste_tabs": { "message": "Paste tabs" },
     "tab_copied": { "message": "Tab has been copied" },
     "tab_cut": { "message": "Tab has been cut" },
