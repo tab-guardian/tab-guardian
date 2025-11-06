@@ -1,4 +1,4 @@
-import type { LinkBuffer } from '@common/types'
+import type { Link, LinkBuffer } from '@common/types'
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import { logger } from '@common/modules'
@@ -11,7 +11,7 @@ export const useLinkStore = defineStore('link', () => {
     const buffer = ref<LinkBuffer | null>(null)
     const isEmptyBuffer = computed<boolean>(() => buffer.value === null)
 
-    async function copyLink(buf: LinkBuffer): Promise<void> {
+    async function copy(buf: LinkBuffer): Promise<void> {
         const groupExist = groupStore.exist(buf.initialGroupId)
 
         if (!groupExist) {
@@ -25,7 +25,7 @@ export const useLinkStore = defineStore('link', () => {
         buffer.value = buf
     }
 
-    function isLinkCut(linkId: number): boolean {
+    function isCut(linkId: number): boolean {
         if (!buffer.value || buffer.value.action !== 'cut') {
             return false
         }
@@ -33,7 +33,7 @@ export const useLinkStore = defineStore('link', () => {
         return buffer.value.link.id === linkId
     }
 
-    async function pasteLink(groupId: number): Promise<void> {
+    async function paste(groupId: number): Promise<void> {
         if (!buffer.value) {
             logger().warn(`There is nothing to paste for group ${groupId}`)
             return
@@ -59,8 +59,8 @@ export const useLinkStore = defineStore('link', () => {
 
     return {
         isEmptyBuffer,
-        copyLink,
-        isLinkCut,
-        pasteLink,
+        copy,
+        isCut,
+        paste,
     }
 })

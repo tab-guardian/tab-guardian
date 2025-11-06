@@ -27,7 +27,7 @@ const tip = computed<string>(() => {
 
 async function pasteLink(): Promise<void> {
     popupStore.hideAll()
-    linkStore.pasteLink(props.group.id)
+    linkStore.paste(props.group.id)
     showToast({ text: trans('tab_pasted') })
 }
 </script>

@@ -20,7 +20,7 @@ describe('link store', () => {
         })
     })
 
-    suite('copyLink()', () => {
+    suite('copy()', () => {
         it('sets buffer when you copy link for existing group', async () => {
             const linkStore = useLinkStore()
             const groupStore = useGroupStore()
@@ -35,7 +35,7 @@ describe('link store', () => {
 
             await groupStore.save(group)
 
-            await linkStore.copyLink(buf)
+            await linkStore.copy(buf)
 
             expect(linkStore.isEmptyBuffer).toBeFalsy()
         })
@@ -49,13 +49,13 @@ describe('link store', () => {
                 link: fakeLink(),
             }
 
-            await expect(linkStore.copyLink(buf)).rejects.toThrowError()
+            await expect(linkStore.copy(buf)).rejects.toThrowError()
 
             expect(linkStore.isEmptyBuffer).toBeTruthy()
         })
     })
 
-    suite('isLinkCut()', () => {
+    suite('isCut()', () => {
         it('returns true when link is cut', async () => {
             const linkStore = useLinkStore()
             const groupStore = useGroupStore()
@@ -71,10 +71,10 @@ describe('link store', () => {
                 link,
             }
 
-            await linkStore.copyLink(buf)
+            await linkStore.copy(buf)
 
             expect(linkStore.isEmptyBuffer).toBeFalsy()
-            expect(linkStore.isLinkCut(link.id)).toBeTruthy()
+            expect(linkStore.isCut(link.id)).toBeTruthy()
         })
 
         it('returns false when link is copied', async () => {
@@ -92,10 +92,10 @@ describe('link store', () => {
                 link,
             }
 
-            await linkStore.copyLink(buf)
+            await linkStore.copy(buf)
 
             expect(linkStore.isEmptyBuffer).toBeFalsy()
-            expect(linkStore.isLinkCut(link.id)).toBeFalsy()
+            expect(linkStore.isCut(link.id)).toBeFalsy()
         })
 
         it('returns false when buffer is empty', async () => {
@@ -108,7 +108,7 @@ describe('link store', () => {
             await groupStore.save(group)
 
             expect(linkStore.isEmptyBuffer).toBeTruthy()
-            expect(linkStore.isLinkCut(link.id)).toBeFalsy()
+            expect(linkStore.isCut(link.id)).toBeFalsy()
         })
 
         it('returns false when link ID does not match', async () => {
@@ -120,7 +120,7 @@ describe('link store', () => {
 
             await groupStore.save(group)
 
-            await linkStore.copyLink({
+            await linkStore.copy({
                 action: 'copy',
                 initialGroupId: group.id,
                 link,
@@ -129,11 +129,11 @@ describe('link store', () => {
             const newLink = fakeLink()
 
             expect(linkStore.isEmptyBuffer).toBeFalsy()
-            expect(linkStore.isLinkCut(newLink.id)).toBeFalsy()
+            expect(linkStore.isCut(newLink.id)).toBeFalsy()
         })
     })
 
-    suite('pasteLink()', () => {
+    suite('paste()', () => {
         it('copies link to provided group', async () => {
             const linkStore = useLinkStore()
             const groupStore = useGroupStore()
@@ -145,13 +145,13 @@ describe('link store', () => {
 
             await groupStore.saveMany([initialGroup, destinationGroup])
 
-            await linkStore.copyLink({
+            await linkStore.copy({
                 action: 'copy',
                 initialGroupId: initialGroup.id,
                 link,
             })
 
-            await linkStore.pasteLink(destinationGroup.id)
+            await linkStore.paste(destinationGroup.id)
 
             const destGroup = groupStore.get(destinationGroup.id)
             expect(destGroup?.links).toHaveLength(1)
@@ -175,13 +175,13 @@ describe('link store', () => {
 
             await groupStore.saveMany([initialGroup, destinationGroup])
 
-            await linkStore.copyLink({
+            await linkStore.copy({
                 action: 'cut',
                 initialGroupId: initialGroup.id,
                 link,
             })
 
-            await linkStore.pasteLink(destinationGroup.id)
+            await linkStore.paste(destinationGroup.id)
 
             const initGroup = groupStore.get(initialGroup.id)
             expect(initGroup?.links).toHaveLength(0)

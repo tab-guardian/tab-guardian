@@ -36,7 +36,7 @@ async function yankLink(action: 'copy' | 'cut', successMsg: string): Promise<voi
         return
     }
 
-    await linkStore.copyLink({
+    await linkStore.copy({
         action,
         initialGroupId: group.value.id,
         link: sharedData.value.link,
@@ -63,13 +63,13 @@ async function cutLink(): Promise<void> {
     >
         <div class="flex flex-col gap-1 mt-3">
             <MenuItem
-                :label="trans('cut_tab')"
+                :label="trans('cut')"
                 :icon="ScissorsIcon"
                 @click="cutLink"
             />
 
             <MenuItem
-                :label="trans('copy_tab')"
+                :label="trans('copy')"
                 :icon="CopyIcon"
                 @click="copyLink"
             />
