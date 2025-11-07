@@ -10,7 +10,7 @@ const groupStore = useGroupStore()
 
 onMounted(async () => {
     groupStore.selectedGroup = null
-    await groupStore.loadGroupsFromStorage()
+    await groupStore.load()
 })
 </script>
 

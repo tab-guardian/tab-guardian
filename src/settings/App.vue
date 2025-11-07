@@ -13,8 +13,8 @@ import RemoveUrlLockPopup from '@/components/Popups/RemoveUrlLockPopup.vue'
 const settingsStore = useSettingsStore()
 
 onMounted(async () => {
-    await settingsStore.loadSettingsFromStorage()
-    await useAttemptsStore().loadAttemptsFromStorage()
+    await settingsStore.load()
+    await useAttemptsStore().load()
 })
 </script>
 

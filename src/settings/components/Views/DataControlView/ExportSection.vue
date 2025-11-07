@@ -19,7 +19,7 @@ const exporting = ref<boolean>(false)
 const usePassword = ref<boolean>(false)
 
 onMounted(async () => {
-    await groupStore.loadGroupsFromStorage()
+    await groupStore.load()
 })
 
 async function exportGroups(): Promise<void> {

@@ -6,7 +6,7 @@ import Input from '@common/components/Form/Input.vue'
 
 const emit = defineEmits<{
     (e: 'loaded', input: HTMLInputElement): void
-    (e: 'hasError', has: boolean): void
+    (e: 'has-error', has: boolean): void
 }>()
 
 type Props = {
@@ -24,26 +24,30 @@ const props = withDefaults(defineProps<Props>(), {
     withMinLength: false,
 })
 
-onMounted(() => emit('hasError', !pass.value))
-
 const pass = defineModel<string | null>()
 
-const passErr = computed<string>(() => {
-    if (!props.withMinLength) {
-        return ''
-    }
+onMounted(() => emit('has-error', isTooShort()))
 
-    return pass.value && pass.value.length < config.MIN_PASS_LENGTH
+const passErr = computed<string>(() => {
+    return pass.value && isTooShort()
         ? trans('password_min_length', config.MIN_PASS_LENGTH.toString())
         : ''
 })
+
+function isTooShort(): boolean {
+    if (!props.withMinLength) {
+        return false
+    }
+
+    return !pass.value || pass.value.length < config.MIN_PASS_LENGTH
+}
 </script>
 
 <template>
     <Input
         v-model="pass"
         @loaded="emit('loaded', $event)"
-        @keyup="emit('hasError', passErr !== '' || !pass)"
+        @keyup="emit('has-error', isTooShort())"
         type="password"
         :error="passErr || error"
         :with-button="withButton"

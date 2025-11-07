@@ -24,12 +24,13 @@ const groupStore = useGroupStore()
             v-model="group.links"
             class="space-y-2"
             @change="groupStore.save(group)"
+            item-key="id"
         >
             <LinkItem
                 v-for="link in group.links"
                 :key="link.id"
-                :link="link"
                 :group-id="group.id"
+                :link
             />
         </VueDraggableNext>
     </div>

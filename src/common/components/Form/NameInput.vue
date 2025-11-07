@@ -6,7 +6,7 @@ import Input from '@common/components/Form/Input.vue'
 
 const emit = defineEmits<{
     (e: 'loaded', input: HTMLInputElement): void
-    (e: 'hasError', has: boolean): void
+    (e: 'has-error', has: boolean): void
 }>()
 
 const name = defineModel<string | null>('name')
@@ -30,7 +30,7 @@ const nameErr = computed<string>(() => {
     <Input
         v-model="name"
         @loaded="emit('loaded', $event)"
-        @keyup="emit('hasError', nameErr !== '')"
+        @keyup="emit('has-error', nameErr !== '')"
         :label="trans('group_name')"
         :error="nameErr"
         type="text"

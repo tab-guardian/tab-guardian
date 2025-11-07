@@ -38,7 +38,7 @@ async function showTabLinkPopup(): Promise<void> {
     <LinkElement
         @click="openTab"
         @click.prevent.right="showTabLinkPopup"
-        :class-name="linkStore.isLinkCut(link.id) ? 'opacity-50' : ''"
+        :class-name="linkStore.isCut(link.id) ? 'opacity-50' : ''"
         :link
     >
         <DeleteLinkButton @click.stop :linkId="link.id" :groupId />

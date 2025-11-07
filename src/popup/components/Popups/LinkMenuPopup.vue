@@ -11,6 +11,7 @@ import Popup from '@/components/Popups/Popup.vue'
 import MenuItem from '@/components/MenuItem.vue'
 import ScissorsIcon from '@common/components/Icons/ScissorsIcon.vue'
 import CopyIcon from '@common/components/Icons/CopyIcon.vue'
+import PinIcon from '@common/components/Icons/PinIcon.vue'
 import PasteLinkMenuItem from '@/components//Views/GroupView/GroupControls/MenuItems/PasteLinkMenuItem.vue'
 
 const popupStore = usePopupStore()
@@ -36,7 +37,7 @@ async function yankLink(action: 'copy' | 'cut', successMsg: string): Promise<voi
         return
     }
 
-    await linkStore.copyLink({
+    await linkStore.copy({
         action,
         initialGroupId: group.value.id,
         link: sharedData.value.link,
@@ -53,6 +54,19 @@ async function copyLink(): Promise<void> {
 async function cutLink(): Promise<void> {
     yankLink('cut', trans('tab_cut'))
 }
+
+async function togglePin(): Promise<void> {
+    if (!group.value) {
+        logger().warn(`Cannot pin the link because group.value is null`)
+        return
+    }
+
+    await groupStore.updateLink(group.value.id, sharedData.value.link.id, {
+        isPinned: !sharedData.value.link.isPinned,
+    })
+
+    popupStore.hideAll()
+}
 </script>
 
 <template>
@@ -62,16 +76,14 @@ async function cutLink(): Promise<void> {
         @cancel="popupStore.hide('linkMenuView', {})"
     >
         <div class="flex flex-col gap-1 mt-3">
-            <MenuItem
-                :label="trans('cut_tab')"
-                :icon="ScissorsIcon"
-                @click="cutLink"
-            />
+            <MenuItem :label="trans('cut')" :icon="ScissorsIcon" @click="cutLink" />
+
+            <MenuItem :label="trans('copy')" :icon="CopyIcon" @click="copyLink" />
 
             <MenuItem
-                :label="trans('copy_tab')"
-                :icon="CopyIcon"
-                @click="copyLink"
+                :label="trans(sharedData.link.isPinned ? 'unpin' : 'pin')"
+                :icon="PinIcon"
+                @click="togglePin"
             />
 
             <PasteLinkMenuItem :group />

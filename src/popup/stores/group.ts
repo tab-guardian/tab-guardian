@@ -49,7 +49,7 @@ export const useGroupStore = defineStore('group', () => {
         return groups.value.some(g => g.id === id)
     }
 
-    async function loadGroupsFromStorage(): Promise<void> {
+    async function load(): Promise<void> {
         loadingGroups.value = true
 
         const storageGroups = await groupStorage.getAll()
@@ -160,7 +160,7 @@ export const useGroupStore = defineStore('group', () => {
             progressStore.advance()
         }
 
-        await loadGroupsFromStorage()
+        await load()
 
         progressStore.finish()
     }
@@ -178,6 +178,31 @@ export const useGroupStore = defineStore('group', () => {
         await save(group)
 
         return true
+    }
+
+    async function updateLink(
+        groupId: number,
+        linkId: number,
+        updates: Partial<Link>,
+    ): Promise<boolean> {
+        const group = get(groupId)
+
+        if (!group) {
+            groupNotFoundLog(groupId, 'updateLink')
+            return false
+        }
+
+        for (const link of group.links) {
+            if (link.id !== linkId) {
+                continue
+            }
+
+            Object.assign(link, updates)
+
+            return update(groupId, { links: group.links })
+        }
+
+        return false
     }
 
     async function deleteGroup(id: number): Promise<void> {
@@ -238,7 +263,7 @@ export const useGroupStore = defineStore('group', () => {
         }
 
         await groupStorage.save(group)
-        await loadGroupsFromStorage()
+        await load()
 
         await notificationStore.recalculateNotification()
     }
@@ -328,14 +353,15 @@ export const useGroupStore = defineStore('group', () => {
         get,
         save,
         lock,
+        load,
         exist,
         update,
         unlock,
         saveMany,
         deleteAll,
+        updateLink,
         deleteGroup,
         deleteLinkFrom,
         insertLinksInto,
-        loadGroupsFromStorage,
     }
 })

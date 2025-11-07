@@ -24,7 +24,7 @@ export const useAttemptsStore = defineStore('attempts', () => {
         return attempts.value.amount >= config.PASS_MAX_ATTEMPTS
     })
 
-    async function loadAttemptsFromStorage(): Promise<void> {
+    async function load(): Promise<void> {
         const results = await runtime.storage.get<Attempts>('attempts')
 
         if (results.length === 1) {
@@ -99,7 +99,7 @@ export const useAttemptsStore = defineStore('attempts', () => {
 
     return {
         isLocked,
-        loadAttemptsFromStorage,
+        load,
         isLockedErrorMessage,
         makeAttempt,
         unlock,

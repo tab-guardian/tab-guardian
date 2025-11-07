@@ -29,7 +29,7 @@ const preventSubmit = computed<boolean>(() => {
     return errors.pass || errors.name
 })
 
-onMounted(async () => await groupStore.loadGroupsFromStorage())
+onMounted(async () => await groupStore.load())
 
 async function submit(): Promise<void> {
     if (processing.value || preventSubmit.value) {

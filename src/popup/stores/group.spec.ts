@@ -496,4 +496,61 @@ describe('group store', () => {
             expect(useGroupStore().exist(0)).toBeFalsy()
         })
     })
+
+    suite('updateLink()', () => {
+        it('updates fields of a link', async () => {
+            const groupStore = useGroupStore()
+            const link = fakeLink()
+            const group = fakeGroup({ links: [link] })
+
+            await groupStore.save(group)
+
+            const result = await groupStore.updateLink(group.id, link.id, {
+                title: 'Anna',
+                isPinned: true,
+                favIconUrl: 'nice',
+            })
+
+            expect(result).toBeTruthy()
+
+            const updatedGroup = groupStore.get(group.id)
+
+            expect(updatedGroup).not.toBeNull()
+
+            const foundLink = updatedGroup?.links[0]!
+
+            expect(foundLink.isPinned).toBeTruthy()
+            expect(foundLink.title).equal('Anna')
+            expect(foundLink.favIconUrl).equal('nice')
+        })
+
+        it('returns false when group not found', async () => {
+            const groupStore = useGroupStore()
+            const link = fakeLink()
+            const result = await groupStore.updateLink(0, link.id, {
+                isPinned: true,
+            })
+
+            expect(result).toBeFalsy()
+        })
+
+        it('returns false when link not found', async () => {
+            const groupStore = useGroupStore()
+            const link = fakeLink({ id: 1 })
+            const group = fakeGroup({ links: [link] })
+
+            await groupStore.save(group)
+
+            const result = await groupStore.updateLink(group.id, 2, {
+                isPinned: true,
+            })
+
+            expect(result).toBeFalsy()
+
+            const updatedGroup = groupStore.get(group.id)
+            const foundLink = updatedGroup?.links[0]!
+
+            expect(foundLink.isPinned).toBeFalsy()
+        })
+    })
 })
