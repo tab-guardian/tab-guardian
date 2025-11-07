@@ -192,17 +192,17 @@ export const useGroupStore = defineStore('group', () => {
             return false
         }
 
-        const links = group.links.map(link => {
-            if (link.id === linkId) {
-                Object.assign(link, updates)
+        for (const link of group.links) {
+            if (link.id !== linkId) {
+                continue
             }
 
-            return link
-        })
+            Object.assign(link, updates)
 
-        await update(groupId, { links })
+            return update(groupId, { links: group.links })
+        }
 
-        return true
+        return false
     }
 
     async function deleteGroup(id: number): Promise<void> {
