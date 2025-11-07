@@ -20,8 +20,8 @@ onMounted(async () => {
     incognitoModeAllowed.value = await runtime.extension.isAllowedIncognitoAccess()
 })
 
-function updateSettings(): void {
-    settingsStore.updateSettings()
+function save(): void {
+    settingsStore.save()
     showToast({ text: trans('settings_saved') })
 }
 </script>
@@ -30,21 +30,21 @@ function updateSettings(): void {
     <Section :title="trans('additional_options')">
         <div class="flex flex-col gap-3">
             <SlideSwitch
-                @changed="updateSettings"
+                @changed="save"
                 v-model="settingsStore.settings.encryptAfterRestore"
             >
                 {{ trans('lock_group_after_restore') }}
             </SlideSwitch>
 
             <SlideSwitch
-                @changed="updateSettings"
+                @changed="save"
                 v-model="settingsStore.settings.overrideWithSameName"
             >
                 {{ trans('override_existing_match') }}
             </SlideSwitch>
 
             <SlideSwitch
-                @changed="updateSettings"
+                @changed="save"
                 v-model="settingsStore.settings.rememberPasswordAfterUnlock"
                 :description="trans('remember_pass_after_unlock_desc')"
             >
@@ -52,7 +52,7 @@ function updateSettings(): void {
             </SlideSwitch>
 
             <SlideSwitch
-                @changed="updateSettings"
+                @changed="save"
                 v-model="settingsStore.settings.showPrivateGroupsOnlyInIncognito"
                 :disabled="!incognitoModeAllowed"
                 :warning="incognitoWarningMessage"
@@ -61,7 +61,7 @@ function updateSettings(): void {
             </SlideSwitch>
 
             <SlideSwitch
-                @changed="updateSettings"
+                @changed="save"
                 v-model="settingsStore.settings.showOnlyPrivateGroupsInIncognito"
                 :disabled="!incognitoModeAllowed"
                 :warning="incognitoWarningMessage"

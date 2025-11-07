@@ -18,13 +18,13 @@ import GroupMenuPopup from '@/components/Popups/GroupMenuPopup.vue'
 import EditGroupNamePopup from '@/components/Popups/EditGroupNamePopup.vue'
 
 onMounted(async () => {
-    handleDarkThem()
-    await useSettingsStore().loadSettingsFromStorage()
+    handleDarkTheme()
+    await useSettingsStore().load()
+    await useAttemptsStore().load()
     await useNotificationStore().recalculateNotification()
-    await useAttemptsStore().loadAttemptsFromStorage()
 })
 
-function handleDarkThem(): void {
+function handleDarkTheme(): void {
     if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
         document.body.classList.add('dark')
     }

@@ -99,7 +99,7 @@ async function processFileContent(rawData: string): Promise<void> {
         groups[0] = await cryptoStore.encryptGroup(groups[0], groupPassword.value)
     }
 
-    await groupStore.loadGroupsFromStorage()
+    await groupStore.load()
 
     const groupsWithSameName = groups.reduce((acc, group) => {
         return acc + groupStore.groups.filter(g => g.name === group.name).length

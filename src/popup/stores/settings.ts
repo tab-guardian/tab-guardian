@@ -14,7 +14,7 @@ export const useSettingsStore = defineStore('settings', () => {
 
     const loading = ref<boolean>(false)
 
-    async function loadSettingsFromStorage(): Promise<void> {
+    async function load(): Promise<void> {
         loading.value = true
 
         const results = await runtime.storage.get<Settings>('settings')
@@ -29,14 +29,14 @@ export const useSettingsStore = defineStore('settings', () => {
         loading.value = false
     }
 
-    function updateSettings(): void {
+    function save(): void {
         runtime.storage.set<Settings>('settings', settings.value)
     }
 
     return {
         settings,
         loading,
-        loadSettingsFromStorage,
-        updateSettings,
+        save,
+        load,
     }
 })

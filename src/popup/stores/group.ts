@@ -49,7 +49,7 @@ export const useGroupStore = defineStore('group', () => {
         return groups.value.some(g => g.id === id)
     }
 
-    async function loadGroupsFromStorage(): Promise<void> {
+    async function load(): Promise<void> {
         loadingGroups.value = true
 
         const storageGroups = await groupStorage.getAll()
@@ -160,7 +160,7 @@ export const useGroupStore = defineStore('group', () => {
             progressStore.advance()
         }
 
-        await loadGroupsFromStorage()
+        await load()
 
         progressStore.finish()
     }
@@ -263,7 +263,7 @@ export const useGroupStore = defineStore('group', () => {
         }
 
         await groupStorage.save(group)
-        await loadGroupsFromStorage()
+        await load()
 
         await notificationStore.recalculateNotification()
     }
@@ -353,6 +353,7 @@ export const useGroupStore = defineStore('group', () => {
         get,
         save,
         lock,
+        load,
         exist,
         update,
         unlock,
@@ -362,6 +363,5 @@ export const useGroupStore = defineStore('group', () => {
         deleteGroup,
         deleteLinkFrom,
         insertLinksInto,
-        loadGroupsFromStorage,
     }
 })
