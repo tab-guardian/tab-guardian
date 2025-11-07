@@ -41,7 +41,6 @@ function isTooShort(): boolean {
 
     return !pass.value || pass.value.length < config.MIN_PASS_LENGTH
 }
-
 </script>
 
 <template>

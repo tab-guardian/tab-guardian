@@ -61,11 +61,9 @@ async function togglePin(): Promise<void> {
         return
     }
 
-    await groupStore.updateLink(
-        group.value.id,
-        sharedData.value.link.id,
-        { isPinned: !sharedData.value.link.isPinned },
-    )
+    await groupStore.updateLink(group.value.id, sharedData.value.link.id, {
+        isPinned: !sharedData.value.link.isPinned,
+    })
 
     popupStore.hideAll()
 }
@@ -78,17 +76,9 @@ async function togglePin(): Promise<void> {
         @cancel="popupStore.hide('linkMenuView', {})"
     >
         <div class="flex flex-col gap-1 mt-3">
-            <MenuItem
-                :label="trans('cut')"
-                :icon="ScissorsIcon"
-                @click="cutLink"
-            />
+            <MenuItem :label="trans('cut')" :icon="ScissorsIcon" @click="cutLink" />
 
-            <MenuItem
-                :label="trans('copy')"
-                :icon="CopyIcon"
-                @click="copyLink"
-            />
+            <MenuItem :label="trans('copy')" :icon="CopyIcon" @click="copyLink" />
 
             <MenuItem
                 :label="trans(sharedData.link.isPinned ? 'unpin' : 'pin')"

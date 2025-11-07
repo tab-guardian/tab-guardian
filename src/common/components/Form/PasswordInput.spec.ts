@@ -1,6 +1,6 @@
 // @vitest-environment happy-dom
 
-import { describe, it, expect, suite, beforeEach } from 'vitest'
+import { describe, it, expect, beforeEach } from 'vitest'
 import { createPinia, setActivePinia } from 'pinia'
 import { config } from '@common/config'
 import { trans } from '@common/modules'
@@ -138,6 +138,7 @@ describe('PasswordInput', () => {
 
         await input.trigger('keyup')
 
+        // @ts-ignore
         expect(wrapper.vm.passErr!).equal(expected)
     })
 })
