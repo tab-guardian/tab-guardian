@@ -52,7 +52,6 @@ async function unlockCallback(pass: string): Promise<boolean> {
     showToast({
         text: unlocking.message,
         type: unlocking.failed ? 'error' : 'info',
-        duration: 5000,
     })
 
     if (unlocking.failed) {

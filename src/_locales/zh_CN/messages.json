@@ -7,6 +7,10 @@
         "message": "密码必须至少包含 $n$ 个字符",
         "placeholders": { "n": { "content": "$1" } }
     },
+    "browser_cannot_open_tab": {
+        "message": "您的浏览器不允许打开第 $n$ 个标签页",
+        "placeholders": { "n": { "content": "$1" } }
+    },
     "you_have_unlocked_groups": {
         "message": "您当前拥有$n$个未锁定的私人群组。请务必在不再需要时将其重新锁定。",
         "placeholders": { "n": { "content": "$1" } }

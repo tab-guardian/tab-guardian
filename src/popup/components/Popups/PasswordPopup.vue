@@ -39,7 +39,7 @@ async function submitPassword(): Promise<void> {
     const attempt = await attemptsStore.makeAttempt()
 
     if (!attempt.success) {
-        showToast({ text: attempt.error, type: 'error', duration: 5000 })
+        showToast({ text: attempt.error, type: 'error' })
         pass.value = ''
         return
     }
@@ -55,7 +55,6 @@ async function submitPassword(): Promise<void> {
         showToast({
             text: attemptsStore.isLockedErrorMessage(),
             type: 'error',
-            duration: 5000,
         })
     }
 
