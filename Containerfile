@@ -1,6 +1,6 @@
 FROM node:24-alpine
 
-RUN apk add --no-cache git zip bash
+RUN apk add --no-cache git zip bash python3
 
 WORKDIR /app
 
