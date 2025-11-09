@@ -1,5 +1,8 @@
 # Release Notes
 
+## v1.16.5 (2025-11-09)
+- 🐛 Fixed issue where you couldn't restore tabs for groups that contain chrome links like `chrome://extensions`. Now, these types of links are skipped for Firefox-based browsers because it's impossible to open them. For Chrome browsers, the behavior didn't change.
+
 ## v1.16.4 (2025-11-07)
 - 🧑‍💻 Changed tooltip from `?` to `!`.
 - 🧑‍💻 Added more tests to the codebase.
