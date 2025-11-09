@@ -7,7 +7,7 @@ type Params = Toastify.Options & {
 export function showToast(params: Params): void {
     Toastify({
         text: params.text,
-        duration: params.duration || 3000,
+        duration: params.duration || 5000,
         close: params.close || false,
         gravity: params.gravity || 'bottom',
         position: params.position || 'center',

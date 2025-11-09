@@ -39,7 +39,7 @@ async function submit(): Promise<void> {
     const attempt = await attemptsStore.makeAttempt()
 
     if (!attempt.success) {
-        showToast({ text: attempt.error, type: 'error', duration: 5000 })
+        showToast({ text: attempt.error, type: 'error' })
         hidePopup()
         return
     }
@@ -61,7 +61,6 @@ async function submit(): Promise<void> {
         showToast({
             text: getDecryptionError(err),
             type: 'error',
-            duration: 5000,
         })
     }
 
@@ -69,7 +68,6 @@ async function submit(): Promise<void> {
         showToast({
             text: attemptsStore.isLockedErrorMessage(),
             type: 'error',
-            duration: 5000,
         })
     }
 
