@@ -32,6 +32,8 @@ export const useTabsStore = defineStore('tabs', () => {
         await restore(group)
         const encryption = await groupStore.lock(group, pass)
 
+        await passwordStorage.delete(group.id)
+
         showToast({
             text: encryption.message,
             type: encryption.failed ? 'error' : 'info',
@@ -61,6 +63,10 @@ export const useTabsStore = defineStore('tabs', () => {
     }
 
     async function openAndDeleteTabs(group: Group): Promise<void> {
+        if (group.isPrivate) {
+            await passwordStorage.delete(group.id)
+        }
+
         await groupStore.deleteGroup(group.id)
         await restoreTabs(group.links)
     }
