@@ -11,7 +11,7 @@ files that later can be used to upload extensions to Chrome and Mozilla stores
 or test them in the browser.
 
 Usage:
-  $0 [OPTION...]
+  ./cmd/build [OPTION...]
 
 Options:
   --help           Show help options
