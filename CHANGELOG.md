@@ -1,5 +1,8 @@
 # Release Notes
 
+## v1.16.6 (2025-11-17)
+- 🐛 Fixed bug with password cache issue where password would not delete itself from storage after locking the group back [#96](https://github.com/tab-guardian/tab-guardian/issues/96)
+
 ## v1.16.5 (2025-11-09)
 - 🐛 Fixed issue where you couldn't restore tabs for groups that contain chrome links like `chrome://extensions`. Now, these types of links are skipped for Firefox-based browsers because it's impossible to open them. For Chrome browsers, the behavior didn't change.
 
