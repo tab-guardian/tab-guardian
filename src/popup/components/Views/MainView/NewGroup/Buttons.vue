@@ -5,6 +5,7 @@ import { usePopupStore } from '@/stores/popup'
 import { onMounted } from 'vue'
 import ShieldCheckIcon from '@common/components/Icons/ShieldCheckIcon.vue'
 import PlusCircleIcon from '@common/components/Icons/PlusCircleIcon.vue'
+import FolderPlusIcon from '@common/components/Icons/FolderPlusIcon.vue'
 import NewGroupButton from '@/components/Views/MainView/NewGroup/NewGroupButton.vue'
 
 onMounted(() => newGroupStore.resetChoices())
@@ -33,7 +34,14 @@ async function askForGroupName(isPrivate: boolean) {
             @click="askForGroupName(true)"
             class="w-24 bg-success hover:bg-success-hover"
         >
-            <ShieldCheckIcon class="size-8" />
+            <ShieldCheckIcon class="size-7" />
         </NewGroupButton>
+
+        <button
+            @click="askForGroupName(true)"
+            class="w-16 flex justify-center hover:scale-105 transition-transform"
+        >
+            <FolderPlusIcon class="size-7 text-font" />
+        </button>
     </div>
 </template>

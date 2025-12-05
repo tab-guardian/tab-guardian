@@ -29,6 +29,8 @@ module.exports = {
                 'safe-hover': 'var(--tg-color-safe-hover)',
                 unsafe: 'var(--tg-color-unsafe)',
                 'unsafe-hover': 'var(--tg-color-unsafe-hover)',
+                folder: 'var(--tg-color-folder)',
+                'folder-hover': 'var(--tg-color-folder-hover)',
             },
         },
     },
