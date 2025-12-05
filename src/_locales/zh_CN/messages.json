@@ -96,7 +96,9 @@
     "rename": { "message": "重命名" },
     "additional_options": { "message": "附加选项" },
     "enter_group_name": { "message": "输入组名称" },
+    "enter_folder_name": { "message": "输入文件夹名称" },
     "group_name": { "message": "组名称" },
+    "folder_name": { "message": "文件夹名称" },
     "group_unlocked": { "message": "组已解锁" },
     "group_locked": { "message": "组已锁定" },
     "error_occurred": { "message": "发生意外错误" },
@@ -207,7 +209,9 @@
     },
     "enter_credentials": { "message": "输入凭据" },
     "delete": { "message": "删除" },
+    "create_new_folder": { "message": "创建一个新文件夹" },
     "bind_url_removed": { "message": "绑定网址已从该组中移除。该组仍可访问。" },
+    "folder_created": { "message": "文件夹已创建" },
     "remember_pass_after_unlock_desc": {
         "message": "若禁用此选项，每次锁定私人群组时均需输入密码。保持此选项启用状态，系统会将密码存储在临时且安全的存储空间中，您无需再次输入密码即可重新锁定群组"
     }

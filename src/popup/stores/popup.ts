@@ -21,6 +21,7 @@ const defaultPopups: Popups = {
     newPassword: structuredClone(defaultEmptyPopup),
     chooseEmoji: structuredClone(defaultEmptyPopup),
     chooseImageIcon: structuredClone(defaultEmptyPopup),
+    folderName: structuredClone(defaultEmptyPopup),
 }
 
 export const usePopupStore = defineStore('popup', () => {

@@ -110,7 +110,9 @@
     "rename": { "message": "Rename" },
     "additional_options": { "message": "Additional options" },
     "enter_group_name": { "message": "Enter a group name" },
+    "enter_folder_name": { "message": "Enter a folder name" },
     "group_name": { "message": "Group name" },
+    "folder_name": { "message": "Folder name" },
     "group_unlocked": { "message": "Group is unlocked" },
     "group_locked": { "message": "Group is locked" },
     "error_occurred": { "message": "Unexpected error occurred" },
@@ -237,6 +239,8 @@
     "delete": { "message": "Delete" },
     "enter_credentials": { "message": "Enter credentials" },
     "rebind_to_other_url": { "message": "Rebind to other URL" },
+    "create_new_folder": { "message": "Create a new folder" },
+    "folder_created": { "message": "Folder created" },
     "bind_url_removed": {
         "message": "Bind URL was removed from the group. The group is accessible."
     },

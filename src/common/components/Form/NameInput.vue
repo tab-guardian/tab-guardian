@@ -9,6 +9,14 @@ const emit = defineEmits<{
     (e: 'has-error', has: boolean): void
 }>()
 
+type Props = {
+    label?: string
+}
+
+withDefaults(defineProps<Props>(), {
+    label: trans('group_name'),
+})
+
 const name = defineModel<string | null>('name')
 
 const meta = computed<string>(() => {
@@ -31,7 +39,7 @@ const nameErr = computed<string>(() => {
         v-model="name"
         @loaded="emit('loaded', $event)"
         @keyup="emit('has-error', nameErr !== '')"
-        :label="trans('group_name')"
+        :label
         :error="nameErr"
         type="text"
         id="group-name"

@@ -38,10 +38,11 @@ async function askForGroupName(isPrivate: boolean) {
         </NewGroupButton>
 
         <button
-            @click="askForGroupName(true)"
-            class="w-16 flex justify-center hover:scale-105 transition-transform"
+            @click="popupStore.show('folderName', {})"
+            class="w-14 flex justify-center hover:scale-105 transition-transform"
+            v-tippy="trans('create_new_folder')"
         >
-            <FolderPlusIcon class="size-7 text-font" />
+            <FolderPlusIcon class="size-6 text-font" />
         </button>
     </div>
 </template>

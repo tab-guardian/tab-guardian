@@ -109,7 +109,9 @@
     "rename": { "message": "Переименовать" },
     "additional_options": { "message": "Дополнительные параметры" },
     "enter_group_name": { "message": "Введите имя группы" },
+    "enter_folder_name": { "message": "Введите имя папки" },
     "group_name": { "message": "Имя группы" },
+    "folder_name": { "message": "Имя папки" },
     "group_unlocked": { "message": "Группа разблокирована" },
     "group_locked": { "message": "Группа заблокирована" },
     "error_occurred": { "message": "Произошла неивестная ошибка" },
@@ -240,6 +242,8 @@
     },
     "enter_credentials": { "message": "Введите учетные данные" },
     "delete": { "message": "Удалить" },
+    "create_new_folder": { "message": "Создать новую папку" },
+    "folder_created": { "message": "Папка создана" },
     "bind_url_removed": {
         "message": "URL-адрес привязки был удален из группы. Группа доступна."
     },

@@ -24,4 +24,5 @@ export type Popups = {
     password: PopupItem<PasswordData>
     linkMenuView: PopupItem<{ link: Link }>
     editGroupName: PopupItem
+    folderName: PopupItem
 }

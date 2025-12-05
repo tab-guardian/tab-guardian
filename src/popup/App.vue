@@ -16,6 +16,7 @@ import ChooseImageIconPopup from '@/components/Popups/ChooseImageIconPopup.vue'
 import LinkMenuPopup from '@/components/Popups/LinkMenuPopup.vue'
 import GroupMenuPopup from '@/components/Popups/GroupMenuPopup.vue'
 import EditGroupNamePopup from '@/components/Popups/EditGroupNamePopup.vue'
+import FolderNamePopup from '@/components/Popups/FolderNamePopup.vue'
 
 onMounted(async () => {
     handleDarkTheme()
@@ -54,6 +55,7 @@ function handleDarkTheme(): void {
             { comp: LinkMenuPopup, name: 'linkMenuView' },
             { comp: EditGroupNamePopup, name: 'editGroupName' },
             { comp: ConfirmPopup, name: 'confirm' },
+            { comp: FolderNamePopup, name: 'folderName' },
         ]"
     />
 </template>
