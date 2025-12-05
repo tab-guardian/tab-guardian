@@ -30,9 +30,9 @@ watch(modelValue, () => {
         <span
             :class="[
                 disabled ? 'opacity-50' : '',
-                'w-10 h-6 flex items-center flex-shrink-0 p-1 dark:bg-zinc-600',
+                'w-10 h-6 flex items-center shrink-0 p-1 dark:bg-zinc-600',
                 'duration-300 ease-in-out peer-checked:bg-success after:size-4',
-                'after:bg-white after:rounded-full after:shadow-sm after:duration-300',
+                'after:bg-white after:rounded-full after:shadow-xs after:duration-300',
                 'peer-checked:after:translate-x-4 border border-border bg-zinc-200 rounded-full',
             ]"
         ></span>

@@ -23,11 +23,11 @@ const groupClasses = computed(() => {
         'cursor-pointer bg-page hover:bg-page-hover',
     ]
 
-    const privateGroup = props.group.isPrivate ? '!bg-safe hover:!bg-safe-hover' : ''
+    const privateGroup = props.group.isPrivate ? 'bg-safe! hover:bg-safe-hover!' : ''
 
     const unsafeGroup =
         props.group.isPrivate && !props.group.isEncrypted
-            ? '!bg-unsafe hover:!bg-unsafe-hover'
+            ? 'bg-unsafe! hover:bg-unsafe-hover!'
             : ''
 
     return [privateGroup, unsafeGroup, ...commonClasses]

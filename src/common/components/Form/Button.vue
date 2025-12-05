@@ -21,7 +21,7 @@ const props = withDefaults(defineProps<Props>(), {
 const buttonStyles = new Map<Props['is'], string>()
 buttonStyles.set(
     'outline',
-    '!text-font border border-border hover:border-border-hover',
+    'text-font! border border-border hover:border-border-hover',
 )
 buttonStyles.set('danger', 'bg-danger text-white')
 buttonStyles.set('success', 'bg-success')

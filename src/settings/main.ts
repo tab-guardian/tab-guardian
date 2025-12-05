@@ -1,8 +1,7 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import router from '@settings/router'
-import '@settings/style.css'
-import 'tippy.js/dist/tippy.css'
+import '@common/assets/css/globals.css'
 import VueTippy from 'vue-tippy'
 import App from '@settings/App.vue'
 

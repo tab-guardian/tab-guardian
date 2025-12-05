@@ -147,7 +147,7 @@ function resetState(): void {
         :title="trans('import_groups')"
         :subtitle="trans('import_private_and_open_groups')"
     >
-        <div class="space-y-4">
+        <div class="flex flex-col gap-4">
             <FileInput
                 @chosen="fileChosen"
                 type="file"

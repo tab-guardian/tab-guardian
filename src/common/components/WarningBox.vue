@@ -24,10 +24,10 @@ const boxClassName = computed<string>(() => {
     >
         <ShieldCheckIcon
             v-if="success"
-            class="text-green-400 size-7 flex-shrink-0"
+            class="text-green-400 size-7 shrink-0"
         />
 
-        <ShieldExclamationIcon v-else class="text-red-400 size-7 flex-shrink-0" />
+        <ShieldExclamationIcon v-else class="text-red-400 size-7 shrink-0" />
 
         <span class="text-sm w-full">{{ message }}</span>
         <slot />

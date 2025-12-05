@@ -29,7 +29,7 @@ const group = computed<Group | null>(() => groupStore.get(groupId))
         :subtitle="trans('you_can_find_details_here')"
     >
         <div v-if="group" class="pt-3 px-3">
-            <ul class="space-y-2">
+            <ul class="flex flex-col gap-2">
                 <ListItem :field="trans('group_name')" :value="group.name" />
 
                 <ListItem

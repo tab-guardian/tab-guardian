@@ -16,7 +16,7 @@ const groupStore = useGroupStore()
     <div
         @click.prevent="groupStore.deleteLinkFrom(groupId, linkId)"
         :class="[
-            'flex items-center py-1 rounded-sm transition-all',
+            'flex items-center py-1 rounded-xs transition-all',
             'border border-transparent hover:border-border',
             'hover:bg-secondary',
         ]"

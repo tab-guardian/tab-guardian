@@ -102,7 +102,7 @@ function hidePopup(): void {
         @cancel="popupStore.hide('removeUrlLock', {})"
         :content="trans('enter_credentials')"
     >
-        <form @submit.prevent="submit" class="space-y-3">
+        <form @submit.prevent="submit" class="flex flex-col gap-3">
             <NameInput
                 v-model:name="formData.name"
                 :loading="processing"

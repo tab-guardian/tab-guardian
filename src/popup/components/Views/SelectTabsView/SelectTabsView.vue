@@ -205,7 +205,7 @@ function toggleSelect(link: Link): void {
         </Message>
 
         <div v-else>
-            <VueDraggableNext v-model="links" class="space-y-2">
+            <VueDraggableNext v-model="links" class="flex flex-col gap-2">
                 <TabItem
                     v-for="link in links"
                     :key="link.id"
