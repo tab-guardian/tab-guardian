@@ -10,17 +10,11 @@ export const folderStorage = {
         }
 
         const folders = await this.getAll()
-        let existingFolder: Folder | null = null
+        const existing = folders.find(f => f.name === folder.name)
 
-        for (const fol of folders) {
-            if (fol.name === folder.name) {
-                existingFolder = fol
-            }
-        }
-
-        if (existingFolder) {
-            existingFolder.updatedAt = folder.updatedAt
-            existingFolder.groupIds = folder.groupIds
+        if (existing) {
+            existing.updatedAt = folder.updatedAt
+            existing.groupIds = folder.groupIds
         } else {
             folders.push(folder)
         }
