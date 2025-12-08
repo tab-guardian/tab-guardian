@@ -9,6 +9,7 @@ import { showToast } from '@common/modules/toast'
 import ChevronRightIcon from '@common/components/Icons/ChevronRightIcon.vue'
 import OpenTabsButton from '@/components/Views/MainView/Groups/OpenTabsButton.vue'
 import GroupIcon from '@/components/Views/MainView/Groups/GroupIcon.vue'
+import MainItem from '@/components/Views/MainView/Groups/MainItem.vue'
 
 const props = defineProps<{ group: Group }>()
 
@@ -16,13 +17,7 @@ const router = useRouter()
 const popupStore = usePopupStore()
 const groupStore = useGroupStore()
 
-const groupClasses = computed(() => {
-    const commonClasses = [
-        'p-2 flex justify-between items-center gap-3',
-        'transition-colors border-b border-border',
-        'cursor-pointer bg-page hover:bg-page-hover',
-    ]
-
+const className = computed(() => {
     const privateGroup = props.group.isPrivate ? 'bg-safe! hover:bg-safe-hover!' : ''
 
     const unsafeGroup =
@@ -30,7 +25,7 @@ const groupClasses = computed(() => {
             ? 'bg-unsafe! hover:bg-unsafe-hover!'
             : ''
 
-    return [privateGroup, unsafeGroup, ...commonClasses]
+    return [privateGroup, unsafeGroup]
 })
 
 async function navigateToGroupView(): Promise<void> {
@@ -68,9 +63,9 @@ async function unlockCallback(pass: string): Promise<boolean> {
 </script>
 
 <template>
-    <div @click="navigateToGroupView" :class="groupClasses">
+    <MainItem @click="navigateToGroupView" :class="className">
         <div class="flex items-center gap-2">
-            <GroupIcon :group />
+            <GroupIcon :group type="group" />
             <h2 class="text-sm">{{ group.name }}</h2>
         </div>
 
@@ -78,5 +73,5 @@ async function unlockCallback(pass: string): Promise<boolean> {
             <OpenTabsButton @click.stop :group />
             <ChevronRightIcon class="size-4" />
         </div>
-    </div>
+    </MainItem>
 </template>

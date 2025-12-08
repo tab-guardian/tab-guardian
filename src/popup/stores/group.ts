@@ -1,5 +1,5 @@
-import type { Group, Link } from '@common/types'
-import { ref } from 'vue'
+import type { Group, Link, Folder, HomeItem } from '@common/types'
+import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import { trans, logger } from '@common/modules'
 import { generateId } from '@common/modules/group'
@@ -13,6 +13,7 @@ import { getHashedCurrentUrl } from '@common/modules/url'
 import { validatePassword } from '@common/modules/validation/group'
 import { passwordStorage } from '@common/modules/storage/password'
 import { groupStorage } from '@common/modules/storage/group'
+import { folderStorage } from '@common/modules/storage/folder'
 
 let isIncognitoCache: boolean | null = null
 
@@ -23,6 +24,7 @@ export const useGroupStore = defineStore('group', () => {
     const progressStore = useProgressStore()
 
     const groups = ref<Group[]>([])
+    const folders = ref<Folder[]>([])
     const loadingGroups = ref<boolean>(false)
     const selectedGroup = ref<Group | null>(null)
 
@@ -53,6 +55,8 @@ export const useGroupStore = defineStore('group', () => {
         loadingGroups.value = true
 
         const storageGroups = await groupStorage.getAll()
+
+        folders.value = await folderStorage.getAll()
 
         groups.value = await hideGroups(storageGroups)
         groups.value.sort((a, b) => b.updatedAt - a.updatedAt)
@@ -350,6 +354,7 @@ export const useGroupStore = defineStore('group', () => {
         selectedGroup,
         loadingGroups,
         groups,
+        folders,
         get,
         save,
         lock,

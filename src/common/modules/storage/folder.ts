@@ -3,21 +3,24 @@ import { runtime } from '@common/modules/runtime'
 import { logger } from '@common/modules'
 
 export const folderStorage = {
-    async save(folder: Folder): Promise<void> {
-        if (folder.name === '') {
+    async save(name: string): Promise<void> {
+        if (name === '') {
             logger().warn('Folder cannot be saved with empty name')
             return
         }
 
         const folders = await this.getAll()
-        const existing = folders.find(f => f.name === folder.name)
+        const exists = folders.some(f => f.name === name)
 
-        if (existing) {
-            existing.updatedAt = folder.updatedAt
-            existing.groupIds = folder.groupIds
-        } else {
-            folders.push(folder)
+        if (exists) {
+            return
         }
+
+        folders.push({
+            name,
+            updatedAt: Date.now(),
+            groupIds: [],
+        })
 
         await runtime.storage.set<Folder[]>('folders', folders)
     },

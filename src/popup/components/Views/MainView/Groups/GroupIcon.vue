@@ -1,24 +1,46 @@
 <script setup lang="ts">
-import type { Group } from '@common/types'
+import type { Group, Folder } from '@common/types'
 import { computed } from 'vue'
 import { getIcons } from '@/modules/getIcons'
 import { isEmoji } from '@common/modules'
 import { config } from '@common/config'
 import ShieldCheckIcon from '@common/components/Icons/ShieldCheckIcon.vue'
 import ShieldExclamationIcon from '@common/components/Icons/ShieldExclamationIcon.vue'
+import FolderIcon from '@common/components/Icons/FolderIcon.vue'
 
-const props = defineProps<{ group: Group }>()
+type GroupProps = {
+    group: Group
+    type: 'group'
+}
 
-const showGroupIcon = computed<boolean>(() =>
-    config.GROUP_ICON_START.some(prefix => {
+type FolderProps = {
+    folder: Folder
+    type: 'folder'
+}
+
+const props = defineProps<GroupProps | FolderProps>()
+
+const showGroupIcon = computed<boolean>(() => {
+    if (props.type === 'folder') {
+        return false
+    }
+
+    return config.GROUP_ICON_START.some(prefix => {
         return props.group.icon && props.group.icon.startsWith(prefix)
-    }),
-)
+    })
+})
 </script>
 
 <template>
     <div class="size-6 flex items-center justify-center">
-        <div v-if="group.isPrivate">
+        <component
+            v-if="type === 'folder'"
+            :is="FolderIcon"
+            class="size-5"
+            style="color: #a08725"
+        />
+
+        <div v-else-if="group.isPrivate">
             <ShieldCheckIcon
                 v-if="group.isEncrypted"
                 class="size-6 text-success"

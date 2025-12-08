@@ -56,7 +56,7 @@ export type Group = {
     openedTimes?: number
     createdAt?: number
     hide?: boolean
-    /** @deprecated bindURL is deprecated Delete it eventually */
+    /** @deprecated bindURL is deprecated Delete it eventually. Use bindUrl */
     bindURL?: string
     bindUrl?: string
     icon?: string

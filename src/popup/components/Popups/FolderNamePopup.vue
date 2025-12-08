@@ -1,23 +1,30 @@
 <script setup lang="ts">
 import { logger, trans } from '@common/modules'
 import { usePopupStore } from '@/stores/popup'
+import { useGroupStore } from '@/stores/group'
 import { showToast } from '@common/modules/toast'
 import { ref } from 'vue'
+import { folderStorage } from '@common/modules/storage/folder'
 import Popup from '@/components/Popups/Popup.vue'
 import NameInput from '@common/components/Form/NameInput.vue'
 import FolderPlusIcon from '@common/components/Icons/FolderPlusIcon.vue'
 import Button from '@common/components/Form/Button.vue'
 
 const popupStore = usePopupStore()
+const groupStore = useGroupStore()
 
 const error = ref<boolean>(false)
 const name = ref<string>('')
 
-function submitName(): void {
+async function submitName(): Promise<void> {
     if (error.value) {
         logger().warn('Cannot submit because folder name has some errors')
         return
     }
+
+    folderStorage.save(name.value)
+
+    await groupStore.load()
 
     popupStore.hide('folderName', {})
 

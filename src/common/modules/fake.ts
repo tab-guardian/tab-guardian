@@ -1,4 +1,4 @@
-import type { Link, Group, Folder } from '@common/types'
+import type { Link, Group } from '@common/types'
 import { generateId } from '@common/modules/group'
 
 export function fakeLink(fields?: Partial<Link>): Link {
@@ -34,19 +34,6 @@ export function fakeGroup(fields?: Partial<Group>): Group {
         isPrivate: false,
         isEncrypted: false,
         updatedAt: Date.now(),
-        ...fields,
-    }
-}
-
-export function fakeFolder(fields?: Partial<Folder>): Folder {
-    fields ??= {}
-
-    const num = Math.floor(Math.random() * 1000000) + 1
-
-    return {
-        name: fields.name ?? `Folder ${num}`,
-        updatedAt: Date.now(),
-        groupIds: [],
         ...fields,
     }
 }

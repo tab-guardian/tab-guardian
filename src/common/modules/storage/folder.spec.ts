@@ -1,7 +1,6 @@
 // @vitest-environment happy-dom
 
 import { describe, it, expect, suite, beforeEach } from 'vitest'
-import { fakeFolder } from '@common/modules/fake'
 import { createPinia, setActivePinia } from 'pinia'
 import { folderStorage } from '@common/modules/storage/folder'
 
@@ -13,8 +12,7 @@ describe('folder storage module', () => {
 
     suite('save()', () => {
         it('saves folder into storage', async () => {
-            const folder = fakeFolder()
-            await folderStorage.save(folder)
+            await folderStorage.save('Anna Photos')
 
             const foldersStr = localStorage.getItem('folders')
 
@@ -23,16 +21,12 @@ describe('folder storage module', () => {
             const foldersParsed = JSON.parse(foldersStr!)
 
             expect(foldersParsed[0]).toBeDefined()
-            expect(foldersParsed[0].name).equal(folder.name)
-            expect(foldersParsed[0].updatedAt).equal(folder.updatedAt)
+            expect(foldersParsed[0].name).equal('Anna Photos')
         })
 
         it('appends folder into storage to other folders', async () => {
-            const folder1 = fakeFolder()
-            await folderStorage.save(folder1)
-
-            const folder2 = fakeFolder()
-            await folderStorage.save(folder2)
+            await folderStorage.save('Serhii')
+            await folderStorage.save('Anna')
 
             const foldersStr = localStorage.getItem('folders')
 
@@ -43,37 +37,22 @@ describe('folder storage module', () => {
             expect(foldersParsed).toHaveLength(2)
         })
 
-        it('saving existing folder will update fields', async () => {
-            const folder1 = fakeFolder({
-                name: 'Anna',
-                groupIds: [1, 2],
-            })
-
-            await folderStorage.save(folder1)
+        it('saving existing folder will be ignored', async () => {
+            await folderStorage.save('Test')
 
             let folders = await folderStorage.getAll()
 
             expect(folders).toHaveLength(1)
-            expect(folders[0].updatedAt).equal(folder1.updatedAt)
-            expect(folders[0].groupIds).toStrictEqual(folder1.groupIds)
 
-            const folder2 = fakeFolder({
-                name: 'Anna',
-                groupIds: [2, 3],
-            })
-
-            await folderStorage.save(folder2)
+            await folderStorage.save('Test')
 
             folders = await folderStorage.getAll()
 
             expect(folders).toHaveLength(1)
-            expect(folders[0].updatedAt).equal(folder2.updatedAt)
-            expect(folders[0].groupIds).toStrictEqual(folder2.groupIds)
         })
 
         it('saving folder with empty name will ignore it', async () => {
-            const folder = fakeFolder({ name: '' })
-            await folderStorage.save(folder)
+            await folderStorage.save('')
 
             const foldersStr = localStorage.getItem('folders')
             expect(foldersStr).toBeNull()
@@ -82,17 +61,14 @@ describe('folder storage module', () => {
 
     suite('getAll()', () => {
         it('loads all folders from storage', async () => {
-            const folder1 = fakeFolder()
-            const folder2 = fakeFolder()
-
-            await folderStorage.save(folder1)
-            await folderStorage.save(folder2)
+            await folderStorage.save('Anna')
+            await folderStorage.save('Serhii')
 
             const folders = await folderStorage.getAll()
 
             expect(folders).toHaveLength(2)
-            expect(folders[0].name).equal(folder1.name)
-            expect(folders[1].name).equal(folder2.name)
+            expect(folders[0].name).equal('Anna')
+            expect(folders[1].name).equal('Serhii')
         })
 
         it('returns empty array when there are not folders', async () => {

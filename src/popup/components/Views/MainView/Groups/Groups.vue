@@ -5,6 +5,7 @@ import { trans } from '@common/modules'
 import GroupItem from '@/components/Views/MainView/Groups/GroupItem.vue'
 import Message from '@common/components/Message.vue'
 import Spinner from '@common/components/Spinner.vue'
+import FolderItem from './FolderItem.vue'
 
 const groupStore = useGroupStore()
 
@@ -22,6 +23,12 @@ onMounted(async () => {
     </Message>
 
     <div v-else class="flex flex-col">
+        <FolderItem
+            v-for="folder in groupStore.folders"
+            :key="folder.name"
+            :folder
+        />
+
         <div v-for="group in groupStore.groups" :key="group.id">
             <GroupItem v-if="!group.hide" :group />
         </div>
