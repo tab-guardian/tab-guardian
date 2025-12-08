@@ -41,6 +41,7 @@ export type Link = {
 export type EncryptionAlgo = 'AES-GCM'
 
 export type Folder = {
+    id: number
     name: string
     updatedAt: number
     groupIds: number[]

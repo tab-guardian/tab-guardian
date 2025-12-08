@@ -65,7 +65,7 @@ async function unlockCallback(pass: string): Promise<boolean> {
 <template>
     <MainItem @click="navigateToGroupView" :class="className">
         <div class="flex items-center gap-2">
-            <GroupIcon :group type="group" />
+            <GroupIcon :group />
             <h2 class="text-sm">{{ group.name }}</h2>
         </div>
 

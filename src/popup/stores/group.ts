@@ -1,5 +1,5 @@
-import type { Group, Link, Folder, HomeItem } from '@common/types'
-import { ref, computed } from 'vue'
+import type { Group, Link, Folder } from '@common/types'
+import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import { trans, logger } from '@common/modules'
 import { generateId } from '@common/modules/group'

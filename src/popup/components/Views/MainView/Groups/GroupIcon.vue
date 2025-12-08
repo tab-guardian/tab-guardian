@@ -8,24 +8,23 @@ import ShieldCheckIcon from '@common/components/Icons/ShieldCheckIcon.vue'
 import ShieldExclamationIcon from '@common/components/Icons/ShieldExclamationIcon.vue'
 import FolderIcon from '@common/components/Icons/FolderIcon.vue'
 
-type GroupProps = {
-    group: Group
-    type: 'group'
+type Props = {
+    folder?: Folder
+    group?: Group
 }
 
-type FolderProps = {
-    folder: Folder
-    type: 'folder'
-}
-
-const props = defineProps<GroupProps | FolderProps>()
+const props = defineProps<Props>()
 
 const showGroupIcon = computed<boolean>(() => {
-    if (props.type === 'folder') {
+    if (props.folder) {
         return false
     }
 
     return config.GROUP_ICON_START.some(prefix => {
+        if (!props.group) {
+            return false
+        }
+
         return props.group.icon && props.group.icon.startsWith(prefix)
     })
 })
@@ -34,7 +33,7 @@ const showGroupIcon = computed<boolean>(() => {
 <template>
     <div class="size-6 flex items-center justify-center">
         <component
-            v-if="type === 'folder'"
+            v-if="!group"
             :is="FolderIcon"
             class="size-5"
             style="color: #a08725"

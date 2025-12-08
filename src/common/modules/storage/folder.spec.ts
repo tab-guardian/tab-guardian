@@ -76,4 +76,24 @@ describe('folder storage module', () => {
             expect(folders).toHaveLength(0)
         })
     })
+
+    suite('get()', () => {
+        it('returns requested folder found in storage', async () => {
+            await folderStorage.save('Anna')
+            await folderStorage.save('Serhii')
+
+            const folders = await folderStorage.getAll()
+
+            const folder1 = await folderStorage.get(folders[0].id)
+            const folder2 = await folderStorage.get(folders[1].id)
+
+            expect(folder1?.name).equal('Anna')
+            expect(folder2?.name).equal('Serhii')
+        })
+
+        it('returns null when not found in storage', async () => {
+            const folder = await folderStorage.get(1)
+            expect(folder).toBeNull()
+        })
+    })
 })

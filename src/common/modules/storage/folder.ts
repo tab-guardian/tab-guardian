@@ -1,6 +1,7 @@
 import type { Folder } from '@common/types'
 import { runtime } from '@common/modules/runtime'
 import { logger } from '@common/modules'
+import { generateId } from '@common/modules/group'
 
 export const folderStorage = {
     async save(name: string): Promise<void> {
@@ -17,6 +18,7 @@ export const folderStorage = {
         }
 
         folders.push({
+            id: generateId(),
             name,
             updatedAt: Date.now(),
             groupIds: [],
@@ -28,5 +30,10 @@ export const folderStorage = {
     async getAll(): Promise<Folder[]> {
         const items = await runtime.storage.get<Folder[]>('folders')
         return items[0] || []
+    },
+
+    async get(id: number): Promise<Folder | null> {
+        const folders = await this.getAll()
+        return folders.find(f => f.id === id) || null
     },
 }
