@@ -3,7 +3,7 @@ import type { Folder } from '@common/types'
 import { useRouter } from 'vue-router'
 import ChevronRightIcon from '@common/components/Icons/ChevronRightIcon.vue'
 import GroupIcon from '@/components/Views/MainView/ListItems/GroupIcon.vue'
-import MainItem from '@components/Views/MainView/ListItems/MainItem.vue'
+import MainItem from '@/components/Views/MainView/ListItems/MainItem.vue'
 
 const props = defineProps<{ folder: Folder }>()
 const router = useRouter()
