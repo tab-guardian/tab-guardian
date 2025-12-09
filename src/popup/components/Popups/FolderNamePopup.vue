@@ -46,11 +46,7 @@ async function submitName(): Promise<void> {
             />
 
             <div class="flex justify-end">
-                <Button
-                    type="submit"
-                    :disabled="error"
-                    :icon="FolderPlusIcon"
-                >
+                <Button type="submit" :disabled="error" :icon="FolderPlusIcon">
                     {{ trans('create') }}
                 </Button>
             </div>

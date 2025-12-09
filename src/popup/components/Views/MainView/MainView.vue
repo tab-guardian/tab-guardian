@@ -2,7 +2,7 @@
 import { onMounted } from 'vue'
 import { useGroupStore } from '@/stores/group'
 import { useFolderStore } from '@/stores/folder'
-import Groups from '@/components/Views/MainView/Groups/Groups.vue'
+import ListItems from '@/components/Views/MainView/ListItems/ListItems.vue'
 import Buttons from '@/components/Views/MainView/NewGroup/Buttons.vue'
 import GroupSearch from '@/components/Views/MainView/NewGroup/GroupSearch.vue'
 
@@ -23,6 +23,6 @@ onMounted(async () => {
             <GroupSearch />
         </div>
 
-        <Groups :groups="groupStore.groups" :folders="folderStore.folders" />
+        <ListItems :groups="groupStore.groups" :folders="folderStore.folders" />
     </div>
 </template>

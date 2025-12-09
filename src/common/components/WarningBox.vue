@@ -22,10 +22,7 @@ const boxClassName = computed<string>(() => {
         class="flex items-center justify-between mb-4 mt-1 p-3 rounded-lg gap-3"
         :class="boxClassName"
     >
-        <ShieldCheckIcon
-            v-if="success"
-            class="text-green-400 size-7 shrink-0"
-        />
+        <ShieldCheckIcon v-if="success" class="text-green-400 size-7 shrink-0" />
 
         <ShieldExclamationIcon v-else class="text-red-400 size-7 shrink-0" />
 

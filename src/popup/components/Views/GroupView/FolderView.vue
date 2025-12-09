@@ -10,8 +10,8 @@ import View from '@/components/Views/View.vue'
 import EllipsisVerticalIcon from '@common/components/Icons/EllipsisVerticalIcon.vue'
 import Control from '@/components/Control.vue'
 import Message from '@common/components/Message.vue'
-import GroupIcon from '@/components/Views/MainView/Groups/GroupIcon.vue'
-import Groups from '@/components/Views/MainView/Groups/Groups.vue'
+import GroupIcon from '@/components/Views/MainView/ListItems/GroupIcon.vue'
+import ListItems from '@/components/Views/MainView/ListItems/ListItems.vue'
 
 const route = useRoute()
 const popupStore = usePopupStore()
@@ -29,7 +29,7 @@ async function fetchFolder(): Promise<void> {
     }
 
     folder.value = await folderStorage.get(Number(id))
-    groups.value =await groupStorage.retrieveFolder(Number(id))
+    groups.value = await groupStorage.retrieveFolder(Number(id))
 }
 </script>
 
@@ -47,7 +47,7 @@ async function fetchFolder(): Promise<void> {
                 <h2 class="text-lg mt-0.5">{{ folder.name }}</h2>
             </div>
 
-            <Groups :groups />
+            <ListItems :groups />
         </div>
 
         <Message v-else>😢 {{ trans('error_no_group_selected') }}</Message>

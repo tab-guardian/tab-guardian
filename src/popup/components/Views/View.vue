@@ -22,7 +22,6 @@ const router = useRouter()
 
         <h2 v-if="title" class="flex items-center gap-2 text-lg">
             <BackButton @click="router.go(-1)" />
-
             {{ title }}
         </h2>
 

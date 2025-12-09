@@ -13,7 +13,7 @@ import Control from '@/components/Control.vue'
 import IsLockedBox from '@/components/Views/GroupView/IsLockedBox.vue'
 import IsUnlockedBox from '@/components/Views/GroupView/IsUnlockedBox.vue'
 import Message from '@common/components/Message.vue'
-import GroupIcon from '@/components/Views/MainView/Groups/GroupIcon.vue'
+import GroupIcon from '@/components/Views/MainView/ListItems/GroupIcon.vue'
 
 const route = useRoute()
 const groupStore = useGroupStore()

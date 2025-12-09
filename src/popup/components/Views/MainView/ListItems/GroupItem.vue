@@ -7,9 +7,9 @@ import { usePopupStore } from '@/stores/popup'
 import { useGroupStore } from '@/stores/group'
 import { showToast } from '@common/modules/toast'
 import ChevronRightIcon from '@common/components/Icons/ChevronRightIcon.vue'
-import OpenTabsButton from '@/components/Views/MainView/Groups/OpenTabsButton.vue'
-import GroupIcon from '@/components/Views/MainView/Groups/GroupIcon.vue'
-import MainItem from '@/components/Views/MainView/Groups/MainItem.vue'
+import OpenTabsButton from '@/components/Views/MainView/ListItems/OpenTabsButton.vue'
+import GroupIcon from '@/components/Views/MainView/ListItems/GroupIcon.vue'
+import MainItem from '@/components/Views/MainView/ListItems/MainItem.vue'
 
 const props = defineProps<{ group: Group }>()
 
