@@ -21,7 +21,6 @@ export const folderStorage = {
             id: generateId(),
             name,
             updatedAt: Date.now(),
-            groupIds: [],
         })
 
         await runtime.storage.set<Folder[]>('folders', folders)

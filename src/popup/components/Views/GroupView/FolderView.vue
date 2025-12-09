@@ -1,18 +1,22 @@
 <script setup lang="ts">
-import type { Folder } from '@common/types'
+import { Group, type Folder } from '@common/types'
 import { ref, onMounted } from 'vue'
 import { trans } from '@common/modules'
 import { useRoute } from 'vue-router'
 import { usePopupStore } from '@/stores/popup'
 import { folderStorage } from '@common/modules/storage/folder'
+import { groupStorage } from '@common/modules/storage/group'
 import View from '@/components/Views/View.vue'
 import EllipsisVerticalIcon from '@common/components/Icons/EllipsisVerticalIcon.vue'
 import Control from '@/components/Control.vue'
 import Message from '@common/components/Message.vue'
 import GroupIcon from '@/components/Views/MainView/Groups/GroupIcon.vue'
+import Groups from '@/components/Views/MainView/Groups/Groups.vue'
 
 const route = useRoute()
 const popupStore = usePopupStore()
+const groups = ref<Group[]>([])
+
 const folder = ref<Folder | null>(null)
 
 onMounted(() => fetchFolder())
@@ -25,11 +29,12 @@ async function fetchFolder(): Promise<void> {
     }
 
     folder.value = await folderStorage.get(Number(id))
+    groups.value =await groupStorage.retrieveFolder(Number(id))
 }
 </script>
 
 <template>
-    <View :routeLocation="{ name: 'main' }">
+    <View>
         <template #controls>
             <Control @click="popupStore.show('groupMenuView', {})">
                 <EllipsisVerticalIcon style="width: 100%" />
@@ -42,7 +47,7 @@ async function fetchFolder(): Promise<void> {
                 <h2 class="text-lg mt-0.5">{{ folder.name }}</h2>
             </div>
 
-            <!-- <Links v-if="!folder.isEncrypted" :folder /> -->
+            <Groups :groups />
         </div>
 
         <Message v-else>😢 {{ trans('error_no_group_selected') }}</Message>

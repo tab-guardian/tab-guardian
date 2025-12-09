@@ -1,4 +1,4 @@
-import type { Group, Link, Folder } from '@common/types'
+import type { Group, Link } from '@common/types'
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import { trans, logger } from '@common/modules'
@@ -13,7 +13,7 @@ import { getHashedCurrentUrl } from '@common/modules/url'
 import { validatePassword } from '@common/modules/validation/group'
 import { passwordStorage } from '@common/modules/storage/password'
 import { groupStorage } from '@common/modules/storage/group'
-import { folderStorage } from '@common/modules/storage/folder'
+import { cloneDeep } from 'lodash'
 
 let isIncognitoCache: boolean | null = null
 
@@ -23,16 +23,16 @@ export const useGroupStore = defineStore('group', () => {
     const notificationStore = useNotificationStore()
     const progressStore = useProgressStore()
 
+    const initialGroups = ref<readonly Readonly<Group>[]>([])
     const groups = ref<Group[]>([])
-    const folders = ref<Folder[]>([])
-    const loadingGroups = ref<boolean>(false)
+    const loading = ref<boolean>(false)
     const selectedGroup = ref<Group | null>(null)
 
     /**
      * @param {string|number} id Group ID or name
      */
     function get(id: number | string): Group | null {
-        const group = groups.value.find(group => {
+        const group = initialGroups.value.find(group => {
             if (typeof id === 'string') {
                 return group.name === id
             }
@@ -44,7 +44,7 @@ export const useGroupStore = defineStore('group', () => {
             return null
         }
 
-        return group
+        return cloneDeep(group)
     }
 
     function exist(id: number): boolean {
@@ -52,16 +52,16 @@ export const useGroupStore = defineStore('group', () => {
     }
 
     async function load(): Promise<void> {
-        loadingGroups.value = true
+        loading.value = true
 
         const storageGroups = await groupStorage.getAll()
 
-        folders.value = await folderStorage.getAll()
+        initialGroups.value = cloneDeep(storageGroups)
 
         groups.value = await hideGroups(storageGroups)
         groups.value.sort((a, b) => b.updatedAt - a.updatedAt)
 
-        loadingGroups.value = false
+        loading.value = false
     }
 
     type LockFuncReturnValue =
@@ -306,6 +306,10 @@ export const useGroupStore = defineStore('group', () => {
         const result: Group[] = []
 
         for (const group of storageGroups) {
+            if (group.folderId) {
+                continue
+            }
+
             const hide = await shouldHideGroup(group)
 
             if (hide) {
@@ -352,9 +356,8 @@ export const useGroupStore = defineStore('group', () => {
 
     return {
         selectedGroup,
-        loadingGroups,
+        loading,
         groups,
-        folders,
         get,
         save,
         lock,

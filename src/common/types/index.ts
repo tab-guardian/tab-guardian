@@ -44,11 +44,11 @@ export type Folder = {
     id: number
     name: string
     updatedAt: number
-    groupIds: number[]
 }
 
 export type Group = {
     id: number
+    folderId?: number
     name: string
     links: Link[]
     isPrivate: boolean

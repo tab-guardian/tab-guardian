@@ -155,4 +155,36 @@ describe('group storage module', () => {
             expect(counted).equal(1)
         })
     })
+
+    suite('retrieveFolder()', () => {
+        it('loads all groups from a folder', async () => {
+            const group1 = fakeGroup({ folderId: 2 })
+            const group2 = fakeGroup({ folderId: 2 })
+            const group3 = fakeGroup()
+
+            await groupStorage.save(group1)
+            await groupStorage.save(group2)
+            await groupStorage.save(group3)
+
+            const groups = await groupStorage.retrieveFolder(2)
+
+            expect(groups).toHaveLength(2)
+            expect(groups[0].id).equal(group1.id)
+            expect(groups[1].id).equal(group2.id)
+        })
+
+        it('returns empty array when no groups for given folder', async () => {
+            const group1 = fakeGroup({ folderId: 1 })
+            const group2 = fakeGroup({ folderId: 2 })
+            const group3 = fakeGroup()
+
+            await groupStorage.save(group1)
+            await groupStorage.save(group2)
+            await groupStorage.save(group3)
+
+            const groups = await groupStorage.retrieveFolder(3)
+
+            expect(groups).toHaveLength(0)
+        })
+    })
 })
