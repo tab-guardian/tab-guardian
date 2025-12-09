@@ -18,7 +18,7 @@ onMounted(async () => {
 
 <template>
     <div>
-        <div class="text-center p-2 border-b border-border">
+        <div class="text-center p-2">
             <Buttons />
             <GroupSearch />
         </div>
