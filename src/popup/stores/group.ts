@@ -48,7 +48,7 @@ export const useGroupStore = defineStore('group', () => {
     }
 
     function exist(id: number): boolean {
-        return groups.value.some(g => g.id === id)
+        return initialGroups.value.some(g => g.id === id)
     }
 
     async function load(): Promise<void> {
@@ -211,12 +211,14 @@ export const useGroupStore = defineStore('group', () => {
 
     async function deleteGroup(id: number): Promise<void> {
         groups.value = groups.value.filter(g => g.id !== id)
+        initialGroups.value = initialGroups.value.filter(g => g.id !== id)
         await groupStorage.delete(id)
         await notificationStore.recalculateNotification()
     }
 
     async function deleteAll(): Promise<void> {
         groups.value = []
+        initialGroups.value = []
         await groupStorage.deleteAll()
         await notificationStore.recalculateNotification()
     }

@@ -73,11 +73,13 @@ describe('group store', () => {
     })
 
     suite('get()', () => {
-        it('returns group with the right group ID', () => {
+        it('returns group with the right group ID', async () => {
             const groupStore = useGroupStore()
 
             const group = fakeGroup()
-            groupStore.groups.push(group)
+            await groupStore.save(group)
+
+            await groupStore.load()
 
             const result = groupStore.get(group.id)
 
@@ -85,11 +87,11 @@ describe('group store', () => {
             expect(group.id).equal(result!.id)
         })
 
-        it('returns group with the right group name', () => {
+        it('returns group with the right group name', async () => {
             const groupStore = useGroupStore()
 
             const group = fakeGroup()
-            groupStore.groups.push(group)
+            await groupStore.save(group)
 
             const result = groupStore.get(group.name)
 
@@ -97,21 +99,21 @@ describe('group store', () => {
             expect(group.name).equal(result!.name)
         })
 
-        it('returns null with non-existent group ID', () => {
+        it('returns null with non-existent group ID', async () => {
             const groupStore = useGroupStore()
 
             const group = fakeGroup()
-            groupStore.groups.push(group)
+            await groupStore.save(group)
 
             const result = groupStore.get(0)
 
             expect(result).toBeNull()
         })
 
-        it('returns null with non-existent group name', () => {
+        it('returns null with non-existent group name', async () => {
             const groupStore = useGroupStore()
             const group = fakeGroup()
-            groupStore.groups.push(group)
+            await groupStore.save(group)
 
             const result = groupStore.get('some')
 
