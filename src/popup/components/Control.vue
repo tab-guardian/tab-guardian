@@ -10,7 +10,7 @@ const { to } = defineProps<Props>()
 const className = [
     'size-7 flex items-center justify-center border border-transparent',
     'rounded-md color-font p-0.5 transition-all opacity-90',
-    'hover:opacity-100 hover:border-border relative',
+    'hover:opacity-100 hover:border-border relative cursor-pointer',
 ]
 </script>
 
