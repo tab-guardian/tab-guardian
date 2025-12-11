@@ -179,6 +179,10 @@ export const useGroupStore = defineStore('group', () => {
 
         Object.assign(group, updates)
 
+        if (updates.folderId === undefined) {
+            delete group.folderId
+        }
+
         await save(group)
 
         return true

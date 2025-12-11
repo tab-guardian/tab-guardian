@@ -26,7 +26,7 @@ async function submitName(): Promise<void> {
 
     await groupStore.load()
 
-    popupStore.hide('folderName', {})
+    popupStore.hide('folderName', { name: name.value })
 
     showToast({ text: trans('folder_created') })
 }

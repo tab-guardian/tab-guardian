@@ -1,10 +1,10 @@
 import { Link } from '@common/types'
 
-type PopupItem<O = any, C = any> = {
+type PopupItem<SHOW = any, HIDE = any> = {
     shown: boolean
-    dataOnShow: O | null
-    dataOnHide: C | null
-    onClose: ((data: C) => void) | null
+    dataOnShow: SHOW | null
+    dataOnHide: HIDE | null
+    onClose: ((data: HIDE) => void) | null
 }
 
 type PasswordData = {
@@ -24,5 +24,5 @@ export type Popups = {
     password: PopupItem<PasswordData>
     linkMenuView: PopupItem<{ link: Link }>
     editGroupName: PopupItem
-    folderName: PopupItem
+    folderName: PopupItem<{}, { name?: string }>
 }

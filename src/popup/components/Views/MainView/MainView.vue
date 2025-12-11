@@ -19,7 +19,7 @@ onMounted(async () => {
 <template>
     <div>
         <div class="text-center p-2">
-            <Buttons />
+            <Buttons @refresh-folders="folderStore.load" />
             <GroupSearch />
         </div>
 

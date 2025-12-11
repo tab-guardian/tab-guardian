@@ -16,7 +16,6 @@ const router = useRouter()
     <div class="absolute inset-0 bg-page p-2">
         <div v-if="!title" class="flex justify-between gap-1">
             <BackButton @click="router.go(-1)" />
-
             <slot name="controls" />
         </div>
 

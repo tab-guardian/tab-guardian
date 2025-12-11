@@ -10,12 +10,22 @@ import NewGroupButton from '@/components/Views/MainView/NewGroup/NewGroupButton.
 
 onMounted(() => newGroupStore.resetChoices())
 
+const emit = defineEmits<{ (e: 'refresh-folders'): void }>()
+
 const popupStore = usePopupStore()
 const newGroupStore = useNewGroupStore()
 
 async function askForGroupName(isPrivate: boolean) {
     newGroupStore.choices.isPrivate = isPrivate
     await popupStore.show('groupName', {})
+}
+
+async function showFolderPopup(): Promise<void> {
+    const res = await popupStore.show('folderName', {})
+
+    if (res && res.name) {
+        emit('refresh-folders')
+    }
 }
 </script>
 
@@ -38,7 +48,7 @@ async function askForGroupName(isPrivate: boolean) {
         </NewGroupButton>
 
         <button
-            @click="popupStore.show('folderName', {})"
+            @click="showFolderPopup"
             class="w-14 flex justify-center hover:scale-105 transition-transform"
             v-tippy="trans('create_new_folder')"
         >

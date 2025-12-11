@@ -48,7 +48,7 @@ export const usePopupStore = defineStore('popup', () => {
 
     function hide<K extends keyof Popups>(
         key: K,
-        onCloseData: Popups[K]['dataOnHide'],
+        onHideData: Popups[K]['dataOnHide'],
     ): void {
         popups.value[key].shown = false
         popups.value[key].dataOnShow = null
@@ -56,8 +56,8 @@ export const usePopupStore = defineStore('popup', () => {
 
         const onClose = popups.value[key].onClose
 
-        if (onCloseData && onClose) {
-            onClose(onCloseData)
+        if (onHideData && onClose) {
+            onClose(onHideData)
         }
     }
 
