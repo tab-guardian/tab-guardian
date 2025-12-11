@@ -63,7 +63,11 @@ function showDropZone(e: any): void {
 async function moveFromFolder(e: any): Promise<void> {
     const dropZone = e.originalTarget as HTMLElement | null
 
-    if (!dropZone || !dropZone.hasAttribute('data-dropzone') || !draggableGroup.value) {
+    if (
+        !dropZone ||
+        !dropZone.hasAttribute('data-dropzone') ||
+        !draggableGroup.value
+    ) {
         return
     }
 
@@ -91,11 +95,15 @@ async function moveFromFolder(e: any): Promise<void> {
             data-dropzone
             :class="[
                 'border-3 border-border border-dashed rounded-md h-14 leading-4',
-                'mt-3 mb-1 flex items-center justify-center gap-2 p-2'
+                'mt-3 mb-1 flex items-center justify-center gap-2 p-2',
             ]"
         >
-            <ArrowRightIcon class="size-5 rotate-180 opacity-50 pointer-events-none" />
-            <span class="opacity-50 pointer-events-none">{{ trans('drop_to_remove') }}</span>
+            <ArrowRightIcon
+                class="size-5 rotate-180 opacity-50 pointer-events-none"
+            />
+            <span class="opacity-50 pointer-events-none">{{
+                trans('drop_to_remove')
+            }}</span>
         </div>
 
         <VueDraggableNext

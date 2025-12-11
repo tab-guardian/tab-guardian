@@ -49,7 +49,7 @@ function submit(): void {
 }
 
 function hideEmojiPopup(): void {
-    popupStore.hide('chooseEmoji', { emo: null })
+    popupStore.hide('chooseEmoji', {})
 }
 </script>
 

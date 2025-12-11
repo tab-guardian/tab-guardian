@@ -44,7 +44,7 @@ async function chooseImageIcon(): Promise<void> {
 }
 
 function hideImageIconPopup(): void {
-    popupStore.hide('chooseImageIcon', { url: null })
+    popupStore.hide('chooseImageIcon', {})
 }
 </script>
 

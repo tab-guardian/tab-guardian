@@ -23,7 +23,7 @@ function updatePassword(): void {
 }
 
 function hidePasswordPopup(): void {
-    popupStore.hide('newPassword', { newPass: null })
+    popupStore.hide('newPassword', {})
 }
 </script>
 

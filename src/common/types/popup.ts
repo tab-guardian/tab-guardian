@@ -18,9 +18,9 @@ export type Popups = {
     groupName: PopupItem
     removeUrlLock: PopupItem
     bindGroup: PopupItem
-    chooseEmoji: PopupItem<{}, { emo: string | null }>
-    chooseImageIcon: PopupItem<{}, { url: string | null }>
-    newPassword: PopupItem<{}, { newPass: string | null }>
+    chooseEmoji: PopupItem<{}, { emo?: string }>
+    chooseImageIcon: PopupItem<{}, { url?: string }>
+    newPassword: PopupItem<{}, { newPass?: string }>
     password: PopupItem<PasswordData>
     linkMenuView: PopupItem<{ link: Link }>
     editGroupName: PopupItem
