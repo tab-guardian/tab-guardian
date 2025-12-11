@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Group } from '@common/types'
-import { computed, watch } from 'vue'
+import { computed, watchEffect } from 'vue'
 import { trans } from '@common/modules'
 import { useGroupStore } from '@/stores/group'
 import { useRoute } from 'vue-router'
@@ -33,7 +33,7 @@ const showButtons = computed<boolean>(() => {
     return group.value !== null && !group.value.isEncrypted
 })
 
-watch(group, () => {
+watchEffect(() => {
     groupStore.selectedGroup = group.value
 })
 </script>
