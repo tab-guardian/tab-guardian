@@ -2,7 +2,7 @@
 import type { EmojiClickEventDetail } from 'emoji-picker-element/shared.js'
 import { ref, computed, onMounted } from 'vue'
 import { useGroupStore } from '@/stores/group'
-import { trans, isEmoji, logger } from '@common/modules'
+import { trans, logger } from '@common/modules'
 import { usePopupStore } from '@/stores/popup'
 import 'emoji-picker-element'
 import Popup from '@/components/Popups/Popup.vue'
@@ -12,7 +12,6 @@ import CheckIcon from '@common/components/Icons/CheckIcon.vue'
 const popupStore = usePopupStore()
 const groupStore = useGroupStore()
 const emoji = ref<string>('')
-const preventSubmit = computed<boolean>(() => !isEmoji(emoji.value))
 
 onMounted(setInitialEmoji)
 
@@ -23,7 +22,7 @@ function setInitialEmoji(): void {
         return
     }
 
-    if (isEmoji(group.icon)) {
+    if (!group.icon) {
         emoji.value = group.icon
     }
 }
@@ -37,7 +36,7 @@ async function chooseEmoji(e: CustomEvent): Promise<void> {
 }
 
 function submit(): void {
-    if (preventSubmit.value) {
+    if (!emoji.value) {
         return
     }
 
@@ -69,7 +68,7 @@ function hideEmojiPopup(): void {
                 {{ trans('cancel') }}
             </Button>
 
-            <Button @click="submit" :disabled="preventSubmit">
+            <Button @click="submit" :disabled="!emoji">
                 <CheckIcon width="20" height="20" />
                 {{ trans('select') }}
             </Button>

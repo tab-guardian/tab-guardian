@@ -14,6 +14,10 @@ export function generateId(): number {
     return Math.floor(Math.random() * 1000000)
 }
 
+export function isComponentIcon(str: string): boolean {
+    return str.slice(-4) === 'Icon'
+}
+
 function addZeroWhenNeeded(value: number): string {
     return value < 10 ? `0${value}` : `${value}`
 }

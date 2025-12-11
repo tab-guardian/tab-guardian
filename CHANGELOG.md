@@ -1,7 +1,7 @@
 # Release Notes
 
-## v1.17.0 (2025-12-05)
-- 
+## v1.17.0 (2025-12-11)
+- 🐛 Fixed not excepting some emojies when trying to select it for a group icon [#98](https://github.com/tab-guardian/tab-guardian/issues/98)
 
 ## v1.16.6 (2025-11-17)
 - 🐛 Fixed bug with password cache issue where password would not delete itself from storage after locking the group back [#96](https://github.com/tab-guardian/tab-guardian/issues/96)

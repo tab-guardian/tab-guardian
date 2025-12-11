@@ -2,7 +2,7 @@
 import type { Group, Folder } from '@common/types'
 import { computed } from 'vue'
 import { getIcons } from '@/modules/getIcons'
-import { isEmoji } from '@common/modules'
+import { isComponentIcon } from '@common/modules/group'
 import { config } from '@common/config'
 import ShieldCheckIcon from '@common/components/Icons/ShieldCheckIcon.vue'
 import ShieldExclamationIcon from '@common/components/Icons/ShieldExclamationIcon.vue'
@@ -51,15 +51,15 @@ const showGroupIcon = computed<boolean>(() => {
 
         <img v-else-if="showGroupIcon" :src="group.icon" class="size-5" />
 
-        <span v-else-if="group.icon && isEmoji(group.icon)" class="text-lg mt-1">
-            {{ group.icon }}
-        </span>
-
         <component
-            v-else-if="group.icon"
+            v-else-if="group.icon && isComponentIcon(group.icon)"
             :is="getIcons(group.icon)"
             class="size-5"
         />
+
+        <span v-else-if="group.icon" class="text-lg mt-1">
+            {{ group.icon }}
+        </span>
 
         <div
             v-else

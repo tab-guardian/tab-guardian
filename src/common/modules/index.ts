@@ -21,19 +21,6 @@ export function formatNumber(num: number): string {
     return num.toLocaleString(undefined, { maximumFractionDigits: 0 })
 }
 
-export function isEmoji(emoji: string): boolean {
-    // Workaround for emojiRegex() treating some emojis as false
-    if (['👎️', '👍️'].includes(emoji)) {
-        return true
-    }
-
-    const regex = emojiRegex()
-    const matches = [...emoji.matchAll(regex)]
-
-    // Ensure exactly one match, and no other characters
-    return matches.length === 1 && matches[0][0] === emoji.trim()
-}
-
 export function downloadFile(text: string, name: string): void {
     const blob = new Blob([text], { type: 'text/plain' })
     const url = URL.createObjectURL(blob)
