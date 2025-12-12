@@ -49,7 +49,7 @@ async function showFolderPopup(): Promise<void> {
 
         <button
             @click="showFolderPopup"
-            class="w-14 flex justify-center hover:scale-105 transition-transform"
+            class="w-14 flex justify-center hover:scale-105 transition-transform cursor-pointer"
             v-tippy="trans('create_new_folder')"
         >
             <FolderPlusIcon class="size-6 text-font" />
