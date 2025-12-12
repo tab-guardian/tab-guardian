@@ -22,7 +22,7 @@ export type Popups = {
     chooseImageIcon: PopupItem<{}, { url?: string }>
     newPassword: PopupItem<{}, { newPass?: string }>
     password: PopupItem<PasswordData>
-    linkMenuView: PopupItem<{ link: Link }>
+    linkMenu: PopupItem<{ link: Link }>
     editGroupName: PopupItem
     folderName: PopupItem<{}, { name?: string }>
 }

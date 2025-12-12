@@ -52,7 +52,7 @@ function handleDarkTheme(): void {
             { comp: BindGroupPopup, name: 'bindGroup' },
             { comp: ChooseEmojiPopup, name: 'chooseEmoji' },
             { comp: ChooseImageIconPopup, name: 'chooseImageIcon' },
-            { comp: LinkMenuPopup, name: 'linkMenuView' },
+            { comp: LinkMenuPopup, name: 'linkMenu' },
             { comp: EditGroupNamePopup, name: 'editGroupName' },
             { comp: ConfirmPopup, name: 'confirm' },
             { comp: FolderNamePopup, name: 'folderName' },

@@ -16,7 +16,7 @@ const defaultPopups: Popups = {
     groupName: structuredClone(defaultEmptyPopup),
     bindGroup: structuredClone(defaultEmptyPopup),
     password: structuredClone(defaultEmptyPopup),
-    linkMenuView: structuredClone(defaultEmptyPopup),
+    linkMenu: structuredClone(defaultEmptyPopup),
     editGroupName: structuredClone(defaultEmptyPopup),
     newPassword: structuredClone(defaultEmptyPopup),
     chooseEmoji: structuredClone(defaultEmptyPopup),

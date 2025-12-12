@@ -30,7 +30,7 @@ async function openTab(): Promise<void> {
 }
 
 async function showTabLinkPopup(): Promise<void> {
-    await popupStore.show('linkMenuView', { link: props.link })
+    await popupStore.show('linkMenu', { link: props.link })
 }
 </script>
 

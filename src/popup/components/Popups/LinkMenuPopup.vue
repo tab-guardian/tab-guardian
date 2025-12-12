@@ -21,7 +21,7 @@ const groupStore = useGroupStore()
 const group = computed<Group | null>(() => groupStore.selectedGroup)
 
 const sharedData = computed(() => {
-    const data = popupStore.getSharedData('linkMenuView')
+    const data = popupStore.getSharedData('linkMenu')
 
     if (!data) {
         showToast({ text: trans('error_occurred'), type: 'error' })
@@ -73,7 +73,7 @@ async function togglePin(): Promise<void> {
     <Popup
         v-if="group && sharedData"
         :content="limitString(sharedData.link.title, 25)"
-        @cancel="popupStore.hide('linkMenuView', {})"
+        @cancel="popupStore.hide('linkMenu', {})"
     >
         <div class="flex flex-col gap-1 mt-3">
             <MenuItem :label="trans('cut')" :icon="ScissorsIcon" @click="cutLink" />
@@ -94,6 +94,6 @@ async function togglePin(): Promise<void> {
     <Popup
         v-else
         :content="trans('error_no_tab_selected')"
-        @cancel="popupStore.hide('linkMenuView', {})"
+        @cancel="popupStore.hide('linkMenu', {})"
     />
 </template>
