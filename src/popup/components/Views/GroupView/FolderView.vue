@@ -40,11 +40,11 @@ async function fetchFolder(): Promise<void> {
 
 <template>
     <View>
-        <!-- <template #controls> -->
-        <!--     <Control @click="popupStore.show('groupMenuView', {})"> -->
-        <!--         <EllipsisVerticalIcon style="width: 100%" /> -->
-        <!--     </Control> -->
-        <!-- </template> -->
+        <template #controls>
+            <Control @click="popupStore.show('groupMenu', {})">
+                <EllipsisVerticalIcon style="width: 100%" />
+            </Control>
+        </template>
 
         <div v-if="folder">
             <div class="flex items-center gap-2 relative my-2 px-2">

@@ -43,7 +43,7 @@ watchEffect(() => {
         <template #controls>
             <Actions v-if="group && showButtons" :group />
 
-            <Control @click="popupStore.show('groupMenuView', {})">
+            <Control @click="popupStore.show('groupMenu', {})">
                 <EllipsisVerticalIcon style="width: 100%" />
             </Control>
         </template>

@@ -7,7 +7,7 @@ import MenuItem from '@/components/MenuItem.vue'
 const popupStore = usePopupStore()
 
 async function startGroupRenaming(): Promise<void> {
-    popupStore.hide('groupMenuView', {})
+    popupStore.hide('groupMenu', {})
     await popupStore.show('editGroupName', {})
 }
 </script>

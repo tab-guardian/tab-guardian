@@ -15,7 +15,7 @@ const popupStore = usePopupStore()
 const groupStore = useGroupStore()
 
 async function promptToDeleteGroup(): Promise<void> {
-    popupStore.hide('groupMenuView', {})
+    popupStore.hide('groupMenu', {})
 
     const resp = await popupStore.show('confirm', {
         text: trans('want_delete_group'),

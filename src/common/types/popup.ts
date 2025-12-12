@@ -13,7 +13,7 @@ type PasswordData = {
 }
 
 export type Popups = {
-    groupMenuView: PopupItem
+    groupMenu: PopupItem
     confirm: PopupItem<{ text: string }, { isConfirmed: boolean }>
     groupName: PopupItem
     removeUrlLock: PopupItem

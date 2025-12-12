@@ -61,7 +61,7 @@ async function downloadExportFile(compressed: string, group: Group): Promise<voi
 
     loading.value = false
 
-    popupStore.hide('groupMenuView', {})
+    popupStore.hide('groupMenu', {})
 }
 </script>
 

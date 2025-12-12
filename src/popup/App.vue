@@ -45,7 +45,7 @@ function handleDarkTheme(): void {
 
     <Popups
         :popups="[
-            { comp: GroupMenuPopup, name: 'groupMenuView' },
+            { comp: GroupMenuPopup, name: 'groupMenu' },
             { comp: GroupNamePopup, name: 'groupName' },
             { comp: NewPasswordPopup, name: 'newPassword' },
             { comp: PasswordPopup, name: 'password' },
