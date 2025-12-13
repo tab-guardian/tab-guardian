@@ -96,4 +96,29 @@ describe('folder storage module', () => {
             expect(folder).toBeNull()
         })
     })
+
+    suite('delete()', () => {
+        it('deletes folder', async () => {
+            const folder1 = await folderStorage.save('Anna')
+            const folder2 = await folderStorage.save('Serhii')
+
+            await folderStorage.delete(folder1!.id)
+
+            const folders = await folderStorage.getAll()
+
+            expect(folders).toHaveLength(1)
+            expect(folders[0].id).equal(folder2?.id)
+        })
+
+        it('does not delete folder for wrong id', async () => {
+            await folderStorage.save('Anna')
+            await folderStorage.save('Serhii')
+
+            await folderStorage.delete(0)
+
+            const folders = await folderStorage.getAll()
+
+            expect(folders).toHaveLength(2)
+        })
+    })
 })
