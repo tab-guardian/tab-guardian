@@ -24,6 +24,7 @@ export const useFolderStore = defineStore('folder', () => {
         // 2. Delete passwords from storage of private groups
         // ---- await passwordStorage.delete(props.folder.id)
 
+        await folderStorage.delete(id)
         await notificationStore.recalculateNotification()
     }
 
