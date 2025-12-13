@@ -8,7 +8,7 @@ import ConfirmPopup from '@/components/Popups/ConfirmPopup.vue'
 import Popups from '@/components/Popups/Popups.vue'
 import NewPasswordPopup from '@/components/Popups/NewPasswordPopup.vue'
 import PasswordPopup from '@/components/Popups/PasswordPopup.vue'
-import RemoveUrlLockPopup from '@/components/Popups/RemoveUrlLockPopup.vue'
+import RemoveUrlLockPopup from '@/components/Popups/Group/RemoveUrlLockPopup.vue'
 
 const settingsStore = useSettingsStore()
 

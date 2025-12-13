@@ -9,7 +9,7 @@ import { useRouter } from 'vue-router'
 import Popup from '@/components/Popups/Popup.vue'
 import Button from '@common/components/Form/Button.vue'
 import ChevronRightIcon from '@common/components/Icons/ChevronRightIcon.vue'
-import BindToUrl from '@/components/Popups/BindToUrl.vue'
+import BindToUrl from '@/components/Popups/Group/BindToUrl.vue'
 import NameInput from '@common/components/Form/NameInput.vue'
 import PasswordInputs from '@/components/PasswordInputs.vue'
 
