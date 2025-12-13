@@ -12,7 +12,7 @@ import MenuItem from '@/components/MenuItem.vue'
 import ScissorsIcon from '@common/components/Icons/ScissorsIcon.vue'
 import CopyIcon from '@common/components/Icons/CopyIcon.vue'
 import PinIcon from '@common/components/Icons/PinIcon.vue'
-import PasteLinkMenuItem from '@/components//Views/GroupView/GroupControls/MenuItems/PasteLinkMenuItem.vue'
+import PasteLinkMenuItem from '@/components/Popups/Link/MenuItems/PasteLinkMenuItem.vue'
 
 const popupStore = usePopupStore()
 const linkStore = useLinkStore()
