@@ -11,6 +11,7 @@ const defaultEmptyPopup = {
 
 const defaultPopups: Popups = {
     groupMenu: structuredClone(defaultEmptyPopup),
+    folderMenu: structuredClone(defaultEmptyPopup),
     confirm: structuredClone(defaultEmptyPopup),
     removeUrlLock: structuredClone(defaultEmptyPopup),
     groupName: structuredClone(defaultEmptyPopup),

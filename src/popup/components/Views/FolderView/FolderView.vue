@@ -17,8 +17,8 @@ import ListItems from '@/components/Views/MainView/ListItems/ListItems.vue'
 const route = useRoute()
 const popupStore = usePopupStore()
 const groupStore = useGroupStore()
-const groups = ref<Group[]>([])
 
+const groups = ref<Group[]>([])
 const folder = ref<Folder | null>(null)
 
 onMounted(async () => {
@@ -41,7 +41,7 @@ async function fetchFolder(): Promise<void> {
 <template>
     <View>
         <template #controls>
-            <Control @click="popupStore.show('groupMenu', {})">
+            <Control @click="popupStore.show('folderMenu', {})">
                 <EllipsisVerticalIcon style="width: 100%" />
             </Control>
         </template>

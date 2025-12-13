@@ -15,6 +15,7 @@ import ChooseEmojiPopup from '@/components/Popups/Group/ChooseEmojiPopup.vue'
 import ChooseImageIconPopup from '@/components/Popups/Group/ChooseImageIconPopup.vue'
 import LinkMenuPopup from '@/components/Popups/Link/LinkMenuPopup.vue'
 import GroupMenuPopup from '@/components/Popups/Group/GroupMenuPopup.vue'
+import FolderMenuPopup from '@/components/Popups/Folder/FolderMenuPopup.vue'
 import EditGroupNamePopup from '@/components/Popups/Group/EditGroupNamePopup.vue'
 import FolderNamePopup from '@/components/Popups/Folder/FolderNamePopup.vue'
 
@@ -46,6 +47,7 @@ function handleDarkTheme(): void {
     <Popups
         :popups="[
             { comp: GroupMenuPopup, name: 'groupMenu' },
+            { comp: FolderMenuPopup, name: 'folderMenu' },
             { comp: GroupNamePopup, name: 'groupName' },
             { comp: NewPasswordPopup, name: 'newPassword' },
             { comp: PasswordPopup, name: 'password' },
