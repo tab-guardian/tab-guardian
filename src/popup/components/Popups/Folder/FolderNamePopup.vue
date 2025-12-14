@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { logger, trans } from '@common/modules'
+import { getDefaultName, logger, trans } from '@common/modules'
 import { usePopupStore } from '@/stores/popup'
 import { useGroupStore } from '@/stores/group'
 import { showToast } from '@common/modules/toast'
@@ -22,11 +22,12 @@ async function submitName(): Promise<void> {
         return
     }
 
-    folderStorage.save(name.value)
+    const folderName = name.value || getDefaultName('Folder')
+    await folderStorage.save(folderName)
 
     await groupStore.load()
 
-    popupStore.hide('folderName', { name: name.value })
+    popupStore.hide('folderName', { name: folderName })
 
     showToast({ text: trans('folder_created') })
 }

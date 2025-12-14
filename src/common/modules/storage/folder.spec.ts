@@ -51,11 +51,11 @@ describe('folder storage module', () => {
             expect(folders).toHaveLength(1)
         })
 
-        it('saving folder with empty name will ignore it', async () => {
+        it('saving folder with create folder with default name', async () => {
             await folderStorage.save('')
 
             const foldersStr = localStorage.getItem('folders')
-            expect(foldersStr).toBeNull()
+            expect(foldersStr).not.toBeNull()
         })
     })
 
