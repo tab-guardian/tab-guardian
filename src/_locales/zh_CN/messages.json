@@ -67,7 +67,9 @@
     "error_no_tab_selected": { "message": "未选中任何选项卡" },
     "error_no_group_selected": { "message": "出现问题！未选择任何组" },
     "want_delete_group": { "message": "您确定要删除该组吗？" },
-    "want_delete_folder": { "message": "您确定要删除该文件夹吗？该文件夹内的所有组也将被删除。" },
+    "want_delete_folder": {
+        "message": "您确定要删除该文件夹吗？该文件夹内的所有组也将被删除。"
+    },
     "no_tabs_this_group": { "message": "此组中没有选项卡" },
     "click_on_each_tab": { "message": "点击每个标签页以选择或取消选择以保存" },
     "select_all": { "message": "全选" },
