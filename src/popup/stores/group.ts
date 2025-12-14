@@ -216,6 +216,8 @@ export const useGroupStore = defineStore('group', () => {
     async function deleteGroup(id: number): Promise<void> {
         groups.value = groups.value.filter(g => g.id !== id)
         initialGroups.value = initialGroups.value.filter(g => g.id !== id)
+
+        await passwordStorage.delete(id)
         await groupStorage.delete(id)
         await notificationStore.recalculateNotification()
     }

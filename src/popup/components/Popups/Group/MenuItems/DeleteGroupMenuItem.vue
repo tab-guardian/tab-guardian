@@ -3,7 +3,6 @@ import type { Group } from '@common/types'
 import MenuItem from '@/components/MenuItem.vue'
 import TrashIcon from '@common/components/Icons/TrashIcon.vue'
 import { trans } from '@common/modules'
-import { passwordStorage } from '@common/modules/storage/password'
 import { useRouter } from 'vue-router'
 import { usePopupStore } from '@/stores/popup'
 import { useGroupStore } from '@/stores/group'
@@ -29,11 +28,6 @@ async function promptToDeleteGroup(): Promise<void> {
 async function deleteGroup(): Promise<void> {
     await groupStore.deleteGroup(props.group.id)
     await router.push({ name: 'main' })
-
-    if (props.group.isPrivate) {
-        await passwordStorage.delete(props.group.id)
-    }
-
     groupStore.selectedGroup = null
 }
 </script>

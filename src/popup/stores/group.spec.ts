@@ -6,6 +6,7 @@ import { describe, it, expect, beforeEach, suite } from 'vitest'
 import { createPinia, setActivePinia } from 'pinia'
 import { useGroupStore } from '@/stores/group'
 import { fakeGroup, fakeLink } from '@common/modules/fake'
+import { KEY_PREFIX, passwordStorage } from '@common/modules/storage/password'
 
 describe('group store', () => {
     beforeEach(() => {
@@ -314,6 +315,21 @@ describe('group store', () => {
             await groupStore.deleteGroup(0)
 
             expect(groupStore.groups).toHaveLength(1)
+        })
+
+        it('deletes cached password for a private group', async () => {
+            const groupStore = useGroupStore()
+            const group = fakeGroup({ isPrivate: true })
+            const key = KEY_PREFIX + group.id.toString()
+
+            passwordStorage.save(group.id, 'amy-pass')
+            await groupStore.save(group)
+
+            expect(localStorage.getItem(key)).not.toBeNull()
+
+            await groupStore.deleteGroup(group.id)
+
+            expect(localStorage.getItem(key)).toBeNull()
         })
     })
 
