@@ -19,7 +19,7 @@ const folderId = computed<number | null>(() => {
 <template>
     <Popup
         :content="trans('additional_options')"
-        @cancel="popupStore.hide('groupMenu', {})"
+        @cancel="popupStore.hide('folderMenu', {})"
     >
         <div v-if="folderId">
             <div class="space flex flex-col gap-1 mt-3">
