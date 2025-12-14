@@ -152,7 +152,7 @@ function hideInput(): void {
             type="text"
             :class="[
                 'w-full py-1 px-2 border border-border rounded-lg text-sm',
-                'ring-0 focus:ring-2 focus:outline-hidden bg-transparent',
+                'ring-0 focus:ring-2 ring-border focus:outline-hidden bg-transparent',
             ]"
             :placeholder="trans('enter_group_name')"
             @input="filterGroups"
