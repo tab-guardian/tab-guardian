@@ -39,7 +39,7 @@ async function deleteGroup(): Promise<void> {
         :icon="TrashIcon"
         :class="[
             'text-red-500 border-red-500!',
-            'hover:text-red-700! hover:border-red-700',
+            'hover:text-red-600! hover:border-red-600!',
         ]"
     />
 </template>

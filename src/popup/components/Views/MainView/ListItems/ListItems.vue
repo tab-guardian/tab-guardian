@@ -82,7 +82,7 @@ async function moveFromFolder(e: any): Promise<void> {
 <template>
     <Spinner v-if="groupStore.loading" />
 
-    <Message v-else-if="groups.length === 0">
+    <Message v-else-if="groups.length === 0 && folders.length === 0">
         {{ trans('no_groups_yet') }}
     </Message>
 

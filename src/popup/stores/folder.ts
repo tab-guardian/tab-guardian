@@ -1,9 +1,10 @@
-import type { Folder, Group } from '@common/types'
+import type { Folder } from '@common/types'
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import { folderStorage } from '@common/modules/storage/folder'
 import { useNotificationStore } from '@/stores/notification'
-import { useGroupStore } from './group'
+import { groupStorage } from '@common/modules/storage/group'
+import { useGroupStore } from '@/stores/group'
 
 export const useFolderStore = defineStore('folder', () => {
     const notificationStore = useNotificationStore()
@@ -19,10 +20,12 @@ export const useFolderStore = defineStore('folder', () => {
     }
 
     async function deleteFolder(id: number): Promise<void> {
-        // 1. Delete all groups inside of it
-        // ---- groupStore.delteGroup(id)
-        // 2. Delete passwords from storage of private groups
-        // ---- await passwordStorage.delete(props.folder.id)
+        const groups = await groupStorage.retrieveFolder(id)
+
+        // Delete all groups inside of a folder first
+        for (const group of groups) {
+            await groupStore.deleteGroup(group.id)
+        }
 
         await folderStorage.delete(id)
         await notificationStore.recalculateNotification()
