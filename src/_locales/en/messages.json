@@ -146,7 +146,7 @@
     },
     "rate_us": { "message": "Rate Us" },
     "storage_usage": { "message": "Storage usage" },
-    "group_name_long": { "message": "Group name is too long" },
+    "text_long": { "message": "Text is too long" },
     "contribute": { "message": "Contribute" },
     "release_notes": { "message": "Release Notes" },
     "change_icon": { "message": "Change Icon" },

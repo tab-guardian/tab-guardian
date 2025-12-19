@@ -9,40 +9,34 @@ const emit = defineEmits<{
     (e: 'has-error', has: boolean): void
 }>()
 
-type Props = {
-    label?: string
-}
+defineProps<{ label: string }>()
 
-withDefaults(defineProps<Props>(), {
-    label: trans('group_name'),
-})
-
-const name = defineModel<string | null>('name')
+const text = defineModel<string | null>('text')
 
 const meta = computed<string>(() => {
-    if (!name.value) {
+    if (!text.value) {
         return ''
     }
 
-    return `${name.value.length} / ${config.MAX_GROUP_NAME_LENGTH}`
+    return `${text.value.length} / ${config.MAX_NAME_LENGTH}`
 })
 
-const nameErr = computed<string>(() => {
-    return name.value && name.value.length > config.MAX_GROUP_NAME_LENGTH
-        ? trans('group_name_long')
+const textErr = computed<string>(() => {
+    return text.value && text.value.length > config.MAX_NAME_LENGTH
+        ? trans('text_long')
         : ''
 })
 </script>
 
 <template>
     <Input
-        v-model="name"
+        v-model="text"
         @loaded="emit('loaded', $event)"
-        @keyup="emit('has-error', nameErr !== '')"
+        @keyup="emit('has-error', textErr !== '')"
         :label
-        :error="nameErr"
+        :error="textErr"
         type="text"
-        id="group-name"
+        id="text-field-value"
         :meta
     />
 </template>

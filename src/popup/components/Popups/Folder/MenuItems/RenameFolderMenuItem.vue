@@ -8,7 +8,23 @@ const popupStore = usePopupStore()
 
 async function startRenaming(): Promise<void> {
     popupStore.hide('folderMenu', {})
-    await popupStore.show('textInput', {})
+
+    const res = await popupStore.show('textInput', {
+        label: trans('folder_name'),
+        title: trans('enter_folder_name'),
+        submitText: trans('create'),
+    })
+
+    if (!res || res.canceled) {
+        return
+    }
+
+    // const folderName = res.name || getDefaultName('Folder')
+    // await folderStorage.save(folderName)
+    //
+    // emit('refresh')
+    //
+    // showToast({ text: trans('folder_created') })
 }
 </script>
 

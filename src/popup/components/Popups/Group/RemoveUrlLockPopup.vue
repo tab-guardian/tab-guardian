@@ -12,7 +12,7 @@ import { cloneDeep } from 'lodash'
 import Popup from '@/components/Popups/Popup.vue'
 import Button from '@common/components/Form/Button.vue'
 import ChevronRightIcon from '@common/components/Icons/ChevronRightIcon.vue'
-import NameInput from '@common/components/Form/NameInput.vue'
+import TextInput from '@common/components/Form/TextInput.vue'
 import PasswordInput from '@common/components/Form/PasswordInput.vue'
 import Progress from '@common/components/Progress.vue'
 
@@ -103,8 +103,9 @@ function hidePopup(): void {
         :content="trans('enter_credentials')"
     >
         <form @submit.prevent="submit" class="flex flex-col gap-3">
-            <NameInput
-                v-model:name="formData.name"
+            <TextInput
+                v-model:text="formData.name"
+                :label="trans('group_name')"
                 :loading="processing"
                 @loaded="inp => inp.focus()"
                 @has-error="errors.name = $event"

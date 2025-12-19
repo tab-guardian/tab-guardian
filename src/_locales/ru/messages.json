@@ -145,7 +145,7 @@
     },
     "rate_us": { "message": "Оцените нас" },
     "storage_usage": { "message": "Хранилище" },
-    "group_name_long": { "message": "Имя группы слишком длинное" },
+    "text_long": { "message": "Текст слишком длинный" },
     "contribute": { "message": "Поддержите нас" },
     "release_notes": { "message": "Журнал изменений" },
     "change_icon": { "message": "Изменить значок" },

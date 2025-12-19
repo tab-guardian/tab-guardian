@@ -8,7 +8,7 @@ export const config = {
     PASS_MAX_ATTEMPTS: toNum('VITE_PASS_MAX_ATTEMPTS'),
     PASS_LOCK_DURATION: toNum('VITE_PASS_LOCK_DURATION'),
     MIN_PASS_LENGTH: 6,
-    MAX_GROUP_NAME_LENGTH: 45,
+    MAX_NAME_LENGTH: 45,
     GROUP_ICON_START: [
         'http', // http and https images
         'data:image', // base64 images

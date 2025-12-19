@@ -8,7 +8,7 @@ import { getDefaultGroupName } from '@common/modules/group'
 import Popup from '@/components/Popups/Popup.vue'
 import Button from '@common/components/Form/Button.vue'
 import ChevronRightIcon from '@common/components/Icons/ChevronRightIcon.vue'
-import NameInput from '@common/components/Form/NameInput.vue'
+import TextInput from '@common/components/Form/TextInput.vue'
 
 const popupStore = usePopupStore()
 const groupStore = useGroupStore()
@@ -51,8 +51,9 @@ async function saveName(): Promise<void> {
         :content="trans('enter_group_name')"
     >
         <form @submit.prevent="saveName" class="flex flex-col gap-3">
-            <NameInput
-                v-model:name="name"
+            <TextInput
+                v-model:text="name"
+                :label="trans('group_name')"
                 @loaded="inp => inp.focus()"
                 @has-error="preventSubmit = $event"
             />

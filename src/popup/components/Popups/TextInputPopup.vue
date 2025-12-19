@@ -3,8 +3,8 @@ import { logger } from '@common/modules'
 import { usePopupStore } from '@/stores/popup'
 import { ref } from 'vue'
 import Popup from '@/components/Popups/Popup.vue'
-import NameInput from '@common/components/Form/NameInput.vue'
-import FolderPlusIcon from '@common/components/Icons/FolderPlusIcon.vue'
+import TextInput from '@common/components/Form/TextInput.vue'
+import CheckIcon from '@common/components/Icons/CheckIcon.vue'
 import Button from '@common/components/Form/Button.vue'
 
 const popupStore = usePopupStore()
@@ -33,15 +33,15 @@ async function submitName(): Promise<void> {
         :content="sharedData.title"
     >
         <form @submit.prevent="submitName" class="flex flex-col gap-3">
-            <NameInput
-                v-model:name="inputText"
+            <TextInput
+                v-model:text="inputText"
                 :label="sharedData.label"
                 @loaded="inp => inp.focus()"
                 @has-error="error = $event"
             />
 
             <div class="flex justify-end">
-                <Button type="submit" :disabled="error" :icon="FolderPlusIcon">
+                <Button type="submit" :disabled="error" :icon="CheckIcon">
                     {{ sharedData.submitText }}
                 </Button>
             </div>

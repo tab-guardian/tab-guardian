@@ -128,7 +128,7 @@
     },
     "rate_us": { "message": "评价我们" },
     "storage_usage": { "message": "存储使用" },
-    "group_name_long": { "message": "组名称太长" },
+    "text_long": { "message": "文本过长" },
     "contribute": { "message": "贡献" },
     "release_notes": { "message": "更新说明" },
     "change_icon": { "message": "更改图标" },

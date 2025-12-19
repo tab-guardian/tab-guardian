@@ -10,7 +10,7 @@ import Popup from '@/components/Popups/Popup.vue'
 import Button from '@common/components/Form/Button.vue'
 import ChevronRightIcon from '@common/components/Icons/ChevronRightIcon.vue'
 import BindToUrl from '@/components/Popups/Group/BindToUrl.vue'
-import NameInput from '@common/components/Form/NameInput.vue'
+import TextInput from '@common/components/Form/TextInput.vue'
 import PasswordInputs from '@/components/PasswordInputs.vue'
 
 const popupStore = usePopupStore()
@@ -54,8 +54,9 @@ function submitName(): void {
         :content="trans('enter_group_name')"
     >
         <form @submit.prevent="submitName" class="flex flex-col gap-3">
-            <NameInput
-                v-model:name="newGroupStore.choices.name"
+            <TextInput
+                v-model:text="newGroupStore.choices.name"
+                :label="trans('group_name')"
                 @loaded="inp => inp.focus()"
                 @has-error="errors.name = $event"
             />
