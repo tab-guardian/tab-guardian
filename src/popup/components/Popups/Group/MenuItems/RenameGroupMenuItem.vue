@@ -1,14 +1,36 @@
 <script setup lang="ts">
+import type { Group } from '@common/types'
 import { usePopupStore } from '@/stores/popup'
-import { trans } from '@common/modules'
+import { getDefaultName, trans } from '@common/modules'
+import { showToast } from '@common/modules/toast'
+import { useGroupStore } from '@/stores/group'
 import PencilSquareIcon from '@common/components/Icons/PencilSquareIcon.vue'
 import MenuItem from '@/components/MenuItem.vue'
 
 const popupStore = usePopupStore()
+const groupStore = useGroupStore()
+
+const props = defineProps<{ group: Group }>()
 
 async function startRenaming(): Promise<void> {
     popupStore.hide('groupMenu', {})
-    await popupStore.show('editGroupName', {})
+
+    const res = await popupStore.show('textInput', {
+        text: props.group.name,
+        label: trans('group_name'),
+        title: trans('enter_group_name'),
+        submitText: trans('save'),
+    })
+
+    if (!res || res.canceled) {
+        return
+    }
+
+    const name = res.name ?? getDefaultName('Group')
+
+    await groupStore.update(props.group.id, { name })
+
+    showToast({ text: trans('new_name_saved') })
 }
 </script>
 

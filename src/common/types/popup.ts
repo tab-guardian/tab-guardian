@@ -31,6 +31,5 @@ export type Popups = {
     newPassword: PopupItem<{}, { newPass?: string }>
     password: PopupItem<PasswordData>
     linkMenu: PopupItem<{ link: Link }>
-    editGroupName: PopupItem
     textInput: PopupItem<TextInputData, { canceled: boolean; name?: string }>
 }

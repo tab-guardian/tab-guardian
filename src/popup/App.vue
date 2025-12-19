@@ -16,7 +16,6 @@ import ChooseImageIconPopup from '@/components/Popups/Group/ChooseImageIconPopup
 import LinkMenuPopup from '@/components/Popups/Link/LinkMenuPopup.vue'
 import GroupMenuPopup from '@/components/Popups/Group/GroupMenuPopup.vue'
 import FolderMenuPopup from '@/components/Popups/Folder/FolderMenuPopup.vue'
-import EditGroupNamePopup from '@/components/Popups/Group/EditGroupNamePopup.vue'
 import TextInputPopup from '@/components/Popups/TextInputPopup.vue'
 
 onMounted(async () => {
@@ -55,7 +54,6 @@ function handleDarkTheme(): void {
             { comp: ChooseEmojiPopup, name: 'chooseEmoji' },
             { comp: ChooseImageIconPopup, name: 'chooseImageIcon' },
             { comp: LinkMenuPopup, name: 'linkMenu' },
-            { comp: EditGroupNamePopup, name: 'editGroupName' },
             { comp: ConfirmPopup, name: 'confirm' },
             { comp: TextInputPopup, name: 'textInput' },
         ]"

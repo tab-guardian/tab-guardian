@@ -1,9 +1,5 @@
 import { getDefaultName } from '@common/modules'
 
-export function getDefaultGroupName(): string {
-    return getDefaultName('Group')
-}
-
 export function generateId(): number {
     return Math.floor(Math.random() * 1000000)
 }

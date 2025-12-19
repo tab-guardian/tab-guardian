@@ -1,7 +1,8 @@
 import type { Group, UserChoices, Link } from '@common/types'
 import { reactive, computed } from 'vue'
 import { defineStore } from 'pinia'
-import { getDefaultGroupName, generateId } from '@common/modules/group'
+import { generateId } from '@common/modules/group'
+import { getDefaultName } from '@common/modules'
 
 export const useNewGroupStore = defineStore('newGroup', () => {
     // null suggest that there was no choice yet
@@ -23,7 +24,7 @@ export const useNewGroupStore = defineStore('newGroup', () => {
     function createGroupFromChoices(links: Link[]): Group {
         const group: Group = {
             id: generateId(),
-            name: choices.name || getDefaultGroupName(),
+            name: choices.name || getDefaultName('Group'),
             isPrivate: choices.isPrivate || false,
             isEncrypted: false,
             updatedAt: Date.now(),

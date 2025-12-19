@@ -46,7 +46,7 @@ const isEncrypted = computed<boolean>(() => {
 
                 <PasteLinkMenuItem :group />
                 <AddLinkMenuItem />
-                <RenameGroupMenuItem />
+                <RenameGroupMenuItem :group />
                 <ExportGroupMenuItem :group />
 
                 <template v-if="group.isPrivate">
