@@ -245,6 +245,7 @@
     "create_new_folder": { "message": "Create a new folder" },
     "folder_created": { "message": "Folder created" },
     "drop_to_remove": { "message": "Drop here to remove from folder" },
+    "next": { "message": "Next" },
     "bind_url_removed": {
         "message": "Bind URL was removed from the group. The group is accessible."
     },

@@ -80,7 +80,7 @@ function submitName(): void {
                         :disabled="preventSubmit"
                         :icon="ChevronRightIcon"
                     >
-                        {{ trans('select') }}
+                        {{ trans('next') }}
                     </Button>
                 </div>
             </div>

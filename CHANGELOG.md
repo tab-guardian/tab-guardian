@@ -1,6 +1,6 @@
 # Release Notes
 
-## v1.17.0 (2025-12-11)
+## v1.17.0 (2025-12-19)
 - 🐛 Fixed not excepting some emojies when trying to select it for a group icon [#98](https://github.com/tab-guardian/tab-guardian/issues/98)
 
 ## v1.16.6 (2025-11-17)

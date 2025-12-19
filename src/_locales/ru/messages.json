@@ -248,6 +248,7 @@
     "create_new_folder": { "message": "Создать новую папку" },
     "folder_created": { "message": "Папка создана" },
     "drop_to_remove": { "message": "Перетащите сюда, чтобы удалить из папки" },
+    "next": { "message": "Далее" },
     "bind_url_removed": {
         "message": "URL-адрес привязки был удален из группы. Группа доступна."
     },
