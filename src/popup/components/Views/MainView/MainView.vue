@@ -11,15 +11,19 @@ const folderStore = useFolderStore()
 
 onMounted(async () => {
     groupStore.selectedGroup = null
+    await load()
+})
+
+async function load(): Promise<void> {
     await groupStore.load()
     await folderStore.load()
-})
+}
 </script>
 
 <template>
     <div>
         <div class="text-center p-2">
-            <Buttons @refresh-folders="folderStore.load" />
+            <Buttons @refresh="load" />
             <GroupSearch />
         </div>
 

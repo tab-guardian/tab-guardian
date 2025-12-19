@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { useNewGroupStore } from '@/stores/newGroup'
-import { trans } from '@common/modules'
+import { getDefaultName, trans } from '@common/modules'
 import { usePopupStore } from '@/stores/popup'
 import { onMounted } from 'vue'
+import { folderStorage } from '@common/modules/storage/folder'
+import { showToast } from '@common/modules/toast'
 import ShieldCheckIcon from '@common/components/Icons/ShieldCheckIcon.vue'
 import PlusCircleIcon from '@common/components/Icons/PlusCircleIcon.vue'
 import FolderPlusIcon from '@common/components/Icons/FolderPlusIcon.vue'
@@ -10,7 +12,7 @@ import NewGroupButton from '@/components/Views/MainView/NewGroup/NewGroupButton.
 
 onMounted(() => newGroupStore.resetChoices())
 
-const emit = defineEmits<{ (e: 'refresh-folders'): void }>()
+const emit = defineEmits<{ (e: 'refresh'): void }>()
 
 const popupStore = usePopupStore()
 const newGroupStore = useNewGroupStore()
@@ -21,11 +23,22 @@ async function askForGroupName(isPrivate: boolean) {
 }
 
 async function showFolderPopup(): Promise<void> {
-    const res = await popupStore.show('folderName', {})
+    const res = await popupStore.show('textInput', {
+        label: trans('folder_name'),
+        title: trans('enter_folder_name'),
+        submitText: trans('create'),
+    })
 
-    if (res && res.name) {
-        emit('refresh-folders')
+    if (!res || res.canceled) {
+        return
     }
+
+    const folderName = res.name || getDefaultName('Folder')
+    await folderStorage.save(folderName)
+
+    emit('refresh')
+
+    showToast({ text: trans('folder_created') })
 }
 </script>
 

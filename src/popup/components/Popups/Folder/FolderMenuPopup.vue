@@ -5,6 +5,7 @@ import { usePopupStore } from '@/stores/popup'
 import { useRoute } from 'vue-router'
 import Popup from '@/components/Popups/Popup.vue'
 import DeleteFolderMenuItem from '@/components/Popups/Folder/MenuItems/DeleteFolderMenuItem.vue'
+import RenameFolderMenuItem from '@/components/Popups/Folder/MenuItems/RenameFolderMenuItem.vue'
 import Message from '@common/components/Message.vue'
 
 const popupStore = usePopupStore()
@@ -23,6 +24,7 @@ const folderId = computed<number | null>(() => {
     >
         <div v-if="folderId">
             <div class="space flex flex-col gap-1 mt-3">
+                <RenameFolderMenuItem />
                 <DeleteFolderMenuItem :folder-id="folderId" />
             </div>
         </div>

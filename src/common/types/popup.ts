@@ -12,6 +12,13 @@ type PasswordData = {
     text: string
 }
 
+type TextInputData = {
+    label: string
+    title: string
+    submitText: string
+    text?: string
+}
+
 export type Popups = {
     groupMenu: PopupItem
     folderMenu: PopupItem
@@ -25,5 +32,5 @@ export type Popups = {
     password: PopupItem<PasswordData>
     linkMenu: PopupItem<{ link: Link }>
     editGroupName: PopupItem
-    folderName: PopupItem<{}, { name?: string }>
+    textInput: PopupItem<TextInputData, { canceled: boolean; name?: string }>
 }
