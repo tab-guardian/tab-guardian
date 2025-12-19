@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { Folder } from '@common/types'
 import MenuItem from '@/components/MenuItem.vue'
 import TrashIcon from '@common/components/Icons/TrashIcon.vue'
 import { trans } from '@common/modules'
@@ -6,7 +7,7 @@ import { useRouter } from 'vue-router'
 import { usePopupStore } from '@/stores/popup'
 import { useFolderStore } from '@/stores/folder'
 
-const props = defineProps<{ folderId: number }>()
+const props = defineProps<{ folder: Folder }>()
 
 const router = useRouter()
 const popupStore = usePopupStore()
@@ -25,7 +26,7 @@ async function promptToDeleteFolder(): Promise<void> {
 }
 
 async function deleteFolder(): Promise<void> {
-    await folderStore.deleteFolder(props.folderId)
+    await folderStore.deleteFolder(props.folder.id)
     await router.push({ name: 'main' })
 }
 </script>
