@@ -3,10 +3,12 @@ import type { Folder } from '@common/types'
 import { usePopupStore } from '@/stores/popup'
 import { getDefaultName, trans } from '@common/modules'
 import { folderStorage } from '@common/modules/storage/folder'
+import { useFolderStore } from '@/stores/folder'
 import PencilSquareIcon from '@common/components/Icons/PencilSquareIcon.vue'
 import MenuItem from '@/components/MenuItem.vue'
 
 const popupStore = usePopupStore()
+const folderStore = useFolderStore()
 
 const props = defineProps<{ folder: Folder }>()
 
@@ -25,10 +27,9 @@ async function startRenaming(): Promise<void> {
     }
 
     const folderName = res.name || getDefaultName('Folder')
-    // TODO: rename folder
-    // await folderStorage.save(folderName)
+    await folderStorage.rename(props.folder.id, folderName)
 
-    // emit('refresh')
+    await folderStore.load()
 }
 </script>
 

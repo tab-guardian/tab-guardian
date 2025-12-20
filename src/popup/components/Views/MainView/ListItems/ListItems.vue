@@ -21,7 +21,7 @@ const props = withDefaults(defineProps<Props>(), {
     folders: () => [],
 })
 
-const emit = defineEmits<{ (e: 'refresh-folder'): void }>()
+const emit = defineEmits<{ (e: 'refresh'): void }>()
 
 const isDragging = ref<boolean>(false)
 const draggableGroup = ref<number | null>(null)
@@ -73,7 +73,7 @@ async function moveFromFolder(e: any): Promise<void> {
 
     await groupStore.update(draggableGroup.value, { folderId: undefined })
 
-    emit('refresh-folder')
+    emit('refresh')
 
     draggableGroup.value = null
 }
