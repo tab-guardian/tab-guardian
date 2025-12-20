@@ -121,4 +121,50 @@ describe('folder storage module', () => {
             expect(folders).toHaveLength(2)
         })
     })
+
+    suite('rename()', () => {
+        it('renames folder', async () => {
+            const folder = await folderStorage.save('Anna')
+
+            await folderStorage.rename(folder!.id, 'Serhii')
+            const renamedFolder = await folderStorage.get(folder!.id)
+
+            expect(renamedFolder?.name).equal('Serhii')
+            expect(await folderStorage.getAll()).toHaveLength(1)
+        })
+
+        it('does not rename folder for wrong id', async () => {
+            const folder = await folderStorage.save('Anna')
+
+            await folderStorage.rename(0, 'Serhii')
+            const notRenamedFolder = await folderStorage.get(folder!.id)
+
+            expect(notRenamedFolder?.name).equal('Anna')
+            expect(await folderStorage.getAll()).toHaveLength(1)
+        })
+
+        it('updates updatedAt on rename', async () => {
+            const folder = await folderStorage.save('Anna')
+            const originalUpdatedAt = folder!.updatedAt
+
+            // Simulate a delay
+            await new Promise(resolve => setTimeout(resolve, 10))
+
+            await folderStorage.rename(folder!.id, 'Serhii')
+            const renamedFolder = await folderStorage.get(folder!.id)
+
+            expect(renamedFolder!.updatedAt).toBeGreaterThan(originalUpdatedAt)
+        })
+
+        it('allows renaming to an existing folder name', async () => {
+            await folderStorage.save('Anna')
+            const folder = await folderStorage.save('Serhii')
+
+            await folderStorage.rename(folder!.id, 'Anna')
+            const renamedFolder = await folderStorage.get(folder!.id)
+
+            expect(renamedFolder?.name).equal('Anna')
+            expect(await folderStorage.getAll()).toHaveLength(2)
+        })
+    })
 })

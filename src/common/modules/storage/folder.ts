@@ -36,6 +36,21 @@ export const folderStorage = {
         return items[0] || []
     },
 
+    async rename(id: number, newName: string): Promise<void> {
+        const folders = await this.getAll()
+        const folder = folders.find(f => f.id === id)
+
+        if (!folder) {
+            logger().warn('Folder not found')
+            return
+        }
+
+        folder.name = newName
+        folder.updatedAt = Date.now()
+
+        await runtime.storage.set<Folder[]>('folders', folders)
+    },
+
     async get(id: number): Promise<Folder | null> {
         const folders = await this.getAll()
         return folders.find(f => f.id === id) || null
