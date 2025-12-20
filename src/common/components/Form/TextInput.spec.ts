@@ -1,9 +1,10 @@
 // @vitest-environment happy-dom
 
-import { describe, it, expect, suite, beforeEach } from 'vitest'
+import { describe, it, expect, beforeEach } from 'vitest'
 import { createPinia, setActivePinia } from 'pinia'
 import { config } from '@common/config'
 import { mount } from '@vue/test-utils'
+import { trans } from '@common/modules'
 import TextInput from '@common/components/Form/TextInput.vue'
 
 describe('TextInput', () => {
@@ -20,7 +21,10 @@ describe('TextInput', () => {
         ['false for exact length', 'a'.repeat(config.MAX_NAME_LENGTH), false],
         ['true  for long name', 'a'.repeat(config.MAX_NAME_LENGTH + 1), true],
     ])('emits has-error with %s', async (_, name, expected) => {
-        const wrapper = mount(TextInput)
+        const wrapper = mount(TextInput, {
+            props: { label: trans('group_name') },
+        })
+
         const input = wrapper.find('#text-field-value')
 
         await input.setValue(name)
@@ -31,7 +35,10 @@ describe('TextInput', () => {
     })
 
     it('emits loaded event when loaded', async () => {
-        const wrapper = mount(TextInput)
+        const wrapper = mount(TextInput, {
+            props: { label: trans('group_name') },
+        })
+
         const input = wrapper.find('#text-field-value')
 
         await input.setValue('some name is here')
