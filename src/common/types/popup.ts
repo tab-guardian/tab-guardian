@@ -24,9 +24,12 @@ type TextInputData = {
 export type Popups = {
     groupMenu: PopupItem
     folderMenu: PopupItem
-    confirm: PopupItem<{ title: string }, { isConfirmed: boolean }>
+    confirm: PopupItem<
+        { title: string; description?: string },
+        { isConfirmed: boolean }
+    >
     removeUrlLock: PopupItem
-    bindGroup: PopupItem
+    bindGroup: PopupItem<{}, { url?: string }>
     chooseEmoji: PopupItem<{}, { emo?: string }>
     chooseImageIcon: PopupItem<{}, { url?: string }>
     newPassword: PopupItem<{ title?: string }, { newPass?: string }>
