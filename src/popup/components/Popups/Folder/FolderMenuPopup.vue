@@ -13,7 +13,7 @@ const folderStore = useFolderStore()
 
 <template>
     <Popup
-        :content="trans('additional_options')"
+        :title="trans('additional_options')"
         @cancel="popupStore.hide('folderMenu', {})"
     >
         <div v-if="folderStore.folder">

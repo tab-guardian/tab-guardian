@@ -47,7 +47,8 @@ async function askForGroupName(): Promise<void> {
 
 async function askForPrivateGroupCreation(): Promise<boolean> {
     const resp = await popupStore.show('confirm', {
-        title: trans('do_you_want_private_group'),
+        title: trans('make_private'),
+        description: trans('do_you_want_private_group'),
     })
 
     return !!resp && resp.isConfirmed

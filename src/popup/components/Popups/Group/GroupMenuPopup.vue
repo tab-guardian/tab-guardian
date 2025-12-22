@@ -28,7 +28,7 @@ const isEncrypted = computed<boolean>(() => {
 
 <template>
     <Popup
-        :content="trans('additional_options')"
+        :title="trans('additional_options')"
         @cancel="popupStore.hide('groupMenu', {})"
     >
         <div v-if="group">

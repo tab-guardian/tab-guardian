@@ -52,7 +52,7 @@ function hideImageIconPopup(): void {
     <Popup
         v-if="groupStore.selectedGroup"
         @cancel="hideImageIconPopup"
-        :content="trans('enter_image_url')"
+        :title="trans('enter_image_url')"
         :description="trans('type_any_image_url_to_set_it')"
     >
         <template #right-side>

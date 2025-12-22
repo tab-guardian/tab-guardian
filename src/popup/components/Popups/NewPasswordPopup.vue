@@ -27,7 +27,7 @@ function updatePassword(): void {
 <template>
     <Popup
         @cancel="popupStore.hide('newPassword', {})"
-        :content="sharedData?.title || trans('enter_new_pass')"
+        :title="sharedData?.title || trans('enter_new_pass')"
     >
         <form @submit.prevent="updatePassword" class="flex flex-col gap-3">
             <PasswordInputs

@@ -72,7 +72,7 @@ async function togglePin(): Promise<void> {
 <template>
     <Popup
         v-if="group && sharedData"
-        :content="limitString(sharedData.link.title, 25)"
+        :title="limitString(sharedData.link.title, 25)"
         @cancel="popupStore.hide('linkMenu', {})"
     >
         <div class="flex flex-col gap-1 mt-3">
@@ -93,7 +93,7 @@ async function togglePin(): Promise<void> {
     <!-- If there is no selected group (edge case) -->
     <Popup
         v-else
-        :content="trans('error_no_tab_selected')"
+        :title="trans('error_no_tab_selected')"
         @cancel="popupStore.hide('linkMenu', {})"
     />
 </template>

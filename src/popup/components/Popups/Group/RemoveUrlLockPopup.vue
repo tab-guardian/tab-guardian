@@ -100,7 +100,7 @@ function hidePopup(): void {
 <template>
     <Popup
         @cancel="popupStore.hide('removeUrlLock', {})"
-        :content="trans('enter_credentials')"
+        :title="trans('enter_credentials')"
     >
         <form @submit.prevent="submit" class="flex flex-col gap-3">
             <TextInput

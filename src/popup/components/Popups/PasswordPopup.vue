@@ -64,7 +64,7 @@ async function submitPassword(): Promise<void> {
 </script>
 
 <template>
-    <Popup @cancel="popupStore.hide('password', {})" :content="trans('enter_pass')">
+    <Popup @cancel="popupStore.hide('password', {})" :title="trans('enter_pass')">
         <p class="flex items-center gap-3 mb-2 text-sm leading-4">
             <ShieldCheckIcon width="45" height="45" />
             {{ sharedData.text }}

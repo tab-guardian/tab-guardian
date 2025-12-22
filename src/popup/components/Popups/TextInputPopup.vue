@@ -30,7 +30,7 @@ async function submitName(): Promise<void> {
 <template>
     <Popup
         @cancel="popupStore.hide('textInput', { canceled: true })"
-        :content="sharedData?.title || ''"
+        :title="sharedData?.title || ''"
     >
         <form @submit.prevent="submitName" class="flex flex-col gap-3">
             <TextInput

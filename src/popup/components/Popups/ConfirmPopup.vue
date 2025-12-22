@@ -34,7 +34,7 @@ async function handleDeny(): Promise<void> {
 <template>
     <Popup
         @cancel="handleDeny"
-        :content="sharedData?.title || ''"
+        :title="sharedData?.title || ''"
         :description="sharedData?.description"
     >
         <template #buttons>

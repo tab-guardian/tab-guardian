@@ -1,12 +1,9 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import { useGroupStore } from '@/stores/group'
-import { logger, trans } from '@common/modules'
+import { trans } from '@common/modules'
 import { usePopupStore } from '@/stores/popup'
-import { useRouter } from 'vue-router'
 import { validateUrl } from '@common/modules/validation/url'
 import { hashUrl, getCurrentUrl } from '@common/modules/url'
-import { showToast } from '@common/modules/toast'
 import Popup from '@/components/Popups/Popup.vue'
 import Button from '@common/components/Form/Button.vue'
 import Input from '@common/components/Form/Input.vue'
@@ -14,8 +11,6 @@ import CheckIcon from '@common/components/Icons/CheckIcon.vue'
 import ControlButton from '@/components/Views/SelectTabsView/ControlButton.vue'
 
 const popupStore = usePopupStore()
-const groupStore = useGroupStore()
-const router = useRouter()
 const currUrl = ref<string>('')
 
 const errorMessage = computed<string | null>(() => validateUrl(currUrl.value))
@@ -29,40 +24,24 @@ async function setCurrentUrl(): Promise<void> {
     }
 }
 
-async function rebindGroup(): Promise<void> {
+async function bindGroup(): Promise<void> {
     if (preventSubmit.value) {
         return
     }
 
-    if (!groupStore.selectedGroup) {
-        logger().warn('No group selected rebinding URL')
-        return
-    }
-
-    popupStore.hide('bindGroup', {})
-
-    await router.push({
-        name: 'group',
-        params: {
-            id: groupStore.selectedGroup.id,
-        },
+    popupStore.hide('bindGroup', {
+        url: await hashUrl(currUrl.value),
     })
-
-    groupStore.selectedGroup.bindUrl = await hashUrl(currUrl.value)
-    groupStore.save(groupStore.selectedGroup)
-
-    showToast({ text: trans('group_rebind_successful') })
 }
 </script>
 
 <template>
     <Popup
-        v-if="groupStore.selectedGroup"
         @cancel="popupStore.hide('bindGroup', {})"
-        :content="trans('enter_new_url_bind_to')"
+        :title="trans('enter_new_url_bind_to')"
         :description="trans('enter_new_url_bind_private_to_new_url')"
     >
-        <form @submit.prevent="rebindGroup">
+        <form @submit.prevent="bindGroup">
             <Input
                 v-model="currUrl"
                 label="URL"

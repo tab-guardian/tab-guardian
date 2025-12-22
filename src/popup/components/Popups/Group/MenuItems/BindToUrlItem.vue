@@ -2,16 +2,45 @@
 import type { Group } from '@common/types'
 import MenuItem from '@/components/MenuItem.vue'
 import LinkIcon from '@common/components/Icons/LinkIcon.vue'
-import { trans } from '@common/modules'
+import { logger, trans } from '@common/modules'
 import { usePopupStore } from '@/stores/popup'
+import { useGroupStore } from '@/stores/group'
+import { useRouter } from 'vue-router'
+import { showToast } from '@common/modules/toast'
 
-defineProps<{ group: Group }>()
+const props = defineProps<{ group: Group }>()
 
+const router = useRouter()
 const popupStore = usePopupStore()
+const groupStore = useGroupStore()
 
 async function rebind(): Promise<void> {
+    if (!groupStore.selectedGroup) {
+        showToast({
+            text: trans('error_no_group_selected'),
+            type: 'error',
+        })
+        return
+    }
+
     popupStore.hide('groupMenu', {})
-    await popupStore.show('bindGroup', {})
+
+    const resp = await popupStore.show('bindGroup', {})
+
+    if (!resp || !resp.url) {
+        logger().info('Bind URL was canceled')
+        return
+    }
+
+    groupStore.selectedGroup.bindUrl = resp.url
+    groupStore.save(groupStore.selectedGroup)
+
+    showToast({ text: trans('group_rebind_successful') })
+
+    await router.push({
+        name: 'group',
+        params: { id: groupStore.selectedGroup.id },
+    })
 }
 </script>
 

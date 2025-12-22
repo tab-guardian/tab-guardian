@@ -57,7 +57,7 @@ function hideEmojiPopup(): void {
     <Popup
         v-if="groupStore.selectedGroup"
         @cancel="hideEmojiPopup"
-        :content="trans('pick_any_emoji')"
+        :title="trans('pick_any_emoji')"
     >
         <p v-if="emoji">{{ trans('your_emoji_is') }} {{ emoji }}</p>
 
