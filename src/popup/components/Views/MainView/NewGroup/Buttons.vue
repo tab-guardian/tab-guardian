@@ -21,9 +21,7 @@ const router = useRouter()
 const popupStore = usePopupStore()
 const newGroupStore = useNewGroupStore()
 
-async function askForGroupName(isPrivate: boolean): Promise<void> {
-    newGroupStore.choices.isPrivate = isPrivate
-
+async function askForGroupName(): Promise<void> {
     const resp = await popupStore.show('textInput', {
         label: trans('group_name'),
         title: trans('enter_group_name'),
@@ -37,18 +35,25 @@ async function askForGroupName(isPrivate: boolean): Promise<void> {
     }
 
     newGroupStore.choices.wantsSelectAllLinks = true
+    newGroupStore.choices.isPrivate = await askForPrivateGroupCreation()
 
-    const operation: SelectTabsOperation = 'creating'
-
-    if (isPrivate) {
-        await askForPassword(operation)
+    if (newGroupStore.choices.isPrivate) {
+        await askForPassword()
         return
     }
 
-    router.push({ name: 'select-tabs', params: { operation } })
+    moveToSelectTabsView()
 }
 
-async function askForPassword(operation: SelectTabsOperation): Promise<void> {
+async function askForPrivateGroupCreation(): Promise<boolean> {
+    const resp = await popupStore.show('confirm', {
+        title: trans('do_you_want_private_group'),
+    })
+
+    return !!resp && resp.isConfirmed
+}
+
+async function askForPassword(): Promise<void> {
     const resp = await popupStore.show('newPassword', {
         title: trans('enter_pass'),
     })
@@ -61,6 +66,11 @@ async function askForPassword(operation: SelectTabsOperation): Promise<void> {
     newGroupStore.choices.password = resp.newPass
     newGroupStore.choices.confirmPassword = resp.newPass
 
+    moveToSelectTabsView()
+}
+
+function moveToSelectTabsView(): void {
+    const operation: SelectTabsOperation = 'creating'
     router.push({ name: 'select-tabs', params: { operation } })
 }
 
@@ -88,7 +98,7 @@ async function showFolderPopup(): Promise<void> {
 <template>
     <div class="flex items-center gap-2">
         <NewGroupButton
-            @click="askForGroupName(false)"
+            @click="askForGroupName"
             class="w-full bg-primary hover:bg-primary-hover"
         >
             <PlusCircleIcon class="size-6" />
@@ -96,19 +106,11 @@ async function showFolderPopup(): Promise<void> {
         </NewGroupButton>
 
         <NewGroupButton
-            v-tippy="trans('private_groups_are_secure')"
-            @click="askForGroupName(true)"
-            class="w-24 bg-success hover:bg-success-hover"
-        >
-            <ShieldCheckIcon class="size-7" />
-        </NewGroupButton>
-
-        <button
-            @click="showFolderPopup"
-            class="w-14 flex justify-center hover:scale-105 transition-transform cursor-pointer"
             v-tippy="trans('create_new_folder')"
+            @click="showFolderPopup"
+            class="w-20 bg-success hover:bg-success-hover"
         >
-            <FolderPlusIcon class="size-6 text-font" />
-        </button>
+            <FolderPlusIcon class="size-6" />
+        </NewGroupButton>
     </div>
 </template>
