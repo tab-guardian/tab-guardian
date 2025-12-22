@@ -1,39 +1,80 @@
 <script setup lang="ts">
+import type { SelectTabsOperation } from '@common/types'
 import { useNewGroupStore } from '@/stores/newGroup'
-import { getDefaultName, trans } from '@common/modules'
+import { getDefaultName, logger, trans } from '@common/modules'
 import { usePopupStore } from '@/stores/popup'
 import { onMounted } from 'vue'
 import { folderStorage } from '@common/modules/storage/folder'
 import { showToast } from '@common/modules/toast'
+import { useRouter } from 'vue-router'
 import ShieldCheckIcon from '@common/components/Icons/ShieldCheckIcon.vue'
 import PlusCircleIcon from '@common/components/Icons/PlusCircleIcon.vue'
 import FolderPlusIcon from '@common/components/Icons/FolderPlusIcon.vue'
 import NewGroupButton from '@/components/Views/MainView/NewGroup/NewGroupButton.vue'
+import ChevronRightIcon from '@common/components/Icons/ChevronRightIcon.vue'
 
 onMounted(() => newGroupStore.resetChoices())
 
 const emit = defineEmits<{ (e: 'refresh'): void }>()
 
+const router = useRouter()
 const popupStore = usePopupStore()
 const newGroupStore = useNewGroupStore()
 
-async function askForGroupName(isPrivate: boolean) {
+async function askForGroupName(isPrivate: boolean): Promise<void> {
     newGroupStore.choices.isPrivate = isPrivate
-    await popupStore.show('groupName', {})
+
+    const resp = await popupStore.show('textInput', {
+        label: trans('group_name'),
+        title: trans('enter_group_name'),
+        submitText: trans('next'),
+        icon: ChevronRightIcon,
+    })
+
+    if (!resp || resp.canceled) {
+        logger().info('Cancled entering group name')
+        return
+    }
+
+    newGroupStore.choices.wantsSelectAllLinks = true
+
+    const operation: SelectTabsOperation = 'creating'
+
+    if (isPrivate) {
+        await askForPassword(operation)
+        return
+    }
+
+    router.push({ name: 'select-tabs', params: { operation } })
+}
+
+async function askForPassword(operation: SelectTabsOperation): Promise<void> {
+    const resp = await popupStore.show('newPassword', {})
+
+    if (!resp || !resp.newPass) {
+        logger().info('Cancled entering password name')
+        return
+    }
+
+    newGroupStore.choices.password = resp.newPass
+    newGroupStore.choices.confirmPassword = resp.newPass
+
+    router.push({ name: 'select-tabs', params: { operation } })
 }
 
 async function showFolderPopup(): Promise<void> {
-    const res = await popupStore.show('textInput', {
+    const resp = await popupStore.show('textInput', {
         label: trans('folder_name'),
         title: trans('enter_folder_name'),
         submitText: trans('create'),
     })
 
-    if (!res || res.canceled) {
+    if (!resp || resp.canceled) {
+        logger().info('Cancled entering folder name')
         return
     }
 
-    const folderName = res.name || getDefaultName('Folder')
+    const folderName = resp.name || getDefaultName('Folder')
     await folderStorage.save(folderName)
 
     emit('refresh')

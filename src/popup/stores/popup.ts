@@ -14,7 +14,6 @@ const defaultPopups: Popups = {
     folderMenu: structuredClone(defaultEmptyPopup),
     confirm: structuredClone(defaultEmptyPopup),
     removeUrlLock: structuredClone(defaultEmptyPopup),
-    groupName: structuredClone(defaultEmptyPopup),
     bindGroup: structuredClone(defaultEmptyPopup),
     password: structuredClone(defaultEmptyPopup),
     linkMenu: structuredClone(defaultEmptyPopup),

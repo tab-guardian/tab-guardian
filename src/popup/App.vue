@@ -6,7 +6,6 @@ import { useAttemptsStore } from '@/stores/attempts'
 import Navbar from '@/components/Navbar/Navbar.vue'
 import AppearTransition from '@common/components/Transitions/AppearTransition.vue'
 import Popups from '@/components/Popups/Popups.vue'
-import GroupNamePopup from '@/components/Popups/Group/GroupNamePopup.vue'
 import ConfirmPopup from '@/components/Popups/ConfirmPopup.vue'
 import NewPasswordPopup from '@/components/Popups/NewPasswordPopup.vue'
 import PasswordPopup from '@/components/Popups/PasswordPopup.vue'
@@ -47,7 +46,6 @@ function handleDarkTheme(): void {
         :popups="[
             { comp: GroupMenuPopup, name: 'groupMenu' },
             { comp: FolderMenuPopup, name: 'folderMenu' },
-            { comp: GroupNamePopup, name: 'groupName' },
             { comp: NewPasswordPopup, name: 'newPassword' },
             { comp: PasswordPopup, name: 'password' },
             { comp: BindGroupPopup, name: 'bindGroup' },

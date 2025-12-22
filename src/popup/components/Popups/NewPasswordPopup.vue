@@ -21,14 +21,13 @@ function updatePassword(): void {
 
     popupStore.hide('newPassword', { newPass: pass.value })
 }
-
-function hidePasswordPopup(): void {
-    popupStore.hide('newPassword', {})
-}
 </script>
 
 <template>
-    <Popup @cancel="hidePasswordPopup" :content="trans('enter_new_pass')">
+    <Popup
+        @cancel="popupStore.hide('newPassword', {})"
+        :content="trans('enter_new_pass')"
+    >
         <form @submit.prevent="updatePassword" class="flex flex-col gap-3">
             <PasswordInputs
                 v-model:pass="pass"

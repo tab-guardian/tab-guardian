@@ -25,7 +25,6 @@ export type Popups = {
     groupMenu: PopupItem
     folderMenu: PopupItem
     confirm: PopupItem<{ text: string }, { isConfirmed: boolean }>
-    groupName: PopupItem
     removeUrlLock: PopupItem
     bindGroup: PopupItem
     chooseEmoji: PopupItem<{}, { emo?: string }>
