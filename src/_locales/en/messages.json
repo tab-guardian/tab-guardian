@@ -230,9 +230,6 @@
     "bind_group_url": {
         "message": "Bind this group to the URL. This will hide the group from everywhere else except the URL you provide. Only opening Tab Guardian on provided URL will show you the hidden group."
     },
-    "cannot_bind_to_this_url": {
-        "message": "You cannot bind your private group to this URL."
-    },
     "use_current_url": { "message": "Use current URL" },
     "make_private": { "message": "Make private" },
     "remove_url_lock": { "message": "Remove URL lock from a private group" },

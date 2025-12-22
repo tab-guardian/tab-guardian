@@ -32,7 +32,11 @@ async function handleDeny(): Promise<void> {
 </script>
 
 <template>
-    <Popup @cancel="handleDeny" :content="sharedData?.title || ''">
+    <Popup
+        @cancel="handleDeny"
+        :content="sharedData?.title || ''"
+        :description="sharedData?.description"
+    >
         <template #buttons>
             <Button @click="handleDeny" is="outline">
                 {{ trans('no') }} <small>(Esc)</small>

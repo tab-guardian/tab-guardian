@@ -201,10 +201,6 @@
     "bind_group_url": {
         "message": "将此组绑定至指定网址。此操作将隐藏该组，除您提供的网址外，其他任何位置均无法查看。仅当在指定网址上打开Tab Guardian时，隐藏组才会显示。"
     },
-    "cannot_bind_to_this_url": {
-        "message": "您无法将您的私人群组绑定到此网址。"
-    },
-    "use_current_url": { "message": "使用当前网址" },
     "make_private": { "message": "设为私密" },
     "remove_url_lock": { "message": "解除私人群组的URL锁定" },
     "remove_url_lock_desc": {
