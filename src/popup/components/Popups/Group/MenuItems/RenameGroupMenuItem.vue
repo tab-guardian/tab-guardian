@@ -15,18 +15,18 @@ const props = defineProps<{ group: Group }>()
 async function startRenaming(): Promise<void> {
     popupStore.hide('groupMenu', {})
 
-    const res = await popupStore.show('textInput', {
+    const resp = await popupStore.show('textInput', {
         text: props.group.name,
         label: trans('group_name'),
         title: trans('enter_group_name'),
         submitText: trans('save'),
     })
 
-    if (!res || res.canceled) {
+    if (!resp || resp.canceled) {
         return
     }
 
-    const name = res.name ?? getDefaultName('Group')
+    const name = resp.name ?? getDefaultName('Group')
 
     await groupStore.update(props.group.id, { name })
 
