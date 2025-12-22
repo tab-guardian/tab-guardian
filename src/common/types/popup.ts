@@ -1,4 +1,5 @@
-import { Link } from '@common/types'
+import type { Component } from 'vue'
+import type { Link } from '@common/types'
 
 type PopupItem<SHOW = any, HIDE = any> = {
     shown: boolean
@@ -17,6 +18,7 @@ type TextInputData = {
     title: string
     submitText: string
     text?: string
+    icon?: Component
 }
 
 export type Popups = {

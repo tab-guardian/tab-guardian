@@ -19,7 +19,7 @@ async function startRenaming(): Promise<void> {
         text: props.folder.name,
         label: trans('folder_name'),
         title: trans('enter_folder_name'),
-        submitText: trans('create'),
+        submitText: trans('save'),
     })
 
     if (!res || res.canceled) {

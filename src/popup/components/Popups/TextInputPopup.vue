@@ -41,7 +41,11 @@ async function submitName(): Promise<void> {
             />
 
             <div class="flex justify-end">
-                <Button type="submit" :disabled="error" :icon="CheckIcon">
+                <Button
+                    type="submit"
+                    :disabled="error"
+                    :icon="sharedData.icon || CheckIcon"
+                >
                     {{ sharedData.submitText }}
                 </Button>
             </div>
