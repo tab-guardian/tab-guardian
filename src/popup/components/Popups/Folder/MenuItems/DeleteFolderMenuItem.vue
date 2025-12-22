@@ -17,7 +17,7 @@ async function promptToDeleteFolder(): Promise<void> {
     popupStore.hide('folderMenu', {})
 
     const resp = await popupStore.show('confirm', {
-        text: trans('want_delete_folder'),
+        title: trans('want_delete_folder'),
     })
 
     if (resp && resp.isConfirmed) {

@@ -112,7 +112,7 @@ async function processFileContent(rawData: string): Promise<void> {
     }
 
     const resp = await popupStore.show('confirm', {
-        text: trans('some_groups_already_exist_same_name'),
+        title: trans('some_groups_already_exist_same_name'),
     })
 
     if (resp) {

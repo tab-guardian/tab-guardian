@@ -16,7 +16,7 @@ const popupStore = usePopupStore()
 
 async function promptToMakeOpen(): Promise<void> {
     const resp = await popupStore.show('confirm', {
-        text: trans('are_you_sure_to_make_group_open'),
+        title: trans('are_you_sure_to_make_group_open'),
     })
 
     if (resp && resp.isConfirmed) {

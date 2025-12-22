@@ -19,7 +19,7 @@ async function promptToDeleteGroups(): Promise<void> {
     }
 
     const resp = await popupStore.show('confirm', {
-        text: trans('i_confirm_want_delete_groups'),
+        title: trans('i_confirm_want_delete_groups'),
     })
 
     if (resp && resp.isConfirmed) {

@@ -17,7 +17,7 @@ async function promptToDeleteGroup(): Promise<void> {
     popupStore.hide('groupMenu', {})
 
     const resp = await popupStore.show('confirm', {
-        text: trans('want_delete_group'),
+        title: trans('want_delete_group'),
     })
 
     if (resp && resp.isConfirmed) {

@@ -49,7 +49,9 @@ async function askForGroupName(isPrivate: boolean): Promise<void> {
 }
 
 async function askForPassword(operation: SelectTabsOperation): Promise<void> {
-    const resp = await popupStore.show('newPassword', {})
+    const resp = await popupStore.show('newPassword', {
+        title: trans('enter_pass'),
+    })
 
     if (!resp || !resp.newPass) {
         logger().info('Cancled entering password name')

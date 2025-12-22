@@ -37,10 +37,10 @@ describe('popup store', () => {
         it('shows popup with data', () => {
             const popupStore = usePopupStore()
 
-            popupStore.show('confirm', { text: 'Sydney' })
+            popupStore.show('confirm', { title: 'Sydney' })
 
             expect(popupStore.popups.confirm.shown).toBeTruthy()
-            expect(popupStore.popups.confirm.dataOnShow?.text).equal('Sydney')
+            expect(popupStore.popups.confirm.dataOnShow?.title).equal('Sydney')
         })
     })
 
@@ -89,12 +89,12 @@ describe('popup store', () => {
         it("returns popup's shared data", () => {
             const popupStore = usePopupStore()
 
-            popupStore.show('confirm', { text: 'Amy Adams' })
+            popupStore.show('confirm', { title: 'Amy Adams' })
 
             const sharedData = popupStore.getSharedData('confirm')
 
             expect(sharedData).not.toBeNull()
-            expect(sharedData?.text).equal('Amy Adams')
+            expect(sharedData?.title).equal('Amy Adams')
         })
 
         it("returned popup's shared data is null when popup is not open", () => {

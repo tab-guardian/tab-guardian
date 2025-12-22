@@ -29,7 +29,7 @@ async function handleDeny(): Promise<void> {
 </script>
 
 <template>
-    <Popup @cancel="handleDeny" :content="sharedData.text">
+    <Popup @cancel="handleDeny" :content="sharedData.title">
         <template #buttons>
             <Button @click="handleDeny" is="outline">
                 {{ trans('no') }}

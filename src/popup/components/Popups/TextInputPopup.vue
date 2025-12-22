@@ -9,10 +9,10 @@ import Button from '@common/components/Form/Button.vue'
 
 const popupStore = usePopupStore()
 
-const sharedData = popupStore.getSharedData('textInput')!
+const sharedData = popupStore.getSharedData('textInput')
 
 const error = ref<boolean>(false)
-const inputText = ref<string>(sharedData.text || '')
+const inputText = ref<string>(sharedData?.text || '')
 
 async function submitName(): Promise<void> {
     if (error.value) {
@@ -30,12 +30,12 @@ async function submitName(): Promise<void> {
 <template>
     <Popup
         @cancel="popupStore.hide('textInput', { canceled: true })"
-        :content="sharedData.title"
+        :content="sharedData?.title || ''"
     >
         <form @submit.prevent="submitName" class="flex flex-col gap-3">
             <TextInput
                 v-model:text="inputText"
-                :label="sharedData.label"
+                :label="sharedData?.label || ''"
                 @loaded="inp => inp.focus()"
                 @has-error="error = $event"
             />
@@ -44,9 +44,9 @@ async function submitName(): Promise<void> {
                 <Button
                     type="submit"
                     :disabled="error"
-                    :icon="sharedData.icon || CheckIcon"
+                    :icon="sharedData?.icon || CheckIcon"
                 >
-                    {{ sharedData.submitText }}
+                    {{ sharedData?.submitText }}
                 </Button>
             </div>
         </form>

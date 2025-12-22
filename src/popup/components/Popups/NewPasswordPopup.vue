@@ -12,6 +12,7 @@ const popupStore = usePopupStore()
 const pass = ref<string>('')
 const confirmPass = ref<string>('')
 const preventSubmit = ref<boolean>(true)
+const sharedData = popupStore.getSharedData('newPassword')
 
 function updatePassword(): void {
     if (preventSubmit.value) {
@@ -26,7 +27,7 @@ function updatePassword(): void {
 <template>
     <Popup
         @cancel="popupStore.hide('newPassword', {})"
-        :content="trans('enter_new_pass')"
+        :content="sharedData?.title || trans('enter_new_pass')"
     >
         <form @submit.prevent="updatePassword" class="flex flex-col gap-3">
             <PasswordInputs
