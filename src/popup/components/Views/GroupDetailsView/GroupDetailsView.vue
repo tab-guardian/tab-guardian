@@ -17,7 +17,7 @@ const groupStore = useGroupStore()
 const groupId = Number(router.currentRoute.value.params.id)
 const modalStore = useModalStore()
 
-onMounted(() => modalStore.hideAll())
+onMounted(modalStore.hideAll)
 
 const DATE_FORMAT = 'DD.MM.YYYY HH:mm'
 const group = computed<Group | null>(() => groupStore.get(groupId))

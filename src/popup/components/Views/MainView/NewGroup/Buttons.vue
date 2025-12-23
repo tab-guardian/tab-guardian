@@ -12,13 +12,13 @@ import FolderPlusIcon from '@common/components/Icons/FolderPlusIcon.vue'
 import NewGroupButton from '@/components/Views/MainView/NewGroup/NewGroupButton.vue'
 import ChevronRightIcon from '@common/components/Icons/ChevronRightIcon.vue'
 
-onMounted(() => newGroupStore.resetChoices())
-
-const emit = defineEmits<{ (e: 'refresh'): void }>()
-
 const router = useRouter()
 const modalStore = useModalStore()
 const newGroupStore = useNewGroupStore()
+
+onMounted(newGroupStore.resetChoices)
+
+const emit = defineEmits<{ (e: 'refresh'): void }>()
 
 async function askForGroupName(): Promise<void> {
     const resp = await modalStore.show('textInput', {

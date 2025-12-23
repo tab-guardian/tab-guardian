@@ -11,6 +11,7 @@ import CheckIcon from '@common/components/Icons/CheckIcon.vue'
 import ControlButton from '@/components/Views/SelectTabsView/ControlButton.vue'
 
 const modalStore = useModalStore()
+
 const currUrl = ref<string>('')
 
 const errorMessage = computed<string | null>(() => validateUrl(currUrl.value))

@@ -30,7 +30,7 @@ const favIcons = computed<string[]>(() => {
     return Array.from(new Set(icons))
 })
 
-onMounted(() => modalStore.hideAll())
+onMounted(modalStore.hideAll)
 
 async function selectIcon(icon: string): Promise<void> {
     if (!group.value || icon === '' || group.value.icon === icon) {
