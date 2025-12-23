@@ -3,13 +3,13 @@ import type { EmojiClickEventDetail } from 'emoji-picker-element/shared.js'
 import { ref, computed, onMounted } from 'vue'
 import { useGroupStore } from '@/stores/group'
 import { trans, logger } from '@common/modules'
-import { usePopupStore } from '@/stores/popup'
+import { useModalStore } from '@/stores/modal'
 import 'emoji-picker-element'
-import Popup from '@/components/Popups/Popup.vue'
+import Modal from '@/components/Modals/Modal.vue'
 import Button from '@common/components/Form/Button.vue'
 import CheckIcon from '@common/components/Icons/CheckIcon.vue'
 
-const popupStore = usePopupStore()
+const modalStore = useModalStore()
 const groupStore = useGroupStore()
 const emoji = ref<string>('')
 
@@ -45,18 +45,18 @@ function submit(): void {
         return
     }
 
-    popupStore.hide('chooseEmoji', { emo: emoji.value })
+    modalStore.hide('chooseEmoji', { emo: emoji.value })
 }
 
-function hideEmojiPopup(): void {
-    popupStore.hide('chooseEmoji', {})
+function hideEmojiModal(): void {
+    modalStore.hide('chooseEmoji', {})
 }
 </script>
 
 <template>
-    <Popup
+    <Modal
         v-if="groupStore.selectedGroup"
-        @cancel="hideEmojiPopup"
+        @cancel="hideEmojiModal"
         :title="trans('pick_any_emoji')"
     >
         <p v-if="emoji">{{ trans('your_emoji_is') }} {{ emoji }}</p>
@@ -64,7 +64,7 @@ function hideEmojiPopup(): void {
         <emoji-picker v-on:emoji-click="chooseEmoji"></emoji-picker>
 
         <template #buttons>
-            <Button @click="hideEmojiPopup" is="outline">
+            <Button @click="hideEmojiModal" is="outline">
                 {{ trans('cancel') }}
             </Button>
 
@@ -73,5 +73,5 @@ function hideEmojiPopup(): void {
                 {{ trans('select') }}
             </Button>
         </template>
-    </Popup>
+    </Modal>
 </template>

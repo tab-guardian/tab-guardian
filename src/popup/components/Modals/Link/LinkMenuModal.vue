@@ -2,30 +2,30 @@
 import type { Group } from '@common/types'
 import { computed } from 'vue'
 import { logger, trans } from '@common/modules'
-import { usePopupStore } from '@/stores/popup'
+import { useModalStore } from '@/stores/modal'
 import { useGroupStore } from '@/stores/group'
 import { showToast } from '@common/modules/toast'
 import { useLinkStore } from '@/stores/link'
 import { limitString } from '@common/modules'
-import Popup from '@/components/Popups/Popup.vue'
+import Modal from '@/components/Modals/Modal.vue'
 import MenuItem from '@/components/MenuItem.vue'
 import ScissorsIcon from '@common/components/Icons/ScissorsIcon.vue'
 import CopyIcon from '@common/components/Icons/CopyIcon.vue'
 import PinIcon from '@common/components/Icons/PinIcon.vue'
-import PasteLinkMenuItem from '@/components/Popups/Link/MenuItems/PasteLinkMenuItem.vue'
+import PasteLinkMenuItem from '@/components/Modals/Link/MenuItems/PasteLinkMenuItem.vue'
 
-const popupStore = usePopupStore()
+const modalStore = useModalStore()
 const linkStore = useLinkStore()
 const groupStore = useGroupStore()
 
 const group = computed<Group | null>(() => groupStore.selectedGroup)
 
 const sharedData = computed(() => {
-    const data = popupStore.getSharedData('linkMenu')
+    const data = modalStore.getSharedData('linkMenu')
 
     if (!data) {
         showToast({ text: trans('error_occurred'), type: 'error' })
-        throw new Error('sharedData must not be nullable in LinkMenuPopup.vue')
+        throw new Error('sharedData must not be nullable in LinkMenuModal.vue')
     }
 
     return data
@@ -43,7 +43,7 @@ async function yankLink(action: 'copy' | 'cut', successMsg: string): Promise<voi
         link: sharedData.value.link,
     })
 
-    popupStore.hideAll()
+    modalStore.hideAll()
     showToast({ text: successMsg })
 }
 
@@ -65,15 +65,15 @@ async function togglePin(): Promise<void> {
         isPinned: !sharedData.value.link.isPinned,
     })
 
-    popupStore.hideAll()
+    modalStore.hideAll()
 }
 </script>
 
 <template>
-    <Popup
+    <Modal
         v-if="group && sharedData"
         :title="limitString(sharedData.link.title, 25)"
-        @cancel="popupStore.hide('linkMenu', {})"
+        @cancel="modalStore.hide('linkMenu', {})"
     >
         <div class="flex flex-col gap-1 mt-3">
             <MenuItem :label="trans('cut')" :icon="ScissorsIcon" @click="cutLink" />
@@ -88,12 +88,12 @@ async function togglePin(): Promise<void> {
 
             <PasteLinkMenuItem :group />
         </div>
-    </Popup>
+    </Modal>
 
     <!-- If there is no selected group (edge case) -->
-    <Popup
+    <Modal
         v-else
         :title="trans('error_no_tab_selected')"
-        @cancel="popupStore.hide('linkMenu', {})"
+        @cancel="modalStore.hide('linkMenu', {})"
     />
 </template>

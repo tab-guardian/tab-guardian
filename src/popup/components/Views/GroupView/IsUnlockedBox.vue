@@ -3,7 +3,7 @@ import type { Group } from '@common/types'
 import { ref } from 'vue'
 import { logger, trans } from '@common/modules'
 import { useGroupStore } from '@/stores/group'
-import { usePopupStore } from '@/stores/popup'
+import { useModalStore } from '@/stores/modal'
 import { useSettingsStore } from '@/stores/settings'
 import { showToast } from '@common/modules/toast'
 import { passwordStorage } from '@common/modules/storage/password'
@@ -15,7 +15,7 @@ import Button from '@common/components/Form/Button.vue'
 const props = defineProps<{ group: Group }>()
 const groupStore = useGroupStore()
 const settingsStore = useSettingsStore()
-const popupStore = usePopupStore()
+const modalStore = useModalStore()
 
 const useNewPassword = ref<boolean>(false)
 const encrypting = ref<boolean>(false)
@@ -47,7 +47,7 @@ async function promptEnterPassword(): Promise<void> {
         })
     }
 
-    const resp = await popupStore.show('newPassword', {})
+    const resp = await modalStore.show('newPassword', {})
     const newPass = resp?.newPass
 
     if (!newPass) {

@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { trans } from '@common/modules'
-import { usePopupStore } from '@/stores/popup'
-import Popup from '@/components/Popups/Popup.vue'
+import { useModalStore } from '@/stores/modal'
+import Modal from '@/components/Modals/Modal.vue'
 import Button from '@common/components/Form/Button.vue'
 import { onMounted, onUnmounted } from 'vue'
 
-const popupStore = usePopupStore()
+const modalStore = useModalStore()
 
-const sharedData = popupStore.getSharedData('confirm')
+const sharedData = modalStore.getSharedData('confirm')
 
 onMounted(() => window.addEventListener('keydown', eventCallback))
 onUnmounted(() => window.removeEventListener('keydown', eventCallback))
@@ -23,16 +23,16 @@ function eventCallback(e: KeyboardEvent): void {
 }
 
 async function handleConfirm(): Promise<void> {
-    popupStore.hide('confirm', { isConfirmed: true })
+    modalStore.hide('confirm', { isConfirmed: true })
 }
 
 async function handleDeny(): Promise<void> {
-    popupStore.hide('confirm', { isConfirmed: false })
+    modalStore.hide('confirm', { isConfirmed: false })
 }
 </script>
 
 <template>
-    <Popup
+    <Modal
         @cancel="handleDeny"
         :title="sharedData?.title || ''"
         :description="sharedData?.description"
@@ -46,5 +46,5 @@ async function handleDeny(): Promise<void> {
                 {{ trans('yes') }} <small>(Enter)</small>
             </Button>
         </template>
-    </Popup>
+    </Modal>
 </template>

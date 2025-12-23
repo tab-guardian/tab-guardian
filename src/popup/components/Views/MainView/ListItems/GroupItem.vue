@@ -3,7 +3,7 @@ import type { Group } from '@common/types'
 import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { trans } from '@common/modules'
-import { usePopupStore } from '@/stores/popup'
+import { useModalStore } from '@/stores/modal'
 import { useGroupStore } from '@/stores/group'
 import { showToast } from '@common/modules/toast'
 import ChevronRightIcon from '@common/components/Icons/ChevronRightIcon.vue'
@@ -14,7 +14,7 @@ import MainItem from '@/components/Views/MainView/ListItems/MainItem.vue'
 const props = defineProps<{ group: Group }>()
 
 const router = useRouter()
-const popupStore = usePopupStore()
+const modalStore = useModalStore()
 const groupStore = useGroupStore()
 
 const className = computed(() => {
@@ -30,7 +30,7 @@ const className = computed(() => {
 
 async function navigateToGroupView(): Promise<void> {
     if (props.group.isPrivate && props.group.isEncrypted) {
-        await popupStore.show('password', {
+        await modalStore.show('password', {
             decrypting: unlockCallback,
             text: trans('enter_pass_unlock_content'),
         })

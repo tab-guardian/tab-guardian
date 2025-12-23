@@ -1,21 +1,21 @@
 <script setup lang="ts">
 import type { Group } from '@common/types'
-import { usePopupStore } from '@/stores/popup'
+import { useModalStore } from '@/stores/modal'
 import { getDefaultName, trans } from '@common/modules'
 import { showToast } from '@common/modules/toast'
 import { useGroupStore } from '@/stores/group'
 import PencilSquareIcon from '@common/components/Icons/PencilSquareIcon.vue'
 import MenuItem from '@/components/MenuItem.vue'
 
-const popupStore = usePopupStore()
+const modalStore = useModalStore()
 const groupStore = useGroupStore()
 
 const props = defineProps<{ group: Group }>()
 
 async function startRenaming(): Promise<void> {
-    popupStore.hide('groupMenu', {})
+    modalStore.hide('groupMenu', {})
 
-    const resp = await popupStore.show('textInput', {
+    const resp = await modalStore.show('textInput', {
         text: props.group.name,
         label: trans('group_name'),
         title: trans('enter_group_name'),

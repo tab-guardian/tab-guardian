@@ -2,7 +2,7 @@
 import type { Group } from '@common/types'
 import { trans } from '@common/modules'
 import { useGroupStore } from '@/stores/group'
-import { usePopupStore } from '@/stores/popup'
+import { useModalStore } from '@/stores/modal'
 import { showToast } from '@common/modules/toast'
 import { passwordStorage } from '@common/modules/storage/password'
 import { cloneDeep } from 'lodash'
@@ -12,10 +12,10 @@ import LockOpenIcon from '@common/components/Icons/LockOpenIcon.vue'
 const props = defineProps<{ group: Group }>()
 
 const groupStore = useGroupStore()
-const popupStore = usePopupStore()
+const modalStore = useModalStore()
 
 async function promptToMakeOpen(): Promise<void> {
-    const resp = await popupStore.show('confirm', {
+    const resp = await modalStore.show('confirm', {
         title: trans('are_you_sure_to_make_group_open'),
     })
 

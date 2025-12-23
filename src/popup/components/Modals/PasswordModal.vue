@@ -1,26 +1,26 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import { usePopupStore } from '@/stores/popup'
+import { useModalStore } from '@/stores/modal'
 import { useAttemptsStore } from '@/stores/attempts'
 import { trans } from '@common/modules'
 import { showToast } from '@common/modules/toast'
 import ShieldCheckIcon from '@common/components/Icons/ShieldCheckIcon.vue'
 import Progress from '@common/components/Progress.vue'
 import PasswordInput from '@common/components/Form/PasswordInput.vue'
-import Popup from '@/components/Popups/Popup.vue'
+import Modal from '@/components/Modals/Modal.vue'
 
-const popupStore = usePopupStore()
+const modalStore = useModalStore()
 const attemptsStore = useAttemptsStore()
 
 const pass = ref<string>('')
 const processing = ref<boolean>(false)
 
 const sharedData = computed(() => {
-    const data = popupStore.getSharedData('password')
+    const data = modalStore.getSharedData('password')
 
     if (!data) {
         showToast({ text: trans('error_occurred'), type: 'error' })
-        throw new Error('sharedData must not be nullable in PasswordPopup.vue')
+        throw new Error('sharedData must not be nullable in PasswordModal.vue')
     }
 
     return data
@@ -50,7 +50,7 @@ async function submitPassword(): Promise<void> {
 
     if (isSuccess) {
         await attemptsStore.unlock()
-        popupStore.hide('password', {})
+        modalStore.hide('password', {})
     } else if (attemptsStore.isLocked) {
         showToast({
             text: attemptsStore.isLockedErrorMessage(),
@@ -64,7 +64,7 @@ async function submitPassword(): Promise<void> {
 </script>
 
 <template>
-    <Popup @cancel="popupStore.hide('password', {})" :title="trans('enter_pass')">
+    <Modal @cancel="modalStore.hide('password', {})" :title="trans('enter_pass')">
         <p class="flex items-center gap-3 mb-2 text-sm leading-4">
             <ShieldCheckIcon width="45" height="45" />
             {{ sharedData.text }}
@@ -82,5 +82,5 @@ async function submitPassword(): Promise<void> {
         </form>
 
         <Progress v-if="processing" class="mt-3" />
-    </Popup>
+    </Modal>
 </template>

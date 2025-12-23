@@ -2,12 +2,11 @@
 import type { SelectTabsOperation } from '@common/types'
 import { useNewGroupStore } from '@/stores/newGroup'
 import { getDefaultName, logger, trans } from '@common/modules'
-import { usePopupStore } from '@/stores/popup'
+import { useModalStore } from '@/stores/modal'
 import { onMounted } from 'vue'
 import { folderStorage } from '@common/modules/storage/folder'
 import { showToast } from '@common/modules/toast'
 import { useRouter } from 'vue-router'
-import ShieldCheckIcon from '@common/components/Icons/ShieldCheckIcon.vue'
 import PlusCircleIcon from '@common/components/Icons/PlusCircleIcon.vue'
 import FolderPlusIcon from '@common/components/Icons/FolderPlusIcon.vue'
 import NewGroupButton from '@/components/Views/MainView/NewGroup/NewGroupButton.vue'
@@ -18,11 +17,11 @@ onMounted(() => newGroupStore.resetChoices())
 const emit = defineEmits<{ (e: 'refresh'): void }>()
 
 const router = useRouter()
-const popupStore = usePopupStore()
+const modalStore = useModalStore()
 const newGroupStore = useNewGroupStore()
 
 async function askForGroupName(): Promise<void> {
-    const resp = await popupStore.show('textInput', {
+    const resp = await modalStore.show('textInput', {
         label: trans('group_name'),
         title: trans('enter_group_name'),
         submitText: trans('next'),
@@ -46,7 +45,7 @@ async function askForGroupName(): Promise<void> {
 }
 
 async function askForPrivateGroupCreation(): Promise<boolean> {
-    const resp = await popupStore.show('confirm', {
+    const resp = await modalStore.show('confirm', {
         title: trans('make_private'),
         description: trans('do_you_want_private_group'),
     })
@@ -55,7 +54,7 @@ async function askForPrivateGroupCreation(): Promise<boolean> {
 }
 
 async function askForPassword(): Promise<void> {
-    const resp = await popupStore.show('newPassword', {
+    const resp = await modalStore.show('newPassword', {
         title: trans('enter_pass'),
     })
 
@@ -75,8 +74,8 @@ function moveToSelectTabsView(): void {
     router.push({ name: 'select-tabs', params: { operation } })
 }
 
-async function showFolderPopup(): Promise<void> {
-    const resp = await popupStore.show('textInput', {
+async function showFolderModal(): Promise<void> {
+    const resp = await modalStore.show('textInput', {
         label: trans('folder_name'),
         title: trans('enter_folder_name'),
         submitText: trans('create'),
@@ -108,7 +107,7 @@ async function showFolderPopup(): Promise<void> {
 
         <NewGroupButton
             v-tippy="trans('create_new_folder')"
-            @click="showFolderPopup"
+            @click="showFolderModal"
             class="w-20 bg-success hover:bg-success-hover"
         >
             <FolderPlusIcon class="size-6" />

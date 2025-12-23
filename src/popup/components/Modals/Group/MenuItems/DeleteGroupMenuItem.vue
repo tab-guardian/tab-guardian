@@ -4,19 +4,19 @@ import MenuItem from '@/components/MenuItem.vue'
 import TrashIcon from '@common/components/Icons/TrashIcon.vue'
 import { trans } from '@common/modules'
 import { useRouter } from 'vue-router'
-import { usePopupStore } from '@/stores/popup'
+import { useModalStore } from '@/stores/modal'
 import { useGroupStore } from '@/stores/group'
 
 const props = defineProps<{ group: Group }>()
 
 const router = useRouter()
-const popupStore = usePopupStore()
+const modalStore = useModalStore()
 const groupStore = useGroupStore()
 
 async function promptToDeleteGroup(): Promise<void> {
-    popupStore.hide('groupMenu', {})
+    modalStore.hide('groupMenu', {})
 
-    const resp = await popupStore.show('confirm', {
+    const resp = await modalStore.show('confirm', {
         title: trans('want_delete_group'),
     })
 

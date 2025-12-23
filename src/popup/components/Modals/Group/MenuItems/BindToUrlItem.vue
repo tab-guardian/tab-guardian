@@ -3,7 +3,7 @@ import type { Group } from '@common/types'
 import MenuItem from '@/components/MenuItem.vue'
 import LinkIcon from '@common/components/Icons/LinkIcon.vue'
 import { logger, trans } from '@common/modules'
-import { usePopupStore } from '@/stores/popup'
+import { useModalStore } from '@/stores/modal'
 import { useGroupStore } from '@/stores/group'
 import { useRouter } from 'vue-router'
 import { showToast } from '@common/modules/toast'
@@ -11,7 +11,7 @@ import { showToast } from '@common/modules/toast'
 const props = defineProps<{ group: Group }>()
 
 const router = useRouter()
-const popupStore = usePopupStore()
+const modalStore = useModalStore()
 const groupStore = useGroupStore()
 
 async function rebind(): Promise<void> {
@@ -23,9 +23,9 @@ async function rebind(): Promise<void> {
         return
     }
 
-    popupStore.hide('groupMenu', {})
+    modalStore.hide('groupMenu', {})
 
-    const resp = await popupStore.show('bindGroup', {})
+    const resp = await modalStore.show('bindGroup', {})
 
     if (!resp || !resp.url) {
         logger().info('Bind URL was canceled')

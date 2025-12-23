@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { Group } from '@common/types'
+import type { Group } from '@common/types'
 import { ref, onMounted } from 'vue'
 import { trans } from '@common/modules'
 import { useRoute } from 'vue-router'
-import { usePopupStore } from '@/stores/popup'
+import { useModalStore } from '@/stores/modal'
 import { useGroupStore } from '@/stores/group'
 import { useFolderStore } from '@/stores/folder'
 import { groupStorage } from '@common/modules/storage/group'
@@ -15,7 +15,7 @@ import GroupIcon from '@/components/Views/MainView/ListItems/GroupIcon.vue'
 import ListItems from '@/components/Views/MainView/ListItems/ListItems.vue'
 
 const route = useRoute()
-const popupStore = usePopupStore()
+const modalStore = useModalStore()
 const groupStore = useGroupStore()
 const folderStore = useFolderStore()
 
@@ -40,7 +40,7 @@ async function fetchGroups(): Promise<void> {
 <template>
     <View>
         <template #controls>
-            <Control @click="popupStore.show('folderMenu', {})">
+            <Control @click="modalStore.show('folderMenu', {})">
                 <EllipsisVerticalIcon style="width: 100%" />
             </Control>
         </template>

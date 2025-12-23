@@ -2,15 +2,15 @@
 import { ref, computed, onMounted } from 'vue'
 import { useGroupStore } from '@/stores/group'
 import { logger, trans } from '@common/modules'
-import { usePopupStore } from '@/stores/popup'
+import { useModalStore } from '@/stores/modal'
 import { isImageUrl } from '@common/modules/url'
 import { validateImageUrl } from '@common/modules/validation/url'
-import Popup from '@/components/Popups/Popup.vue'
+import Modal from '@/components/Modals/Modal.vue'
 import Button from '@common/components/Form/Button.vue'
 import Input from '@common/components/Form/Input.vue'
 import CheckIcon from '@common/components/Icons/CheckIcon.vue'
 
-const popupStore = usePopupStore()
+const modalStore = useModalStore()
 const groupStore = useGroupStore()
 
 const url = ref<string>('')
@@ -40,18 +40,18 @@ async function chooseImageIcon(): Promise<void> {
         return
     }
 
-    hideImageIconPopup()
+    hideImageIconModal()
 }
 
-function hideImageIconPopup(): void {
-    popupStore.hide('chooseImageIcon', {})
+function hideImageIconModal(): void {
+    modalStore.hide('chooseImageIcon', {})
 }
 </script>
 
 <template>
-    <Popup
+    <Modal
         v-if="groupStore.selectedGroup"
-        @cancel="hideImageIconPopup"
+        @cancel="hideImageIconModal"
         :title="trans('enter_image_url')"
         :description="trans('type_any_image_url_to_set_it')"
     >
@@ -70,7 +70,7 @@ function hideImageIconPopup(): void {
         />
 
         <template #buttons>
-            <Button @click="hideImageIconPopup" is="outline">
+            <Button @click="hideImageIconModal" is="outline">
                 {{ trans('cancel') }}
             </Button>
 
@@ -79,5 +79,5 @@ function hideImageIconPopup(): void {
                 {{ trans('select') }}
             </Button>
         </template>
-    </Popup>
+    </Modal>
 </template>

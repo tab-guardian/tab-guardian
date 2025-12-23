@@ -2,7 +2,7 @@
 import type { Group } from '@common/types'
 import { trans } from '@common/modules'
 import { useTabsStore } from '@/stores/tabs'
-import { usePopupStore } from '@/stores/popup'
+import { useModalStore } from '@/stores/modal'
 import { useGroupStore } from '@/stores/group'
 import { useRouter } from 'vue-router'
 import { runtime } from '@common/modules/runtime'
@@ -11,7 +11,7 @@ import { showToast } from '@common/modules/toast'
 const props = defineProps<{ group: Group }>()
 
 const tabsStore = useTabsStore()
-const popupStore = usePopupStore()
+const modalStore = useModalStore()
 const groupStore = useGroupStore()
 const router = useRouter()
 
@@ -30,7 +30,7 @@ async function openTabs(): Promise<void> {
         return
     }
 
-    await popupStore.show('password', {
+    await modalStore.show('password', {
         decrypting: unlockCallback,
         text: trans('enter_pass_unlock_content'),
     })

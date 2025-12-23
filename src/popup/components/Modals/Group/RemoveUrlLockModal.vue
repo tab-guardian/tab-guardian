@@ -3,20 +3,20 @@ import type { Group } from '@common/types'
 import { ref, reactive, computed, onMounted } from 'vue'
 import { trans } from '@common/modules'
 import { showToast } from '@common/modules/toast'
-import { usePopupStore } from '@/stores/popup'
+import { useModalStore } from '@/stores/modal'
 import { useGroupStore } from '@/stores/group'
 import { useAttemptsStore } from '@/stores/attempts'
 import { useCryptoStore } from '@/stores/crypto'
 import { getDecryptionError } from '@/errors'
 import { cloneDeep } from 'lodash'
-import Popup from '@/components/Popups/Popup.vue'
+import Modal from '@/components/Modals/Modal.vue'
 import Button from '@common/components/Form/Button.vue'
 import ChevronRightIcon from '@common/components/Icons/ChevronRightIcon.vue'
 import TextInput from '@common/components/Form/TextInput.vue'
 import PasswordInput from '@common/components/Form/PasswordInput.vue'
 import Progress from '@common/components/Progress.vue'
 
-const popupStore = usePopupStore()
+const modalStore = useModalStore()
 const groupStore = useGroupStore()
 const attemptsStore = useAttemptsStore()
 const cryptoStore = useCryptoStore()
@@ -40,7 +40,7 @@ async function submit(): Promise<void> {
 
     if (!attempt.success) {
         showToast({ text: attempt.error, type: 'error' })
-        hidePopup()
+        hideModal()
         return
     }
 
@@ -50,7 +50,7 @@ async function submit(): Promise<void> {
 
     if (!group) {
         showToast({ text: trans('group_not_found'), type: 'error' })
-        hidePopup()
+        hideModal()
         return
     }
 
@@ -72,7 +72,7 @@ async function submit(): Promise<void> {
     }
 
     showToast({ text: trans('bind_url_removed') })
-    hidePopup()
+    hideModal()
 }
 
 async function removeBindUrl(g: Group): Promise<void> {
@@ -88,18 +88,18 @@ async function removeBindUrl(g: Group): Promise<void> {
     await groupStore.save(encrypted)
 }
 
-function hidePopup(): void {
+function hideModal(): void {
     formData.pass = ''
     formData.name = ''
     processing.value = false
 
-    popupStore.hide('removeUrlLock', {})
+    modalStore.hide('removeUrlLock', {})
 }
 </script>
 
 <template>
-    <Popup
-        @cancel="popupStore.hide('removeUrlLock', {})"
+    <Modal
+        @cancel="modalStore.hide('removeUrlLock', {})"
         :title="trans('enter_credentials')"
     >
         <form @submit.prevent="submit" class="flex flex-col gap-3">
@@ -132,5 +132,5 @@ function hidePopup(): void {
                 </Button>
             </div>
         </form>
-    </Popup>
+    </Modal>
 </template>

@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import { logger } from '@common/modules'
-import { usePopupStore } from '@/stores/popup'
+import { useModalStore } from '@/stores/modal'
 import { ref } from 'vue'
-import Popup from '@/components/Popups/Popup.vue'
+import Modal from '@/components/Modals/Modal.vue'
 import TextInput from '@common/components/Form/TextInput.vue'
 import CheckIcon from '@common/components/Icons/CheckIcon.vue'
 import Button from '@common/components/Form/Button.vue'
 
-const popupStore = usePopupStore()
+const modalStore = useModalStore()
 
-const sharedData = popupStore.getSharedData('textInput')
+const sharedData = modalStore.getSharedData('textInput')
 
 const error = ref<boolean>(false)
 const inputText = ref<string>(sharedData?.text || '')
@@ -20,7 +20,7 @@ async function submitName(): Promise<void> {
         return
     }
 
-    popupStore.hide('textInput', {
+    modalStore.hide('textInput', {
         name: inputText.value,
         canceled: false,
     })
@@ -28,8 +28,8 @@ async function submitName(): Promise<void> {
 </script>
 
 <template>
-    <Popup
-        @cancel="popupStore.hide('textInput', { canceled: true })"
+    <Modal
+        @cancel="modalStore.hide('textInput', { canceled: true })"
         :title="sharedData?.title || ''"
     >
         <form @submit.prevent="submitName" class="flex flex-col gap-3">
@@ -50,5 +50,5 @@ async function submitName(): Promise<void> {
                 </Button>
             </div>
         </form>
-    </Popup>
+    </Modal>
 </template>

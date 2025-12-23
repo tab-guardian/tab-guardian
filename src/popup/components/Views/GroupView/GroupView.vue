@@ -4,7 +4,7 @@ import { computed, watchEffect } from 'vue'
 import { trans } from '@common/modules'
 import { useGroupStore } from '@/stores/group'
 import { useRoute } from 'vue-router'
-import { usePopupStore } from '@/stores/popup'
+import { useModalStore } from '@/stores/modal'
 import View from '@/components/Views/View.vue'
 import Links from '@/components/Views/GroupView/Links.vue'
 import EllipsisVerticalIcon from '@common/components/Icons/EllipsisVerticalIcon.vue'
@@ -17,7 +17,7 @@ import GroupIcon from '@/components/Views/MainView/ListItems/GroupIcon.vue'
 
 const route = useRoute()
 const groupStore = useGroupStore()
-const popupStore = usePopupStore()
+const modalStore = useModalStore()
 
 const group = computed<Group | null>(() => {
     const id = route.params.id
@@ -43,7 +43,7 @@ watchEffect(() => {
         <template #controls>
             <Actions v-if="group && showButtons" :group />
 
-            <Control @click="popupStore.show('groupMenu', {})">
+            <Control @click="modalStore.show('groupMenu', {})">
                 <EllipsisVerticalIcon style="width: 100%" />
             </Control>
         </template>

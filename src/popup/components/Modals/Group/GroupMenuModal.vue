@@ -2,22 +2,22 @@
 import type { Group } from '@common/types'
 import { computed } from 'vue'
 import { trans } from '@common/modules'
-import { usePopupStore } from '@/stores/popup'
+import { useModalStore } from '@/stores/modal'
 import { useGroupStore } from '@/stores/group'
-import Popup from '@/components/Popups/Popup.vue'
-import AddLinkMenuItem from '@/components/Popups/Group/MenuItems/AddLinkMenuItem.vue'
-import DeleteGroupMenuItem from '@/components/Popups/Group/MenuItems/DeleteGroupMenuItem.vue'
-import RenameGroupMenuItem from '@/components/Popups/Group/MenuItems/RenameGroupMenuItem.vue'
-import MakeGroupPrivateItem from '@/components/Popups/Group/MenuItems/MakeGroupPrivateItem.vue'
-import BindToUrlItem from '@/components/Popups/Group/MenuItems/BindToUrlItem.vue'
-import ExportGroupMenuItem from '@/components/Popups/Group/MenuItems/ExportGroupMenuItem.vue'
-import PasteLinkMenuItem from '@/components/Popups/Link/MenuItems/PasteLinkMenuItem.vue'
-import MakeGroupOpenItem from '@/components/Popups/Group/MenuItems/MakeGroupOpenItem.vue'
+import Modal from '@/components/Modals/Modal.vue'
+import AddLinkMenuItem from '@/components/Modals/Group/MenuItems/AddLinkMenuItem.vue'
+import DeleteGroupMenuItem from '@/components/Modals/Group/MenuItems/DeleteGroupMenuItem.vue'
+import RenameGroupMenuItem from '@/components/Modals/Group/MenuItems/RenameGroupMenuItem.vue'
+import MakeGroupPrivateItem from '@/components/Modals/Group/MenuItems/MakeGroupPrivateItem.vue'
+import BindToUrlItem from '@/components/Modals/Group/MenuItems/BindToUrlItem.vue'
+import ExportGroupMenuItem from '@/components/Modals/Group/MenuItems/ExportGroupMenuItem.vue'
+import PasteLinkMenuItem from '@/components/Modals/Link/MenuItems/PasteLinkMenuItem.vue'
+import MakeGroupOpenItem from '@/components/Modals/Group/MenuItems/MakeGroupOpenItem.vue'
 import PhotoIcon from '@common/components/Icons/PhotoIcon.vue'
 import InfoCircleIcon from '@common/components/Icons/InfoCircleIcon.vue'
 import Message from '@common/components/Message.vue'
 
-const popupStore = usePopupStore()
+const modalStore = useModalStore()
 const groupStore = useGroupStore()
 const group = computed<Group | null>(() => groupStore.selectedGroup)
 
@@ -27,9 +27,9 @@ const isEncrypted = computed<boolean>(() => {
 </script>
 
 <template>
-    <Popup
+    <Modal
         :title="trans('additional_options')"
-        @cancel="popupStore.hide('groupMenu', {})"
+        @cancel="modalStore.hide('groupMenu', {})"
     >
         <div v-if="group">
             <p
@@ -70,5 +70,5 @@ const isEncrypted = computed<boolean>(() => {
 
         <!-- If there is no selected group (edge case) -->
         <Message v-else>😢 {{ trans('error_no_group_selected') }}</Message>
-    </Popup>
+    </Modal>
 </template>

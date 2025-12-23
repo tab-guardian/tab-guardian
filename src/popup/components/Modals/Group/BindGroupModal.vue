@@ -1,16 +1,16 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { trans } from '@common/modules'
-import { usePopupStore } from '@/stores/popup'
+import { useModalStore } from '@/stores/modal'
 import { validateUrl } from '@common/modules/validation/url'
 import { hashUrl, getCurrentUrl } from '@common/modules/url'
-import Popup from '@/components/Popups/Popup.vue'
+import Modal from '@/components/Modals/Modal.vue'
 import Button from '@common/components/Form/Button.vue'
 import Input from '@common/components/Form/Input.vue'
 import CheckIcon from '@common/components/Icons/CheckIcon.vue'
 import ControlButton from '@/components/Views/SelectTabsView/ControlButton.vue'
 
-const popupStore = usePopupStore()
+const modalStore = useModalStore()
 const currUrl = ref<string>('')
 
 const errorMessage = computed<string | null>(() => validateUrl(currUrl.value))
@@ -29,15 +29,15 @@ async function bindGroup(): Promise<void> {
         return
     }
 
-    popupStore.hide('bindGroup', {
+    modalStore.hide('bindGroup', {
         url: await hashUrl(currUrl.value),
     })
 }
 </script>
 
 <template>
-    <Popup
-        @cancel="popupStore.hide('bindGroup', {})"
+    <Modal
+        @cancel="modalStore.hide('bindGroup', {})"
         :title="trans('enter_new_url_bind_to')"
         :description="trans('enter_new_url_bind_private_to_new_url')"
     >
@@ -64,5 +64,5 @@ async function bindGroup(): Promise<void> {
                 </Button>
             </div>
         </form>
-    </Popup>
+    </Modal>
 </template>

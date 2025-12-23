@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Group } from '@common/types'
 import { ref } from 'vue'
-import { usePopupStore } from '@/stores/popup'
+import { useModalStore } from '@/stores/modal'
 import { trans, downloadFile, logger } from '@common/modules'
 import { encryptExport } from '@common/modules/webCrypto'
 import { passwordStorage } from '@common/modules/storage/password'
@@ -15,7 +15,7 @@ import MenuItem from '@/components/MenuItem.vue'
 
 const props = defineProps<{ group: Group }>()
 
-const popupStore = usePopupStore()
+const modalStore = useModalStore()
 
 const loading = ref<boolean>(false)
 
@@ -47,7 +47,7 @@ async function exportGroup(): Promise<void> {
 
     showToast({ text: trans('enter_your_password'), duration: 4000 })
 
-    const resp = await popupStore.show('newPassword', {})
+    const resp = await modalStore.show('newPassword', {})
     const newPass = resp?.newPass
 
     if (newPass) {
@@ -61,7 +61,7 @@ async function downloadExportFile(compressed: string, group: Group): Promise<voi
 
     loading.value = false
 
-    popupStore.hide('groupMenu', {})
+    modalStore.hide('groupMenu', {})
 }
 </script>
 
