@@ -152,7 +152,7 @@
     "choose_group_icon": { "message": "Choose a group icon" },
     "icon_is_set": { "message": "Icon has been set" },
     "enter_url_bind_to": { "message": "Enter a URL to bind to" },
-    "group_rebind_successful": { "message": "Group rebind successful" },
+    "group_bind_successful": { "message": "Group bind successful" },
     "url_must_start_with_http": { "message": "URL must start with https://" },
     "select_emoji": { "message": "Select emoji" },
     "select_image": { "message": "Select image" },

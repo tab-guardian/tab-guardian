@@ -152,7 +152,7 @@
     "icon_is_set": { "message": "Значок установлен" },
     "rebind_to_other_url": { "message": "Привязать к другому URL" },
     "enter_url_bind_to": { "message": "Введите URL для привязки" },
-    "group_rebind_successful": { "message": "Группа успешно пере-привязана" },
+    "group_bind_successful": { "message": "Группа успешно привязана" },
     "url_must_start_with_http": {
         "message": "URL должен начинаться с http:// или https://"
     },

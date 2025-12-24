@@ -135,7 +135,7 @@
     "icon_is_set": { "message": "图标已设置" },
     "rebind_to_other_url": { "message": "重新绑定到其他 URL" },
     "enter_url_bind_to": { "message": "输入要绑定的网址" },
-    "group_rebind_successful": { "message": "组重新绑定成功" },
+    "group_bind_successful": { "message": "组绑定成功" },
     "url_must_start_with_http": { "message": "URL 必须以 http:// 或 https:// 开头" },
     "select_emoji": { "message": "选择表情符号" },
     "select_image": { "message": "选择图片" },
