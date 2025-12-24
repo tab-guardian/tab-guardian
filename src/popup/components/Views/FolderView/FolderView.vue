@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { Group } from '@common/types'
-import { ref, onMounted } from 'vue'
+import type { Group, Folder } from '@common/types'
+import { ref, onMounted, computed } from 'vue'
 import { trans } from '@common/modules'
 import { useRoute } from 'vue-router'
 import { useModalStore } from '@/stores/modal'
@@ -23,8 +23,22 @@ const groups = ref<Group[]>([])
 
 onMounted(async () => {
     groupStore.selectedGroup = null
+    folderStore.selectedFolder = findFolder()
     await fetchGroups()
 })
+
+const folder = computed(() => folderStore.selectedFolder)
+
+function findFolder(): Folder | null {
+    const id = route.params.id
+
+    if (!id) {
+        return null
+    }
+
+    const parsedId = Number(id)
+    return folderStore.folders.find(f => f.id == parsedId) || null
+}
 
 async function fetchGroups(): Promise<void> {
     const id = route.params.id
@@ -45,10 +59,10 @@ async function fetchGroups(): Promise<void> {
             </Control>
         </template>
 
-        <div v-if="folderStore.folder">
+        <div v-if="folder">
             <div class="flex items-center gap-2 relative my-2 px-2">
-                <GroupIcon :folder="folderStore.folder" />
-                <h2 class="text-lg mt-0.5">{{ folderStore.folder.name }}</h2>
+                <GroupIcon :folder />
+                <h2 class="text-lg mt-0.5">{{ folder.name }}</h2>
             </div>
 
             <ListItems :groups @refresh="fetchGroups" />

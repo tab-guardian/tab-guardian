@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import { trans } from '@common/modules'
 import { useModalStore } from '@/stores/modal'
 import { useFolderStore } from '@/stores/folder'
@@ -9,6 +10,8 @@ import Message from '@common/components/Message.vue'
 
 const modalStore = useModalStore()
 const folderStore = useFolderStore()
+
+const folder = computed(() => folderStore.selectedFolder)
 </script>
 
 <template>
@@ -16,10 +19,10 @@ const folderStore = useFolderStore()
         :title="trans('additional_options')"
         @cancel="modalStore.hide('folderMenu', {})"
     >
-        <div v-if="folderStore.folder">
+        <div v-if="folder">
             <div class="space flex flex-col gap-1 mt-3">
-                <RenameFolderMenuItem :folder="folderStore.folder" />
-                <DeleteFolderMenuItem :folder="folderStore.folder" />
+                <RenameFolderMenuItem :folder />
+                <DeleteFolderMenuItem :folder />
             </div>
         </div>
 

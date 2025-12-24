@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Group } from '@common/types'
-import { computed, watchEffect } from 'vue'
+import { computed, onMounted, watchEffect } from 'vue'
 import { trans } from '@common/modules'
 import { useGroupStore } from '@/stores/group'
 import { useRoute } from 'vue-router'
@@ -19,7 +19,17 @@ const route = useRoute()
 const groupStore = useGroupStore()
 const modalStore = useModalStore()
 
-const group = computed<Group | null>(() => {
+onMounted(() => {
+    groupStore.selectedGroup = findGroup()
+})
+
+const group = computed(() => groupStore.selectedGroup)
+
+const showButtons = computed<boolean>(() => {
+    return group.value !== null && !group.value.isEncrypted
+})
+
+function findGroup(): Group | null {
     const id = route.params.id
 
     if (!id) {
@@ -27,15 +37,7 @@ const group = computed<Group | null>(() => {
     }
 
     return groupStore.get(Number(id))
-})
-
-const showButtons = computed<boolean>(() => {
-    return group.value !== null && !group.value.isEncrypted
-})
-
-watchEffect(() => {
-    groupStore.selectedGroup = group.value
-})
+}
 </script>
 
 <template>
