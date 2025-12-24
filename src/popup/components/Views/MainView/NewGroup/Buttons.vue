@@ -28,16 +28,25 @@ async function askForGroupName(): Promise<void> {
         icon: ChevronRightIcon,
     })
 
-    if (!resp || resp.canceled) {
-        logger().info('Cancled entering group name')
+    if (!resp || resp.canceled || !resp.name) {
+        logger().info('Canceled entering group name')
         return
     }
 
+    newGroupStore.choices.name = resp.name
     newGroupStore.choices.wantsSelectAllLinks = true
     newGroupStore.choices.isPrivate = await askForPrivateGroupCreation()
 
-    if (newGroupStore.choices.isPrivate) {
-        await askForPassword()
+    if (!newGroupStore.choices.isPrivate) {
+        moveToSelectTabsView()
+        return
+    }
+
+    if (!await askForPassword()) {
+        return
+    }
+
+    if (!await askToBindGroup()) {
         return
     }
 
@@ -53,20 +62,45 @@ async function askForPrivateGroupCreation(): Promise<boolean> {
     return !!resp && resp.isConfirmed
 }
 
-async function askForPassword(): Promise<void> {
+async function askForPassword(): Promise<boolean> {
     const resp = await modalStore.show('newPassword', {
         title: trans('enter_pass'),
     })
 
     if (!resp || !resp.newPass) {
         logger().info('Cancled entering password name')
-        return
+        return false
     }
 
     newGroupStore.choices.password = resp.newPass
     newGroupStore.choices.confirmPassword = resp.newPass
 
-    moveToSelectTabsView()
+    return true
+}
+
+async function askToBindGroup(): Promise<boolean> {
+    const confirmResp = await modalStore.show('confirm', {
+        title: trans('bind_to_url'),
+        description: trans('bind_group_url'),
+    })
+
+    if (!confirmResp || !confirmResp.isConfirmed) {
+        logger().info('Not confirmed group bind URL')
+        return true
+    }
+
+    const resp = await modalStore.show('bindGroup', {
+        useCurrentUrl: true,
+    })
+
+    if (!resp || !resp.url) {
+        logger().info('Canceled entering group bind URL')
+        return false
+    }
+
+    newGroupStore.choices.bindUrl = resp.url
+
+    return true
 }
 
 function moveToSelectTabsView(): void {

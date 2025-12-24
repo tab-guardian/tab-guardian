@@ -29,7 +29,7 @@ export type Modals = {
         { isConfirmed: boolean }
     >
     removeUrlLock: ModalItem
-    bindGroup: ModalItem<{}, { url?: string }>
+    bindGroup: ModalItem<{ useCurrentUrl: boolean }, { url?: string }>
     chooseEmoji: ModalItem<{}, { emo?: string }>
     chooseImageIcon: ModalItem<{}, { url?: string }>
     newPassword: ModalItem<{ title?: string }, { newPass?: string }>

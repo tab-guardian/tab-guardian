@@ -25,7 +25,9 @@ async function rebind(): Promise<void> {
 
     modalStore.hide('groupMenu', {})
 
-    const resp = await modalStore.show('bindGroup', {})
+    const resp = await modalStore.show('bindGroup', {
+        useCurrentUrl: !props.group.bindUrl,
+    })
 
     if (!resp || !resp.url) {
         logger().info('Bind URL was canceled')

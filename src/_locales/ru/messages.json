@@ -56,7 +56,6 @@
     "no": { "message": "Нет" },
     "lock": { "message": "Закрыть" },
     "unlock": { "message": "Открыть" },
-    "rebind": { "message": "Отвязать" },
     "bound_to_url": { "message": "Привязана к URL" },
     "opened_tabs_times": { "message": "Открыто вкладок раз" },
     "opened_tabs_times_tip": {
@@ -152,10 +151,7 @@
     "choose_group_icon": { "message": "Выберите значок группы" },
     "icon_is_set": { "message": "Значок установлен" },
     "rebind_to_other_url": { "message": "Привязать к другому URL" },
-    "enter_new_url_bind_private_to_new_url": {
-        "message": "Введите новый URL для привязки вашей приватной группы. Эта группа будет видна только при посещении указанного URL. Не забудьте заблокировать группу"
-    },
-    "enter_new_url_bind_to": { "message": "Введите новый URL для привязки" },
+    "enter_url_bind_to": { "message": "Введите URL для привязки" },
     "group_rebind_successful": { "message": "Группа успешно пере-привязана" },
     "url_must_start_with_http": {
         "message": "URL должен начинаться с http:// или https://"

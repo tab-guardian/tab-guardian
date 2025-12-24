@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { trans } from '@common/modules'
 import { useModalStore } from '@/stores/modal'
 import { validateUrl } from '@common/modules/validation/url'
@@ -12,10 +12,19 @@ import ControlButton from '@/components/Views/SelectTabsView/ControlButton.vue'
 
 const modalStore = useModalStore()
 
+const sharedData = modalStore.getSharedData('bindGroup')
+
 const currUrl = ref<string>('')
 
 const errorMessage = computed<string | null>(() => validateUrl(currUrl.value))
 const preventSubmit = computed<boolean>(() => validateUrl(currUrl.value) !== null)
+
+onMounted(() => {
+    if (sharedData && sharedData.useCurrentUrl) {
+        // execute with a small delay
+        setTimeout(setCurrentUrl, 10)
+    }
+})
 
 async function setCurrentUrl(): Promise<void> {
     const url = await getCurrentUrl()
@@ -39,8 +48,8 @@ async function bindGroup(): Promise<void> {
 <template>
     <Modal
         @cancel="modalStore.hide('bindGroup', {})"
-        :title="trans('enter_new_url_bind_to')"
-        :description="trans('enter_new_url_bind_private_to_new_url')"
+        :title="trans('enter_url_bind_to')"
+        :description="trans('bind_group_url')"
     >
         <form @submit.prevent="bindGroup">
             <Input
@@ -54,14 +63,15 @@ async function bindGroup(): Promise<void> {
             />
 
             <div class="flex items-center justify-between gap-5 mt-3">
-                <div>
+                <div v-if="!sharedData || !sharedData.useCurrentUrl">
                     <ControlButton @click="setCurrentUrl">
                         {{ trans('use_current_url') }}
                     </ControlButton>
                 </div>
+                <div v-else></div> <!-- keep for flex justify -->
 
                 <Button type="submit" :disabled="preventSubmit" :icon="CheckIcon">
-                    {{ trans('rebind') }}
+                    {{ trans('bind_to_url') }}
                 </Button>
             </div>
         </form>

@@ -54,7 +54,6 @@
     "no": { "message": "否" },
     "lock": { "message": "锁定" },
     "unlock": { "message": "解锁" },
-    "rebind": { "message": "重新绑定" },
     "bound_to_url": { "message": "绑定到 URL" },
     "opened_tabs_times": { "message": "打开标签页次数" },
     "opened_tabs_times_tip": {
@@ -135,10 +134,7 @@
     "choose_group_icon": { "message": "选择组图标" },
     "icon_is_set": { "message": "图标已设置" },
     "rebind_to_other_url": { "message": "重新绑定到其他 URL" },
-    "enter_new_url_bind_private_to_new_url": {
-        "message": "输入一个新 URL 将您的私有组绑定到此新 URL。只有在访问该 URL 时该组才会可见。不要忘记锁定该组"
-    },
-    "enter_new_url_bind_to": { "message": "输入一个新 URL 进行绑定" },
+    "enter_url_bind_to": { "message": "输入要绑定的网址" },
     "group_rebind_successful": { "message": "组重新绑定成功" },
     "url_must_start_with_http": { "message": "URL 必须以 http:// 或 https:// 开头" },
     "select_emoji": { "message": "选择表情符号" },
