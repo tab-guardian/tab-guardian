@@ -23,6 +23,7 @@ export type UserChoices = {
     confirmPassword: string | null
     wantsSelectAllLinks: boolean | null
     bindUrl: string | null
+    folderId: number | null
 }
 
 export type SelectTabsOperation = 'adding' | 'creating'
