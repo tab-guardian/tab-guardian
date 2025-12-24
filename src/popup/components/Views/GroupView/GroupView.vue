@@ -19,9 +19,7 @@ const route = useRoute()
 const groupStore = useGroupStore()
 const modalStore = useModalStore()
 
-onMounted(() => {
-    groupStore.selectedGroup = findGroup()
-})
+onMounted(() => groupStore.selectedGroup = findGroup())
 
 const group = computed(() => groupStore.selectedGroup)
 
