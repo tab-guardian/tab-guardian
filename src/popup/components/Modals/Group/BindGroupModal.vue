@@ -19,10 +19,9 @@ const currUrl = ref<string>('')
 const errorMessage = computed<string | null>(() => validateUrl(currUrl.value))
 const preventSubmit = computed<boolean>(() => validateUrl(currUrl.value) !== null)
 
-onMounted(() => {
+onMounted(async () => {
     if (sharedData && sharedData.useCurrentUrl) {
-        // execute with a small delay
-        setTimeout(setCurrentUrl, 10)
+        await setCurrentUrl()
     }
 })
 

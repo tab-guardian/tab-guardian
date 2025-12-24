@@ -13,6 +13,8 @@ onMounted(() => window.addEventListener('keydown', eventCallback))
 onUnmounted(() => window.removeEventListener('keydown', eventCallback))
 
 function eventCallback(e: KeyboardEvent): void {
+    e.preventDefault()
+
     if (e.key === 'Enter') {
         handleConfirm()
     }
