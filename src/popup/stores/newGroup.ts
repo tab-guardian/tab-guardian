@@ -148,7 +148,8 @@ export const useNewGroupStore = defineStore('newGroup', () => {
 
     function moveToSelectTabsView(): void {
         const operation: SelectTabsOperation = 'creating'
-        router.push({ name: 'select-tabs', params: { operation } })
+        const redirect = choices.folderId ? `/folder/${choices.folderId}` : '/'
+        router.push({ name: 'select-tabs', params: { operation, redirect } })
     }
 
     return {

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Group, Link, SelectTabsOperation } from '@common/types'
 import { ref, computed, onMounted, onUnmounted } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute, useRouter, RouteLocationRaw } from 'vue-router'
 import { useNewGroupStore } from '@/stores/newGroup'
 import { logger, trans } from '@common/modules'
 import { useGroupStore } from '@/stores/group'
@@ -34,6 +34,7 @@ const operation = computed<SelectTabsOperation>(() => {
 })
 
 onUnmounted(() => removeEventListener('keydown', saveTabsAfterEnter))
+
 onMounted(async () => {
     addEventListener('keydown', saveTabsAfterEnter)
     await fetchLinks()
@@ -81,7 +82,15 @@ async function handleCreateGroup(): Promise<void> {
 
     saving.value = false
 
-    await router.push({ name: 'group', params: { id: group.id } })
+    await toGroupView(group.id)
+}
+
+async function toGroupView(id: number): Promise<void> {
+    const redirect = typeof route.params.redirect === 'string'
+        ? route.params.redirect
+        : '/'
+
+    await router.push({ name: 'group', params: { id, redirect }})
 }
 
 async function handleSaveGroup(): Promise<void> {
@@ -106,7 +115,7 @@ async function handleSaveGroup(): Promise<void> {
 
     saving.value = false
 
-    await router.push({ name: 'group', params: { id: group.id } })
+    await toGroupView(group.id)
 }
 
 async function createGroup(): Promise<Group | null> {

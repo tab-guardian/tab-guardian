@@ -3,7 +3,7 @@ import type { Group } from '@common/types'
 import { computed, onMounted } from 'vue'
 import { trans } from '@common/modules'
 import { useGroupStore } from '@/stores/group'
-import { useRoute } from 'vue-router'
+import { useRoute, RouteLocationRaw } from 'vue-router'
 import { useModalStore } from '@/stores/modal'
 import View from '@/components/Views/View.vue'
 import Links from '@/components/Views/GroupView/Links.vue'
@@ -19,9 +19,14 @@ const route = useRoute()
 const groupStore = useGroupStore()
 const modalStore = useModalStore()
 
-onMounted(() => groupStore.selectedGroup = findGroup())
+onMounted(() => (groupStore.selectedGroup = findGroup()))
 
 const group = computed(() => groupStore.selectedGroup)
+
+const redirectRoute = computed<RouteLocationRaw | undefined>(() => {
+    const redirect = route.params.redirect
+    return typeof redirect === 'string' ? redirect : undefined
+})
 
 const showButtons = computed<boolean>(() => {
     return group.value !== null && !group.value.isEncrypted
@@ -39,7 +44,7 @@ function findGroup(): Group | null {
 </script>
 
 <template>
-    <View>
+    <View :redirect-route="redirectRoute">
         <template #controls>
             <Actions v-if="group && showButtons" :group />
 

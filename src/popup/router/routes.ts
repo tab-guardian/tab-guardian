@@ -7,7 +7,7 @@ import FolderView from '@/components/Views/FolderView/FolderView.vue'
 
 export const routes = [
     { path: '/', name: 'main', component: MainView },
-    { path: '/group/:id', name: 'group', component: GroupView },
+    { path: '/group/:id/:redirect?', name: 'group', component: GroupView },
     { path: '/folder/:id', name: 'folder', component: FolderView },
     { path: '/group-icon/:id', name: 'groupIcon', component: GroupIconView },
     {
@@ -16,7 +16,7 @@ export const routes = [
         component: GroupDetailsView,
     },
     {
-        path: '/select-tabs/:operation?',
+        path: '/select-tabs/:operation?/:redirect?',
         name: 'select-tabs',
         component: SelectTabsView,
     },

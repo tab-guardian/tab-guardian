@@ -40,7 +40,7 @@ async function showFolderModal(): Promise<void> {
 <template>
     <div class="flex items-center gap-2">
         <NewGroupButton
-            @click="newGroupStore.startGroupCreation"
+            @click="newGroupStore.startGroupCreation()"
             class="w-full bg-primary hover:bg-primary-hover"
         >
             <PlusCircleIcon class="size-6" />

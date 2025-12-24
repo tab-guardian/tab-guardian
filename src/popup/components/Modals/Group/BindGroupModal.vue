@@ -67,7 +67,8 @@ async function bindGroup(): Promise<void> {
                         {{ trans('use_current_url') }}
                     </ControlButton>
                 </div>
-                <div v-else></div> <!-- keep for flex justify -->
+                <div v-else></div>
+                <!-- keep for flex justify -->
 
                 <Button type="submit" :disabled="preventSubmit" :icon="CheckIcon">
                     {{ trans('bind_to_url') }}
