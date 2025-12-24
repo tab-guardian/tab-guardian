@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Group } from '@common/types'
-import { computed, onMounted, watchEffect } from 'vue'
+import { computed, onMounted } from 'vue'
 import { trans } from '@common/modules'
 import { useGroupStore } from '@/stores/group'
 import { useRoute } from 'vue-router'
