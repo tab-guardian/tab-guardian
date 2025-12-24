@@ -86,11 +86,10 @@ async function handleCreateGroup(): Promise<void> {
 }
 
 async function toGroupView(id: number): Promise<void> {
-    const redirect = typeof route.params.redirect === 'string'
-        ? route.params.redirect
-        : '/'
+    const redirect =
+        typeof route.params.redirect === 'string' ? route.params.redirect : '/'
 
-    await router.push({ name: 'group', params: { id, redirect }})
+    await router.push({ name: 'group', params: { id, redirect } })
 }
 
 async function handleSaveGroup(): Promise<void> {
