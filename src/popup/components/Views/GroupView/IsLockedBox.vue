@@ -2,7 +2,7 @@
 import type { Group } from '@common/types'
 import { ref } from 'vue'
 import { trans } from '@common/modules'
-import { usePopupStore } from '@/stores/popup'
+import { useModalStore } from '@/stores/modal'
 import { useGroupStore } from '@/stores/group'
 import { useRouter } from 'vue-router'
 import { showToast } from '@common/modules/toast'
@@ -11,14 +11,14 @@ import WarningBox from '@common/components/WarningBox.vue'
 import Button from '@common/components/Form/Button.vue'
 
 const props = defineProps<{ group: Group }>()
-const popupStore = usePopupStore()
+const modalStore = useModalStore()
 const groupStore = useGroupStore()
 const router = useRouter()
 
 const encrypting = ref<boolean>(false)
 
 async function promptEnterPassword(): Promise<void> {
-    await popupStore.show('password', {
+    await modalStore.show('password', {
         decrypting: unlockCallback,
         text: trans('enter_pass_unlock_content'),
     })

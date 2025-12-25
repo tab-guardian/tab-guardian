@@ -22,7 +22,7 @@ const groupStore = useGroupStore()
     <div v-else>
         <VueDraggableNext
             v-model="group.links"
-            class="space-y-2"
+            class="flex flex-col gap-2"
             @change="groupStore.save(group)"
             item-key="id"
         >

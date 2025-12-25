@@ -4,11 +4,11 @@ import { useSettingsStore } from '@/stores/settings'
 import { useAttemptsStore } from '@/stores/attempts'
 import Spinner from '@common/components/Spinner.vue'
 import SettingsSidebar from '@settings/components/SettingsSidebar.vue'
-import ConfirmPopup from '@/components/Popups/ConfirmPopup.vue'
-import Popups from '@/components/Popups/Popups.vue'
-import NewPasswordPopup from '@/components/Popups/NewPasswordPopup.vue'
-import PasswordPopup from '@/components/Popups/PasswordPopup.vue'
-import RemoveUrlLockPopup from '@/components/Popups/RemoveUrlLockPopup.vue'
+import ConfirmModal from '@/components/Modals/ConfirmModal.vue'
+import Modals from '@/components/Modals/Modals.vue'
+import NewPasswordModal from '@/components/Modals/NewPasswordModal.vue'
+import PasswordModal from '@/components/Modals/PasswordModal.vue'
+import RemoveUrlLockModal from '@/components/Modals/Group/RemoveUrlLockModal.vue'
 
 const settingsStore = useSettingsStore()
 
@@ -30,12 +30,12 @@ onMounted(async () => {
         </div>
     </div>
 
-    <Popups
-        :popups="[
-            { comp: RemoveUrlLockPopup, name: 'removeUrlLock' },
-            { comp: NewPasswordPopup, name: 'newPassword' },
-            { comp: PasswordPopup, name: 'password' },
-            { comp: ConfirmPopup, name: 'confirm' },
+    <Modals
+        :modals="[
+            { comp: RemoveUrlLockModal, name: 'removeUrlLock' },
+            { comp: NewPasswordModal, name: 'newPassword' },
+            { comp: PasswordModal, name: 'password' },
+            { comp: ConfirmModal, name: 'confirm' },
         ]"
     />
 </template>

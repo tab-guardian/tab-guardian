@@ -1,27 +1,46 @@
 <script setup lang="ts">
-import { useNewGroupStore } from '@/stores/newGroup'
-import { trans } from '@common/modules'
-import { usePopupStore } from '@/stores/popup'
 import { onMounted } from 'vue'
-import ShieldCheckIcon from '@common/components/Icons/ShieldCheckIcon.vue'
+import { getDefaultName, logger, trans } from '@common/modules'
+import { useModalStore } from '@/stores/modal'
+import { folderStorage } from '@common/modules/storage/folder'
+import { showToast } from '@common/modules/toast'
+import { useNewGroupStore } from '@/stores/newGroup'
 import PlusCircleIcon from '@common/components/Icons/PlusCircleIcon.vue'
+import FolderPlusIcon from '@common/components/Icons/FolderPlusIcon.vue'
 import NewGroupButton from '@/components/Views/MainView/NewGroup/NewGroupButton.vue'
 
-onMounted(() => newGroupStore.resetChoices())
-
-const popupStore = usePopupStore()
+const modalStore = useModalStore()
 const newGroupStore = useNewGroupStore()
 
-async function askForGroupName(isPrivate: boolean) {
-    newGroupStore.choices.isPrivate = isPrivate
-    await popupStore.show('groupName', {})
+onMounted(newGroupStore.resetChoices)
+
+const emit = defineEmits<{ (e: 'refresh'): void }>()
+
+async function showFolderModal(): Promise<void> {
+    const resp = await modalStore.show('textInput', {
+        label: trans('folder_name'),
+        title: trans('enter_folder_name'),
+        submitText: trans('create'),
+    })
+
+    if (!resp || resp.canceled) {
+        logger().info('Cancled entering folder name')
+        return
+    }
+
+    const folderName = resp.name || getDefaultName('Folder')
+    await folderStorage.save(folderName)
+
+    emit('refresh')
+
+    showToast({ text: trans('folder_created') })
 }
 </script>
 
 <template>
     <div class="flex items-center gap-2">
         <NewGroupButton
-            @click="askForGroupName(false)"
+            @click="newGroupStore.startGroupCreation()"
             class="w-full bg-primary hover:bg-primary-hover"
         >
             <PlusCircleIcon class="size-6" />
@@ -29,11 +48,11 @@ async function askForGroupName(isPrivate: boolean) {
         </NewGroupButton>
 
         <NewGroupButton
-            v-tippy="trans('private_groups_are_secure')"
-            @click="askForGroupName(true)"
-            class="w-24 bg-success hover:bg-success-hover"
+            v-tippy="trans('create_new_folder')"
+            @click="showFolderModal"
+            class="w-20 bg-success hover:bg-success-hover"
         >
-            <ShieldCheckIcon class="size-8" />
+            <FolderPlusIcon class="size-6" />
         </NewGroupButton>
     </div>
 </template>

@@ -1,5 +1,10 @@
 # Release Notes
 
+## v1.17.0 (2025-12-25)
+- 🐛 Fixed not excepting some emojies when trying to select it for a group icon [#98](https://github.com/tab-guardian/tab-guardian/issues/98).
+- ✨ Changed the way you create private and public groups. We used to have 2 seperate buttons, but now it was replaced with a single button and step-like creation process.
+- ✨ Added the ability to create folders with groups. You can drag and drop existing groups to folders or create groups inside folders [#47](https://github.com/tab-guardian/tab-guardian/issues/47).
+
 ## v1.16.6 (2025-11-17)
 - 🐛 Fixed bug with password cache issue where password would not delete itself from storage after locking the group back [#96](https://github.com/tab-guardian/tab-guardian/issues/96)
 
@@ -38,7 +43,7 @@
 ## v1.15.0 (2025-10-19)
 - ✨ Group icon on a group page is now clickable. It will open "Choose Icon" interface [#53](https://github.com/tab-guardian/tab-guardian/issues/53).
 - ✨ Private groups can now be bound to any URL that you provide for additional security [#65](https://github.com/tab-guardian/tab-guardian/issues/65).
-- ✨ Public groups can now be changed into private groups with a simple button click in group popup menu [#73](https://github.com/tab-guardian/tab-guardian/issues/73).
+- ✨ Public groups can now be changed into private groups with a simple button click in group modal menu [#73](https://github.com/tab-guardian/tab-guardian/issues/73).
 - 🐛 Fixed issue where you couldn't use 👎️ and 👍️ emojis as your group icon.
 - 🐛 Fixed the font contrast on a lock/unlock group button.
 - 🐛 Fixed not working tooltip helper on the `Paste tabs here` button.
@@ -51,8 +56,8 @@
 
 ## v1.14.1 (2025-10-16)
 - 🐛 Fixed development environment. App wasn't working on Chrome-based browsers.
-- 🐛 Fixed incorrect implementation of popup functionality.
-- 🧑‍💻 Replaced `Sweetalert 2` confirmation modals with custom popup for consistency.
+- 🐛 Fixed incorrect implementation of modal functionality.
+- 🧑‍💻 Replaced `Sweetalert 2` confirmation modals with custom modal for consistency.
 - 🧑‍💻 Removed `sweetalert2` dependency.
 - 🧑‍💻 When you export a private group, it will now will be encrypted with 2 layers. First layer encrypts only JSON fields, the second encryption layer encrypts the whole JSON export file.
 - 🧑‍💻 Changed named of exported files to not include `.json` extension, since we don't use JSON for exports anymore.
@@ -88,7 +93,7 @@
 - ✨ Added 3 more black and white icons for groups
 - ✨ Added a spinner to the main (home) page where groups are loaded [#70](https://github.com/tab-guardian/tab-guardian/issues/70)
 - ✨ Added a spinner when you export all groups in settings, which indicates that groups are being exported [#68](https://github.com/tab-guardian/tab-guardian/issues/68)
-- ✨ Added a spinner to the "Export a group" button in group popup menu [#66](https://github.com/tab-guardian/tab-guardian/issues/66)
+- ✨ Added a spinner to the "Export a group" button in group modal menu [#66](https://github.com/tab-guardian/tab-guardian/issues/66)
 - ✨ Added a spinner to the "Create" button when you create a group or add more links to it [#67](https://github.com/tab-guardian/tab-guardian/issues/67)
 - ✨ Added functionality that prevents from overloading storage. It will give you an error message that you used all of your quota [#58](https://github.com/tab-guardian/tab-guardian/issues/58)
 - ✨ Added "Remember my password after unlock" option to settings, which you can toggle [#62](https://github.com/tab-guardian/tab-guardian/issues/62)
@@ -159,7 +164,7 @@
 
 ## v1.7.0 (2025-01-05)
 - ✨ When you filter groups, you can press `Enter` to open the first group in the list
-- 🐛 Bug fix. Sometimes, when you create a new group, it wasn't showing up immediately. The popup needed to be reloaded to see a new group. Now it fixed
+- 🐛 Bug fix. Sometimes, when you create a new group, it wasn't showing up immediately. The modal needed to be reloaded to see a new group. Now it fixed
 
 ## v1.6.0 (2024-12-02)
 - ✨ Added 1 more icon for groups
@@ -202,7 +207,7 @@
 - ✨ Added the ability to set a custom group icon by providing a URL to an image. You can use any image you like
 - ✨ Added a new icon for groups Face Smile
 - 🧑‍💻 Added showing group icon on the group screen on the left side of the group name
-- 🐛 Fixed overflowing text inside tip popups
+- 🐛 Fixed overflowing text inside tip modals
 
 ## v1.2.0 (2024-09-12)
 - ✨ Added 25 more icons that you can use for your groups

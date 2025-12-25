@@ -2,7 +2,7 @@
 import type { Group } from '@common/types'
 import { useGroupStore } from '@/stores/group'
 import { useTabsStore } from '@/stores/tabs'
-import { usePopupStore } from '@/stores/popup'
+import { useModalStore } from '@/stores/modal'
 import { useRouter } from 'vue-router'
 import { ref, onMounted, onUnmounted } from 'vue'
 import { logger, trans } from '@common/modules'
@@ -11,14 +11,15 @@ import MagnifyingGlassIcon from '@common/components/Icons/MagnifyingGlassIcon.vu
 
 const groupStore = useGroupStore()
 const tabsStore = useTabsStore()
+const modalStore = useModalStore()
 const router = useRouter()
+
+const placeholder =
+    navigator.userAgent.indexOf('Mac OS X') != -1 ? '⌃⌘k' : 'ctrl+alt+k'
 
 const initialGroups = ref<Group[]>([])
 const inpElem = ref<HTMLInputElement | null>(null)
 const query = ref<string>('')
-const popupStore = usePopupStore()
-const placeholder =
-    navigator.userAgent.indexOf('Mac OS X') != -1 ? '⌃⌘k' : 'ctrl+alt+k'
 
 onMounted(() => {
     document.addEventListener('keydown', focusOnSearch)
@@ -56,7 +57,7 @@ async function openFirstGroup(e: KeyboardEvent): Promise<void> {
         return
     }
 
-    await popupStore.show('password', {
+    await modalStore.show('password', {
         decrypting: async pass => await unlockCallback(group, pass),
         text: trans('enter_pass_unlock_content'),
     })
@@ -152,7 +153,7 @@ function hideInput(): void {
             type="text"
             :class="[
                 'w-full py-1 px-2 border border-border rounded-lg text-sm',
-                'ring-0 focus:ring-2 focus:outline-none bg-transparent',
+                'ring-0 focus:ring-2 ring-border focus:outline-hidden bg-transparent',
             ]"
             :placeholder="trans('enter_group_name')"
             @input="filterGroups"

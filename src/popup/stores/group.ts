@@ -13,6 +13,7 @@ import { getHashedCurrentUrl } from '@common/modules/url'
 import { validatePassword } from '@common/modules/validation/group'
 import { passwordStorage } from '@common/modules/storage/password'
 import { groupStorage } from '@common/modules/storage/group'
+import { cloneDeep } from 'lodash'
 
 let isIncognitoCache: boolean | null = null
 
@@ -22,15 +23,16 @@ export const useGroupStore = defineStore('group', () => {
     const notificationStore = useNotificationStore()
     const progressStore = useProgressStore()
 
+    const initialGroups = ref<readonly Readonly<Group>[]>([])
     const groups = ref<Group[]>([])
-    const loadingGroups = ref<boolean>(false)
+    const loading = ref<boolean>(false)
     const selectedGroup = ref<Group | null>(null)
 
     /**
      * @param {string|number} id Group ID or name
      */
     function get(id: number | string): Group | null {
-        const group = groups.value.find(group => {
+        const group = initialGroups.value.find(group => {
             if (typeof id === 'string') {
                 return group.name === id
             }
@@ -42,22 +44,24 @@ export const useGroupStore = defineStore('group', () => {
             return null
         }
 
-        return group
+        return cloneDeep(group)
     }
 
     function exist(id: number): boolean {
-        return groups.value.some(g => g.id === id)
+        return initialGroups.value.some(g => g.id === id)
     }
 
     async function load(): Promise<void> {
-        loadingGroups.value = true
+        loading.value = true
 
         const storageGroups = await groupStorage.getAll()
+
+        initialGroups.value = cloneDeep(storageGroups)
 
         groups.value = await hideGroups(storageGroups)
         groups.value.sort((a, b) => b.updatedAt - a.updatedAt)
 
-        loadingGroups.value = false
+        loading.value = false
     }
 
     type LockFuncReturnValue =
@@ -175,6 +179,10 @@ export const useGroupStore = defineStore('group', () => {
 
         Object.assign(group, updates)
 
+        if (updates.folderId === undefined) {
+            delete group.folderId
+        }
+
         await save(group)
 
         return true
@@ -207,12 +215,16 @@ export const useGroupStore = defineStore('group', () => {
 
     async function deleteGroup(id: number): Promise<void> {
         groups.value = groups.value.filter(g => g.id !== id)
+        initialGroups.value = initialGroups.value.filter(g => g.id !== id)
+
+        await passwordStorage.delete(id)
         await groupStorage.delete(id)
         await notificationStore.recalculateNotification()
     }
 
     async function deleteAll(): Promise<void> {
         groups.value = []
+        initialGroups.value = []
         await groupStorage.deleteAll()
         await notificationStore.recalculateNotification()
     }
@@ -302,6 +314,10 @@ export const useGroupStore = defineStore('group', () => {
         const result: Group[] = []
 
         for (const group of storageGroups) {
+            if (group.folderId) {
+                continue
+            }
+
             const hide = await shouldHideGroup(group)
 
             if (hide) {
@@ -348,7 +364,7 @@ export const useGroupStore = defineStore('group', () => {
 
     return {
         selectedGroup,
-        loadingGroups,
+        loading,
         groups,
         get,
         save,

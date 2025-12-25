@@ -5,13 +5,14 @@ export function fakeLink(fields?: Partial<Link>): Link {
     fields ??= {}
 
     const id = fields.id || generateId()
+    const randNum = Math.floor(Math.random() * 10000) + 1
 
     return {
         id,
         tabId: id,
         url: 'https://www.fake.com',
         title: `Link #${id}`,
-        favIconUrl: 'https://placehold.co/50',
+        favIconUrl: `https://picsum.photos/seed/${randNum}/100/100`,
         isPinned: false,
         ...fields,
     }

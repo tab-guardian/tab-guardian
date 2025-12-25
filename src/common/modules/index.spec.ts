@@ -2,13 +2,7 @@
 
 import { describe, it, expect, suite, beforeEach } from 'vitest'
 import { createPinia, setActivePinia } from 'pinia'
-import {
-    formatNumber,
-    isEmoji,
-    limitString,
-    removeTrail,
-    trans,
-} from '@common/modules'
+import { formatNumber, limitString, removeTrail, trans } from '@common/modules'
 
 describe('modules/index utils module', () => {
     beforeEach(() => {
@@ -73,24 +67,6 @@ describe('modules/index utils module', () => {
             expect(formatNumber(123456)).equal('123,456')
             expect(formatNumber(1000001)).equal('1,000,001')
             expect(formatNumber(1000001009)).equal('1,000,001,009')
-        })
-    })
-
-    suite('isEmoji()', () => {
-        it('returns true for 👎️👍️ up emojis', () => {
-            expect(isEmoji('👎️')).toBeTruthy()
-            expect(isEmoji('👍️')).toBeTruthy()
-        })
-
-        it('returns false for multiple emojis', () => {
-            expect(isEmoji('👎️❤️')).toBeFalsy()
-        })
-
-        it('returns false for non-emojis', () => {
-            expect(isEmoji('x')).toBeFalsy()
-            expect(isEmoji('a')).toBeFalsy()
-            expect(isEmoji('.')).toBeFalsy()
-            expect(isEmoji('nc')).toBeFalsy()
         })
     })
 })

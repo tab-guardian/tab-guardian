@@ -56,7 +56,6 @@
     "no": { "message": "No" },
     "lock": { "message": "Lock" },
     "unlock": { "message": "Unlock" },
-    "rebind": { "message": "Rebind" },
     "bound_to_url": { "message": "Bound to URL" },
     "opened_tabs_times": { "message": "Opened tabs times" },
     "opened_tabs_times_tip": {
@@ -71,6 +70,9 @@
     },
     "error_no_tab_selected": { "message": "No tab selected" },
     "want_delete_group": { "message": "Do you want to delete the group?" },
+    "want_delete_folder": {
+        "message": "Do you want to delete this folder? All groups inside of this folder will be also deleted."
+    },
     "no_tabs_this_group": { "message": "There are no tabs in this group" },
     "click_on_each_tab": {
         "message": "Click on each tab to select or unselect it for saving to memory"
@@ -110,7 +112,9 @@
     "rename": { "message": "Rename" },
     "additional_options": { "message": "Additional options" },
     "enter_group_name": { "message": "Enter a group name" },
+    "enter_folder_name": { "message": "Enter a folder name" },
     "group_name": { "message": "Group name" },
+    "folder_name": { "message": "Folder name" },
     "group_unlocked": { "message": "Group is unlocked" },
     "group_locked": { "message": "Group is locked" },
     "error_occurred": { "message": "Unexpected error occurred" },
@@ -136,22 +140,19 @@
     "group_created_with_tabs": { "message": "Group created with tabs" },
     "close_selected_tabs": { "message": "Close selected tabs" },
     "bind_to_url": { "message": "Bind to URL" },
-    "private_groups_are_secure": {
-        "message": "Private groups are secure and use encryption. Only users with the password can access them"
+    "do_you_want_private_group": {
+        "message": "Do you want to make your group private? Private groups are secure and encrypted. You can only access them knowing the password."
     },
     "rate_us": { "message": "Rate Us" },
     "storage_usage": { "message": "Storage usage" },
-    "group_name_long": { "message": "Group name is too long" },
+    "text_long": { "message": "Text is too long" },
     "contribute": { "message": "Contribute" },
     "release_notes": { "message": "Release Notes" },
     "change_icon": { "message": "Change Icon" },
     "choose_group_icon": { "message": "Choose a group icon" },
     "icon_is_set": { "message": "Icon has been set" },
-    "enter_new_url_bind_private_to_new_url": {
-        "message": "Enter a new URL to bind your private group to this new URL. This group will be only visible in the list of groups only when you visit this specific URL. Do not forget to lock the group"
-    },
-    "enter_new_url_bind_to": { "message": "Enter a new URL to bind to" },
-    "group_rebind_successful": { "message": "Group rebind successful" },
+    "enter_url_bind_to": { "message": "Enter a URL to bind to" },
+    "group_bind_successful": { "message": "Group bind successful" },
     "url_must_start_with_http": { "message": "URL must start with https://" },
     "select_emoji": { "message": "Select emoji" },
     "select_image": { "message": "Select image" },
@@ -225,9 +226,6 @@
     "bind_group_url": {
         "message": "Bind this group to the URL. This will hide the group from everywhere else except the URL you provide. Only opening Tab Guardian on provided URL will show you the hidden group."
     },
-    "cannot_bind_to_this_url": {
-        "message": "You cannot bind your private group to this URL."
-    },
     "use_current_url": { "message": "Use current URL" },
     "make_private": { "message": "Make private" },
     "remove_url_lock": { "message": "Remove URL lock from a private group" },
@@ -237,6 +235,10 @@
     "delete": { "message": "Delete" },
     "enter_credentials": { "message": "Enter credentials" },
     "rebind_to_other_url": { "message": "Rebind to other URL" },
+    "create_new_folder": { "message": "Create a new folder" },
+    "folder_created": { "message": "Folder created" },
+    "drop_to_remove": { "message": "Drop here to remove from folder" },
+    "next": { "message": "Next" },
     "bind_url_removed": {
         "message": "Bind URL was removed from the group. The group is accessible."
     },

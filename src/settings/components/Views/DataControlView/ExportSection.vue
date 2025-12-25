@@ -3,7 +3,7 @@ import { useGroupStore } from '@/stores/group'
 import { ref, onMounted } from 'vue'
 import { trans, downloadFile } from '@common/modules'
 import { showToast } from '@common/modules/toast'
-import { usePopupStore } from '@/stores/popup'
+import { useModalStore } from '@/stores/modal'
 import { encryptExport } from '@common/modules/webCrypto'
 import { toBase64 } from '@common/modules/base64'
 import pako from 'pako'
@@ -13,14 +13,12 @@ import ArrowDownTrayIcon from '@common/components/Icons/ArrowDownTrayIcon.vue'
 import SlideSwitch from '@common/components/Form/SlideSwitch.vue'
 
 const groupStore = useGroupStore()
-const popupStore = usePopupStore()
+const modalStore = useModalStore()
 
 const exporting = ref<boolean>(false)
 const usePassword = ref<boolean>(false)
 
-onMounted(async () => {
-    await groupStore.load()
-})
+onMounted(async () => await groupStore.load())
 
 async function exportGroups(): Promise<void> {
     const groups = groupStore.groups
@@ -41,7 +39,7 @@ async function exportGroups(): Promise<void> {
         return
     }
 
-    const resp = await popupStore.show('newPassword', {})
+    const resp = await modalStore.show('newPassword', {})
 
     if (!resp || !resp.newPass) {
         exporting.value = false

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Group } from '@common/types'
 import { onMounted, computed } from 'vue'
-import { usePopupStore } from '@/stores/popup'
+import { useModalStore } from '@/stores/modal'
 import { trans } from '@common/modules'
 import { useGroupStore } from '@/stores/group'
 import { useRouter } from 'vue-router'
@@ -17,7 +17,7 @@ const groupStore = useGroupStore()
 const router = useRouter()
 const groupId = Number(router.currentRoute.value.params.id)
 
-const popupStore = usePopupStore()
+const modalStore = useModalStore()
 const group = computed<Group | null>(() => groupStore.get(groupId))
 
 const favIcons = computed<string[]>(() => {
@@ -30,7 +30,7 @@ const favIcons = computed<string[]>(() => {
     return Array.from(new Set(icons))
 })
 
-onMounted(() => popupStore.hideAll())
+onMounted(modalStore.hideAll)
 
 async function selectIcon(icon: string): Promise<void> {
     if (!group.value || icon === '' || group.value.icon === icon) {
@@ -44,8 +44,8 @@ async function selectIcon(icon: string): Promise<void> {
     await router.push({ name: 'group', params: { id: group.value.id.toString() } })
 }
 
-async function openEmojiPopup(): Promise<void> {
-    const resp = await popupStore.show('chooseEmoji', {})
+async function openEmojiModal(): Promise<void> {
+    const resp = await modalStore.show('chooseEmoji', {})
     const emo = resp?.emo
 
     if (emo) {
@@ -53,8 +53,8 @@ async function openEmojiPopup(): Promise<void> {
     }
 }
 
-async function openImageIconPopup(): Promise<void> {
-    const resp = await popupStore.show('chooseImageIcon', {})
+async function openImageIconModal(): Promise<void> {
+    const resp = await modalStore.show('chooseImageIcon', {})
     const url = resp?.url
 
     if (url) {
@@ -66,11 +66,11 @@ async function openImageIconPopup(): Promise<void> {
 <template>
     <View :title="trans('choose_group_icon')">
         <div class="flex justify-center gap-2 mt-2">
-            <Button is="outline" @click="openImageIconPopup">
+            <Button is="outline" @click="openImageIconModal">
                 <PhotoIcon class="size-5" /> {{ trans('select_image') }}
             </Button>
 
-            <Button is="outline" @click="openEmojiPopup">
+            <Button is="outline" @click="openEmojiModal">
                 <FaceSmileIcon class="size-5" /> {{ trans('select_emoji') }}
             </Button>
         </div>

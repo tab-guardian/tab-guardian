@@ -18,7 +18,7 @@ Here is what makes Tab Guardian a great tool for managing your tabs:
 - [x] Export and import all open groups across devices and browsers
 - [x] Customize groups with icons or emojis for quick recognition
 - [x] Hide groups until needed by binding them to specific URLs
-- [x] User-friendly interface with tooltips and confirmation popups
+- [x] User-friendly interface with tooltips and confirmation modals
 - [x] Highly configurable to suit your workflow
 - [x] Multi-language support 🇬🇧 🇷🇺 🇨🇳 based on your system language
 - [x] Works with all modern browsers: Chrome, Firefox, Edge, Brave, Zen, and more

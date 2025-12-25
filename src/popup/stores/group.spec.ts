@@ -6,6 +6,7 @@ import { describe, it, expect, beforeEach, suite } from 'vitest'
 import { createPinia, setActivePinia } from 'pinia'
 import { useGroupStore } from '@/stores/group'
 import { fakeGroup, fakeLink } from '@common/modules/fake'
+import { KEY_PREFIX, passwordStorage } from '@common/modules/storage/password'
 
 describe('group store', () => {
     beforeEach(() => {
@@ -73,11 +74,13 @@ describe('group store', () => {
     })
 
     suite('get()', () => {
-        it('returns group with the right group ID', () => {
+        it('returns group with the right group ID', async () => {
             const groupStore = useGroupStore()
 
             const group = fakeGroup()
-            groupStore.groups.push(group)
+            await groupStore.save(group)
+
+            await groupStore.load()
 
             const result = groupStore.get(group.id)
 
@@ -85,11 +88,11 @@ describe('group store', () => {
             expect(group.id).equal(result!.id)
         })
 
-        it('returns group with the right group name', () => {
+        it('returns group with the right group name', async () => {
             const groupStore = useGroupStore()
 
             const group = fakeGroup()
-            groupStore.groups.push(group)
+            await groupStore.save(group)
 
             const result = groupStore.get(group.name)
 
@@ -97,21 +100,21 @@ describe('group store', () => {
             expect(group.name).equal(result!.name)
         })
 
-        it('returns null with non-existent group ID', () => {
+        it('returns null with non-existent group ID', async () => {
             const groupStore = useGroupStore()
 
             const group = fakeGroup()
-            groupStore.groups.push(group)
+            await groupStore.save(group)
 
             const result = groupStore.get(0)
 
             expect(result).toBeNull()
         })
 
-        it('returns null with non-existent group name', () => {
+        it('returns null with non-existent group name', async () => {
             const groupStore = useGroupStore()
             const group = fakeGroup()
-            groupStore.groups.push(group)
+            await groupStore.save(group)
 
             const result = groupStore.get('some')
 
@@ -312,6 +315,21 @@ describe('group store', () => {
             await groupStore.deleteGroup(0)
 
             expect(groupStore.groups).toHaveLength(1)
+        })
+
+        it('deletes cached password for a private group', async () => {
+            const groupStore = useGroupStore()
+            const group = fakeGroup({ isPrivate: true })
+            const key = KEY_PREFIX + group.id.toString()
+
+            passwordStorage.save(group.id, 'amy-pass')
+            await groupStore.save(group)
+
+            expect(localStorage.getItem(key)).not.toBeNull()
+
+            await groupStore.deleteGroup(group.id)
+
+            expect(localStorage.getItem(key)).toBeNull()
         })
     })
 

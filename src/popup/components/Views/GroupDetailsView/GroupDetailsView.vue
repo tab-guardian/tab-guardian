@@ -2,7 +2,7 @@
 import type { Group } from '@common/types'
 import { computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { usePopupStore } from '@/stores/popup'
+import { useModalStore } from '@/stores/modal'
 import { useGroupStore } from '@/stores/group'
 import moment from 'moment'
 import { trans } from '@common/modules'
@@ -15,9 +15,9 @@ const router = useRouter()
 const groupStore = useGroupStore()
 
 const groupId = Number(router.currentRoute.value.params.id)
-const popupStore = usePopupStore()
+const modalStore = useModalStore()
 
-onMounted(() => popupStore.hideAll())
+onMounted(modalStore.hideAll)
 
 const DATE_FORMAT = 'DD.MM.YYYY HH:mm'
 const group = computed<Group | null>(() => groupStore.get(groupId))
@@ -29,7 +29,7 @@ const group = computed<Group | null>(() => groupStore.get(groupId))
         :subtitle="trans('you_can_find_details_here')"
     >
         <div v-if="group" class="pt-3 px-3">
-            <ul class="space-y-2">
+            <ul class="flex flex-col gap-2">
                 <ListItem :field="trans('group_name')" :value="group.name" />
 
                 <ListItem

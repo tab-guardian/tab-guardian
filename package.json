@@ -21,6 +21,7 @@
         "all": "npm run check && npm run prettier && npm run test run"
     },
     "devDependencies": {
+        "@tailwindcss/vite": "^4.1.17",
         "@types/chrome": "^0.0.267",
         "@types/crypto-js": "^4.2.2",
         "@types/firefox": "^0.0.34",
@@ -29,20 +30,20 @@
         "@types/pako": "^2.0.4",
         "@types/slug": "^5.0.9",
         "@types/toastify-js": "^1.12.3",
-        "@vitejs/plugin-vue": "^6.0.1",
+        "@vitejs/plugin-vue": "^6.0.2",
         "@vue/test-utils": "^2.4.6",
         "autoprefixer": "^10.4.19",
         "fs": "^0.0.1-security",
         "happy-dom": "^20.0.2",
         "path": "^0.12.7",
-        "postcss": "^8.4.38",
+        "postcss": "^8.5.6",
         "prettier": "^3.2.5",
-        "tailwindcss": "^3.4.3",
+        "tailwindcss": "^4.1.17",
         "typescript": "^5.9.3",
-        "vite": "^7.1.10",
+        "vite": "^7.2.6",
         "vite-plugin-static-copy": "^3.1.4",
-        "vitest": "^3.2.4",
-        "vue-tsc": "^3.1.1"
+        "vitest": "^4.0.15",
+        "vue-tsc": "^3.1.5"
     },
     "author": "Serhii Cho",
     "dependencies": {
@@ -55,7 +56,7 @@
         "pinia": "^2.1.7",
         "slug": "^11.0.0",
         "toastify-js": "^1.12.0",
-        "vue": "^3.5.13",
+        "vue": "^3.5.25",
         "vue-draggable-next": "^2.2.1",
         "vue-router": "4",
         "vue-tippy": "^6.7.1"

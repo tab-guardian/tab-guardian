@@ -2,7 +2,7 @@
     "manifest_version": 2,
     "name": "__MSG_ext_name__",
     "description": "__MSG_ext_description__",
-    "version": "1.16.6",
+    "version": "1.17.0",
     "default_locale": "en",
     "web_accessible_resources": [
         "images/*",

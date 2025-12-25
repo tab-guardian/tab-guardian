@@ -5,17 +5,17 @@ import { useNotificationStore } from '@/stores/notification'
 import { useAttemptsStore } from '@/stores/attempts'
 import Navbar from '@/components/Navbar/Navbar.vue'
 import AppearTransition from '@common/components/Transitions/AppearTransition.vue'
-import Popups from '@/components/Popups/Popups.vue'
-import GroupNamePopup from '@/components/Popups/GroupNamePopup.vue'
-import ConfirmPopup from '@/components/Popups/ConfirmPopup.vue'
-import NewPasswordPopup from '@/components/Popups/NewPasswordPopup.vue'
-import PasswordPopup from '@/components/Popups/PasswordPopup.vue'
-import BindGroupPopup from '@/components/Popups/BindGroupPopup.vue'
-import ChooseEmojiPopup from '@/components/Popups/ChooseEmojiPopup.vue'
-import ChooseImageIconPopup from '@/components/Popups/ChooseImageIconPopup.vue'
-import LinkMenuPopup from '@/components/Popups/LinkMenuPopup.vue'
-import GroupMenuPopup from '@/components/Popups/GroupMenuPopup.vue'
-import EditGroupNamePopup from '@/components/Popups/EditGroupNamePopup.vue'
+import Modals from '@/components/Modals/Modals.vue'
+import ConfirmModal from '@/components/Modals/ConfirmModal.vue'
+import NewPasswordModal from '@/components/Modals/NewPasswordModal.vue'
+import PasswordModal from '@/components/Modals/PasswordModal.vue'
+import BindGroupModal from '@/components/Modals/Group/BindGroupModal.vue'
+import ChooseEmojiModal from '@/components/Modals/Group/ChooseEmojiModal.vue'
+import ChooseImageIconModal from '@/components/Modals/Group/ChooseImageIconModal.vue'
+import LinkMenuModal from '@/components/Modals/Link/LinkMenuModal.vue'
+import GroupMenuModal from '@/components/Modals/Group/GroupMenuModal.vue'
+import FolderMenuModal from '@/components/Modals/Folder/FolderMenuModal.vue'
+import TextInputModal from '@/components/Modals/TextInputModal.vue'
 
 onMounted(async () => {
     handleDarkTheme()
@@ -42,18 +42,18 @@ function handleDarkTheme(): void {
         </RouterView>
     </main>
 
-    <Popups
-        :popups="[
-            { comp: GroupMenuPopup, name: 'groupMenuView' },
-            { comp: GroupNamePopup, name: 'groupName' },
-            { comp: NewPasswordPopup, name: 'newPassword' },
-            { comp: PasswordPopup, name: 'password' },
-            { comp: BindGroupPopup, name: 'bindGroup' },
-            { comp: ChooseEmojiPopup, name: 'chooseEmoji' },
-            { comp: ChooseImageIconPopup, name: 'chooseImageIcon' },
-            { comp: LinkMenuPopup, name: 'linkMenuView' },
-            { comp: EditGroupNamePopup, name: 'editGroupName' },
-            { comp: ConfirmPopup, name: 'confirm' },
+    <Modals
+        :modals="[
+            { comp: GroupMenuModal, name: 'groupMenu' },
+            { comp: FolderMenuModal, name: 'folderMenu' },
+            { comp: NewPasswordModal, name: 'newPassword' },
+            { comp: PasswordModal, name: 'password' },
+            { comp: BindGroupModal, name: 'bindGroup' },
+            { comp: ChooseEmojiModal, name: 'chooseEmoji' },
+            { comp: ChooseImageIconModal, name: 'chooseImageIcon' },
+            { comp: LinkMenuModal, name: 'linkMenu' },
+            { comp: ConfirmModal, name: 'confirm' },
+            { comp: TextInputModal, name: 'textInput' },
         ]"
     />
 </template>

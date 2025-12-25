@@ -8,7 +8,7 @@ import { showToast } from '@common/modules/toast'
 import { getDecryptionError } from '@/errors'
 import { useAttemptsStore } from '@/stores/attempts'
 import { useGroupStore } from '@/stores/group'
-import { usePopupStore } from '@/stores/popup'
+import { useModalStore } from '@/stores/modal'
 import { useProgressStore } from '@/stores/progress'
 import { useCryptoStore } from '@/stores/crypto'
 import pako from 'pako'
@@ -18,7 +18,7 @@ import Progress from '@common/components/Progress.vue'
 
 const groupStore = useGroupStore()
 const attemptsStore = useAttemptsStore()
-const popupStore = usePopupStore()
+const modalStore = useModalStore()
 const progressStore = useProgressStore()
 const cryptoStore = useCryptoStore()
 
@@ -76,7 +76,7 @@ async function decryptFile(encrypted: string, pass: string): Promise<boolean> {
 
 async function processFileContent(rawData: string): Promise<void> {
     if (rawData.startsWith('algo(')) {
-        await popupStore.show('password', {
+        await modalStore.show('password', {
             decrypting: pass => decryptFile(rawData, pass),
             text: trans('enter_pass_unlock_file'),
         })
@@ -111,8 +111,8 @@ async function processFileContent(rawData: string): Promise<void> {
         return
     }
 
-    const resp = await popupStore.show('confirm', {
-        text: trans('some_groups_already_exist_same_name'),
+    const resp = await modalStore.show('confirm', {
+        title: trans('some_groups_already_exist_same_name'),
     })
 
     if (resp) {
@@ -147,7 +147,7 @@ function resetState(): void {
         :title="trans('import_groups')"
         :subtitle="trans('import_private_and_open_groups')"
     >
-        <div class="space-y-4">
+        <div class="flex flex-col gap-4">
             <FileInput
                 @chosen="fileChosen"
                 type="file"

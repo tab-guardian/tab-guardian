@@ -33,11 +33,11 @@ const inputRef = ref<HTMLInputElement | null>(null)
 
 const className = computed(() => {
     return [
-        'rounded-md px-2.5 py-1.5 w-full bg-page border focus:outline',
+        'rounded-md px-2.5 py-1.5 w-full bg-page border',
         props.class,
         props.error
             ? 'border-red-600 outline-red-600'
-            : 'border-border outline-primary outline-2',
+            : 'border-border focus:outline-primary focus:outline-2',
     ]
 })
 

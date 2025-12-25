@@ -3,13 +3,13 @@ import { ref } from 'vue'
 import { trans } from '@common/modules'
 import { showToast } from '@common/modules/toast'
 import { useGroupStore } from '@/stores/group'
-import { usePopupStore } from '@/stores/popup'
+import { useModalStore } from '@/stores/modal'
 import Section from '@settings/components/Section.vue'
 import Button from '@common/components/Form/Button.vue'
 import TrashIcon from '@common/components/Icons/TrashIcon.vue'
 
 const groupStore = useGroupStore()
-const popupStore = usePopupStore()
+const modalStore = useModalStore()
 
 const loading = ref<boolean>(false)
 
@@ -18,8 +18,8 @@ async function promptToDeleteGroups(): Promise<void> {
         return
     }
 
-    const resp = await popupStore.show('confirm', {
-        text: trans('i_confirm_want_delete_groups'),
+    const resp = await modalStore.show('confirm', {
+        title: trans('i_confirm_want_delete_groups'),
     })
 
     if (resp && resp.isConfirmed) {

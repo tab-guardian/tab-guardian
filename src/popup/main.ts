@@ -3,8 +3,7 @@ import { createPinia } from 'pinia'
 import router from '@/router'
 import versionPlugin from '@/plugins/versionPlugin'
 import App from '@/App.vue'
-import '@/style.css'
-import 'tippy.js/dist/tippy.css'
+import '@common/assets/css/globals.css'
 import { plugin as VueTippy } from 'vue-tippy'
 
 createApp(App)

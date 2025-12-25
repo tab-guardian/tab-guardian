@@ -23,6 +23,7 @@ export type UserChoices = {
     confirmPassword: string | null
     wantsSelectAllLinks: boolean | null
     bindUrl: string | null
+    folderId: number | null
 }
 
 export type SelectTabsOperation = 'adding' | 'creating'
@@ -40,8 +41,15 @@ export type Link = {
 
 export type EncryptionAlgo = 'AES-GCM'
 
+export type Folder = {
+    id: number
+    name: string
+    updatedAt: number
+}
+
 export type Group = {
     id: number
+    folderId?: number
     name: string
     links: Link[]
     isPrivate: boolean
@@ -50,7 +58,7 @@ export type Group = {
     openedTimes?: number
     createdAt?: number
     hide?: boolean
-    /** @deprecated bindURL is deprecated Delete it eventually */
+    /** @deprecated bindURL is deprecated Delete it eventually. Use bindUrl */
     bindURL?: string
     bindUrl?: string
     icon?: string

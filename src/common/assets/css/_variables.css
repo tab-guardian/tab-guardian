@@ -20,6 +20,8 @@
     --tg-color-safe-hover: rgb(78 220 208 / 25%);
     --tg-color-unsafe: rgba(220, 78, 78, 0.15);
     --tg-color-unsafe-hover: rgba(220, 78, 78, 0.25);
+    --tg-color-folder: rgba(0, 0, 0, 0.05);
+    --tg-color-folder-hover: rgba(0, 0, 0, 0.1);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -45,5 +47,7 @@
         --tg-color-safe-hover: rgb(46 225 209 / 15%);
         --tg-color-unsafe: rgba(225, 46, 46, 0.2);
         --tg-color-unsafe-hover: rgba(225, 46, 46, 0.3);
+        --tg-color-folder: rgba(0, 0, 0, 0.7);
+        --tg-color-folder-hover: rgba(0, 0, 0, 0.8);
     }
 }

@@ -3,7 +3,7 @@ defineProps<{ field: string; value: string }>()
 </script>
 
 <template>
-    <li class="flex items-center justify-between break-words relative text-sm">
+    <li class="flex items-center justify-between wrap-break-words relative text-sm">
         <div class="relative bg-page pr-3 z-10">
             <span>{{ field }} <slot /></span>
         </div>

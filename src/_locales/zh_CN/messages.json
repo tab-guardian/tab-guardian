@@ -54,7 +54,6 @@
     "no": { "message": "否" },
     "lock": { "message": "锁定" },
     "unlock": { "message": "解锁" },
-    "rebind": { "message": "重新绑定" },
     "bound_to_url": { "message": "绑定到 URL" },
     "opened_tabs_times": { "message": "打开标签页次数" },
     "opened_tabs_times_tip": {
@@ -67,6 +66,9 @@
     "error_no_tab_selected": { "message": "未选中任何选项卡" },
     "error_no_group_selected": { "message": "出现问题！未选择任何组" },
     "want_delete_group": { "message": "您确定要删除该组吗？" },
+    "want_delete_folder": {
+        "message": "您确定要删除该文件夹吗？该文件夹内的所有组也将被删除。"
+    },
     "no_tabs_this_group": { "message": "此组中没有选项卡" },
     "click_on_each_tab": { "message": "点击每个标签页以选择或取消选择以保存" },
     "select_all": { "message": "全选" },
@@ -96,7 +98,9 @@
     "rename": { "message": "重命名" },
     "additional_options": { "message": "附加选项" },
     "enter_group_name": { "message": "输入组名称" },
+    "enter_folder_name": { "message": "输入文件夹名称" },
     "group_name": { "message": "组名称" },
+    "folder_name": { "message": "文件夹名称" },
     "group_unlocked": { "message": "组已解锁" },
     "group_locked": { "message": "组已锁定" },
     "error_occurred": { "message": "发生意外错误" },
@@ -118,23 +122,20 @@
     "group_created_with_tabs": { "message": "创建的组包含标签页" },
     "close_selected_tabs": { "message": "关闭选中的标签页" },
     "bind_to_url": { "message": "绑定到URL" },
-    "private_groups_are_secure": {
-        "message": "私有组是安全的并使用加密。只有知道密码的用户可以访问"
+    "do_you_want_private_group": {
+        "message": "您是否希望将您的群组设为私密？私密群组具有安全加密特性，只有知晓密码的人才能访问。"
     },
     "rate_us": { "message": "评价我们" },
     "storage_usage": { "message": "存储使用" },
-    "group_name_long": { "message": "组名称太长" },
+    "text_long": { "message": "文本过长" },
     "contribute": { "message": "贡献" },
     "release_notes": { "message": "更新说明" },
     "change_icon": { "message": "更改图标" },
     "choose_group_icon": { "message": "选择组图标" },
     "icon_is_set": { "message": "图标已设置" },
     "rebind_to_other_url": { "message": "重新绑定到其他 URL" },
-    "enter_new_url_bind_private_to_new_url": {
-        "message": "输入一个新 URL 将您的私有组绑定到此新 URL。只有在访问该 URL 时该组才会可见。不要忘记锁定该组"
-    },
-    "enter_new_url_bind_to": { "message": "输入一个新 URL 进行绑定" },
-    "group_rebind_successful": { "message": "组重新绑定成功" },
+    "enter_url_bind_to": { "message": "输入要绑定的网址" },
+    "group_bind_successful": { "message": "组绑定成功" },
     "url_must_start_with_http": { "message": "URL 必须以 http:// 或 https:// 开头" },
     "select_emoji": { "message": "选择表情符号" },
     "select_image": { "message": "选择图片" },
@@ -196,10 +197,6 @@
     "bind_group_url": {
         "message": "将此组绑定至指定网址。此操作将隐藏该组，除您提供的网址外，其他任何位置均无法查看。仅当在指定网址上打开Tab Guardian时，隐藏组才会显示。"
     },
-    "cannot_bind_to_this_url": {
-        "message": "您无法将您的私人群组绑定到此网址。"
-    },
-    "use_current_url": { "message": "使用当前网址" },
     "make_private": { "message": "设为私密" },
     "remove_url_lock": { "message": "解除私人群组的URL锁定" },
     "remove_url_lock_desc": {
@@ -207,7 +204,11 @@
     },
     "enter_credentials": { "message": "输入凭据" },
     "delete": { "message": "删除" },
+    "create_new_folder": { "message": "创建一个新文件夹" },
     "bind_url_removed": { "message": "绑定网址已从该组中移除。该组仍可访问。" },
+    "folder_created": { "message": "文件夹已创建" },
+    "drop_to_remove": { "message": "拖放至此可从文件夹中移除" },
+    "next": { "message": "接下来" },
     "remember_pass_after_unlock_desc": {
         "message": "若禁用此选项，每次锁定私人群组时均需输入密码。保持此选项启用状态，系统会将密码存储在临时且安全的存储空间中，您无需再次输入密码即可重新锁定群组"
     }

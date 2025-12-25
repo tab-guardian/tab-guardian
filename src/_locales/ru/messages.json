@@ -56,7 +56,6 @@
     "no": { "message": "Нет" },
     "lock": { "message": "Закрыть" },
     "unlock": { "message": "Открыть" },
-    "rebind": { "message": "Отвязать" },
     "bound_to_url": { "message": "Привязана к URL" },
     "opened_tabs_times": { "message": "Открыто вкладок раз" },
     "opened_tabs_times_tip": {
@@ -71,6 +70,9 @@
     },
     "error_no_tab_selected": { "message": "Вкладка не выбрана" },
     "want_delete_group": { "message": "Вы хотите удалить группу?" },
+    "want_delete_folder": {
+        "message": "Вы хотите удалить папку? Все группы внутри этой папки также будут удалены."
+    },
     "click_on_each_tab": {
         "message": "Нажмите на каждую вкладку, чтобы выбрать или отменить выбор для сохранения"
     },
@@ -109,7 +111,9 @@
     "rename": { "message": "Переименовать" },
     "additional_options": { "message": "Дополнительные параметры" },
     "enter_group_name": { "message": "Введите имя группы" },
+    "enter_folder_name": { "message": "Введите имя папки" },
     "group_name": { "message": "Имя группы" },
+    "folder_name": { "message": "Имя папки" },
     "group_unlocked": { "message": "Группа разблокирована" },
     "group_locked": { "message": "Группа заблокирована" },
     "error_occurred": { "message": "Произошла неивестная ошибка" },
@@ -135,23 +139,20 @@
     "group_created_with_tabs": { "message": "Группа создана с вкладками" },
     "close_selected_tabs": { "message": "Закрыть выбранное" },
     "bind_to_url": { "message": "Привязать к URL" },
-    "private_groups_are_secure": {
-        "message": "Приватные группы защищены и используют шифрование. Доступ к ним имеют только пользователи с паролем"
+    "do_you_want_private_group": {
+        "message": "Хотите сделать свою группу приватной? Приватные группы являются безопасными и зашифрованными. Доступ к ним можно получить только зная пароль."
     },
     "rate_us": { "message": "Оцените нас" },
     "storage_usage": { "message": "Хранилище" },
-    "group_name_long": { "message": "Имя группы слишком длинное" },
+    "text_long": { "message": "Текст слишком длинный" },
     "contribute": { "message": "Поддержите нас" },
     "release_notes": { "message": "Журнал изменений" },
     "change_icon": { "message": "Изменить значок" },
     "choose_group_icon": { "message": "Выберите значок группы" },
     "icon_is_set": { "message": "Значок установлен" },
     "rebind_to_other_url": { "message": "Привязать к другому URL" },
-    "enter_new_url_bind_private_to_new_url": {
-        "message": "Введите новый URL для привязки вашей приватной группы. Эта группа будет видна только при посещении указанного URL. Не забудьте заблокировать группу"
-    },
-    "enter_new_url_bind_to": { "message": "Введите новый URL для привязки" },
-    "group_rebind_successful": { "message": "Группа успешно пере-привязана" },
+    "enter_url_bind_to": { "message": "Введите URL для привязки" },
+    "group_bind_successful": { "message": "Группа успешно привязана" },
     "url_must_start_with_http": {
         "message": "URL должен начинаться с http:// или https://"
     },
@@ -229,9 +230,6 @@
     "bind_group_url": {
         "message": "Привяжите эту группу к URL-адресу. Это скроет группу от всех, кроме указанного вами URL-адреса. Только при открытии Tab Guardian по указанному URL-адресу вам будет показана скрытая группа."
     },
-    "cannot_bind_to_this_url": {
-        "message": "Вы не можете привязать свою приватную группу к этому URL-адресу."
-    },
     "use_current_url": { "message": "Использовать текущий URL" },
     "make_private": { "message": "Сделать приватной" },
     "remove_url_lock": { "message": "Удалить привязанный URL от приватной группы" },
@@ -240,6 +238,10 @@
     },
     "enter_credentials": { "message": "Введите учетные данные" },
     "delete": { "message": "Удалить" },
+    "create_new_folder": { "message": "Создать новую папку" },
+    "folder_created": { "message": "Папка создана" },
+    "drop_to_remove": { "message": "Перетащите сюда, чтобы удалить из папки" },
+    "next": { "message": "Далее" },
     "bind_url_removed": {
         "message": "URL-адрес привязки был удален из группы. Группа доступна."
     },

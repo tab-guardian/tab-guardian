@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { trans } from '@common/modules'
-import { usePopupStore } from '@/stores/popup'
+import { useModalStore } from '@/stores/modal'
 import Section from '@settings/components/Section.vue'
 import Button from '@common/components/Form/Button.vue'
 import PencilSquareIcon from '@common/components/Icons/PencilSquareIcon.vue'
 
-const popupStore = usePopupStore()
+const modalStore = useModalStore()
 
 const loading = ref<boolean>(false)
 
@@ -16,7 +16,7 @@ async function promptToDeleteUrlLock(): Promise<void> {
     }
 
     loading.value = true
-    await popupStore.show('removeUrlLock', {})
+    await modalStore.show('removeUrlLock', {})
     loading.value = false
 }
 </script>
