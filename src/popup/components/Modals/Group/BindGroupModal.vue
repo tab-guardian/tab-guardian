@@ -70,7 +70,12 @@ async function bindGroup(): Promise<void> {
                 <div v-else></div>
                 <!-- keep for flex justify -->
 
-                <Button type="submit" :disabled="preventSubmit" :icon="CheckIcon">
+                <Button
+                    type="submit"
+                    :disabled="preventSubmit"
+                    :icon="CheckIcon"
+                    shortcut="Enter"
+                >
                     {{ trans('bind_to_url') }}
                 </Button>
             </div>

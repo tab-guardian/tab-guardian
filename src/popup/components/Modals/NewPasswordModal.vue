@@ -38,7 +38,12 @@ function updatePassword(): void {
                 @has-error="preventSubmit = $event"
             />
 
-            <Button type="submit" :disabled="preventSubmit" :icon="ChevronRightIcon">
+            <Button
+                type="submit"
+                :disabled="preventSubmit"
+                :icon="ChevronRightIcon"
+                shortcut="Enter"
+            >
                 {{ trans('confirm') }}
             </Button>
         </form>

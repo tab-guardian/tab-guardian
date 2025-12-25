@@ -45,6 +45,7 @@ async function submitName(): Promise<void> {
                     type="submit"
                     :disabled="error"
                     :icon="sharedData?.icon || CheckIcon"
+                    shortcut="Enter"
                 >
                     {{ sharedData?.submitText }}
                 </Button>

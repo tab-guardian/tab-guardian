@@ -250,6 +250,7 @@ function toggleSelect(link: Link): void {
                 @clicked="handleSaveGroup"
                 :loading="saving"
                 :icon="PlusIcon"
+                shortcut="Enter"
             >
                 {{ trans('add_tabs') }}
             </Button>
