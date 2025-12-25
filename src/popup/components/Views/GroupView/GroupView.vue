@@ -19,7 +19,9 @@ const route = useRoute()
 const groupStore = useGroupStore()
 const modalStore = useModalStore()
 
-watchEffect(() => groupStore.selectedGroup = findGroup())
+watchEffect(() => {
+    groupStore.selectedGroup = findGroup()
+})
 
 const group = computed(() => groupStore.selectedGroup)
 

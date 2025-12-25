@@ -31,7 +31,7 @@ const className = computed<string[]>(() => {
     const classes = [
         'text-page px-5 py-2 rounded-lg text-md inline-flex hover:opacity-85',
         'justify-center items-center gap-3 transition-opacity cursor-pointer',
-        'relative group/shortcut'
+        'relative group/shortcut',
     ]
 
     if (props.loading || props.disabled) {
@@ -61,11 +61,15 @@ const className = computed<string[]>(() => {
             <component v-else :is="icon" class="size-5" />
             <slot />
 
-            <small v-if="shortcut" :class="[
-                'block rounded-sm bg-page px-1 text-[.6rem] text-font border',
-                'border-border tracking-wide font-mono absolute -top-1.5 -right-1',
-                'opacity-0 group-hover/shortcut:opacity-100 transition-opacity',
-            ]">{{ shortcut }}</small>
+            <small
+                v-if="shortcut"
+                :class="[
+                    'block rounded-sm bg-page px-1 text-[.6rem] text-font border',
+                    'border-border tracking-wide font-mono absolute -top-1.5 -right-1',
+                    'opacity-0 group-hover/shortcut:opacity-100 transition-opacity',
+                ]"
+                >{{ shortcut }}</small
+            >
         </button>
     </div>
 </template>

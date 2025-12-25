@@ -1,6 +1,6 @@
 # Release Notes
 
-## v1.17.0 (2025-12-23)
+## v1.17.0 (2025-12-25)
 - 🐛 Fixed not excepting some emojies when trying to select it for a group icon [#98](https://github.com/tab-guardian/tab-guardian/issues/98).
 - ✨ Changed the way you create private and public groups. We used to have 2 seperate buttons, but now it was replaced with a single button and step-like creation process.
 - ✨ Added the ability to create folders with groups. You can drag and drop existing groups to folders or create groups inside folders [#47](https://github.com/tab-guardian/tab-guardian/issues/47).

@@ -17,9 +17,7 @@ defineProps<{ label: string }>()
             'mt-3 mb-1 flex items-center justify-center gap-2 p-2',
         ]"
     >
-        <ArrowRightIcon
-            class="size-5 rotate-180 opacity-50 pointer-events-none"
-        />
+        <ArrowRightIcon class="size-5 rotate-180 opacity-50 pointer-events-none" />
 
         <span class="opacity-50 pointer-events-none">
             {{ label }}

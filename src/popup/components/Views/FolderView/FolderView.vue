@@ -26,7 +26,9 @@ onMounted(async () => {
     await fetchGroups()
 })
 
-watchEffect(() => folderStore.selectedFolder = findFolder())
+watchEffect(() => {
+    folderStore.selectedFolder = findFolder()
+})
 
 const folder = computed(() => folderStore.selectedFolder)
 
