@@ -241,6 +241,7 @@ function toggleSelect(link: Link): void {
                 @clicked="handleCreateGroup"
                 :loading="saving"
                 :icon="PlusIcon"
+                shortcut="Enter"
             >
                 {{ trans('create') }}
             </Button>
