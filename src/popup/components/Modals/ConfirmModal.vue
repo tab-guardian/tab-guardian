@@ -19,7 +19,7 @@ function eventCallback(e: KeyboardEvent): void {
         handleConfirm()
     }
 
-    if (e.key === 'Escape') {
+    if (e.key === 'n') {
         handleDeny()
     }
 }
@@ -40,7 +40,7 @@ async function handleDeny(): Promise<void> {
         :description="sharedData?.description"
     >
         <template #buttons>
-            <Button @click="handleDeny" is="outline" shortcut="Esc">
+            <Button @click="handleDeny" is="outline" shortcut="n">
                 {{ trans('no') }}
             </Button>
 
