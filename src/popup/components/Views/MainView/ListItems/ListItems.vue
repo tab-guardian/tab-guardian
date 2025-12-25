@@ -101,9 +101,10 @@ async function moveFromFolder(e: any): Promise<void> {
             <ArrowRightIcon
                 class="size-5 rotate-180 opacity-50 pointer-events-none"
             />
-            <span class="opacity-50 pointer-events-none">{{
-                trans('drop_to_remove')
-            }}</span>
+
+            <span class="opacity-50 pointer-events-none">
+                {{ trans('drop_to_remove') }}
+            </span>
         </div>
 
         <VueDraggableNext

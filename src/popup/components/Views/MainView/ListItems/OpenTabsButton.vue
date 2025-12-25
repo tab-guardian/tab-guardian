@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Group } from '@common/types'
+import { computed } from 'vue'
 import { trans } from '@common/modules'
 import { useTabsStore } from '@/stores/tabs'
 import { useModalStore } from '@/stores/modal'
@@ -14,6 +15,8 @@ const tabsStore = useTabsStore()
 const modalStore = useModalStore()
 const groupStore = useGroupStore()
 const router = useRouter()
+
+const isEmptyGroup = computed(() => props.group.links.length === 0)
 
 async function openTabs(): Promise<void> {
     if (props.group.links.length === 0) {
@@ -61,10 +64,10 @@ async function unlockCallback(pass: string): Promise<boolean> {
         :src="runtime.getUrl('images/tab-icons/up.png')"
         alt="Open tabs"
         @click.prevent="openTabs"
-        v-tippy="trans('open_tabs')"
+        v-tippy="trans(isEmptyGroup ? 'no_tabs_this_group' : 'open_tabs')"
         class="size-4 transition-transform hover:scale-110 dark:invert"
         :class="{
-            'cursor-not-allowed opacity-40': group.links.length === 0,
+            'cursor-not-allowed opacity-40': isEmptyGroup,
         }"
     />
 </template>
