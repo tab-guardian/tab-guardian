@@ -23,7 +23,7 @@ async function navigateToFolderView(): Promise<void> {
             <h2 class="text-sm">{{ folder.name }}</h2>
         </div>
 
-        <div class="flex items-center gap-3">
+        <div class="flex items-center gap-3 pointer-events-none">
             <ChevronRightIcon class="size-4" />
         </div>
     </MainItem>
