@@ -8,7 +8,7 @@ import GroupItem from '@/components/Views/MainView/ListItems/GroupItem.vue'
 import Message from '@common/components/Message.vue'
 import Spinner from '@common/components/Spinner.vue'
 import FolderItem from '@/components/Views/MainView/ListItems/FolderItem.vue'
-import ArrowRightIcon from '@common/components/Icons/ArrowRightIcon.vue'
+import DropArea from '@/components/DropArea.vue'
 
 const groupStore = useGroupStore()
 
@@ -76,6 +76,7 @@ async function moveFromFolder(e: any): Promise<void> {
     emit('refresh')
 
     draggableGroup.value = null
+    isDragging.value = false
 }
 </script>
 
@@ -87,25 +88,11 @@ async function moveFromFolder(e: any): Promise<void> {
     </Message>
 
     <div v-else class="flex flex-col border-t border-border">
-        <div
+        <DropArea
             v-if="isDragging && folders.length === 0"
-            @dragenter.prevent
-            @dragover.prevent
-            @drop.prevent="moveFromFolder"
-            data-dropzone
-            :class="[
-                'border-3 border-border border-dashed rounded-md h-14 leading-4',
-                'mt-3 mb-1 flex items-center justify-center gap-2 p-2',
-            ]"
-        >
-            <ArrowRightIcon
-                class="size-5 rotate-180 opacity-50 pointer-events-none"
-            />
-
-            <span class="opacity-50 pointer-events-none">
-                {{ trans('drop_to_remove') }}
-            </span>
-        </div>
+            @is-dropped="moveFromFolder"
+            :label="trans('drop_to_remove')"
+        />
 
         <VueDraggableNext
             :sort="false"
