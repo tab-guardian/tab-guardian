@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Group, Folder } from '@common/types'
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, computed, watchEffect } from 'vue'
 import { trans } from '@common/modules'
 import { useRoute } from 'vue-router'
 import { useModalStore } from '@/stores/modal'
@@ -23,9 +23,10 @@ const groups = ref<Group[]>([])
 
 onMounted(async () => {
     groupStore.selectedGroup = null
-    folderStore.selectedFolder = findFolder()
     await fetchGroups()
 })
+
+watchEffect(() => folderStore.selectedFolder = findFolder())
 
 const folder = computed(() => folderStore.selectedFolder)
 

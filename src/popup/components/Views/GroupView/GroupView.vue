@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Group } from '@common/types'
-import { computed, onMounted } from 'vue'
+import { computed, onMounted, watchEffect } from 'vue'
 import { trans } from '@common/modules'
 import { useGroupStore } from '@/stores/group'
 import { useRoute, RouteLocationRaw } from 'vue-router'
@@ -19,7 +19,7 @@ const route = useRoute()
 const groupStore = useGroupStore()
 const modalStore = useModalStore()
 
-onMounted(() => (groupStore.selectedGroup = findGroup()))
+watchEffect(() => groupStore.selectedGroup = findGroup())
 
 const group = computed(() => groupStore.selectedGroup)
 
