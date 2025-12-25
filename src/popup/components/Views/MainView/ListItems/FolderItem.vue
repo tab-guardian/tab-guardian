@@ -18,7 +18,7 @@ async function navigateToFolderView(): Promise<void> {
         @click="navigateToFolderView"
         class="bg-folder! hover:bg-folder-hover!"
     >
-        <div class="flex items-center gap-2">
+        <div class="flex items-center gap-2 pointer-events-none">
             <GroupIcon :folder />
             <h2 class="text-sm">{{ folder.name }}</h2>
         </div>
