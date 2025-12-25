@@ -40,12 +40,12 @@ async function handleDeny(): Promise<void> {
         :description="sharedData?.description"
     >
         <template #buttons>
-            <Button @click="handleDeny" is="outline">
-                {{ trans('no') }} <small>(Esc)</small>
+            <Button @click="handleDeny" is="outline" shortcut="Esc">
+                {{ trans('no') }}
             </Button>
 
-            <Button @click="handleConfirm" is="success">
-                {{ trans('yes') }} <small>(Enter)</small>
+            <Button @click="handleConfirm" is="success" shortcut="Enter">
+                {{ trans('yes') }}
             </Button>
         </template>
     </Modal>
