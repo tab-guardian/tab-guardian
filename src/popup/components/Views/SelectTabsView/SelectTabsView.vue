@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import type { Group, Link, SelectTabsOperation } from '@common/types'
 import { ref, computed, onMounted, onUnmounted } from 'vue'
-import { useRoute, useRouter, RouteLocationRaw } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { useNewGroupStore } from '@/stores/newGroup'
 import { logger, trans } from '@common/modules'
 import { useGroupStore } from '@/stores/group'
 import { getCurrentLinks } from '@common/modules/tabs/getCurrentLinks'
 import { showToast } from '@common/modules/toast'
+import { filterForbittenLinks } from '@common/modules/group'
 import { closeTabs } from '@common/modules/tabs/closeTabs'
 import { VueDraggableNext } from 'vue-draggable-next'
 import View from '@/components/Views/View.vue'
@@ -18,10 +19,11 @@ import SlideSwitch from '@common/components/Form/SlideSwitch.vue'
 import Spinner from '@common/components/Spinner.vue'
 import PlusIcon from '@common/components/Icons/PlusIcon.vue'
 
-const newGroupStore = useNewGroupStore()
-const groupStore = useGroupStore()
 const router = useRouter()
 const route = useRoute()
+
+const newGroupStore = useNewGroupStore()
+const groupStore = useGroupStore()
 
 const loading = ref<boolean>(false)
 const saving = ref<boolean>(false)
@@ -105,7 +107,9 @@ async function handleSaveGroup(): Promise<void> {
 
     saving.value = true
 
-    await groupStore.insertLinksInto(group.id, selectedLinks.value)
+    const filteredLinks = filterForbittenLinks(selectedLinks.value)
+    await groupStore.insertLinksInto(group.id, filteredLinks)
+
     showToastMessage()
 
     if (closeAllTabs.value) {
@@ -118,7 +122,8 @@ async function handleSaveGroup(): Promise<void> {
 }
 
 async function createGroup(): Promise<Group | null> {
-    const group = newGroupStore.createGroupFromChoices(selectedLinks.value)
+    const filteredLinks = filterForbittenLinks(selectedLinks.value)
+    const group = newGroupStore.createGroupFromChoices(filteredLinks)
 
     if (!newGroupStore.choices.isPrivate) {
         return group

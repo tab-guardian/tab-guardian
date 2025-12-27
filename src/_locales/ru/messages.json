@@ -8,7 +8,7 @@
         "placeholders": { "n": { "content": "$1" } }
     },
     "browser_cannot_open_tab": {
-        "message": "Ваш браузер запретил открытие вкладки $n$",
+        "message": "Ваш браузер запретил открытие и сохранение вкладки $n$",
         "placeholders": { "n": { "content": "$1" } }
     },
     "you_have_unlocked_groups": {

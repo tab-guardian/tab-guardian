@@ -28,7 +28,6 @@ async function startFolderCreation(): Promise<void> {
         return
     }
 
-
     const isPrivate = await askForPrivateFolderCreation()
     const folderName = resp.name || getDefaultName('Folder')
 

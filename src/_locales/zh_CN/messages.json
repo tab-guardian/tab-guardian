@@ -8,7 +8,7 @@
         "placeholders": { "n": { "content": "$1" } }
     },
     "browser_cannot_open_tab": {
-        "message": "您的浏览器不允许打开第 $n$ 个标签页",
+        "message": "您的浏览器不允许打开并保存此标签页 $n$",
         "placeholders": { "n": { "content": "$1" } }
     },
     "you_have_unlocked_groups": {
