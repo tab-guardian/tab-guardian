@@ -45,6 +45,7 @@ export type Folder = {
     id: number
     name: string
     updatedAt: number
+    isPrivate?: boolean
 }
 
 export type Group = {

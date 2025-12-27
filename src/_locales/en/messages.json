@@ -141,7 +141,10 @@
     "close_selected_tabs": { "message": "Close selected tabs" },
     "bind_to_url": { "message": "Bind to URL" },
     "do_you_want_private_group": {
-        "message": "Do you want to make your group private? Private groups are secure and encrypted. You can only access them knowing the password."
+        "message": "Do you want to make your group private? Private groups are secure, and encrypted. You can only access them knowing the password."
+    },
+    "do_you_want_private_folder": {
+        "message": "Do you want to make your folder private? Private folders are secure and all groups inside are encrypted. You can only access them knowing the password."
     },
     "rate_us": { "message": "Rate Us" },
     "storage_usage": { "message": "Storage usage" },

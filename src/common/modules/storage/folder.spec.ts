@@ -24,6 +24,42 @@ describe('folder storage module', () => {
             expect(foldersParsed[0].name).equal('Anna Photos')
         })
 
+        it('is missing isPrivate field', async () => {
+            await folderStorage.save('Anna Photos')
+
+            const foldersStr = localStorage.getItem('folders')
+
+            expect(foldersStr).not.toBeNull()
+
+            const foldersParsed = JSON.parse(foldersStr!)
+
+            expect(foldersParsed[0].isPrivate).toBeUndefined()
+        })
+
+        it('is missing isPrivate field when isPrivate is false', async () => {
+            await folderStorage.save('Anna Photos', false)
+
+            const foldersStr = localStorage.getItem('folders')
+
+            expect(foldersStr).not.toBeNull()
+
+            const foldersParsed = JSON.parse(foldersStr!)
+
+            expect(foldersParsed[0].isPrivate).toBeUndefined()
+        })
+
+        it('has isPrivate field with true when isPrivate passed with true', async () => {
+            await folderStorage.save('Anna Photos', true)
+
+            const foldersStr = localStorage.getItem('folders')
+
+            expect(foldersStr).not.toBeNull()
+
+            const foldersParsed = JSON.parse(foldersStr!)
+
+            expect(foldersParsed[0].isPrivate).toBeTruthy()
+        })
+
         it('appends folder into storage to other folders', async () => {
             await folderStorage.save('Serhii')
             await folderStorage.save('Anna')

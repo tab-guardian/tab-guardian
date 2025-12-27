@@ -5,7 +5,7 @@ import { generateId } from '@common/modules/group'
 import { getDefaultName } from '@common/modules'
 
 export const folderStorage = {
-    async save(name: string): Promise<Folder | null> {
+    async save(name: string, isPrivate?: boolean): Promise<Folder | null> {
         if (name === '') {
             name = getDefaultName('Folder')
         }
@@ -22,6 +22,10 @@ export const folderStorage = {
             id: generateId(),
             name,
             updatedAt: Date.now(),
+        }
+
+        if (isPrivate) {
+            folder.isPrivate = true
         }
 
         folders.push(folder)

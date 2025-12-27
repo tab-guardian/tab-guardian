@@ -16,7 +16,7 @@ onMounted(newGroupStore.resetChoices)
 
 const emit = defineEmits<{ (e: 'refresh'): void }>()
 
-async function showFolderModal(): Promise<void> {
+async function startFolderCreation(): Promise<void> {
     const resp = await modalStore.show('textInput', {
         label: trans('folder_name'),
         title: trans('enter_folder_name'),
@@ -28,12 +28,24 @@ async function showFolderModal(): Promise<void> {
         return
     }
 
+
+    const isPrivate = await askForPrivateFolderCreation()
     const folderName = resp.name || getDefaultName('Folder')
-    await folderStorage.save(folderName)
+
+    await folderStorage.save(folderName, isPrivate)
 
     emit('refresh')
 
     showToast({ text: trans('folder_created') })
+}
+
+async function askForPrivateFolderCreation(): Promise<boolean> {
+    const resp = await modalStore.show('confirm', {
+        title: trans('make_private'),
+        description: trans('do_you_want_private_folder'),
+    })
+
+    return !!resp && resp.isConfirmed
 }
 </script>
 
@@ -49,7 +61,7 @@ async function showFolderModal(): Promise<void> {
 
         <NewGroupButton
             v-tippy="trans('create_new_folder')"
-            @click="showFolderModal"
+            @click="startFolderCreation"
             class="w-20 bg-success hover:bg-success-hover"
         >
             <FolderPlusIcon class="size-6" />

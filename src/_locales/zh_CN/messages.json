@@ -125,6 +125,9 @@
     "do_you_want_private_group": {
         "message": "您是否希望将您的群组设为私密？私密群组具有安全加密特性，只有知晓密码的人才能访问。"
     },
+    "do_you_want_private_folder": {
+        "message": "您是否希望将文件夹设为私有？私有文件夹具有安全性，其中所有组均经过加密处理。只有知晓密码才能访问这些文件夹。"
+    },
     "rate_us": { "message": "评价我们" },
     "storage_usage": { "message": "存储使用" },
     "text_long": { "message": "文本过长" },
