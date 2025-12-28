@@ -1,5 +1,23 @@
 export type Locale = 'ru' | 'zh_CN' | 'en'
 
+export type FrontendEventMessage =
+    | { type: 'closeTabs'; payload: number[] }
+    | {
+        type: 'encryptGroup'
+        payload: { group: Group; password: string }
+    }
+    | {
+        type: 'decryptGroup'
+        payload: { group: Group; password: string; rememberPass: boolean }
+    }
+
+export type BackendEventMessage =
+    | { type: 'encryptionProgress'; payload: { linksEncrypted: number } }
+    | { type: 'decryptionProgress'; payload: { linksDecrypted: number } }
+    | { type: 'decryptionProgress'; payload: { linksDecrypted: number } }
+    | { type: 'groupEncrypted'; payload: { group: Group } }
+    | { type: 'groupDecrypted'; payload: { group: Group } }
+
 export type LinkBuffer = {
     action: 'copy' | 'cut'
     initialGroupId: number

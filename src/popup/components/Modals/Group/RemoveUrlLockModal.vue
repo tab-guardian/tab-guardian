@@ -78,14 +78,17 @@ async function submit(): Promise<void> {
 async function removeBindUrl(g: Group): Promise<void> {
     let group = cloneDeep(g)
 
+    // TODO: here
     if (group.isEncrypted) {
         // We decrypt just to make sure that provided password is correct
-        group = await cryptoStore.decryptGroup(group, formData.pass)
+        // group = await cryptoStore.decryptGroup(group, formData.pass)
     }
 
     delete group.bindUrl
+
+    // TODO: finish here
     const encrypted = await cryptoStore.encryptGroup(group, formData.pass)
-    await groupStore.save(encrypted)
+    // await groupStore.save(encrypted)
 }
 
 function hideModal(): void {

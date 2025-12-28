@@ -94,9 +94,11 @@ async function processFileContent(rawData: string): Promise<void> {
 
     const groups = Array.isArray(json) ? json : [json]
 
-    // Lock (encrypt) the private group
+    // Lock (encrypt) the private group.
+    // We have only 1 group in array.
     if (groupPassword.value && groups.length === 1) {
-        groups[0] = await cryptoStore.encryptGroup(groups[0], groupPassword.value)
+        // TODO: finish here
+        // groups[0] = await cryptoStore.encryptGroup(groups[0], groupPassword.value)
     }
 
     await groupStore.load()

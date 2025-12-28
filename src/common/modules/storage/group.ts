@@ -35,7 +35,11 @@ export const groupStorage = {
         return groups.map(group => decodeGroup(group))
     },
 
-    async save(group: Group): Promise<void> {
+    async save(group: Group, updateTimestamp = true): Promise<void> {
+        if (updateTimestamp) {
+            group.updatedAt = Date.now()
+        }
+
         const links = group.links.map(link => {
             return {
                 ...link,

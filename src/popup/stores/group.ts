@@ -9,7 +9,7 @@ import { useNotificationStore } from '@/stores/notification'
 import { useCryptoStore } from '@/stores/crypto'
 import { useProgressStore } from '@/stores/progress'
 import { getDecryptionError } from '@/errors'
-import { getHashedCurrentUrl, isForbittenUrl } from '@common/modules/url'
+import { getHashedCurrentUrl } from '@common/modules/url'
 import { validatePassword } from '@common/modules/validation/group'
 import { passwordStorage } from '@common/modules/storage/password'
 import { groupStorage } from '@common/modules/storage/group'
@@ -64,9 +64,7 @@ export const useGroupStore = defineStore('group', () => {
         loading.value = false
     }
 
-    type LockFuncReturnValue =
-        | { message: string; failed: true; group: null }
-        | { message: string; failed: false; group: Group }
+    type LockFuncReturnValue = { message: string; failed: boolean }
 
     async function lock(
         group: Group,
@@ -74,74 +72,38 @@ export const useGroupStore = defineStore('group', () => {
         confirm?: string,
     ): Promise<LockFuncReturnValue> {
         if (group.isEncrypted) {
-            return {
-                message: trans('group_already_locked'),
-                failed: true,
-                group: null,
-            }
+            return { message: trans('group_already_locked'), failed: true }
         }
 
         const validationError = validatePassword(pass, confirm)
 
         if (validationError) {
-            return {
-                message: validationError,
-                failed: true,
-                group: null,
-            }
+            return { message: validationError, failed: true }
         }
 
         try {
-            const encrypted = await cryptoStore.encryptGroup(group, pass)
-
-            encrypted.isEncrypted = true
-            encrypted.isPrivate = true
-
-            await save(encrypted)
-
-            return {
-                failed: false,
-                message: trans('group_locked'),
-                group: encrypted,
-            }
+            await cryptoStore.encryptGroup(group, pass)
+            return { failed: false, message: trans('group_locked') }
         } catch (err) {
             logger().error('Encryption:', err)
         }
 
-        return {
-            failed: true,
-            group: null,
-            message: trans('error_occurred'),
-        }
+        return { failed: true, message: trans('error_occurred') }
     }
 
     type UnlockFuncReturnValue =
-        | { message: string; failed: true; group: null }
-        | { message: string; failed: false; group: Group }
+        | { message: string; failed: true }
+        | { message: string; failed: false }
 
     async function unlock(
         group: Group,
         password: string,
     ): Promise<UnlockFuncReturnValue> {
         try {
-            const decryptedGroup = await cryptoStore.decryptGroup(group, password)
-            await save(decryptedGroup)
-
-            if (settingsStore.settings.rememberPasswordAfterUnlock) {
-                await passwordStorage.save(group.id, password)
-            }
-
-            return {
-                failed: false,
-                message: trans('group_unlocked'),
-                group: decryptedGroup,
-            }
+            await cryptoStore.decryptGroup(group, password)
+            return { failed: false, message: trans('group_unlocked') }
         } catch (err: any) {
-            return {
-                message: getDecryptionError(err),
-                failed: true,
-                group: null,
-            }
+            return { message: getDecryptionError(err), failed: true }
         }
     }
 
@@ -270,13 +232,8 @@ export const useGroupStore = defineStore('group', () => {
     }
 
     async function save(group: Group, updateTimestamp = true): Promise<void> {
-        if (updateTimestamp) {
-            group.updatedAt = Date.now()
-        }
-
-        await groupStorage.save(group)
+        await groupStorage.save(group, updateTimestamp)
         await load()
-
         await notificationStore.recalculateNotification()
     }
 

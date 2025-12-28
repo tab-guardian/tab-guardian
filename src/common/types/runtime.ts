@@ -1,3 +1,5 @@
+import type { FrontendEventMessage } from '@common/types'
+
 export type RuntimeType = 'chrome' | 'firefox' | 'web'
 
 export type PlatformRuntime = {
@@ -22,7 +24,7 @@ export type PlatformRuntime = {
      * extensions cannot send messages to content scripts using this method.
      * To send messages to content scripts, use tabs.sendMessage.
      */
-    sendMessage<M = any>(message: M): Promise<void>
+    sendMessage(message: FrontendEventMessage): Promise<void>
 
     extension: {
         lastError(): string | null

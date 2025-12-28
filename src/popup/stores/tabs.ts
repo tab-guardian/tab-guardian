@@ -33,8 +33,6 @@ export const useTabsStore = defineStore('tabs', () => {
         await restore(group)
         const encryption = await groupStore.lock(group, pass)
 
-        await passwordStorage.delete(group.id)
-
         showToast({
             text: encryption.message,
             type: encryption.failed ? 'error' : 'info',
@@ -43,8 +41,6 @@ export const useTabsStore = defineStore('tabs', () => {
         if (encryption.failed) {
             return false
         }
-
-        await groupStore.save(encryption.group)
 
         return true
     }

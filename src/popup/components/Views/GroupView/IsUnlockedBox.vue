@@ -74,9 +74,6 @@ async function lockGroup(pass: string): Promise<void> {
         return
     }
 
-    await groupStore.save(locking.group)
-    await passwordStorage.delete(props.group.id)
-
     encrypting.value = false
 }
 </script>
