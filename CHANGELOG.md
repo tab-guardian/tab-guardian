@@ -1,7 +1,7 @@
 # Release Notes
 
-## v1.18.0 (2025-12-27)
-- 
+## v1.18.0 (2025-12-30)
+- 🧑‍💻 Instead of checking if tab with the specific URL can be restored, we now do these checks when we save tabs into groups. Because the previous implementation could creates bugs where you cannot fast open a private group from main screen if it contains a tab like `about:privatebrowsing`. [#94](https://github.com/tab-guardian/tab-guardian/issues/94).
 
 ## v1.17.0 (2025-12-25)
 - 🐛 Fixed not excepting some emojies when trying to select it for a group icon [#98](https://github.com/tab-guardian/tab-guardian/issues/98).
