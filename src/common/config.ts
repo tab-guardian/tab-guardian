@@ -22,6 +22,7 @@ export const config = {
         'about:privatebrowsing',
         'chrome://newtab/',
     ],
+    GROUP_MISSING_FOLDER: -1,
 }
 
 function toStr(inpKey: string): string {

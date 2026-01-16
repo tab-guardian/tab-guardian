@@ -14,6 +14,7 @@ import { validatePassword } from '@common/modules/validation/group'
 import { passwordStorage } from '@common/modules/storage/password'
 import { groupStorage } from '@common/modules/storage/group'
 import { cloneDeep } from 'lodash'
+import { config } from '@common/config'
 
 let isIncognitoCache: boolean | null = null
 
@@ -179,7 +180,7 @@ export const useGroupStore = defineStore('group', () => {
 
         Object.assign(group, updates)
 
-        if (updates.folderId === undefined) {
+        if (updates.folderId === config.GROUP_MISSING_FOLDER) {
             delete group.folderId
         }
 
