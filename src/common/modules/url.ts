@@ -47,3 +47,15 @@ export async function getHashedCurrentUrl(): Promise<string | null> {
 export function isImageUrl(url: string | null | undefined): boolean {
     return url ? validateImageUrl(url) === null : false
 }
+
+export function isForbittenUrl(url: string): boolean {
+    const isFirefox = isRuntime('firefox')
+
+    if (!isFirefox || url === 'about:blank') {
+        return false
+    }
+
+    // It's a limitation of Firefox, you cannot open about: and chrome: pages.
+    // The only exception is `about:blank` which can be open.
+    return url.startsWith('about:') || url.startsWith('chrome:')
+}

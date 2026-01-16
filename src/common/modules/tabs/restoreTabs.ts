@@ -1,14 +1,18 @@
 import type { Link } from '@common/types'
 import { queryTabs } from '@common/modules/tabs/queryTabs'
 import { runtime } from '@common/modules/runtime'
-import { isRuntime } from '@common/modules/runtime/utils'
-import { config } from '@common/config'
-import { showToast } from '@common/modules/toast'
 import { trans } from '@common/modules'
+import { showToast } from '@common/modules/toast'
+import { config } from '@common/config'
+import { isForbittenUrl } from '@common/modules/url'
 
 export async function restoreTabs(links: Link[]): Promise<void> {
     for (const link of links) {
-        if (shouldPreventOpening(link.url)) {
+        if (isForbittenUrl(link.url)) {
+            showToast({
+                text: trans('browser_cannot_open_tab', link.url),
+                type: 'error',
+            })
             continue
         }
 
@@ -20,26 +24,6 @@ export async function restoreTabs(links: Link[]): Promise<void> {
     }
 
     await closeEmptyTab()
-}
-
-function shouldPreventOpening(url: string): boolean {
-    const isFirefox = isRuntime('firefox')
-
-    if (!isFirefox || url === 'about:blank') {
-        return false
-    }
-
-    // It's a limitation of Firefox, you cannot open about: and chrome: pages.
-    // The only exception is `about:blank` which can be open.
-    if (url.startsWith('about:') || url.startsWith('chrome:')) {
-        showToast({
-            text: trans('browser_cannot_open_tab', url),
-            type: 'error',
-        })
-        return true
-    }
-
-    return false
 }
 
 async function closeEmptyTab(): Promise<void> {

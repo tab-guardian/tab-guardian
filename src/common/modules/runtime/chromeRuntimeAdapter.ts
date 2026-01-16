@@ -44,7 +44,10 @@ export function getChromeRuntimeAdapter(): PlatformRuntime {
             MAX_BYTES_QUOTA: chrome.storage.local.QUOTA_BYTES,
 
             async all() {
-                const items = await chrome.storage.local.get()
+                const items = await chrome.storage.local.get<{
+                    [key: string]: string
+                }>()
+
                 const result: { [key: string]: string } = {}
 
                 for (const key in items) {

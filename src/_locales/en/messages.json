@@ -8,7 +8,7 @@
         "placeholders": { "n": { "content": "$1" } }
     },
     "browser_cannot_open_tab": {
-        "message": "Your browser doesn't allow opening the tab $n$",
+        "message": "Your browser doesn't allow opening and saving this tab $n$",
         "placeholders": { "n": { "content": "$1" } }
     },
     "you_have_unlocked_groups": {
