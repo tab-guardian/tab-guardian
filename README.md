@@ -85,42 +85,73 @@ npm run prettier
 ```
 
 ### With a Container Engine
-> [!NOTE]
-> If you use [🐳 Docker](https://app.docker.com/) instead of [🦦 Podman](https://podman.io/), just replace `podman-compose` with `docker compose`, and `podman` with `docker` in code examples below.
-
 #### Build the Image
-To build the image, run this command:
+To build the image, run this command.
+
+With Podman:
 ```bash
 podman-compose build
 ```
 
-#### Create `node_modules`
-Run this command to install npm packages and generate a `node_modules` directory on your local machine:
+With Docker:
+```bash
+docker compose build
+```
 
+#### Create `node_modules`
+Run this command to install npm packages and generate a `node_modules` directory on your local machine.
+
+With Podman:
 ```bash
 podman-compose run --rm app npm i
 ```
 
+With Docker:
+```bash
+docker compose run --rm app npm i
+```
+
 #### Run the Container
-After the image is build, you can run a container from that image. Run this command:
+After the image is build, you can run a container from that image. Run this command.
+
+With Podman:
 ```bash
 podman-compose up -d
+```
+
+With Docker:
+```bash
+docker compose up -d
 ```
 
 After the container is created, it will run the development server which is available on `http://localhost:3000` with hot reloading.
 
 #### Enter the Container
-To enter inside the container, run this command:
+To enter inside the container, run this command.
+
+With Podman:
 ```bash
-podman-compose exec app sh
+podman-compose exec app bash
+```
+
+With Docker:
+```bash
+docker compose exec app bash
 ```
 
 You'll be able to run [NPM commands](#npm-commands-available) inside of the container.
 
 #### Delete the Container
-When you are done working, you can delete the container by running this:
+When you are done working, you can delete the container by running this.
+
+With Podman:
 ```bash
 podman-compose down
+```
+
+With Docker:
+```bash
+docker compose down
 ```
 
 ## Terminology
