@@ -8,3 +8,5 @@ source.zip
 package-lock.json
 .DS_Store
 Session.vim
+GEMINI.md
+CLAUDE.md
