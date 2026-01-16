@@ -11,7 +11,7 @@ defineProps<Props>()
 
 <template>
     <a
-        href="https://serhii.io/about-me"
+        href="https://serhiicho.com/about-me"
         target="_blank"
         class="flex items-center gap-3 bg-page hover:bg-page-hover transition-colors px-4 py-2"
     >
