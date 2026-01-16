@@ -15,8 +15,8 @@ Usage:
 
 Options:
   --help           Show help options
-  --firefox        Build only Firefox extension
-  --chrome         Build only Chrome extension
+  --firefox, -f    Build only Firefox extension
+  --chrome,  -c    Build only Chrome extension
 EOF
 )
 
@@ -74,7 +74,7 @@ build_zip_archive () {
 compile_assets () {
     echo "⏳ LOADING: compiling assets 'npm run build'..."
     npm run check
-    npm run prettier-check
+    npm run prettier
     npm run build
     echo "✅ SUCCESS: 'npm run build'"
 }
@@ -89,12 +89,14 @@ for arg in "$@"; do
         help=1
     fi
 
-    if [[ "$arg" == "--firefox" ]]; then
+    if [[ "$arg" == "--firefox" || "$arg" == "-f" ]]; then
         only_firefox=1
+        echo "🎯 Target is Firefox"
     fi
 
-    if [[ "$arg" == "--chrome" ]]; then
+    if [[ "$arg" == "--chrome" || "$arg" == "-c" ]]; then
         only_chrome=1
+        echo "🎯 Target is Chrome"
     fi
 done
 
