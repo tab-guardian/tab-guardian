@@ -8,7 +8,7 @@ import { useGroupStore } from '@/stores/group'
 import { getCurrentLinks } from '@common/modules/tabs/getCurrentLinks'
 import { showToast } from '@common/modules/toast'
 import { closeTabs } from '@common/modules/tabs/closeTabs'
-import { filterForbittenLinks } from '@common/modules/group'
+import { filterForbiddenLinks } from '@common/modules/group'
 import { VueDraggableNext } from 'vue-draggable-next'
 import View from '@/components/Views/View.vue'
 import TabItem from '@/components/Views/SelectTabsView/TabItem.vue'
@@ -106,7 +106,7 @@ async function handleSaveGroup(): Promise<void> {
 
     saving.value = true
 
-    const filteredLinks = filterForbittenLinks(selectedLinks.value)
+    const filteredLinks = filterForbiddenLinks(selectedLinks.value)
     await groupStore.insertLinksInto(group.id, filteredLinks)
     showToastMessage()
 
@@ -120,7 +120,7 @@ async function handleSaveGroup(): Promise<void> {
 }
 
 async function createGroup(): Promise<Group | null> {
-    const filteredLinks = filterForbittenLinks(selectedLinks.value)
+    const filteredLinks = filterForbiddenLinks(selectedLinks.value)
     const group = newGroupStore.createGroupFromChoices(filteredLinks)
 
     if (!newGroupStore.choices.isPrivate) {

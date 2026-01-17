@@ -3,7 +3,7 @@ import { defineStore } from 'pinia'
 import { useGroupStore } from '@/stores/group'
 import { trans } from '@common/modules'
 import { useSettingsStore } from '@/stores/settings'
-import { filterForbittenLinks } from '@common/modules/group'
+import { filterForbiddenLinks } from '@common/modules/group'
 import { showToast } from '@common/modules/toast'
 import { getCurrentLinks } from '@common/modules/tabs/getCurrentLinks'
 import { restoreTabs } from '@common/modules/tabs/restoreTabs'
@@ -83,7 +83,7 @@ export const useTabsStore = defineStore('tabs', () => {
             return
         }
 
-        const filteredLinks = filterForbittenLinks(links)
+        const filteredLinks = filterForbiddenLinks(links)
 
         if (filteredLinks.length > 0) {
             await groupStore.update(group.id, { links: [] })

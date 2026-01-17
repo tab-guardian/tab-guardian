@@ -1,5 +1,4 @@
 import { runtime } from '@common/modules/runtime'
-import emojiRegex from 'emoji-regex'
 
 export function trans(msg: string, ...args: string[]): string {
     return runtime.trans(msg, ...args)
