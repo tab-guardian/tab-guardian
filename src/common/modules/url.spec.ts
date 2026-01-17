@@ -1,6 +1,8 @@
 // @vitest-environment happy-dom
 
-import { describe, it, expect, suite, beforeEach } from 'vitest'
+import type { RuntimeType } from '@common/types/runtime'
+import type { Mock } from 'vitest'
+import { describe, it, expect, suite, beforeEach, vi } from 'vitest'
 import { createPinia, setActivePinia } from 'pinia'
 import {
     getCurrentUrl,
@@ -10,11 +12,19 @@ import {
     isForbiddenUrl,
 } from '@common/modules/url'
 import { fakeInvalidImageUrls, fakeValidImageUrls } from './fake'
+import * as RuntimeUtils from '@common/modules/runtime/utils'
 
 describe('url utilities module', () => {
+    let isRuntimeSpy: Mock
+
     beforeEach(() => {
         localStorage.clear()
         setActivePinia(createPinia())
+
+        isRuntimeSpy = vi.spyOn(RuntimeUtils, 'isRuntime')
+
+        // Reset mocks
+        isRuntimeSpy.mockReset()
     })
 
     suite('hashUrl()', () => {
@@ -68,6 +78,47 @@ describe('url utilities module', () => {
         it('returns false because the runtime is not firefox', () => {
             const res = isForbiddenUrl('https://duckduckgo.com/')
             expect(res).toBeFalsy()
+        })
+
+        it('approves URLs in chrome runtime', () => {
+            // Chrome runtime
+            isRuntimeSpy.mockImplementation((arg: RuntimeType) => arg === 'chrome')
+
+            const urls = [
+                'about:config',
+                'chrome://extensions',
+                'https://example.com',
+                'about:blank', // about:blank is never forbidden
+            ]
+
+            urls.forEach(url => {
+                const res = isForbiddenUrl(url)
+                expect(res).toBeFalsy()
+            })
+        })
+
+        it('does not approve forbidden URLs in firefox runtime', () => {
+            // Firefox runtime
+            isRuntimeSpy.mockImplementation((arg: RuntimeType) => arg === 'firefox')
+
+            const urls = ['about:config', 'chrome://extensions']
+
+            urls.forEach(url => {
+                const res = isForbiddenUrl(url)
+                expect(res).toBeTruthy()
+            })
+        })
+
+        it('approve non-forbidden URLs in firefox runtime', () => {
+            // Firefox runtime
+            isRuntimeSpy.mockImplementation((arg: RuntimeType) => arg === 'firefox')
+
+            const urls = ['about:addons', 'chrome://settings']
+
+            urls.forEach(url => {
+                const res = isForbiddenUrl(url)
+                expect(res).toBeTruthy()
+            })
         })
     })
 })
