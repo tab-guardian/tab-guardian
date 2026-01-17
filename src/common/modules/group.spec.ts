@@ -1,5 +1,6 @@
 // @vitest-environment happy-dom
 
+import type { RuntimeType } from '@common/types/runtime'
 import type { Link } from '@common/types'
 import type { Mock } from 'vitest'
 import { describe, it, expect, suite, beforeEach, vi } from 'vitest'
@@ -10,7 +11,6 @@ import {
     filterForbiddenLinks,
 } from '@common/modules/group'
 import { fakeLink } from '@common/modules/fake'
-import { setIsRuntimeTo } from '@common/modules/test-utils'
 import * as RuntimeUtils from '@common/modules/runtime/utils'
 
 describe('group utils module', () => {
@@ -64,7 +64,7 @@ describe('group utils module', () => {
 
     suite('filterForbiddenLinks()', () => {
         it('does not filter links in chrome runtime', () => {
-            setIsRuntimeTo('chrome', isRuntimeSpy)
+            isRuntimeSpy.mockImplementation((arg: RuntimeType) => arg === 'chrome')
 
             const links = [
                 fakeLink({ url: 'about:config' }),
@@ -80,7 +80,7 @@ describe('group utils module', () => {
         })
 
         it('filters forbidden links in firefox runtime', () => {
-            setIsRuntimeTo('firefox', isRuntimeSpy)
+            isRuntimeSpy.mockImplementation((arg: RuntimeType) => arg === 'firefox')
 
             const links = [
                 fakeLink({ url: 'about:config' }),
@@ -101,7 +101,7 @@ describe('group utils module', () => {
         })
 
         it('returns empty array if all links are forbidden in firefox runtime', () => {
-            setIsRuntimeTo('firefox', isRuntimeSpy)
+            isRuntimeSpy.mockImplementation((arg: RuntimeType) => arg === 'firefox')
 
             const links = [
                 fakeLink({ url: 'about:addons' }),
@@ -115,7 +115,7 @@ describe('group utils module', () => {
         })
 
         it('returns original links if no links are forbidden in firefox runtime', () => {
-            setIsRuntimeTo('firefox', isRuntimeSpy)
+            isRuntimeSpy.mockImplementation((arg: RuntimeType) => arg === 'firefox')
 
             const links = [
                 fakeLink({ url: 'https://google.com' }),
@@ -134,7 +134,7 @@ describe('group utils module', () => {
         })
 
         it('handles empty links array gracefully', () => {
-            setIsRuntimeTo('firefox', isRuntimeSpy)
+            isRuntimeSpy.mockImplementation((arg: RuntimeType) => arg === 'firefox')
 
             const links: Link[] = []
             const res = filterForbiddenLinks(links)
