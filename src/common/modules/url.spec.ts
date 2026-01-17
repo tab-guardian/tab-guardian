@@ -7,7 +7,7 @@ import {
     getHashedCurrentUrl,
     hashUrl,
     isImageUrl,
-    isForbittenUrl,
+    isForbiddenUrl,
 } from '@common/modules/url'
 import { fakeInvalidImageUrls, fakeValidImageUrls } from './fake'
 
@@ -64,9 +64,9 @@ describe('url utilities module', () => {
         })
     })
 
-    suite('isForbittenUrl()', () => {
+    suite('isForbiddenUrl()', () => {
         it('returns false because the runtime is not firefox', () => {
-            const res = isForbittenUrl('https://duckduckgo.com/')
+            const res = isForbiddenUrl('https://duckduckgo.com/')
             expect(res).toBeFalsy()
         })
     })

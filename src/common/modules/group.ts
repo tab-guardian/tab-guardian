@@ -1,6 +1,6 @@
 import type { Link } from '@common/types'
 import { toRaw } from 'vue'
-import { isForbittenUrl } from '@common/modules/url'
+import { isForbiddenUrl } from '@common/modules/url'
 import { showToast } from '@common/modules/toast'
 import { trans } from '@common/modules'
 
@@ -17,18 +17,19 @@ export function isComponentIcon(str: string): boolean {
 }
 
 export function filterForbiddenLinks(links: Link[]): Link[] {
-    const forbidden = links.filter(l => isForbittenUrl(l.url))
+    const allowed: Link[] = []
 
-    if (forbidden.length > 0) {
-        for (const link of forbidden) {
+    for (const link of links) {
+        if (isForbiddenUrl(link.url)) {
             showToast({
                 text: trans('browser_cannot_open_tab', link.url),
                 type: 'error',
             })
+            continue
         }
+
+        allowed.push(link)
     }
 
-    const result = links.filter(l => !isForbittenUrl(l.url)).map(l => toRaw(l))
-
-    return toRaw(result)
+    return toRaw(allowed.map(l => toRaw(l)))
 }

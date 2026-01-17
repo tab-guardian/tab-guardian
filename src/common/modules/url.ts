@@ -48,7 +48,7 @@ export function isImageUrl(url: string | null | undefined): boolean {
     return url ? validateImageUrl(url) === null : false
 }
 
-export function isForbittenUrl(url: string): boolean {
+export function isForbiddenUrl(url: string): boolean {
     const isFirefox = isRuntime('firefox')
 
     if (!isFirefox || url === 'about:blank') {
