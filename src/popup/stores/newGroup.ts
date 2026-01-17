@@ -1,15 +1,14 @@
 import type { Group, UserChoices, Link, SelectTabsOperation } from '@common/types'
+import type { Router } from 'vue-router'
 import { reactive, computed } from 'vue'
 import { defineStore } from 'pinia'
 import { generateId } from '@common/modules/group'
 import { getDefaultName } from '@common/modules'
 import { logger, trans } from '@common/modules'
-import { useRouter } from 'vue-router'
 import { useModalStore } from '@/stores/modal'
 import ChevronRightIcon from '@common/components/Icons/ChevronRightIcon.vue'
 
 export const useNewGroupStore = defineStore('newGroup', () => {
-    const router = useRouter()
     const modalStore = useModalStore()
 
     // null suggest that there was no choice yet
@@ -62,7 +61,10 @@ export const useNewGroupStore = defineStore('newGroup', () => {
         }
     }
 
-    async function startGroupCreation(folderId?: number | null): Promise<void> {
+    async function startGroupCreation(
+        router: Router,
+        folderId?: number | null,
+    ): Promise<void> {
         const resp = await modalStore.show('textInput', {
             label: trans('group_name'),
             title: trans('enter_group_name'),
@@ -81,7 +83,7 @@ export const useNewGroupStore = defineStore('newGroup', () => {
         choices.isPrivate = await askForPrivateGroupCreation()
 
         if (!choices.isPrivate) {
-            moveToSelectTabsView()
+            moveToSelectTabsView(router)
             return
         }
 
@@ -93,7 +95,7 @@ export const useNewGroupStore = defineStore('newGroup', () => {
             return
         }
 
-        moveToSelectTabsView()
+        moveToSelectTabsView(router)
     }
 
     async function askForPrivateGroupCreation(): Promise<boolean> {
@@ -146,7 +148,7 @@ export const useNewGroupStore = defineStore('newGroup', () => {
         return true
     }
 
-    function moveToSelectTabsView(): void {
+    function moveToSelectTabsView(router: Router): void {
         const operation: SelectTabsOperation = 'creating'
         const redirect = choices.folderId ? `/folder/${choices.folderId}` : '/'
         router.push({ name: 'select-tabs', params: { operation, redirect } })

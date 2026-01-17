@@ -4,6 +4,7 @@ import { trans } from '@common/modules'
 import { useModalStore } from '@/stores/modal'
 import { useFolderStore } from '@/stores/folder'
 import { useNewGroupStore } from '@/stores/newGroup'
+import { useRouter } from 'vue-router'
 import Modal from '@/components/Modals/Modal.vue'
 import DeleteFolderMenuItem from '@/components/Modals/Folder/MenuItems/DeleteFolderMenuItem.vue'
 import RenameFolderMenuItem from '@/components/Modals/Folder/MenuItems/RenameFolderMenuItem.vue'
@@ -14,6 +15,7 @@ import PlusIcon from '@common/components/Icons/PlusIcon.vue'
 const modalStore = useModalStore()
 const folderStore = useFolderStore()
 const newGroupStore = useNewGroupStore()
+const router = useRouter()
 
 const folder = computed(() => folderStore.selectedFolder)
 
@@ -21,7 +23,7 @@ onMounted(newGroupStore.resetChoices)
 
 async function createGroup(): Promise<void> {
     modalStore.hide('folderMenu', {})
-    await newGroupStore.startGroupCreation(folder.value?.id)
+    await newGroupStore.startGroupCreation(router, folder.value?.id)
 }
 </script>
 
