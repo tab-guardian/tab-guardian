@@ -17,10 +17,10 @@ export function isComponentIcon(str: string): boolean {
 }
 
 export function filterForbittenLinks(links: Link[]): Link[] {
-    const forbittedLinks = links.filter(l => isForbittenUrl(l.url))
+    const forbitten = links.filter(l => isForbittenUrl(l.url))
 
-    if (forbittedLinks.length > 0) {
-        for (const link of forbittedLinks) {
+    if (forbitten.length > 0) {
+        for (const link of forbitten) {
             showToast({
                 text: trans('browser_cannot_open_tab', link.url),
                 type: 'error',
