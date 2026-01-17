@@ -16,20 +16,32 @@ export function isComponentIcon(str: string): boolean {
     return str.slice(-4) === 'Icon'
 }
 
-export function filterForbiddenLinks(links: Link[]): Link[] {
-    const allowed: Link[] = []
+export function printForbiddenLinks(links: Link[]): void {
+    for (const link of links) {
+        showToast({
+            text: trans('browser_cannot_open_tab', link.url),
+            type: 'error',
+        })
+    }
+}
+
+export function filterForbiddenLinks(links: Link[]): {
+    allowed: Link[]
+    forbidden: Link[]
+} {
+    let allowed: Link[] = []
+    let forbidden: Link[] = []
 
     for (const link of links) {
         if (isForbiddenUrl(link.url)) {
-            showToast({
-                text: trans('browser_cannot_open_tab', link.url),
-                type: 'error',
-            })
+            forbidden.push(link)
             continue
         }
 
         allowed.push(link)
     }
 
-    return toRaw(allowed.map(l => toRaw(l)))
+    allowed = toRaw(allowed.map(l => toRaw(l)))
+
+    return { allowed, forbidden }
 }

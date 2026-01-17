@@ -4,11 +4,11 @@ import { runtime } from '@common/modules/runtime'
 import { trans } from '@common/modules'
 import { showToast } from '@common/modules/toast'
 import { config } from '@common/config'
-import { isForbittenUrl } from '@common/modules/url'
+import { isForbiddenUrl } from '@common/modules/url'
 
 export async function restoreTabs(links: Link[]): Promise<void> {
     for (const link of links) {
-        if (isForbittenUrl(link.url)) {
+        if (isForbiddenUrl(link.url)) {
             showToast({
                 text: trans('browser_cannot_open_tab', link.url),
                 type: 'error',
