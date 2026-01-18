@@ -85,13 +85,13 @@ export const useTabsStore = defineStore('tabs', () => {
 
         const filteredLinks = filterForbiddenLinks(links)
 
-        if (filteredLinks.length > 0) {
+        if (filteredLinks.allowed.length > 0) {
             await groupStore.update(group.id, { links: [] })
-            await groupStore.insertLinksInto(group.id, filteredLinks)
+            await groupStore.insertLinksInto(group.id, filteredLinks.allowed)
         }
 
         if (closeAllTabs) {
-            await closeTabs(filteredLinks.map(l => l.tabId))
+            await closeTabs(filteredLinks.allowed.map(l => l.tabId))
         }
 
         showToast({ text: trans('tabs_now_saved') })
