@@ -33,7 +33,9 @@ export function downloadFile(text: string, name: string): void {
 }
 
 export function logger() {
-    if (import.meta.env?.TEST === 'true') {
+    const isTestMode = import.meta.env?.TEST === 'true'
+
+    if (isTestMode) {
         return {
             error: () => null,
             info: () => null,
