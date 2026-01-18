@@ -4,6 +4,8 @@
 - 🧑‍💻 Updated all dependencies to the latest versions.
 - 🧑‍💻 Instead of checking if tab with the specific URL can be restored, we now do these checks when we save tabs into groups. Because the previous implementation could creates bugs where you cannot fast open a private group from main screen if it contains a tab like `about:privatebrowsing`. [#94](https://github.com/tab-guardian/tab-guardian/issues/94).
 - 🐛 Fixed bug where group would be removed from folder when restoring it.
+- 🧑‍💻 Filtering groups on the main page now works for groups that are inside of folders.
+- 🧑‍💻 When you use filtering on the main page, it temporary hides folders.
 
 ## v1.17.0 (2025-12-25)
 - 🐛 Fixed not excepting some emojies when trying to select it for a group icon [#98](https://github.com/tab-guardian/tab-guardian/issues/98).

@@ -364,6 +364,7 @@ export const useGroupStore = defineStore('group', () => {
     }
 
     return {
+        initialGroups,
         selectedGroup,
         loading,
         groups,
