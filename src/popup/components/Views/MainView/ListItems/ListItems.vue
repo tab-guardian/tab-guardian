@@ -34,7 +34,6 @@ function moveToFolder(e: any): void {
     const folderElem = e.explicitOriginalTarget as HTMLElement
     const groupElem = e.item as HTMLElement
 
-    console.log({ folderElem, e })
     const groupValue = groupElem.getAttribute('data-group-id')
     const folderValue = folderElem.getAttribute('data-folder-id')
 
