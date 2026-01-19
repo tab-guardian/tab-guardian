@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { logger } from '@common/modules'
 import { useModalStore } from '@/stores/modal'
-import { ref } from 'vue'
+import { ref, toRaw } from 'vue'
 import Modal from '@/components/Modals/Modal.vue'
 import TextInput from '@common/components/Form/TextInput.vue'
 import CheckIcon from '@common/components/Icons/CheckIcon.vue'
@@ -44,7 +44,7 @@ async function submitName(): Promise<void> {
                 <Button
                     type="submit"
                     :disabled="error"
-                    :icon="sharedData?.icon || CheckIcon"
+                    :icon="sharedData?.icon ? toRaw(sharedData.icon) : CheckIcon"
                     shortcut="Enter"
                 >
                     {{ sharedData?.submitText }}

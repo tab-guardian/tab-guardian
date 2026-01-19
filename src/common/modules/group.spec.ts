@@ -1,13 +1,27 @@
 // @vitest-environment happy-dom
 
-import { describe, it, expect, suite, beforeEach } from 'vitest'
+import type { RuntimeType } from '@common/types/runtime'
+import type { Link } from '@common/types'
+import type { Mock } from 'vitest'
+import { describe, it, expect, suite, beforeEach, vi } from 'vitest'
 import { createPinia, setActivePinia } from 'pinia'
-import { generateId, isComponentIcon } from '@common/modules/group'
+import {
+    generateId,
+    isComponentIcon,
+    filterForbiddenLinks,
+} from '@common/modules/group'
+import { fakeLink } from '@common/modules/fake'
+import * as RuntimeUtils from '@common/modules/runtime/utils'
 
 describe('group utils module', () => {
+    let isRuntimeSpy: Mock
+
     beforeEach(() => {
         localStorage.clear()
         setActivePinia(createPinia())
+
+        isRuntimeSpy = vi.spyOn(RuntimeUtils, 'isRuntime')
+        isRuntimeSpy.mockReset()
     })
 
     suite('generateId()', () => {
@@ -45,6 +59,88 @@ describe('group utils module', () => {
 
         it('returns true for 5 character input', () => {
             expect(isComponentIcon('XIcon')).toBeTruthy()
+        })
+    })
+
+    suite('filterForbiddenLinks()', () => {
+        it('does not filter links in chrome runtime', () => {
+            isRuntimeSpy.mockImplementation((arg: RuntimeType) => arg === 'chrome')
+
+            const links = [
+                fakeLink({ url: 'about:config' }),
+                fakeLink({ url: 'chrome://extensions' }),
+                fakeLink({ url: 'https://example.com' }),
+                fakeLink({ url: 'about:blank' }), // about:blank is never forbidden
+            ]
+
+            const res = filterForbiddenLinks(links)
+
+            expect(res.allowed).toHaveLength(4)
+            expect(res.forbidden).toHaveLength(0)
+        })
+
+        it('filters forbidden links in firefox runtime', () => {
+            isRuntimeSpy.mockImplementation((arg: RuntimeType) => arg === 'firefox')
+
+            const links = [
+                fakeLink({ url: 'about:config' }),
+                fakeLink({ url: 'chrome://extensions' }),
+                fakeLink({ url: 'https://example.com' }),
+                fakeLink({ url: 'about:blank' }),
+            ]
+
+            const res = filterForbiddenLinks(links)
+
+            expect(res.allowed).toHaveLength(2)
+            expect(res.allowed[0].url).toBe('https://example.com')
+            expect(res.allowed[1].url).toBe('about:blank')
+
+            expect(res.forbidden).toHaveLength(2)
+            expect(res.forbidden[0].url).toBe('about:config')
+            expect(res.forbidden[1].url).toBe('chrome://extensions')
+        })
+
+        it('returns empty array if all links are forbidden in firefox runtime', () => {
+            isRuntimeSpy.mockImplementation((arg: RuntimeType) => arg === 'firefox')
+
+            const links = [
+                fakeLink({ url: 'about:addons' }),
+                fakeLink({ url: 'chrome://settings' }),
+            ]
+
+            const res = filterForbiddenLinks(links)
+
+            expect(res.allowed).toHaveLength(0)
+            expect(res.forbidden).toHaveLength(2)
+        })
+
+        it('returns original links if no links are forbidden in firefox runtime', () => {
+            isRuntimeSpy.mockImplementation((arg: RuntimeType) => arg === 'firefox')
+
+            const links = [
+                fakeLink({ url: 'https://google.com' }),
+                fakeLink({ url: 'https://bing.com' }),
+                fakeLink({ url: 'about:blank' }),
+            ]
+
+            const res = filterForbiddenLinks(links)
+
+            expect(res.allowed).toHaveLength(3)
+            expect(res.allowed[0].url).toBe('https://google.com')
+            expect(res.allowed[1].url).toBe('https://bing.com')
+            expect(res.allowed[2].url).toBe('about:blank')
+
+            expect(res.forbidden).toHaveLength(0)
+        })
+
+        it('handles empty links array gracefully', () => {
+            isRuntimeSpy.mockImplementation((arg: RuntimeType) => arg === 'firefox')
+
+            const links: Link[] = []
+            const res = filterForbiddenLinks(links)
+
+            expect(res.allowed).toHaveLength(0)
+            expect(res.forbidden).toHaveLength(0)
         })
     })
 })

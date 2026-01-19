@@ -1,5 +1,4 @@
 import { runtime } from '@common/modules/runtime'
-import emojiRegex from 'emoji-regex'
 
 export function trans(msg: string, ...args: string[]): string {
     return runtime.trans(msg, ...args)
@@ -33,8 +32,19 @@ export function downloadFile(text: string, name: string): void {
     URL.revokeObjectURL(url)
 }
 
+export function isTestMode(): boolean {
+    return (
+        (typeof window !== 'undefined' &&
+            (window.location?.hostname === 'localhost' ||
+                window.location?.protocol === 'file:')) ||
+        (typeof globalThis !== 'undefined' &&
+            ((globalThis as any).process?.env?.NODE_ENV === 'test' ||
+                (globalThis as any).__vitest__))
+    )
+}
+
 export function logger() {
-    if (import.meta.env?.TEST === 'true') {
+    if (isTestMode()) {
         return {
             error: () => null,
             info: () => null,

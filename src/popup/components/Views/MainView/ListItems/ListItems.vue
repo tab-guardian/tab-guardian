@@ -3,6 +3,7 @@ import type { Group, Folder } from '@common/types'
 import { computed, ref } from 'vue'
 import { trans } from '@common/modules'
 import { useGroupStore } from '@/stores/group'
+import { config } from '@common/config'
 import { VueDraggableNext } from 'vue-draggable-next'
 import GroupItem from '@/components/Views/MainView/ListItems/GroupItem.vue'
 import Message from '@common/components/Message.vue'
@@ -33,7 +34,6 @@ function moveToFolder(e: any): void {
     const folderElem = e.explicitOriginalTarget as HTMLElement
     const groupElem = e.item as HTMLElement
 
-    console.log({ folderElem, e })
     const groupValue = groupElem.getAttribute('data-group-id')
     const folderValue = folderElem.getAttribute('data-folder-id')
 
@@ -72,7 +72,9 @@ async function moveFromFolder(e: any): Promise<void> {
         return
     }
 
-    await groupStore.update(draggableGroup.value, { folderId: undefined })
+    await groupStore.update(draggableGroup.value, {
+        folderId: config.GROUP_MISSING_FOLDER,
+    })
 
     emit('refresh')
 

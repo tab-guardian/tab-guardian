@@ -5,12 +5,14 @@ import { useModalStore } from '@/stores/modal'
 import { folderStorage } from '@common/modules/storage/folder'
 import { showToast } from '@common/modules/toast'
 import { useNewGroupStore } from '@/stores/newGroup'
+import { useRouter } from 'vue-router'
 import PlusCircleIcon from '@common/components/Icons/PlusCircleIcon.vue'
 import FolderPlusIcon from '@common/components/Icons/FolderPlusIcon.vue'
 import NewGroupButton from '@/components/Views/MainView/NewGroup/NewGroupButton.vue'
 
 const modalStore = useModalStore()
 const newGroupStore = useNewGroupStore()
+const router = useRouter()
 
 onMounted(newGroupStore.resetChoices)
 
@@ -40,7 +42,7 @@ async function showFolderModal(): Promise<void> {
 <template>
     <div class="flex items-center gap-2">
         <NewGroupButton
-            @click="newGroupStore.startGroupCreation()"
+            @click="newGroupStore.startGroupCreation(router)"
             class="w-full bg-primary hover:bg-primary-hover"
         >
             <PlusCircleIcon class="size-6" />

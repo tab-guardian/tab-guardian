@@ -4,6 +4,7 @@ import { useGroupStore } from '@/stores/group'
 import { useTabsStore } from '@/stores/tabs'
 import { useModalStore } from '@/stores/modal'
 import { useRouter } from 'vue-router'
+import { useFolderStore } from '@/stores/folder'
 import { ref, onMounted, onUnmounted } from 'vue'
 import { logger, trans } from '@common/modules'
 import { showToast } from '@common/modules/toast'
@@ -12,12 +13,12 @@ import MagnifyingGlassIcon from '@common/components/Icons/MagnifyingGlassIcon.vu
 const groupStore = useGroupStore()
 const tabsStore = useTabsStore()
 const modalStore = useModalStore()
+const folderStore = useFolderStore()
 const router = useRouter()
 
 const placeholder =
     navigator.userAgent.indexOf('Mac OS X') != -1 ? '⌃⌘k' : 'ctrl+alt+k'
 
-const initialGroups = ref<Group[]>([])
 const inpElem = ref<HTMLInputElement | null>(null)
 const query = ref<string>('')
 
@@ -29,12 +30,6 @@ onMounted(() => {
 onUnmounted(() => {
     document.removeEventListener('keydown', focusOnSearch)
     document.removeEventListener('keydown', openFirstGroup)
-
-    if (initialGroups.value.length === 0) {
-        initialGroups.value = groupStore.groups
-    }
-
-    groupStore.groups = initialGroups.value
 })
 
 async function openFirstGroup(e: KeyboardEvent): Promise<void> {
@@ -50,7 +45,6 @@ async function openFirstGroup(e: KeyboardEvent): Promise<void> {
     // Clear the input field after Enter was pressed
     query.value = ''
     inpElem.value!.value = ''
-    groupStore.groups = initialGroups.value
 
     if (!group.isPrivate) {
         await tabsStore.openTabs(group)
@@ -103,7 +97,7 @@ function focusOnSearch(e: KeyboardEvent): void {
     }
 }
 
-function filterGroups(): void {
+async function filterGroups(): Promise<void> {
     if (!inpElem.value) {
         logger().warn('Input element is not defined')
         return
@@ -111,16 +105,15 @@ function filterGroups(): void {
 
     query.value = inpElem.value.value
 
-    if (initialGroups.value.length === 0) {
-        initialGroups.value = groupStore.groups
-    }
-
     if (query.value === '') {
-        groupStore.groups = initialGroups.value
+        await groupStore.load()
+        await folderStore.load()
         return
     }
 
-    groupStore.groups = initialGroups.value.filter(group => {
+    folderStore.folders = []
+
+    groupStore.groups = groupStore.initialGroups.filter(group => {
         const nameMatch = group.name
             .toLowerCase()
             .includes(query.value.toLowerCase())
@@ -135,7 +128,7 @@ function filterGroups(): void {
     })
 }
 
-function hideInput(): void {
+function clearInput(): void {
     if (query.value !== '') {
         return
     }
@@ -157,7 +150,7 @@ function hideInput(): void {
             ]"
             :placeholder="trans('enter_group_name')"
             @input="filterGroups"
-            @blur="hideInput"
+            @blur="clearInput"
         />
 
         <div

@@ -3,6 +3,7 @@ import { defineStore } from 'pinia'
 import { useGroupStore } from '@/stores/group'
 import { trans } from '@common/modules'
 import { useSettingsStore } from '@/stores/settings'
+import { filterForbiddenLinks } from '@common/modules/group'
 import { showToast } from '@common/modules/toast'
 import { getCurrentLinks } from '@common/modules/tabs/getCurrentLinks'
 import { restoreTabs } from '@common/modules/tabs/restoreTabs'
@@ -82,13 +83,15 @@ export const useTabsStore = defineStore('tabs', () => {
             return
         }
 
-        if (links.length > 0) {
+        const filteredLinks = filterForbiddenLinks(links)
+
+        if (filteredLinks.allowed.length > 0) {
             await groupStore.update(group.id, { links: [] })
-            await groupStore.insertLinksInto(group.id, links)
+            await groupStore.insertLinksInto(group.id, filteredLinks.allowed)
         }
 
         if (closeAllTabs) {
-            await closeTabs(links.map(l => l.tabId))
+            await closeTabs(filteredLinks.allowed.map(l => l.tabId))
         }
 
         showToast({ text: trans('tabs_now_saved') })

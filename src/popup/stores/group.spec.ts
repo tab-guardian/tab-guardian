@@ -265,6 +265,25 @@ describe('group store', () => {
     })
 
     suite('update()', () => {
+        it('persists folderId when other fields are updated', async () => {
+            const groupStore = useGroupStore()
+            const folderId = 123
+            const group = fakeGroup({ folderId })
+
+            await groupStore.save(group)
+
+            const result = await groupStore.update(group.id, {
+                name: 'NEW NAME',
+            })
+
+            expect(result).toBeTruthy()
+
+            const updatedGroup = groupStore.get(group.id)
+
+            expect(updatedGroup).not.toBeNull()
+            expect(updatedGroup?.folderId).toEqual(folderId)
+        })
+
         it('updates fields of a group', async () => {
             const groupStore = useGroupStore()
             const group = fakeGroup()
@@ -290,6 +309,22 @@ describe('group store', () => {
             const groupStore = useGroupStore()
             const result = await groupStore.update(0, { name: 'NAME' })
             expect(result).toBeFalsy()
+        })
+
+        it('remove folderId field when folderId is updated to GROUP_MISSING_FOLDER', async () => {
+            const groupStore = useGroupStore()
+            const folderId = 123
+            const group = fakeGroup({ folderId })
+
+            await groupStore.save(group)
+            await groupStore.update(group.id, {
+                folderId: config.GROUP_MISSING_FOLDER,
+            })
+
+            const updatedGroup = groupStore.get(group.id)
+
+            expect(updatedGroup).not.toBeNull()
+            expect(updatedGroup?.folderId).toBeUndefined()
         })
     })
 
