@@ -1,9 +1,9 @@
 {
     "compilerOptions": {
-      "target": "ESNext",
+      "target": "es2022",
+      "module": "esnext",
+      "moduleResolution": "bundler",
       "useDefineForClassFields": true,
-      "module": "ESNext",
-      "moduleResolution": "Node",
       "strict": true,
       "sourceMap": true,
       "jsx": "preserve",
@@ -13,17 +13,16 @@
       "lib": ["ESNext", "DOM"],
       "skipLibCheck": true,
       "noEmit": true,
-      "baseUrl": "./src",
       "typeRoots": [
         "./node_modules/@types",
         "./src/popup/globals.d.ts"
       ],
       "paths": {
-          "@/*": ["popup/*"],
-          "@bg/*": ["background/*"],
-          "@settings/*": ["settings/*"],
-          "@common/*": ["common/*"],
-          "@locales/*": ["_locales/*"]
+          "@/*": ["./src/popup/*"],
+          "@bg/*": ["./src/background/*"],
+          "@settings/*": ["./src/settings/*"],
+          "@common/*": ["./src/common/*"],
+          "@locales/*": ["./src/_locales/*"]
       }
     },
     "include": [

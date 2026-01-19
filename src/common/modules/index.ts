@@ -32,10 +32,19 @@ export function downloadFile(text: string, name: string): void {
     URL.revokeObjectURL(url)
 }
 
-export function logger() {
-    const isTestMode = import.meta.env?.TEST === 'true'
+export function isTestMode(): boolean {
+    return (
+        (typeof window !== 'undefined' &&
+            (window.location?.hostname === 'localhost' ||
+                window.location?.protocol === 'file:')) ||
+        (typeof globalThis !== 'undefined' &&
+            ((globalThis as any).process?.env?.NODE_ENV === 'test' ||
+                (globalThis as any).__vitest__))
+    )
+}
 
-    if (isTestMode) {
+export function logger() {
+    if (isTestMode()) {
         return {
             error: () => null,
             info: () => null,
