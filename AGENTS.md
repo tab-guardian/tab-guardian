@@ -41,3 +41,7 @@ To format files with prettier, run this command:
 ### TypeScript
 To see any TypeScript errors, run this command:
 `podman-compose exec app npm run check`
+
+### Build
+Build project to dist directory:
+`podman-compose exec app npm run build`
