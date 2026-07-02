@@ -1,6 +1,12 @@
-# Tab Guardian Project
-
+## Description
 This is a browser extension that supports all Chrome-based and Firefox-based browsers. It allows users to save their browser tabs into Tab Guardian group and later restore it back to tabs.
+
+## CodingStyle
+- functions and variables - camelCase
+- types and classes - PascalCase
+
+## Rules
+- Never change any d.ts files and files in ./cmd/ directory unless explicitly told so
 
 ## Technologies
 This project uses these technologies:
@@ -16,7 +22,7 @@ This project uses these technologies:
 ## Project Structure
 - `src/` - Contains all source files (functions, core, modules, etc.)
 - `public/` - Contains `manifest2.json` for Firefox and `manifest3.json` for Chrome
-- `cmd/` - Contains bash scripts for building files into extension archives ready to be uploaded to Chrome and Mozilla stores. (DON'T RUN THESE SCRIPTS)
+- `cmd/` - Contains bash scripts for building files into extension archives ready to be uploaded to Chrome and Mozilla stores.
 
 ## Context
 - We have `./src/common/modules/runtime/index.ts` file which is an adapter to abstract Firefox, Chrome and web based APIs
