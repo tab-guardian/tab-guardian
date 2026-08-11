@@ -1,11 +1,11 @@
 name: tab-guardian
 
 services:
-    app:
-        image: tab-guardian
-        container_name: tab-guardian
-        build: .
-        volumes:
-            - .:/var/www/html:Z
-        ports:
-            - 3000:5173
+  app:
+    image: tab-guardian
+    container_name: tab-guardian
+    build: .
+    volumes:
+      - .:/var/www/html:Z
+    ports:
+      - 3000:5173

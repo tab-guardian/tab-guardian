@@ -1,10 +1,8 @@
 # Tab Guardian
 
-[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
+Tab Guardian is a browser extension designed to help you save and restore your browser tabs. Perfect for professionals, students, and casual users alike, this tool allows you to organize your digital workspace with a few clicks. Save individual tabs and restore them later, ensuring you never lose track of important information.
 
-Tab Guardian is a powerful browser extension designed to help you save and restore your browser tabs effortlessly. Perfect for professionals, students, and casual users alike, this tool allows you to organize your digital workspace with ease. Save individual tabs with a single click and restore them whenever you need, ensuring you never lose track of important information.
-
-For those who prioritize security, Tab Guardian offers the added feature of encrypting your saved tabs with a password. This ensures that your browsing data remains private and secure. Simplify your online experience and protect your information with Tab Guardian, the all-in-one solution for efficient and secure tab management.
+For those who prioritize security, Tab Guardian offers the added feature of encrypting your saved tabs with a password. This ensures that your browsing data remains private and secure.
 
 ## Features
 
@@ -51,7 +49,7 @@ All necessary scripts are in package.json file. You need to have [npm](https://w
 **Clone the repo**
 
 ```bash
-git clone https://github.com/tab-guardian/tab-guardian.git && cd tab-guardian
+git clone https://codeberg.org/tab-guardian/tab-guardian.git && cd tab-guardian
 ```
 
 **Install all dependencies**
@@ -194,3 +192,69 @@ Here are some words that you need to know in order to undetstand the context of 
 - `group` group is a collection of links (tabs)
 - `link` in the context of this app is a link that is stored in your group
 - `tab` tab is what users see in their browsers. After storing those tabs in a group they become `links`
+
+## Context
+
+- We have `./src/common/modules/runtime/index.ts` file which is an adapter to abstract Firefox, Chrome and web based APIs
+- This browser extension allows users to save their tabs into groups, each group contains links (browser tabs)
+- At any point of time, user can restore links back into tabs in a browser
+- A group can be private. When it's private, the field `isPrivate` is set to true
+
+## Coding Style
+
+- functions and variables - camelCase
+- types and classes - PascalCase
+- local constants - camelCase
+- global constants, env variables - SCREAMING_SNAKE_CASE
+
+## Technologies
+
+This project uses these technologies:
+
+- Vue 3
+- Vitest (for tests)
+- Pinia (store)
+- TypeScript
+- Prettier (formatter)
+- Podman (containers)
+- Vite
+
+## Fast Commands
+
+### Run Tests
+
+The command for running tests with Vitest:
+
+```bash
+podman-compose exec app npm run test run
+```
+
+### Format with Prettier
+
+To format files with prettier, run this command:
+
+```bash
+podman-compose exec app npm run prettier
+```
+
+### TypeScript Error Check
+
+To see any TypeScript errors, run this command:
+
+```bash
+podman-compose exec app npm run check
+```
+
+### NPM Build
+
+Build project to dist directory:
+
+```bash
+podman-compose exec app npm run build
+```
+
+## Project Structure
+
+- `src/` - Contains all source files (functions, core, modules, etc.)
+- `public/` - Contains `manifest2.json` for Firefox and `manifest3.json` for Chrome
+- `cmd/` - Contains bash scripts for building files into extension archives ready to be uploaded to Chrome and Mozilla stores

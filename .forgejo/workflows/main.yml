@@ -1,0 +1,29 @@
+name: Main
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  test:
+    runs-on: burn
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Create .env File
+        run: cp .env.example .env
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run Vitest Tests
+        run: npm run test run
+
+      - name: Run TypeScript Check
+        run: npm run check
+
+      - name: Run Prettier Check
+        run: npm run prettier
