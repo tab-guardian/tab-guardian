@@ -9,7 +9,7 @@
     ],
     "repository": {
         "type": "git",
-        "url": "https://github.com/tab-guardian/tab-guardian"
+        "url": "https://codeberg.org/tab-guardian/tab-guardian"
     },
     "scripts": {
         "dev": "vite --host",

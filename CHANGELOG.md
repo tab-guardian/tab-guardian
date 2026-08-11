@@ -1,5 +1,8 @@
 # Release Notes
 
+## v1.18.0 (2026-08-11)
+- 🧑‍💻 Moved from GitHub to Codeberg
+
 ## v1.17.1 (2026-01-19)
 - 🧑‍💻 Updated all dependencies to the latest versions.
 - 🧑‍💻 Instead of checking if tab with the specific URL can be restored, we now do these checks when we save tabs into groups. Because the previous implementation could creates bugs where you cannot fast open a private group from main screen if it contains a tab like `about:privatebrowsing`. [#94](https://github.com/tab-guardian/tab-guardian/issues/94).
