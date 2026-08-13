@@ -1,4 +1,5 @@
-name: Main
+name: Run quality checks
+enable-email-notifications: true
 
 on:
   push:
@@ -7,8 +8,9 @@ on:
     branches: [master]
 
 jobs:
-  test:
+  run-checks:
     runs-on: burn
+    name: Run checks
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
