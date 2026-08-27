@@ -10,7 +10,7 @@ on:
 jobs:
   run-checks:
     runs-on: podman
-    container: docker.io/library/node:26
+    container: docker.io/library/node:20
     name: Run checks
 
     steps:
