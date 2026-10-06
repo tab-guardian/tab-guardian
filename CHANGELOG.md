@@ -1,5 +1,9 @@
 # Release Notes
 
+## v1.18.1 (2026-10-07)
+
+- 🐛 Fixed issue where tabs inside folders are still visible in private window with "Hide open groups from browser incognito (private mode)" setting enabled. [#107](https://codeberg.org/tab-guardian/tab-guardian/issues/107)
+
 ## v1.18.0 (2026-08-11)
 
 - 🧑‍💻 Moved from GitHub to Codeberg
