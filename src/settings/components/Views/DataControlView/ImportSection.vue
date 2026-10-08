@@ -24,7 +24,7 @@ const cryptoStore = useCryptoStore()
 
 const file = ref<File | null>(null)
 const fileInput = ref<HTMLInputElement | null>(null)
-const groupPassword = ref<string | null>(null)
+const exportFilePassword = ref<string | null>(null)
 
 async function importGroups(): Promise<void> {
     if (!file.value) {
@@ -58,7 +58,7 @@ async function importGroups(): Promise<void> {
 }
 
 async function decryptFile(encrypted: string, pass: string): Promise<boolean> {
-    groupPassword.value = pass
+    exportFilePassword.value = pass
 
     try {
         const decrypted = await decryptExport(encrypted, pass)
@@ -95,8 +95,8 @@ async function processFileContent(rawData: string): Promise<void> {
     const groups = Array.isArray(json) ? json : [json]
 
     // Lock (encrypt) the private group
-    if (groupPassword.value && groups.length === 1) {
-        groups[0] = await cryptoStore.encryptGroup(groups[0], groupPassword.value)
+    if (exportFilePassword.value && groups.length === 1) {
+        groups[0] = await cryptoStore.encryptGroup(groups[0], exportFilePassword.value)
     }
 
     await groupStore.load()
