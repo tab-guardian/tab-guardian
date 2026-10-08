@@ -1,5 +1,10 @@
 # Release Notes
 
+## v1.18.1 (2026-10-09)
+
+- 🐛 Fixed weakness where saved link (tab) fields shared encryption randomness. Re-saving private groups re-encrypts them securely.
+- 🐛 Fixed infinite loading on a "Lock" button when you are trying to lock your private group and it gives you error that password needs to be more then 6 characters.
+
 ## v1.18.0 (2026-08-11)
 
 - 🧑‍💻 Moved from GitHub to Codeberg
@@ -7,20 +12,20 @@
 ## v1.17.1 (2026-01-19)
 
 - 🧑‍💻 Updated all dependencies to the latest versions.
-- 🧑‍💻 Instead of checking if tab with the specific URL can be restored, we now do these checks when we save tabs into groups. Because the previous implementation could creates bugs where you cannot fast open a private group from main screen if it contains a tab like `about:privatebrowsing`. [#94](https://github.com/tab-guardian/tab-guardian/issues/94).
+- 🧑‍💻 Instead of checking if tab with the specific URL can be restored, we now do these checks when we save tabs into groups. Because the previous implementation could creates bugs where you cannot fast open a private group from main screen if it contains a tab like `about:privatebrowsing`. [#94](https://codeberg.org/tab-guardian/tab-guardian/issues/94).
 - 🐛 Fixed bug where group would be removed from folder when restoring it.
 - 🧑‍💻 Filtering groups on the main page now works for groups that are inside of folders.
 - 🧑‍💻 When you use filtering on the main page, it temporary hides folders.
 
 ## v1.17.0 (2025-12-25)
 
-- 🐛 Fixed not excepting some emojies when trying to select it for a group icon [#98](https://github.com/tab-guardian/tab-guardian/issues/98).
+- 🐛 Fixed not excepting some emojies when trying to select it for a group icon [#98](https://codeberg.org/tab-guardian/tab-guardian/issues/98).
 - ✨ Changed the way you create private and public groups. We used to have 2 seperate buttons, but now it was replaced with a single button and step-like creation process.
-- ✨ Added the ability to create folders with groups. You can drag and drop existing groups to folders or create groups inside folders [#47](https://github.com/tab-guardian/tab-guardian/issues/47).
+- ✨ Added the ability to create folders with groups. You can drag and drop existing groups to folders or create groups inside folders [#47](https://codeberg.org/tab-guardian/tab-guardian/issues/47).
 
 ## v1.16.6 (2025-11-17)
 
-- 🐛 Fixed bug with password cache issue where password would not delete itself from storage after locking the group back [#96](https://github.com/tab-guardian/tab-guardian/issues/96)
+- 🐛 Fixed bug with password cache issue where password would not delete itself from storage after locking the group back [#96](https://codeberg.org/tab-guardian/tab-guardian/issues/96)
 
 ## v1.16.5 (2025-11-09)
 
@@ -30,7 +35,7 @@
 
 - 🧑‍💻 Changed tooltip from `?` to `!`.
 - 🧑‍💻 Added more tests to the codebase.
-- ✨ Added ability to pin/unpin tabs [#91](https://github.com/tab-guardian/tab-guardian/issues/91).
+- ✨ Added ability to pin/unpin tabs [#91](https://codeberg.org/tab-guardian/tab-guardian/issues/91).
 
 ## v1.16.3 (2025-10-29)
 
@@ -39,32 +44,32 @@
 ## v1.16.2 (2025-10-29)
 
 - 🐛 Fixed bug when creating a private group with attached URL. Sometimes, the `Select` button would be disabled and you couldn't proceed with creation.
-- 🐛 Fixed bug with tab duplications when adding and sorting them [#37](https://github.com/tab-guardian/tab-guardian/issues/37).
+- 🐛 Fixed bug with tab duplications when adding and sorting them [#37](https://codeberg.org/tab-guardian/tab-guardian/issues/37).
 
 ## v1.16.1 (2025-10-27)
 
 - 🧑‍💻 Added more tests to the codebase.
 - 🚀 Improved performance of fetching groups from storage.
-- 🐛 Fixed bug which was deleting multiple duplicate tabs when you wanted to remove only 1 [#87](https://github.com/tab-guardian/tab-guardian/issues/87).
+- 🐛 Fixed bug which was deleting multiple duplicate tabs when you wanted to remove only 1 [#87](https://codeberg.org/tab-guardian/tab-guardian/issues/87).
 - 🐛 Fixed bug when you try to use quick open button for private groups.
 
 ## v1.16.0 (2025-10-23)
 
 - 🧑‍💻 Improved performance for the main (home) page with loading groups.
-- 🧑‍💻 Improved "Add tabs" and "Create" buttons visibility [#84](https://github.com/tab-guardian/tab-guardian/issues/84).
-- 🧑‍💻 Added showing small pin icon on the tab icon in a group if the tab is pinned [#83](https://github.com/tab-guardian/tab-guardian/issues/83).
+- 🧑‍💻 Improved "Add tabs" and "Create" buttons visibility [#84](https://codeberg.org/tab-guardian/tab-guardian/issues/84).
+- 🧑‍💻 Added showing small pin icon on the tab icon in a group if the tab is pinned [#83](https://codeberg.org/tab-guardian/tab-guardian/issues/83).
 - 🧑‍💻 Improve styles for tab icons in a group.
 - 🧑‍💻 Added 1 more "Pin" icon to choose for a group.
 - 🧑‍💻 Added more tests to the codebase.
 - 🐛 Fixed validation error message text when password is empty. It was `password_empty`.
 - 🐛 Fixed not working "Cancel" button when choosing group icon.
-- ✨ Added "Detach URL Lock" functionality to settings [#61](https://github.com/tab-guardian/tab-guardian/issues/61).
+- ✨ Added "Detach URL Lock" functionality to settings [#61](https://codeberg.org/tab-guardian/tab-guardian/issues/61).
 
 ## v1.15.0 (2025-10-19)
 
-- ✨ Group icon on a group page is now clickable. It will open "Choose Icon" interface [#53](https://github.com/tab-guardian/tab-guardian/issues/53).
-- ✨ Private groups can now be bound to any URL that you provide for additional security [#65](https://github.com/tab-guardian/tab-guardian/issues/65).
-- ✨ Public groups can now be changed into private groups with a simple button click in group modal menu [#73](https://github.com/tab-guardian/tab-guardian/issues/73).
+- ✨ Group icon on a group page is now clickable. It will open "Choose Icon" interface [#53](https://codeberg.org/tab-guardian/tab-guardian/issues/53).
+- ✨ Private groups can now be bound to any URL that you provide for additional security [#65](https://codeberg.org/tab-guardian/tab-guardian/issues/65).
+- ✨ Public groups can now be changed into private groups with a simple button click in group modal menu [#73](https://codeberg.org/tab-guardian/tab-guardian/issues/73).
 - 🐛 Fixed issue where you couldn't use 👎️ and 👍️ emojis as your group icon.
 - 🐛 Fixed the font contrast on a lock/unlock group button.
 - 🐛 Fixed not working tooltip helper on the `Paste tabs here` button.
@@ -88,8 +93,8 @@
 
 - 🐛 Fixed potential bugs with encryption/decryption.
 - 🐛 Fixed showing password validation error when password and confirmation passwords are empty. Now, it doesn't show error.
-- 🐛 Fixed restoring tabs would not recalculate showing notification that you have unlocked groups [#79](https://github.com/tab-guardian/tab-guardian/issues/79).
-- ✨ Improved export/import functionality. Now, you can export all groups with a password protection [#77](https://github.com/tab-guardian/tab-guardian/issues/77).
+- 🐛 Fixed restoring tabs would not recalculate showing notification that you have unlocked groups [#79](https://codeberg.org/tab-guardian/tab-guardian/issues/79).
+- ✨ Improved export/import functionality. Now, you can export all groups with a password protection [#77](https://codeberg.org/tab-guardian/tab-guardian/issues/77).
 - ✨ Exported files are now compressed with Gzip.
 - ✨ Add Gzip compression when exporting individual groups.
 - 🚀 Improve performance of "Erase all groups" functionality.
@@ -108,30 +113,30 @@
 - 🚀 Fixed issue with creating private group and it wouldn't remember the password the user entered. Plus, this change improved the performance of creating a private group
 - 🐛 Fixed incorrect bytes calculation on Firefox-based browsers. It was showing used space a little bit more than it really was
 - 🐛 Fixed wrong groups sort order when you import all groups. Now, groups will be in the same order that they were when you exported them
-- 🧑‍💻 Remove "import" button from importing groups on settings page [#60](https://github.com/tab-guardian/tab-guardian/issues/60)
+- 🧑‍💻 Remove "import" button from importing groups on settings page [#60](https://codeberg.org/tab-guardian/tab-guardian/issues/60)
 - 🧑‍💻 When you add a new tab to a group, it will be appended to the end instead of the list
-- 🧑‍💻 Now, when you open tabs, additional empty pages like `about:blank` and `about:privatebrowsing` will be automatically closed [#64](https://github.com/tab-guardian/tab-guardian/issues/64)
-- 🧑‍💻 Remove `Import` buttom from settings page. Now, when you select a file, it will be automatically uploaded [#60](https://github.com/tab-guardian/tab-guardian/issues/60)
-- 🧑‍💻 Now, you cannot rename private groups without unlocking them [#56](https://github.com/tab-guardian/tab-guardian/issues/56)
+- 🧑‍💻 Now, when you open tabs, additional empty pages like `about:blank` and `about:privatebrowsing` will be automatically closed [#64](https://codeberg.org/tab-guardian/tab-guardian/issues/64)
+- 🧑‍💻 Remove `Import` buttom from settings page. Now, when you select a file, it will be automatically uploaded [#60](https://codeberg.org/tab-guardian/tab-guardian/issues/60)
+- 🧑‍💻 Now, you cannot rename private groups without unlocking them [#56](https://codeberg.org/tab-guardian/tab-guardian/issues/56)
 - 🧑‍💻 Change enter password max attempts to 5 and lock duration to 10 minutes. It means you have 5 attempts to enter the correct password, after which you will be unable to enter a password for 10 minutes
 - 🧑‍💻 Refactored settings page into a different design
 - 🧑‍💻 Added "Clear Cache" section to settings which only appears if you have any useless data in your cache that can be safely deleted to free up the space
 - ✨ Added 3 more black and white icons for groups
-- ✨ Added a spinner to the main (home) page where groups are loaded [#70](https://github.com/tab-guardian/tab-guardian/issues/70)
-- ✨ Added a spinner when you export all groups in settings, which indicates that groups are being exported [#68](https://github.com/tab-guardian/tab-guardian/issues/68)
-- ✨ Added a spinner to the "Export a group" button in group modal menu [#66](https://github.com/tab-guardian/tab-guardian/issues/66)
-- ✨ Added a spinner to the "Create" button when you create a group or add more links to it [#67](https://github.com/tab-guardian/tab-guardian/issues/67)
-- ✨ Added functionality that prevents from overloading storage. It will give you an error message that you used all of your quota [#58](https://github.com/tab-guardian/tab-guardian/issues/58)
-- ✨ Added "Remember my password after unlock" option to settings, which you can toggle [#62](https://github.com/tab-guardian/tab-guardian/issues/62)
-- ✨ Added minimum password length requirement with `6` characters [#63](https://github.com/tab-guardian/tab-guardian/issues/63)
-- ✨ Added the ability to make your private groups open [#69](https://github.com/tab-guardian/tab-guardian/issues/69)
-- ✨ Extension icon shows a red warning square when you have at least 1 private group unlocked. It also adds a bell icon to the navbar that tells you that you have a private group unlocked [#52](https://github.com/tab-guardian/tab-guardian/issues/52)
+- ✨ Added a spinner to the main (home) page where groups are loaded [#70](https://codeberg.org/tab-guardian/tab-guardian/issues/70)
+- ✨ Added a spinner when you export all groups in settings, which indicates that groups are being exported [#68](https://codeberg.org/tab-guardian/tab-guardian/issues/68)
+- ✨ Added a spinner to the "Export a group" button in group modal menu [#66](https://codeberg.org/tab-guardian/tab-guardian/issues/66)
+- ✨ Added a spinner to the "Create" button when you create a group or add more links to it [#67](https://codeberg.org/tab-guardian/tab-guardian/issues/67)
+- ✨ Added functionality that prevents from overloading storage. It will give you an error message that you used all of your quota [#58](https://codeberg.org/tab-guardian/tab-guardian/issues/58)
+- ✨ Added "Remember my password after unlock" option to settings, which you can toggle [#62](https://codeberg.org/tab-guardian/tab-guardian/issues/62)
+- ✨ Added minimum password length requirement with `6` characters [#63](https://codeberg.org/tab-guardian/tab-guardian/issues/63)
+- ✨ Added the ability to make your private groups open [#69](https://codeberg.org/tab-guardian/tab-guardian/issues/69)
+- ✨ Extension icon shows a red warning square when you have at least 1 private group unlocked. It also adds a bell icon to the navbar that tells you that you have a private group unlocked [#52](https://codeberg.org/tab-guardian/tab-guardian/issues/52)
 
 ## v1.12.0 (2025-09-24)
 
-- ✨ Added improved encryption algoriphm `AES-GCM` with WEB Crypto API without breaking backward compatibility [#54](https://github.com/tab-guardian/tab-guardian/issues/54)
+- ✨ Added improved encryption algoriphm `AES-GCM` with WEB Crypto API without breaking backward compatibility [#54](https://codeberg.org/tab-guardian/tab-guardian/issues/54)
 - ✨ Added showing a warning message on private groups that use the old encryption implementation to suggest them to re-encrypt for improved security
-- ✨ Added a loading spinner that appears when you unlock and lock the private group [#55](https://github.com/tab-guardian/tab-guardian/issues/55)
+- ✨ Added a loading spinner that appears when you unlock and lock the private group [#55](https://codeberg.org/tab-guardian/tab-guardian/issues/55)
 - ✨ Added a progress bar that shows progress on encryption and decryption of groups
 - 🧑‍💻 Change password attempts from 2 to 3 for incorrect password because 3 is a sweet spot
 - 🧑‍💻 Change keybind from `command + k` to `control+command+k` on macos
@@ -140,18 +145,18 @@
 
 - 🧑‍💻 Improve helping messages in settings
 - 🐛 Fixed type in "Erase all groups" message
-- 🐛 Fixed displaying message after wrong password attempts [#46](https://github.com/tab-guardian/tab-guardian/issues/46)
-- ✨ When you lock a private group, you can now change its password to a new one [#41](https://github.com/tab-guardian/tab-guardian/issues/41)
+- 🐛 Fixed displaying message after wrong password attempts [#46](https://codeberg.org/tab-guardian/tab-guardian/issues/46)
+- ✨ When you lock a private group, you can now change its password to a new one [#41](https://codeberg.org/tab-guardian/tab-guardian/issues/41)
 
 ## v1.10.0 (2025-09-05)
 
-- ✨ Added copy and cut tabs from a group into a different group [#39](https://github.com/tab-guardian/tab-guardian/issues/39)
+- ✨ Added copy and cut tabs from a group into a different group [#39](https://codeberg.org/tab-guardian/tab-guardian/issues/39)
 - ✨ Added 3 more black and white icons for groups
 - ✨ Added emoji picker when you choose an emoji for your group as an icon
-- ✨ Added preview for the image group icon when you choose it [#38](https://github.com/tab-guardian/tab-guardian/issues/38)
+- ✨ Added preview for the image group icon when you choose it [#38](https://codeberg.org/tab-guardian/tab-guardian/issues/38)
 - 🧑‍💻 Changed: when you export a group, it will have a slugifying version of the group name. For example, 'Test Group' will have the name 'test-group.json'
 - 🐛 Fixed not visible version number in the right bottom of the sidebar
-- 🐛 Fixed a small style issue on a sidebar where the amount of bytes used were showing [#40](https://github.com/tab-guardian/tab-guardian/issues/40) [#42](https://github.com/tab-guardian/tab-guardian/issues/42)
+- 🐛 Fixed a small style issue on a sidebar where the amount of bytes used were showing [#40](https://codeberg.org/tab-guardian/tab-guardian/issues/40) [#42](https://codeberg.org/tab-guardian/tab-guardian/issues/42)
 
 ## v1.9.3 (2025-08-13)
 
@@ -230,8 +235,8 @@
 ## v1.4.4 (2024-10-31)
 
 - ✨ Restore tabs button is now disabled if the group is empty
-- 🐛 Bug fix [#7](https://github.com/tab-guardian/tab-guardian/issues/7). If you restore tabs from an empty group, it would error out
-- 🐛 Bug fix [#8](https://github.com/tab-guardian/tab-guardian/issues/8). Reproduce by filtering groups, entering one, go back to main screen and you see only those groups that were visible when filtering. Other groups would not be visible
+- 🐛 Bug fix [#7](https://codeberg.org/tab-guardian/tab-guardian/issues/7). If you restore tabs from an empty group, it would error out
+- 🐛 Bug fix [#8](https://codeberg.org/tab-guardian/tab-guardian/issues/8). Reproduce by filtering groups, entering one, go back to main screen and you see only those groups that were visible when filtering. Other groups would not be visible
 
 ## v1.4.3 (2024-10-05)
 

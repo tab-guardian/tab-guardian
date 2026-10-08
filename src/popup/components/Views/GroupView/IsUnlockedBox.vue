@@ -70,6 +70,7 @@ async function lockGroup(pass: string): Promise<void> {
     })
 
     if (locking.failed) {
+        encrypting.value = false
         logger().info(`Group ${props.group.id} wasn't encrypted`)
         return
     }

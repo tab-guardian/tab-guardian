@@ -244,5 +244,8 @@
     },
     "remember_pass_after_unlock_desc": {
         "message": "If you disable this option, you will need to enter a password everytime when you want to lock any private group. Keeping this option enabled saves password in temporary and secure storage and allows you to lock groups back without entering your password"
+    },
+    "legacy_encryption_warning": {
+        "message": "Saved with older encryption. Unlock then lock this group again to re-encrypt it."
     }
 }

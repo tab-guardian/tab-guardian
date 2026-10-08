@@ -9,3 +9,4 @@ services:
       - .:/var/www/html:Z
     ports:
       - 3000:5173
+    init: true

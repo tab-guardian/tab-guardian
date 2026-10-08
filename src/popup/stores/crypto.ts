@@ -2,6 +2,7 @@ import type { EncryptionAlgo, Group, Link } from '@common/types'
 import { useProgressStore } from '@/stores/progress'
 import { defineStore } from 'pinia'
 import {
+    KEY_BYTES_LENGTH,
     encrypt,
     decrypt,
     createEncryptKey,
@@ -15,6 +16,13 @@ import CryptoJS from 'crypto-js'
 export const useCryptoStore = defineStore('crypto', () => {
     const progressStore = useProgressStore()
 
+    function prependIv(cipher: Uint8Array, iv: Uint8Array): Uint8Array {
+        const combined = new Uint8Array(iv.length + cipher.length)
+        combined.set(iv, 0)
+        combined.set(cipher, iv.length)
+        return combined
+    }
+
     async function encryptGroup(group: Group, pass: string): Promise<Group> {
         if (pass === '') {
             throw new Error('password should not be empty when encryping group')
@@ -27,23 +35,25 @@ export const useCryptoStore = defineStore('crypto', () => {
         progressStore.start(encrypted.links.length)
 
         for (const link of encrypted.links) {
-            const salt = crypto.getRandomValues(new Uint8Array(16))
-            const iv = crypto.getRandomValues(new Uint8Array(16))
+            const salt = crypto.getRandomValues(new Uint8Array(KEY_BYTES_LENGTH))
             const key = await createEncryptKey(pass, salt, algo)
 
-            const urlBin = await encrypt(link.url, key, iv, algo)
-            const titleBin = await encrypt(link.title, key, iv, algo)
-            const favIconUrlBin = await encrypt(link.favIconUrl, key, iv, algo)
+            const urlIv = crypto.getRandomValues(new Uint8Array(KEY_BYTES_LENGTH))
+            const titleIv = crypto.getRandomValues(new Uint8Array(KEY_BYTES_LENGTH))
+            const favIv = crypto.getRandomValues(new Uint8Array(KEY_BYTES_LENGTH))
+
+            const urlBin = await encrypt(link.url, key, urlIv, algo)
+            const titleBin = await encrypt(link.title, key, titleIv, algo)
+            const favIconUrlBin = await encrypt(link.favIconUrl, key, favIv, algo)
 
             encryptedLinks.push({
                 id: link.id,
                 tabId: link.tabId,
-                url: toBase64(urlBin),
-                title: toBase64(titleBin),
-                favIconUrl: toBase64(favIconUrlBin),
+                url: toBase64(prependIv(urlBin, urlIv)),
+                title: toBase64(prependIv(titleBin, titleIv)),
+                favIconUrl: toBase64(prependIv(favIconUrlBin, favIv)),
                 isPinned: link.isPinned,
                 salt: toBase64(salt),
-                iv: toBase64(iv),
             })
 
             progressStore.advance()
@@ -102,22 +112,49 @@ export const useCryptoStore = defineStore('crypto', () => {
         return decryptLinkWebCrypto(link, key, group.algo)
     }
 
+    /**
+     * If tab (link) has iv field that is not empty, it means it's a legacy
+     * encryption that we were using with a single iv for all fields. Since
+     * we now use unique IV for each field, we need to grab it from the
+     * beginning of each field instead of the object field to keep it
+     * backward compatible with the old implementation.
+     */
     async function decryptLinkWebCrypto(
         link: Link,
         key: CryptoKey,
         algo: EncryptionAlgo,
     ): Promise<Link> {
-        if (!link.iv) {
-            throw new Error(
-                `Link ${link.id} doesn't have iv attached. Which should not happen`,
-            )
+        if (link.iv) {
+            // Legacy way of decrypting the link
+            const ivBytes = fromBase64(link.iv)
+
+            const url = await decrypt(link.url, key, ivBytes, algo)
+            const title = await decrypt(link.title, key, ivBytes, algo)
+            const favIconUrl = await decrypt(link.favIconUrl, key, ivBytes, algo)
+
+            // Take all fields from the object except iv
+            const { iv: _, ...rest } = link
+
+            return { ...rest, url, title, favIconUrl }
         }
 
-        const ivBytes = fromBase64(link.iv)
+        const decodedUrlCypher = fromBase64(link.url)
+        const decodedTitleCypher = fromBase64(link.title)
+        const decodedFavCypher = fromBase64(link.favIconUrl)
 
-        const url = await decrypt(link.url, key, ivBytes, algo)
-        const title = await decrypt(link.title, key, ivBytes, algo)
-        const favIconUrl = await decrypt(link.favIconUrl, key, ivBytes, algo)
+        // Get IVs from each field as the first bytes
+        const urlIv = decodedUrlCypher.slice(0, KEY_BYTES_LENGTH)
+        const titleIv = decodedTitleCypher.slice(0, KEY_BYTES_LENGTH)
+        const favIv = decodedFavCypher.slice(0, KEY_BYTES_LENGTH)
+
+        // Remove iv each field to decrypt it
+        const urlCypher = decodedUrlCypher.slice(KEY_BYTES_LENGTH)
+        const titleCypher = decodedTitleCypher.slice(KEY_BYTES_LENGTH)
+        const favCypher = decodedFavCypher.slice(KEY_BYTES_LENGTH)
+
+        const url = await decrypt(urlCypher, key, urlIv, algo)
+        const title = await decrypt(titleCypher, key, titleIv, algo)
+        const favIconUrl = await decrypt(favCypher, key, favIv, algo)
 
         return { ...link, url, title, favIconUrl }
     }

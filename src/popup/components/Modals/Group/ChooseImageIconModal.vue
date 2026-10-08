@@ -62,7 +62,7 @@ function hideImageIconModal(): void {
         <Input
             v-model="url"
             label="URL"
-            @loaded="inp => inp.focus()"
+            @loaded="(inp: HTMLInputElement) => inp.focus()"
             type="text"
             id="group-icon-emoji"
             placeholder="https://example.com/icon.png"

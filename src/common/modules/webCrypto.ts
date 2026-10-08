@@ -3,9 +3,9 @@ import { toBase64, fromBase64 } from '@common/modules/base64'
 import { config } from '@common/config'
 
 const KEY_BITS = 256 // bits
-const KEY_BYTES_LENGTH = 16
 const KEY_ALGO = 'PBKDF2'
 const HASH = 'SHA-256'
+export const KEY_BYTES_LENGTH = 16
 
 export async function createEncryptKey(
     pass: string,

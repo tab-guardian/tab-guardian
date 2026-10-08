@@ -43,7 +43,6 @@ describe('crypto store', () => {
             expect(encryptedLink.favIconUrl).not.equal(link.favIconUrl)
             expect(encryptedLink.title).not.equal(link.title)
             expect(encryptedLink.salt).not.toHaveLength(0)
-            expect(encryptedLink.iv).not.toHaveLength(0)
         })
     })
 
@@ -83,19 +82,6 @@ describe('crypto store', () => {
             const pass = 'password'
             const encrypted = await cryptoStore.encryptGroup(group, pass)
             delete encrypted.links[0].salt
-
-            await expect(
-                cryptoStore.decryptGroup(encrypted, pass),
-            ).rejects.toThrowError()
-        })
-
-        it('throws error with non-existent iv', async () => {
-            const cryptoStore = useCryptoStore()
-            const group = fakeGroup({ isPrivate: true })
-
-            const pass = 'password'
-            const encrypted = await cryptoStore.encryptGroup(group, pass)
-            delete encrypted.links[0].iv
 
             await expect(
                 cryptoStore.decryptGroup(encrypted, pass),
