@@ -4,8 +4,10 @@ import { describe, it, expect, beforeEach, afterEach, suite, vi } from 'vitest'
 import { createPinia, setActivePinia } from 'pinia'
 import { useCryptoStore } from '@/stores/crypto'
 import { fakeGroup, fakeLink } from '@common/modules/fake'
-import { fromBase64 } from '@common/modules/base64'
+import { config } from '@common/config'
+import { fromBase64, toBase64 } from '@common/modules/base64'
 import * as webCrypto from '@common/modules/webCrypto'
+import { encrypt, createEncryptKey } from '@common/modules/webCrypto'
 
 // AES-GCM auth tag appended by WebCrypto is 16 bytes and must be
 // excluded from the keystream-XOR math (it is not CTR keystream).
@@ -42,7 +44,7 @@ function ivToHex(iv: Uint8Array): string {
         .join('')
 }
 
-describe('crypto store IV reuse (AES-GCM)', () => {
+describe('crypto store IV (AES-GCM)', () => {
     beforeEach(() => {
         localStorage.clear()
         setActivePinia(createPinia())
@@ -53,6 +55,15 @@ describe('crypto store IV reuse (AES-GCM)', () => {
     })
 
     suite('distinct IV per field', () => {
+        it('does not store a shared iv per link', async () => {
+            const cryptoStore = useCryptoStore()
+            const group = fakeGroup({ isPrivate: true, links: [fakeLink()] })
+
+            const encrypted = await cryptoStore.encryptGroup(group, 'password')
+
+            expect(encrypted.links[0].iv).toBeUndefined()
+        })
+
         it('passes a fresh IV to every field encryption', async () => {
             const encryptSpy = vi.spyOn(webCrypto, 'encrypt')
             const cryptoStore = useCryptoStore()
@@ -63,7 +74,7 @@ describe('crypto store IV reuse (AES-GCM)', () => {
             // One link with url + title + favIconUrl = 3 encrypt calls
             expect(encryptSpy).toHaveBeenCalledTimes(3)
 
-            // Collect IVs from each entrypt() function call
+            // Collect IVs from each encrypt() function call
             const ivs = encryptSpy.mock.calls.map(args =>
                 // 2 is the index of an argument in encrypt() function
                 ivToHex(args[2] as Uint8Array),
@@ -113,6 +124,57 @@ describe('crypto store IV reuse (AES-GCM)', () => {
             const recovered = recoverPrefix(link.url, link.favIconUrl, favIconUrl)
 
             expect(recovered).not.toEqual(leakedPrefix)
+        })
+    })
+
+    suite('decrypt with per-field IVs', () => {
+        it('throws error on corrupted per-field payload', async () => {
+            const cryptoStore = useCryptoStore()
+            const group = fakeGroup({ isPrivate: true })
+
+            const pass = 'password'
+            const encrypted = await cryptoStore.encryptGroup(group, pass)
+            encrypted.links[0].url = toBase64(new Uint8Array([1, 2, 3]))
+
+            await expect(
+                cryptoStore.decryptGroup(encrypted, pass),
+            ).rejects.toThrowError()
+        })
+
+        it('decrypts legacy links encrypted with a single shared iv', async () => {
+            const cryptoStore = useCryptoStore()
+            const initialGroup = fakeGroup({ isPrivate: true })
+
+            const pass = 'password'
+            const algo = config.CURR_ENCRYPT_ALGO
+            const salt = crypto.getRandomValues(new Uint8Array(16))
+            const iv = crypto.getRandomValues(new Uint8Array(16))
+            const key = await createEncryptKey(pass, salt, algo)
+            const src = initialGroup.links[0]
+
+            const legacyGroup = {
+                ...initialGroup,
+                algo,
+                isEncrypted: true,
+                links: [
+                    {
+                        ...src,
+                        url: toBase64(await encrypt(src.url, key, iv, algo)),
+                        title: toBase64(await encrypt(src.title, key, iv, algo)),
+                        favIconUrl: toBase64(
+                            await encrypt(src.favIconUrl, key, iv, algo),
+                        ),
+                        salt: toBase64(salt),
+                        iv: toBase64(iv),
+                    },
+                ],
+            }
+
+            const group = await cryptoStore.decryptGroup(legacyGroup, pass)
+
+            expect(group.links[0].url).equal(src.url)
+            expect(group.links[0].title).equal(src.title)
+            expect(group.links[0].favIconUrl).equal(src.favIconUrl)
         })
     })
 })
