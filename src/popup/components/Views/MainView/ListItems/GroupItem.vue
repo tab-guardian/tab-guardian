@@ -21,12 +21,23 @@ const className = computed(() => {
     const privateGroup = props.group.isPrivate ? 'bg-safe! hover:bg-safe-hover!' : ''
 
     const unsafeGroup =
-        props.group.isPrivate && !props.group.isEncrypted
+        (props.group.isPrivate && !props.group.isEncrypted) || legacyEncryption.value
             ? 'bg-unsafe! hover:bg-unsafe-hover!'
             : ''
 
     return [privateGroup, unsafeGroup]
 })
+
+const legacyEncryption = computed(
+    () =>
+        props.group.isPrivate &&
+        props.group.isEncrypted &&
+        props.group.links.some(link => !!link.iv),
+)
+
+const warningMsg = computed(() =>
+    legacyEncryption.value ? trans('legacy_encryption_warning') : '',
+)
 
 async function navigateToGroupView(): Promise<void> {
     if (props.group.isPrivate && props.group.isEncrypted) {
@@ -63,7 +74,7 @@ async function unlockCallback(pass: string): Promise<boolean> {
 </script>
 
 <template>
-    <MainItem @click="navigateToGroupView" :class="className">
+    <MainItem @click="navigateToGroupView" :class="className" :tip="warningMsg">
         <div class="flex items-center gap-2">
             <GroupIcon :group />
             <h2 class="text-sm">{{ group.name }}</h2>

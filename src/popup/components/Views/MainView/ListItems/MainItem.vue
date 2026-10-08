@@ -1,5 +1,14 @@
+<script setup lang="ts">
+type Props = {
+    tip?: string
+}
+
+defineProps<Props>()
+</script>
+
 <template>
     <div
+        v-tippy="tip"
         :class="[
             'p-2 flex justify-between items-center gap-3',
             'transition-colors border-b border-border',
