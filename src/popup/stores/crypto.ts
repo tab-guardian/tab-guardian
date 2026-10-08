@@ -126,13 +126,16 @@ export const useCryptoStore = defineStore('crypto', () => {
     ): Promise<Link> {
         if (link.iv) {
             // Legacy way of decrypting the link
-            const ivBytes = fromBase64(link.iv!)
+            const ivBytes = fromBase64(link.iv)
 
             const url = await decrypt(link.url, key, ivBytes, algo)
             const title = await decrypt(link.title, key, ivBytes, algo)
             const favIconUrl = await decrypt(link.favIconUrl, key, ivBytes, algo)
 
-            return { ...link, url, title, favIconUrl }
+            // Take all fields from the object except iv
+            const { iv: _, ...rest } = link
+
+            return { ...rest, url, title, favIconUrl }
         }
 
         const decodedUrlCypher = fromBase64(link.url)
