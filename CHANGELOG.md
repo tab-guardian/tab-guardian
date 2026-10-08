@@ -1,5 +1,8 @@
 # Release Notes
 
+## v1.18.2 (2026-10-08)
+- 
+
 ## v1.18.1 (2026-10-09)
 
 - 🐛 Fixed weakness where saved link (tab) fields shared encryption randomness. Re-saving private groups re-encrypts them securely.
