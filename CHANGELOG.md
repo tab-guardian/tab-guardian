@@ -1,7 +1,8 @@
 # Release Notes
 
-## v1.18.1 (2026-10-07)
+## v1.18.1 (2026-10-09)
 
+- 🐛 Fixed weakness where saved link (tab) fields shared encryption randomness. Re-saving private groups re-encrypts them securely.
 - 🐛 Fixed issue where tabs inside folders are still visible in private window with "Hide open groups from browser incognito (private mode)" setting enabled. [#107](https://codeberg.org/tab-guardian/tab-guardian/issues/107)
 
 ## v1.18.0 (2026-08-11)
