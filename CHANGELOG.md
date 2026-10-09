@@ -1,9 +1,13 @@
 # Release Notes
 
-## v1.18.1 (2026-10-09)
+## v1.18.2 (2026-10-09)
 
-- 🐛 Fixed weakness where saved link (tab) fields shared encryption randomness. Re-saving private groups re-encrypts them securely.
-- 🐛 Fixed infinite loading on a "Lock" button when you are trying to lock your private group and it gives you error that password needs to be more then 6 characters.
+- 🐛 Fixed importing a password-protected export wiping out your locked group. It was getting encrypted a second time on import, after which neither the export password nor the original one worked.
+
+## v1.18.1 (2026-10-08)
+
+- 🐛 Fixed the weakness where saved link (tab) fields shared encryption randomness. Re-saving private groups re-encrypts them securely.
+- 🐛 Fixed infinite loading on a "Lock" button when you are trying to lock your private group, and it gives you the error that the password needs to be more than 6 characters.
 
 ## v1.18.0 (2026-08-11)
 
