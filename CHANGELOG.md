@@ -2,11 +2,12 @@
 
 ## v1.18.3 (2026-10-09)
 
-- Fixed issue where previous password wasn't cleared from cache. [#110](https://codeberg.org/tab-guardian/tab-guardian/issues/110)
+- 🐛 Fixed exporting issue which doesn't include folders and their content to export file. [#111](https://codeberg.org/tab-guardian/tab-guardian/issues/111)
 
 ## v1.18.2 (2026-10-09)
 
 - 🐛 Fixed importing a password-protected export wiping out your locked group. It was getting encrypted a second time on import, after which neither the export password nor the original one worked.
+- 🐛 Fixed issue where previous password wasn't cleared from cache. [#110](https://codeberg.org/tab-guardian/tab-guardian/issues/110)
 
 ## v1.18.1 (2026-10-08)
 
