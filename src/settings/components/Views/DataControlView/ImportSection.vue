@@ -10,7 +10,6 @@ import { useAttemptsStore } from '@/stores/attempts'
 import { useGroupStore } from '@/stores/group'
 import { useModalStore } from '@/stores/modal'
 import { useProgressStore } from '@/stores/progress'
-import { useCryptoStore } from '@/stores/crypto'
 import pako from 'pako'
 import Section from '@settings/components/Section.vue'
 import FileInput from '@common/components/Form/FileInput.vue'
@@ -20,11 +19,9 @@ const groupStore = useGroupStore()
 const attemptsStore = useAttemptsStore()
 const modalStore = useModalStore()
 const progressStore = useProgressStore()
-const cryptoStore = useCryptoStore()
 
 const file = ref<File | null>(null)
 const fileInput = ref<HTMLInputElement | null>(null)
-const exportFilePassword = ref<string | null>(null)
 
 async function importGroups(): Promise<void> {
     if (!file.value) {
@@ -58,8 +55,6 @@ async function importGroups(): Promise<void> {
 }
 
 async function decryptFile(encrypted: string, pass: string): Promise<boolean> {
-    exportFilePassword.value = pass
-
     try {
         const decrypted = await decryptExport(encrypted, pass)
         await processFileContent(decrypted)
@@ -93,11 +88,6 @@ async function processFileContent(rawData: string): Promise<void> {
     const json = JSON.parse(rawData) as Group[] | Group
 
     const groups = Array.isArray(json) ? json : [json]
-
-    // Lock (encrypt) the private group
-    if (exportFilePassword.value && groups.length === 1) {
-        groups[0] = await cryptoStore.encryptGroup(groups[0], exportFilePassword.value)
-    }
 
     await groupStore.load()
 

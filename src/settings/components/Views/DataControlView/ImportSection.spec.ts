@@ -1,0 +1,236 @@
+// @vitest-environment happy-dom
+
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
+import { createPinia, setActivePinia } from 'pinia'
+import type { Pinia } from 'pinia'
+import { mount } from '@vue/test-utils'
+import pako from 'pako'
+import { toBase64 } from '@common/modules/base64'
+import { encryptExport } from '@common/modules/webCrypto'
+import { fakeGroup, fakeLink } from '@common/modules/fake'
+import { useCryptoStore } from '@/stores/crypto'
+import { useGroupStore } from '@/stores/group'
+import { useModalStore } from '@/stores/modal'
+import ImportSection from '@settings/components/Views/DataControlView/ImportSection.vue'
+import FileInput from '@common/components/Form/FileInput.vue'
+
+const EXPORT_PASS = 'export-password-123'
+const ORIGINAL_PASS = 'original-password-123'
+
+type TestFile = File & { __content?: string }
+type FileLoadEvent = { target: { result: string } }
+type LoadHandler = (event: FileLoadEvent) => void
+type ErrorHandler = (error: unknown) => void
+
+// FileReader can't read real files in happy-dom, so feed it attached content
+function mockFileReader(): void {
+    class MockFileReader {
+        result: string | null = null
+        onload: LoadHandler | null = null
+        onerror: ErrorHandler | null = null
+
+        readAsText(file: TestFile): void {
+            const content = file.__content ?? ''
+            this.result = content
+
+            setTimeout(() => {
+                this.onload?.({ target: { result: content } })
+            }, 0)
+        }
+    }
+
+    vi.stubGlobal('FileReader', MockFileReader)
+}
+
+function makeFile(content: string): TestFile {
+    const file = new File([content], 'tab-groups-export', {
+        type: 'text/plain',
+    }) as TestFile
+
+    file.__content = content
+
+    return file
+}
+
+// Mirrors ExportSection: stringify -> gzip -> base64 -> password-protect
+async function buildExportFile(payload: unknown): Promise<string> {
+    const json = JSON.stringify(payload)
+    const compressed = toBase64(pako.gzip(json))
+    return await encryptExport(compressed, EXPORT_PASS)
+}
+
+// Auto-unlocks the password prompt with the export password,
+// auto-confirms the duplicate-name prompt
+function mockPasswordModal(modalStore: ReturnType<typeof useModalStore>): void {
+    const fakeShow = async (key: string, data: any) => {
+        if (key !== 'password') {
+            return { isConfirmed: true }
+        }
+
+        await data.decrypting(EXPORT_PASS)
+
+        return true
+    }
+
+    vi.spyOn(modalStore, 'show').mockImplementation(
+        fakeShow as typeof modalStore.show,
+    )
+}
+
+function mountImportSection(pinia: Pinia): ReturnType<typeof mount> {
+    return mount(ImportSection, {
+        global: {
+            plugins: [pinia],
+            stubs: {
+                Progress: true,
+                Section: { template: '<section><slot /></section>' },
+            },
+        },
+    })
+}
+
+async function importFileContent(
+    wrapper: ReturnType<typeof mount>,
+    content: string,
+): Promise<void> {
+    const fileInput = wrapper.findComponent(FileInput)
+    expect(fileInput.exists()).toBe(true)
+
+    fileInput.vm.$emit('chosen', makeFile(content), document.createElement('input'))
+
+    await vi.waitFor(
+        () => {
+            expect(useGroupStore().groups.length).toBeGreaterThan(0)
+        },
+        { timeout: 5000, interval: 25 },
+    )
+}
+
+describe('ImportSection double-encryption regression', () => {
+    beforeEach(() => {
+        localStorage.clear()
+        mockFileReader()
+    })
+
+    afterEach(() => {
+        vi.unstubAllGlobals()
+        vi.restoreAllMocks()
+    })
+
+    it('documents data loss when an already-encrypted group is encrypted again', async () => {
+        setActivePinia(createPinia())
+        const cryptoStore = useCryptoStore()
+
+        const plainUrl = 'https://original.example/article'
+        const group = fakeGroup({
+            isPrivate: true,
+            isEncrypted: false,
+            links: [fakeLink({ url: plainUrl, title: 'Original' })],
+        })
+
+        const onceEncrypted = await cryptoStore.encryptGroup(group, ORIGINAL_PASS)
+        const originalSalt = onceEncrypted.links[0].salt
+
+        // This is exactly what ImportSection.vue lines 98-99 do today:
+        // encrypt without checking `isEncrypted` first.
+        const twiceEncrypted = await cryptoStore.encryptGroup(
+            onceEncrypted,
+            EXPORT_PASS,
+        )
+
+        // Salt + IV are overwritten by the second encryption
+        expect(twiceEncrypted.links[0].salt).not.toEqual(originalSalt)
+
+        // Unlocking with the export password gives back ciphertext, not the URL
+        const unlockedWithExportPass = await cryptoStore.decryptGroup(
+            twiceEncrypted,
+            EXPORT_PASS,
+        )
+
+        expect(unlockedWithExportPass.links[0].url).not.toEqual(plainUrl)
+        expect(unlockedWithExportPass.links[0].url).toEqual(
+            onceEncrypted.links[0].url,
+        )
+
+        // The original password fails on both the once- and twice-encrypted versions
+        await expect(
+            cryptoStore.decryptGroup(twiceEncrypted, ORIGINAL_PASS),
+        ).rejects.toThrowError()
+        await expect(
+            cryptoStore.decryptGroup(unlockedWithExportPass, ORIGINAL_PASS),
+        ).rejects.toThrowError()
+    })
+
+    it('does not encrypt an already-locked group on import', async () => {
+        const pinia = createPinia()
+        setActivePinia(pinia)
+
+        const cryptoStore = useCryptoStore()
+        const modalStore = useModalStore()
+
+        const plainUrl = 'https://locked.example/secret'
+        const locked = await cryptoStore.encryptGroup(
+            fakeGroup({
+                isPrivate: true,
+                links: [fakeLink({ url: plainUrl, title: 'Locked' })],
+            }),
+            ORIGINAL_PASS,
+        )
+        const originalSalt = locked.links[0].salt
+        const originalUrlCipher = locked.links[0].url
+
+        const fileContent = await buildExportFile([locked])
+        const encryptSpy = vi.spyOn(cryptoStore, 'encryptGroup')
+
+        mockPasswordModal(modalStore)
+
+        const wrapper = mountImportSection(pinia)
+        await importFileContent(wrapper, fileContent)
+
+        // Correct behavior: already-encrypted group is left untouched
+        expect(encryptSpy).not.toHaveBeenCalled()
+
+        const saved = useGroupStore().groups.find(g => g.name === locked.name)
+
+        expect(saved).toBeDefined()
+        expect(saved!.isEncrypted).toBe(true)
+        expect(saved!.links[0].salt).toEqual(originalSalt)
+        expect(saved!.links[0].url).toEqual(originalUrlCipher)
+
+        const decrypted = await useCryptoStore().decryptGroup(saved!, ORIGINAL_PASS)
+        expect(decrypted.links[0].url).toEqual(plainUrl)
+
+        wrapper.unmount()
+    })
+
+    it('leaves an open group open on import', async () => {
+        const pinia = createPinia()
+        setActivePinia(pinia)
+
+        const modalStore = useModalStore()
+
+        const openGroup = fakeGroup({
+            isPrivate: false,
+            isEncrypted: false,
+            links: [fakeLink({ url: 'https://open.example/page', title: 'Open' })],
+        })
+
+        const fileContent = await buildExportFile([openGroup])
+
+        mockPasswordModal(modalStore)
+
+        const wrapper = mountImportSection(pinia)
+        await importFileContent(wrapper, fileContent)
+
+        const saved = useGroupStore().groups.find(g => g.name === openGroup.name)
+
+        expect(saved).toBeDefined()
+
+        // The file password only protected the file in transit,
+        // it must not turn an open group into a locked one
+        expect(saved!.isEncrypted).toBe(false)
+        expect(saved!.isPrivate).toBe(false)
+
+        wrapper.unmount()
+    })
+})
