@@ -1,7 +1,8 @@
 # Release Notes
 
 ## v1.18.3 (2026-10-09)
-- 
+
+- Fixed issue where previous password wasn't cleared from cache. [#110](https://codeberg.org/tab-guardian/tab-guardian/issues/110)
 
 ## v1.18.2 (2026-10-09)
 
