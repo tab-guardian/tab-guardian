@@ -1,5 +1,8 @@
 # Release Notes
 
+## v1.18.3 (2026-10-09)
+- 
+
 ## v1.18.2 (2026-10-09)
 
 - 🐛 Fixed importing a password-protected export wiping out your locked group. It was getting encrypted a second time on import, after which neither the export password nor the original one worked.
