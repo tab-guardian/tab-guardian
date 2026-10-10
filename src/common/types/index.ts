@@ -6,6 +6,7 @@ export type LinkBuffer = {
     link: Link
 }
 
+
 export type ExportFile = {
     meta: {
         schemaVersion: number
@@ -14,6 +15,11 @@ export type ExportFile = {
     groups: Group[]
     folders: Folder[]
 }
+
+// It used to be that export file could be a group or an array of groups.
+// So we should always expect that imported file as LegacyExportFile and
+// check for meta.schemaVersion field to prove that it's a new format.
+export type LegacyExportFile = Group | Group[] | ExportFile
 
 export type LocaleMessageItem = {
     [key: string]: { message: string }
