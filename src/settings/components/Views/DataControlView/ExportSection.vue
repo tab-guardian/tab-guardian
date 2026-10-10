@@ -1,9 +1,11 @@
 <script setup lang="ts">
+import type { ExportFile, Group, Folder } from '@common/types'
 import { useGroupStore } from '@/stores/group'
 import { ref, onMounted } from 'vue'
 import { trans, downloadFile } from '@common/modules'
 import { showToast } from '@common/modules/toast'
 import { useModalStore } from '@/stores/modal'
+import { useFolderStore } from '@/stores/folder'
 import { encryptExport } from '@common/modules/webCrypto'
 import { toBase64 } from '@common/modules/base64'
 import pako from 'pako'
@@ -13,6 +15,7 @@ import ArrowDownTrayIcon from '@common/components/Icons/ArrowDownTrayIcon.vue'
 import SlideSwitch from '@common/components/Form/SlideSwitch.vue'
 
 const groupStore = useGroupStore()
+const folderStore = useFolderStore()
 const modalStore = useModalStore()
 
 const exporting = ref<boolean>(false)
@@ -20,8 +23,20 @@ const usePassword = ref<boolean>(false)
 
 onMounted(async () => await groupStore.load())
 
+function generateExportFile(groups: readonly Group[], folders: readonly Folder[]): ExportFile {
+    return {
+        meta: {
+            schemaVersion: 1,
+            extensionVersion: __APP_VERSION__,
+        },
+        groups,
+        folders,
+    }
+}
+
 async function exportGroups(): Promise<void> {
-    const groups = groupStore.groups
+    const groups = groupStore.initialGroups
+    const folders = folderStore.folders
 
     if (groups.length === 0) {
         showToast({ text: trans('no_groups_export'), type: 'error' })
@@ -30,8 +45,8 @@ async function exportGroups(): Promise<void> {
 
     exporting.value = true
 
-    const json = JSON.stringify(groups)
-    const compressed = toBase64(pako.gzip(json))
+    const jsonExport = JSON.stringify(generateExportFile(groups, folders))
+    const compressed = toBase64(pako.gzip(jsonExport))
 
     if (!usePassword.value) {
         downloadFile(compressed, 'tab-groups-export')

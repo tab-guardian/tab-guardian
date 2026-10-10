@@ -12,8 +12,8 @@ export type ExportFile = {
         schemaVersion: number
         extensionVersion: string
     }
-    groups: Group[]
-    folders: Folder[]
+    groups: readonly Group[]
+    folders: readonly Folder[]
 }
 
 // It used to be that export file could be a group or an array of groups.
