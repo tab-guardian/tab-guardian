@@ -1,8 +1,9 @@
 // @vitest-environment happy-dom
 
+import type { Pinia } from 'pinia'
+import type { ExportFile } from '@common/types'
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
 import { createPinia, setActivePinia } from 'pinia'
-import type { Pinia } from 'pinia'
 import { mount } from '@vue/test-utils'
 import pako from 'pako'
 import { toBase64 } from '@common/modules/base64'
@@ -10,7 +11,9 @@ import { encryptExport } from '@common/modules/webCrypto'
 import { fakeGroup, fakeLink } from '@common/modules/fake'
 import { useCryptoStore } from '@/stores/crypto'
 import { useGroupStore } from '@/stores/group'
+import { useFolderStore } from '@/stores/folder'
 import { useModalStore } from '@/stores/modal'
+import { folderStorage } from '@common/modules/storage/folder'
 import ImportSection from '@settings/components/Views/DataControlView/ImportSection.vue'
 import FileInput from '@common/components/Form/FileInput.vue'
 
@@ -230,6 +233,147 @@ describe('ImportSection double-encryption regression', () => {
         // it must not turn an open group into a locked one
         expect(saved!.isEncrypted).toBe(false)
         expect(saved!.isPrivate).toBe(false)
+
+        wrapper.unmount()
+    })
+})
+
+describe('ImportSection export file schemas', () => {
+    beforeEach(() => {
+        localStorage.clear()
+        mockFileReader()
+    })
+
+    afterEach(() => {
+        vi.unstubAllGlobals()
+        vi.restoreAllMocks()
+    })
+
+    it('imports legacy single-group file', async () => {
+        const pinia = createPinia()
+        setActivePinia(pinia)
+
+        const singleUrl = 'https://single.example/page'
+        const group = fakeGroup({
+            isPrivate: false,
+            isEncrypted: false,
+            links: [fakeLink({ url: singleUrl, title: 'Single' })],
+        })
+
+        // Single-group export from the popup menu is plain gzip + base64,
+        // no password envelope around it
+        const plainContent = toBase64(pako.gzip(JSON.stringify(group)))
+
+        const wrapper = mountImportSection(pinia)
+        await importFileContent(wrapper, plainContent)
+
+        const saved = useGroupStore().groups.find(g => g.name === group.name)
+
+        expect(saved).toBeDefined()
+        expect(saved!.isEncrypted).toBe(false)
+        expect(saved!.links[0].url).toEqual(singleUrl)
+
+        wrapper.unmount()
+    })
+
+    it('imports legacy groups-array file', async () => {
+        const pinia = createPinia()
+        setActivePinia(pinia)
+
+        const modalStore = useModalStore()
+
+        const firstUrl = 'https://first.example/page'
+        const secondUrl = 'https://second.example/page'
+        const first = fakeGroup({
+            isPrivate: false,
+            isEncrypted: false,
+            links: [fakeLink({ url: firstUrl })],
+        })
+
+        const second = fakeGroup({
+            isPrivate: false,
+            isEncrypted: false,
+            links: [fakeLink({ url: secondUrl })],
+        })
+
+        const fileContent = await buildExportFile([first, second])
+
+        mockPasswordModal(modalStore)
+
+        const wrapper = mountImportSection(pinia)
+        await importFileContent(wrapper, fileContent)
+
+        const savedFirst = useGroupStore().groups.find(g => g.name === first.name)
+        const savedSecond = useGroupStore().groups.find(g => g.name === second.name)
+
+        expect(savedFirst).toBeDefined()
+        expect(savedSecond).toBeDefined()
+        expect(savedFirst!.links[0].url).toEqual(firstUrl)
+        expect(savedSecond!.links[0].url).toEqual(secondUrl)
+
+        wrapper.unmount()
+    })
+
+    it('imports new ExportFile with groups and folders', async () => {
+        const pinia = createPinia()
+        setActivePinia(pinia)
+
+        const modalStore = useModalStore()
+        const folderStore = useFolderStore()
+
+        const folderName = 'import-folder-xyz'
+        const topUrl = 'https://top.example/page'
+        const inFolderUrl = 'https://folder.example/page'
+
+        const folder = await folderStorage.save(folderName)
+        expect(folder).not.toBeNull()
+
+        const topLevel = fakeGroup({
+            isPrivate: false,
+            isEncrypted: false,
+            links: [fakeLink({ url: topUrl })],
+        })
+
+        const inFolder = fakeGroup({
+            isPrivate: false,
+            isEncrypted: false,
+            folderId: folder!.id,
+            links: [fakeLink({ url: inFolderUrl })],
+        })
+
+        const payload: ExportFile = {
+            meta: { schemaVersion: 1, extensionVersion: 'test-version' },
+            groups: [topLevel, inFolder],
+            folders: [folder!],
+        }
+
+        const fileContent = await buildExportFile(payload)
+
+        mockPasswordModal(modalStore)
+
+        const wrapper = mountImportSection(pinia)
+        await importFileContent(wrapper, fileContent)
+
+        await folderStore.load()
+
+        const savedTop = useGroupStore().groups.find(g => g.name === topLevel.name)
+        const restoredFolder = folderStore.folders.find(f => f.id === folder!.id)
+
+        // In-folder groups live in initialGroups, not the top-level display list
+        const savedInFolder = useGroupStore().initialGroups.find(
+            g => g.name === inFolder.name,
+        )
+
+        expect(savedTop).toBeDefined()
+        expect(savedTop!.links[0].url).toEqual(topUrl)
+
+        // Folders come back with their ids so group links stay valid
+        expect(restoredFolder).toBeDefined()
+        expect(restoredFolder!.name).toEqual(folderName)
+
+        expect(savedInFolder).toBeDefined()
+        expect(savedInFolder!.folderId).toEqual(folder!.id)
+        expect(savedInFolder!.links[0].url).toEqual(inFolderUrl)
 
         wrapper.unmount()
     })
