@@ -6,6 +6,15 @@ export type LinkBuffer = {
     link: Link
 }
 
+export type ExportFile = {
+    meta: {
+        schemaVersion: number
+        extensionVersion: string
+    }
+    groups: Group[]
+    folders: Folder[]
+}
+
 export type LocaleMessageItem = {
     [key: string]: { message: string }
 }
