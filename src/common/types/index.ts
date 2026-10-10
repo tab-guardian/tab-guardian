@@ -6,7 +6,6 @@ export type LinkBuffer = {
     link: Link
 }
 
-
 export type ExportFile = {
     meta: {
         schemaVersion: number

@@ -21,7 +21,12 @@ const modalStore = useModalStore()
 const exporting = ref<boolean>(false)
 const usePassword = ref<boolean>(false)
 
-onMounted(async () => await groupStore.load())
+onMounted(async () => await loadData())
+
+async function loadData(): Promise<void> {
+    await groupStore.load()
+    await folderStore.load()
+}
 
 function generateExportFile(groups: readonly Group[], folders: readonly Folder[]): ExportFile {
     return {
@@ -35,10 +40,12 @@ function generateExportFile(groups: readonly Group[], folders: readonly Folder[]
 }
 
 async function exportGroups(): Promise<void> {
+    await loadData()
+
     const groups = groupStore.initialGroups
     const folders = folderStore.folders
 
-    if (groups.length === 0) {
+    if (groups.length === 0 && folders.length === 0) {
         showToast({ text: trans('no_groups_export'), type: 'error' })
         return
     }

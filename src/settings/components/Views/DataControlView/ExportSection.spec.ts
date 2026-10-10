@@ -47,7 +47,13 @@ async function exportAndParse(): Promise<ExportFile> {
 async function clickExport(pinia: Pinia): Promise<ExportFile> {
     const wrapper = mountExportSection(pinia)
     wrapper.findComponent(Button).vm.$emit('clicked')
-    await wrapper.vm.$nextTick()
+
+    await vi.waitFor(
+        () => {
+            expect(vi.mocked(downloadFile)).toHaveBeenCalledOnce()
+        },
+        { timeout: 5000, interval: 25 },
+    )
 
     const parsed = await exportAndParse()
     wrapper.unmount()
