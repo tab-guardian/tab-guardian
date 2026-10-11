@@ -151,5 +151,26 @@ describe('folder store', () => {
             expect(folderNames).toContain(folderName)
             expect(folderNames).toContain(`${folderName} (Copy 1)`)
         })
+
+        it('skips folder when id already exists', async () => {
+            const folderStore = useFolderStore()
+            const folderName = 'Work'
+
+            await folderStore.saveMany([fakeFolder({ id: 1, name: folderName })])
+            await folderStore.saveMany([fakeFolder({ id: 1, name: folderName })])
+
+            expect(folderStore.folders).toHaveLength(1)
+            expect(folderStore.folders[0]?.name).equal(folderName)
+        })
+
+        it('keeps local name when id matches but name differs', async () => {
+            const folderStore = useFolderStore()
+
+            await folderStore.saveMany([fakeFolder({ id: 1, name: 'Work' })])
+            await folderStore.saveMany([fakeFolder({ id: 1, name: 'Job' })])
+
+            expect(folderStore.folders).toHaveLength(1)
+            expect(folderStore.folders[0]?.name).equal('Work')
+        })
     })
 })

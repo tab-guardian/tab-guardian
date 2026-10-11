@@ -56,6 +56,13 @@ export const useFolderStore = defineStore('folder', () => {
                 ? folderOrName
                 : generateEmptyFolder(folderOrName)
 
+        // Same id means same folder, it is already stored
+        const existingFolder = await folderStorage.get(folder.id)
+
+        if (existingFolder) {
+            return
+        }
+
         if (folder.name === '') {
             folder.name = getDefaultName('Folder')
         }
