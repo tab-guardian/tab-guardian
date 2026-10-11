@@ -3,6 +3,7 @@
 ## v1.18.3 (2026-10-10)
 
 - 🐛 Fixed exporting issue which doesn't include folders and their content to export file. [#111](https://codeberg.org/tab-guardian/tab-guardian/issues/111)
+- 🧑‍💻 Creating a folder with a duplicate name now saves it as `<name> (Copy n)` instead of silently ignoring it.
 
 ## v1.18.2 (2026-10-09)
 
