@@ -28,7 +28,10 @@ async function loadData(): Promise<void> {
     await folderStore.load()
 }
 
-function generateExportFile(groups: readonly Group[], folders: readonly Folder[]): ExportSchemaV1 {
+function generateExportFile(
+    groups: readonly Group[],
+    folders: readonly Folder[],
+): ExportSchemaV1 {
     return {
         meta: { schema: 1, extensionVersion: __APP_VERSION__ },
         groups,

@@ -18,9 +18,7 @@ export const folderStorage = {
     },
 
     async save(arg: string | Folder): Promise<Folder | null> {
-        const folder = typeof arg === 'object'
-            ? arg
-            : this.generateEmptyFolder(arg)
+        const folder = typeof arg === 'object' ? arg : this.generateEmptyFolder(arg)
 
         const folders = await this.getAll()
         const exists = folders.some(f => f.name === folder.name)
