@@ -9,6 +9,7 @@ import {
     generateId,
     isComponentIcon,
     filterForbiddenLinks,
+    forceUniqueName,
 } from '@common/modules/group'
 import { fakeLink } from '@common/modules/fake'
 import * as RuntimeUtils from '@common/modules/runtime/utils'
@@ -59,6 +60,28 @@ describe('group utils module', () => {
 
         it('returns true for 5 character input', () => {
             expect(isComponentIcon('XIcon')).toBeTruthy()
+        })
+    })
+
+    suite('forceUniqueName()', () => {
+        it('returns name unchanged when it is free', () => {
+            expect(forceUniqueName('Work', new Set(['Job']))).toBe('Work')
+        })
+
+        it('appends copy suffix when name is taken', () => {
+            expect(forceUniqueName('Work', new Set(['Work']))).toBe('Work (Copy 1)')
+        })
+
+        it('picks first free number when copies exist', () => {
+            const takenNames = new Set(['Work', 'Work (Copy 100)'])
+
+            expect(forceUniqueName('Work', takenNames)).toBe('Work (Copy 1)')
+        })
+
+        it('numbers from base name when a copy already exists', () => {
+            const takenNames = new Set(['Work', 'Work (Copy 1)'])
+
+            expect(forceUniqueName('Work', takenNames)).toBe('Work (Copy 2)')
         })
     })
 

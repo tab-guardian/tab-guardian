@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import { folderStorage } from '@common/modules/storage/folder'
 import { useNotificationStore } from '@/stores/notification'
+import { forceUniqueName } from '@common/modules/group'
 import { groupStorage } from '@common/modules/storage/group'
 import { useGroupStore } from '@/stores/group'
 import { getDefaultName, logger } from '@common/modules'
@@ -67,7 +68,10 @@ export const useFolderStore = defineStore('folder', () => {
             folder.name = getDefaultName('Folder')
         }
 
-        folder.name = await forceUniqueName(folder.name)
+        const folders = await folderStorage.getAll()
+        const takenNames = new Set(folders.map(f => f.name))
+
+        folder.name = forceUniqueName(folder.name, takenNames)
 
         await folderStorage.save(folder)
 
@@ -77,29 +81,7 @@ export const useFolderStore = defineStore('folder', () => {
         }
     }
 
-    // Returns a new name for given folder name
-    async function forceUniqueName(oldName: string): Promise<string> {
-        const folders = await folderStorage.getAll()
-        const takenNames = new Set(folders.map(folder => folder.name))
-
-        if (!takenNames.has(oldName)) {
-            return oldName
-        }
-
-        let duplicateIndex = 1
-
-        while (takenNames.has(`${oldName} (Copy ${duplicateIndex})`)) {
-            duplicateIndex++
-        }
-
-        return `${oldName} (Copy ${duplicateIndex})`
-    }
-
     function generateEmptyFolder(name: string): Folder {
-        if (name === '') {
-            name = getDefaultName('Folder')
-        }
-
         return {
             id: generateId(),
             name,

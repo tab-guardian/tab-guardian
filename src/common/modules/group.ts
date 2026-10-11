@@ -15,6 +15,22 @@ export function generateId(): number {
     return high * 0x100000000 + buffer[1]
 }
 
+// Returns a new name for given folder or group name in format
+// `<name> (Copy <number>)`
+export function forceUniqueName(oldName: string, takenNames: Set<string>): string {
+    if (!takenNames.has(oldName)) {
+        return oldName
+    }
+
+    let duplicateIndex = 1
+
+    while (takenNames.has(`${oldName} (Copy ${duplicateIndex})`)) {
+        duplicateIndex++
+    }
+
+    return `${oldName} (Copy ${duplicateIndex})`
+}
+
 export function isComponentIcon(str: string): boolean {
     if (str.length <= 4) {
         return false
