@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
-import { getDefaultName, logger, trans } from '@common/modules'
+import { logger, trans } from '@common/modules'
 import { useModalStore } from '@/stores/modal'
-import { folderStorage } from '@common/modules/storage/folder'
 import { showToast } from '@common/modules/toast'
 import { useNewGroupStore } from '@/stores/newGroup'
+import { useFolderStore } from '@/stores/folder'
 import { useRouter } from 'vue-router'
 import PlusCircleIcon from '@common/components/Icons/PlusCircleIcon.vue'
 import FolderPlusIcon from '@common/components/Icons/FolderPlusIcon.vue'
@@ -12,6 +12,7 @@ import NewGroupButton from '@/components/Views/MainView/NewGroup/NewGroupButton.
 
 const modalStore = useModalStore()
 const newGroupStore = useNewGroupStore()
+const folderStore = useFolderStore()
 const router = useRouter()
 
 onMounted(newGroupStore.resetChoices)
@@ -30,8 +31,7 @@ async function showFolderModal(): Promise<void> {
         return
     }
 
-    const folderName = resp.name || getDefaultName('Folder')
-    await folderStorage.save(folderName)
+    await folderStore.save(resp.name || '')
 
     emit('refresh')
 

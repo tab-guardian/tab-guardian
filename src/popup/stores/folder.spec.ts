@@ -23,6 +23,40 @@ describe('folder store', () => {
         setActivePinia(createPinia())
     })
 
+    suite('save()', () => {
+        it('saves folder by name', async () => {
+            const folderStore = useFolderStore()
+            const folderName = 'Anna Photos'
+
+            await folderStore.save(folderName)
+
+            expect(folderStore.folders).toHaveLength(1)
+            expect(folderStore.folders[0]?.name).equal(folderName)
+        })
+
+        it('saves empty name with default name', async () => {
+            const folderStore = useFolderStore()
+
+            await folderStore.save('')
+
+            expect(folderStore.folders).toHaveLength(1)
+            expect(folderStore.folders[0]?.name).toMatch(/^Folder /)
+        })
+
+        it('saves duplicate name with copy suffix', async () => {
+            const folderStore = useFolderStore()
+            const folderName = 'Work'
+
+            await folderStore.save(folderName)
+            await folderStore.save(folderName)
+
+            const folderNames = folderStore.folders.map(f => f.name)
+
+            expect(folderNames).toContain(folderName)
+            expect(folderNames).toContain(`${folderName} (Copy 1)`)
+        })
+    })
+
     suite('saveMany()', () => {
         it('saves folders to folders state', async () => {
             const folderStore = useFolderStore()
@@ -52,8 +86,10 @@ describe('folder store', () => {
             const folderStore = useFolderStore()
             const folderName = 'Work'
 
-            await folderStorage.save(folderName)
-            await folderStorage.save(`${folderName} (Copy 100)`)
+            await folderStore.saveMany([
+                fakeFolder({ name: folderName }),
+                fakeFolder({ name: `${folderName} (Copy 100)` }),
+            ])
 
             await folderStore.saveMany([fakeFolder({ name: folderName })])
 
@@ -68,8 +104,10 @@ describe('folder store', () => {
             const folderStore = useFolderStore()
             const folderName = 'Work'
 
-            await folderStorage.save(folderName)
-            await folderStorage.save(`${folderName} (Copy 1)`)
+            await folderStore.saveMany([
+                fakeFolder({ name: folderName }),
+                fakeFolder({ name: `${folderName} (Copy 1)` }),
+            ])
 
             await folderStore.saveMany([fakeFolder({ name: folderName })])
 
@@ -85,7 +123,7 @@ describe('folder store', () => {
             const folderName = 'Work'
             const incomingId = 222
 
-            await folderStorage.save(folderName)
+            await folderStore.saveMany([fakeFolder({ name: folderName })])
 
             await folderStore.saveMany([
                 fakeFolder({ id: incomingId, name: folderName }),

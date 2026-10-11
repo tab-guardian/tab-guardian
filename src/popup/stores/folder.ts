@@ -5,7 +5,8 @@ import { folderStorage } from '@common/modules/storage/folder'
 import { useNotificationStore } from '@/stores/notification'
 import { groupStorage } from '@common/modules/storage/group'
 import { useGroupStore } from '@/stores/group'
-import { logger } from '@common/modules'
+import { getDefaultName, logger } from '@common/modules'
+import { generateId } from '@common/modules/group'
 
 export const useFolderStore = defineStore('folder', () => {
     const notificationStore = useNotificationStore()
@@ -46,7 +47,19 @@ export const useFolderStore = defineStore('folder', () => {
         await notificationStore.recalculateNotification()
     }
 
-    async function save(folder: Folder, loadFolders = true): Promise<void> {
+    async function save(
+        folderOrName: string | Folder,
+        loadFolders = true,
+    ): Promise<void> {
+        const folder =
+            typeof folderOrName === 'object'
+                ? folderOrName
+                : generateEmptyFolder(folderOrName)
+
+        if (folder.name === '') {
+            folder.name = getDefaultName('Folder')
+        }
+
         folder.name = await forceUniqueName(folder.name)
 
         await folderStorage.save(folder)
@@ -75,11 +88,24 @@ export const useFolderStore = defineStore('folder', () => {
         return `${oldName} (Copy ${duplicateIndex})`
     }
 
+    function generateEmptyFolder(name: string): Folder {
+        if (name === '') {
+            name = getDefaultName('Folder')
+        }
+
+        return {
+            id: generateId(),
+            name,
+            updatedAt: Date.now(),
+        }
+    }
+
     return {
         selectedFolder,
         folders,
         loading,
         saveMany,
+        save,
         load,
         deleteFolder,
     }

@@ -1,31 +1,14 @@
 import type { Folder } from '@common/types'
 import { runtime } from '@common/modules/runtime'
 import { logger } from '@common/modules'
-import { generateId } from '@common/modules/group'
-import { getDefaultName } from '@common/modules'
 
 export const folderStorage = {
-    generateEmptyFolder(name: string): Folder {
-        if (name === '') {
-            name = getDefaultName('Folder')
-        }
-
-        return {
-            id: generateId(),
-            name,
-            updatedAt: Date.now(),
-        }
-    },
-
-    async save(arg: string | Folder): Promise<Folder | null> {
-        const folder = typeof arg === 'object' ? arg : this.generateEmptyFolder(arg)
-
+    async save(folder: Folder): Promise<Folder | null> {
         const folders = await this.getAll()
         const exists = folders.some(f => f.name === folder.name)
 
         if (exists) {
-            logger().warn('Folder already exists')
-            return null
+            throw new Error('Folder already exists, it should not happen')
         }
 
         folders.push(folder)

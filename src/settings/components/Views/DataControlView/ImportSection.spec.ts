@@ -12,7 +12,6 @@ import { useCryptoStore } from '@/stores/crypto'
 import { useGroupStore } from '@/stores/group'
 import { useFolderStore } from '@/stores/folder'
 import { useModalStore } from '@/stores/modal'
-import { folderStorage } from '@common/modules/storage/folder'
 import pako from 'pako'
 import ImportSection from '@settings/components/Views/DataControlView/ImportSection.vue'
 import FileInput from '@common/components/Form/FileInput.vue'
@@ -325,8 +324,10 @@ describe('ImportSection export file schemas', () => {
         const topUrl = 'https://top.example/page'
         const inFolderUrl = 'https://folder.example/page'
 
-        const folder = await folderStorage.save(folderName)
-        expect(folder).not.toBeNull()
+        await folderStore.save(folderName)
+
+        const folder = folderStore.folders.find(f => f.name === folderName)
+        expect(folder).not.toBeUndefined()
 
         const topLevel = fakeGroup({
             isPrivate: false,
@@ -387,8 +388,10 @@ describe('ImportSection export file schemas', () => {
         const folderName = 'conflict-folder-xyz'
         const inFolderUrl = 'https://folder.example/page'
 
-        const existingFolder = await folderStorage.save(folderName)
-        expect(existingFolder).not.toBeNull()
+        await folderStore.save(folderName)
+
+        const existingFolder = folderStore.folders.find(f => f.name === folderName)
+        expect(existingFolder).not.toBeUndefined()
 
         // Same name as the existing folder, foreign id, like a folder
         // coming from another machine

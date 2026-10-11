@@ -9,7 +9,6 @@ import { fromBase64 } from '@common/modules/base64'
 import { fakeGroup, fakeLink } from '@common/modules/fake'
 import { downloadFile } from '@common/modules'
 import { groupStorage } from '@common/modules/storage/group'
-import { folderStorage } from '@common/modules/storage/folder'
 import { useGroupStore } from '@/stores/group'
 import { useFolderStore } from '@/stores/folder'
 import ExportSection from '@settings/components/Views/DataControlView/ExportSection.vue'
@@ -91,9 +90,13 @@ describe('ExportSection export file', () => {
         setActivePinia(pinia)
 
         const groupStore = useGroupStore()
-        const folder = await folderStorage.save('my-folder-xyz')
+        const folderStore = useFolderStore()
 
-        expect(folder).not.toBeNull()
+        await folderStore.save('my-folder-xyz')
+
+        const folder = folderStore.folders.find(f => f.name === 'my-folder-xyz')
+
+        expect(folder).not.toBeUndefined()
 
         const topLevelGroup = fakeGroup({
             name: 'top-level-group',
@@ -132,9 +135,11 @@ describe('ExportSection export file', () => {
         const folderStore = useFolderStore()
 
         const folderName = 'my-folder-xyz'
-        const folder = await folderStorage.save(folderName)
+        await folderStore.save(folderName)
 
-        expect(folder).not.toBeNull()
+        const folder = folderStore.folders.find(f => f.name === folderName)
+
+        expect(folder).not.toBeUndefined()
 
         const topLevelGroup = fakeGroup({
             name: 'top-level-group',
