@@ -58,17 +58,21 @@ export const useFolderStore = defineStore('folder', () => {
     }
 
     // Returns a new name for given folder name
-    async function forceUniqueName(oldName: string, duplicateIndex = 1): Promise<string> {
+    async function forceUniqueName(oldName: string): Promise<string> {
         const folders = await folderStorage.getAll()
-        const nameExists = folders.some(folder => folder.name === oldName)
+        const takenNames = new Set(folders.map(folder => folder.name))
 
-        if (!nameExists) {
+        if (!takenNames.has(oldName)) {
             return oldName
         }
 
-        const newName = `${oldName} (Copy ${duplicateIndex})`
+        let duplicateIndex = 1
 
-        return forceUniqueName(newName, ++duplicateIndex)
+        while (takenNames.has(`${oldName} (Copy ${duplicateIndex})`)) {
+            duplicateIndex++
+        }
+
+        return `${oldName} (Copy ${duplicateIndex})`
     }
 
     return {

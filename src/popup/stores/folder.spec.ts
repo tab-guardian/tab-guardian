@@ -64,6 +64,22 @@ describe('folder store', () => {
             expect(folderNames).toContain(`${folderName} (Copy 1)`)
         })
 
+        it('numbers from the base name when a copy already exists', async () => {
+            const folderStore = useFolderStore()
+            const folderName = 'Work'
+
+            await folderStorage.save(folderName)
+            await folderStorage.save(`${folderName} (Copy 1)`)
+
+            await folderStore.saveMany([fakeFolder({ name: folderName })])
+
+            const folderNames = folderStore.folders.map(f => f.name)
+
+            expect(folderNames).toContain(folderName)
+            expect(folderNames).toContain(`${folderName} (Copy 1)`)
+            expect(folderNames).toContain(`${folderName} (Copy 2)`)
+        })
+
         it('keeps the incoming folder id when renaming a duplicate', async () => {
             const folderStore = useFolderStore()
             const folderName = 'Work'
