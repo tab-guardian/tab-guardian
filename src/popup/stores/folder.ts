@@ -47,12 +47,28 @@ export const useFolderStore = defineStore('folder', () => {
     }
 
     async function save(folder: Folder, loadFolders = true): Promise<void> {
+        folder.name = await forceUniqueName(folder.name)
+
         await folderStorage.save(folder)
 
         if (loadFolders) {
             await load()
             await notificationStore.recalculateNotification()
         }
+    }
+
+    // Returns a new name for given folder name
+    async function forceUniqueName(oldName: string, duplicateIndex = 1): Promise<string> {
+        const folders = await folderStorage.getAll()
+        const nameExists = folders.some(folder => folder.name === oldName)
+
+        if (!nameExists) {
+            return oldName
+        }
+
+        const newName = `${oldName} (Copy ${duplicateIndex})`
+
+        return forceUniqueName(newName, ++duplicateIndex)
     }
 
     return {
