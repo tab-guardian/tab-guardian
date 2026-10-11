@@ -63,5 +63,39 @@ describe('folder store', () => {
             expect(folderNames).toContain(`${folderName} (Copy 100)`)
             expect(folderNames).toContain(`${folderName} (Copy 1)`)
         })
+
+        it('keeps the incoming folder id when renaming a duplicate', async () => {
+            const folderStore = useFolderStore()
+            const folderName = 'Work'
+            const incomingId = 222
+
+            await folderStorage.save(folderName)
+
+            await folderStore.saveMany([
+                fakeFolder({ id: incomingId, name: folderName }),
+            ])
+
+            const folderCopy = folderStore.folders.find(
+                f => f.name === `${folderName} (Copy 1)`,
+            )
+
+            expect(folderCopy).toBeDefined()
+            expect(folderCopy!.id).toEqual(incomingId)
+        })
+
+        it('numbers duplicates within the same batch', async () => {
+            const folderStore = useFolderStore()
+            const folderName = 'Work'
+
+            await folderStore.saveMany([
+                fakeFolder({ id: 11, name: folderName }),
+                fakeFolder({ id: 22, name: folderName }),
+            ])
+
+            const folderNames = folderStore.folders.map(f => f.name)
+
+            expect(folderNames).toContain(folderName)
+            expect(folderNames).toContain(`${folderName} (Copy 1)`)
+        })
     })
 })

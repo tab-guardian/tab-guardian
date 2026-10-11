@@ -376,4 +376,64 @@ describe('ImportSection export file schemas', () => {
 
         wrapper.unmount()
     })
+
+    it('links imported group to the renamed folder copy on name conflict', async () => {
+        const pinia = createPinia()
+        setActivePinia(pinia)
+
+        const modalStore = useModalStore()
+        const folderStore = useFolderStore()
+
+        const folderName = 'conflict-folder-xyz'
+        const inFolderUrl = 'https://folder.example/page'
+
+        const existingFolder = await folderStorage.save(folderName)
+        expect(existingFolder).not.toBeNull()
+
+        // Same name as the existing folder, foreign id, like a folder
+        // coming from another machine
+        const incomingFolder = { ...existingFolder!, id: existingFolder!.id + 1 }
+        const inFolderGroup = fakeGroup({
+            isPrivate: false,
+            isEncrypted: false,
+            folderId: incomingFolder.id,
+            links: [fakeLink({ url: inFolderUrl })],
+        })
+        const topLevel = fakeGroup({
+            isPrivate: false,
+            isEncrypted: false,
+            links: [fakeLink()],
+        })
+
+        const exportSchema = generateExportSchemaV1(
+            [topLevel, inFolderGroup],
+            [incomingFolder],
+        )
+
+        const fileContent = await buildExportFile(exportSchema)
+
+        mockPasswordModal(modalStore)
+
+        const wrapper = mountImportSection(pinia)
+        await importFileContent(wrapper, fileContent)
+
+        await folderStore.load()
+
+        // The group must land in a folder that exists, not dangle
+        // on the skipped folder id
+        const savedInFolder = useGroupStore().initialGroups.find(
+            g => g.name === inFolderGroup.name,
+        )
+
+        expect(savedInFolder).toBeDefined()
+
+        const linkedFolder = folderStore.folders.find(
+            f => f.id === savedInFolder!.folderId,
+        )
+
+        expect(linkedFolder).toBeDefined()
+        expect(savedInFolder!.links[0].url).toEqual(inFolderUrl)
+
+        wrapper.unmount()
+    })
 })
