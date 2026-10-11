@@ -1,11 +1,21 @@
 // @vitest-environment happy-dom
 
-import { describe, it, expect, suite, beforeEach } from 'vitest'
+import type { Folder } from '@common/types'
+import { describe, it, expect, beforeEach, suite } from 'vitest'
 import { createPinia, setActivePinia } from 'pinia'
 import { useFolderStore } from '@/stores/folder'
 import { folderStorage } from '@common/modules/storage/folder'
-import { fakeGroup } from '@common/modules/fake'
-import { groupStorage } from '@common/modules/storage/group'
+
+function fakeFolder(fields?: Partial<Folder>): Folder {
+    const id = fields?.id ?? Math.floor(Date.now() + Math.random() * 1000)
+
+    return {
+        id,
+        name: `Test folder ${id}`,
+        updatedAt: Date.now(),
+        ...fields,
+    }
+}
 
 describe('folder store', () => {
     beforeEach(() => {
@@ -13,40 +23,45 @@ describe('folder store', () => {
         setActivePinia(createPinia())
     })
 
-    suite('deleteFolder()', () => {
-        it('deleting folder removes it from storage', async () => {
+    suite('saveMany()', () => {
+        it('saves folders to folders state', async () => {
             const folderStore = useFolderStore()
-            const folder = await folderStorage.save('Crina Maria')
 
-            await folderStore.deleteFolder(folder!.id)
+            expect(folderStore.folders).toHaveLength(0)
 
-            const found = await folderStorage.get(folder!.id)
-            expect(found).toBeNullable()
+            await folderStore.saveMany([
+                fakeFolder({ name: 'Serhii' }),
+                fakeFolder({ name: 'Anna' }),
+            ])
+
+            expect(folderStore.folders).toHaveLength(2)
         })
 
-        it('deletes groups attatched to deleted folder', async () => {
+        it('saves folders to local storage', async () => {
             const folderStore = useFolderStore()
 
-            let folder = await folderStorage.save('Actresses')
+            await folderStore.saveMany([fakeFolder({ name: 'Anna Photos' })])
 
-            const sedneyGroup = fakeGroup({
-                name: 'Sydney Sweeney',
-                folderId: folder!.id,
-            })
+            const folders = await folderStorage.getAll()
 
-            const amyGroup = fakeGroup({
-                name: 'Amy Adams',
-                folderId: folder!.id,
-            })
+            expect(folders).toHaveLength(1)
+            expect(folders[0]?.name).equal('Anna Photos')
+        })
 
-            await groupStorage.save(sedneyGroup)
-            await groupStorage.save(amyGroup)
+        it('saves duplicate name as first free "<name> (Copy n)" starting at 1', async () => {
+            const folderStore = useFolderStore()
+            const folderName = 'Work'
 
-            await folderStore.deleteFolder(folder!.id)
+            await folderStorage.save(folderName)
+            await folderStorage.save(`${folderName} (Copy 100)`)
 
-            const groups = await groupStorage.getAll()
+            await folderStore.saveMany([fakeFolder({ name: folderName })])
 
-            expect(groups).toHaveLength(0)
+            const folderNames = folderStore.folders.map(f => f.name)
+
+            expect(folderNames).toContain(folderName)
+            expect(folderNames).toContain(`${folderName} (Copy 100)`)
+            expect(folderNames).toContain(`${folderName} (Copy 1)`)
         })
     })
 })
