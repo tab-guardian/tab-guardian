@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import type { ExportSchemaV1, Group, Folder } from '@common/types'
 import { useGroupStore } from '@/stores/group'
 import { ref, onMounted } from 'vue'
 import { trans, downloadFile } from '@common/modules'
@@ -8,6 +7,7 @@ import { useModalStore } from '@/stores/modal'
 import { useFolderStore } from '@/stores/folder'
 import { encryptExport } from '@common/modules/webCrypto'
 import { toBase64 } from '@common/modules/base64'
+import { generateExportSchemaV1 } from '@common/modules/importExport'
 import pako from 'pako'
 import Section from '@settings/components/Section.vue'
 import Button from '@common/components/Form/Button.vue'
@@ -28,17 +28,6 @@ async function loadData(): Promise<void> {
     await folderStore.load()
 }
 
-function generateExportFile(
-    groups: readonly Group[],
-    folders: readonly Folder[],
-): ExportSchemaV1 {
-    return {
-        meta: { schema: 1, extensionVersion: __APP_VERSION__ },
-        groups,
-        folders,
-    }
-}
-
 async function exportGroups(): Promise<void> {
     await loadData()
 
@@ -52,7 +41,7 @@ async function exportGroups(): Promise<void> {
 
     exporting.value = true
 
-    const jsonExport = JSON.stringify(generateExportFile(groups, folders))
+    const jsonExport = JSON.stringify(generateExportSchemaV1(groups, folders))
     const compressed = toBase64(pako.gzip(jsonExport))
 
     if (!usePassword.value) {

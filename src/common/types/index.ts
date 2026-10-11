@@ -17,7 +17,7 @@ export type ExportSchemaV1 = {
 
 // It used to be that export file could be a group or an array of groups.
 // So we should always expect that imported file as LegacyExportFile and
-// check for meta.schemaVersion field to prove that it's a new format.
+// check for meta.schema field to prove that it's a new format.
 export type ExportSchema = Group | Group[] | ExportSchemaV1
 
 export type LocaleMessageItem = {

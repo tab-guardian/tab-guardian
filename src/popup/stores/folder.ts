@@ -5,6 +5,7 @@ import { folderStorage } from '@common/modules/storage/folder'
 import { useNotificationStore } from '@/stores/notification'
 import { groupStorage } from '@common/modules/storage/group'
 import { useGroupStore } from '@/stores/group'
+import { logger } from '@common/modules'
 
 export const useFolderStore = defineStore('folder', () => {
     const notificationStore = useNotificationStore()
@@ -38,7 +39,7 @@ export const useFolderStore = defineStore('folder', () => {
                 await save(folder, false)
             }
         } catch (err) {
-            console.error(err)
+            logger().error(err)
         }
 
         await load()

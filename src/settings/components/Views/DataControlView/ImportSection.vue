@@ -16,6 +16,7 @@ import pako from 'pako'
 import Section from '@settings/components/Section.vue'
 import FileInput from '@common/components/Form/FileInput.vue'
 import Progress from '@common/components/Progress.vue'
+import { generateExportSchemaV1 } from '@common/modules/importExport'
 
 const groupStore = useGroupStore()
 const folderStore = useFolderStore()
@@ -96,15 +97,10 @@ async function importFile(rawData: string): Promise<void> {
     }
 
     const exportsWithoutFoldersVersion = 'v1.18.2'
+    const groups = Array.isArray(json) ? json : [json]
+    const schema = generateExportSchemaV1(groups, [], exportsWithoutFoldersVersion)
 
-    await importNormalizedFile({
-        meta: {
-            schema: 1,
-            extensionVersion: exportsWithoutFoldersVersion,
-        },
-        groups: Array.isArray(json) ? json : [json],
-        folders: [],
-    })
+    await importNormalizedFile(schema)
 }
 
 async function importNormalizedFile(exportFile: ExportSchemaV1) {
