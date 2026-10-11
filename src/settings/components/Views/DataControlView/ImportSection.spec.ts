@@ -1,11 +1,10 @@
 // @vitest-environment happy-dom
 
 import type { Pinia } from 'pinia'
-import type { ExportSchemaV1 as ExportSchemaV1 } from '@common/types'
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
 import { createPinia, setActivePinia } from 'pinia'
 import { mount } from '@vue/test-utils'
-import pako from 'pako'
+import { generateExportSchemaV1 } from '@common/modules/importExport'
 import { toBase64 } from '@common/modules/base64'
 import { encryptExport } from '@common/modules/webCrypto'
 import { fakeGroup, fakeLink } from '@common/modules/fake'
@@ -14,6 +13,7 @@ import { useGroupStore } from '@/stores/group'
 import { useFolderStore } from '@/stores/folder'
 import { useModalStore } from '@/stores/modal'
 import { folderStorage } from '@common/modules/storage/folder'
+import pako from 'pako'
 import ImportSection from '@settings/components/Views/DataControlView/ImportSection.vue'
 import FileInput from '@common/components/Form/FileInput.vue'
 
@@ -56,8 +56,8 @@ function makeFile(content: string): TestFile {
 }
 
 // Mirrors ExportSection: stringify -> gzip -> base64 -> password-protect
-async function buildExportFile(payload: unknown): Promise<string> {
-    const json = JSON.stringify(payload)
+async function buildExportFile(exportSchema: unknown): Promise<string> {
+    const json = JSON.stringify(exportSchema)
     const compressed = toBase64(pako.gzip(json))
     return await encryptExport(compressed, EXPORT_PASS)
 }
@@ -334,20 +334,19 @@ describe('ImportSection export file schemas', () => {
             links: [fakeLink({ url: topUrl })],
         })
 
-        const inFolder = fakeGroup({
+        const inFolderGroup = fakeGroup({
             isPrivate: false,
             isEncrypted: false,
             folderId: folder!.id,
             links: [fakeLink({ url: inFolderUrl })],
         })
 
-        const payload: ExportSchemaV1 = {
-            meta: { schema: 1, extensionVersion: 'test-version' },
-            groups: [topLevel, inFolder],
-            folders: [folder!],
-        }
+        const exportSchema = generateExportSchemaV1(
+            [topLevel, inFolderGroup],
+            [folder!],
+        )
 
-        const fileContent = await buildExportFile(payload)
+        const fileContent = await buildExportFile(exportSchema)
 
         mockPasswordModal(modalStore)
 
@@ -361,7 +360,7 @@ describe('ImportSection export file schemas', () => {
 
         // In-folder groups live in initialGroups, not the top-level display list
         const savedInFolder = useGroupStore().initialGroups.find(
-            g => g.name === inFolder.name,
+            g => g.name === inFolderGroup.name,
         )
 
         expect(savedTop).toBeDefined()
@@ -374,6 +373,113 @@ describe('ImportSection export file schemas', () => {
         expect(savedInFolder).toBeDefined()
         expect(savedInFolder!.folderId).toEqual(folder!.id)
         expect(savedInFolder!.links[0].url).toEqual(inFolderUrl)
+
+        wrapper.unmount()
+    })
+
+    it('renames imported folder when name already exists', async () => {
+        const pinia = createPinia()
+        setActivePinia(pinia)
+
+        const modalStore = useModalStore()
+        const folderStore = useFolderStore()
+
+        const folderName = 'work-folder-xyz'
+        const copyName = `${folderName} (Copy 1)`
+        const inFolderUrl = 'https://folder.example/page'
+
+        const existing = await folderStorage.save(folderName)
+        expect(existing).not.toBeNull()
+
+        // Same name as existing folder, different id, like a folder
+        // coming from another machine
+        const incomingFolder = { ...existing!, id: existing!.id + 1 }
+        const inFolderGroup = fakeGroup({
+            isPrivate: false,
+            isEncrypted: false,
+            folderId: incomingFolder.id,
+            links: [fakeLink({ url: inFolderUrl })],
+        })
+
+        const topLevelGroup = fakeGroup({
+            isPrivate: false,
+            isEncrypted: false,
+            links: [fakeLink()],
+        })
+
+        const exportSchema = generateExportSchemaV1(
+            [topLevelGroup, inFolderGroup],
+            [incomingFolder],
+        )
+
+        const fileContent = await buildExportFile(exportSchema)
+
+        mockPasswordModal(modalStore)
+
+        const wrapper = mountImportSection(pinia)
+        await importFileContent(wrapper, fileContent)
+
+        await folderStore.load()
+
+        const folderNames = folderStore.folders.map(f => f.name)
+
+        expect(folderNames).toContain(folderName)
+        expect(folderNames).toContain(copyName)
+
+        // The group must follow its folder instead of dangling
+        // on the skipped id
+        const folderCopy = folderStore.folders.find(f => f.name === copyName)
+        const savedInFolder = useGroupStore().initialGroups.find(
+            g => g.name === inFolderGroup.name,
+        )
+
+        expect(folderCopy).toBeDefined()
+        expect(savedInFolder).toBeDefined()
+        expect(savedInFolder!.folderId).toEqual(folderCopy!.id)
+        expect(savedInFolder!.links[0].url).toEqual(inFolderUrl)
+
+        wrapper.unmount()
+    })
+
+    it('numbers folder copies sequentially', async () => {
+        const pinia = createPinia()
+        setActivePinia(pinia)
+
+        const modalStore = useModalStore()
+        const folderStore = useFolderStore()
+
+        const folderName = 'work-folder-xyz'
+
+        const existingFolder = await folderStorage.save(folderName)
+        expect(existingFolder).not.toBeNull()
+
+        const firstFolderCopy = await folderStorage.save(`${folderName} (Copy 1)`)
+        expect(firstFolderCopy).not.toBeNull()
+
+        const incomingFolder = { ...existingFolder!, id: existingFolder!.id + 1 }
+        const topLevelGroup = fakeGroup({
+            isPrivate: false,
+            isEncrypted: false,
+            links: [fakeLink()],
+        })
+
+        const exportSchema = generateExportSchemaV1(
+            [topLevelGroup],
+            [incomingFolder],
+        )
+
+        const fileContent = await buildExportFile(exportSchema)
+
+        mockPasswordModal(modalStore)
+
+        const wrapper = mountImportSection(pinia)
+        await importFileContent(wrapper, fileContent)
+
+        await folderStore.load()
+
+        expect(folderStore.folders.map(f => f.name)).toContain(
+            `${folderName} (Copy 2)`,
+        )
 
         wrapper.unmount()
     })
