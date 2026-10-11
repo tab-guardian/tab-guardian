@@ -5,6 +5,7 @@
 - 🐛 Fixed exporting issue which doesn't include folders and their content to export file. [#111](https://codeberg.org/tab-guardian/tab-guardian/issues/111)
 - 🧑‍💻 Creating a folder with a duplicate name now saves it as `<name> (Copy n)` instead of silently ignoring it.
 - 🐛 Fixed importing a folder that already exists creating a broken duplicate. Matching folders are now skipped, keeping your local folder name.
+- 🧑‍💻 Improved id generation for groups and folders. Ids now use cryptographic randomness instead of `Math.random`, making collisions across devices and backups far less likely.
 
 ## v1.18.2 (2026-10-09)
 

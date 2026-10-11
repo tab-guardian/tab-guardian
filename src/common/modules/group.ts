@@ -4,8 +4,15 @@ import { isForbiddenUrl } from '@common/modules/url'
 import { showToast } from '@common/modules/toast'
 import { trans } from '@common/modules'
 
+// 53 bits of cryptographic randomness packed into a number:
+// 21 high bits and 32 low bits, the largest exact integer
+// a JS number can hold. Much better than using Math.random which
+// we were using before.
 export function generateId(): number {
-    return Math.floor(Math.random() * 1000000)
+    const buffer = crypto.getRandomValues(new Uint32Array(2))
+    const high = buffer[0] % 0x200000
+
+    return high * 0x100000000 + buffer[1]
 }
 
 export function isComponentIcon(str: string): boolean {
