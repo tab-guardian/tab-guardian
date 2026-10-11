@@ -1,7 +1,7 @@
 // @vitest-environment happy-dom
 
 import type { Pinia } from 'pinia'
-import type { ExportFile } from '@common/types'
+import type { ExportSchemaV1 } from '@common/types'
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
 import { createPinia, setActivePinia } from 'pinia'
 import { mount } from '@vue/test-utils'
@@ -34,17 +34,17 @@ function mountExportSection(pinia: Pinia): ReturnType<typeof mount> {
     })
 }
 
-async function exportAndParse(): Promise<ExportFile> {
+async function exportAndParse(): Promise<ExportSchemaV1> {
     const mocked = vi.mocked(downloadFile)
     expect(mocked).toHaveBeenCalledOnce()
 
     const payload = mocked.mock.calls[0][0] as string
     const json = pako.ungzip(fromBase64(payload), { to: 'string' })
 
-    return JSON.parse(json) as ExportFile
+    return JSON.parse(json) as ExportSchemaV1
 }
 
-async function clickExport(pinia: Pinia): Promise<ExportFile> {
+async function clickExport(pinia: Pinia): Promise<ExportSchemaV1> {
     const wrapper = mountExportSection(pinia)
     wrapper.findComponent(Button).vm.$emit('clicked')
 
@@ -81,7 +81,7 @@ describe('ExportSection export file', () => {
 
         const parsed = await clickExport(pinia)
 
-        expect(parsed.meta.schemaVersion).toBe(1)
+        expect(parsed.meta.schema).toBe(1)
         expect(typeof parsed.meta.extensionVersion).toBe('string')
         expect(parsed.meta.extensionVersion.length).toBeGreaterThan(0)
     })

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ExportFile, Group, Folder } from '@common/types'
+import type { ExportSchemaV1, Group, Folder } from '@common/types'
 import { useGroupStore } from '@/stores/group'
 import { ref, onMounted } from 'vue'
 import { trans, downloadFile } from '@common/modules'
@@ -28,12 +28,9 @@ async function loadData(): Promise<void> {
     await folderStore.load()
 }
 
-function generateExportFile(groups: readonly Group[], folders: readonly Folder[]): ExportFile {
+function generateExportFile(groups: readonly Group[], folders: readonly Folder[]): ExportSchemaV1 {
     return {
-        meta: {
-            schemaVersion: 1,
-            extensionVersion: __APP_VERSION__,
-        },
+        meta: { schema: 1, extensionVersion: __APP_VERSION__ },
         groups,
         folders,
     }

@@ -1,7 +1,7 @@
 // @vitest-environment happy-dom
 
 import type { Pinia } from 'pinia'
-import type { ExportFile } from '@common/types'
+import type { ExportSchemaV1 as ExportSchemaV1 } from '@common/types'
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
 import { createPinia, setActivePinia } from 'pinia'
 import { mount } from '@vue/test-utils'
@@ -341,8 +341,8 @@ describe('ImportSection export file schemas', () => {
             links: [fakeLink({ url: inFolderUrl })],
         })
 
-        const payload: ExportFile = {
-            meta: { schemaVersion: 1, extensionVersion: 'test-version' },
+        const payload: ExportSchemaV1 = {
+            meta: { schema: 1, extensionVersion: 'test-version' },
             groups: [topLevel, inFolder],
             folders: [folder!],
         }

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Group, Folder, LegacyExportFile, ExportFile } from '@common/types'
+import type { Group, Folder, ExportSchema, ExportSchemaV1 } from '@common/types'
 import { ref } from 'vue'
 import { cloneDeep } from 'lodash'
 import { logger, trans } from '@common/modules'
@@ -88,7 +88,7 @@ async function importFile(rawData: string): Promise<void> {
         rawData = pako.ungzip(compressedBytes, { to: 'string' })
     }
 
-    const json = JSON.parse(rawData) as LegacyExportFile
+    const json = JSON.parse(rawData) as ExportSchema
 
     if (json !== null && typeof json === 'object' && 'meta' in json) {
         await importNormalizedFile(json)
@@ -99,7 +99,7 @@ async function importFile(rawData: string): Promise<void> {
 
     await importNormalizedFile({
         meta: {
-            schemaVersion: 1,
+            schema: 1,
             extensionVersion: exportsWithoutFoldersVersion,
         },
         groups: Array.isArray(json) ? json : [json],
@@ -107,7 +107,7 @@ async function importFile(rawData: string): Promise<void> {
     })
 }
 
-async function importNormalizedFile(exportFile: ExportFile) {
+async function importNormalizedFile(exportFile: ExportSchemaV1) {
     await groupStore.load()
 
     const groups = cloneDeep(exportFile.groups) as Group[]
