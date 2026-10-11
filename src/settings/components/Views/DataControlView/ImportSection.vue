@@ -106,8 +106,8 @@ async function importFile(rawData: string): Promise<void> {
 async function importNormalizedFile(exportFile: ExportSchemaV1) {
     await groupStore.load()
 
-    const groups = cloneDeep(exportFile.groups) as Group[]
     const folders = cloneDeep(exportFile.folders) as Folder[]
+    const groups = cloneDeep(exportFile.groups) as Group[]
 
     const replaceGroups = await shouldReplaceDuplicateGroups(groups)
 
