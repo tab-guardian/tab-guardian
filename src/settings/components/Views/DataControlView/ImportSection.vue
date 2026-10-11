@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import type { Group } from '@common/types'
+import type { Group, Folder, LegacyExportFile, ExportFile } from '@common/types'
 import { ref } from 'vue'
+import { cloneDeep } from 'lodash'
 import { logger, trans } from '@common/modules'
 import { decryptExport } from '@common/modules/webCrypto'
 import { fromBase64 } from '@common/modules/base64'
@@ -8,6 +9,7 @@ import { showToast } from '@common/modules/toast'
 import { getDecryptionError } from '@/errors'
 import { useAttemptsStore } from '@/stores/attempts'
 import { useGroupStore } from '@/stores/group'
+import { useFolderStore } from '@/stores/folder'
 import { useModalStore } from '@/stores/modal'
 import { useProgressStore } from '@/stores/progress'
 import pako from 'pako'
@@ -16,6 +18,7 @@ import FileInput from '@common/components/Form/FileInput.vue'
 import Progress from '@common/components/Progress.vue'
 
 const groupStore = useGroupStore()
+const folderStore = useFolderStore()
 const attemptsStore = useAttemptsStore()
 const modalStore = useModalStore()
 const progressStore = useProgressStore()
@@ -37,7 +40,7 @@ async function importGroups(): Promise<void> {
         }
 
         try {
-            await processFileContent(e.target.result as string)
+            await importFile(e.target.result as string)
         } catch (err) {
             logger().error('Process file content', err)
             showToast({ text: trans('error_reading_file'), type: 'error' })
@@ -57,7 +60,7 @@ async function importGroups(): Promise<void> {
 async function decryptFile(encrypted: string, pass: string): Promise<boolean> {
     try {
         const decrypted = await decryptExport(encrypted, pass)
-        await processFileContent(decrypted)
+        await importFile(decrypted)
         attemptsStore.unlock()
     } catch (err) {
         showToast({ text: getDecryptionError(err), type: 'error' })
@@ -69,7 +72,7 @@ async function decryptFile(encrypted: string, pass: string): Promise<boolean> {
     return true
 }
 
-async function processFileContent(rawData: string): Promise<void> {
+async function importFile(rawData: string): Promise<void> {
     if (rawData.startsWith('algo(')) {
         await modalStore.show('password', {
             decrypting: pass => decryptFile(rawData, pass),
@@ -85,30 +88,53 @@ async function processFileContent(rawData: string): Promise<void> {
         rawData = pako.ungzip(compressedBytes, { to: 'string' })
     }
 
-    const json = JSON.parse(rawData) as Group[] | Group
+    const json = JSON.parse(rawData) as LegacyExportFile
 
-    const groups = Array.isArray(json) ? json : [json]
+    if (json !== null && typeof json === 'object' && 'meta' in json) {
+        await importNormalizedFile(json)
+        return
+    }
 
+    const exportsWithoutFoldersVersion = 'v1.18.2'
+
+    await importNormalizedFile({
+        meta: {
+            schemaVersion: 1,
+            extensionVersion: exportsWithoutFoldersVersion,
+        },
+        groups: Array.isArray(json) ? json : [json],
+        folders: [],
+    })
+}
+
+async function importNormalizedFile(exportFile: ExportFile) {
     await groupStore.load()
 
+    const groups = cloneDeep(exportFile.groups) as Group[]
+    const folders = cloneDeep(exportFile.folders) as Folder[]
+
+    const replaceGroups = await shouldReplaceDuplicateGroups(groups)
+
+    await groupStore.saveMany(groups, replaceGroups)
+    await folderStore.saveMany(folders)
+
+    showSuccessMessage(groups)
+}
+
+async function shouldReplaceDuplicateGroups(groups: Group[]): Promise<boolean> {
     const groupsWithSameName = groups.reduce((acc, group) => {
         return acc + groupStore.groups.filter(g => g.name === group.name).length
     }, 0)
 
     if (groupsWithSameName === 0) {
-        await groupStore.saveMany(groups)
-        showSuccessMessage(groups)
-        return
+        return false
     }
 
     const resp = await modalStore.show('confirm', {
         title: trans('some_groups_already_exist_same_name'),
     })
 
-    if (resp) {
-        await groupStore.saveMany(groups, resp.isConfirmed)
-        showSuccessMessage(groups)
-    }
+    return resp ? resp.isConfirmed : false
 }
 
 function showSuccessMessage(groups: Group[]): void {

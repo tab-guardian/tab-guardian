@@ -5,23 +5,29 @@ import { generateId } from '@common/modules/group'
 import { getDefaultName } from '@common/modules'
 
 export const folderStorage = {
-    async save(name: string): Promise<Folder | null> {
+    generateEmptyFolder(name: string): Folder {
         if (name === '') {
             name = getDefaultName('Folder')
         }
 
+        return {
+            id: generateId(),
+            name,
+            updatedAt: Date.now(),
+        }
+    },
+
+    async save(arg: string | Folder): Promise<Folder | null> {
+        const folder = typeof arg === 'object'
+            ? arg
+            : this.generateEmptyFolder(arg)
+
         const folders = await this.getAll()
-        const exists = folders.some(f => f.name === name)
+        const exists = folders.some(f => f.name === folder.name)
 
         if (exists) {
             logger().warn('Folder already exists')
             return null
-        }
-
-        const folder: Folder = {
-            id: generateId(),
-            name,
-            updatedAt: Date.now(),
         }
 
         folders.push(folder)

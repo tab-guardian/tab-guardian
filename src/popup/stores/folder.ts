@@ -32,10 +32,33 @@ export const useFolderStore = defineStore('folder', () => {
         await notificationStore.recalculateNotification()
     }
 
+    async function saveMany(folders: Folder[]): Promise<void> {
+        try {
+            for (const folder of folders) {
+                await save(folder, false)
+            }
+        } catch (err) {
+            console.error(err)
+        }
+
+        await load()
+        await notificationStore.recalculateNotification()
+    }
+
+    async function save(folder: Folder, loadFolders = true): Promise<void> {
+        await folderStorage.save(folder)
+
+        if (loadFolders) {
+            await load()
+            await notificationStore.recalculateNotification()
+        }
+    }
+
     return {
         selectedFolder,
         folders,
         loading,
+        saveMany,
         load,
         deleteFolder,
     }
