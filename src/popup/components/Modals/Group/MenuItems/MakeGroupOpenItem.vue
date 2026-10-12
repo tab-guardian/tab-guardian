@@ -40,7 +40,7 @@ async function makeOpen(): Promise<void> {
     // Delete cached password if exists
     await passwordStorage.delete(group.id)
 
-    await groupStore.save(group)
+    await groupStore.update(group)
 
     showToast({ text: trans('group_is_now_open') })
 }

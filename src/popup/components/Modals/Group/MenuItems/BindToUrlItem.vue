@@ -35,7 +35,7 @@ async function rebind(): Promise<void> {
     }
 
     groupStore.selectedGroup.bindUrl = resp.url
-    groupStore.save(groupStore.selectedGroup)
+    groupStore.update(groupStore.selectedGroup)
 
     showToast({ text: trans('group_bind_successful') })
 

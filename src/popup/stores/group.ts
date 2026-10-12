@@ -99,7 +99,7 @@ export const useGroupStore = defineStore('group', () => {
             encrypted.isEncrypted = true
             encrypted.isPrivate = true
 
-            await save(encrypted)
+            await update(encrypted)
 
             return {
                 failed: false,
@@ -127,7 +127,7 @@ export const useGroupStore = defineStore('group', () => {
     ): Promise<UnlockFuncReturnValue> {
         try {
             const decryptedGroup = await cryptoStore.decryptGroup(group, password)
-            await save(decryptedGroup)
+            await update(decryptedGroup)
 
             if (settingsStore.settings.rememberPasswordAfterUnlock) {
                 await passwordStorage.save(group.id, password)
@@ -148,20 +148,37 @@ export const useGroupStore = defineStore('group', () => {
     }
 
     // Add groups to memory and save them to storage
-    async function saveMany(
-        groups: Group[],
-        replace: boolean = false,
-    ): Promise<void> {
+    async function createMany(groups: Group[]): Promise<void> {
         progressStore.start(groups.length)
 
         for (const group of groups) {
-            group.id = generateId()
+            await create(group)
+            progressStore.advance()
+        }
+
+        progressStore.finish()
+    }
+
+    async function importMany(groups: Group[], replace = false): Promise<void> {
+        progressStore.start(groups.length)
+
+        const storedIds = new Set((await groupStorage.getAll()).map(g => g.id))
+
+        for (const group of groups) {
+            // Never overwrite an unrelated stored group: incoming ids
+            // are preserved, so a collision gets a fresh id instead.
+            // The replace flow below handles same-name matches.
+            if (storedIds.has(group.id)) {
+                group.id = generateId()
+            }
+
+            storedIds.add(group.id)
+
             if (replace) {
                 await deleteDuplicateGroup(group)
             }
 
-            await save(group, false)
-
+            await create(group)
             progressStore.advance()
         }
 
@@ -170,7 +187,10 @@ export const useGroupStore = defineStore('group', () => {
         progressStore.finish()
     }
 
-    async function update(id: number, updates: Partial<Group>): Promise<boolean> {
+    async function updateFields(
+        id: number,
+        updates: Partial<Group>,
+    ): Promise<boolean> {
         const group = get(id)
 
         if (!group) {
@@ -184,7 +204,7 @@ export const useGroupStore = defineStore('group', () => {
             delete group.folderId
         }
 
-        await save(group)
+        await update(group)
 
         return true
     }
@@ -208,7 +228,7 @@ export const useGroupStore = defineStore('group', () => {
 
             Object.assign(link, updates)
 
-            return update(groupId, { links: group.links })
+            return updateFields(groupId, { links: group.links })
         }
 
         return false
@@ -250,7 +270,7 @@ export const useGroupStore = defineStore('group', () => {
             group.links.splice(deleteIndex, 1)
         }
 
-        await save(group)
+        await update(group)
 
         return true
     }
@@ -265,17 +285,28 @@ export const useGroupStore = defineStore('group', () => {
 
         group.links.push(...links)
 
-        await save(group)
+        await update(group)
 
         return true
     }
 
-    async function save(group: Group, updateTimestamp = true): Promise<void> {
-        if (updateTimestamp) {
-            group.updatedAt = Date.now()
-        }
+    async function create(group: Group): Promise<void> {
+        const takenNames = new Set(initialGroups.value.map(g => g.name))
+        group.name = forceUniqueName(group.name, takenNames)
 
-        const takenNames = new Set(initialGroups.value.map(f => f.name))
+        await groupStorage.save(group)
+        await load()
+
+        await notificationStore.recalculateNotification()
+    }
+
+    async function update(group: Group): Promise<void> {
+        group.updatedAt = Date.now()
+
+        const takenNames = new Set(
+            initialGroups.value.filter(g => g.id !== group.id).map(g => g.name),
+        )
+
         group.name = forceUniqueName(group.name, takenNames)
 
         await groupStorage.save(group)
@@ -372,13 +403,15 @@ export const useGroupStore = defineStore('group', () => {
         loading,
         groups,
         get,
-        save,
+        create,
+        update,
         lock,
         load,
         exist,
-        update,
+        updateFields,
         unlock,
-        saveMany,
+        createMany,
+        importMany,
         deleteAll,
         updateLink,
         deleteGroup,

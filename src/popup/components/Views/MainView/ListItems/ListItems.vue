@@ -44,7 +44,7 @@ function moveToFolder(e: any): void {
     const folderId = Number(folderValue)
     const groupId = Number(groupValue)
 
-    groupStore.update(groupId, { folderId })
+    groupStore.updateFields(groupId, { folderId })
     groupStore.load()
 }
 
@@ -72,7 +72,7 @@ async function moveFromFolder(e: any): Promise<void> {
         return
     }
 
-    await groupStore.update(draggableGroup.value, {
+    await groupStore.updateFields(draggableGroup.value, {
         folderId: config.GROUP_MISSING_FOLDER,
     })
 

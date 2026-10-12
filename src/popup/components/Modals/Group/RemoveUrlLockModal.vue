@@ -85,7 +85,7 @@ async function removeBindUrl(g: Group): Promise<void> {
 
     delete group.bindUrl
     const encrypted = await cryptoStore.encryptGroup(group, formData.pass)
-    await groupStore.save(encrypted)
+    await groupStore.update(encrypted)
 }
 
 function hideModal(): void {

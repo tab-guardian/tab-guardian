@@ -44,7 +44,7 @@ export const useTabsStore = defineStore('tabs', () => {
             return false
         }
 
-        await groupStore.save(encryption.group)
+        await groupStore.update(encryption.group)
 
         return true
     }
@@ -58,7 +58,7 @@ export const useTabsStore = defineStore('tabs', () => {
             openedTimes = group.openedTimes + 1
         }
 
-        await groupStore.update(group.id, { openedTimes })
+        await groupStore.updateFields(group.id, { openedTimes })
 
         await restoreTabs(group.links)
     }
@@ -86,7 +86,7 @@ export const useTabsStore = defineStore('tabs', () => {
         const filteredLinks = filterForbiddenLinks(links)
 
         if (filteredLinks.allowed.length > 0) {
-            await groupStore.update(group.id, { links: [] })
+            await groupStore.updateFields(group.id, { links: [] })
             await groupStore.insertLinksInto(group.id, filteredLinks.allowed)
         }
 

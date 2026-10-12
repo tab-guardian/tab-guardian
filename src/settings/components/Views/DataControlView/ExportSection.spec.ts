@@ -78,7 +78,7 @@ describe('ExportSection export file', () => {
 
         const group = fakeGroup({ name: 'top-level-group' })
 
-        await useGroupStore().save(group)
+        await useGroupStore().create(group)
 
         const parsed = await clickExport(pinia)
 
@@ -111,8 +111,8 @@ describe('ExportSection export file', () => {
             links: [fakeLink()],
         })
 
-        await groupStore.save(topLevelGroup)
-        await groupStore.save(inFolderGroup)
+        await groupStore.create(topLevelGroup)
+        await groupStore.create(inFolderGroup)
         await groupStore.load()
 
         const stored = await groupStorage.getAll()
@@ -154,8 +154,8 @@ describe('ExportSection export file', () => {
             links: [fakeLink()],
         })
 
-        await groupStore.save(topLevelGroup)
-        await groupStore.save(inFolderGroup)
+        await groupStore.create(topLevelGroup)
+        await groupStore.create(inFolderGroup)
 
         await groupStore.load()
         await folderStore.load()
@@ -190,7 +190,7 @@ describe('ExportSection export file', () => {
         const groupUrl = 'https://top.example/page'
         const modalStore = useModalStore()
 
-        await useGroupStore().save(
+        await useGroupStore().create(
             fakeGroup({
                 name: 'top-level-group',
                 links: [fakeLink({ url: groupUrl })],

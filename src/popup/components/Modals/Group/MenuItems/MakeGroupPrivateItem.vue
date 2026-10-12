@@ -17,7 +17,7 @@ async function makeGroupPrivate(): Promise<void> {
     group.isPrivate = true
     group.algo = config.CURR_ENCRYPT_ALGO
 
-    await groupStore.save(group)
+    await groupStore.update(group)
     showToast({ text: trans('group_is_now_private') })
 }
 </script>

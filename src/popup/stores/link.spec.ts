@@ -33,7 +33,7 @@ describe('link store', () => {
                 link: fakeLink(),
             }
 
-            await groupStore.save(group)
+            await groupStore.create(group)
 
             await linkStore.copy(buf)
 
@@ -63,7 +63,7 @@ describe('link store', () => {
             const link = fakeLink()
             const group = fakeGroup({ links: [link] })
 
-            await groupStore.save(group)
+            await groupStore.create(group)
 
             const buf: LinkBuffer = {
                 action: 'cut',
@@ -84,7 +84,7 @@ describe('link store', () => {
             const link = fakeLink()
             const group = fakeGroup({ links: [link] })
 
-            await groupStore.save(group)
+            await groupStore.create(group)
 
             const buf: LinkBuffer = {
                 action: 'copy',
@@ -105,7 +105,7 @@ describe('link store', () => {
             const link = fakeLink()
             const group = fakeGroup({ links: [link] })
 
-            await groupStore.save(group)
+            await groupStore.create(group)
 
             expect(linkStore.isEmptyBuffer).toBeTruthy()
             expect(linkStore.isCut(link.id)).toBeFalsy()
@@ -118,7 +118,7 @@ describe('link store', () => {
             const link = fakeLink()
             const group = fakeGroup({ links: [link] })
 
-            await groupStore.save(group)
+            await groupStore.create(group)
 
             await linkStore.copy({
                 action: 'copy',
@@ -143,7 +143,7 @@ describe('link store', () => {
             const initialGroup = fakeGroup({ links: [link] })
             const destinationGroup = fakeGroup({ links: [] })
 
-            await groupStore.saveMany([initialGroup, destinationGroup])
+            await groupStore.createMany([initialGroup, destinationGroup])
 
             await linkStore.copy({
                 action: 'copy',
@@ -173,7 +173,7 @@ describe('link store', () => {
             const initialGroup = fakeGroup({ links: [link] })
             const destinationGroup = fakeGroup({ links: [] })
 
-            await groupStore.saveMany([initialGroup, destinationGroup])
+            await groupStore.createMany([initialGroup, destinationGroup])
 
             await linkStore.copy({
                 action: 'cut',

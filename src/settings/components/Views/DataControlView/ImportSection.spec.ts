@@ -458,7 +458,7 @@ describe('ImportSection export file schemas', () => {
         const originalUrl = 'https://original.example/page'
         const incomingUrl = 'https://incoming.example/page'
 
-        await useGroupStore().save(
+        await useGroupStore().create(
             fakeGroup({
                 name: groupName,
                 links: [fakeLink({ url: originalUrl })],
@@ -552,12 +552,12 @@ describe('Export-import round trip', () => {
         expect(exportedFolder).toBeDefined()
 
         const exportGroupStore = useGroupStore()
-        await exportGroupStore.save(
+        await exportGroupStore.create(
             fakeGroup({ links: [fakeLink({ url: topUrl })] }),
         )
         const topName = exportGroupStore.groups[0]!.name
 
-        await exportGroupStore.save(
+        await exportGroupStore.create(
             fakeGroup({
                 folderId: exportedFolder!.id,
                 links: [fakeLink({ url: inFolderUrl })],
