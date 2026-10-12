@@ -109,20 +109,20 @@ async function importNormalizedFile(exportFile: ExportSchemaV1) {
     const folders = cloneDeep(exportFile.folders) as Folder[]
     const groups = cloneDeep(exportFile.groups) as Group[]
 
-    const replaceGroups = await shouldReplaceDuplicateGroups(groups)
-
-    await groupStore.importMany(groups, replaceGroups)
     await folderStore.createMany(folders)
+
+    const shouldReplaceDuplicates = await shouldReplaceDuplicateGroups(groups)
+    await groupStore.importMany(groups, shouldReplaceDuplicates)
 
     showSuccessMessage(groups)
 }
 
 async function shouldReplaceDuplicateGroups(groups: Group[]): Promise<boolean> {
-    const groupsWithSameName = groups.reduce((acc, group) => {
-        return acc + groupStore.groups.filter(g => g.name === group.name).length
+    const duplicatesCount = groups.reduce((acc, group) => {
+        return acc + groupStore.groups.filter(g => g.id === group.id).length
     }, 0)
 
-    if (groupsWithSameName === 0) {
+    if (duplicatesCount === 0) {
         return false
     }
 
