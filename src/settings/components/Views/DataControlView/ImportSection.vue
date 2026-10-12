@@ -112,7 +112,7 @@ async function importNormalizedFile(exportFile: ExportSchemaV1) {
     const replaceGroups = await shouldReplaceDuplicateGroups(groups)
 
     await groupStore.importMany(groups, replaceGroups)
-    await folderStore.saveMany(folders)
+    await folderStore.createMany(folders)
 
     showSuccessMessage(groups)
 }

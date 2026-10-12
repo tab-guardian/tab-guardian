@@ -327,7 +327,7 @@ describe('group store', () => {
             const folderStore = useFolderStore()
             const groupName = 'Work tabs'
 
-            await folderStore.save(groupName)
+            await folderStore.create(groupName)
             const folderId = folderStore.folders[0]!.id
 
             await groupStore.create(fakeGroup({ name: groupName, folderId }))

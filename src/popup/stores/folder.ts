@@ -35,10 +35,10 @@ export const useFolderStore = defineStore('folder', () => {
         await notificationStore.recalculateNotification()
     }
 
-    async function saveMany(folders: Folder[]): Promise<void> {
+    async function createMany(folders: Folder[]): Promise<void> {
         try {
             for (const folder of folders) {
-                await save(folder, false)
+                await create(folder, false)
             }
         } catch (err) {
             logger().error(err)
@@ -48,7 +48,7 @@ export const useFolderStore = defineStore('folder', () => {
         await notificationStore.recalculateNotification()
     }
 
-    async function save(
+    async function create(
         folderOrName: string | Folder,
         loadFolders = true,
     ): Promise<void> {
@@ -93,8 +93,8 @@ export const useFolderStore = defineStore('folder', () => {
         selectedFolder,
         folders,
         loading,
-        saveMany,
-        save,
+        createMany,
+        create,
         load,
         deleteFolder,
     }

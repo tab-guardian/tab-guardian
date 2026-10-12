@@ -31,7 +31,7 @@ async function showFolderModal(): Promise<void> {
         return
     }
 
-    await folderStore.save(resp.name || '')
+    await folderStore.create(resp.name || '')
 
     emit('refresh')
 

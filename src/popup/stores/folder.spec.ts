@@ -23,12 +23,12 @@ describe('folder store', () => {
         setActivePinia(createPinia())
     })
 
-    suite('save()', () => {
+    suite('create()', () => {
         it('saves folder by name', async () => {
             const folderStore = useFolderStore()
             const folderName = 'Anna Photos'
 
-            await folderStore.save(folderName)
+            await folderStore.create(folderName)
 
             expect(folderStore.folders).toHaveLength(1)
             expect(folderStore.folders[0]?.name).equal(folderName)
@@ -37,7 +37,7 @@ describe('folder store', () => {
         it('saves empty name with default name', async () => {
             const folderStore = useFolderStore()
 
-            await folderStore.save('')
+            await folderStore.create('')
 
             expect(folderStore.folders).toHaveLength(1)
             expect(folderStore.folders[0]?.name).toMatch(/^Folder /)
@@ -47,8 +47,8 @@ describe('folder store', () => {
             const folderStore = useFolderStore()
             const folderName = 'Work'
 
-            await folderStore.save(folderName)
-            await folderStore.save(folderName)
+            await folderStore.create(folderName)
+            await folderStore.create(folderName)
 
             const folderNames = folderStore.folders.map(f => f.name)
 
@@ -57,13 +57,13 @@ describe('folder store', () => {
         })
     })
 
-    suite('saveMany()', () => {
+    suite('createMany()', () => {
         it('saves folders to folders state', async () => {
             const folderStore = useFolderStore()
 
             expect(folderStore.folders).toHaveLength(0)
 
-            await folderStore.saveMany([
+            await folderStore.createMany([
                 fakeFolder({ name: 'Serhii' }),
                 fakeFolder({ name: 'Anna' }),
             ])
@@ -74,7 +74,7 @@ describe('folder store', () => {
         it('saves folders to local storage', async () => {
             const folderStore = useFolderStore()
 
-            await folderStore.save(fakeFolder({ name: 'Anna Photos' }))
+            await folderStore.create(fakeFolder({ name: 'Anna Photos' }))
 
             const folders = await folderStorage.getAll()
 
@@ -86,12 +86,12 @@ describe('folder store', () => {
             const folderStore = useFolderStore()
             const folderName = 'Work'
 
-            await folderStore.saveMany([
+            await folderStore.createMany([
                 fakeFolder({ name: folderName }),
                 fakeFolder({ name: `${folderName} (Copy 100)` }),
             ])
 
-            await folderStore.save(fakeFolder({ name: folderName }))
+            await folderStore.create(fakeFolder({ name: folderName }))
 
             const folderNames = folderStore.folders.map(f => f.name)
 
@@ -104,12 +104,12 @@ describe('folder store', () => {
             const folderStore = useFolderStore()
             const folderName = 'Work'
 
-            await folderStore.saveMany([
+            await folderStore.createMany([
                 fakeFolder({ name: folderName }),
                 fakeFolder({ name: `${folderName} (Copy 1)` }),
             ])
 
-            await folderStore.save(fakeFolder({ name: folderName }))
+            await folderStore.create(fakeFolder({ name: folderName }))
 
             const folderNames = folderStore.folders.map(f => f.name)
 
@@ -123,9 +123,9 @@ describe('folder store', () => {
             const folderName = 'Work'
             const incomingId = 222
 
-            await folderStore.save(fakeFolder({ name: folderName }))
+            await folderStore.create(fakeFolder({ name: folderName }))
 
-            await folderStore.saveMany([
+            await folderStore.createMany([
                 fakeFolder({ id: incomingId, name: folderName }),
             ])
 
@@ -141,7 +141,7 @@ describe('folder store', () => {
             const folderStore = useFolderStore()
             const folderName = 'Work'
 
-            await folderStore.saveMany([
+            await folderStore.createMany([
                 fakeFolder({ id: 11, name: folderName }),
                 fakeFolder({ id: 22, name: folderName }),
             ])
@@ -156,8 +156,8 @@ describe('folder store', () => {
             const folderStore = useFolderStore()
             const folderName = 'Work'
 
-            await folderStore.save(fakeFolder({ id: 1, name: folderName }))
-            await folderStore.save(fakeFolder({ id: 1, name: folderName }))
+            await folderStore.create(fakeFolder({ id: 1, name: folderName }))
+            await folderStore.create(fakeFolder({ id: 1, name: folderName }))
 
             expect(folderStore.folders).toHaveLength(1)
             expect(folderStore.folders[0]?.name).equal(folderName)
@@ -166,8 +166,8 @@ describe('folder store', () => {
         it('keeps local name when id matches but name differs', async () => {
             const folderStore = useFolderStore()
 
-            await folderStore.save(fakeFolder({ id: 1, name: 'Work' }))
-            await folderStore.save(fakeFolder({ id: 1, name: 'Job' }))
+            await folderStore.create(fakeFolder({ id: 1, name: 'Work' }))
+            await folderStore.create(fakeFolder({ id: 1, name: 'Job' }))
 
             expect(folderStore.folders).toHaveLength(1)
             expect(folderStore.folders[0]?.name).equal('Work')

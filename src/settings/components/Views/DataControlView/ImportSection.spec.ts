@@ -332,7 +332,7 @@ describe('ImportSection export file schemas', () => {
         const topUrl = 'https://top.example/page'
         const inFolderUrl = 'https://folder.example/page'
 
-        await folderStore.save(folderName)
+        await folderStore.create(folderName)
 
         const folder = folderStore.folders.find(f => f.name === folderName)
         expect(folder).not.toBeUndefined()
@@ -396,7 +396,7 @@ describe('ImportSection export file schemas', () => {
         const folderName = 'conflict-folder-xyz'
         const inFolderUrl = 'https://folder.example/page'
 
-        await folderStore.save(folderName)
+        await folderStore.create(folderName)
 
         const existingFolder = folderStore.folders.find(f => f.name === folderName)
         expect(existingFolder).not.toBeUndefined()
@@ -544,7 +544,7 @@ describe('Export-import round trip', () => {
         setActivePinia(exportPinia)
 
         const exportFolderStore = useFolderStore()
-        await exportFolderStore.save(folderName)
+        await exportFolderStore.create(folderName)
 
         const exportedFolder = exportFolderStore.folders.find(
             f => f.name === folderName,

@@ -94,7 +94,7 @@ describe('ExportSection export file', () => {
         const groupStore = useGroupStore()
         const folderStore = useFolderStore()
 
-        await folderStore.save('my-folder-xyz')
+        await folderStore.create('my-folder-xyz')
 
         const folder = folderStore.folders.find(f => f.name === 'my-folder-xyz')
 
@@ -137,7 +137,7 @@ describe('ExportSection export file', () => {
         const folderStore = useFolderStore()
 
         const folderName = 'my-folder-xyz'
-        await folderStore.save(folderName)
+        await folderStore.create(folderName)
 
         const folder = folderStore.folders.find(f => f.name === folderName)
 
