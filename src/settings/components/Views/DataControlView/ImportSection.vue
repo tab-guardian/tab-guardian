@@ -12,11 +12,11 @@ import { useGroupStore } from '@/stores/group'
 import { useFolderStore } from '@/stores/folder'
 import { useModalStore } from '@/stores/modal'
 import { useProgressStore } from '@/stores/progress'
+import { generateExportSchemaV1 } from '@common/modules/importExport'
 import pako from 'pako'
 import Section from '@settings/components/Section.vue'
 import FileInput from '@common/components/Form/FileInput.vue'
 import Progress from '@common/components/Progress.vue'
-import { generateExportSchemaV1 } from '@common/modules/importExport'
 
 const groupStore = useGroupStore()
 const folderStore = useFolderStore()
