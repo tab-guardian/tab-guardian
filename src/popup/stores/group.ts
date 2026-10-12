@@ -156,9 +156,8 @@ export const useGroupStore = defineStore('group', () => {
 
         for (const group of groups) {
             group.id = generateId()
-
             if (replace) {
-                await replaceGroup(group)
+                await deleteDuplicateGroup(group)
             }
 
             await save(group, false)
@@ -354,8 +353,8 @@ export const useGroupStore = defineStore('group', () => {
     }
 
     // Private function
-    async function replaceGroup(group: Group): Promise<void> {
-        const existing = get(group.name)
+    async function deleteDuplicateGroup(group: Group): Promise<void> {
+        const existing = get(group.id)
 
         if (existing) {
             await deleteGroup(existing.id)
