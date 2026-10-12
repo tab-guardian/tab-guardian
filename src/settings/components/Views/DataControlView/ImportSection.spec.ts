@@ -12,9 +12,17 @@ import { useCryptoStore } from '@/stores/crypto'
 import { useGroupStore } from '@/stores/group'
 import { useFolderStore } from '@/stores/folder'
 import { useModalStore } from '@/stores/modal'
+import { downloadFile } from '@common/modules'
+import ExportSection from '@settings/components/Views/DataControlView/ExportSection.vue'
+import Button from '@common/components/Form/Button.vue'
 import pako from 'pako'
 import ImportSection from '@settings/components/Views/DataControlView/ImportSection.vue'
 import FileInput from '@common/components/Form/FileInput.vue'
+
+vi.mock('@common/modules', async importOriginal => {
+    const mod = await importOriginal<typeof import('@common/modules')>()
+    return { ...mod, downloadFile: vi.fn() }
+})
 
 const EXPORT_PASS = 'export-password-123'
 const ORIGINAL_PASS = 'original-password-123'
@@ -438,5 +446,176 @@ describe('ImportSection export file schemas', () => {
         expect(savedInFolder!.links[0].url).toEqual(inFolderUrl)
 
         wrapper.unmount()
+    })
+
+    it('imports declined duplicates as copies instead of aborting', async () => {
+        const pinia = createPinia()
+        setActivePinia(pinia)
+
+        const modalStore = useModalStore()
+
+        const groupName = 'declined-group-xyz'
+        const originalUrl = 'https://original.example/page'
+        const incomingUrl = 'https://incoming.example/page'
+
+        await useGroupStore().save(
+            fakeGroup({
+                name: groupName,
+                links: [fakeLink({ url: originalUrl })],
+            }),
+        )
+
+        const incomingGroup = fakeGroup({
+            name: groupName,
+            links: [fakeLink({ url: incomingUrl })],
+        })
+
+        const fileContent = await buildExportFile([incomingGroup])
+
+        // Unlock the file but decline replacing duplicates
+        vi.spyOn(modalStore, 'show').mockImplementation((async (
+            key: string,
+            data: any,
+        ) => {
+            if (key === 'password') {
+                await data.decrypting(EXPORT_PASS)
+                return true
+            }
+
+            return { isConfirmed: false }
+        }) as typeof modalStore.show)
+
+        const wrapper = mountImportSection(pinia)
+
+        const fileInput = wrapper.findComponent(FileInput)
+        expect(fileInput.exists()).toBe(true)
+
+        fileInput.vm.$emit(
+            'chosen',
+            makeFile(fileContent),
+            document.createElement('input'),
+        )
+
+        await vi.waitFor(
+            () => {
+                expect(useGroupStore().groups.map(g => g.name)).toContain(
+                    `${groupName} (Copy 1)`,
+                )
+            },
+            { timeout: 5000, interval: 25 },
+        )
+
+        const groupNames = useGroupStore().groups.map(g => g.name)
+
+        expect(groupNames).toContain(groupName)
+        expect(groupNames).toContain(`${groupName} (Copy 1)`)
+
+        const originalGroup = useGroupStore().groups.find(g => g.name === groupName)
+        const copiedGroup = useGroupStore().groups.find(
+            g => g.name === `${groupName} (Copy 1)`,
+        )
+
+        expect(originalGroup!.links[0].url).toEqual(originalUrl)
+        expect(copiedGroup!.links[0].url).toEqual(incomingUrl)
+
+        wrapper.unmount()
+    })
+})
+
+describe('Export-import round trip', () => {
+    beforeEach(() => {
+        localStorage.clear()
+        mockFileReader()
+    })
+
+    afterEach(() => {
+        vi.unstubAllGlobals()
+        vi.restoreAllMocks()
+        vi.clearAllMocks()
+    })
+
+    it('restores exact bytes produced by export', async () => {
+        const folderName = 'roundtrip-folder-xyz'
+        const topUrl = 'https://top.example/page'
+        const inFolderUrl = 'https://folder.example/page'
+
+        // First machine: build data and export it
+        const exportPinia = createPinia()
+        setActivePinia(exportPinia)
+
+        const exportFolderStore = useFolderStore()
+        await exportFolderStore.save(folderName)
+
+        const exportedFolder = exportFolderStore.folders.find(
+            f => f.name === folderName,
+        )
+        expect(exportedFolder).toBeDefined()
+
+        const exportGroupStore = useGroupStore()
+        await exportGroupStore.save(
+            fakeGroup({ links: [fakeLink({ url: topUrl })] }),
+        )
+        const topName = exportGroupStore.groups[0]!.name
+
+        await exportGroupStore.save(
+            fakeGroup({
+                folderId: exportedFolder!.id,
+                links: [fakeLink({ url: inFolderUrl })],
+            }),
+        )
+
+        const exportWrapper = mount(ExportSection, {
+            global: {
+                plugins: [exportPinia],
+                stubs: {
+                    Section: { template: '<section><slot /></section>' },
+                    SlideSwitch: true,
+                    Progress: true,
+                },
+            },
+        })
+
+        exportWrapper.findComponent(Button).vm.$emit('clicked')
+
+        await vi.waitFor(
+            () => {
+                expect(vi.mocked(downloadFile)).toHaveBeenCalledOnce()
+            },
+            { timeout: 5000, interval: 25 },
+        )
+
+        const payload = vi.mocked(downloadFile).mock.calls[0][0] as string
+        const folderId = exportedFolder!.id
+        exportWrapper.unmount()
+
+        // Second machine: blank storage, import the payload
+        localStorage.clear()
+        vi.clearAllMocks()
+
+        const importPinia = createPinia()
+        setActivePinia(importPinia)
+
+        const importWrapper = mountImportSection(importPinia)
+        await importFileContent(importWrapper, payload)
+
+        const folderStore = useFolderStore()
+        await folderStore.load()
+
+        const restoredFolder = folderStore.folders.find(f => f.id === folderId)
+
+        expect(restoredFolder).toBeDefined()
+        expect(restoredFolder!.name).toEqual(folderName)
+
+        const savedTop = useGroupStore().groups.find(g => g.name === topName)
+        expect(savedTop).toBeDefined()
+        expect(savedTop!.links[0].url).toEqual(topUrl)
+
+        const inFolderNames = useGroupStore()
+            .initialGroups.filter(g => g.folderId === folderId)
+            .map(g => g.links[0].url)
+
+        expect(inFolderNames).toContain(inFolderUrl)
+
+        importWrapper.unmount()
     })
 })

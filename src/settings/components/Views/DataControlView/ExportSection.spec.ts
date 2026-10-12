@@ -11,6 +11,8 @@ import { downloadFile } from '@common/modules'
 import { groupStorage } from '@common/modules/storage/group'
 import { useGroupStore } from '@/stores/group'
 import { useFolderStore } from '@/stores/folder'
+import { useModalStore } from '@/stores/modal'
+import { decryptExport } from '@common/modules/webCrypto'
 import ExportSection from '@settings/components/Views/DataControlView/ExportSection.vue'
 import Button from '@common/components/Form/Button.vue'
 import pako from 'pako'
@@ -164,5 +166,72 @@ describe('ExportSection export file', () => {
 
         expect(parsed.folders.map(f => f.name)).toContain(folderName)
         expect(parsed.folders.map(f => f.id)).toContain(folder!.id)
+    })
+
+    it('exports nothing when storage is empty', async () => {
+        const pinia = createPinia()
+        setActivePinia(pinia)
+
+        const wrapper = mountExportSection(pinia)
+        wrapper.findComponent(Button).vm.$emit('clicked')
+
+        await new Promise(resolve => setTimeout(resolve, 300))
+
+        expect(vi.mocked(downloadFile)).not.toHaveBeenCalled()
+
+        wrapper.unmount()
+    })
+
+    it('protects export with password', async () => {
+        const pinia = createPinia()
+        setActivePinia(pinia)
+
+        const exportPass = 'export-password-123'
+        const groupUrl = 'https://top.example/page'
+        const modalStore = useModalStore()
+
+        await useGroupStore().save(
+            fakeGroup({
+                name: 'top-level-group',
+                links: [fakeLink({ url: groupUrl })],
+            }),
+        )
+
+        vi.spyOn(modalStore, 'show').mockImplementation((async () => ({
+            newPass: exportPass,
+        })) as typeof modalStore.show)
+
+        const wrapper = mount(ExportSection, {
+            global: {
+                plugins: [pinia],
+                stubs: {
+                    Section: { template: '<section><slot /></section>' },
+                    Progress: true,
+                },
+            },
+        })
+
+        await wrapper.find('input[type="checkbox"]').setValue(true)
+        wrapper.findComponent(Button).vm.$emit('clicked')
+
+        await vi.waitFor(
+            () => {
+                expect(vi.mocked(downloadFile)).toHaveBeenCalledOnce()
+            },
+            { timeout: 5000, interval: 25 },
+        )
+
+        const payload = vi.mocked(downloadFile).mock.calls[0][0] as string
+
+        expect(payload.startsWith('algo(')).toBe(true)
+
+        const decrypted = await decryptExport(payload, exportPass)
+        const json = pako.ungzip(fromBase64(decrypted), { to: 'string' })
+        const parsed = JSON.parse(json) as ExportSchemaV1
+
+        expect(parsed.groups.map(g => g.name)).toContain('top-level-group')
+        expect(parsed.meta.schema).toBe(1)
+
+        wrapper.unmount()
     })
 })
