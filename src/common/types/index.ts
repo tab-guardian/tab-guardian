@@ -72,11 +72,16 @@ export type Group = {
     openedTimes?: number
     createdAt?: number
     hide?: boolean
-    /** @deprecated bindURL is deprecated Delete it eventually. Use bindUrl */
-    bindURL?: string
     bindUrl?: string
     icon?: string
     algo?: EncryptionAlgo
+
+    /**
+     * @deprecated bindURL is deprecated Delete it eventually. Use bindUrl.
+     * Keep in mind that some projects might still use the old keyword and it
+     * could break their code.
+     */
+    bindURL?: string
 }
 
 export type Settings = {
