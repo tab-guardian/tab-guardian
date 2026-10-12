@@ -5,6 +5,7 @@ import { trans } from '@common/modules'
 import { describe, it, expect, beforeEach, suite } from 'vitest'
 import { createPinia, setActivePinia } from 'pinia'
 import { useGroupStore } from '@/stores/group'
+import { useFolderStore } from '@/stores/folder'
 import { fakeGroup, fakeLink } from '@common/modules/fake'
 import { KEY_PREFIX, passwordStorage } from '@common/modules/storage/password'
 
@@ -272,7 +273,7 @@ describe('group store', () => {
                 fakeGroup({ name: `${groupName} (Copy 100)` }),
             ])
 
-            await groupStore.saveMany([fakeGroup({ name: groupName })])
+            await groupStore.save(fakeGroup({ name: groupName }))
 
             const groupNames = groupStore.groups.map(g => g.name)
 
@@ -290,13 +291,35 @@ describe('group store', () => {
                 fakeGroup({ name: `${groupName} (Copy 1)` }),
             ])
 
-            await groupStore.saveMany([fakeGroup({ name: groupName })])
+            await groupStore.save(fakeGroup({ name: groupName }))
 
             const groupNames = groupStore.groups.map(g => g.name)
 
             expect(groupNames).toContain(groupName)
             expect(groupNames).toContain(`${groupName} (Copy 1)`)
             expect(groupNames).toContain(`${groupName} (Copy 2)`)
+        })
+
+        it('suffixed top-level name taken by a folder group', async () => {
+            const groupStore = useGroupStore()
+            const folderStore = useFolderStore()
+            const groupName = 'Work tabs'
+
+            await folderStore.save(groupName)
+            const folderId = folderStore.folders[0]!.id
+
+            await groupStore.save(fakeGroup({ name: groupName, folderId }))
+            await groupStore.save(fakeGroup({ name: groupName }))
+
+            // The plain name lives only in initialGroups, it is hidden
+            // inside a folder and never shows in the display list
+            const allNames = groupStore.initialGroups.map(g => g.name)
+
+            expect(allNames).toContain(groupName)
+            expect(allNames).toContain(`${groupName} (Copy 1)`)
+
+            const topLevelGroupNames = groupStore.groups.map(g => g.name)
+            expect(topLevelGroupNames).toContain(`${groupName} (Copy 1)`)
         })
     })
 

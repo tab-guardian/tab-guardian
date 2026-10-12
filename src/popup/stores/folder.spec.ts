@@ -74,7 +74,7 @@ describe('folder store', () => {
         it('saves folders to local storage', async () => {
             const folderStore = useFolderStore()
 
-            await folderStore.saveMany([fakeFolder({ name: 'Anna Photos' })])
+            await folderStore.save(fakeFolder({ name: 'Anna Photos' }))
 
             const folders = await folderStorage.getAll()
 
@@ -91,7 +91,7 @@ describe('folder store', () => {
                 fakeFolder({ name: `${folderName} (Copy 100)` }),
             ])
 
-            await folderStore.saveMany([fakeFolder({ name: folderName })])
+            await folderStore.save(fakeFolder({ name: folderName }))
 
             const folderNames = folderStore.folders.map(f => f.name)
 
@@ -109,7 +109,7 @@ describe('folder store', () => {
                 fakeFolder({ name: `${folderName} (Copy 1)` }),
             ])
 
-            await folderStore.saveMany([fakeFolder({ name: folderName })])
+            await folderStore.save(fakeFolder({ name: folderName }))
 
             const folderNames = folderStore.folders.map(f => f.name)
 
@@ -123,7 +123,7 @@ describe('folder store', () => {
             const folderName = 'Work'
             const incomingId = 222
 
-            await folderStore.saveMany([fakeFolder({ name: folderName })])
+            await folderStore.save(fakeFolder({ name: folderName }))
 
             await folderStore.saveMany([
                 fakeFolder({ id: incomingId, name: folderName }),
@@ -156,8 +156,8 @@ describe('folder store', () => {
             const folderStore = useFolderStore()
             const folderName = 'Work'
 
-            await folderStore.saveMany([fakeFolder({ id: 1, name: folderName })])
-            await folderStore.saveMany([fakeFolder({ id: 1, name: folderName })])
+            await folderStore.save(fakeFolder({ id: 1, name: folderName }))
+            await folderStore.save(fakeFolder({ id: 1, name: folderName }))
 
             expect(folderStore.folders).toHaveLength(1)
             expect(folderStore.folders[0]?.name).equal(folderName)
@@ -166,8 +166,8 @@ describe('folder store', () => {
         it('keeps local name when id matches but name differs', async () => {
             const folderStore = useFolderStore()
 
-            await folderStore.saveMany([fakeFolder({ id: 1, name: 'Work' })])
-            await folderStore.saveMany([fakeFolder({ id: 1, name: 'Job' })])
+            await folderStore.save(fakeFolder({ id: 1, name: 'Work' }))
+            await folderStore.save(fakeFolder({ id: 1, name: 'Job' }))
 
             expect(folderStore.folders).toHaveLength(1)
             expect(folderStore.folders[0]?.name).equal('Work')
