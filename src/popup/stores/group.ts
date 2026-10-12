@@ -8,6 +8,7 @@ import { useSettingsStore } from '@/stores/settings'
 import { useNotificationStore } from '@/stores/notification'
 import { useCryptoStore } from '@/stores/crypto'
 import { useProgressStore } from '@/stores/progress'
+import { forceUniqueName } from '@common/modules/group'
 import { getDecryptionError } from '@/errors'
 import { getHashedCurrentUrl } from '@common/modules/url'
 import { validatePassword } from '@common/modules/validation/group'
@@ -274,6 +275,9 @@ export const useGroupStore = defineStore('group', () => {
         if (updateTimestamp) {
             group.updatedAt = Date.now()
         }
+
+        const takenNames = new Set(groups.value.map(f => f.name))
+        group.name = forceUniqueName(group.name, takenNames)
 
         await groupStorage.save(group)
         await load()

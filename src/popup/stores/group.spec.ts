@@ -262,6 +262,42 @@ describe('group store', () => {
             expect(groupStore.groups[0]!.updatedAt).equal(updatedAt)
             expect(groupStore.groups[1]!.updatedAt).equal(updatedAt)
         })
+
+        it('saves duplicate name as first free "<name> (Copy n)" starting at 1', async () => {
+            const groupStore = useGroupStore()
+            const groupName = 'Work tabs'
+
+            await groupStore.saveMany([
+                fakeGroup({ name: groupName }),
+                fakeGroup({ name: `${groupName} (Copy 100)` }),
+            ])
+
+            await groupStore.saveMany([fakeGroup({ name: groupName })])
+
+            const groupNames = groupStore.groups.map(g => g.name)
+
+            expect(groupNames).toContain(groupName)
+            expect(groupNames).toContain(`${groupName} (Copy 100)`)
+            expect(groupNames).toContain(`${groupName} (Copy 1)`)
+        })
+
+        it('numbers from the base name when a copy already exists', async () => {
+            const groupStore = useGroupStore()
+            const groupName = 'Work tabs'
+
+            await groupStore.saveMany([
+                fakeGroup({ name: groupName }),
+                fakeGroup({ name: `${groupName} (Copy 1)` }),
+            ])
+
+            await groupStore.saveMany([fakeGroup({ name: groupName })])
+
+            const groupNames = groupStore.groups.map(g => g.name)
+
+            expect(groupNames).toContain(groupName)
+            expect(groupNames).toContain(`${groupName} (Copy 1)`)
+            expect(groupNames).toContain(`${groupName} (Copy 2)`)
+        })
     })
 
     suite('update()', () => {
