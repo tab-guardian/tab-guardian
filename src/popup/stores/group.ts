@@ -276,7 +276,7 @@ export const useGroupStore = defineStore('group', () => {
             group.updatedAt = Date.now()
         }
 
-        const takenNames = new Set(groups.value.map(f => f.name))
+        const takenNames = new Set(initialGroups.value.map(f => f.name))
         group.name = forceUniqueName(group.name, takenNames)
 
         await groupStorage.save(group)
