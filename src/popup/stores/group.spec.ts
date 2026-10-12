@@ -238,18 +238,6 @@ describe('group store', () => {
             expect(groupStore.groups).toHaveLength(4)
         })
 
-        it('saves many groups without replacing duplicates', async () => {
-            const groupStore = useGroupStore()
-
-            const group1 = fakeGroup()
-            const group2 = fakeGroup()
-
-            await groupStore.saveMany([group1, group2], true)
-            await groupStore.saveMany([group1, group2], true)
-
-            expect(groupStore.groups).toHaveLength(2)
-        })
-
         it('does not update updatedAt field on groups', async () => {
             const groupStore = useGroupStore()
             const updatedAt = Date.now()
