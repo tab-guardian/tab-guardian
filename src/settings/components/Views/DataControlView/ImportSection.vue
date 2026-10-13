@@ -4,7 +4,6 @@ import { ref } from 'vue'
 import { cloneDeep } from 'lodash'
 import { logger, trans } from '@common/modules'
 import { decryptExport } from '@common/modules/webCrypto'
-import { fromBase64 } from '@common/modules/base64'
 import { showToast } from '@common/modules/toast'
 import { getDecryptionError } from '@/errors'
 import { useAttemptsStore } from '@/stores/attempts'
@@ -12,8 +11,12 @@ import { useGroupStore } from '@/stores/group'
 import { useFolderStore } from '@/stores/folder'
 import { useModalStore } from '@/stores/modal'
 import { useProgressStore } from '@/stores/progress'
-import { generateExportSchema } from '@common/modules/importExport'
-import pako from 'pako'
+import {
+    decompressExportPayload,
+    isEncryptedExport,
+    normalizeExportSchema,
+    splitDuplicateGroups,
+} from '@common/modules/importExport'
 import Section from '@settings/components/Section.vue'
 import FileInput from '@common/components/Form/FileInput.vue'
 import Progress from '@common/components/Progress.vue'
@@ -72,7 +75,7 @@ async function decryptFile(encrypted: string, pass: string): Promise<boolean> {
 }
 
 async function importFile(rawData: string): Promise<void> {
-    if (rawData.startsWith('algo(')) {
+    if (isEncryptedExport(rawData)) {
         await modalStore.show('password', {
             decrypting: pass => decryptFile(rawData, pass),
             text: trans('enter_pass_unlock_file'),
@@ -80,25 +83,10 @@ async function importFile(rawData: string): Promise<void> {
         return
     }
 
-    const isCompressed = !rawData.startsWith('{') && !rawData.startsWith('[{')
+    const json = JSON.parse(decompressExportPayload(rawData)) as LegacyExportSchema
+    const normalizedExport = normalizeExportSchema(json)
 
-    if (isCompressed) {
-        const compressedBytes = fromBase64(rawData)
-        rawData = pako.ungzip(compressedBytes, { to: 'string' })
-    }
-
-    const json = JSON.parse(rawData) as LegacyExportSchema
-
-    if (json !== null && typeof json === 'object' && 'meta' in json) {
-        await importNormalizedFile(json)
-        return
-    }
-
-    const groups = Array.isArray(json) ? json : [json]
-    const exportsWithoutFoldersVersion = 'v1.18.2'
-    const schema = generateExportSchema(groups, [], exportsWithoutFoldersVersion)
-
-    await importNormalizedFile(schema)
+    await importNormalizedFile(normalizedExport)
 }
 
 async function importNormalizedFile(exportFile: ExportSchema) {
@@ -116,11 +104,9 @@ async function importNormalizedFile(exportFile: ExportSchema) {
 }
 
 async function shouldReplaceDuplicateGroups(groups: Group[]): Promise<boolean> {
-    const duplicatesCount = groups.reduce((acc, group) => {
-        return acc + groupStore.groups.filter(g => g.id === group.id).length
-    }, 0)
+    const { duplicates } = splitDuplicateGroups(groups, groupStore.groups)
 
-    if (duplicatesCount === 0) {
+    if (duplicates.length === 0) {
         return false
     }
 
