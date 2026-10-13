@@ -1,6 +1,6 @@
 # Release Notes
 
-## v1.18.3 (2026-10-10)
+## v1.18.3 (2026-10-14)
 
 - ✨ Export file now has a versioned format with groups, folders, and extension metadata. Old single-group and groups-array files still import.
 - 🐛 Fixed exporting issue which doesn't include folders and their content to export file. [#111](https://codeberg.org/tab-guardian/tab-guardian/issues/111)
