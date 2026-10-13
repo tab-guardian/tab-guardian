@@ -19,7 +19,7 @@ export function fakeLink(fields?: Partial<Link>): Link {
 }
 
 export function fakeFolder(fields?: Partial<Folder>): Folder {
-    const id = fields?.id ?? Math.floor(Date.now() + Math.random() * 1000)
+    const id = fields?.id ?? generateId()
 
     return {
         id,
