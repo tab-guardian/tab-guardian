@@ -1,10 +1,10 @@
-import type { Group, Folder, ExportSchemaV1 } from '@common/types'
+import type { Group, Folder, ExportSchema } from '@common/types'
 
-export function generateExportSchemaV1(
+export function generateExportSchema(
     groups: readonly Group[],
     folders: readonly Folder[],
     extensionVersion = __APP_VERSION__,
-): ExportSchemaV1 {
+): ExportSchema {
     return {
         meta: { schema: 1, extensionVersion },
         groups,

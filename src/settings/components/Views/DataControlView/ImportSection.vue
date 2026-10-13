@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Group, Folder, ExportSchema, ExportSchemaV1 } from '@common/types'
+import type { Group, Folder, LegacyExportSchema, ExportSchema } from '@common/types'
 import { ref } from 'vue'
 import { cloneDeep } from 'lodash'
 import { logger, trans } from '@common/modules'
@@ -12,7 +12,7 @@ import { useGroupStore } from '@/stores/group'
 import { useFolderStore } from '@/stores/folder'
 import { useModalStore } from '@/stores/modal'
 import { useProgressStore } from '@/stores/progress'
-import { generateExportSchemaV1 } from '@common/modules/importExport'
+import { generateExportSchema } from '@common/modules/importExport'
 import pako from 'pako'
 import Section from '@settings/components/Section.vue'
 import FileInput from '@common/components/Form/FileInput.vue'
@@ -87,7 +87,7 @@ async function importFile(rawData: string): Promise<void> {
         rawData = pako.ungzip(compressedBytes, { to: 'string' })
     }
 
-    const json = JSON.parse(rawData) as ExportSchema
+    const json = JSON.parse(rawData) as LegacyExportSchema
 
     if (json !== null && typeof json === 'object' && 'meta' in json) {
         await importNormalizedFile(json)
@@ -96,12 +96,12 @@ async function importFile(rawData: string): Promise<void> {
 
     const groups = Array.isArray(json) ? json : [json]
     const exportsWithoutFoldersVersion = 'v1.18.2'
-    const schema = generateExportSchemaV1(groups, [], exportsWithoutFoldersVersion)
+    const schema = generateExportSchema(groups, [], exportsWithoutFoldersVersion)
 
     await importNormalizedFile(schema)
 }
 
-async function importNormalizedFile(exportFile: ExportSchemaV1) {
+async function importNormalizedFile(exportFile: ExportSchema) {
     await groupStore.load()
 
     const folders = cloneDeep(exportFile.folders) as Folder[]

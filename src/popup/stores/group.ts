@@ -159,7 +159,10 @@ export const useGroupStore = defineStore('group', () => {
         progressStore.finish()
     }
 
-    async function importMany(groups: Group[], shouldReplaceDuplicates = false): Promise<void> {
+    async function importMany(
+        groups: Group[],
+        shouldReplaceDuplicates = false,
+    ): Promise<void> {
         progressStore.start(groups.length)
 
         const storedIds = new Set((await groupStorage.getAll()).map(g => g.id))
