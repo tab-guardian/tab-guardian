@@ -2,9 +2,11 @@
 
 ## v1.18.3 (2026-10-10)
 
+- ✨ Export file now has a versioned format with groups, folders, and extension metadata. Old single-group and groups-array files still import.
 - 🐛 Fixed exporting issue which doesn't include folders and their content to export file. [#111](https://codeberg.org/tab-guardian/tab-guardian/issues/111)
+- 🧑‍💻 Creating a group with a duplicate name now saves it as `<name> (Copy n)` instead of silently ignoring it.
 - 🧑‍💻 Creating a folder with a duplicate name now saves it as `<name> (Copy n)` instead of silently ignoring it.
-- 🐛 Fixed importing a folder that already exists creating a broken duplicate. Matching folders are now skipped, keeping your local folder name.
+- 🧑‍💻 Split confusing `save`/`saveMany` group functions into `create`, `update`, `createMany`, and `importMany` with a single responsibility each.
 - 🧑‍💻 Improved id generation for groups and folders. Ids now use cryptographic randomness instead of `Math.random`, making collisions across devices and backups far less likely.
 
 ## v1.18.2 (2026-10-09)
