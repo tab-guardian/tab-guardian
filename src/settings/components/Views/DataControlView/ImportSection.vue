@@ -27,13 +27,11 @@ const progressStore = useProgressStore()
 const file = ref<File | null>(null)
 const fileInput = ref<HTMLInputElement | null>(null)
 
-async function importGroups(): Promise<void> {
+async function importGroups(reader: FileReader): Promise<void> {
     if (!file.value) {
         showToast({ text: trans('choose_file_import'), type: 'error' })
         return
     }
-
-    const reader = new FileReader()
 
     reader.onload = async e => {
         if (!e.target) {
@@ -96,8 +94,8 @@ async function importFile(rawData: string): Promise<void> {
         return
     }
 
-    const exportsWithoutFoldersVersion = 'v1.18.2'
     const groups = Array.isArray(json) ? json : [json]
+    const exportsWithoutFoldersVersion = 'v1.18.2'
     const schema = generateExportSchemaV1(groups, [], exportsWithoutFoldersVersion)
 
     await importNormalizedFile(schema)
@@ -139,10 +137,10 @@ function showSuccessMessage(groups: Group[]): void {
     })
 }
 
-async function fileChosen(f: File, elem: HTMLInputElement): Promise<void> {
+async function chooseFile(f: File, elem: HTMLInputElement): Promise<void> {
     file.value = f
     fileInput.value = elem
-    await importGroups()
+    await importGroups(new FileReader())
 }
 
 function resetState(): void {
@@ -161,7 +159,7 @@ function resetState(): void {
     >
         <div class="flex flex-col gap-4">
             <FileInput
-                @chosen="fileChosen"
+                @chosen="chooseFile"
                 type="file"
                 :label="file ? trans('file_chosen') : trans('choose_exported_file')"
                 id="choose-file"
