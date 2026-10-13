@@ -403,18 +403,17 @@ describe('ImportSection', () => {
             ]),
         )
 
-        // Wait until link URL inside of a group will be updated
+        // Wait until group with incoming name appears
         await waitUntil(() => {
-            const updated = useGroupStore().groups.find(
-                g => g.name === originalGroup.name,
-            )
-            expect(updated).not.toBeUndefined()
+            const names = useGroupStore().groups.map(g => g.name)
+            expect(names).toContain(incomingName)
         })
 
         expect(useGroupStore().groups).toHaveLength(1)
 
-        const stored = storedGroup(originalGroup.name)
+        const stored = storedGroup(incomingName)
 
+        expect(stored.id).toEqual(originalGroup.id)
         expect(stored.name).toEqual(incomingName)
         expect(stored.links[0].url).toEqual(incomingUrl)
 

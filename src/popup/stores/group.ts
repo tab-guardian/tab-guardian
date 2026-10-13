@@ -168,18 +168,16 @@ export const useGroupStore = defineStore('group', () => {
         const storedIds = new Set((await groupStorage.getAll()).map(g => g.id))
 
         for (const group of groups) {
-            // Never overwrite an unrelated stored group: incoming ids
-            // are preserved, so a collision gets a fresh id instead.
-            // The replace flow below handles same-name matches.
-            if (storedIds.has(group.id)) {
+            if (shouldReplaceDuplicates) {
+                await deleteDuplicateGroup(group)
+                storedIds.delete(group.id)
+            } else if (storedIds.has(group.id)) {
+                // Fresh id so an incoming group never overwrites
+                // an unrelated stored group
                 group.id = generateId()
             }
 
             storedIds.add(group.id)
-
-            if (shouldReplaceDuplicates) {
-                await deleteDuplicateGroup(group)
-            }
 
             await create(group)
             progressStore.advance()
