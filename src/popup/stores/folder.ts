@@ -23,8 +23,12 @@ export const useFolderStore = defineStore('folder', () => {
         loading.value = false
     }
 
-    function get(name: string): Folder | undefined {
-        return folders.value.find(f => f.name === name)
+    function get(nameOrId: string | number): Folder | undefined {
+        return folders.value.find(f => {
+            return typeof nameOrId === 'string'
+                ? f.name === nameOrId
+                : f.id === nameOrId
+        })
     }
 
     async function deleteFolder(id: number): Promise<void> {

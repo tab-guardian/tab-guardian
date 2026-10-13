@@ -61,10 +61,30 @@ describe('folder store', () => {
             expect(actual?.name).equal('Anna')
         })
 
+        it('returns folder with matching id', async () => {
+            const folderStore = useFolderStore()
+
+            await folderStore.createMany([
+                fakeFolder({ id: 11, name: 'Serhii' }),
+                fakeFolder({ id: 22, name: 'Anna' }),
+            ])
+
+            const actual = folderStore.get(22)
+
+            expect(actual).not.toBeUndefined()
+            expect(actual?.name).equal('Anna')
+        })
+
         it('returns undefined for missing name', async () => {
             const folderStore = useFolderStore()
             await folderStore.create(fakeFolder({ name: 'Serhii' }))
             expect(folderStore.get('Anna')).toBeUndefined()
+        })
+
+        it('returns undefined for missing id', async () => {
+            const folderStore = useFolderStore()
+            await folderStore.create(fakeFolder({ id: 11, name: 'Serhii' }))
+            expect(folderStore.get(22)).toBeUndefined()
         })
     })
 
