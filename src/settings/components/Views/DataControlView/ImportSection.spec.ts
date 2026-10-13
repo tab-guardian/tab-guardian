@@ -376,27 +376,28 @@ describe('ImportSection', () => {
         const pinia = useFreshPinia()
         const modalStore = useModalStore()
 
-        const originalUrl = 'https://original.example/page'
-        const incomingUrl = 'https://incoming.example/page'
+        const originalUrl = 'https://original'
 
-        const acceptedGroup = fakeGroup({
-            name: 'accepted-group-xyz',
+        const originalGroup = fakeGroup({
+            name: 'original-group',
             links: [fakeLink({ url: originalUrl })],
         })
 
-        await useGroupStore().create(acceptedGroup)
+        await useGroupStore().create(originalGroup)
 
-        const storedId = storedGroup(acceptedGroup.name).id
         const wrapper = mountImportSection(pinia)
 
         mockModals(modalStore, true)
+
+        const incomingName = 'incoming-group-name'
+        const incomingUrl = 'https://incoming.com'
 
         chooseFile(
             wrapper,
             buildPlainFile([
                 fakeGroup({
-                    id: storedId,
-                    name: acceptedGroup.name,
+                    id: originalGroup.id,
+                    name: incomingName,
                     links: [fakeLink({ url: incomingUrl })],
                 }),
             ]),
@@ -404,17 +405,18 @@ describe('ImportSection', () => {
 
         // Wait until link URL inside of a group will be updated
         await waitUntil(() => {
-            const updatedGroup = useGroupStore().groups.find(
-                g => g.name === acceptedGroup.name,
+            const updated = useGroupStore().groups.find(
+                g => g.name === originalGroup.name,
             )
-            const updatedUrl = updatedGroup?.links[0].url
-            expect(updatedUrl).toEqual(incomingUrl)
+            expect(updated).not.toBeUndefined()
         })
 
         expect(useGroupStore().groups).toHaveLength(1)
 
-        const storedLinkUrl = storedGroup(acceptedGroup.name).links[0].url
-        expect(storedLinkUrl).toEqual(incomingUrl)
+        const stored = storedGroup(originalGroup.name)
+
+        expect(stored.name).toEqual(incomingName)
+        expect(stored.links[0].url).toEqual(incomingUrl)
 
         wrapper.unmount()
     })
