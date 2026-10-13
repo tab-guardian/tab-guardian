@@ -1,5 +1,5 @@
 import type { Pinia } from 'pinia'
-import type { Group, Folder } from '@common/types'
+import type { Group } from '@common/types'
 import { createPinia, setActivePinia } from 'pinia'
 import { vi } from 'vitest'
 import { fakeGroup, fakeLink } from '@common/modules/fake'
@@ -24,4 +24,3 @@ export function getOpenGroup(name: string, url: string, folderId?: number): Grou
         links: [fakeLink({ url })],
     })
 }
-
