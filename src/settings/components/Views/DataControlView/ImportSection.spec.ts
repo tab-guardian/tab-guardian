@@ -231,14 +231,10 @@ describe('ImportSection', () => {
         const pinia = useFreshPinia()
         const folderStore = useFolderStore()
 
+        const folderId = 111
         const folderName = 'import-folder-xyz'
         const topGroupUrl = 'https://top.example/page'
         const inFolderGroupUrl = 'https://folder.example/page'
-
-        await folderStore.create(folderName)
-
-        const folder = folderStore.folders.find(f => f.name === folderName)
-        expect(folder).not.toBeUndefined()
 
         const wrapper = mountImportSection(pinia)
 
@@ -249,32 +245,38 @@ describe('ImportSection', () => {
 
         const inFolderGroup = fakeGroup({
             name: 'in-folder-group',
-            folderId: folder!.id,
+            folderId,
             links: [fakeLink({ url: inFolderGroupUrl })],
         })
 
         chooseFile(
             wrapper,
             buildPlainFile(
-                generateExportSchema([topGroup, inFolderGroup], [folder!]),
+                generateExportSchema(
+                    [topGroup, inFolderGroup],
+                    [{ id: folderId, name: folderName, updatedAt: Date.now() }],
+                ),
             ),
         )
 
         await waitUntil(() => {
-            const groupsCount = useGroupStore().groups.length
-            expect(groupsCount).toBeGreaterThan(0)
+            const groupStore = useGroupStore()
+            expect(groupStore.groups.map(g => g.name)).toContain('top-group')
+            expect(groupStore.initialGroups.map(g => g.name)).toContain(
+                'in-folder-group',
+            )
         })
 
         await folderStore.load()
 
-        const restoredFolder = folderStore.folders.find(f => f.id === folder!.id)
+        const restoredFolder = folderStore.get(folderId)
         expect(restoredFolder).toBeDefined()
         expect(restoredFolder!.name).toEqual(folderName)
 
         expect(storedGroup('top-group').links[0].url).toEqual(topGroupUrl)
 
         const savedInFolder = storedInitialGroup('in-folder-group')
-        expect(savedInFolder.folderId).toEqual(folder!.id)
+        expect(savedInFolder.folderId).toEqual(folderId)
         expect(savedInFolder.links[0].url).toEqual(inFolderGroupUrl)
 
         wrapper.unmount()
@@ -289,7 +291,7 @@ describe('ImportSection', () => {
 
         await folderStore.create(folderName)
 
-        const existingFolder = folderStore.folders.find(f => f.name === folderName)
+        const existingFolder = folderStore.get(folderName)
         expect(existingFolder).not.toBeUndefined()
 
         const incomingFolder = { ...existingFolder!, id: existingFolder!.id + 1 }
@@ -316,9 +318,7 @@ describe('ImportSection', () => {
         await folderStore.load()
 
         const savedInFolder = storedInitialGroup('in-folder-group')
-        const linkedFolder = folderStore.folders.find(
-            f => f.id === savedInFolder.folderId,
-        )
+        const linkedFolder = folderStore.get(savedInFolder.folderId!)
 
         expect(linkedFolder).toBeDefined()
         expect(savedInFolder.links[0].url).toEqual(inFolderUrl)
