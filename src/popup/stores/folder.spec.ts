@@ -46,6 +46,28 @@ describe('folder store', () => {
         })
     })
 
+    suite('get()', () => {
+        it('returns folder with matching name', async () => {
+            const folderStore = useFolderStore()
+
+            await folderStore.createMany([
+                fakeFolder({ name: 'Serhii' }),
+                fakeFolder({ name: 'Anna' }),
+            ])
+
+            const actual = folderStore.get('Anna')
+
+            expect(actual).not.toBeUndefined()
+            expect(actual?.name).equal('Anna')
+        })
+
+        it('returns undefined for missing name', async () => {
+            const folderStore = useFolderStore()
+            await folderStore.create(fakeFolder({ name: 'Serhii' }))
+            expect(folderStore.get('Anna')).toBeUndefined()
+        })
+    })
+
     suite('createMany()', () => {
         it('saves folders to folders state', async () => {
             const folderStore = useFolderStore()

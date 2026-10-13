@@ -23,6 +23,10 @@ export const useFolderStore = defineStore('folder', () => {
         loading.value = false
     }
 
+    function get(name: string): Folder | undefined {
+        return folders.value.find(f => f.name === name)
+    }
+
     async function deleteFolder(id: number): Promise<void> {
         const groups = await groupStorage.retrieveFolder(id)
 
@@ -95,6 +99,7 @@ export const useFolderStore = defineStore('folder', () => {
         loading,
         createMany,
         create,
+        get,
         load,
         deleteFolder,
     }
