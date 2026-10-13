@@ -1,8 +1,9 @@
 import type { Pinia } from 'pinia'
 import type { Group } from '@common/types'
+import { expect } from 'vitest'
 import { createPinia, setActivePinia } from 'pinia'
+import { useGroupStore } from '@/stores/group'
 import { vi } from 'vitest'
-import { fakeGroup, fakeLink } from '@common/modules/fake'
 
 export function useFreshPinia(): Pinia {
     const pinia = createPinia()
@@ -15,12 +16,14 @@ export async function waitUntil(assertion: () => void): Promise<void> {
     await vi.waitFor(assertion, { timeout: 5000, interval: 25 })
 }
 
-export function getOpenGroup(name: string, url: string, folderId?: number): Group {
-    return fakeGroup({
-        name,
-        isPrivate: false,
-        isEncrypted: false,
-        folderId,
-        links: [fakeLink({ url })],
-    })
+export function storedGroup(name: string): Group {
+    const group = useGroupStore().groups.find(g => g.name === name)
+    expect(group).toBeDefined()
+    return group!
+}
+
+export function storedInitialGroup(name: string): Group {
+    const group = useGroupStore().initialGroups.find(g => g.name === name)
+    expect(group).toBeDefined()
+    return group!
 }
