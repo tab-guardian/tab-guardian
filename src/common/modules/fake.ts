@@ -1,4 +1,4 @@
-import type { Link, Group } from '@common/types'
+import type { Link, Group, Folder } from '@common/types'
 import { generateId } from '@common/modules/group'
 
 export function fakeLink(fields?: Partial<Link>): Link {
@@ -14,6 +14,17 @@ export function fakeLink(fields?: Partial<Link>): Link {
         title: `Link #${id}`,
         favIconUrl: `https://picsum.photos/seed/${randNum}/100/100`,
         isPinned: false,
+        ...fields,
+    }
+}
+
+export function fakeFolder(fields?: Partial<Folder>): Folder {
+    const id = fields?.id ?? Math.floor(Date.now() + Math.random() * 1000)
+
+    return {
+        id,
+        name: `Test folder ${id}`,
+        updatedAt: Date.now(),
         ...fields,
     }
 }

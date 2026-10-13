@@ -1,21 +1,10 @@
 // @vitest-environment happy-dom
 
-import type { Folder } from '@common/types'
+import { fakeFolder } from '@common/modules/fake'
 import { describe, it, expect, beforeEach, suite } from 'vitest'
 import { createPinia, setActivePinia } from 'pinia'
 import { useFolderStore } from '@/stores/folder'
 import { folderStorage } from '@common/modules/storage/folder'
-
-function fakeFolder(fields?: Partial<Folder>): Folder {
-    const id = fields?.id ?? Math.floor(Date.now() + Math.random() * 1000)
-
-    return {
-        id,
-        name: `Test folder ${id}`,
-        updatedAt: Date.now(),
-        ...fields,
-    }
-}
 
 describe('folder store', () => {
     beforeEach(() => {
