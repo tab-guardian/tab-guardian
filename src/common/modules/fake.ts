@@ -33,6 +33,7 @@ export function fakeLinks(): Link[] {
     return [fakeLink(), fakeLink()]
 }
 
+// A default public group with 1 link
 export function fakeGroup(fields?: Partial<Group>): Group {
     fields ??= {}
 
@@ -41,7 +42,7 @@ export function fakeGroup(fields?: Partial<Group>): Group {
     return {
         id,
         name: fields.name ?? `Test group ${id}`,
-        links: fields.links || fakeLinks(),
+        links: fields.links || [fakeLink()],
         isPrivate: false,
         isEncrypted: false,
         updatedAt: Date.now(),
