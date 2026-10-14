@@ -36,7 +36,6 @@ describe('groups in folders in incognito window', () => {
             isPrivate: false,
             folderId: folder.id,
         })
-
         await groupStore.create(openGroup)
 
         settingsStore.settings.showOnlyPrivateGroupsInIncognito = true

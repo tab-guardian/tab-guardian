@@ -57,15 +57,15 @@ export const useGroupStore = defineStore('group', () => {
 
         const storageGroups = await groupStorage.getAll()
 
-        initialGroups.value = cloneDeep(storageGroups)
-
         groups.value = await hideGroups(storageGroups)
         groups.value.sort((a, b) => b.updatedAt - a.updatedAt)
+
+        initialGroups.value = cloneDeep(storageGroups)
 
         loading.value = false
     }
 
-    async function folderGroups(folderId: number): Promise<Group[]> {
+    function folderGroups(folderId: number): Group[] {
         return initialGroups.value.filter(g => g.folderId === folderId)
     }
 
@@ -346,23 +346,15 @@ export const useGroupStore = defineStore('group', () => {
     }
 
     async function hideGroups(storageGroups: Group[]): Promise<Group[]> {
-        const result: Group[] = []
-
         for (const group of storageGroups) {
-            if (group.folderId) {
-                continue
-            }
-
             if (await isGroupHiddenInCurrentWindow(group)) {
                 group.hide = true
-            } else {
-                delete group.hide
+                continue
             }
-
-            result.push(group)
+            delete group.hide
         }
 
-        return result
+        return storageGroups.filter(group => !group.folderId)
     }
 
     async function isIncognitoWindow(): Promise<boolean> {

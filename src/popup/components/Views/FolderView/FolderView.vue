@@ -49,7 +49,7 @@ async function fetchGroups(): Promise<void> {
         return
     }
 
-    groups.value = await groupStore.folderGroups(Number(id))
+    groups.value = groupStore.folderGroups(Number(id))
 }
 </script>
 
