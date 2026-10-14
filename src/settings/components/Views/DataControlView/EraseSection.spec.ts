@@ -41,9 +41,7 @@ describe('EraseSection', () => {
         const settingsStore = useSettingsStore()
 
         await folderStore.create('keep-me')
-        await useGroupStore().create(
-            fakeGroup({ links: [fakeLink({ url: 'https://top.example/page' })] }),
-        )
+        await useGroupStore().create(fakeGroup())
 
         settingsStore.settings.rememberPasswordAfterUnlock = false
         settingsStore.save()
