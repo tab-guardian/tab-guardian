@@ -151,9 +151,12 @@ export const useGroupStore = defineStore('group', () => {
         progressStore.start(groups.length)
 
         for (const group of groups) {
-            await create(group)
+            await create(group, false)
             progressStore.advance()
         }
+
+        await load()
+        await notificationStore.recalculateNotification()
 
         progressStore.finish()
     }
@@ -291,7 +294,7 @@ export const useGroupStore = defineStore('group', () => {
         return true
     }
 
-    async function create(group: Group): Promise<void> {
+    async function create(group: Group, loadGroups = true): Promise<void> {
         if (loading.value) {
             const msg = `Cannot create group ${group.name}. The loading is still active`
             logger().info(msg)
@@ -301,7 +304,7 @@ export const useGroupStore = defineStore('group', () => {
         loading.value = true
 
         try {
-            await _persistCreateGroup(group)
+            await persistCreateGroup(group, loadGroups)
         } finally {
             loading.value = false
         }
@@ -399,14 +402,16 @@ export const useGroupStore = defineStore('group', () => {
         logger().info(`Group "${id}" not found for "${operation}" operation`)
     }
 
-    async function _persistCreateGroup(group: Group): Promise<void> {
+    async function persistCreateGroup(group: Group, loadGroups: boolean): Promise<void> {
         const takenNames = new Set(initialGroups.value.map(g => g.name))
         group.name = forceUniqueName(group.name, takenNames)
 
         await groupStorage.save(group)
-        await load()
 
-        await notificationStore.recalculateNotification()
+        if (loadGroups) {
+            await load()
+            await notificationStore.recalculateNotification()
+        }
     }
 
     return {
