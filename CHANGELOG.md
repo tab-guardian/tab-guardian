@@ -10,6 +10,7 @@
 - 🧑‍💻 Creating a folder with a duplicate name now saves it as `<name> (Copy n)` instead of silently ignoring it.
 - 🧑‍💻 Split confusing `save`/`saveMany` group functions into `create`, `update`, `createMany`, and `importMany` with a single responsibility each.
 - 🧑‍💻 Improved id generation for groups and folders. Ids now use cryptographic randomness instead of `Math.random`, making collisions across devices and backups far less likely.
+- 🧑‍💻 Change Codeberg icon in sidebar to black and white to match other icons in the sidebar
 
 ## v1.18.2 (2026-10-09)
 
