@@ -35,11 +35,11 @@ export function normalizeExportSchema(json: LegacyExportSchema): ExportSchema {
 
     const groups = Array.isArray(json) ? json : [json]
 
-    // We use extension version v1.18.2 because this is the last version which
+    // We use extension version 1.18.2 because this is the last version which
     // didn't have any normalized schema. It was just Group and Group[] for
     // export files. Starting from v1.18.3 we now have proper export format
     // with 'meta' field.
-    return generateExportSchema(groups, [], 'v1.18.2')
+    return generateExportSchema(groups, [], '1.18.2')
 }
 
 // Seperates groups into fresh and duplicates.
