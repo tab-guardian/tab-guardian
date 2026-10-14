@@ -23,7 +23,7 @@ const groupStore = useGroupStore()
         <VueDraggableNext
             v-model="group.links"
             class="flex flex-col gap-2"
-            @change="groupStore.save(group)"
+            @change="groupStore.update(group)"
             item-key="id"
         >
             <LinkItem

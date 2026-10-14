@@ -199,7 +199,7 @@
     "choose_file_import": { "message": "Please choose a file to import" },
     "error_reading_file": { "message": "Error reading file" },
     "some_groups_already_exist_same_name": {
-        "message": "Some groups that you want to import already exist with the same name. Do you want to replace them?"
+        "message": "Some groups that you want to import already exist with the same IDs. Do you want to replace them? If you choose 'No', duplicates will be skipped."
     },
     "file_chosen": { "message": "File chosen" },
     "save": { "message": "Save" },

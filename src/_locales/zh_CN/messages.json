@@ -174,7 +174,7 @@
     "choose_file_import": { "message": "请选择一个文件进行导入" },
     "error_reading_file": { "message": "读取文件时出错" },
     "some_groups_already_exist_same_name": {
-        "message": "要导入的某些组已存在相同名称。您想替换它们吗？"
+        "message": "您要导入的某些组已存在，且 ID 相同。是否要替换它们？如果选择“否”，系统将跳过重复项。"
     },
     "file_chosen": { "message": "文件已选择" },
     "save": { "message": "保存" },

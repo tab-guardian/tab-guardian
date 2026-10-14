@@ -37,7 +37,7 @@ async function selectIcon(icon: string): Promise<void> {
         return
     }
 
-    await groupStore.update(group.value.id, { icon })
+    await groupStore.updateFields(group.value.id, { icon })
 
     showToast({ text: trans('icon_is_set') })
 

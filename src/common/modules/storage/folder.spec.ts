@@ -1,5 +1,6 @@
 // @vitest-environment happy-dom
 
+import { fakeFolder } from '@common/modules/fake'
 import { describe, it, expect, suite, beforeEach } from 'vitest'
 import { createPinia, setActivePinia } from 'pinia'
 import { folderStorage } from '@common/modules/storage/folder'
@@ -12,7 +13,7 @@ describe('folder storage module', () => {
 
     suite('save()', () => {
         it('saves folder into storage', async () => {
-            await folderStorage.save('Anna Photos')
+            await folderStorage.save(fakeFolder({ name: 'Anna Photos' }))
 
             const foldersStr = localStorage.getItem('folders')
 
@@ -25,8 +26,8 @@ describe('folder storage module', () => {
         })
 
         it('appends folder into storage to other folders', async () => {
-            await folderStorage.save('Serhii')
-            await folderStorage.save('Anna')
+            await folderStorage.save(fakeFolder({ name: 'Serhii' }))
+            await folderStorage.save(fakeFolder({ name: 'Anna' }))
 
             const foldersStr = localStorage.getItem('folders')
 
@@ -37,32 +38,27 @@ describe('folder storage module', () => {
             expect(foldersParsed).toHaveLength(2)
         })
 
-        it('saving existing folder will be ignored', async () => {
-            await folderStorage.save('Test')
+        it('saving existing folder throws', async () => {
+            await folderStorage.save(fakeFolder({ name: 'Test' }))
 
             let folders = await folderStorage.getAll()
 
             expect(folders).toHaveLength(1)
 
-            await folderStorage.save('Test')
+            await expect(
+                folderStorage.save(fakeFolder({ name: 'Test' })),
+            ).rejects.toThrowError()
 
             folders = await folderStorage.getAll()
 
             expect(folders).toHaveLength(1)
         })
-
-        it('saving folder with create folder with default name', async () => {
-            await folderStorage.save('')
-
-            const foldersStr = localStorage.getItem('folders')
-            expect(foldersStr).not.toBeNull()
-        })
     })
 
     suite('getAll()', () => {
         it('loads all folders from storage', async () => {
-            await folderStorage.save('Anna')
-            await folderStorage.save('Serhii')
+            await folderStorage.save(fakeFolder({ name: 'Anna' }))
+            await folderStorage.save(fakeFolder({ name: 'Serhii' }))
 
             const folders = await folderStorage.getAll()
 
@@ -79,8 +75,8 @@ describe('folder storage module', () => {
 
     suite('get()', () => {
         it('returns requested folder found in storage', async () => {
-            await folderStorage.save('Anna')
-            await folderStorage.save('Serhii')
+            await folderStorage.save(fakeFolder({ name: 'Anna' }))
+            await folderStorage.save(fakeFolder({ name: 'Serhii' }))
 
             const folders = await folderStorage.getAll()
 
@@ -99,8 +95,8 @@ describe('folder storage module', () => {
 
     suite('delete()', () => {
         it('deletes folder', async () => {
-            const folder1 = await folderStorage.save('Anna')
-            const folder2 = await folderStorage.save('Serhii')
+            const folder1 = await folderStorage.save(fakeFolder({ name: 'Anna' }))
+            const folder2 = await folderStorage.save(fakeFolder({ name: 'Serhii' }))
 
             await folderStorage.delete(folder1!.id)
 
@@ -111,8 +107,8 @@ describe('folder storage module', () => {
         })
 
         it('does not delete folder for wrong id', async () => {
-            await folderStorage.save('Anna')
-            await folderStorage.save('Serhii')
+            await folderStorage.save(fakeFolder({ name: 'Anna' }))
+            await folderStorage.save(fakeFolder({ name: 'Serhii' }))
 
             await folderStorage.delete(0)
 
@@ -124,7 +120,7 @@ describe('folder storage module', () => {
 
     suite('rename()', () => {
         it('renames folder', async () => {
-            const folder = await folderStorage.save('Anna')
+            const folder = await folderStorage.save(fakeFolder({ name: 'Anna' }))
 
             await folderStorage.rename(folder!.id, 'Serhii')
             const renamedFolder = await folderStorage.get(folder!.id)
@@ -134,7 +130,7 @@ describe('folder storage module', () => {
         })
 
         it('does not rename folder for wrong id', async () => {
-            const folder = await folderStorage.save('Anna')
+            const folder = await folderStorage.save(fakeFolder({ name: 'Anna' }))
 
             await folderStorage.rename(0, 'Serhii')
             const notRenamedFolder = await folderStorage.get(folder!.id)
@@ -144,7 +140,7 @@ describe('folder storage module', () => {
         })
 
         it('updates updatedAt on rename', async () => {
-            const folder = await folderStorage.save('Anna')
+            const folder = await folderStorage.save(fakeFolder({ name: 'Anna' }))
             const originalUpdatedAt = folder!.updatedAt
 
             // Simulate a delay
@@ -157,8 +153,8 @@ describe('folder storage module', () => {
         })
 
         it('allows renaming to an existing folder name', async () => {
-            await folderStorage.save('Anna')
-            const folder = await folderStorage.save('Serhii')
+            await folderStorage.save(fakeFolder({ name: 'Anna' }))
+            const folder = await folderStorage.save(fakeFolder({ name: 'Serhii' }))
 
             await folderStorage.rename(folder!.id, 'Anna')
             const renamedFolder = await folderStorage.get(folder!.id)

@@ -1,11 +1,10 @@
 // @vitest-environment happy-dom
 
-import { describe, it, expect, suite, beforeEach } from 'vitest'
+import { fakeFolder } from '@common/modules/fake'
+import { describe, it, expect, beforeEach, suite } from 'vitest'
 import { createPinia, setActivePinia } from 'pinia'
 import { useFolderStore } from '@/stores/folder'
 import { folderStorage } from '@common/modules/storage/folder'
-import { fakeGroup } from '@common/modules/fake'
-import { groupStorage } from '@common/modules/storage/group'
 
 describe('folder store', () => {
     beforeEach(() => {
@@ -13,40 +12,207 @@ describe('folder store', () => {
         setActivePinia(createPinia())
     })
 
-    suite('deleteFolder()', () => {
-        it('deleting folder removes it from storage', async () => {
+    suite('create()', () => {
+        it('ignores second create while first is still running', async () => {
             const folderStore = useFolderStore()
-            const folder = await folderStorage.save('Crina Maria')
 
-            await folderStore.deleteFolder(folder!.id)
+            const first = folderStore.create(fakeFolder({ name: 'Work' }))
+            await folderStore.create(fakeFolder({ name: 'Work' }))
+            await first
 
-            const found = await folderStorage.get(folder!.id)
-            expect(found).toBeNullable()
+            expect(folderStore.folders).toHaveLength(1)
+            expect(folderStore.folders[0]?.name).equal('Work')
         })
 
-        it('deletes groups attatched to deleted folder', async () => {
+        it('saves folder by name', async () => {
+            const folderStore = useFolderStore()
+            const folderName = 'Anna Photos'
+
+            await folderStore.create(folderName)
+
+            expect(folderStore.folders).toHaveLength(1)
+            expect(folderStore.folders[0]?.name).equal(folderName)
+        })
+
+        it('saves empty name with default name', async () => {
             const folderStore = useFolderStore()
 
-            let folder = await folderStorage.save('Actresses')
+            await folderStore.create('')
 
-            const sedneyGroup = fakeGroup({
-                name: 'Sydney Sweeney',
-                folderId: folder!.id,
-            })
+            expect(folderStore.folders).toHaveLength(1)
+            expect(folderStore.folders[0]?.name).toMatch(/^Folder /)
+        })
 
-            const amyGroup = fakeGroup({
-                name: 'Amy Adams',
-                folderId: folder!.id,
-            })
+        it('saves duplicate name with copy suffix', async () => {
+            const folderStore = useFolderStore()
+            const folderName = 'Work'
 
-            await groupStorage.save(sedneyGroup)
-            await groupStorage.save(amyGroup)
+            await folderStore.create(folderName)
+            await folderStore.create(folderName)
 
-            await folderStore.deleteFolder(folder!.id)
+            const folderNames = folderStore.folders.map(f => f.name)
 
-            const groups = await groupStorage.getAll()
+            expect(folderNames).toContain(folderName)
+            expect(folderNames).toContain(`${folderName} (Copy 1)`)
+        })
+    })
 
-            expect(groups).toHaveLength(0)
+    suite('get()', () => {
+        it('returns folder with matching name', async () => {
+            const folderStore = useFolderStore()
+
+            await folderStore.createMany([
+                fakeFolder({ name: 'Serhii' }),
+                fakeFolder({ name: 'Anna' }),
+            ])
+
+            const actual = folderStore.get('Anna')
+
+            expect(actual).not.toBeUndefined()
+            expect(actual?.name).equal('Anna')
+        })
+
+        it('returns folder with matching id', async () => {
+            const folderStore = useFolderStore()
+
+            await folderStore.createMany([
+                fakeFolder({ id: 11, name: 'Serhii' }),
+                fakeFolder({ id: 22, name: 'Anna' }),
+            ])
+
+            const actual = folderStore.get(22)
+
+            expect(actual).not.toBeUndefined()
+            expect(actual?.name).equal('Anna')
+        })
+
+        it('returns undefined for missing name', async () => {
+            const folderStore = useFolderStore()
+            await folderStore.create(fakeFolder({ name: 'Serhii' }))
+            expect(folderStore.get('Anna')).toBeUndefined()
+        })
+
+        it('returns undefined for missing id', async () => {
+            const folderStore = useFolderStore()
+            await folderStore.create(fakeFolder({ id: 11, name: 'Serhii' }))
+            expect(folderStore.get(22)).toBeUndefined()
+        })
+    })
+
+    suite('createMany()', () => {
+        it('saves folders to folders state', async () => {
+            const folderStore = useFolderStore()
+
+            expect(folderStore.folders).toHaveLength(0)
+
+            await folderStore.createMany([
+                fakeFolder({ name: 'Serhii' }),
+                fakeFolder({ name: 'Anna' }),
+            ])
+
+            expect(folderStore.folders).toHaveLength(2)
+        })
+
+        it('saves folders to local storage', async () => {
+            const folderStore = useFolderStore()
+
+            await folderStore.create(fakeFolder({ name: 'Anna Photos' }))
+
+            const folders = await folderStorage.getAll()
+
+            expect(folders).toHaveLength(1)
+            expect(folders[0]?.name).equal('Anna Photos')
+        })
+
+        it('saves duplicate name as first free "<name> (Copy n)" starting at 1', async () => {
+            const folderStore = useFolderStore()
+            const folderName = 'Work'
+
+            await folderStore.createMany([
+                fakeFolder({ name: folderName }),
+                fakeFolder({ name: `${folderName} (Copy 100)` }),
+            ])
+
+            await folderStore.create(fakeFolder({ name: folderName }))
+
+            const folderNames = folderStore.folders.map(f => f.name)
+
+            expect(folderNames).toContain(folderName)
+            expect(folderNames).toContain(`${folderName} (Copy 100)`)
+            expect(folderNames).toContain(`${folderName} (Copy 1)`)
+        })
+
+        it('numbers from the base name when a copy already exists', async () => {
+            const folderStore = useFolderStore()
+            const folderName = 'Work'
+
+            await folderStore.createMany([
+                fakeFolder({ name: folderName }),
+                fakeFolder({ name: `${folderName} (Copy 1)` }),
+            ])
+
+            await folderStore.create(fakeFolder({ name: folderName }))
+
+            const folderNames = folderStore.folders.map(f => f.name)
+
+            expect(folderNames).toContain(folderName)
+            expect(folderNames).toContain(`${folderName} (Copy 1)`)
+            expect(folderNames).toContain(`${folderName} (Copy 2)`)
+        })
+
+        it('keeps the incoming folder id when renaming a duplicate', async () => {
+            const folderStore = useFolderStore()
+            const folderName = 'Work'
+            const incomingId = 222
+
+            await folderStore.create(fakeFolder({ name: folderName }))
+
+            await folderStore.createMany([
+                fakeFolder({ id: incomingId, name: folderName }),
+            ])
+
+            const folderCopy = folderStore.folders.find(
+                f => f.name === `${folderName} (Copy 1)`,
+            )
+
+            expect(folderCopy).toBeDefined()
+            expect(folderCopy!.id).toEqual(incomingId)
+        })
+
+        it('numbers duplicates within the same batch', async () => {
+            const folderStore = useFolderStore()
+            const folderName = 'Work'
+
+            await folderStore.createMany([
+                fakeFolder({ id: 11, name: folderName }),
+                fakeFolder({ id: 22, name: folderName }),
+            ])
+
+            const folderNames = folderStore.folders.map(f => f.name)
+
+            expect(folderNames).toContain(folderName)
+            expect(folderNames).toContain(`${folderName} (Copy 1)`)
+        })
+
+        it('skips folder when id already exists', async () => {
+            const folderStore = useFolderStore()
+            const folderName = 'Work'
+
+            await folderStore.create(fakeFolder({ id: 1, name: folderName }))
+            await folderStore.create(fakeFolder({ id: 1, name: folderName }))
+
+            expect(folderStore.folders).toHaveLength(1)
+            expect(folderStore.folders[0]?.name).equal(folderName)
+        })
+
+        it('keeps local name when id matches but name differs', async () => {
+            const folderStore = useFolderStore()
+
+            await folderStore.create(fakeFolder({ id: 1, name: 'Work' }))
+            await folderStore.create(fakeFolder({ id: 1, name: 'Job' }))
+
+            expect(folderStore.folders).toHaveLength(1)
+            expect(folderStore.folders[0]?.name).equal('Work')
         })
     })
 })

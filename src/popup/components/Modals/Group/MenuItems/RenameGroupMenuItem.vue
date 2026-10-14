@@ -28,7 +28,7 @@ async function startRenaming(): Promise<void> {
 
     const name = resp.name ?? getDefaultName('Group')
 
-    await groupStore.update(props.group.id, { name })
+    await groupStore.updateFields(props.group.id, { name })
 
     showToast({ text: trans('new_name_saved') })
 }

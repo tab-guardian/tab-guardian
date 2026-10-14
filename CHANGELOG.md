@@ -1,8 +1,22 @@
 # Release Notes
 
+## v1.19.0 (2026-10-14)
+
+- 🐛 Fixed "Erase all groups" also wiping settings, folders and saved passwords. [#119](https://codeberg.org/tab-guardian/tab-guardian/issues/119)
+- ✨ Export file now has a versioned format with groups, folders, and extension metadata. Old single-group and groups-array files still import. [#104](https://codeberg.org/tab-guardian/tab-guardian/issues/104)
+- 🐛 Fixed exporting issue which doesn't include folders and their content to export file. [#111](https://codeberg.org/tab-guardian/tab-guardian/issues/111)
+- 🐛 Fixed replacing a group on import deleting its saved password. Matching groups are now updated in place instead of deleted and recreated.
+- 🧑‍💻 Declining the duplicate prompt on import now skips matching groups instead of importing them as copies.
+- 🧑‍💻 Creating a group with a duplicate name now saves it as `<name> (Copy n)` instead of silently ignoring it. [#127](https://codeberg.org/tab-guardian/tab-guardian/issues/127)
+- 🧑‍💻 Creating a folder with a duplicate name now saves it as `<name> (Copy n)` instead of silently ignoring it.
+- 🧑‍💻 Split confusing `save`/`saveMany` group functions into `create`, `update`, `createMany`, and `importMany` with a single responsibility each.
+- 🧑‍💻 Improved id generation for groups and folders. Ids now use cryptographic randomness instead of `Math.random`, making collisions across devices and backups far less likely.
+- 🧑‍💻 Change Codeberg icon in sidebar to black and white to match other icons in the sidebar
+
 ## v1.18.2 (2026-10-09)
 
 - 🐛 Fixed importing a password-protected export wiping out your locked group. It was getting encrypted a second time on import, after which neither the export password nor the original one worked.
+- 🐛 Fixed issue where previous password wasn't cleared from cache. [#110](https://codeberg.org/tab-guardian/tab-guardian/issues/110)
 
 ## v1.18.1 (2026-10-08)
 

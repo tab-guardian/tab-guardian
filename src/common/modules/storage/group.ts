@@ -2,6 +2,7 @@ import type { Group } from '@common/types'
 import { runtime } from '@common/modules/runtime'
 import { cloneDeep } from 'lodash'
 import { groupIdsStorage } from '@common/modules/storage/groupIds'
+import { passwordStorage } from '@common/modules/storage/password'
 
 export const groupStorage = {
     async delete(groupId: number): Promise<void> {
@@ -10,8 +11,12 @@ export const groupStorage = {
     },
 
     async deleteAll(): Promise<void> {
-        await runtime.storage.clear()
-        await groupIdsStorage.save([])
+        const groupIds = await groupIdsStorage.getAll()
+
+        for (const id of groupIds) {
+            await this.delete(id)
+            await passwordStorage.delete(id)
+        }
     },
 
     async retrieveFolder(folderId: number): Promise<Group[]> {

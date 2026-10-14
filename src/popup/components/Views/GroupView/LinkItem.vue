@@ -19,7 +19,7 @@ const modalStore = useModalStore()
 
 async function openTab(): Promise<void> {
     if (groupStore.selectedGroup) {
-        await groupStore.save(groupStore.selectedGroup)
+        await groupStore.update(groupStore.selectedGroup)
     } else {
         logger().error(
             `Group with id ${props.groupId} is not selected as selectedGroup`,

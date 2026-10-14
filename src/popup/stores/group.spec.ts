@@ -2,9 +2,11 @@
 
 import { config } from '@common/config'
 import { trans } from '@common/modules'
-import { describe, it, expect, beforeEach, suite } from 'vitest'
+import { describe, it, expect, beforeEach, afterEach, suite, vi } from 'vitest'
 import { createPinia, setActivePinia } from 'pinia'
 import { useGroupStore } from '@/stores/group'
+import { useFolderStore } from '@/stores/folder'
+import { groupStorage } from '@common/modules/storage/group'
 import { fakeGroup, fakeLink } from '@common/modules/fake'
 import { KEY_PREFIX, passwordStorage } from '@common/modules/storage/password'
 
@@ -14,14 +16,29 @@ describe('group store', () => {
         setActivePinia(createPinia())
     })
 
-    suite('save()', () => {
+    afterEach(() => {
+        vi.restoreAllMocks()
+    })
+
+    suite('create()', () => {
+        it('ignores second create while first is still running', async () => {
+            const groupStore = useGroupStore()
+
+            const first = groupStore.create(fakeGroup({ name: 'work' }))
+            await groupStore.create(fakeGroup({ name: 'work' }))
+            await first
+
+            expect(groupStore.groups).toHaveLength(1)
+            expect(groupStore.groups[0]?.name).equal('work')
+        })
+
         it('saves group to groups state', async () => {
             const groupStore = useGroupStore()
             const group = fakeGroup()
 
             expect(groupStore.groups).toHaveLength(0)
 
-            await groupStore.save(group)
+            await groupStore.create(group)
 
             expect(groupStore.groups).toHaveLength(1)
         })
@@ -30,7 +47,7 @@ describe('group store', () => {
             const groupStore = useGroupStore()
             const group = fakeGroup()
 
-            await groupStore.save(group)
+            await groupStore.create(group)
 
             const result = localStorage.getItem(group.id.toString())
 
@@ -41,6 +58,22 @@ describe('group store', () => {
             expect(obj.id).equal(group.id)
         })
 
+        it('create does not touch updatedAt timestamp', async () => {
+            const updatedAt = 444444
+
+            const groupStore = useGroupStore()
+            const group = fakeGroup({ updatedAt })
+
+            expect(group.updatedAt).equal(updatedAt)
+
+            await groupStore.create(group)
+
+            expect(groupStore.groups).toHaveLength(1)
+            expect(groupStore.groups[0]?.updatedAt).equal(updatedAt)
+        })
+    })
+
+    suite('update()', () => {
         it('updates updatedAt timestamp', async () => {
             const updatedAt = 444444
             const currTimestamp = Date.now()
@@ -48,9 +81,11 @@ describe('group store', () => {
             const groupStore = useGroupStore()
             const group = fakeGroup({ updatedAt })
 
+            await groupStore.create(group)
+
             expect(group.updatedAt).equal(updatedAt)
 
-            await groupStore.save(group)
+            await groupStore.update(group)
 
             expect(groupStore.groups).toHaveLength(1)
             expect(groupStore.groups[0]?.updatedAt).toBeGreaterThanOrEqual(
@@ -58,18 +93,81 @@ describe('group store', () => {
             )
         })
 
-        it('does not update updatedAt timestamp when asked', async () => {
-            const updatedAt = 444444
-
+        it('does not rename group when name is unchanged', async () => {
             const groupStore = useGroupStore()
-            const group = fakeGroup({ updatedAt })
+            const group = fakeGroup({ name: 'work' })
 
-            expect(group.updatedAt).equal(updatedAt)
+            await groupStore.create(group)
+            await groupStore.update(group)
 
-            await groupStore.save(group, false)
+            const groupNames = groupStore.groups.map(g => g.name)
+
+            expect(groupNames).toHaveLength(1)
+            expect(groupNames).toContain('work')
+        })
+
+        it('renames group when updated name is taken', async () => {
+            const groupStore = useGroupStore()
+            const group = fakeGroup({ name: 'work' })
+            const otherGroup = fakeGroup({ name: 'other' })
+
+            await groupStore.create(group)
+            await groupStore.create(otherGroup)
+
+            otherGroup.name = 'work'
+            await groupStore.update(otherGroup)
+
+            const groupNames = groupStore.groups.map(g => g.name)
+
+            expect(groupNames).toContain('work')
+            expect(groupNames).toContain('work (Copy 1)')
+        })
+
+        it('keeps name stable across repeated unrelated updates', async () => {
+            const groupStore = useGroupStore()
+            const group = fakeGroup({ name: 'work' })
+
+            await groupStore.create(group)
+
+            group.links.push(fakeLink())
+            await groupStore.update(group)
+
+            group.links.push(fakeLink())
+            await groupStore.update(group)
+
+            group.links.push(fakeLink())
+            await groupStore.update(group)
 
             expect(groupStore.groups).toHaveLength(1)
-            expect(groupStore.groups[0]?.updatedAt).equal(updatedAt)
+            expect(groupStore.groups.map(g => g.name)).toEqual(['work'])
+        })
+
+        it('keeps name when only openedTimes changes', async () => {
+            const groupStore = useGroupStore()
+            const group = fakeGroup({ name: 'work' })
+
+            await groupStore.create(group)
+            await groupStore.updateFields(group.id, { openedTimes: 5 })
+
+            expect(groupStore.groups).toHaveLength(1)
+            expect(groupStore.groups.map(g => g.name)).toEqual(['work'])
+        })
+
+        it('keeps other groups untouched when one group updates', async () => {
+            const groupStore = useGroupStore()
+            const group = fakeGroup({ name: 'work' })
+            const otherGroup = fakeGroup({ name: 'other' })
+
+            await groupStore.create(group)
+            await groupStore.create(otherGroup)
+
+            otherGroup.links.push(fakeLink())
+            await groupStore.update(otherGroup)
+
+            const groupNames = groupStore.groups.map(g => g.name).sort()
+
+            expect(groupStore.groups).toHaveLength(2)
+            expect(groupNames).toEqual(['other', 'work'])
         })
     })
 
@@ -78,7 +176,7 @@ describe('group store', () => {
             const groupStore = useGroupStore()
 
             const group = fakeGroup()
-            await groupStore.save(group)
+            await groupStore.create(group)
 
             await groupStore.load()
 
@@ -92,7 +190,7 @@ describe('group store', () => {
             const groupStore = useGroupStore()
 
             const group = fakeGroup()
-            await groupStore.save(group)
+            await groupStore.create(group)
 
             const result = groupStore.get(group.name)
 
@@ -104,7 +202,7 @@ describe('group store', () => {
             const groupStore = useGroupStore()
 
             const group = fakeGroup()
-            await groupStore.save(group)
+            await groupStore.create(group)
 
             const result = groupStore.get(0)
 
@@ -114,7 +212,7 @@ describe('group store', () => {
         it('returns null with non-existent group name', async () => {
             const groupStore = useGroupStore()
             const group = fakeGroup()
-            await groupStore.save(group)
+            await groupStore.create(group)
 
             const result = groupStore.get('some')
 
@@ -213,38 +311,65 @@ describe('group store', () => {
         })
     })
 
-    suite('saveMany()', () => {
+    suite('importMany()', () => {
+        it('keeps saved password when replacing group', async () => {
+            const groupStore = useGroupStore()
+            await groupStore.create(fakeGroup({ id: 1, name: 'work' }))
+            await passwordStorage.save(1, 'amy-pass')
+
+            await groupStore.importMany([fakeGroup({ id: 1, name: 'work' })], true)
+
+            expect(await passwordStorage.get(1)).toEqual('amy-pass')
+        })
+
+        it('keeps original group when create fails during replace', async () => {
+            const groupStore = useGroupStore()
+            const groupName = 'work'
+            const groupUrl = 'https://work.example/page'
+
+            await groupStore.create(
+                fakeGroup({
+                    id: 1,
+                    name: groupName,
+                    links: [fakeLink({ url: groupUrl })],
+                }),
+            )
+
+            vi.spyOn(groupStorage, 'save').mockRejectedValueOnce(
+                new Error('quota exceeded'),
+            )
+
+            await expect(
+                groupStore.importMany([fakeGroup({ id: 1, name: groupName })], true),
+            ).rejects.toThrowError()
+
+            const stored = groupStore.get(1)
+
+            expect(stored).not.toBeNull()
+            expect(stored?.links[0].url).toEqual(groupUrl)
+        })
+    })
+
+    suite('createMany()', () => {
         it('saves many groups', async () => {
             const groupStore = useGroupStore()
 
             const group1 = fakeGroup()
             const group2 = fakeGroup()
 
-            await groupStore.saveMany([group1, group2])
+            await groupStore.createMany([group1, group2])
 
             expect(groupStore.groups).toHaveLength(2)
         })
 
-        it('saves many groups without replacing duplicates', async () => {
+        it('does not duplicate groups with matching ids', async () => {
             const groupStore = useGroupStore()
 
             const group1 = fakeGroup({ id: 1 })
             const group2 = fakeGroup({ id: 2 })
 
-            await groupStore.saveMany([group1, group2])
-            await groupStore.saveMany([group1, group2])
-
-            expect(groupStore.groups).toHaveLength(4)
-        })
-
-        it('saves many groups without replacing duplicates', async () => {
-            const groupStore = useGroupStore()
-
-            const group1 = fakeGroup()
-            const group2 = fakeGroup()
-
-            await groupStore.saveMany([group1, group2], true)
-            await groupStore.saveMany([group1, group2], true)
+            await groupStore.createMany([group1, group2])
+            await groupStore.createMany([group1, group2])
 
             expect(groupStore.groups).toHaveLength(2)
         })
@@ -256,23 +381,81 @@ describe('group store', () => {
             const group1 = fakeGroup({ updatedAt })
             const group2 = fakeGroup({ updatedAt })
 
-            await groupStore.saveMany([group1, group2])
+            await groupStore.createMany([group1, group2])
 
             expect(groupStore.groups).toHaveLength(2)
             expect(groupStore.groups[0]!.updatedAt).equal(updatedAt)
             expect(groupStore.groups[1]!.updatedAt).equal(updatedAt)
         })
+
+        it('saves duplicate name as first free "<name> (Copy n)" starting at 1', async () => {
+            const groupStore = useGroupStore()
+            const groupName = 'work'
+
+            await groupStore.createMany([
+                fakeGroup({ name: groupName }),
+                fakeGroup({ name: `${groupName} (Copy 100)` }),
+            ])
+
+            await groupStore.create(fakeGroup({ name: groupName }))
+
+            const groupNames = groupStore.groups.map(g => g.name)
+
+            expect(groupNames).toContain(groupName)
+            expect(groupNames).toContain(`${groupName} (Copy 100)`)
+            expect(groupNames).toContain(`${groupName} (Copy 1)`)
+        })
+
+        it('numbers from the base name when a copy already exists', async () => {
+            const groupStore = useGroupStore()
+            const groupName = 'work'
+
+            await groupStore.createMany([
+                fakeGroup({ name: groupName }),
+                fakeGroup({ name: `${groupName} (Copy 1)` }),
+            ])
+
+            await groupStore.create(fakeGroup({ name: groupName }))
+
+            const groupNames = groupStore.groups.map(g => g.name)
+
+            expect(groupNames).toContain(groupName)
+            expect(groupNames).toContain(`${groupName} (Copy 1)`)
+            expect(groupNames).toContain(`${groupName} (Copy 2)`)
+        })
+
+        it('suffixed top-level name taken by a folder group', async () => {
+            const groupStore = useGroupStore()
+            const folderStore = useFolderStore()
+            const groupName = 'work'
+
+            await folderStore.create(groupName)
+            const folderId = folderStore.folders[0]!.id
+
+            await groupStore.create(fakeGroup({ name: groupName, folderId }))
+            await groupStore.create(fakeGroup({ name: groupName }))
+
+            // The plain name lives only in initialGroups, it is hidden
+            // inside a folder and never shows in the display list
+            const allNames = groupStore.initialGroups.map(g => g.name)
+
+            expect(allNames).toContain(groupName)
+            expect(allNames).toContain(`${groupName} (Copy 1)`)
+
+            const topLevelGroupNames = groupStore.groups.map(g => g.name)
+            expect(topLevelGroupNames).toContain(`${groupName} (Copy 1)`)
+        })
     })
 
-    suite('update()', () => {
+    suite('updateFields()', () => {
         it('persists folderId when other fields are updated', async () => {
             const groupStore = useGroupStore()
             const folderId = 123
             const group = fakeGroup({ folderId })
 
-            await groupStore.save(group)
+            await groupStore.create(group)
 
-            const result = await groupStore.update(group.id, {
+            const result = await groupStore.updateFields(group.id, {
                 name: 'NEW NAME',
             })
 
@@ -288,9 +471,9 @@ describe('group store', () => {
             const groupStore = useGroupStore()
             const group = fakeGroup()
 
-            await groupStore.save(group)
+            await groupStore.create(group)
 
-            const result = await groupStore.update(group.id, {
+            const result = await groupStore.updateFields(group.id, {
                 name: 'NAME',
                 bindUrl: 'BINDURL',
             })
@@ -307,7 +490,7 @@ describe('group store', () => {
 
         it('returns false when group not found', async () => {
             const groupStore = useGroupStore()
-            const result = await groupStore.update(0, { name: 'NAME' })
+            const result = await groupStore.updateFields(0, { name: 'NAME' })
             expect(result).toBeFalsy()
         })
 
@@ -316,8 +499,8 @@ describe('group store', () => {
             const folderId = 123
             const group = fakeGroup({ folderId })
 
-            await groupStore.save(group)
-            await groupStore.update(group.id, {
+            await groupStore.create(group)
+            await groupStore.updateFields(group.id, {
                 folderId: config.GROUP_MISSING_FOLDER,
             })
 
@@ -333,7 +516,7 @@ describe('group store', () => {
             const groupStore = useGroupStore()
             const group = fakeGroup()
 
-            await groupStore.save(group)
+            await groupStore.create(group)
 
             await groupStore.deleteGroup(group.id)
             const result = groupStore.get(group.id)
@@ -346,7 +529,7 @@ describe('group store', () => {
             const groupStore = useGroupStore()
             const group = fakeGroup()
 
-            await groupStore.save(group)
+            await groupStore.create(group)
             await groupStore.deleteGroup(0)
 
             expect(groupStore.groups).toHaveLength(1)
@@ -358,7 +541,7 @@ describe('group store', () => {
             const key = KEY_PREFIX + group.id.toString()
 
             passwordStorage.save(group.id, 'amy-pass')
-            await groupStore.save(group)
+            await groupStore.create(group)
 
             expect(localStorage.getItem(key)).not.toBeNull()
 
@@ -375,7 +558,7 @@ describe('group store', () => {
             const group1 = fakeGroup()
             const group2 = fakeGroup()
 
-            await groupStore.saveMany([group1, group2], false)
+            await groupStore.createMany([group1, group2])
 
             expect(groupStore.groups).toHaveLength(2)
 
@@ -404,7 +587,7 @@ describe('group store', () => {
                 links: [link1, link2],
             })
 
-            await groupStore.save(group)
+            await groupStore.create(group)
             const deleted = await groupStore.deleteLinkFrom(group.id, link2.id)
 
             expect(deleted).toBeTruthy()
@@ -423,7 +606,7 @@ describe('group store', () => {
                 links: [link, link, link],
             })
 
-            await groupStore.save(group)
+            await groupStore.create(group)
             const deleted = await groupStore.deleteLinkFrom(group.id, link.id)
 
             expect(deleted).toBeTruthy()
@@ -444,7 +627,7 @@ describe('group store', () => {
                 links: [link1, link2],
             })
 
-            await groupStore.save(group)
+            await groupStore.create(group)
             const deleted = await groupStore.deleteLinkFrom(0, link2.id)
 
             expect(deleted).toBeFalsy()
@@ -465,7 +648,7 @@ describe('group store', () => {
                 links: [link1, link2],
             })
 
-            await groupStore.save(group)
+            await groupStore.create(group)
             const deleted = await groupStore.deleteLinkFrom(group.id, 0)
 
             expect(deleted).toBeFalsy()
@@ -485,7 +668,7 @@ describe('group store', () => {
                 links: [fakeLink()],
             })
 
-            await groupStore.save(group)
+            await groupStore.create(group)
 
             expect(group.links).toHaveLength(1)
 
@@ -513,7 +696,7 @@ describe('group store', () => {
                 links: [fakeLink()],
             })
 
-            await groupStore.save(group)
+            await groupStore.create(group)
 
             expect(group.links).toHaveLength(1)
 
@@ -540,7 +723,7 @@ describe('group store', () => {
             const groupStore = useGroupStore()
             const group = fakeGroup()
 
-            await groupStore.save(group)
+            await groupStore.create(group)
 
             expect(groupStore.exist(group.id)).toBeTruthy()
         })
@@ -556,7 +739,7 @@ describe('group store', () => {
             const link = fakeLink()
             const group = fakeGroup({ links: [link] })
 
-            await groupStore.save(group)
+            await groupStore.create(group)
 
             const result = await groupStore.updateLink(group.id, link.id, {
                 title: 'Anna',
@@ -592,7 +775,7 @@ describe('group store', () => {
             const link = fakeLink({ id: 1 })
             const group = fakeGroup({ links: [link] })
 
-            await groupStore.save(group)
+            await groupStore.create(group)
 
             const result = await groupStore.updateLink(group.id, 2, {
                 isPinned: true,

@@ -1,37 +1,38 @@
 // @vitest-environment happy-dom
 
-import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
-import { createPinia, setActivePinia } from 'pinia'
 import type { Pinia } from 'pinia'
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
-import pako from 'pako'
+import {
+    useFreshPinia,
+    waitUntil,
+    storedGroup,
+    storedInitialGroup,
+} from '@common/modules/testUtils'
+import { generateExportSchema } from '@common/modules/importExport'
 import { toBase64 } from '@common/modules/base64'
 import { encryptExport } from '@common/modules/webCrypto'
 import { fakeGroup, fakeLink } from '@common/modules/fake'
 import { useCryptoStore } from '@/stores/crypto'
+import { useFolderStore } from '@/stores/folder'
 import { useGroupStore } from '@/stores/group'
 import { useModalStore } from '@/stores/modal'
 import ImportSection from '@settings/components/Views/DataControlView/ImportSection.vue'
 import FileInput from '@common/components/Form/FileInput.vue'
+import pako from 'pako'
 
-const EXPORT_PASS = 'export-password-123'
-const ORIGINAL_PASS = 'original-password-123'
+const FILE_PASS = 'export-password-123'
+const GROUP_PASS = 'original-password-123'
 
 type TestFile = File & { __content?: string }
-type FileLoadEvent = { target: { result: string } }
-type LoadHandler = (event: FileLoadEvent) => void
-type ErrorHandler = (error: unknown) => void
 
-// FileReader can't read real files in happy-dom, so feed it attached content
+// happy-dom cannot read real files, so feed the attached content instead
 function mockFileReader(): void {
     class MockFileReader {
-        result: string | null = null
-        onload: LoadHandler | null = null
-        onerror: ErrorHandler | null = null
+        onload: ((event: { target: { result: string } }) => void) | null = null
 
         readAsText(file: TestFile): void {
             const content = file.__content ?? ''
-            this.result = content
 
             setTimeout(() => {
                 this.onload?.({ target: { result: content } })
@@ -52,29 +53,34 @@ function makeFile(content: string): TestFile {
     return file
 }
 
-// Mirrors ExportSection: stringify -> gzip -> base64 -> password-protect
-async function buildExportFile(payload: unknown): Promise<string> {
-    const json = JSON.stringify(payload)
-    const compressed = toBase64(pako.gzip(json))
-    return await encryptExport(compressed, EXPORT_PASS)
+function buildPlainFile(payload: unknown): string {
+    return toBase64(pako.gzip(JSON.stringify(payload)))
 }
 
-// Auto-unlocks the password prompt with the export password,
-// auto-confirms the duplicate-name prompt
-function mockPasswordModal(modalStore: ReturnType<typeof useModalStore>): void {
-    const fakeShow = async (key: string, data: any) => {
-        if (key !== 'password') {
-            return { isConfirmed: true }
+async function buildPasswordProtectedFile(payload: unknown): Promise<string> {
+    return await encryptExport(
+        toBase64(pako.gzip(JSON.stringify(payload))),
+        FILE_PASS,
+    )
+}
+
+// Answers the password dialog with the file password and the duplicate
+// dialog with `confirmDuplicates`. Only use in tests where a dialog fires.
+function mockModals(
+    modalStore: ReturnType<typeof useModalStore>,
+    confirmDuplicates = true,
+): void {
+    vi.spyOn(modalStore, 'show').mockImplementation((async (
+        key: string,
+        data: any,
+    ) => {
+        if (key === 'password') {
+            await data.decrypting(FILE_PASS)
+            return true
         }
 
-        await data.decrypting(EXPORT_PASS)
-
-        return true
-    }
-
-    vi.spyOn(modalStore, 'show').mockImplementation(
-        fakeShow as typeof modalStore.show,
-    )
+        return { isConfirmed: confirmDuplicates }
+    }) as typeof modalStore.show)
 }
 
 function mountImportSection(pinia: Pinia): ReturnType<typeof mount> {
@@ -82,31 +88,21 @@ function mountImportSection(pinia: Pinia): ReturnType<typeof mount> {
         global: {
             plugins: [pinia],
             stubs: {
-                Progress: true,
-                Section: { template: '<section><slot /></section>' },
+                Progress: true, // Ignore Progress component
+                Section: { template: '<div><slot /></div>' },
             },
         },
     })
 }
 
-async function importFileContent(
-    wrapper: ReturnType<typeof mount>,
-    content: string,
-): Promise<void> {
+function chooseFile(wrapper: ReturnType<typeof mount>, content: string): void {
     const fileInput = wrapper.findComponent(FileInput)
     expect(fileInput.exists()).toBe(true)
 
     fileInput.vm.$emit('chosen', makeFile(content), document.createElement('input'))
-
-    await vi.waitFor(
-        () => {
-            expect(useGroupStore().groups.length).toBeGreaterThan(0)
-        },
-        { timeout: 5000, interval: 25 },
-    )
 }
 
-describe('ImportSection double-encryption regression', () => {
+describe('ImportSection', () => {
     beforeEach(() => {
         localStorage.clear()
         mockFileReader()
@@ -117,119 +113,369 @@ describe('ImportSection double-encryption regression', () => {
         vi.restoreAllMocks()
     })
 
-    it('documents data loss when an already-encrypted group is encrypted again', async () => {
-        setActivePinia(createPinia())
-        const cryptoStore = useCryptoStore()
-
-        const plainUrl = 'https://original.example/article'
-        const group = fakeGroup({
-            isPrivate: true,
-            isEncrypted: false,
-            links: [fakeLink({ url: plainUrl, title: 'Original' })],
-        })
-
-        const onceEncrypted = await cryptoStore.encryptGroup(group, ORIGINAL_PASS)
-        const originalSalt = onceEncrypted.links[0].salt
-
-        // This is exactly what ImportSection.vue lines 98-99 do today:
-        // encrypt without checking `isEncrypted` first.
-        const twiceEncrypted = await cryptoStore.encryptGroup(
-            onceEncrypted,
-            EXPORT_PASS,
-        )
-
-        // Salt + IV are overwritten by the second encryption
-        expect(twiceEncrypted.links[0].salt).not.toEqual(originalSalt)
-
-        // Unlocking with the export password gives back ciphertext, not the URL
-        const unlockedWithExportPass = await cryptoStore.decryptGroup(
-            twiceEncrypted,
-            EXPORT_PASS,
-        )
-
-        expect(unlockedWithExportPass.links[0].url).not.toEqual(plainUrl)
-        expect(unlockedWithExportPass.links[0].url).toEqual(
-            onceEncrypted.links[0].url,
-        )
-
-        // The original password fails on both the once- and twice-encrypted versions
-        await expect(
-            cryptoStore.decryptGroup(twiceEncrypted, ORIGINAL_PASS),
-        ).rejects.toThrowError()
-        await expect(
-            cryptoStore.decryptGroup(unlockedWithExportPass, ORIGINAL_PASS),
-        ).rejects.toThrowError()
-    })
-
-    it('does not encrypt an already-locked group on import', async () => {
-        const pinia = createPinia()
-        setActivePinia(pinia)
-
-        const cryptoStore = useCryptoStore()
+    it('keeps locked group locked', async () => {
+        const pinia = useFreshPinia()
         const modalStore = useModalStore()
+        const groupStore = useGroupStore()
 
         const plainUrl = 'https://locked.example/secret'
-        const locked = await cryptoStore.encryptGroup(
+        const lockedGroup = await useCryptoStore().encryptGroup(
             fakeGroup({
-                isPrivate: true,
                 links: [fakeLink({ url: plainUrl, title: 'Locked' })],
             }),
-            ORIGINAL_PASS,
+            GROUP_PASS,
         )
-        const originalSalt = locked.links[0].salt
-        const originalUrlCipher = locked.links[0].url
-
-        const fileContent = await buildExportFile([locked])
-        const encryptSpy = vi.spyOn(cryptoStore, 'encryptGroup')
-
-        mockPasswordModal(modalStore)
 
         const wrapper = mountImportSection(pinia)
-        await importFileContent(wrapper, fileContent)
 
-        // Correct behavior: already-encrypted group is left untouched
-        expect(encryptSpy).not.toHaveBeenCalled()
+        mockModals(modalStore)
+        chooseFile(wrapper, await buildPasswordProtectedFile([lockedGroup]))
 
-        const saved = useGroupStore().groups.find(g => g.name === locked.name)
+        // Wait until groups will appear in the store after import
+        await waitUntil(() => {
+            expect(groupStore.groups.length).toBeGreaterThan(0)
+        })
 
-        expect(saved).toBeDefined()
-        expect(saved!.isEncrypted).toBe(true)
-        expect(saved!.links[0].salt).toEqual(originalSalt)
-        expect(saved!.links[0].url).toEqual(originalUrlCipher)
+        const savedGroup = storedGroup(lockedGroup.name)
 
-        const decrypted = await useCryptoStore().decryptGroup(saved!, ORIGINAL_PASS)
-        expect(decrypted.links[0].url).toEqual(plainUrl)
+        expect(savedGroup.isEncrypted).toBe(true)
+
+        // Verify that password for the group is still correct
+        const decryptedGroup = await useCryptoStore().decryptGroup(
+            savedGroup,
+            GROUP_PASS,
+        )
+
+        expect(decryptedGroup.links[0].url).toEqual(plainUrl)
 
         wrapper.unmount()
     })
 
-    it('leaves an open group open on import', async () => {
-        const pinia = createPinia()
-        setActivePinia(pinia)
-
+    it('keeps open group open', async () => {
+        const pinia = useFreshPinia()
         const modalStore = useModalStore()
-
-        const openGroup = fakeGroup({
-            isPrivate: false,
-            isEncrypted: false,
-            links: [fakeLink({ url: 'https://open.example/page', title: 'Open' })],
-        })
-
-        const fileContent = await buildExportFile([openGroup])
-
-        mockPasswordModal(modalStore)
+        const groupStore = useGroupStore()
 
         const wrapper = mountImportSection(pinia)
-        await importFileContent(wrapper, fileContent)
 
-        const saved = useGroupStore().groups.find(g => g.name === openGroup.name)
+        mockModals(modalStore)
 
-        expect(saved).toBeDefined()
+        const exportGroups = [fakeGroup({ name: 'open-group' })]
+        const encryptedExport = await buildPasswordProtectedFile(exportGroups)
 
-        // The file password only protected the file in transit,
-        // it must not turn an open group into a locked one
-        expect(saved!.isEncrypted).toBe(false)
-        expect(saved!.isPrivate).toBe(false)
+        chooseFile(wrapper, encryptedExport)
+
+        await waitUntil(() => {
+            expect(groupStore.groups.length).toBeGreaterThan(0)
+        })
+
+        const savedGroup = storedGroup('open-group')
+
+        expect(savedGroup.isEncrypted).toBe(false)
+        expect(savedGroup.isPrivate).toBe(false)
+
+        wrapper.unmount()
+    })
+
+    it('imports legacy single group', async () => {
+        const pinia = useFreshPinia()
+        const groupStore = useGroupStore()
+
+        const linkUrl = 'https://single.example/page'
+        const groupLinks = [fakeLink({ url: linkUrl })]
+        const group = fakeGroup({ links: groupLinks })
+
+        const wrapper = mountImportSection(pinia)
+        chooseFile(wrapper, buildPlainFile(group))
+
+        await waitUntil(() => {
+            expect(groupStore.groups.length).toBeGreaterThan(0)
+        })
+
+        expect(storedGroup(group.name).links[0].url).toEqual(linkUrl)
+
+        wrapper.unmount()
+    })
+
+    it('imports legacy groups array', async () => {
+        const pinia = useFreshPinia()
+        const groupStore = useGroupStore()
+
+        const firstUrl = 'https://first.example/page'
+        const secondUrl = 'https://second.example/page'
+
+        const firstGroup = fakeGroup({
+            name: 'first-group',
+            links: [fakeLink({ url: firstUrl })],
+        })
+
+        const secondGroup = fakeGroup({
+            name: 'second-group',
+            links: [fakeLink({ url: secondUrl })],
+        })
+
+        const wrapper = mountImportSection(pinia)
+
+        chooseFile(wrapper, buildPlainFile([firstGroup, secondGroup]))
+
+        await waitUntil(() => {
+            expect(groupStore.groups.length).toBeGreaterThan(1)
+        })
+
+        expect(storedGroup('first-group').links[0].url).toEqual(firstUrl)
+        expect(storedGroup('second-group').links[0].url).toEqual(secondUrl)
+
+        wrapper.unmount()
+    })
+
+    it('imports schema with folders', async () => {
+        const pinia = useFreshPinia()
+        const folderStore = useFolderStore()
+
+        const folderId = 111
+        const folderName = 'import-folder-xyz'
+        const topGroupUrl = 'https://top.example/page'
+        const inFolderGroupUrl = 'https://folder.example/page'
+
+        const wrapper = mountImportSection(pinia)
+
+        const topGroup = fakeGroup({
+            name: 'top-group',
+            links: [fakeLink({ url: topGroupUrl })],
+        })
+
+        const inFolderGroup = fakeGroup({
+            name: 'in-folder-group',
+            folderId,
+            links: [fakeLink({ url: inFolderGroupUrl })],
+        })
+
+        chooseFile(
+            wrapper,
+            buildPlainFile(
+                generateExportSchema(
+                    [topGroup, inFolderGroup],
+                    [{ id: folderId, name: folderName, updatedAt: Date.now() }],
+                ),
+            ),
+        )
+
+        // In-folder group is last in the payload, so its presence
+        // means the whole import finished
+        await waitUntil(() => {
+            storedInitialGroup('in-folder-group')
+        })
+
+        await folderStore.load()
+
+        const restoredFolder = folderStore.get(folderId)
+        expect(restoredFolder).toBeDefined()
+        expect(restoredFolder!.name).toEqual(folderName)
+
+        expect(storedGroup('top-group').links[0].url).toEqual(topGroupUrl)
+
+        const savedInFolder = storedInitialGroup('in-folder-group')
+        expect(savedInFolder.folderId).toEqual(folderId)
+        expect(savedInFolder.links[0].url).toEqual(inFolderGroupUrl)
+
+        wrapper.unmount()
+    })
+
+    it('keeps group linked on folder name conflict', async () => {
+        const pinia = useFreshPinia()
+        const folderStore = useFolderStore()
+
+        const folderName = 'conflict-folder-xyz'
+        const inFolderUrl = 'https://folder.example/page'
+
+        await folderStore.create(folderName)
+
+        const existingFolder = folderStore.get(folderName)
+        expect(existingFolder).not.toBeUndefined()
+
+        const incomingFolder = { ...existingFolder!, id: existingFolder!.id + 1 }
+
+        const wrapper = mountImportSection(pinia)
+
+        const inFolderGroup = fakeGroup({
+            name: 'in-folder-group',
+            folderId: incomingFolder.id,
+            links: [fakeLink({ url: inFolderUrl })],
+        })
+
+        chooseFile(
+            wrapper,
+            buildPlainFile(generateExportSchema([inFolderGroup], [incomingFolder])),
+        )
+
+        // The group itself arrives last, so waiting for it
+        // means the whole import finished
+        await waitUntil(() => storedInitialGroup('in-folder-group'))
+
+        await folderStore.load()
+
+        const savedInFolder = storedInitialGroup('in-folder-group')
+        const linkedFolder = folderStore.get(savedInFolder.folderId!)
+
+        expect(linkedFolder).toBeDefined()
+        expect(savedInFolder.links[0].url).toEqual(inFolderUrl)
+
+        wrapper.unmount()
+    })
+
+    it('imports fresh groups while skipping declined duplicates', async () => {
+        const pinia = useFreshPinia()
+        const modalStore = useModalStore()
+
+        const originalUrl = 'https://original.example/page'
+        const incomingUrl = 'https://incoming.example/page'
+        const freshUrl = 'https://fresh.example/page'
+
+        const declinedGroup = fakeGroup({
+            name: 'declined',
+            links: [fakeLink({ url: originalUrl })],
+        })
+
+        const groupStore = useGroupStore()
+        await groupStore.create(declinedGroup)
+        const storedId = storedGroup(declinedGroup.name).id
+
+        const wrapper = mountImportSection(pinia)
+
+        mockModals(modalStore, false)
+
+        chooseFile(
+            wrapper,
+            buildPlainFile([
+                fakeGroup({
+                    id: storedId,
+                    name: declinedGroup.name,
+                    links: [fakeLink({ url: incomingUrl })],
+                }),
+                fakeGroup({
+                    name: 'fresh-group',
+                    links: [fakeLink({ url: freshUrl })],
+                }),
+            ]),
+        )
+
+        await waitUntil(() => storedGroup('fresh-group'))
+
+        expect(groupStore.groups).toHaveLength(2)
+        expect(storedGroup(declinedGroup.name).links[0].url).toEqual(originalUrl)
+        expect(storedGroup('fresh-group').links[0].url).toEqual(freshUrl)
+
+        const storedNames = groupStore.groups.map(g => g.name)
+        expect(storedNames).not.toContain(`${declinedGroup.name} (Copy 1)`)
+
+        wrapper.unmount()
+    })
+
+    it('prompts replace for groups inside folders', async () => {
+        const pinia = useFreshPinia()
+        const modalStore = useModalStore()
+        const folderStore = useFolderStore()
+        const groupStore = useGroupStore()
+
+        const folderName = 'prompt-folder-xyz'
+        const originalUrl = 'https://original.example/page'
+        const incomingUrl = 'https://incoming.example/page'
+
+        await folderStore.create(folderName)
+
+        const folder = folderStore.get(folderName)
+        expect(folder).not.toBeUndefined()
+
+        await useGroupStore().create(
+            fakeGroup({
+                name: 'in-folder-group',
+                links: [fakeLink({ url: originalUrl })],
+                folderId: folder!.id,
+            }),
+        )
+
+        const storedId = storedInitialGroup('in-folder-group').id
+        const wrapper = mountImportSection(pinia)
+
+        mockModals(modalStore, true)
+
+        chooseFile(
+            wrapper,
+            buildPlainFile(
+                generateExportSchema(
+                    [
+                        {
+                            ...fakeGroup({
+                                name: 'in-folder-group',
+                                links: [fakeLink({ url: incomingUrl })],
+                                folderId: folder!.id,
+                            }),
+                            id: storedId,
+                        },
+                    ],
+                    [folder!],
+                ),
+            ),
+        )
+
+        await waitUntil(() => {
+            const group = useGroupStore().initialGroups.find(g => g.id === storedId)
+            expect(group?.links[0].url).toEqual(incomingUrl)
+        })
+
+        expect(modalStore.show).toHaveBeenCalledWith('confirm', expect.anything())
+        expect(groupStore.initialGroups).toHaveLength(1)
+
+        const names = groupStore.initialGroups.map(g => g.name)
+        expect(names).not.toContain('in-folder-group (Copy 1)')
+
+        wrapper.unmount()
+    })
+
+    it('overwrites group when duplicates are accepted', async () => {
+        const pinia = useFreshPinia()
+        const modalStore = useModalStore()
+
+        const originalUrl = 'https://original'
+
+        const originalGroup = fakeGroup({
+            name: 'original-group',
+            links: [fakeLink({ url: originalUrl })],
+        })
+
+        await useGroupStore().create(originalGroup)
+
+        const wrapper = mountImportSection(pinia)
+
+        mockModals(modalStore, true)
+
+        const incomingName = 'incoming-group-name'
+        const incomingUrl = 'https://incoming.com'
+
+        chooseFile(
+            wrapper,
+            buildPlainFile([
+                fakeGroup({
+                    id: originalGroup.id,
+                    name: incomingName,
+                    links: [fakeLink({ url: incomingUrl })],
+                }),
+            ]),
+        )
+
+        // Wait until group with incoming name appears
+        await waitUntil(() => {
+            const names = useGroupStore().groups.map(g => g.name)
+            expect(names).toContain(incomingName)
+        })
+
+        expect(useGroupStore().groups).toHaveLength(1)
+
+        const stored = storedGroup(incomingName)
+
+        expect(stored.id).toEqual(originalGroup.id)
+        expect(stored.name).toEqual(incomingName)
+        expect(stored.links[0].url).toEqual(incomingUrl)
 
         wrapper.unmount()
     })

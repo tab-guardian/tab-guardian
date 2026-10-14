@@ -6,6 +6,20 @@ export type LinkBuffer = {
     link: Link
 }
 
+export type ExportSchema = {
+    meta: {
+        schema: number
+        extensionVersion: string
+    }
+    groups: readonly Group[]
+    folders: readonly Folder[]
+}
+
+// It used to be that export file could be a group or an array of groups.
+// So we should always expect that imported file as LegacyExportFile and
+// check for meta.schema field to prove that it's a new format.
+export type LegacyExportSchema = Group | Group[] | ExportSchema
+
 export type LocaleMessageItem = {
     [key: string]: { message: string }
 }
@@ -58,11 +72,16 @@ export type Group = {
     openedTimes?: number
     createdAt?: number
     hide?: boolean
-    /** @deprecated bindURL is deprecated Delete it eventually. Use bindUrl */
-    bindURL?: string
     bindUrl?: string
     icon?: string
     algo?: EncryptionAlgo
+
+    /**
+     * @deprecated bindURL is deprecated Delete it eventually. Use bindUrl.
+     * Keep in mind that some projects might still use the old keyword and it
+     * could break their code.
+     */
+    bindURL?: string
 }
 
 export type Settings = {
