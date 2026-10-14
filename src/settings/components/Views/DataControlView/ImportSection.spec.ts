@@ -116,6 +116,7 @@ describe('ImportSection', () => {
     it('keeps locked group locked', async () => {
         const pinia = useFreshPinia()
         const modalStore = useModalStore()
+        const groupStore = useGroupStore()
 
         const plainUrl = 'https://locked.example/secret'
         const lockedGroup = await useCryptoStore().encryptGroup(
@@ -132,7 +133,7 @@ describe('ImportSection', () => {
 
         // Wait until groups will appear in the store after import
         await waitUntil(() => {
-            expect(useGroupStore().groups.length).toBeGreaterThan(0)
+            expect(groupStore.groups.length).toBeGreaterThan(0)
         })
 
         const savedGroup = storedGroup(lockedGroup.name)
@@ -153,6 +154,7 @@ describe('ImportSection', () => {
     it('keeps open group open', async () => {
         const pinia = useFreshPinia()
         const modalStore = useModalStore()
+        const groupStore = useGroupStore()
 
         const wrapper = mountImportSection(pinia)
 
@@ -164,8 +166,7 @@ describe('ImportSection', () => {
         chooseFile(wrapper, encryptedExport)
 
         await waitUntil(() => {
-            const groupsCount = useGroupStore().groups.length
-            expect(groupsCount).toBeGreaterThan(0)
+            expect(groupStore.groups.length).toBeGreaterThan(0)
         })
 
         const savedGroup = storedGroup('open-group')
@@ -178,6 +179,7 @@ describe('ImportSection', () => {
 
     it('imports legacy single group', async () => {
         const pinia = useFreshPinia()
+        const groupStore = useGroupStore()
 
         const linkUrl = 'https://single.example/page'
         const groupLinks = [fakeLink({ url: linkUrl })]
@@ -187,8 +189,7 @@ describe('ImportSection', () => {
         chooseFile(wrapper, buildPlainFile(group))
 
         await waitUntil(() => {
-            const groupsCount = useGroupStore().groups.length
-            expect(groupsCount).toBeGreaterThan(0)
+            expect(groupStore.groups.length).toBeGreaterThan(0)
         })
 
         expect(storedGroup(group.name).links[0].url).toEqual(linkUrl)
@@ -198,6 +199,7 @@ describe('ImportSection', () => {
 
     it('imports legacy groups array', async () => {
         const pinia = useFreshPinia()
+        const groupStore = useGroupStore()
 
         const firstUrl = 'https://first.example/page'
         const secondUrl = 'https://second.example/page'
@@ -217,8 +219,7 @@ describe('ImportSection', () => {
         chooseFile(wrapper, buildPlainFile([firstGroup, secondGroup]))
 
         await waitUntil(() => {
-            const groupsCount = useGroupStore().groups.length
-            expect(groupsCount).toBeGreaterThan(1)
+            expect(groupStore.groups.length).toBeGreaterThan(1)
         })
 
         expect(storedGroup('first-group').links[0].url).toEqual(firstUrl)
@@ -259,12 +260,10 @@ describe('ImportSection', () => {
             ),
         )
 
+        // In-folder group is last in the payload, so its presence
+        // means the whole import finished
         await waitUntil(() => {
-            const groupStore = useGroupStore()
-            expect(groupStore.groups.map(g => g.name)).toContain('top-group')
-            expect(groupStore.initialGroups.map(g => g.name)).toContain(
-                'in-folder-group',
-            )
+            storedInitialGroup('in-folder-group')
         })
 
         await folderStore.load()
@@ -309,11 +308,9 @@ describe('ImportSection', () => {
             buildPlainFile(generateExportSchema([inFolderGroup], [incomingFolder])),
         )
 
-        // Wait untils groups will appear in the store
-        await waitUntil(() => {
-            const groupsCount = useGroupStore().initialGroups.length
-            expect(groupsCount).toBeGreaterThan(0)
-        })
+        // The group itself arrives last, so waiting for it
+        // means the whole import finished
+        await waitUntil(() => storedInitialGroup('in-folder-group'))
 
         await folderStore.load()
 
@@ -362,10 +359,7 @@ describe('ImportSection', () => {
             ]),
         )
 
-        await waitUntil(() => {
-            const names = useGroupStore().groups.map(g => g.name)
-            expect(names).toContain('fresh-group')
-        })
+        await waitUntil(() => storedGroup('fresh-group'))
 
         expect(groupStore.groups).toHaveLength(2)
         expect(storedGroup(declinedGroup.name).links[0].url).toEqual(originalUrl)
@@ -373,6 +367,67 @@ describe('ImportSection', () => {
 
         const storedNames = groupStore.groups.map(g => g.name)
         expect(storedNames).not.toContain(`${declinedGroup.name} (Copy 1)`)
+
+        wrapper.unmount()
+    })
+
+    it('prompts replace for groups inside folders', async () => {
+        const pinia = useFreshPinia()
+        const modalStore = useModalStore()
+        const folderStore = useFolderStore()
+        const groupStore = useGroupStore()
+
+        const folderName = 'prompt-folder-xyz'
+        const originalUrl = 'https://original.example/page'
+        const incomingUrl = 'https://incoming.example/page'
+
+        await folderStore.create(folderName)
+
+        const folder = folderStore.get(folderName)
+        expect(folder).not.toBeUndefined()
+
+        await useGroupStore().create(
+            fakeGroup({
+                name: 'in-folder-group',
+                links: [fakeLink({ url: originalUrl })],
+                folderId: folder!.id,
+            }),
+        )
+
+        const storedId = storedInitialGroup('in-folder-group').id
+        const wrapper = mountImportSection(pinia)
+
+        mockModals(modalStore, true)
+
+        chooseFile(
+            wrapper,
+            buildPlainFile(
+                generateExportSchema(
+                    [
+                        {
+                            ...fakeGroup({
+                                name: 'in-folder-group',
+                                links: [fakeLink({ url: incomingUrl })],
+                                folderId: folder!.id,
+                            }),
+                            id: storedId,
+                        },
+                    ],
+                    [folder!],
+                ),
+            ),
+        )
+
+        await waitUntil(() => {
+            const group = useGroupStore().initialGroups.find(g => g.id === storedId)
+            expect(group?.links[0].url).toEqual(incomingUrl)
+        })
+
+        expect(modalStore.show).toHaveBeenCalledWith('confirm', expect.anything())
+        expect(groupStore.initialGroups).toHaveLength(1)
+
+        const names = groupStore.initialGroups.map(g => g.name)
+        expect(names).not.toContain('in-folder-group (Copy 1)')
 
         wrapper.unmount()
     })
