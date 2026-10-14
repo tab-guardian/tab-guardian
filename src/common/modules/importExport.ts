@@ -37,7 +37,7 @@ export function normalizeExportSchema(json: LegacyExportSchema): ExportSchema {
 
     // We use extension version 1.18.2 because this is the last version which
     // didn't have any normalized schema. It was just Group and Group[] for
-    // export files. Starting from v1.18.3 we now have proper export format
+    // export files. Starting from v1.19.0 we now have proper export format
     // with 'meta' field.
     return generateExportSchema(groups, [], '1.18.2')
 }
