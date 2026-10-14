@@ -322,7 +322,6 @@ export const useGroupStore = defineStore('group', () => {
         await notificationStore.recalculateNotification()
     }
 
-    // Private function
     async function shouldHideGroup(group: Group): Promise<boolean> {
         const isPrivate = await isIncognito()
 
@@ -351,7 +350,6 @@ export const useGroupStore = defineStore('group', () => {
         return false
     }
 
-    // Private function
     async function hideGroups(storageGroups: Group[]): Promise<Group[]> {
         const result: Group[] = []
 
@@ -374,7 +372,6 @@ export const useGroupStore = defineStore('group', () => {
         return result
     }
 
-    // Private function
     async function isIncognito(): Promise<boolean> {
         if (isIncognitoCache !== null) {
             return isIncognitoCache
@@ -390,7 +387,6 @@ export const useGroupStore = defineStore('group', () => {
         return false
     }
 
-    // Private function
     async function replace(group: Group): Promise<void> {
         const existing = get(group.id)
 
@@ -399,7 +395,6 @@ export const useGroupStore = defineStore('group', () => {
         }
     }
 
-    // Private function
     function groupNotFoundLog(id: number, operation: string): void {
         logger().info(`Group "${id}" not found for "${operation}" operation`)
     }
