@@ -4,7 +4,6 @@ import { defineStore } from 'pinia'
 import { folderStorage } from '@common/modules/storage/folder'
 import { useNotificationStore } from '@/stores/notification'
 import { forceUniqueName } from '@common/modules/group'
-import { groupStorage } from '@common/modules/storage/group'
 import { useGroupStore } from '@/stores/group'
 import { getDefaultName, logger } from '@common/modules'
 import { generateId } from '@common/modules/group'
@@ -32,7 +31,7 @@ export const useFolderStore = defineStore('folder', () => {
     }
 
     async function deleteFolder(id: number): Promise<void> {
-        const groups = await groupStorage.retrieveFolder(id)
+        const groups = await groupStore.folderGroups(id)
 
         // Delete all groups inside of a folder first
         for (const group of groups) {

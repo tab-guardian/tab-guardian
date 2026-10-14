@@ -65,6 +65,10 @@ export const useGroupStore = defineStore('group', () => {
         loading.value = false
     }
 
+    async function folderGroups(folderId: number): Promise<Group[]> {
+        return initialGroups.value.filter(g => g.folderId === folderId)
+    }
+
     type LockFuncReturnValue =
         | { message: string; failed: true; group: null }
         | { message: string; failed: false; group: Group }
@@ -421,6 +425,7 @@ export const useGroupStore = defineStore('group', () => {
         deleteAll,
         updateLink,
         deleteGroup,
+        folderGroups,
         deleteLinkFrom,
         insertLinksInto,
         isGroupHiddenInCurrentWindow,

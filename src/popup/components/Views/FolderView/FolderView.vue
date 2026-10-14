@@ -6,7 +6,6 @@ import { useRoute } from 'vue-router'
 import { useModalStore } from '@/stores/modal'
 import { useGroupStore } from '@/stores/group'
 import { useFolderStore } from '@/stores/folder'
-import { groupStorage } from '@common/modules/storage/group'
 import View from '@/components/Views/View.vue'
 import EllipsisVerticalIcon from '@common/components/Icons/EllipsisVerticalIcon.vue'
 import Control from '@/components/Control.vue'
@@ -50,7 +49,7 @@ async function fetchGroups(): Promise<void> {
         return
     }
 
-    groups.value = await groupStorage.retrieveFolder(Number(id))
+    groups.value = await groupStore.folderGroups(Number(id))
 }
 </script>
 
