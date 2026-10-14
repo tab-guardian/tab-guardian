@@ -23,6 +23,7 @@ Here is what makes Tab Guardian a great tool for managing your tabs:
 - [x] Multi-language support 🇬🇧 🇷🇺 🇨🇳 based on your system language
 - [x] Works with all modern browsers: Chrome, Firefox, Edge, Brave, Zen, and more
 - [x] Convert open groups to private
+- [x] Save groups into folders to organize your groups
 
 ## Links
 

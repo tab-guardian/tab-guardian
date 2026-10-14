@@ -27,6 +27,7 @@ const emit = defineEmits<{ (e: 'refresh'): void }>()
 const isDragging = ref<boolean>(false)
 const draggableGroup = ref<number | null>(null)
 const groups = computed(() => props.groups)
+const visibleGroups = computed(() => props.groups.filter(group => !group.hide))
 
 function moveToFolder(e: any): void {
     isDragging.value = false
@@ -86,7 +87,7 @@ async function moveFromFolder(e: any): Promise<void> {
 <template>
     <Spinner v-if="groupStore.loading" />
 
-    <Message v-else-if="groups.length === 0 && folders.length === 0">
+    <Message v-else-if="visibleGroups.length === 0 && folders.length === 0">
         {{ trans('no_groups_yet') }}
     </Message>
 
@@ -111,8 +112,12 @@ async function moveFromFolder(e: any): Promise<void> {
                 :folder
             />
 
-            <div v-for="group in groups" :key="group.id" :data-group-id="group.id">
-                <GroupItem v-if="!group.hide" :group />
+            <div
+                v-for="group in visibleGroups"
+                :key="group.id"
+                :data-group-id="group.id"
+            >
+                <GroupItem :group />
             </div>
         </VueDraggableNext>
     </div>

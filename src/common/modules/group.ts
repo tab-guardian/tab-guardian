@@ -1,4 +1,4 @@
-import type { Link } from '@common/types'
+import type { Group, GroupVisibility, Link } from '@common/types'
 import { toRaw } from 'vue'
 import { isForbiddenUrl } from '@common/modules/url'
 import { showToast } from '@common/modules/toast'
@@ -29,6 +29,32 @@ export function forceUniqueName(oldName: string, takenNames: Set<string>): strin
     }
 
     return `${oldName} (Copy ${duplicateIndex})`
+}
+
+export function isGroupHidden(group: Group, visibility: GroupVisibility): boolean {
+    if (group.bindUrl) {
+        if (visibility.currHashedUrl !== group.bindUrl) {
+            return true
+        }
+    }
+
+    if (
+        !group.isPrivate &&
+        visibility.isIncognito &&
+        visibility.settings.showOnlyPrivateGroupsInIncognito
+    ) {
+        return true
+    }
+
+    if (
+        group.isPrivate &&
+        !visibility.isIncognito &&
+        visibility.settings.showPrivateGroupsOnlyInIncognito
+    ) {
+        return true
+    }
+
+    return false
 }
 
 export function isComponentIcon(str: string): boolean {

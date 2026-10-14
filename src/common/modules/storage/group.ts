@@ -19,11 +19,6 @@ export const groupStorage = {
         }
     },
 
-    async retrieveFolder(folderId: number): Promise<Group[]> {
-        const groups = await this.getAll()
-        return groups.filter(group => group.folderId === folderId)
-    },
-
     async getAll(): Promise<Group[]> {
         const groupIds = await groupIdsStorage.getAll()
         const groups = await runtime.storage.get<Group>(

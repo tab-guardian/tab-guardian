@@ -92,6 +92,12 @@ export type Settings = {
     rememberPasswordAfterUnlock: boolean
 }
 
+export type GroupVisibility = {
+    isIncognito: boolean
+    currHashedUrl?: string | null
+    settings: Settings
+}
+
 export type Attempts = {
     amount: number
     lockEndTime: number
