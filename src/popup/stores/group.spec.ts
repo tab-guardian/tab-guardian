@@ -79,7 +79,7 @@ describe('group store', () => {
 
         it('does not rename group when name is unchanged', async () => {
             const groupStore = useGroupStore()
-            const group = fakeGroup({ name: 'Work tabs' })
+            const group = fakeGroup({ name: 'work' })
 
             await groupStore.create(group)
             await groupStore.update(group)
@@ -87,24 +87,71 @@ describe('group store', () => {
             const groupNames = groupStore.groups.map(g => g.name)
 
             expect(groupNames).toHaveLength(1)
-            expect(groupNames).toContain('Work tabs')
+            expect(groupNames).toContain('work')
         })
 
         it('renames group when updated name is taken', async () => {
             const groupStore = useGroupStore()
-            const group = fakeGroup({ name: 'Work tabs' })
-            const otherGroup = fakeGroup({ name: 'Other tabs' })
+            const group = fakeGroup({ name: 'work' })
+            const otherGroup = fakeGroup({ name: 'other' })
 
             await groupStore.create(group)
             await groupStore.create(otherGroup)
 
-            otherGroup.name = 'Work tabs'
+            otherGroup.name = 'work'
             await groupStore.update(otherGroup)
 
             const groupNames = groupStore.groups.map(g => g.name)
 
-            expect(groupNames).toContain('Work tabs')
-            expect(groupNames).toContain('Work tabs (Copy 1)')
+            expect(groupNames).toContain('work')
+            expect(groupNames).toContain('work (Copy 1)')
+        })
+
+        it('keeps name stable across repeated unrelated updates', async () => {
+            const groupStore = useGroupStore()
+            const group = fakeGroup({ name: 'work' })
+
+            await groupStore.create(group)
+
+            group.links.push(fakeLink())
+            await groupStore.update(group)
+
+            group.links.push(fakeLink())
+            await groupStore.update(group)
+
+            group.links.push(fakeLink())
+            await groupStore.update(group)
+
+            expect(groupStore.groups).toHaveLength(1)
+            expect(groupStore.groups.map(g => g.name)).toEqual(['work'])
+        })
+
+        it('keeps name when only openedTimes changes', async () => {
+            const groupStore = useGroupStore()
+            const group = fakeGroup({ name: 'work' })
+
+            await groupStore.create(group)
+            await groupStore.updateFields(group.id, { openedTimes: 5 })
+
+            expect(groupStore.groups).toHaveLength(1)
+            expect(groupStore.groups.map(g => g.name)).toEqual(['work'])
+        })
+
+        it('keeps other groups untouched when one group updates', async () => {
+            const groupStore = useGroupStore()
+            const group = fakeGroup({ name: 'work' })
+            const otherGroup = fakeGroup({ name: 'other' })
+
+            await groupStore.create(group)
+            await groupStore.create(otherGroup)
+
+            otherGroup.links.push(fakeLink())
+            await groupStore.update(otherGroup)
+
+            const groupNames = groupStore.groups.map(g => g.name).sort()
+
+            expect(groupStore.groups).toHaveLength(2)
+            expect(groupNames).toEqual(['other', 'work'])
         })
     })
 
@@ -288,7 +335,7 @@ describe('group store', () => {
 
         it('saves duplicate name as first free "<name> (Copy n)" starting at 1', async () => {
             const groupStore = useGroupStore()
-            const groupName = 'Work tabs'
+            const groupName = 'work'
 
             await groupStore.createMany([
                 fakeGroup({ name: groupName }),
@@ -306,7 +353,7 @@ describe('group store', () => {
 
         it('numbers from the base name when a copy already exists', async () => {
             const groupStore = useGroupStore()
-            const groupName = 'Work tabs'
+            const groupName = 'work'
 
             await groupStore.createMany([
                 fakeGroup({ name: groupName }),
@@ -325,7 +372,7 @@ describe('group store', () => {
         it('suffixed top-level name taken by a folder group', async () => {
             const groupStore = useGroupStore()
             const folderStore = useFolderStore()
-            const groupName = 'Work tabs'
+            const groupName = 'work'
 
             await folderStore.create(groupName)
             const folderId = folderStore.folders[0]!.id
