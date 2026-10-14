@@ -7,7 +7,7 @@ import { useSettingsStore } from '@/stores/settings'
 import { useNotificationStore } from '@/stores/notification'
 import { useCryptoStore } from '@/stores/crypto'
 import { useProgressStore } from '@/stores/progress'
-import { forceUniqueName } from '@common/modules/group'
+import { forceUniqueName, isGroupHidden } from '@common/modules/group'
 import { getDecryptionError } from '@/errors'
 import { getHashedCurrentUrl } from '@common/modules/url'
 import { validatePassword } from '@common/modules/validation/group'
@@ -325,32 +325,20 @@ export const useGroupStore = defineStore('group', () => {
         await notificationStore.recalculateNotification()
     }
 
-    async function shouldHideGroup(group: Group): Promise<boolean> {
-        const isPrivate = await isIncognito()
+    async function isGroupHiddenInCurrentWindow(group: Group): Promise<boolean> {
+        const isIncognito = await isIncognitoWindow()
+
+        let currHashedUrl: string | null = null
 
         if (group.bindUrl) {
-            const currHashedUrl = await getHashedCurrentUrl()
-
-            if (currHashedUrl !== group.bindUrl) {
-                return true
-            }
+            currHashedUrl = await getHashedCurrentUrl()
         }
 
-        const showOnlyPrivateGroupsInIncognito =
-            settingsStore.settings.showOnlyPrivateGroupsInIncognito
-
-        if (!group.isPrivate && isPrivate && showOnlyPrivateGroupsInIncognito) {
-            return true
-        }
-
-        const showPrivateGroupsOnlyInIncognito =
-            settingsStore.settings.showPrivateGroupsOnlyInIncognito
-
-        if (group.isPrivate && !isPrivate && showPrivateGroupsOnlyInIncognito) {
-            return true
-        }
-
-        return false
+        return isGroupHidden(group, {
+            isIncognito,
+            currHashedUrl,
+            settings: settingsStore.settings,
+        })
     }
 
     async function hideGroups(storageGroups: Group[]): Promise<Group[]> {
@@ -361,9 +349,7 @@ export const useGroupStore = defineStore('group', () => {
                 continue
             }
 
-            const hide = await shouldHideGroup(group)
-
-            if (hide) {
+            if (await isGroupHiddenInCurrentWindow(group)) {
                 group.hide = true
             } else {
                 delete group.hide
@@ -375,7 +361,7 @@ export const useGroupStore = defineStore('group', () => {
         return result
     }
 
-    async function isIncognito(): Promise<boolean> {
+    async function isIncognitoWindow(): Promise<boolean> {
         if (isIncognitoCache !== null) {
             return isIncognitoCache
         }
@@ -437,5 +423,7 @@ export const useGroupStore = defineStore('group', () => {
         deleteGroup,
         deleteLinkFrom,
         insertLinksInto,
+        isGroupHiddenInCurrentWindow,
+        hideGroups,
     }
 })
