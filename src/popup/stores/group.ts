@@ -402,7 +402,10 @@ export const useGroupStore = defineStore('group', () => {
         logger().info(`Group "${id}" not found for "${operation}" operation`)
     }
 
-    async function persistCreateGroup(group: Group, loadGroups: boolean): Promise<void> {
+    async function persistCreateGroup(
+        group: Group,
+        loadGroups: boolean,
+    ): Promise<void> {
         const takenNames = new Set(initialGroups.value.map(g => g.name))
         group.name = forceUniqueName(group.name, takenNames)
 
