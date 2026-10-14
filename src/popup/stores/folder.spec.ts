@@ -13,19 +13,15 @@ describe('folder store', () => {
     })
 
     suite('create()', () => {
-        it('handles concurrent creates with same name', async () => {
+        it('ignores second create while first is still running', async () => {
             const folderStore = useFolderStore()
-            const folderName = 'Work'
 
-            await Promise.all([
-                folderStore.create(fakeFolder({ name: folderName })),
-                folderStore.create(fakeFolder({ name: folderName })),
-            ])
+            const first = folderStore.create(fakeFolder({ name: 'Work' }))
+            await folderStore.create(fakeFolder({ name: 'Work' }))
+            await first
 
-            const folderNames = folderStore.folders.map(f => f.name)
-
-            expect(folderNames).toContain(folderName)
-            expect(folderNames).toContain(`${folderName} (Copy 1)`)
+            expect(folderStore.folders).toHaveLength(1)
+            expect(folderStore.folders[0]?.name).equal('Work')
         })
 
         it('saves folder by name', async () => {

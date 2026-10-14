@@ -60,28 +60,45 @@ export const useFolderStore = defineStore('folder', () => {
         folderOrName: string | Folder,
         loadFolders = true,
     ): Promise<void> {
+        if (loading.value) {
+            const msg = `Cannot create folder ${folderOrName}. The loading is still active`
+            logger().info(msg)
+            return
+        }
+
+        loading.value = true
+
+        try {
+            await _persistCreateFolder(folderOrName, loadFolders)
+        } finally {
+            loading.value = false
+        }
+    }
+
+    async function _persistCreateFolder(
+        folderOrName: string | Folder,
+        loadFolders = true,
+    ): Promise<void> {
         const folder =
             typeof folderOrName === 'object'
                 ? folderOrName
-                : generateEmptyFolder(folderOrName)
+                : _generateEmptyFolder(folderOrName)
 
         // Same id means same folder, it is already stored
         const existingFolder = await folderStorage.get(folder.id)
 
-        if (existingFolder) {
-            return
+        if (!existingFolder) {
+            if (folder.name === '') {
+                folder.name = getDefaultName('Folder')
+            }
+
+            const folders = await folderStorage.getAll()
+            const takenNames = new Set(folders.map(f => f.name))
+
+            folder.name = forceUniqueName(folder.name, takenNames)
+
+            await folderStorage.save(folder)
         }
-
-        if (folder.name === '') {
-            folder.name = getDefaultName('Folder')
-        }
-
-        const folders = await folderStorage.getAll()
-        const takenNames = new Set(folders.map(f => f.name))
-
-        folder.name = forceUniqueName(folder.name, takenNames)
-
-        await folderStorage.save(folder)
 
         if (loadFolders) {
             await load()
@@ -89,7 +106,7 @@ export const useFolderStore = defineStore('folder', () => {
         }
     }
 
-    function generateEmptyFolder(name: string): Folder {
+    function _generateEmptyFolder(name: string): Folder {
         return {
             id: generateId(),
             name,
