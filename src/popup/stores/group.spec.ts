@@ -21,6 +21,17 @@ describe('group store', () => {
     })
 
     suite('create()', () => {
+        it('ignores second create while first is still running', async () => {
+            const groupStore = useGroupStore()
+
+            const first = groupStore.create(fakeGroup({ name: 'work' }))
+            await groupStore.create(fakeGroup({ name: 'work' }))
+            await first
+
+            expect(groupStore.groups).toHaveLength(1)
+            expect(groupStore.groups[0]?.name).equal('work')
+        })
+
         it('saves group to groups state', async () => {
             const groupStore = useGroupStore()
             const group = fakeGroup()
