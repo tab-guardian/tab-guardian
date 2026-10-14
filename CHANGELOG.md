@@ -1,5 +1,7 @@
 # Release Notes
 
+## v1.19.1 (2026-10-15)
+
 ## v1.19.0 (2026-10-14)
 
 - 🐛 Fixed "Erase all groups" also wiping settings, folders and saved passwords. [#119](https://codeberg.org/tab-guardian/tab-guardian/issues/119)
