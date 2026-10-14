@@ -2,10 +2,11 @@
 
 import { config } from '@common/config'
 import { trans } from '@common/modules'
-import { describe, it, expect, beforeEach, suite } from 'vitest'
+import { describe, it, expect, beforeEach, afterEach, suite, vi } from 'vitest'
 import { createPinia, setActivePinia } from 'pinia'
 import { useGroupStore } from '@/stores/group'
 import { useFolderStore } from '@/stores/folder'
+import { groupStorage } from '@common/modules/storage/group'
 import { fakeGroup, fakeLink } from '@common/modules/fake'
 import { KEY_PREFIX, passwordStorage } from '@common/modules/storage/password'
 
@@ -13,6 +14,10 @@ describe('group store', () => {
     beforeEach(() => {
         localStorage.clear()
         setActivePinia(createPinia())
+    })
+
+    afterEach(() => {
+        vi.restoreAllMocks()
     })
 
     suite('create()', () => {
@@ -292,6 +297,45 @@ describe('group store', () => {
             expect(encryption.failed).toBeTruthy()
             expect(encryption.message).equal(trans(msg))
             expect(encryption.group).toBeNull()
+        })
+    })
+
+    suite('importMany()', () => {
+        it('keeps saved password when replacing group', async () => {
+            const groupStore = useGroupStore()
+            await groupStore.create(fakeGroup({ id: 1, name: 'work' }))
+            await passwordStorage.save(1, 'amy-pass')
+
+            await groupStore.importMany([fakeGroup({ id: 1, name: 'work' })], true)
+
+            expect(await passwordStorage.get(1)).toEqual('amy-pass')
+        })
+
+        it('keeps original group when create fails during replace', async () => {
+            const groupStore = useGroupStore()
+            const groupName = 'work'
+            const groupUrl = 'https://work.example/page'
+
+            await groupStore.create(
+                fakeGroup({
+                    id: 1,
+                    name: groupName,
+                    links: [fakeLink({ url: groupUrl })],
+                }),
+            )
+
+            vi.spyOn(groupStorage, 'save').mockRejectedValueOnce(
+                new Error('quota exceeded'),
+            )
+
+            await expect(
+                groupStore.importMany([fakeGroup({ id: 1, name: groupName })], true),
+            ).rejects.toThrowError()
+
+            const stored = groupStore.get(1)
+
+            expect(stored).not.toBeNull()
+            expect(stored?.links[0].url).toEqual(groupUrl)
         })
     })
 

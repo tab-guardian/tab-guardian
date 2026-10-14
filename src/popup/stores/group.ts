@@ -169,9 +169,11 @@ export const useGroupStore = defineStore('group', () => {
 
         for (const group of groups) {
             if (shouldReplaceDuplicates) {
-                await deleteDuplicateGroup(group)
-                storedIds.delete(group.id)
-            } else if (storedIds.has(group.id)) {
+                await replace(group)
+                continue
+            }
+
+            if (storedIds.has(group.id)) {
                 // Fresh id so an incoming group never overwrites
                 // an unrelated stored group
                 group.id = generateId()
@@ -385,11 +387,11 @@ export const useGroupStore = defineStore('group', () => {
     }
 
     // Private function
-    async function deleteDuplicateGroup(group: Group): Promise<void> {
+    async function replace(group: Group): Promise<void> {
         const existing = get(group.id)
 
         if (existing) {
-            await deleteGroup(existing.id)
+            await updateFields(group.id, group)
         }
     }
 
