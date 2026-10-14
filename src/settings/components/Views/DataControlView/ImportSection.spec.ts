@@ -326,19 +326,21 @@ describe('ImportSection', () => {
         wrapper.unmount()
     })
 
-    it('creates copies when overwriting duplicates is declined', async () => {
+    it('imports fresh groups while skipping declined duplicates', async () => {
         const pinia = useFreshPinia()
         const modalStore = useModalStore()
 
         const originalUrl = 'https://original.example/page'
         const incomingUrl = 'https://incoming.example/page'
+        const freshUrl = 'https://fresh.example/page'
 
         const declinedGroup = fakeGroup({
-            name: 'declined-group-xyz',
+            name: 'declined',
             links: [fakeLink({ url: originalUrl })],
         })
 
-        await useGroupStore().create(declinedGroup)
+        const groupStore = useGroupStore()
+        await groupStore.create(declinedGroup)
         const storedId = storedGroup(declinedGroup.name).id
 
         const wrapper = mountImportSection(pinia)
@@ -353,21 +355,24 @@ describe('ImportSection', () => {
                     name: declinedGroup.name,
                     links: [fakeLink({ url: incomingUrl })],
                 }),
+                fakeGroup({
+                    name: 'fresh-group',
+                    links: [fakeLink({ url: freshUrl })],
+                }),
             ]),
         )
 
         await waitUntil(() => {
-            const groupNames = useGroupStore().groups.map(g => g.name)
-            expect(groupNames).toContain(`${declinedGroup.name} (Copy 1)`)
+            const names = useGroupStore().groups.map(g => g.name)
+            expect(names).toContain('fresh-group')
         })
 
-        const originalGroup = storedGroup(declinedGroup.name)
-        const copiedGroup = storedGroup(`${declinedGroup.name} (Copy 1)`)
+        expect(groupStore.groups).toHaveLength(2)
+        expect(storedGroup(declinedGroup.name).links[0].url).toEqual(originalUrl)
+        expect(storedGroup('fresh-group').links[0].url).toEqual(freshUrl)
 
-        expect(originalGroup.links[0].url).toEqual(originalUrl)
-        expect(originalGroup.id).toEqual(storedId)
-        expect(copiedGroup.links[0].url).toEqual(incomingUrl)
-        expect(copiedGroup.id).not.toEqual(storedId)
+        const storedNames = groupStore.groups.map(g => g.name)
+        expect(storedNames).not.toContain(`${declinedGroup.name} (Copy 1)`)
 
         wrapper.unmount()
     })

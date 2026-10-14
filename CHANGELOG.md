@@ -4,6 +4,7 @@
 
 - ✨ Export file now has a versioned format with groups, folders, and extension metadata. Old single-group and groups-array files still import.
 - 🐛 Fixed exporting issue which doesn't include folders and their content to export file. [#111](https://codeberg.org/tab-guardian/tab-guardian/issues/111)
+- 🐛 Fixed replacing a group on import deleting its saved password. Matching groups are now updated in place instead of deleted and recreated.
 - 🧑‍💻 Creating a group with a duplicate name now saves it as `<name> (Copy n)` instead of silently ignoring it.
 - 🧑‍💻 Creating a folder with a duplicate name now saves it as `<name> (Copy n)` instead of silently ignoring it.
 - 🧑‍💻 Split confusing `save`/`saveMany` group functions into `create`, `update`, `createMany`, and `importMany` with a single responsibility each.
