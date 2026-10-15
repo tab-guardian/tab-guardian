@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { Group, Folder } from '@common/types'
-import type { SortableEvent } from 'vue-draggable-next'
 import { computed, ref } from 'vue'
 import { trans } from '@common/modules'
 import { useGroupStore } from '@/stores/group'
