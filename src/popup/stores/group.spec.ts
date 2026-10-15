@@ -227,18 +227,6 @@ describe('group store', () => {
             expect(group.id).equal(result!.id)
         })
 
-        it('returns group with the right group name', async () => {
-            const groupStore = useGroupStore()
-
-            const group = fakeGroup()
-            await groupStore.create(group)
-
-            const result = groupStore.get(group.name)
-
-            expect(result).not.toBeNull()
-            expect(group.name).equal(result!.name)
-        })
-
         it('returns null with non-existent group ID', async () => {
             const groupStore = useGroupStore()
 
@@ -249,13 +237,27 @@ describe('group store', () => {
 
             expect(result).toBeNull()
         })
+    })
+
+    suite('getNamed()', () => {
+        it('returns group with the right group name', async () => {
+            const groupStore = useGroupStore()
+
+            const group = fakeGroup()
+            await groupStore.create(group)
+
+            const result = groupStore.getNamed(group.name)
+
+            expect(result).not.toBeNull()
+            expect(group.name).equal(result!.name)
+        })
 
         it('returns null with non-existent group name', async () => {
             const groupStore = useGroupStore()
             const group = fakeGroup()
             await groupStore.create(group)
 
-            const result = groupStore.get('some')
+            const result = groupStore.getNamed('some')
 
             expect(result).toBeNull()
         })

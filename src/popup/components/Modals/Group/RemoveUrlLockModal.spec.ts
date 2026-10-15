@@ -56,7 +56,7 @@ describe('RemoveUrlLockModal', () => {
         await submitCredentials(wrapper, 'work', 'correct-password')
 
         await waitUntil(() => {
-            const group = groupStore.get('work')
+            const group = groupStore.getNamed('work')
             expect(group?.bindUrl).toBeUndefined()
         })
 
@@ -111,7 +111,7 @@ describe('RemoveUrlLockModal', () => {
             })
         })
 
-        expect(groupStore.get('work')?.bindUrl).toBe('hashed-url')
+        expect(groupStore.getNamed('work')?.bindUrl).toBe('hashed-url')
         expect(modalStore.isModalVisible('removeUrlLock')).toBe(true)
 
         wrapper.unmount()

@@ -29,17 +29,18 @@ export const useGroupStore = defineStore('group', () => {
     const loading = ref<boolean>(false)
     const selectedGroup = ref<Group | null>(null)
 
-    /**
-     * @param {string|number} id Group ID or name
-     */
-    function get(id: number | string): Group | null {
-        const group = allGroups.value.find(group => {
-            if (typeof id === 'string') {
-                return group.name === id
-            }
+    function get(id: number): Group | null {
+        const group = allGroups.value.find(g => g.id === id)
 
-            return group.id === id
-        })
+        if (!group) {
+            return null
+        }
+
+        return cloneDeep(group)
+    }
+
+    function getNamed(name: string): Group | null {
+        const group = allGroups.value.find(g => g.name === name)
 
         if (!group) {
             return null
@@ -130,7 +131,7 @@ export const useGroupStore = defineStore('group', () => {
         name: string,
         pass: string,
     ): Promise<GroupOperationResult> {
-        const group = get(name)
+        const group = getNamed(name)
 
         if (!group) {
             return failure(trans('group_with_credentials_not_found'))
@@ -258,7 +259,7 @@ export const useGroupStore = defineStore('group', () => {
     }
 
     async function deleteGroupNamed(name: string): Promise<void> {
-        const group = get(name)
+        const group = getNamed(name)
 
         if (group) {
             await deleteGroup(group.id)
@@ -326,7 +327,8 @@ export const useGroupStore = defineStore('group', () => {
                 await deleteGroupNamed(group.name)
             }
 
-            // Must run after the delete above, otherwise the old name still counts as taken
+            // Must run after the delete above,
+            // otherwise the old name still counts as taken
             const name = uniqueGroupName(group.name)
 
             await groupStorage.save({ ...group, name })
@@ -423,6 +425,7 @@ export const useGroupStore = defineStore('group', () => {
         rootGroups,
         loading,
         get,
+        getNamed,
         create,
         update,
         lock,
