@@ -233,7 +233,7 @@
         "message": "Bind URL was removed from the group. The group is accessible."
     },
     "remember_pass_after_unlock_desc": {
-        "message": "If you disable this option, you will need to enter a password everytime when you want to lock any private group. Keeping this option enabled saves password in temporary and secure storage and allows you to lock groups back without entering your password"
+        "message": "If you disable this option, you will need to enter a password everytime when you want to lock any private group. Keeping this option enabled keeps the password only in memory until the browser closes and never writes it to disk, allowing you to lock groups back without entering your password"
     },
     "legacy_encryption_warning": {
         "message": "Saved with older encryption. Unlock then lock this group again to re-encrypt it."
