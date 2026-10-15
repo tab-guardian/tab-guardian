@@ -1,7 +1,8 @@
 # Release Notes
 
 ## v1.19.2 (2026-10-15)
-- 
+
+- 🐛 Fixed issue where 'Group details' button wasn't showing up in the group menu. [#144](https://codeberg.org/tab-guardian/tab-guardian/issues/144)
 
 ## v1.19.1 (2026-10-14)
 
