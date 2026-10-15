@@ -1,8 +1,7 @@
-import type { PasswordBytes } from '@common/types'
 import { runtime } from '@common/modules/runtime'
-import { groupStorage } from '@common/modules/storage/group'
 
 export const KEY_PREFIX = 'group-password-'
+const LEGACY_CLEANUP_FLAG = 'legacy-pass-cleanup'
 
 export const passwordStorage = {
     async save(groupId: number, pass: string): Promise<void> {
@@ -10,44 +9,35 @@ export const passwordStorage = {
             return
         }
 
-        await runtime.storage.set<string>(KEY_PREFIX + groupId, pass)
+        await runtime.sessionStorage.set<string>(KEY_PREFIX + groupId, pass)
     },
 
     async get(groupId: number): Promise<string | null> {
-        const results = await runtime.storage.get<string>(KEY_PREFIX + groupId)
+        const results = await runtime.sessionStorage.get<string>(
+            KEY_PREFIX + groupId,
+        )
         return results[0] ?? null
     },
 
     async delete(groupId: number): Promise<void> {
-        await runtime.storage.remove(KEY_PREFIX + groupId)
-    },
-
-    async getBytes(): Promise<PasswordBytes[]> {
-        const pwdBytes: PasswordBytes[] = await getBytesExt()
-
-        const groups = await groupStorage.getAll()
-        const unlockedIds = groups
-            .filter(g => g.isPrivate && !g.isEncrypted)
-            .map(g => g.id)
-
-        return pwdBytes.filter(pwd => !unlockedIds.includes(pwd.groupId))
+        await runtime.sessionStorage.remove(KEY_PREFIX + groupId)
     },
 }
 
-async function getBytesExt(): Promise<PasswordBytes[]> {
-    const items = await runtime.storage.all()
-    const result: PasswordBytes[] = []
+/**
+ * Removes passwords that were stored in persistent storage by older versions
+ * prior to 1.19.3. Idempotent, the flag makes repeat runs a single cheap read
+ */
+export async function cleanupLegacyPasswords(): Promise<void> {
+    const [done] = await runtime.storage.get<string>(LEGACY_CLEANUP_FLAG)
 
-    for (const key in items) {
-        if (!key.startsWith(KEY_PREFIX)) {
-            continue
-        }
-
-        result.push({
-            groupId: Number(key.replace(KEY_PREFIX, '')),
-            bytes: (items[key] + key).length,
-        })
+    if (done) {
+        return
     }
 
-    return result
+    const items = await runtime.storage.all()
+    const legacyKeys = Object.keys(items).filter(key => key.startsWith(KEY_PREFIX))
+
+    await Promise.all(legacyKeys.map(key => runtime.storage.remove(key)))
+    await runtime.storage.set<string>(LEGACY_CLEANUP_FLAG, 'done')
 }
