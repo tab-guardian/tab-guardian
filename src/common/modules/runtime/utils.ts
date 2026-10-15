@@ -6,19 +6,37 @@ import { trans } from '@common/modules'
 export function isRuntime(runtime: RuntimeType): boolean {
     switch (runtime) {
         case 'firefox':
-            return (
-                typeof browser !== 'undefined' &&
-                browser.runtime.getManifest().manifest_version === 2
-            )
+            return isFirefox()
         case 'chrome':
-            return (
-                typeof chrome !== 'undefined' &&
-                chrome.runtime.getManifest().manifest_version === 3
-            )
+            return isChrome()
         case 'web':
-            return typeof chrome === 'undefined' && typeof browser === 'undefined'
+            return !isFirefox() && !isChrome()
         default:
             throw new Error('Unknown runtime is used')
+    }
+}
+
+function isFirefox(): boolean {
+    try {
+        return (
+            typeof browser !== 'undefined' &&
+            !!browser.runtime?.id &&
+            browser.runtime.getManifest?.()?.manifest_version === 2
+        )
+    } catch {
+        return false
+    }
+}
+
+function isChrome(): boolean {
+    try {
+        return (
+            typeof chrome !== 'undefined' &&
+            !!chrome.runtime?.id &&
+            chrome.runtime.getManifest?.()?.manifest_version === 3
+        )
+    } catch {
+        return false
     }
 }
 
