@@ -24,8 +24,8 @@ export const useGroupStore = defineStore('group', () => {
     const notificationStore = useNotificationStore()
     const progressStore = useProgressStore()
 
-    const initialGroups = ref<readonly Readonly<Group>[]>([])
-    const groups = ref<Group[]>([])
+    const allGroups = ref<readonly Readonly<Group>[]>([])
+    const rootGroups = ref<Group[]>([])
     const loading = ref<boolean>(false)
     const selectedGroup = ref<Group | null>(null)
 
@@ -33,7 +33,7 @@ export const useGroupStore = defineStore('group', () => {
      * @param {string|number} id Group ID or name
      */
     function get(id: number | string): Group | null {
-        const group = initialGroups.value.find(group => {
+        const group = allGroups.value.find(group => {
             if (typeof id === 'string') {
                 return group.name === id
             }
@@ -49,7 +49,7 @@ export const useGroupStore = defineStore('group', () => {
     }
 
     function exist(id: number): boolean {
-        return initialGroups.value.some(g => g.id === id)
+        return allGroups.value.some(g => g.id === id)
     }
 
     async function load(): Promise<void> {
@@ -57,16 +57,16 @@ export const useGroupStore = defineStore('group', () => {
 
         const storageGroups = await groupStorage.getAll()
 
-        groups.value = await hideGroups(storageGroups)
-        groups.value.sort((a, b) => b.updatedAt - a.updatedAt)
+        rootGroups.value = await hideGroups(storageGroups)
+        rootGroups.value.sort((a, b) => b.updatedAt - a.updatedAt)
 
-        initialGroups.value = cloneDeep(storageGroups)
+        allGroups.value = cloneDeep(storageGroups)
 
         loading.value = false
     }
 
     function folderGroups(folderId: number): Group[] {
-        return initialGroups.value.filter(g => g.folderId === folderId)
+        return allGroups.value.filter(g => g.folderId === folderId)
     }
 
     async function lock(
@@ -249,8 +249,8 @@ export const useGroupStore = defineStore('group', () => {
     }
 
     async function deleteGroup(id: number): Promise<void> {
-        groups.value = groups.value.filter(g => g.id !== id)
-        initialGroups.value = initialGroups.value.filter(g => g.id !== id)
+        rootGroups.value = rootGroups.value.filter(g => g.id !== id)
+        allGroups.value = allGroups.value.filter(g => g.id !== id)
 
         await passwordStorage.delete(id)
         await groupStorage.delete(id)
@@ -258,8 +258,8 @@ export const useGroupStore = defineStore('group', () => {
     }
 
     async function deleteAll(): Promise<void> {
-        groups.value = []
-        initialGroups.value = []
+        rootGroups.value = []
+        allGroups.value = []
         await groupStorage.deleteAll()
         await notificationStore.recalculateNotification()
     }
@@ -324,7 +324,7 @@ export const useGroupStore = defineStore('group', () => {
         group.updatedAt = Date.now()
 
         const takenNames = new Set(
-            initialGroups.value.filter(g => g.id !== group.id).map(g => g.name),
+            allGroups.value.filter(g => g.id !== group.id).map(g => g.name),
         )
 
         group.name = forceUniqueName(group.name, takenNames)
@@ -394,7 +394,7 @@ export const useGroupStore = defineStore('group', () => {
         group: Group,
         loadGroups: boolean,
     ): Promise<void> {
-        const takenNames = new Set(initialGroups.value.map(g => g.name))
+        const takenNames = new Set(allGroups.value.map(g => g.name))
         group.name = forceUniqueName(group.name, takenNames)
 
         await groupStorage.save(group)
@@ -406,10 +406,10 @@ export const useGroupStore = defineStore('group', () => {
     }
 
     return {
-        initialGroups,
+        allGroups,
         selectedGroup,
+        rootGroups,
         loading,
-        groups,
         get,
         create,
         update,

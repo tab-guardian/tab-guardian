@@ -69,7 +69,7 @@ async function handleCreateGroup(): Promise<void> {
 
     saving.value = true
 
-    groupStore.groups.push(group)
+    groupStore.rootGroups.push(group)
 
     await groupStore.create(group)
 

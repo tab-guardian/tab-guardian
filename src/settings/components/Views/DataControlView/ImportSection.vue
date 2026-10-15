@@ -104,7 +104,7 @@ async function importNormalizedFile(exportFile: ExportSchema) {
 }
 
 async function shouldReplaceDuplicateGroups(groups: Group[]): Promise<boolean> {
-    const { duplicates } = splitDuplicateGroups(groups, groupStore.initialGroups)
+    const { duplicates } = splitDuplicateGroups(groups, groupStore.allGroups)
 
     if (duplicates.length === 0) {
         return false

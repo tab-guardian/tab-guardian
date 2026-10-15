@@ -4,7 +4,7 @@ import type { Pinia } from 'pinia'
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
 import { createPinia, setActivePinia } from 'pinia'
 import { mount } from '@vue/test-utils'
-import { fakeGroup, fakeLink } from '@common/modules/fake'
+import { fakeGroup } from '@common/modules/fake'
 import { useFolderStore } from '@/stores/folder'
 import { useGroupStore } from '@/stores/group'
 import { useModalStore } from '@/stores/modal'
@@ -54,7 +54,7 @@ describe('EraseSection', () => {
         wrapper.findComponent(Button).vm.$emit('clicked')
 
         await waitUntil(() => {
-            expect(useGroupStore().groups).toHaveLength(0)
+            expect(useGroupStore().rootGroups).toHaveLength(0)
         })
 
         await folderStore.load()
@@ -81,7 +81,7 @@ describe('EraseSection', () => {
 
         await new Promise(resolve => setTimeout(resolve, 300))
 
-        expect(useGroupStore().groups).toHaveLength(1)
+        expect(useGroupStore().rootGroups).toHaveLength(1)
 
         wrapper.unmount()
     })

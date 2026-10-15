@@ -19,14 +19,14 @@ export async function waitUntil(assertion: () => void): Promise<void> {
 // Stored group only includes groups that are visible in the top level.
 // Groups that are in folders or hidden are not gonna be returned here.
 export function storedGroup(name: string): Group {
-    const group = useGroupStore().groups.find(g => g.name === name)
+    const group = useGroupStore().rootGroups.find(g => g.name === name)
     expect(group).toBeDefined()
     return group!
 }
 
 // Initial groups are all groups loaded from the storage without any exceptions
 export function storedInitialGroup(name: string): Group {
-    const group = useGroupStore().initialGroups.find(g => g.name === name)
+    const group = useGroupStore().allGroups.find(g => g.name === name)
     expect(group).toBeDefined()
     return group!
 }

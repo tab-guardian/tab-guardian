@@ -31,7 +31,7 @@ async function loadData(): Promise<void> {
 async function exportGroups(): Promise<void> {
     await loadData()
 
-    const groups = groupStore.initialGroups
+    const groups = groupStore.allGroups
     const folders = folderStore.folders
 
     if (groups.length === 0 && folders.length === 0) {

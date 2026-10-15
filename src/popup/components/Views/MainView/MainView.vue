@@ -27,6 +27,6 @@ async function load(): Promise<void> {
             <GroupSearch />
         </div>
 
-        <ListItems :groups="groupStore.groups" :folders="folderStore.folders" />
+        <ListItems :groups="groupStore.rootGroups" :folders="folderStore.folders" />
     </div>
 </template>

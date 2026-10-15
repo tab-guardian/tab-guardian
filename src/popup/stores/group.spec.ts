@@ -28,19 +28,19 @@ describe('group store', () => {
             await groupStore.create(fakeGroup({ name: 'work' }))
             await first
 
-            expect(groupStore.groups).toHaveLength(1)
-            expect(groupStore.groups[0]?.name).equal('work')
+            expect(groupStore.rootGroups).toHaveLength(1)
+            expect(groupStore.rootGroups[0]?.name).equal('work')
         })
 
         it('saves group to groups state', async () => {
             const groupStore = useGroupStore()
             const group = fakeGroup()
 
-            expect(groupStore.groups).toHaveLength(0)
+            expect(groupStore.rootGroups).toHaveLength(0)
 
             await groupStore.create(group)
 
-            expect(groupStore.groups).toHaveLength(1)
+            expect(groupStore.rootGroups).toHaveLength(1)
         })
 
         it('saves group to local storage', async () => {
@@ -68,8 +68,8 @@ describe('group store', () => {
 
             await groupStore.create(group)
 
-            expect(groupStore.groups).toHaveLength(1)
-            expect(groupStore.groups[0]?.updatedAt).equal(updatedAt)
+            expect(groupStore.rootGroups).toHaveLength(1)
+            expect(groupStore.rootGroups[0]?.updatedAt).equal(updatedAt)
         })
     })
 
@@ -87,8 +87,8 @@ describe('group store', () => {
 
             await groupStore.update(group)
 
-            expect(groupStore.groups).toHaveLength(1)
-            expect(groupStore.groups[0]?.updatedAt).toBeGreaterThanOrEqual(
+            expect(groupStore.rootGroups).toHaveLength(1)
+            expect(groupStore.rootGroups[0]?.updatedAt).toBeGreaterThanOrEqual(
                 currTimestamp,
             )
         })
@@ -100,7 +100,7 @@ describe('group store', () => {
             await groupStore.create(group)
             await groupStore.update(group)
 
-            const groupNames = groupStore.groups.map(g => g.name)
+            const groupNames = groupStore.rootGroups.map(g => g.name)
 
             expect(groupNames).toHaveLength(1)
             expect(groupNames).toContain('work')
@@ -117,7 +117,7 @@ describe('group store', () => {
             otherGroup.name = 'work'
             await groupStore.update(otherGroup)
 
-            const groupNames = groupStore.groups.map(g => g.name)
+            const groupNames = groupStore.rootGroups.map(g => g.name)
 
             expect(groupNames).toContain('work')
             expect(groupNames).toContain('work (Copy 1)')
@@ -138,8 +138,8 @@ describe('group store', () => {
             group.links.push(fakeLink())
             await groupStore.update(group)
 
-            expect(groupStore.groups).toHaveLength(1)
-            expect(groupStore.groups.map(g => g.name)).toEqual(['work'])
+            expect(groupStore.rootGroups).toHaveLength(1)
+            expect(groupStore.rootGroups.map(g => g.name)).toEqual(['work'])
         })
 
         it('keeps name when only openedTimes changes', async () => {
@@ -149,8 +149,8 @@ describe('group store', () => {
             await groupStore.create(group)
             await groupStore.updateFields(group.id, { openedTimes: 5 })
 
-            expect(groupStore.groups).toHaveLength(1)
-            expect(groupStore.groups.map(g => g.name)).toEqual(['work'])
+            expect(groupStore.rootGroups).toHaveLength(1)
+            expect(groupStore.rootGroups.map(g => g.name)).toEqual(['work'])
         })
 
         it('keeps other groups untouched when one group updates', async () => {
@@ -164,9 +164,9 @@ describe('group store', () => {
             otherGroup.links.push(fakeLink())
             await groupStore.update(otherGroup)
 
-            const groupNames = groupStore.groups.map(g => g.name).sort()
+            const groupNames = groupStore.rootGroups.map(g => g.name).sort()
 
-            expect(groupStore.groups).toHaveLength(2)
+            expect(groupStore.rootGroups).toHaveLength(2)
             expect(groupNames).toEqual(['other', 'work'])
         })
     })
@@ -359,7 +359,7 @@ describe('group store', () => {
 
             await groupStore.createMany([group1, group2])
 
-            expect(groupStore.groups).toHaveLength(2)
+            expect(groupStore.rootGroups).toHaveLength(2)
         })
 
         it('does not duplicate groups with matching ids', async () => {
@@ -371,7 +371,7 @@ describe('group store', () => {
             await groupStore.createMany([group1, group2])
             await groupStore.createMany([group1, group2])
 
-            expect(groupStore.groups).toHaveLength(2)
+            expect(groupStore.rootGroups).toHaveLength(2)
         })
 
         it('does not update updatedAt field on groups', async () => {
@@ -383,9 +383,9 @@ describe('group store', () => {
 
             await groupStore.createMany([group1, group2])
 
-            expect(groupStore.groups).toHaveLength(2)
-            expect(groupStore.groups[0]!.updatedAt).equal(updatedAt)
-            expect(groupStore.groups[1]!.updatedAt).equal(updatedAt)
+            expect(groupStore.rootGroups).toHaveLength(2)
+            expect(groupStore.rootGroups[0]!.updatedAt).equal(updatedAt)
+            expect(groupStore.rootGroups[1]!.updatedAt).equal(updatedAt)
         })
 
         it('saves duplicate name as first free "<name> (Copy n)" starting at 1', async () => {
@@ -399,7 +399,7 @@ describe('group store', () => {
 
             await groupStore.create(fakeGroup({ name: groupName }))
 
-            const groupNames = groupStore.groups.map(g => g.name)
+            const groupNames = groupStore.rootGroups.map(g => g.name)
 
             expect(groupNames).toContain(groupName)
             expect(groupNames).toContain(`${groupName} (Copy 100)`)
@@ -417,7 +417,7 @@ describe('group store', () => {
 
             await groupStore.create(fakeGroup({ name: groupName }))
 
-            const groupNames = groupStore.groups.map(g => g.name)
+            const groupNames = groupStore.rootGroups.map(g => g.name)
 
             expect(groupNames).toContain(groupName)
             expect(groupNames).toContain(`${groupName} (Copy 1)`)
@@ -435,14 +435,14 @@ describe('group store', () => {
             await groupStore.create(fakeGroup({ name: groupName, folderId }))
             await groupStore.create(fakeGroup({ name: groupName }))
 
-            // The plain name lives only in initialGroups, it is hidden
+            // The plain name lives only in allGroups, it is hidden
             // inside a folder and never shows in the display list
-            const allNames = groupStore.initialGroups.map(g => g.name)
+            const allNames = groupStore.allGroups.map(g => g.name)
 
             expect(allNames).toContain(groupName)
             expect(allNames).toContain(`${groupName} (Copy 1)`)
 
-            const topLevelGroupNames = groupStore.groups.map(g => g.name)
+            const topLevelGroupNames = groupStore.rootGroups.map(g => g.name)
             expect(topLevelGroupNames).toContain(`${groupName} (Copy 1)`)
         })
     })
@@ -532,7 +532,7 @@ describe('group store', () => {
             await groupStore.create(group)
             await groupStore.deleteGroup(0)
 
-            expect(groupStore.groups).toHaveLength(1)
+            expect(groupStore.rootGroups).toHaveLength(1)
         })
 
         it('deletes cached password for a private group', async () => {
@@ -560,11 +560,11 @@ describe('group store', () => {
 
             await groupStore.createMany([group1, group2])
 
-            expect(groupStore.groups).toHaveLength(2)
+            expect(groupStore.rootGroups).toHaveLength(2)
 
             await groupStore.deleteAll()
 
-            expect(groupStore.groups).toHaveLength(0)
+            expect(groupStore.rootGroups).toHaveLength(0)
             expect(localStorage.getItem(group1.id.toString())).toBeNull()
             expect(localStorage.getItem(group2.id.toString())).toBeNull()
         })
@@ -572,7 +572,7 @@ describe('group store', () => {
         it('works fine if no groups exist', async () => {
             const groupStore = useGroupStore()
             await groupStore.deleteAll()
-            expect(groupStore.groups).toHaveLength(0)
+            expect(groupStore.rootGroups).toHaveLength(0)
         })
     })
 
@@ -592,7 +592,7 @@ describe('group store', () => {
 
             expect(deleted).toBeTruthy()
 
-            const foundGroup = groupStore.groups[0]
+            const foundGroup = groupStore.rootGroups[0]
 
             expect(foundGroup).toBeDefined()
             expect(foundGroup?.links).toHaveLength(1)
@@ -611,7 +611,7 @@ describe('group store', () => {
 
             expect(deleted).toBeTruthy()
 
-            const foundGroup = groupStore.groups[0]
+            const foundGroup = groupStore.rootGroups[0]
 
             expect(foundGroup).toBeDefined()
             expect(foundGroup?.links).toHaveLength(2)
@@ -632,7 +632,7 @@ describe('group store', () => {
 
             expect(deleted).toBeFalsy()
 
-            const foundGroup = groupStore.groups[0]
+            const foundGroup = groupStore.rootGroups[0]
 
             expect(foundGroup).toBeDefined()
             expect(foundGroup?.links).toHaveLength(2)
@@ -653,7 +653,7 @@ describe('group store', () => {
 
             expect(deleted).toBeFalsy()
 
-            const foundGroup = groupStore.groups[0]
+            const foundGroup = groupStore.rootGroups[0]
 
             expect(foundGroup).toBeDefined()
             expect(foundGroup?.links).toHaveLength(2)
@@ -682,9 +682,9 @@ describe('group store', () => {
 
             expect(inserted).toBeTruthy()
 
-            const foundGroup = groupStore.groups[0]
+            const foundGroup = groupStore.rootGroups[0]
 
-            expect(groupStore.groups).toHaveLength(1)
+            expect(groupStore.rootGroups).toHaveLength(1)
             expect(foundGroup).toBeDefined()
             expect(foundGroup?.links).toHaveLength(3)
         })
@@ -710,9 +710,9 @@ describe('group store', () => {
 
             expect(inserted).toBeFalsy()
 
-            const foundGroup = groupStore.groups[0]
+            const foundGroup = groupStore.rootGroups[0]
 
-            expect(groupStore.groups).toHaveLength(1)
+            expect(groupStore.rootGroups).toHaveLength(1)
             expect(foundGroup).toBeDefined()
             expect(foundGroup?.links).toHaveLength(1)
         })
