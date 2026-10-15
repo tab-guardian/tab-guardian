@@ -42,19 +42,28 @@ describe('RemoveUrlLockModal', () => {
         const groupStore = useGroupStore()
         const modalStore = useModalStore()
 
-        await groupStore.create(fakeGroup({ name: 'work', bindUrl: 'hashed-url' }))
+        const group = fakeGroup({
+            name: 'work',
+            bindUrl: 'hashed-url',
+        })
+
+        await groupStore.create(group)
+        await groupStore.lock(group, 'correct-password')
+
         void modalStore.show('removeUrlLock', {})
 
         const wrapper = mountModal(pinia)
-        await submitCredentials(wrapper, 'work', 'amyadams-password')
+        await submitCredentials(wrapper, 'work', 'correct-password')
 
         await waitUntil(() => {
-            expect(groupStore.get('work')?.bindUrl).toBeUndefined()
+            const group = groupStore.get('work')
+            expect(group?.bindUrl).toBeUndefined()
         })
 
         expect(showToast).toHaveBeenCalledWith({
             text: trans('bind_url_removed'),
         })
+
         expect(modalStore.isModalVisible('removeUrlLock')).toBe(false)
 
         wrapper.unmount()
@@ -67,7 +76,7 @@ describe('RemoveUrlLockModal', () => {
         void modalStore.show('removeUrlLock', {})
 
         const wrapper = mountModal(pinia)
-        await submitCredentials(wrapper, 'missing', 'amyadams-password')
+        await submitCredentials(wrapper, 'missing', 'some-password')
 
         await waitUntil(() => {
             expect(showToast).toHaveBeenCalledWith({
@@ -89,6 +98,7 @@ describe('RemoveUrlLockModal', () => {
         const group = fakeGroup({ name: 'work', bindUrl: 'hashed-url' })
         await groupStore.create(group)
         await groupStore.lock(group, 'correct-password')
+
         void modalStore.show('removeUrlLock', {})
 
         const wrapper = mountModal(pinia)
