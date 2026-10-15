@@ -1,4 +1,4 @@
-import type { Group, Link } from '@common/types'
+import type { Group, Link, GroupOperationResult } from '@common/types'
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import { trans, logger } from '@common/modules'
@@ -69,31 +69,19 @@ export const useGroupStore = defineStore('group', () => {
         return initialGroups.value.filter(g => g.folderId === folderId)
     }
 
-    type LockFuncReturnValue =
-        | { message: string; failed: true; group: null }
-        | { message: string; failed: false; group: Group }
-
     async function lock(
         group: Group,
         pass: string,
         confirm?: string,
-    ): Promise<LockFuncReturnValue> {
+    ): Promise<GroupOperationResult> {
         if (group.isEncrypted) {
-            return {
-                message: trans('group_already_locked'),
-                failed: true,
-                group: null,
-            }
+            return failure(trans('group_already_locked'))
         }
 
         const validationError = validatePassword(pass, confirm)
 
         if (validationError) {
-            return {
-                message: validationError,
-                failed: true,
-                group: null,
-            }
+            return failure(validationError)
         }
 
         try {
@@ -104,30 +92,18 @@ export const useGroupStore = defineStore('group', () => {
 
             await update(encrypted)
 
-            return {
-                failed: false,
-                message: trans('group_locked'),
-                group: encrypted,
-            }
+            return success(encrypted, trans('group_locked'))
         } catch (err) {
             logger().error('Encryption:', err)
         }
 
-        return {
-            failed: true,
-            group: null,
-            message: trans('error_occurred'),
-        }
+        return failure(trans('error_occurred'))
     }
-
-    type UnlockFuncReturnValue =
-        | { message: string; failed: true; group: null }
-        | { message: string; failed: false; group: Group }
 
     async function unlock(
         group: Group,
         password: string,
-    ): Promise<UnlockFuncReturnValue> {
+    ): Promise<GroupOperationResult> {
         try {
             const decryptedGroup = await cryptoStore.decryptGroup(group, password)
             await update(decryptedGroup)
@@ -136,17 +112,47 @@ export const useGroupStore = defineStore('group', () => {
                 await passwordStorage.save(group.id, password)
             }
 
-            return {
-                failed: false,
-                message: trans('group_unlocked'),
-                group: decryptedGroup,
-            }
+            return success(decryptedGroup, trans('group_unlocked'))
         } catch (err: any) {
-            return {
-                message: getDecryptionError(err),
-                failed: true,
-                group: null,
-            }
+            return failure(getDecryptionError(err))
+        }
+    }
+
+    function failure(message: string): GroupOperationResult {
+        return { failed: true, group: null, message }
+    }
+
+    function success(group: Group, message: string): GroupOperationResult {
+        return { failed: false, group, message }
+    }
+
+    async function removeBindUrl(
+        name: string,
+        pass: string,
+    ): Promise<GroupOperationResult> {
+        const group = get(name)
+
+        if (!group) {
+            return failure(trans('group_with_credentials_not_found'))
+        }
+
+        try {
+            // Decrypting also proves the password is correct
+            const decrypted = group.isEncrypted
+                ? await cryptoStore.decryptGroup(group, pass)
+                : group
+
+            const { bindUrl, ...withoutBindUrl } = decrypted
+            const encrypted = await cryptoStore.encryptGroup(withoutBindUrl, pass)
+
+            await update(encrypted)
+
+            return success(encrypted, trans('bind_url_removed'))
+        } catch (err) {
+            logger().error('Remove bind URL:', err)
+
+            // A wrong password is reported the same as a missing group
+            return failure(trans('group_with_credentials_not_found'))
         }
     }
 
@@ -412,6 +418,7 @@ export const useGroupStore = defineStore('group', () => {
         exist,
         updateFields,
         unlock,
+        removeBindUrl,
         createMany,
         importMany,
         deleteAll,
