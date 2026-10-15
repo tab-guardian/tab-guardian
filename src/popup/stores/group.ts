@@ -257,6 +257,14 @@ export const useGroupStore = defineStore('group', () => {
         await notificationStore.recalculateNotification()
     }
 
+    async function deleteGroupNamed(name: string): Promise<void> {
+        const group = get(name)
+
+        if (group) {
+            await deleteGroup(group.id)
+        }
+    }
+
     async function deleteAll(): Promise<void> {
         rootGroups.value = []
         allGroups.value = []
@@ -314,10 +322,31 @@ export const useGroupStore = defineStore('group', () => {
         loading.value = true
 
         try {
-            await persistCreateGroup(group, loadGroups)
+            if (settingsStore.settings.overrideWithSameName) {
+                await deleteGroupNamed(group.name)
+            }
+
+            // Must run after the delete above, otherwise the old name still counts as taken
+            const name = uniqueGroupName(group.name)
+
+            await groupStorage.save({ ...group, name })
+
+            if (loadGroups) {
+                await reloadGroupsAndNotifications()
+            }
         } finally {
             loading.value = false
         }
+    }
+
+    function uniqueGroupName(name: string): string {
+        const takenNames = new Set(allGroups.value.map(group => group.name))
+        return forceUniqueName(name, takenNames)
+    }
+
+    async function reloadGroupsAndNotifications(): Promise<void> {
+        await load()
+        await notificationStore.recalculateNotification()
     }
 
     async function update(group: Group): Promise<void> {
@@ -330,9 +359,7 @@ export const useGroupStore = defineStore('group', () => {
         group.name = forceUniqueName(group.name, takenNames)
 
         await groupStorage.save(group)
-        await load()
-
-        await notificationStore.recalculateNotification()
+        await reloadGroupsAndNotifications()
     }
 
     async function isGroupHiddenInCurrentWindow(group: Group): Promise<boolean> {
@@ -388,21 +415,6 @@ export const useGroupStore = defineStore('group', () => {
 
     function groupNotFoundLog(id: number, operation: string): void {
         logger().info(`Group "${id}" not found for "${operation}" operation`)
-    }
-
-    async function persistCreateGroup(
-        group: Group,
-        loadGroups: boolean,
-    ): Promise<void> {
-        const takenNames = new Set(allGroups.value.map(g => g.name))
-        group.name = forceUniqueName(group.name, takenNames)
-
-        await groupStorage.save(group)
-
-        if (loadGroups) {
-            await load()
-            await notificationStore.recalculateNotification()
-        }
     }
 
     return {
