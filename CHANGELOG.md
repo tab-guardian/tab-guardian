@@ -4,6 +4,7 @@
 
 - 🐛 Fixed issue where 'Group details' button wasn't showing up in the group menu. Closes [#144](https://codeberg.org/tab-guardian/tab-guardian/issues/144)
 - 🛡️ Improved security for `Remove URL lock from a private group` section. Now, it will always show the same error to prevent from guessing which group exist and which doesn't. Closes [#143](https://codeberg.org/tab-guardian/tab-guardian/issues/143).
+- 🐛 Fixed incorrect message in `Remove URL lock` section. Closes [#141](https://codeberg.org/tab-guardian/tab-guardian/issues/141)
 
 ## v1.19.1 (2026-10-14)
 
