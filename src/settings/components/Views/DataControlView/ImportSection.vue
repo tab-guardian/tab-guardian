@@ -151,7 +151,7 @@ function resetState(): void {
                 id="choose-file"
             />
 
-            <Progress v-if="progressStore.loading" />
+            <Progress v-if="progressStore.loading && progressStore.current !== 0" />
         </div>
     </Section>
 </template>
