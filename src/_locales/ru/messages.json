@@ -15,14 +15,6 @@
         "message": "У вас есть $n$ разблокированных приватных групп. Не забудьте заблокировать их обратно, когда они вам больше не понадобятся.",
         "placeholders": { "n": { "content": "$1" } }
     },
-    "clear_cache_desc": {
-        "message": "Освободить $n$ байт кэша без потери данных. Это абсолютно безопасно и рекомендуется сделать.",
-        "placeholders": { "n": { "content": "$1" } }
-    },
-    "cache_cleared_on": {
-        "message": "Кеш был очищен на $n$ байт данных",
-        "placeholders": { "n": { "content": "$1" } }
-    },
     "not_enough_storage": {
         "message": "Нельзя превышать квоту хранения. Максимальная квота составляет $n$ МБ, вы используете $n$ МБ",
         "placeholders": { "n": { "content": "$1" } }
@@ -214,7 +206,6 @@
     "nothing_to_paste": { "message": "Нет ничего, чтобы вставить" },
     "general": { "message": "Общее" },
     "data_control": { "message": "Управление Данными" },
-    "clear_cache": { "message": "Удалить Кеш" },
     "remember_pass_after_unlock": {
         "message": "Запомнить мой пароль после разблокировки"
     },

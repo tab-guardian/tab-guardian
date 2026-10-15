@@ -15,14 +15,6 @@
         "message": "You have $n$ unlocked private groups. Please don't forget to lock them back when you no longer need it.",
         "placeholders": { "n": { "content": "$1" } }
     },
-    "clear_cache_desc": {
-        "message": "Free $n$ bytes of cache without loosing any data. It's completely safe and recommended to do.",
-        "placeholders": { "n": { "content": "$1" } }
-    },
-    "cache_cleared_on": {
-        "message": "Your cache was cleared on $n$ bytes",
-        "placeholders": { "n": { "content": "$1" } }
-    },
     "not_enough_storage": {
         "message": "Cannot exceed storage quota. Maximum quota is $n$ MB, you use $n$ MB",
         "placeholders": { "n": { "content": "$1" } }
@@ -212,7 +204,6 @@
     "nothing_to_paste": { "message": "There is nothing to paste" },
     "general": { "message": "General" },
     "data_control": { "message": "Data Control" },
-    "clear_cache": { "message": "Clear Cache" },
     "remember_pass_after_unlock": { "message": "Remember my password after unlock" },
     "make_open": { "message": "Make open" },
     "are_you_sure_to_make_group_open": {

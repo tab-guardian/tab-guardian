@@ -15,14 +15,6 @@
         "message": "您当前拥有$n$个未锁定的私人群组。请务必在不再需要时将其重新锁定。",
         "placeholders": { "n": { "content": "$1" } }
     },
-    "clear_cache_desc": {
-        "message": "释放$n$字节缓存空间而不丢失任何数据。此操作完全安全且值得推荐。",
-        "placeholders": { "n": { "content": "$1" } }
-    },
-    "cache_cleared_on": {
-        "message": "您的缓存已清除，共清除 $n$ 字节",
-        "placeholders": { "n": { "content": "$1" } }
-    },
     "not_enough_storage": {
         "message": "存储配额已满。最大配额为 $n$ 兆字节，您已使用 $n$ 兆字节",
         "placeholders": { "n": { "content": "$1" } }
@@ -185,7 +177,6 @@
     "nothing_to_paste": { "message": "没有内容可粘贴" },
     "general": { "message": "总则" },
     "data_control": { "message": "数据控制" },
-    "clear_cache": { "message": "清除缓存" },
     "remember_pass_after_unlock": { "message": "解锁后记住我的密码" },
     "make_open": { "message": "公开" },
     "are_you_sure_to_make_group_open": {
