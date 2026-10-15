@@ -439,6 +439,7 @@ export const useGroupStore = defineStore('group', () => {
         deleteAll,
         updateLink,
         deleteGroup,
+        deleteGroupNamed,
         folderGroups,
         deleteLinkFrom,
         insertLinksInto,

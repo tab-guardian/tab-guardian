@@ -84,6 +84,18 @@ describe('group store', () => {
             expect(group.links[0]?.url).toEqual(newUrl)
         })
 
+        it('creates unique group normally when override setting is on', async () => {
+            const groupStore = useGroupStore()
+            const settingsStore = useSettingsStore()
+
+            settingsStore.settings.overrideWithSameName = true
+
+            await groupStore.create(fakeGroup({ name: 'work' }))
+
+            expect(groupStore.rootGroups).toHaveLength(1)
+            expect(groupStore.rootGroups[0]?.name).equal('work')
+        })
+
         it('copies group with same name when override setting is off', async () => {
             const groupStore = useGroupStore()
             const groupName = 'work'
@@ -551,6 +563,28 @@ describe('group store', () => {
 
             expect(updatedGroup).not.toBeNull()
             expect(updatedGroup?.folderId).toBeUndefined()
+        })
+    })
+
+    suite('deleteGroupNamed()', () => {
+        it('deletes group with matching name', async () => {
+            const groupStore = useGroupStore()
+
+            await groupStore.create(fakeGroup({ name: 'work' }))
+            await groupStore.create(fakeGroup({ name: 'other' }))
+
+            await groupStore.deleteGroupNamed('work')
+
+            expect(groupStore.rootGroups.map(g => g.name)).toEqual(['other'])
+        })
+
+        it('does nothing when name matches nothing', async () => {
+            const groupStore = useGroupStore()
+
+            await groupStore.create(fakeGroup({ name: 'work' }))
+            await groupStore.deleteGroupNamed('missing')
+
+            expect(groupStore.rootGroups.map(g => g.name)).toEqual(['work'])
         })
     })
 
