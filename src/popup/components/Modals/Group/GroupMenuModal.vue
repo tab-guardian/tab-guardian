@@ -15,6 +15,7 @@ import PasteLinkMenuItem from '@/components/Modals/Link/MenuItems/PasteLinkMenuI
 import MakeGroupOpenItem from '@/components/Modals/Group/MenuItems/MakeGroupOpenItem.vue'
 import PhotoIcon from '@common/components/Icons/PhotoIcon.vue'
 import InfoCircleIcon from '@common/components/Icons/InfoCircleIcon.vue'
+import MenuItem from '@/components/MenuItem.vue'
 import Message from '@common/components/Message.vue'
 
 const modalStore = useModalStore()

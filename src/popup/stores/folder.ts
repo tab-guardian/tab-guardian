@@ -31,7 +31,7 @@ export const useFolderStore = defineStore('folder', () => {
     }
 
     async function deleteFolder(id: number): Promise<void> {
-        const groups = await groupStore.folderGroups(id)
+        const groups = groupStore.folderGroups(id)
 
         // Delete all groups inside of a folder first
         for (const group of groups) {

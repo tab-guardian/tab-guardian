@@ -4,8 +4,8 @@ import { computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useModalStore } from '@/stores/modal'
 import { useGroupStore } from '@/stores/group'
-import moment from 'moment'
 import { trans } from '@common/modules'
+import moment from 'moment'
 import View from '@/components/Views/View.vue'
 import Message from '@common/components/Message.vue'
 import ListItem from '@/components/Views/GroupDetailsView/ListItem.vue'
@@ -13,14 +13,16 @@ import Tip from '@common/components/Tip.vue'
 
 const router = useRouter()
 const groupStore = useGroupStore()
-
-const groupId = Number(router.currentRoute.value.params.id)
 const modalStore = useModalStore()
 
 onMounted(modalStore.hideAll)
 
 const DATE_FORMAT = 'DD.MM.YYYY HH:mm'
-const group = computed<Group | null>(() => groupStore.get(groupId))
+
+const group = computed<Group | null>(() => {
+    const groupId = Number(router.currentRoute.value.params.id)
+    return groupStore.get(groupId)
+})
 </script>
 
 <template>

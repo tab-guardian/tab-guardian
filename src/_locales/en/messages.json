@@ -126,7 +126,6 @@
     "group_private_unlock_it": {
         "message": "This group is private. You need to unlock it to see the options"
     },
-    "group_not_found": { "message": "Group has not been found" },
     "group_already_locked": { "message": "Group is already locked" },
     "private_group_unlocked": { "message": "This private group is unlocked" },
     "no_tabs_to_save": { "message": "No tabs to save" },
@@ -247,5 +246,8 @@
     },
     "legacy_encryption_warning": {
         "message": "Saved with older encryption. Unlock then lock this group again to re-encrypt it."
+    },
+    "group_with_credentials_not_found": {
+        "message": "Group with entered credentials has not been found. Try again"
     }
 }

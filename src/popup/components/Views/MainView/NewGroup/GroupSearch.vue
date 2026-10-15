@@ -33,14 +33,14 @@ onUnmounted(() => {
 })
 
 async function openFirstGroup(e: KeyboardEvent): Promise<void> {
-    const noGroups = groupStore.groups.length === 0
+    const noGroups = groupStore.rootGroups.length === 0
     const inpIsFocused = inpElem.value === document.activeElement
 
     if (e.key !== 'Enter' || noGroups || query.value === '' || !inpIsFocused) {
         return
     }
 
-    const group = groupStore.groups[0]
+    const group = groupStore.rootGroups[0]
 
     // Clear the input field after Enter was pressed
     query.value = ''
@@ -113,7 +113,7 @@ async function filterGroups(): Promise<void> {
 
     folderStore.folders = []
 
-    groupStore.groups = groupStore.initialGroups.filter(group => {
+    groupStore.rootGroups = groupStore.allGroups.filter(group => {
         const nameMatch = group.name
             .toLowerCase()
             .includes(query.value.toLowerCase())

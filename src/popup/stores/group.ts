@@ -1,4 +1,4 @@
-import type { Group, Link } from '@common/types'
+import type { Group, Link, GroupOperationResult } from '@common/types'
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import { trans, logger } from '@common/modules'
@@ -24,22 +24,23 @@ export const useGroupStore = defineStore('group', () => {
     const notificationStore = useNotificationStore()
     const progressStore = useProgressStore()
 
-    const initialGroups = ref<readonly Readonly<Group>[]>([])
-    const groups = ref<Group[]>([])
+    const allGroups = ref<readonly Readonly<Group>[]>([])
+    const rootGroups = ref<Group[]>([])
     const loading = ref<boolean>(false)
     const selectedGroup = ref<Group | null>(null)
 
-    /**
-     * @param {string|number} id Group ID or name
-     */
-    function get(id: number | string): Group | null {
-        const group = initialGroups.value.find(group => {
-            if (typeof id === 'string') {
-                return group.name === id
-            }
+    function get(id: number): Group | null {
+        const group = allGroups.value.find(g => g.id === id)
 
-            return group.id === id
-        })
+        if (!group) {
+            return null
+        }
+
+        return cloneDeep(group)
+    }
+
+    function getNamed(name: string): Group | null {
+        const group = allGroups.value.find(g => g.name === name)
 
         if (!group) {
             return null
@@ -49,7 +50,7 @@ export const useGroupStore = defineStore('group', () => {
     }
 
     function exist(id: number): boolean {
-        return initialGroups.value.some(g => g.id === id)
+        return allGroups.value.some(g => g.id === id)
     }
 
     async function load(): Promise<void> {
@@ -57,43 +58,31 @@ export const useGroupStore = defineStore('group', () => {
 
         const storageGroups = await groupStorage.getAll()
 
-        groups.value = await hideGroups(storageGroups)
-        groups.value.sort((a, b) => b.updatedAt - a.updatedAt)
+        rootGroups.value = await hideGroups(storageGroups)
+        rootGroups.value.sort((a, b) => b.updatedAt - a.updatedAt)
 
-        initialGroups.value = cloneDeep(storageGroups)
+        allGroups.value = cloneDeep(storageGroups)
 
         loading.value = false
     }
 
     function folderGroups(folderId: number): Group[] {
-        return initialGroups.value.filter(g => g.folderId === folderId)
+        return allGroups.value.filter(g => g.folderId === folderId)
     }
-
-    type LockFuncReturnValue =
-        | { message: string; failed: true; group: null }
-        | { message: string; failed: false; group: Group }
 
     async function lock(
         group: Group,
         pass: string,
         confirm?: string,
-    ): Promise<LockFuncReturnValue> {
+    ): Promise<GroupOperationResult> {
         if (group.isEncrypted) {
-            return {
-                message: trans('group_already_locked'),
-                failed: true,
-                group: null,
-            }
+            return failure(trans('group_already_locked'))
         }
 
         const validationError = validatePassword(pass, confirm)
 
         if (validationError) {
-            return {
-                message: validationError,
-                failed: true,
-                group: null,
-            }
+            return failure(validationError)
         }
 
         try {
@@ -104,30 +93,18 @@ export const useGroupStore = defineStore('group', () => {
 
             await update(encrypted)
 
-            return {
-                failed: false,
-                message: trans('group_locked'),
-                group: encrypted,
-            }
+            return success(encrypted, trans('group_locked'))
         } catch (err) {
             logger().error('Encryption:', err)
         }
 
-        return {
-            failed: true,
-            group: null,
-            message: trans('error_occurred'),
-        }
+        return failure(trans('error_occurred'))
     }
-
-    type UnlockFuncReturnValue =
-        | { message: string; failed: true; group: null }
-        | { message: string; failed: false; group: Group }
 
     async function unlock(
         group: Group,
         password: string,
-    ): Promise<UnlockFuncReturnValue> {
+    ): Promise<GroupOperationResult> {
         try {
             const decryptedGroup = await cryptoStore.decryptGroup(group, password)
             await update(decryptedGroup)
@@ -136,17 +113,47 @@ export const useGroupStore = defineStore('group', () => {
                 await passwordStorage.save(group.id, password)
             }
 
-            return {
-                failed: false,
-                message: trans('group_unlocked'),
-                group: decryptedGroup,
-            }
+            return success(decryptedGroup, trans('group_unlocked'))
         } catch (err: any) {
-            return {
-                message: getDecryptionError(err),
-                failed: true,
-                group: null,
-            }
+            return failure(getDecryptionError(err))
+        }
+    }
+
+    function failure(message: string): GroupOperationResult {
+        return { failed: true, group: null, message }
+    }
+
+    function success(group: Group, message: string): GroupOperationResult {
+        return { failed: false, group, message }
+    }
+
+    async function removeBindUrl(
+        name: string,
+        pass: string,
+    ): Promise<GroupOperationResult> {
+        const group = getNamed(name)
+
+        if (!group) {
+            return failure(trans('group_with_credentials_not_found'))
+        }
+
+        try {
+            // Decrypting also proves the password is correct
+            const decrypted = group.isEncrypted
+                ? await cryptoStore.decryptGroup(group, pass)
+                : group
+
+            const { bindUrl, ...withoutBindUrl } = decrypted
+            const encrypted = await cryptoStore.encryptGroup(withoutBindUrl, pass)
+
+            await update(encrypted)
+
+            return success(encrypted, trans('bind_url_removed'))
+        } catch (err) {
+            logger().error('Remove bind URL:', err)
+
+            // A wrong password is reported the same as a missing group
+            return failure(trans('group_with_credentials_not_found'))
         }
     }
 
@@ -243,17 +250,25 @@ export const useGroupStore = defineStore('group', () => {
     }
 
     async function deleteGroup(id: number): Promise<void> {
-        groups.value = groups.value.filter(g => g.id !== id)
-        initialGroups.value = initialGroups.value.filter(g => g.id !== id)
+        rootGroups.value = rootGroups.value.filter(g => g.id !== id)
+        allGroups.value = allGroups.value.filter(g => g.id !== id)
 
         await passwordStorage.delete(id)
         await groupStorage.delete(id)
         await notificationStore.recalculateNotification()
     }
 
+    async function deleteGroupNamed(name: string): Promise<void> {
+        const group = getNamed(name)
+
+        if (group) {
+            await deleteGroup(group.id)
+        }
+    }
+
     async function deleteAll(): Promise<void> {
-        groups.value = []
-        initialGroups.value = []
+        rootGroups.value = []
+        allGroups.value = []
         await groupStorage.deleteAll()
         await notificationStore.recalculateNotification()
     }
@@ -308,25 +323,45 @@ export const useGroupStore = defineStore('group', () => {
         loading.value = true
 
         try {
-            await persistCreateGroup(group, loadGroups)
+            if (settingsStore.settings.overrideWithSameName) {
+                await deleteGroupNamed(group.name)
+            }
+
+            // Must run after the delete above,
+            // otherwise the old name still counts as taken
+            const name = uniqueGroupName(group.name)
+
+            await groupStorage.save({ ...group, name })
+
+            if (loadGroups) {
+                await reloadGroupsAndNotifications()
+            }
         } finally {
             loading.value = false
         }
+    }
+
+    function uniqueGroupName(name: string): string {
+        const takenNames = new Set(allGroups.value.map(group => group.name))
+        return forceUniqueName(name, takenNames)
+    }
+
+    async function reloadGroupsAndNotifications(): Promise<void> {
+        await load()
+        await notificationStore.recalculateNotification()
     }
 
     async function update(group: Group): Promise<void> {
         group.updatedAt = Date.now()
 
         const takenNames = new Set(
-            initialGroups.value.filter(g => g.id !== group.id).map(g => g.name),
+            allGroups.value.filter(g => g.id !== group.id).map(g => g.name),
         )
 
         group.name = forceUniqueName(group.name, takenNames)
 
         await groupStorage.save(group)
-        await load()
-
-        await notificationStore.recalculateNotification()
+        await reloadGroupsAndNotifications()
     }
 
     async function isGroupHiddenInCurrentWindow(group: Group): Promise<boolean> {
@@ -384,27 +419,13 @@ export const useGroupStore = defineStore('group', () => {
         logger().info(`Group "${id}" not found for "${operation}" operation`)
     }
 
-    async function persistCreateGroup(
-        group: Group,
-        loadGroups: boolean,
-    ): Promise<void> {
-        const takenNames = new Set(initialGroups.value.map(g => g.name))
-        group.name = forceUniqueName(group.name, takenNames)
-
-        await groupStorage.save(group)
-
-        if (loadGroups) {
-            await load()
-            await notificationStore.recalculateNotification()
-        }
-    }
-
     return {
-        initialGroups,
+        allGroups,
         selectedGroup,
+        rootGroups,
         loading,
-        groups,
         get,
+        getNamed,
         create,
         update,
         lock,
@@ -412,11 +433,13 @@ export const useGroupStore = defineStore('group', () => {
         exist,
         updateFields,
         unlock,
+        removeBindUrl,
         createMany,
         importMany,
         deleteAll,
         updateLink,
         deleteGroup,
+        deleteGroupNamed,
         folderGroups,
         deleteLinkFrom,
         insertLinksInto,

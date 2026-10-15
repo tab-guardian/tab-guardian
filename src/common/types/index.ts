@@ -6,6 +6,10 @@ export type LinkBuffer = {
     link: Link
 }
 
+export type GroupOperationResult =
+    | { failed: true; group: null; message: string }
+    | { failed: false; group: Group; message: string }
+
 export type ExportSchema = {
     meta: {
         schema: number

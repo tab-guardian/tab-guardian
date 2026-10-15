@@ -21,7 +21,7 @@ jobs:
         run: cp .env.example .env
 
       - name: Install Dependencies
-        run: npm install
+        run: npm ci
 
       - name: Run Vitest Tests
         run: npm run test run
@@ -30,4 +30,4 @@ jobs:
         run: npm run check
 
       - name: Run Prettier Check
-        run: npm run prettier
+        run: npm run prettier-check

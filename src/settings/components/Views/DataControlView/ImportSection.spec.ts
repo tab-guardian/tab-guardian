@@ -133,7 +133,7 @@ describe('ImportSection', () => {
 
         // Wait until groups will appear in the store after import
         await waitUntil(() => {
-            expect(groupStore.groups.length).toBeGreaterThan(0)
+            expect(groupStore.rootGroups.length).toBeGreaterThan(0)
         })
 
         const savedGroup = storedGroup(lockedGroup.name)
@@ -166,7 +166,7 @@ describe('ImportSection', () => {
         chooseFile(wrapper, encryptedExport)
 
         await waitUntil(() => {
-            expect(groupStore.groups.length).toBeGreaterThan(0)
+            expect(groupStore.rootGroups.length).toBeGreaterThan(0)
         })
 
         const savedGroup = storedGroup('open-group')
@@ -189,7 +189,7 @@ describe('ImportSection', () => {
         chooseFile(wrapper, buildPlainFile(group))
 
         await waitUntil(() => {
-            expect(groupStore.groups.length).toBeGreaterThan(0)
+            expect(groupStore.rootGroups.length).toBeGreaterThan(0)
         })
 
         expect(storedGroup(group.name).links[0].url).toEqual(linkUrl)
@@ -219,7 +219,7 @@ describe('ImportSection', () => {
         chooseFile(wrapper, buildPlainFile([firstGroup, secondGroup]))
 
         await waitUntil(() => {
-            expect(groupStore.groups.length).toBeGreaterThan(1)
+            expect(groupStore.rootGroups.length).toBeGreaterThan(1)
         })
 
         expect(storedGroup('first-group').links[0].url).toEqual(firstUrl)
@@ -361,11 +361,11 @@ describe('ImportSection', () => {
 
         await waitUntil(() => storedGroup('fresh-group'))
 
-        expect(groupStore.groups).toHaveLength(2)
+        expect(groupStore.rootGroups).toHaveLength(2)
         expect(storedGroup(declinedGroup.name).links[0].url).toEqual(originalUrl)
         expect(storedGroup('fresh-group').links[0].url).toEqual(freshUrl)
 
-        const storedNames = groupStore.groups.map(g => g.name)
+        const storedNames = groupStore.rootGroups.map(g => g.name)
         expect(storedNames).not.toContain(`${declinedGroup.name} (Copy 1)`)
 
         wrapper.unmount()
@@ -419,14 +419,14 @@ describe('ImportSection', () => {
         )
 
         await waitUntil(() => {
-            const group = useGroupStore().initialGroups.find(g => g.id === storedId)
+            const group = useGroupStore().allGroups.find(g => g.id === storedId)
             expect(group?.links[0].url).toEqual(incomingUrl)
         })
 
         expect(modalStore.show).toHaveBeenCalledWith('confirm', expect.anything())
-        expect(groupStore.initialGroups).toHaveLength(1)
+        expect(groupStore.allGroups).toHaveLength(1)
 
-        const names = groupStore.initialGroups.map(g => g.name)
+        const names = groupStore.allGroups.map(g => g.name)
         expect(names).not.toContain('in-folder-group (Copy 1)')
 
         wrapper.unmount()
@@ -465,11 +465,11 @@ describe('ImportSection', () => {
 
         // Wait until group with incoming name appears
         await waitUntil(() => {
-            const names = useGroupStore().groups.map(g => g.name)
+            const names = useGroupStore().rootGroups.map(g => g.name)
             expect(names).toContain(incomingName)
         })
 
-        expect(useGroupStore().groups).toHaveLength(1)
+        expect(useGroupStore().rootGroups).toHaveLength(1)
 
         const stored = storedGroup(incomingName)
 

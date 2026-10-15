@@ -104,7 +104,7 @@ async function importNormalizedFile(exportFile: ExportSchema) {
 }
 
 async function shouldReplaceDuplicateGroups(groups: Group[]): Promise<boolean> {
-    const { duplicates } = splitDuplicateGroups(groups, groupStore.initialGroups)
+    const { duplicates } = splitDuplicateGroups(groups, groupStore.allGroups)
 
     if (duplicates.length === 0) {
         return false
@@ -151,7 +151,7 @@ function resetState(): void {
                 id="choose-file"
             />
 
-            <Progress v-if="progressStore.loading" />
+            <Progress v-if="progressStore.loading && progressStore.current !== 0" />
         </div>
     </Section>
 </template>

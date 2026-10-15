@@ -110,7 +110,6 @@
     "move_tabs_into_group": { "message": "移动标签页到该组" },
     "new_name_saved": { "message": "新名称已保存" },
     "group_private_unlock_it": { "message": "该组是私有的。您需要解锁以查看选项" },
-    "group_not_found": { "message": "未找到该组" },
     "group_already_locked": { "message": "该组已锁定" },
     "private_group_unlocked": { "message": "该私有组已解锁" },
     "no_tabs_to_save": { "message": "没有标签页可保存" },
@@ -214,5 +213,8 @@
     },
     "legacy_encryption_warning": {
         "message": "使用旧版加密方式保存。请先解锁，然后重新锁定该组以重新加密。"
+    },
+    "group_with_credentials_not_found": {
+        "message": "未找到输入凭据所属的组。请重试"
     }
 }

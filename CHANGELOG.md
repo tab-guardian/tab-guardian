@@ -1,17 +1,26 @@
 # Release Notes
 
+## v1.19.2 (2026-10-15)
+
+- 🐛 Fixed issue where 'Group details' button wasn't showing up in the group menu. Closes [#144](https://codeberg.org/tab-guardian/tab-guardian/issues/144).
+- 🛡️ Improved security for `Remove URL lock from a private group` section. Now, it will always show the same error to prevent from guessing which group exist and which doesn't. Closes [#143](https://codeberg.org/tab-guardian/tab-guardian/issues/143).
+- 🐛 Fixed incorrect message in `Remove URL lock` section. Closes [#141](https://codeberg.org/tab-guardian/tab-guardian/issues/141).
+- 🐛 Fixed progress bar is visible with 0% progress in "Import Tab Groups" section. Closes [#142](https://codeberg.org/tab-guardian/tab-guardian/issues/142).
+- 🐛 Fixed issue where.`If the new group name matches an existing one, override it (overrideWithSameName)` setting was not used anywhere. Closes [#145](https://codeberg.org/tab-guardian/tab-guardian/issues/145).
+- 🐛 Improve Forgejo Actions workflow. Closes [#129](https://codeberg.org/tab-guardian/tab-guardian/issues/129).
+
 ## v1.19.1 (2026-10-14)
 
-- 🐛 Fixed issue "Hide tabs in folders in private window". [#107](https://codeberg.org/tab-guardian/tab-guardian/issues/107)
+- 🐛 Fixed issue "Hide tabs in folders in private window". Closes [#107](https://codeberg.org/tab-guardian/tab-guardian/issues/107).
 
 ## v1.19.0 (2026-10-14)
 
-- 🐛 Fixed "Erase all groups" also wiping settings, folders and saved passwords. [#119](https://codeberg.org/tab-guardian/tab-guardian/issues/119)
-- ✨ Export file now has a versioned format with groups, folders, and extension metadata. Old single-group and groups-array files still import. [#104](https://codeberg.org/tab-guardian/tab-guardian/issues/104)
-- 🐛 Fixed exporting issue which doesn't include folders and their content to export file. [#111](https://codeberg.org/tab-guardian/tab-guardian/issues/111)
+- 🐛 Fixed "Erase all groups" also wiping settings, folders and saved passwords. [#119](https://codeberg.org/tab-guardian/tab-guardian/issues/119).
+- ✨ Export file now has a versioned format with groups, folders, and extension metadata. Old single-group and groups-array files still import. [#104](https://codeberg.org/tab-guardian/tab-guardian/issues/104).
+- 🐛 Fixed exporting issue which doesn't include folders and their content to export file. [#111](https://codeberg.org/tab-guardian/tab-guardian/issues/111).
 - 🐛 Fixed replacing a group on import deleting its saved password. Matching groups are now updated in place instead of deleted and recreated.
 - 🧑‍💻 Declining the duplicate prompt on import now skips matching groups instead of importing them as copies.
-- 🧑‍💻 Creating a group with a duplicate name now saves it as `<name> (Copy n)` instead of silently ignoring it. [#127](https://codeberg.org/tab-guardian/tab-guardian/issues/127)
+- 🧑‍💻 Creating a group with a duplicate name now saves it as `<name> (Copy n)` instead of silently ignoring it. [#127](https://codeberg.org/tab-guardian/tab-guardian/issues/127).
 - 🧑‍💻 Creating a folder with a duplicate name now saves it as `<name> (Copy n)` instead of silently ignoring it.
 - 🧑‍💻 Split confusing `save`/`saveMany` group functions into `create`, `update`, `createMany`, and `importMany` with a single responsibility each.
 - 🧑‍💻 Improved id generation for groups and folders. Ids now use cryptographic randomness instead of `Math.random`, making collisions across devices and backups far less likely.
@@ -20,16 +29,16 @@
 ## v1.18.2 (2026-10-09)
 
 - 🐛 Fixed importing a password-protected export wiping out your locked group. It was getting encrypted a second time on import, after which neither the export password nor the original one worked.
-- 🐛 Fixed issue where previous password wasn't cleared from cache. [#110](https://codeberg.org/tab-guardian/tab-guardian/issues/110)
+- 🐛 Fixed issue where previous password wasn't cleared from cache. [#110](https://codeberg.org/tab-guardian/tab-guardian/issues/110).
 
 ## v1.18.1 (2026-10-08)
 
-- 🐛 Fixed the weakness where saved link (tab) fields shared encryption randomness. Re-saving private groups re-encrypts them securely.
+- 🛡️ Fixed the weakness where saved link (tab) fields shared encryption randomness. Re-saving private groups re-encrypts them securely.
 - 🐛 Fixed infinite loading on a "Lock" button when you are trying to lock your private group, and it gives you the error that the password needs to be more than 6 characters.
 
 ## v1.18.0 (2026-08-11)
 
-- 🧑‍💻 Moved from GitHub to Codeberg
+- 🧑‍💻 Moved from GitHub to Codeberg.
 
 ## v1.17.1 (2026-01-19)
 
@@ -47,7 +56,7 @@
 
 ## v1.16.6 (2025-11-17)
 
-- 🐛 Fixed bug with password cache issue where password would not delete itself from storage after locking the group back [#96](https://codeberg.org/tab-guardian/tab-guardian/issues/96)
+- 🐛 Fixed bug with password cache issue where password would not delete itself from storage after locking the group back [#96](https://codeberg.org/tab-guardian/tab-guardian/issues/96).
 
 ## v1.16.5 (2025-11-09)
 
@@ -156,7 +165,7 @@
 
 ## v1.12.0 (2025-09-24)
 
-- ✨ Added improved encryption algoriphm `AES-GCM` with WEB Crypto API without breaking backward compatibility [#54](https://codeberg.org/tab-guardian/tab-guardian/issues/54)
+- 🛡️ Added improved encryption algoriphm `AES-GCM` with WEB Crypto API without breaking backward compatibility [#54](https://codeberg.org/tab-guardian/tab-guardian/issues/54)
 - ✨ Added showing a warning message on private groups that use the old encryption implementation to suggest them to re-encrypt for improved security
 - ✨ Added a loading spinner that appears when you unlock and lock the private group [#55](https://codeberg.org/tab-guardian/tab-guardian/issues/55)
 - ✨ Added a progress bar that shows progress on encryption and decryption of groups

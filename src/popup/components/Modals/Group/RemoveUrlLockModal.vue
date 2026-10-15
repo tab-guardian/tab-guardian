@@ -1,14 +1,10 @@
 <script setup lang="ts">
-import type { Group } from '@common/types'
 import { ref, reactive, computed, onMounted } from 'vue'
 import { trans } from '@common/modules'
 import { showToast } from '@common/modules/toast'
 import { useModalStore } from '@/stores/modal'
 import { useGroupStore } from '@/stores/group'
 import { useAttemptsStore } from '@/stores/attempts'
-import { useCryptoStore } from '@/stores/crypto'
-import { getDecryptionError } from '@/errors'
-import { cloneDeep } from 'lodash'
 import Modal from '@/components/Modals/Modal.vue'
 import Button from '@common/components/Form/Button.vue'
 import ChevronRightIcon from '@common/components/Icons/ChevronRightIcon.vue'
@@ -19,7 +15,6 @@ import Progress from '@common/components/Progress.vue'
 const modalStore = useModalStore()
 const groupStore = useGroupStore()
 const attemptsStore = useAttemptsStore()
-const cryptoStore = useCryptoStore()
 
 const processing = ref<boolean>(false)
 const formData = reactive({ name: '', pass: '' })
@@ -36,64 +31,44 @@ async function submit(): Promise<void> {
         return
     }
 
+    processing.value = true
+
     const attempt = await attemptsStore.makeAttempt()
 
     if (!attempt.success) {
-        showToast({ text: attempt.error, type: 'error' })
-        hideModal()
+        fail(attempt.error)
         return
     }
 
-    processing.value = true
+    const result = await groupStore.removeBindUrl(formData.name, formData.pass)
 
-    const group = groupStore.get(formData.name)
-
-    if (!group) {
-        showToast({ text: trans('group_not_found'), type: 'error' })
-        hideModal()
+    if (result.failed) {
+        fail(result.message)
         return
     }
 
-    try {
-        await removeBindUrl(group)
-        await attemptsStore.unlock()
-    } catch (err: any) {
-        showToast({
-            text: getDecryptionError(err),
-            type: 'error',
-        })
-    }
+    await attemptsStore.unlock()
 
     if (attemptsStore.isLocked) {
-        showToast({
-            text: attemptsStore.isLockedErrorMessage(),
-            type: 'error',
-        })
+        fail(trans('group_with_credentials_not_found'))
+        return
     }
 
-    showToast({ text: trans('bind_url_removed') })
-    hideModal()
+    showToast({ text: result.message })
+    clearForm()
+
+    modalStore.hide('removeUrlLock', {})
 }
 
-async function removeBindUrl(g: Group): Promise<void> {
-    let group = cloneDeep(g)
-
-    if (group.isEncrypted) {
-        // We decrypt just to make sure that provided password is correct
-        group = await cryptoStore.decryptGroup(group, formData.pass)
-    }
-
-    delete group.bindUrl
-    const encrypted = await cryptoStore.encryptGroup(group, formData.pass)
-    await groupStore.update(encrypted)
+function fail(text: string): void {
+    showToast({ text, type: 'error' })
+    clearForm()
 }
 
-function hideModal(): void {
+function clearForm(): void {
     formData.pass = ''
     formData.name = ''
     processing.value = false
-
-    modalStore.hide('removeUrlLock', {})
 }
 </script>
 
