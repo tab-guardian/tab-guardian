@@ -1,7 +1,8 @@
 # Release Notes
 
 ## v1.19.3 (2026-10-15)
-- 
+
+- 🐛 Fixed issue where drag events didn't work in Chromium browsers. Things like drag group into and out of folder. Closes [#120](https://codeberg.org/tab-guardian/tab-guardian/issues/120).
 
 ## v1.19.2 (2026-10-15)
 
