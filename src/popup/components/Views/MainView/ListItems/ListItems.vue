@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Group, Folder } from '@common/types'
+import type { SortableEvent } from 'vue-draggable-next'
 import { computed, ref } from 'vue'
 import { trans } from '@common/modules'
 import { useGroupStore } from '@/stores/group'
@@ -29,11 +30,23 @@ const draggableGroup = ref<number | null>(null)
 const groups = computed(() => props.groups)
 const visibleGroups = computed(() => props.groups.filter(group => !group.hide))
 
+function getFolderElement(e: DragEvent | undefined): HTMLElement | null {
+    const el = e ? document.elementFromPoint(e.clientX, e.clientY) : null
+    return el?.closest?.('[data-folder-id]') ?? null
+}
+
 function moveToFolder(e: any): void {
     isDragging.value = false
 
-    const folderElem = e.explicitOriginalTarget as HTMLElement
+    const originEvent = e.originalEvent as DragEvent | undefined
+    const folderElem = getFolderElement(originEvent)
     const groupElem = e.item as HTMLElement
+
+    if (!folderElem) {
+        throw new Error('Unexpected error: folderElem not found in moveToFolder()')
+    }
+
+    console.log({ folderElem, groupElem })
 
     const groupValue = groupElem.getAttribute('data-group-id')
     const folderValue = folderElem.getAttribute('data-folder-id')
