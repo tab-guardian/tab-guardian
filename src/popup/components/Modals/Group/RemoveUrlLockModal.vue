@@ -40,7 +40,7 @@ async function submit(): Promise<void> {
 
     if (!attempt.success) {
         showToast({ text: attempt.error, type: 'error' })
-        hideModal()
+        clearForm()
         return
     }
 
@@ -49,8 +49,11 @@ async function submit(): Promise<void> {
     const group = groupStore.get(formData.name)
 
     if (!group) {
-        showToast({ text: trans('group_not_found'), type: 'error' })
-        hideModal()
+        showToast({
+            text: trans('group_with_credentials_not_found'),
+            type: 'error',
+        })
+        clearForm()
         return
     }
 
@@ -59,20 +62,26 @@ async function submit(): Promise<void> {
         await attemptsStore.unlock()
     } catch (err: any) {
         showToast({
-            text: getDecryptionError(err),
+            text: trans('group_with_credentials_not_found'),
             type: 'error',
         })
+        clearForm()
+        return
     }
 
     if (attemptsStore.isLocked) {
         showToast({
-            text: attemptsStore.isLockedErrorMessage(),
+            text: trans('group_with_credentials_not_found'),
             type: 'error',
         })
+        clearForm()
+        return
     }
 
     showToast({ text: trans('bind_url_removed') })
-    hideModal()
+    clearForm()
+
+    modalStore.hide('removeUrlLock', {})
 }
 
 async function removeBindUrl(g: Group): Promise<void> {
@@ -88,12 +97,10 @@ async function removeBindUrl(g: Group): Promise<void> {
     await groupStore.update(encrypted)
 }
 
-function hideModal(): void {
+function clearForm(): void {
     formData.pass = ''
     formData.name = ''
     processing.value = false
-
-    modalStore.hide('removeUrlLock', {})
 }
 </script>
 

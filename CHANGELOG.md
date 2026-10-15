@@ -2,11 +2,12 @@
 
 ## v1.19.2 (2026-10-15)
 
-- 🐛 Fixed issue where 'Group details' button wasn't showing up in the group menu. [#144](https://codeberg.org/tab-guardian/tab-guardian/issues/144)
+- 🐛 Fixed issue where 'Group details' button wasn't showing up in the group menu. Closes [#144](https://codeberg.org/tab-guardian/tab-guardian/issues/144)
+- 🛡️ Improved security for `Remove URL lock from a private group` section. Now, it will always show the same error to prevent from guessing which group exist and which doesn't. Closes [#143](https://codeberg.org/tab-guardian/tab-guardian/issues/143).
 
 ## v1.19.1 (2026-10-14)
 
-- 🐛 Fixed issue "Hide tabs in folders in private window". [#107](https://codeberg.org/tab-guardian/tab-guardian/issues/107)
+- 🐛 Fixed issue "Hide tabs in folders in private window". Closes [#107](https://codeberg.org/tab-guardian/tab-guardian/issues/107)
 
 ## v1.19.0 (2026-10-14)
 
@@ -28,7 +29,7 @@
 
 ## v1.18.1 (2026-10-08)
 
-- 🐛 Fixed the weakness where saved link (tab) fields shared encryption randomness. Re-saving private groups re-encrypts them securely.
+- 🛡️ Fixed the weakness where saved link (tab) fields shared encryption randomness. Re-saving private groups re-encrypts them securely.
 - 🐛 Fixed infinite loading on a "Lock" button when you are trying to lock your private group, and it gives you the error that the password needs to be more than 6 characters.
 
 ## v1.18.0 (2026-08-11)
@@ -160,7 +161,7 @@
 
 ## v1.12.0 (2025-09-24)
 
-- ✨ Added improved encryption algoriphm `AES-GCM` with WEB Crypto API without breaking backward compatibility [#54](https://codeberg.org/tab-guardian/tab-guardian/issues/54)
+- 🛡️ Added improved encryption algoriphm `AES-GCM` with WEB Crypto API without breaking backward compatibility [#54](https://codeberg.org/tab-guardian/tab-guardian/issues/54)
 - ✨ Added showing a warning message on private groups that use the old encryption implementation to suggest them to re-encrypt for improved security
 - ✨ Added a loading spinner that appears when you unlock and lock the private group [#55](https://codeberg.org/tab-guardian/tab-guardian/issues/55)
 - ✨ Added a progress bar that shows progress on encryption and decryption of groups
