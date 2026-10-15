@@ -6,6 +6,7 @@ import { describe, it, expect, beforeEach, afterEach, suite, vi } from 'vitest'
 import { createPinia, setActivePinia } from 'pinia'
 import { useGroupStore } from '@/stores/group'
 import { useFolderStore } from '@/stores/folder'
+import { useSettingsStore } from '@/stores/settings'
 import { groupStorage } from '@common/modules/storage/group'
 import { fakeGroup, fakeLink } from '@common/modules/fake'
 import { KEY_PREFIX, passwordStorage } from '@common/modules/storage/password'
@@ -56,6 +57,46 @@ describe('group store', () => {
             const obj = JSON.parse(result!)
 
             expect(obj.id).equal(group.id)
+        })
+
+        it('replaces group with same name when override setting is on', async () => {
+            const groupStore = useGroupStore()
+            const settingsStore = useSettingsStore()
+            const newUrl = 'https://new.example/page'
+
+            settingsStore.settings.overrideWithSameName = true
+
+            await groupStore.create(
+                fakeGroup({
+                    name: 'work',
+                    links: [fakeLink({ url: 'https://old.example/page' })],
+                }),
+            )
+
+            await groupStore.create(
+                fakeGroup({ name: 'work', links: [fakeLink({ url: newUrl })] }),
+            )
+
+            expect(groupStore.rootGroups).toHaveLength(1)
+
+            const group = groupStore.rootGroups[0]!
+            expect(group.name).equal('work')
+            expect(group.links[0]?.url).toEqual(newUrl)
+        })
+
+        it('copies group with same name when override setting is off', async () => {
+            const groupStore = useGroupStore()
+            const groupName = 'work'
+
+            expect(useSettingsStore().settings.overrideWithSameName).toBe(false)
+
+            await groupStore.create(fakeGroup({ name: groupName }))
+            await groupStore.create(fakeGroup({ name: groupName }))
+
+            const groupNames = groupStore.rootGroups.map(g => g.name)
+
+            expect(groupNames).toContain(groupName)
+            expect(groupNames).toContain(`${groupName} (Copy 1)`)
         })
 
         it('create does not touch updatedAt timestamp', async () => {

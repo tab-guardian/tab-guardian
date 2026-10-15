@@ -6,6 +6,7 @@
 - 🛡️ Improved security for `Remove URL lock from a private group` section. Now, it will always show the same error to prevent from guessing which group exist and which doesn't. Closes [#143](https://codeberg.org/tab-guardian/tab-guardian/issues/143).
 - 🐛 Fixed incorrect message in `Remove URL lock` section. Closes [#141](https://codeberg.org/tab-guardian/tab-guardian/issues/141)
 - 🐛 Fixed progress bar is visible with 0% progress in "Import Tab Groups" section. Closes [#142](https://codeberg.org/tab-guardian/tab-guardian/issues/142)
+- 🐛 Fixed issue where.`If the new group name matches an existing one, override it (overrideWithSameName)` setting was not used anywhere. Closes [#145](https://codeberg.org/tab-guardian/tab-guardian/issues/145)
 
 ## v1.19.1 (2026-10-14)
 
