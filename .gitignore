@@ -5,6 +5,5 @@ node_modules
 firefox.zip
 chrome.zip
 source.zip
-package-lock.json
 .DS_Store
 Session.vim
