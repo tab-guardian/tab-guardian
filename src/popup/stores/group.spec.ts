@@ -800,7 +800,7 @@ describe('group store', () => {
 
             await groupStore.createMany([group1, group2, group3])
 
-            const groups = await groupStore.folderGroups(2)
+            const groups = groupStore.folderGroups(2)
 
             expect(groups).toHaveLength(2)
             expect(groups[0].id).equal(group1.id)
@@ -816,7 +816,7 @@ describe('group store', () => {
 
             await groupStore.createMany([group1, group2, group3])
 
-            const groups = await groupStore.folderGroups(3)
+            const groups = groupStore.folderGroups(3)
 
             expect(groups).toHaveLength(0)
         })
