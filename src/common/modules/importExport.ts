@@ -62,3 +62,21 @@ export function splitDuplicateGroups(
 
     return { duplicates, fresh }
 }
+
+// Drops folderId from groups whose folder is missing, so they land
+// at the top level instead of being invisible.
+export function dropMissingFolderIds(
+    groups: readonly Group[],
+    folders: readonly Folder[],
+): Group[] {
+    const folderIds = new Set(folders.map(folder => folder.id))
+
+    return groups.map(group => {
+        if (group.folderId === undefined || folderIds.has(group.folderId)) {
+            return group
+        }
+
+        const { folderId: _, ...topLevelGroup } = group
+        return topLevelGroup
+    })
+}

@@ -26,7 +26,7 @@ function getStyles(t: Params['type']): Params['style'] {
         borderRadius: '8px',
         position: 'absolute',
         width: '90%',
-        maxWidth: '90%',
+        maxWidth: '380px',
         textAlign: 'center',
         boxShadow: t === 'info' ? '' : ERROR_SHADOW,
     }

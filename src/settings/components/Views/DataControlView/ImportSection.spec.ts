@@ -197,6 +197,25 @@ describe('ImportSection', () => {
         wrapper.unmount()
     })
 
+    it('lands imported group with unknown folder at top level', async () => {
+        const pinia = useFreshPinia()
+        const groupStore = useGroupStore()
+
+        const group = fakeGroup({ name: 'dangling-group', folderId: 999999 })
+
+        const wrapper = mountImportSection(pinia)
+        chooseFile(wrapper, buildPlainFile(group))
+
+        await waitUntil(() => {
+            expect(groupStore.rootGroups.length).toBeGreaterThan(0)
+        })
+
+        const saved = storedGroup('dangling-group')
+        expect(saved.folderId).toBeUndefined()
+
+        wrapper.unmount()
+    })
+
     it('imports legacy groups array', async () => {
         const pinia = useFreshPinia()
         const groupStore = useGroupStore()

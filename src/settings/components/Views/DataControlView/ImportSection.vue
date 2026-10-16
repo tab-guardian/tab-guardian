@@ -13,6 +13,7 @@ import { useModalStore } from '@/stores/modal'
 import { useProgressStore } from '@/stores/progress'
 import {
     decompressExportPayload,
+    dropMissingFolderIds,
     isEncryptedExport,
     normalizeExportSchema,
     splitDuplicateGroups,
@@ -93,9 +94,9 @@ async function importNormalizedFile(exportFile: ExportSchema) {
     await groupStore.load()
 
     const folders = cloneDeep(exportFile.folders) as Folder[]
-    const groups = cloneDeep(exportFile.groups) as Group[]
-
     await folderStore.createMany(folders)
+
+    const groups = dropMissingFolderIds(exportFile.groups, folderStore.folders)
 
     const shouldReplaceDuplicates = await shouldReplaceDuplicateGroups(groups)
     await groupStore.importMany(groups, shouldReplaceDuplicates)

@@ -3,9 +3,10 @@
 import { describe, it, expect } from 'vitest'
 import pako from 'pako'
 import { toBase64 } from '@common/modules/base64'
-import { fakeGroup } from '@common/modules/fake'
+import { fakeFolder, fakeGroup } from '@common/modules/fake'
 import {
     decompressExportPayload,
+    dropMissingFolderIds,
     generateExportSchema,
     isEncryptedExport,
     normalizeExportSchema,
@@ -71,5 +72,55 @@ describe('importExport helpers', () => {
 
         expect(duplicateIds).toEqual([2])
         expect(freshIds).toEqual([3])
+    })
+
+    it('drops folderId when no matching folder exists', () => {
+        const groups = [fakeGroup({ id: 1, folderId: 42 })]
+
+        const actual = dropMissingFolderIds(groups, [])
+
+        expect(actual).toHaveLength(1)
+        expect(actual[0]?.folderId).toBeUndefined()
+    })
+
+    it('keeps folderId when the folder exists', () => {
+        const folder = fakeFolder({ id: 42 })
+        const groups = [fakeGroup({ id: 1, folderId: 42 })]
+
+        const actual = dropMissingFolderIds(groups, [folder])
+
+        expect(actual).toHaveLength(1)
+        expect(actual[0]?.folderId).toEqual(42)
+    })
+
+    it('leaves groups without folderId untouched', () => {
+        const group = fakeGroup({ id: 1 })
+
+        const actual = dropMissingFolderIds([group], [])
+
+        expect(actual).toHaveLength(1)
+        expect(actual[0]).toEqual(group)
+    })
+
+    it('does not mutate the input groups', () => {
+        const groups = [fakeGroup({ id: 1, folderId: 42 })]
+
+        dropMissingFolderIds(groups, [])
+
+        expect(groups[0]?.folderId).toEqual(42)
+    })
+
+    it('handles mixed groups with and without matching folders', () => {
+        const folder = fakeFolder({ id: 42 })
+        const groups = [
+            fakeGroup({ id: 1, folderId: 42 }),
+            fakeGroup({ id: 2, folderId: 43 }),
+        ]
+
+        const actual = dropMissingFolderIds(groups, [folder])
+
+        expect(actual).toHaveLength(2)
+        expect(actual[0]?.folderId).toEqual(42)
+        expect(actual[1]?.folderId).toBeUndefined()
     })
 })
