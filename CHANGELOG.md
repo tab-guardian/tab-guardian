@@ -3,6 +3,7 @@
 ## 1.19.5 (2026-10-17)
 
 - 🐛 Fixed decrypting a private group with WebCrypto fields but missing `algo` field silently returning corrupted links. It now throws instead.
+- 🐛 Fixed incorrect error message for storage quota. Closes [#122](https://codeberg.org/tab-guardian/tab-guardian/issues/122).
 
 ## 1.19.4 (2026-10-16)
 

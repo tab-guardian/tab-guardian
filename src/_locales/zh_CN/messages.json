@@ -16,8 +16,11 @@
         "placeholders": { "n": { "content": "$1" } }
     },
     "not_enough_storage": {
-        "message": "存储配额已满。最大配额为 $n$ 兆字节，您已使用 $n$ 兆字节",
-        "placeholders": { "n": { "content": "$1" } }
+        "message": "存储配额已满。最大配额为 $max$ 兆字节，您已使用 $used$ 兆字节",
+        "placeholders": {
+            "max": { "content": "$1" },
+            "used": { "content": "$2" }
+        }
     },
     "many_attempts_next_attempt_in": {
         "message": "尝试次数过多。下一次尝试在 $n$ 分钟后",
