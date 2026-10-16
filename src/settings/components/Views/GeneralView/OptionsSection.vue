@@ -16,6 +16,12 @@ const incognitoWarningMessage = computed<string | null>(() => {
         : trans('go_to_settings_and_enable_allow_incognito')
 })
 
+const sessionWarningMessage = computed<string | null>(() => {
+    return runtime.sessionStorage.isAvailable
+        ? null
+        : trans('remember_pass_unavailable')
+})
+
 onMounted(async () => {
     incognitoModeAllowed.value = await runtime.extension.isAllowedIncognitoAccess()
 })
@@ -47,6 +53,8 @@ function save(): void {
                 @changed="save"
                 v-model="settingsStore.settings.rememberPasswordAfterUnlock"
                 :description="trans('remember_pass_after_unlock_desc')"
+                :disabled="!runtime.sessionStorage.isAvailable"
+                :warning="sessionWarningMessage"
             >
                 {{ trans('remember_pass_after_unlock') }}
             </SlideSwitch>

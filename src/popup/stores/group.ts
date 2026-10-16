@@ -109,7 +109,7 @@ export const useGroupStore = defineStore('group', () => {
             const decryptedGroup = await cryptoStore.decryptGroup(group, password)
             await update(decryptedGroup)
 
-            if (settingsStore.settings.rememberPasswordAfterUnlock) {
+            if (settingsStore.rememberPasswordEnabled) {
                 await passwordStorage.save(group.id, password)
             }
 

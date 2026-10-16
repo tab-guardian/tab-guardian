@@ -2,11 +2,13 @@ import type { PlatformRuntime } from '@common/types/runtime'
 import { mapToTab, mapToWindow } from '@common/modules/runtime/maps'
 import { logger } from '@common/modules'
 import {
-    getFromExtentionStorage,
+    decodeStorageEntries,
     throwIfQuotaExceeds,
 } from '@common/modules/runtime/utils'
 
 export function getFirefoxRuntimeAdapter(): PlatformRuntime {
+    const nativeSession = browser.storage.session ?? null
+
     return {
         trans(msg, ...args) {
             return browser.i18n.getMessage(msg, args)
@@ -63,8 +65,8 @@ export function getFirefoxRuntimeAdapter(): PlatformRuntime {
 
             async get<T>(keys: string | string[]) {
                 return new Promise<T[]>(async resolve => {
-                    const result = await browser.storage.local.get(keys)
-                    resolve(getFromExtentionStorage<T>(keys, result))
+                    const entries = await browser.storage.local.get(keys)
+                    resolve(decodeStorageEntries<T>(keys, entries))
                 })
             },
 
@@ -96,6 +98,40 @@ export function getFirefoxRuntimeAdapter(): PlatformRuntime {
                     .join('')
 
                 return new TextEncoder().encode(entries).length
+            },
+        },
+
+        sessionStorage: {
+            isAvailable: nativeSession !== null,
+
+            async get<T>(keys: string | string[]) {
+                if (!nativeSession) {
+                    return []
+                }
+
+                const entries = await nativeSession.get(keys)
+                return decodeStorageEntries<T>(keys, entries)
+            },
+
+            async set(key, value) {
+                if (!value) {
+                    logger().error(
+                        `Failed to save "${key}" to session storage, no value`,
+                    )
+                    return
+                }
+
+                if (!nativeSession) {
+                    return
+                }
+
+                await nativeSession.set({ [key]: JSON.stringify(value) })
+            },
+
+            async remove(key) {
+                if (nativeSession) {
+                    await nativeSession.remove(key)
+                }
             },
         },
 

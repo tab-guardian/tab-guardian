@@ -15,14 +15,6 @@
         "message": "You have $n$ unlocked private groups. Please don't forget to lock them back when you no longer need it.",
         "placeholders": { "n": { "content": "$1" } }
     },
-    "clear_cache_desc": {
-        "message": "Free $n$ bytes of cache without loosing any data. It's completely safe and recommended to do.",
-        "placeholders": { "n": { "content": "$1" } }
-    },
-    "cache_cleared_on": {
-        "message": "Your cache was cleared on $n$ bytes",
-        "placeholders": { "n": { "content": "$1" } }
-    },
     "not_enough_storage": {
         "message": "Cannot exceed storage quota. Maximum quota is $n$ MB, you use $n$ MB",
         "placeholders": { "n": { "content": "$1" } }
@@ -212,8 +204,10 @@
     "nothing_to_paste": { "message": "There is nothing to paste" },
     "general": { "message": "General" },
     "data_control": { "message": "Data Control" },
-    "clear_cache": { "message": "Clear Cache" },
     "remember_pass_after_unlock": { "message": "Remember my password after unlock" },
+    "remember_pass_unavailable": {
+        "message": "Not available: your browser version has no session storage. Update the browser to enable remembering passwords"
+    },
     "make_open": { "message": "Make open" },
     "are_you_sure_to_make_group_open": {
         "message": "Are you sure you want to make this group open? It means that you don't need to enter a password to access this group"
@@ -242,7 +236,7 @@
         "message": "Bind URL was removed from the group. The group is accessible."
     },
     "remember_pass_after_unlock_desc": {
-        "message": "If you disable this option, you will need to enter a password everytime when you want to lock any private group. Keeping this option enabled saves password in temporary and secure storage and allows you to lock groups back without entering your password"
+        "message": "If you disable this option, you will need to enter a password everytime when you want to lock any private group. Keeping this option enabled keeps the password only in memory until the browser closes and never writes it to disk, allowing you to lock groups back without entering your password"
     },
     "legacy_encryption_warning": {
         "message": "Saved with older encryption. Unlock then lock this group again to re-encrypt it."

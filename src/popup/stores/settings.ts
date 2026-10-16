@@ -1,5 +1,5 @@
 import type { Settings } from '@common/types'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
 import { runtime } from '@common/modules/runtime'
 
@@ -13,6 +13,13 @@ export const useSettingsStore = defineStore('settings', () => {
     })
 
     const loading = ref<boolean>(false)
+
+    const rememberPasswordEnabled = computed<boolean>(() => {
+        return (
+            settings.value.rememberPasswordAfterUnlock &&
+            runtime.sessionStorage.isAvailable
+        )
+    })
 
     async function load(): Promise<void> {
         loading.value = true
@@ -36,6 +43,7 @@ export const useSettingsStore = defineStore('settings', () => {
     return {
         settings,
         loading,
+        rememberPasswordEnabled,
         save,
         load,
     }

@@ -25,7 +25,7 @@ async function promptEnterPassword(): Promise<void> {
         return
     }
 
-    if (!settingsStore.settings.rememberPasswordAfterUnlock) {
+    if (!settingsStore.rememberPasswordEnabled) {
         useNewPassword.value = true
     }
 
@@ -97,7 +97,7 @@ async function lockGroup(pass: string): Promise<void> {
             </Button>
 
             <label
-                v-if="settingsStore.settings.rememberPasswordAfterUnlock"
+                v-if="settingsStore.rememberPasswordEnabled"
                 class="flex gap-1.5 align-center opacity-80"
             >
                 <input type="checkbox" v-model="useNewPassword" />

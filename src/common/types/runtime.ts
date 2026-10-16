@@ -52,6 +52,13 @@ export type PlatformRuntime = {
         getBytesInUse(): Promise<number>
     }
 
+    sessionStorage: {
+        isAvailable: boolean
+        get<T>(keys: string | string[]): Promise<T[]>
+        set<T>(key: string, value: T | null | undefined): Promise<void>
+        remove(key: string): Promise<void>
+    }
+
     tabs: {
         query(queryInfo: tabs.QueryInfo): Promise<tabs.Tab[]>
         create(createProperties: tabs.CreateProperties): Promise<tabs.Tab | null>

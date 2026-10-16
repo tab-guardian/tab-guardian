@@ -9,7 +9,7 @@ import { useFolderStore } from '@/stores/folder'
 import { useSettingsStore } from '@/stores/settings'
 import { groupStorage } from '@common/modules/storage/group'
 import { fakeGroup, fakeLink } from '@common/modules/fake'
-import { KEY_PREFIX, passwordStorage } from '@common/modules/storage/password'
+import { passwordStorage } from '@common/modules/storage/password'
 
 describe('group store', () => {
     beforeEach(() => {
@@ -615,16 +615,15 @@ describe('group store', () => {
         it('deletes cached password for a private group', async () => {
             const groupStore = useGroupStore()
             const group = fakeGroup({ isPrivate: true })
-            const key = KEY_PREFIX + group.id.toString()
 
-            passwordStorage.save(group.id, 'amy-pass')
+            await passwordStorage.save(group.id, 'amy-pass')
             await groupStore.create(group)
 
-            expect(localStorage.getItem(key)).not.toBeNull()
+            expect(await passwordStorage.get(group.id)).toEqual('amy-pass')
 
             await groupStore.deleteGroup(group.id)
 
-            expect(localStorage.getItem(key)).toBeNull()
+            expect(await passwordStorage.get(group.id)).toBeNull()
         })
     })
 

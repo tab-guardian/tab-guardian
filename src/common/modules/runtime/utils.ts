@@ -6,19 +6,37 @@ import { trans } from '@common/modules'
 export function isRuntime(runtime: RuntimeType): boolean {
     switch (runtime) {
         case 'firefox':
-            return (
-                typeof browser !== 'undefined' &&
-                browser.runtime.getManifest().manifest_version === 2
-            )
+            return isFirefox()
         case 'chrome':
-            return (
-                typeof chrome !== 'undefined' &&
-                chrome.runtime.getManifest().manifest_version === 3
-            )
+            return isChrome()
         case 'web':
-            return typeof chrome === 'undefined' && typeof browser === 'undefined'
+            return !isFirefox() && !isChrome()
         default:
             throw new Error('Unknown runtime is used')
+    }
+}
+
+function isFirefox(): boolean {
+    try {
+        return (
+            typeof browser !== 'undefined' &&
+            !!browser.runtime?.id &&
+            browser.runtime.getManifest?.()?.manifest_version === 2
+        )
+    } catch {
+        return false
+    }
+}
+
+function isChrome(): boolean {
+    try {
+        return (
+            typeof chrome !== 'undefined' &&
+            !!chrome.runtime?.id &&
+            chrome.runtime.getManifest?.()?.manifest_version === 3
+        )
+    } catch {
+        return false
     }
 }
 
@@ -43,12 +61,12 @@ export function throwIfQuotaExceeds(
     }
 }
 
-export function getFromExtentionStorage<T>(
+export function decodeStorageEntries<T>(
     keys: string | string[],
-    result: { [key: string]: any },
+    entries: { [key: string]: any },
 ): T[] {
-    const get = function (key: string) {
-        const strValue: string = result[key]
+    const decodeEntry = function (key: string) {
+        const strValue: string = entries[key]
 
         if (!strValue) {
             return null
@@ -65,9 +83,9 @@ export function getFromExtentionStorage<T>(
     }
 
     if (typeof keys === 'string') {
-        const val = get(keys)
+        const val = decodeEntry(keys)
         return val ? [val] : []
     }
 
-    return keys.map(key => get(key.toString())).filter(item => item !== null)
+    return keys.map(key => decodeEntry(key)).filter(item => item !== null)
 }

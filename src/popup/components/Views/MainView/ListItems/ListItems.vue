@@ -25,31 +25,74 @@ const props = withDefaults(defineProps<Props>(), {
 const emit = defineEmits<{ (e: 'refresh'): void }>()
 
 const isDragging = ref<boolean>(false)
-const draggableGroup = ref<number | null>(null)
+const draggedGroupId = ref<number | null>(null)
 const groups = computed(() => props.groups)
 const visibleGroups = computed(() => props.groups.filter(group => !group.hide))
 
-function moveToFolder(e: any): void {
+function findElementUnderPointer(e: DragEvent | undefined): HTMLElement | null {
+    const el = e ? document.elementFromPoint(e.clientX, e.clientY) : null
+    return (el as HTMLElement | null) ?? null
+}
+
+function findFolderUnderPointer(e: DragEvent | undefined): HTMLElement | null {
+    return findElementUnderPointer(e)?.closest?.('[data-folder-id]') ?? null
+}
+
+function findDropZoneUnderPointer(e: DragEvent | undefined): HTMLElement | null {
+    return findElementUnderPointer(e)?.closest?.('[data-dropzone]') ?? null
+}
+
+function resetDragState(): void {
+    draggedGroupId.value = null
     isDragging.value = false
+}
 
-    const folderElem = e.explicitOriginalTarget as HTMLElement
-    const groupElem = e.item as HTMLElement
+async function moveGroupToFolder(groupId: number, folderId: number): Promise<void> {
+    await groupStore.updateFields(groupId, { folderId })
+    await groupStore.load()
+}
 
-    const groupValue = groupElem.getAttribute('data-group-id')
-    const folderValue = folderElem.getAttribute('data-folder-id')
+async function moveGroupToRoot(groupId: number): Promise<void> {
+    await groupStore.updateFields(groupId, {
+        folderId: config.GROUP_MISSING_FOLDER,
+    })
 
-    if (!folderValue || !groupValue) {
+    emit('refresh')
+}
+
+async function handleSortableDragEnd(e: any): Promise<void> {
+    const pointerEvent = e.originalEvent as DragEvent | undefined
+    const groupElem = e.item as HTMLElement | undefined
+
+    if (findDropZoneUnderPointer(pointerEvent)) {
+        if (draggedGroupId.value) {
+            await moveGroupToRoot(draggedGroupId.value)
+        }
+        resetDragState()
         return
     }
 
-    const folderId = Number(folderValue)
-    const groupId = Number(groupValue)
+    const folderElem = findFolderUnderPointer(pointerEvent)
 
-    groupStore.updateFields(groupId, { folderId })
-    groupStore.load()
+    if (!folderElem || !groupElem) {
+        resetDragState()
+        return
+    }
+
+    const groupId = groupElem.getAttribute('data-group-id')
+    const folderId = folderElem.getAttribute('data-folder-id')
+
+    if (!folderId || !groupId) {
+        resetDragState()
+        return
+    }
+
+    await moveGroupToFolder(Number(groupId), Number(folderId))
+
+    resetDragState()
 }
 
-function showDropZone(e: any): void {
+function handleDragStart(e: any): void {
     isDragging.value = true
 
     const groupElem = e.item
@@ -59,28 +102,20 @@ function showDropZone(e: any): void {
         return
     }
 
-    draggableGroup.value = Number(groupValue)
+    draggedGroupId.value = Number(groupValue)
 }
 
-async function moveFromFolder(e: any): Promise<void> {
-    const dropZone = e.originalTarget as HTMLElement | null
+async function handleDropZoneDrop(e: DragEvent): Promise<void> {
+    const target = e.target as HTMLElement | null
+    const dropZone = target?.closest?.('[data-dropzone]') ?? null
 
-    if (
-        !dropZone ||
-        !dropZone.hasAttribute('data-dropzone') ||
-        !draggableGroup.value
-    ) {
+    if (!dropZone || !draggedGroupId.value) {
         return
     }
 
-    await groupStore.updateFields(draggableGroup.value, {
-        folderId: config.GROUP_MISSING_FOLDER,
-    })
+    await moveGroupToRoot(draggedGroupId.value)
 
-    emit('refresh')
-
-    draggableGroup.value = null
-    isDragging.value = false
+    resetDragState()
 }
 </script>
 
@@ -94,14 +129,14 @@ async function moveFromFolder(e: any): Promise<void> {
     <div v-else class="flex flex-col border-t border-border">
         <DropArea
             v-if="isDragging && folders.length === 0"
-            @is-dropped="moveFromFolder"
+            @is-dropped="handleDropZoneDrop"
             :label="trans('drop_to_remove')"
         />
 
         <VueDraggableNext
             :sort="false"
-            @start="showDropZone"
-            @end="moveToFolder"
+            @start="handleDragStart"
+            @end="handleSortableDragEnd"
             v-model="groups"
             item-key="id"
         >

@@ -1,12 +1,19 @@
 # Release Notes
 
+## v1.19.3 (2026-10-16)
+
+- 🐛 Fixed issue where drag events didn't work in Chromium browsers. Things like drag group into and out of folder. Closes [#120](https://codeberg.org/tab-guardian/tab-guardian/issues/120).
+- 🛡️ "Remember my password after unlock" now keeps passwords in session storage (memory only, gone when the browser closes) instead of writing them to disk. Previously cached passwords are cleaned up automatically and the "Clear Cache" section is removed. Closes [#126](https://codeberg.org/tab-guardian/tab-guardian/issues/126).
+- 🧑‍💻 The remember password option is disabled with an upgrade warning on browsers without session storage support (Firefox older than 115).
+- 🐛 Fixed toast notifications rendering at inconsistent widths across browsers. They now always take 90% of the popup width.
+
 ## v1.19.2 (2026-10-15)
 
 - 🐛 Fixed issue where 'Group details' button wasn't showing up in the group menu. Closes [#144](https://codeberg.org/tab-guardian/tab-guardian/issues/144).
-- 🛡️ Improved security for `Remove URL lock from a private group` section. Now, it will always show the same error to prevent from guessing which group exist and which doesn't. Closes [#143](https://codeberg.org/tab-guardian/tab-guardian/issues/143).
+- 🛡️ Improved security for `Remove URL lock from a private group` section. Now, it will always show the same error to prevent guessing which group exists and which doesn't. Closes [#143](https://codeberg.org/tab-guardian/tab-guardian/issues/143).
 - 🐛 Fixed incorrect message in `Remove URL lock` section. Closes [#141](https://codeberg.org/tab-guardian/tab-guardian/issues/141).
 - 🐛 Fixed progress bar is visible with 0% progress in "Import Tab Groups" section. Closes [#142](https://codeberg.org/tab-guardian/tab-guardian/issues/142).
-- 🐛 Fixed issue where.`If the new group name matches an existing one, override it (overrideWithSameName)` setting was not used anywhere. Closes [#145](https://codeberg.org/tab-guardian/tab-guardian/issues/145).
+- 🐛 Fixed issue where the `If the new group name matches an existing one, override it (overrideWithSameName)` setting was not used anywhere. Closes [#145](https://codeberg.org/tab-guardian/tab-guardian/issues/145).
 - 🐛 Improve Forgejo Actions workflow. Closes [#129](https://codeberg.org/tab-guardian/tab-guardian/issues/129).
 
 ## v1.19.1 (2026-10-14)

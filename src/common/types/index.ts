@@ -28,11 +28,6 @@ export type LocaleMessageItem = {
     [key: string]: { message: string }
 }
 
-export type PasswordBytes = {
-    groupId: number
-    bytes: number
-}
-
 export type UserChoices = {
     isPrivate: boolean | null
     name: string | null
@@ -93,6 +88,12 @@ export type Settings = {
     showPrivateGroupsOnlyInIncognito: boolean
     overrideWithSameName: boolean
     showOnlyPrivateGroupsInIncognito: boolean
+
+    /**
+     * Raw user preference. Never read it directly for behavior, use the
+     * `rememberPasswordEnabled` getter instead from settings store which
+     * also checks that the browser supports session storage.
+     */
     rememberPasswordAfterUnlock: boolean
 }
 
