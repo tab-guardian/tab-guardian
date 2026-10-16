@@ -6,7 +6,7 @@ import { config } from '@common/config'
 import enMessages from '@locales/en/messages.json'
 import ruMessages from '@locales/ru/messages.json'
 import zhMessages from '@locales/zh_CN/messages.json'
-import { logger } from '..'
+import { logger } from '@common/modules'
 
 const messageMap = new Map<Locale, LocaleMessageItem>()
 messageMap.set('en', enMessages)
@@ -173,6 +173,54 @@ export function getWebRuntimeAdapter(): PlatformRuntime {
                 }
 
                 return totalBytes
+            },
+        },
+
+        sessionStorage: {
+            isAvailable: true,
+
+            async get<T>(keys: string | string[]) {
+                const getItem = function (key: string) {
+                    const strValue: string | null = sessionStorage.getItem(key)
+
+                    if (!strValue) {
+                        logger().info(`"${key}" key not found in session storage`)
+                        return null
+                    }
+
+                    const value: T | null | undefined = JSON.parse(strValue)
+
+                    if (!value) {
+                        logger().error(`Failed to parse ${key} from session storage`)
+                        return null
+                    }
+
+                    return value
+                }
+
+                if (typeof keys === 'string') {
+                    const item = getItem(keys)
+                    return item ? [item] : []
+                }
+
+                return keys
+                    .map(key => getItem(key.toString()))
+                    .filter(item => item !== null)
+            },
+
+            async set(key, value) {
+                if (!value) {
+                    logger().error(
+                        `Failed to save "${key}" to session storage, no value`,
+                    )
+                    return
+                }
+
+                sessionStorage.setItem(key, JSON.stringify(value))
+            },
+
+            async remove(key) {
+                sessionStorage.removeItem(key)
             },
         },
 

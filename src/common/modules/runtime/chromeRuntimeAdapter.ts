@@ -7,6 +7,8 @@ import {
 } from '@common/modules/runtime/utils'
 
 export function getChromeRuntimeAdapter(): PlatformRuntime {
+    const nativeSession = chrome.storage.session ?? null
+
     return {
         trans(msg, ...args) {
             return chrome.i18n.getMessage(msg, args)
@@ -93,6 +95,43 @@ export function getChromeRuntimeAdapter(): PlatformRuntime {
 
             async getBytesInUse() {
                 return await chrome.storage.local.getBytesInUse()
+            },
+        },
+
+        sessionStorage: {
+            isAvailable: nativeSession !== null,
+
+            async get<T>(keys: string | string[]) {
+                if (!nativeSession) {
+                    return []
+                }
+
+                return new Promise<T[]>(resolve => {
+                    nativeSession.get(keys, entries => {
+                        resolve(decodeStorageEntries<T>(keys, entries))
+                    })
+                })
+            },
+
+            async set(key, value) {
+                if (!value) {
+                    logger().error(
+                        `Failed to save "${key}" to session storage, no value`,
+                    )
+                    return
+                }
+
+                if (!nativeSession) {
+                    return
+                }
+
+                await nativeSession.set({ [key]: JSON.stringify(value) })
+            },
+
+            async remove(key) {
+                if (nativeSession) {
+                    await nativeSession.remove(key)
+                }
             },
         },
 
