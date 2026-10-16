@@ -71,7 +71,7 @@ export function getWebRuntimeAdapter(): PlatformRuntime {
         },
 
         storage: {
-            MAX_BYTES_QUOTA: 5_242_880,
+            MAX_BYTES_QUOTA: config.MAX_STORAGE_BYTES,
 
             async all() {
                 const result: { [key: string]: string } = {}

@@ -1,6 +1,7 @@
 import type { PlatformRuntime } from '@common/types/runtime'
 import { mapToTab, mapToWindow } from '@common/modules/runtime/maps'
 import { logger } from '@common/modules'
+import { config } from '@common/config'
 import {
     decodeStorageEntries,
     throwIfQuotaExceeds,
@@ -43,7 +44,7 @@ export function getFirefoxRuntimeAdapter(): PlatformRuntime {
         },
 
         storage: {
-            MAX_BYTES_QUOTA: 5_242_880,
+            MAX_BYTES_QUOTA: config.MAX_STORAGE_BYTES,
 
             async all() {
                 const items = await browser.storage.local.get()
