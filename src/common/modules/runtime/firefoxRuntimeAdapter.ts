@@ -2,7 +2,7 @@ import type { PlatformRuntime } from '@common/types/runtime'
 import { mapToTab, mapToWindow } from '@common/modules/runtime/maps'
 import { logger } from '@common/modules'
 import {
-    getFromExtentionStorage,
+    decodeStorageEntries,
     throwIfQuotaExceeds,
 } from '@common/modules/runtime/utils'
 
@@ -63,8 +63,8 @@ export function getFirefoxRuntimeAdapter(): PlatformRuntime {
 
             async get<T>(keys: string | string[]) {
                 return new Promise<T[]>(async resolve => {
-                    const result = await browser.storage.local.get(keys)
-                    resolve(getFromExtentionStorage<T>(keys, result))
+                    const entries = await browser.storage.local.get(keys)
+                    resolve(decodeStorageEntries<T>(keys, entries))
                 })
             },
 

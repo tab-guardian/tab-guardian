@@ -2,7 +2,7 @@ import type { PlatformRuntime } from '@common/types/runtime'
 import { mapToTab, mapToWindow } from '@common/modules/runtime/maps'
 import { logger } from '@common/modules'
 import {
-    getFromExtentionStorage,
+    decodeStorageEntries,
     throwIfQuotaExceeds,
 } from '@common/modules/runtime/utils'
 
@@ -66,8 +66,8 @@ export function getChromeRuntimeAdapter(): PlatformRuntime {
 
             async get<T>(keys: string | string[]) {
                 return new Promise<T[]>(resolve => {
-                    chrome.storage.local.get(keys, result => {
-                        resolve(getFromExtentionStorage<T>(keys, result))
+                    chrome.storage.local.get(keys, entries => {
+                        resolve(decodeStorageEntries<T>(keys, entries))
                     })
                 })
             },
