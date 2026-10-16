@@ -1,7 +1,8 @@
 # Release Notes
 
 ## 1.19.4 (2026-10-16)
-- 
+
+- 🐛 Fixed re-saving a group deleting it before writing the update, which could lose the group if the popup closed mid-save. Storage `remove` calls are now awaited so ordering stays correct. Closes [#130](https://codeberg.org/tab-guardian/tab-guardian/issues/130).
 
 ## 1.19.3 (2026-10-16)
 

@@ -50,10 +50,6 @@ export const groupStorage = {
         const ids = await groupIdsStorage.getAll()
 
         if (ids.includes(newGroup.id)) {
-            // delete old group
-            await runtime.storage.remove(newGroup.id.toString())
-
-            // save new group
             await runtime.storage.set<Group>(newGroup.id.toString(), newGroup)
             return
         }
