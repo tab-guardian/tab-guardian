@@ -90,7 +90,7 @@ export function getChromeRuntimeAdapter(): PlatformRuntime {
             },
 
             async remove(key) {
-                chrome.storage.local.remove(key)
+                await chrome.storage.local.remove(key)
             },
 
             async getBytesInUse() {

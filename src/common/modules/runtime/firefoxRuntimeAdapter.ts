@@ -87,7 +87,7 @@ export function getFirefoxRuntimeAdapter(): PlatformRuntime {
             },
 
             async remove(key) {
-                browser.storage.local.remove(key)
+                await browser.storage.local.remove(key)
             },
 
             async getBytesInUse() {
