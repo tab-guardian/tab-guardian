@@ -48,19 +48,19 @@ async function exportGroup(): Promise<void> {
     showToast({ text: trans('enter_your_password'), duration: 4000 })
 
     const resp = await modalStore.show('newPassword', {})
-    const newPass = resp?.newPass
 
-    if (newPass) {
-        const encrypted = await encryptExport(compressed, newPass)
-        await downloadExportFile(encrypted, group)
+    if (!resp || !resp.newPass) {
+        loading.value = false
+        return
     }
+
+    const encrypted = await encryptExport(compressed, resp.newPass)
+    await downloadExportFile(encrypted, group)
 }
 
 async function downloadExportFile(compressed: string, group: Group): Promise<void> {
     downloadFile(compressed, slug(group.name))
-
     loading.value = false
-
     modalStore.hide('groupMenu', {})
 }
 </script>
