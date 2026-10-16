@@ -205,6 +205,9 @@
     "general": { "message": "General" },
     "data_control": { "message": "Data Control" },
     "remember_pass_after_unlock": { "message": "Remember my password after unlock" },
+    "remember_pass_unavailable": {
+        "message": "Not available: your browser version has no session storage. Update the browser to enable remembering passwords"
+    },
     "make_open": { "message": "Make open" },
     "are_you_sure_to_make_group_open": {
         "message": "Are you sure you want to make this group open? It means that you don't need to enter a password to access this group"

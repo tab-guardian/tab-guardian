@@ -88,6 +88,12 @@ export type Settings = {
     showPrivateGroupsOnlyInIncognito: boolean
     overrideWithSameName: boolean
     showOnlyPrivateGroupsInIncognito: boolean
+
+    /**
+     * Raw user preference. Never read it directly for behavior, use the
+     * `rememberPasswordEnabled` getter instead from settings store which
+     * also checks that the browser supports session storage.
+     */
     rememberPasswordAfterUnlock: boolean
 }
 
