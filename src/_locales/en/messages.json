@@ -116,7 +116,9 @@
     "open_tabs": { "message": "Open tabs" },
     "open_tabs_delete_group": { "message": "Open tabs and delete this group" },
     "copy_tabs_into_group": { "message": "Replace group with current tabs" },
-    "move_tabs_into_group": { "message": "Replace group with current tabs and close them" },
+    "move_tabs_into_group": {
+        "message": "Replace group with current tabs and close them"
+    },
     "new_name_saved": { "message": "The new name has been saved" },
     "group_private_unlock_it": {
         "message": "This group is private. You need to unlock it to see the options"

@@ -115,7 +115,9 @@
     "open_tabs": { "message": "Открыть вкладки" },
     "open_tabs_delete_group": { "message": "Открыть вкладки и удалить эту группу" },
     "copy_tabs_into_group": { "message": "Заменить группу текущими вкладками" },
-    "move_tabs_into_group": { "message": "Заменить группу текущими вкладками и закрыть их" },
+    "move_tabs_into_group": {
+        "message": "Заменить группу текущими вкладками и закрыть их"
+    },
     "new_name_saved": { "message": "Новое имя сохранено" },
     "group_private_unlock_it": {
         "message": "Эта группа приватная. Разблокируйте её, чтобы увидеть параметры"
