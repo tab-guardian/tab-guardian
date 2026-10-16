@@ -3,6 +3,8 @@
 ## v1.19.6 (2026-10-16)
 
 - 🎨 Fixed styles for toast popup being too wide on the settings page.
+- 🧑‍💻 Rephrase 2 tooltips for saving tabs into a group and saving tabs into the current group and closing them. Closes [#125](https://codeberg.org/tab-guardian/tab-guardian/issues/125).
+
 ## 1.19.5 (2026-10-16)
 
 - 🧑‍💻 Moved group encoding/decoding out of group storage into a standalone `group-codec` module. The URL encoding and the legacy `bindURL` field mapping now live there with dedicated tests. Closes [#132](https://codeberg.org/tab-guardian/tab-guardian/issues/132).
