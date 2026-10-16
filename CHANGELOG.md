@@ -1,5 +1,12 @@
 # Release Notes
 
+## 1.19.5 (2026-10-16)
+
+- 🧑‍💻 Moved group encoding/decoding out of group storage into a standalone `group-codec` module. The URL encoding and the legacy `bindURL` field mapping now live there with dedicated tests. Closes [#132](https://codeberg.org/tab-guardian/tab-guardian/issues/132).
+- 🐛 Fixed issue where after closing password modal on private group export you would see an infinite loading spinner. Closes [#121](https://codeberg.org/tab-guardian/tab-guardian/issues/121)
+- 🐛 Fixed decrypting a private group with WebCrypto fields but missing `algo` field silently returning corrupted links. It now throws instead.
+- 🐛 Fixed incorrect error message for storage quota. Closes [#122](https://codeberg.org/tab-guardian/tab-guardian/issues/122).
+
 ## 1.19.4 (2026-10-16)
 
 - 🐛 Fixed re-saving a group deleting it before writing the update, which could lose the group if the popup closed mid-save. Storage `remove` calls are now awaited so ordering stays correct. Closes [#130](https://codeberg.org/tab-guardian/tab-guardian/issues/130).

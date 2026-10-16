@@ -16,8 +16,11 @@
         "placeholders": { "n": { "content": "$1" } }
     },
     "not_enough_storage": {
-        "message": "Нельзя превышать квоту хранения. Максимальная квота составляет $n$ МБ, вы используете $n$ МБ",
-        "placeholders": { "n": { "content": "$1" } }
+        "message": "Нельзя превышать квоту хранения. Максимальная квота составляет $max$ МБ, вы используете $used$ МБ",
+        "placeholders": {
+            "max": { "content": "$1" },
+            "used": { "content": "$2" }
+        }
     },
     "many_attempts_next_attempt_in": {
         "message": "Слишком много попыток. Следующая попытка через $n$ минут",
