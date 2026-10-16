@@ -1,5 +1,9 @@
 # Release Notes
 
+## 1.19.5 (2026-10-17)
+
+- 🐛 Fixed decrypting a private group with WebCrypto fields but missing `algo` field silently returning corrupted links. It now throws instead.
+
 ## 1.19.4 (2026-10-16)
 
 - 🐛 Fixed re-saving a group deleting it before writing the update, which could lose the group if the popup closed mid-save. Storage `remove` calls are now awaited so ordering stays correct. Closes [#130](https://codeberg.org/tab-guardian/tab-guardian/issues/130).
