@@ -5,6 +5,7 @@
 - 🐛 Fixed issue where drag events didn't work in Chromium browsers. Things like drag group into and out of folder. Closes [#120](https://codeberg.org/tab-guardian/tab-guardian/issues/120).
 - 🛡️ "Remember my password after unlock" now keeps passwords in session storage (memory only, gone when the browser closes) instead of writing them to disk. Previously cached passwords are cleaned up automatically and the "Clear Cache" section is removed. Closes [#126](https://codeberg.org/tab-guardian/tab-guardian/issues/126).
 - 🧑‍💻 The remember password option is disabled with an upgrade warning on browsers without session storage support (Firefox older than 115).
+- 🐛 Fixed toast notifications rendering at inconsistent widths across browsers. They now always take 90% of the popup width.
 
 ## v1.19.2 (2026-10-15)
 
