@@ -1,8 +1,8 @@
 import type { Group } from '@common/types'
 import { runtime } from '@common/modules/runtime'
-import { cloneDeep } from 'lodash'
 import { groupIdsStorage } from '@common/modules/storage/groupIds'
 import { passwordStorage } from '@common/modules/storage/password'
+import { decodeGroup, encodeGroup } from '@common/modules/group-codec'
 
 export const groupStorage = {
     async delete(groupId: number): Promise<void> {
@@ -25,28 +25,11 @@ export const groupStorage = {
             groupIds.map(id => id.toString()),
         )
 
-        for (let group of groups) {
-            if (group.bindURL) {
-                group.bindUrl = group.bindURL
-                delete group.bindURL
-            }
-        }
-
-        return groups.map(group => decodeGroup(group))
+        return groups.map(decodeGroup)
     },
 
     async save(group: Group): Promise<void> {
-        const links = group.links.map(link => {
-            return {
-                ...link,
-                favIconUrl: encodeURIComponent(link.favIconUrl),
-                url: encodeURIComponent(link.url),
-            }
-        })
-
-        const newGroup = cloneDeep(group)
-        newGroup.links = links
-
+        const newGroup = encodeGroup(group)
         const ids = await groupIdsStorage.getAll()
 
         if (ids.includes(newGroup.id)) {
@@ -66,16 +49,4 @@ export const groupStorage = {
         const groups = await this.getAll()
         return groups.filter(g => g.isPrivate && !g.isEncrypted).length
     },
-}
-
-function decodeGroup(group: Group): Group {
-    const links = group.links.map(link => {
-        return {
-            ...link,
-            favIconUrl: decodeURIComponent(link.favIconUrl),
-            url: decodeURIComponent(link.url),
-        }
-    })
-
-    return { ...group, links }
 }
