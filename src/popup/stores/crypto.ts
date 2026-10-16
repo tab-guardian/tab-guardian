@@ -97,6 +97,15 @@ export const useCryptoStore = defineStore('crypto', () => {
         link: Link,
         pass: string,
     ): Promise<Link> {
+        const isWebCryptoWithoutAlgo =
+            !group.algo && (link.salt || link.iv)
+
+        if (isWebCryptoWithoutAlgo) {
+            throw new Error(
+                `Group ${group.id} is missing algo field but link ${link.id} has WebCrypto fields`,
+            )
+        }
+
         if (!group.algo) {
             return decryptLinkCryptoJS(link, pass)
         }
