@@ -4,6 +4,7 @@
 
 - 🎨 Fixed styles for toast popup being too wide on the settings page.
 - 🧑‍💻 Rephrase 2 tooltips for saving tabs into a group and saving tabs into the current group and closing them. Closes [#125](https://codeberg.org/tab-guardian/tab-guardian/issues/125).
+- 🐛 Fixed imported single group disappearing when its folder doesn't exist on the target profile. Groups with an unknown folder now land at the top level. Closes [#118](https://codeberg.org/tab-guardian/tab-guardian/issues/118).
 
 ## 1.19.5 (2026-10-16)
 
