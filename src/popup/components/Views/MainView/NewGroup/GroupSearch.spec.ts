@@ -50,7 +50,6 @@ describe('GroupSearch', () => {
         await waitUntil(() => {
             expect(folderStore.folders).toHaveLength(0)
         })
-
         ;(input.element as HTMLInputElement).focus()
 
         expect(document.activeElement).toBe(input.element)
@@ -82,7 +81,6 @@ describe('GroupSearch', () => {
         await waitUntil(() => {
             expect(groupStore.rootGroups).toHaveLength(1)
         })
-
         ;(input.element as HTMLInputElement).focus()
 
         document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }))
