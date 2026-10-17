@@ -6,6 +6,7 @@
 - 🐛 "Restore tabs and delete group" no longer deletes the group when at least 1 tab fails to open. The group is kept with only the links that failed to restore, so you don't lose them. Closes [#117](https://codeberg.org/tab-guardian/tab-guardian/issues/117).
 - 🐛 Opening an unlocked private group with "Lock the group back after restoring the tabs" on and "Remember my password after unlock" off did nothing. It now asks for a password before opening any tab. Closes [#116](https://codeberg.org/tab-guardian/tab-guardian/issues/116).
 - 🐛 Pressing Enter in search asked for the password of an already unlocked private group and failed with "Unexpected error occurred". Opening a group now shares one code path between search and the open button. Closes [#115](https://codeberg.org/tab-guardian/tab-guardian/issues/115).
+- 🐛 Opening a group from search with Enter hid every folder until the popup was reopened. The full list now comes back once the group opens. Closes [#153](https://codeberg.org/tab-guardian/tab-guardian/issues/153).
 
 ## v1.19.6 (2026-10-16)
 

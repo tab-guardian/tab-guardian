@@ -36,9 +36,8 @@ async function openFirstGroup(e: KeyboardEvent): Promise<void> {
 
     const group = groupStore.rootGroups[0]
 
-    // Clear the input field after Enter was pressed
-    query.value = ''
-    inpElem.value!.value = ''
+    // Clear the search after Enter so the full list comes back
+    await resetSearch()
 
     await open(group)
 }
@@ -73,8 +72,7 @@ async function filterGroups(): Promise<void> {
     query.value = inpElem.value.value
 
     if (query.value === '') {
-        await groupStore.load()
-        await folderStore.load()
+        await resetSearch()
         return
     }
 
@@ -93,6 +91,13 @@ async function filterGroups(): Promise<void> {
             link.title.toLowerCase().includes(query.value.toLowerCase()),
         )
     })
+}
+
+async function resetSearch(): Promise<void> {
+    query.value = ''
+    inpElem.value!.value = ''
+    await groupStore.load()
+    await folderStore.load()
 }
 
 function clearInput(): void {
