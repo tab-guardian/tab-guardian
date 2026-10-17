@@ -2,7 +2,8 @@
 
 ## v1.19.7 (2026-10-17)
 
-- 🧑‍💻 When you delete a group, it used to show an error for half a second that group doesn't exist. Now it's fixed
+- 🧑‍💻 When you delete a group, it used to show an error for half a second that group doesn't exist. Now it's fixed.
+- 🐛 "Restore tabs and delete group" no longer deletes the group when at least 1 tab fails to open. The group is kept with only the links that failed to restore, so you don't lose them. Closes [#117](https://codeberg.org/tab-guardian/tab-guardian/issues/117).
 
 ## v1.19.6 (2026-10-16)
 
