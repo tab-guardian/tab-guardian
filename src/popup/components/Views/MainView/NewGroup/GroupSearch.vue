@@ -1,20 +1,14 @@
 <script setup lang="ts">
-import type { Group } from '@common/types'
 import { useGroupStore } from '@/stores/group'
-import { useTabsStore } from '@/stores/tabs'
-import { useModalStore } from '@/stores/modal'
-import { useRouter } from 'vue-router'
 import { useFolderStore } from '@/stores/folder'
+import { useOpenGroup } from '@/composables/useOpenGroup'
 import { ref, onMounted, onUnmounted } from 'vue'
 import { logger, trans } from '@common/modules'
-import { showToast } from '@common/modules/toast'
 import MagnifyingGlassIcon from '@common/components/Icons/MagnifyingGlassIcon.vue'
 
 const groupStore = useGroupStore()
-const tabsStore = useTabsStore()
-const modalStore = useModalStore()
 const folderStore = useFolderStore()
-const router = useRouter()
+const { open } = useOpenGroup()
 
 const placeholder =
     navigator.userAgent.indexOf('Mac OS X') != -1 ? '⌃⌘k' : 'ctrl+alt+k'
@@ -46,34 +40,7 @@ async function openFirstGroup(e: KeyboardEvent): Promise<void> {
     query.value = ''
     inpElem.value!.value = ''
 
-    if (!group.isPrivate) {
-        await tabsStore.openTabs(group)
-        return
-    }
-
-    await modalStore.show('password', {
-        decrypting: async pass => await unlockCallback(group, pass),
-        text: trans('enter_pass_unlock_content'),
-    })
-}
-
-async function unlockCallback(group: Group, pass: string): Promise<boolean> {
-    const unlocking = await groupStore.unlock(group, pass)
-
-    showToast({
-        text: unlocking.message,
-        type: unlocking.failed ? 'error' : 'info',
-    })
-
-    if (unlocking.failed) {
-        return false
-    }
-
-    await tabsStore.openTabs(unlocking.group, pass)
-
-    await router.push({ name: 'main' })
-
-    return true
+    await open(group)
 }
 
 function focusOnSearch(e: KeyboardEvent): void {
