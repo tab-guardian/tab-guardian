@@ -7,8 +7,8 @@
         "message": "密码必须至少包含 $n$ 个字符",
         "placeholders": { "n": { "content": "$1" } }
     },
-    "browser_cannot_open_tab": {
-        "message": "您的浏览器不允许打开并保存此标签页 $n$",
+    "browser_cannot_open_these_tabs": {
+        "message": "您的浏览器不允许打开和保存这些标签页：$n$",
         "placeholders": { "n": { "content": "$1" } }
     },
     "you_have_unlocked_groups": {
