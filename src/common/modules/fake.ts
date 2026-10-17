@@ -43,7 +43,7 @@ export function fakeLinks(linksCount: number): Link[] {
 export function fakeGroup(fields?: Partial<Group>): Group {
     fields ??= {}
 
-    const id = Math.floor(Date.now() + Math.random() * 1000)
+    const id = generateId()
 
     return {
         id,
