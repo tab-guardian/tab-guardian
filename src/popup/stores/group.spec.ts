@@ -111,6 +111,42 @@ describe('group store', () => {
             expect(groupNames).toContain(`${groupName} (Copy 1)`)
         })
 
+        it('does not suffix a locked group when its name is unused', async () => {
+            const groupStore = useGroupStore()
+            const groupName = 'unique-private-group'
+
+            const group = fakeGroup({ name: groupName })
+            const encryption = await groupStore.lock(group, 'amyadams')
+
+            expect(encryption.failed).toBeFalsy()
+
+            await groupStore.create(encryption.group!)
+
+            const groupNames = groupStore.rootGroups.map(g => g.name)
+
+            expect(groupNames).toContain(groupName)
+            expect(groupNames).not.toContain(`${groupName} (Copy 1)`)
+        })
+
+        it('suffixes a locked group when its name is already taken', async () => {
+            const groupStore = useGroupStore()
+            const groupName = 'work'
+
+            await groupStore.create(fakeGroup({ name: groupName }))
+
+            const group = fakeGroup({ name: groupName })
+            const encryption = await groupStore.lock(group, 'amyadams')
+
+            expect(encryption.failed).toBeFalsy()
+
+            await groupStore.create(encryption.group!)
+
+            const groupNames = groupStore.rootGroups.map(g => g.name)
+
+            expect(groupNames).toContain(groupName)
+            expect(groupNames).toContain(`${groupName} (Copy 1)`)
+        })
+
         it('create does not touch updatedAt timestamp', async () => {
             const updatedAt = 444444
 
