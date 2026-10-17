@@ -11,7 +11,7 @@ def main():
     version = sys.argv[2]
 
     date = datetime.now().strftime('%Y-%m-%d')
-    replacement = f'# Release Notes\n\n## v{version} ({date})\n\n- '
+    replacement = f'# Release Notes\n\n## {version} ({date})\n\n- '
     
     try:
         with open(path, 'r') as f:

@@ -329,7 +329,7 @@ export const useGroupStore = defineStore('group', () => {
 
             // Must run after the delete above,
             // otherwise the old name still counts as taken
-            const name = uniqueGroupName(group.name)
+            const name = uniqueGroupName(group)
 
             await groupStorage.save({ ...group, name })
 
@@ -341,9 +341,11 @@ export const useGroupStore = defineStore('group', () => {
         }
     }
 
-    function uniqueGroupName(name: string): string {
-        const takenNames = new Set(allGroups.value.map(group => group.name))
-        return forceUniqueName(name, takenNames)
+    function uniqueGroupName(group: Group): string {
+        const uniqueGroups = allGroups.value.filter(g => g.id !== group.id)
+        const takenNames = new Set(uniqueGroups.map(g => g.name))
+
+        return forceUniqueName(group.name, takenNames)
     }
 
     async function reloadGroupsAndNotifications(): Promise<void> {

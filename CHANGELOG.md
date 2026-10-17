@@ -1,6 +1,10 @@
 # Release Notes
 
-## v1.19.7 (2026-10-17)
+## 1.19.8 (2026-10-17)
+
+- 🐛 Creating a private group with an unused name no longer adds an unnecessary `(Copy 1)` suffix. Genuine name collisions still get the normal copy suffix. Closes [#155](https://codeberg.org/tab-guardian/tab-guardian/issues/155).
+
+## 1.19.7 (2026-10-17)
 
 - 🧑‍💻 When you delete a group, it used to show an error for half a second that group doesn't exist. Now it's fixed.
 - 🐛 "Restore tabs and delete group" no longer deletes the group when at least 1 tab fails to open. The group is kept with only the links that failed to restore, so you don't lose them. Closes [#117](https://codeberg.org/tab-guardian/tab-guardian/issues/117).
@@ -8,7 +12,7 @@
 - 🐛 Pressing Enter in search asked for the password of an already unlocked private group and failed with "Unexpected error occurred". Opening a group now shares one code path between search and the open button. Closes [#115](https://codeberg.org/tab-guardian/tab-guardian/issues/115).
 - 🐛 Opening a group from search with Enter hid every folder until the popup was reopened. The full list now comes back once the group opens. Closes [#153](https://codeberg.org/tab-guardian/tab-guardian/issues/153).
 
-## v1.19.6 (2026-10-16)
+## 1.19.6 (2026-10-16)
 
 - 🎨 Fixed styles for toast popup being too wide on the settings page.
 - 🧑‍💻 Rephrase 2 tooltips for saving tabs into a group and saving tabs into the current group and closing them. Closes [#125](https://codeberg.org/tab-guardian/tab-guardian/issues/125).
