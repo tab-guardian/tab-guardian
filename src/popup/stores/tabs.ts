@@ -44,7 +44,7 @@ export const useTabsStore = defineStore('tabs', () => {
             return false
         }
 
-        await groupStore.update(encryption.group)
+        await groupStore.update(encryption.data)
 
         return true
     }

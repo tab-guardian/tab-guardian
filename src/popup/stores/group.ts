@@ -1,4 +1,4 @@
-import type { Group, Link, GroupOperationResult } from '@common/types'
+import type { Group, Link, GroupOperationResult as OperationResult } from '@common/types'
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import { trans, logger } from '@common/modules'
@@ -74,7 +74,7 @@ export const useGroupStore = defineStore('group', () => {
         group: Group,
         pass: string,
         confirm?: string,
-    ): Promise<GroupOperationResult> {
+    ): Promise<OperationResult<Group>> {
         if (group.isEncrypted) {
             return failure(trans('group_already_locked'))
         }
@@ -104,7 +104,7 @@ export const useGroupStore = defineStore('group', () => {
     async function unlock(
         group: Group,
         password: string,
-    ): Promise<GroupOperationResult> {
+    ): Promise<OperationResult<Group>> {
         try {
             const decryptedGroup = await cryptoStore.decryptGroup(group, password)
             await update(decryptedGroup)
@@ -119,18 +119,18 @@ export const useGroupStore = defineStore('group', () => {
         }
     }
 
-    function failure(message: string): GroupOperationResult {
-        return { failed: true, group: null, message }
+    function failure(message: string): OperationResult<Group> {
+        return { failed: true, data: null, message }
     }
 
-    function success(group: Group, message: string): GroupOperationResult {
-        return { failed: false, group, message }
+    function success(group: Group, message: string): OperationResult<Group> {
+        return { failed: false, data: group, message }
     }
 
     async function removeBindUrl(
         name: string,
         pass: string,
-    ): Promise<GroupOperationResult> {
+    ): Promise<OperationResult<Group>> {
         const group = getNamed(name)
 
         if (!group) {

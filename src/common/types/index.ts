@@ -6,9 +6,9 @@ export type LinkBuffer = {
     link: Link
 }
 
-export type GroupOperationResult =
-    | { failed: true; group: null; message: string }
-    | { failed: false; group: Group; message: string }
+export type GroupOperationResult<T> =
+    | { failed: true; data: null; message: string }
+    | { failed: false; data: T; message: string }
 
 export type ExportSchema = {
     meta: {
