@@ -2,7 +2,7 @@
 
 ## v1.19.7 (2026-10-17)
 
-- 
+- 🧑‍💻 When you delete a group, it used to show an error for half a second that group doesn't exist. Now it's fixed
 
 ## v1.19.6 (2026-10-16)
 

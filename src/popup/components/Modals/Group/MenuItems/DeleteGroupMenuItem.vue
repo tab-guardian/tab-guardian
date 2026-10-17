@@ -26,8 +26,8 @@ async function promptToDeleteGroup(): Promise<void> {
 }
 
 async function deleteGroup(): Promise<void> {
-    await groupStore.deleteGroup(props.group.id)
     await router.push({ name: 'main' })
+    await groupStore.deleteGroup(props.group.id)
     groupStore.selectedGroup = null
 }
 </script>
