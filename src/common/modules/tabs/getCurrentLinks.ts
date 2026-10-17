@@ -7,7 +7,7 @@ import { logger } from '@common/modules'
 
 export async function getCurrentLinks(): Promise<Link[]> {
     if (isRuntime('web')) {
-        return fakeLinks()
+        return fakeLinks(2)
     }
 
     try {

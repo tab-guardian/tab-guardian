@@ -3,7 +3,7 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest'
 import { createPinia, setActivePinia } from 'pinia'
 import { runtime } from '@common/modules/runtime'
-import { useSettingsStore } from '@/stores/settings'
+import { DEFAULT_SETTINGS, useSettingsStore } from '@/stores/settings'
 
 describe('settings store', () => {
     beforeEach(() => {
@@ -34,5 +34,17 @@ describe('settings store', () => {
         runtime.sessionStorage.isAvailable = false
 
         expect(settingsStore.rememberPasswordEnabled).toBe(false)
+    })
+
+    it('resetToDefaults restores every setting', () => {
+        const settingsStore = useSettingsStore()
+
+        settingsStore.settings.encryptAfterRestore = false
+        settingsStore.settings.rememberPasswordAfterUnlock = false
+        settingsStore.settings.overrideWithSameName = true
+
+        settingsStore.resetToDefaults()
+
+        expect(settingsStore.settings).toEqual(DEFAULT_SETTINGS)
     })
 })

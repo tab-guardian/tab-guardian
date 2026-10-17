@@ -1,18 +1,17 @@
 import type { Link } from '@common/types'
 import { queryTabs } from '@common/modules/tabs/queryTabs'
-import { runtime } from '@common/modules/runtime'
 import { trans } from '@common/modules'
 import { showToast } from '@common/modules/toast'
+import { runtime } from '@common/modules/runtime'
 import { config } from '@common/config'
 import { isForbiddenUrl } from '@common/modules/url'
 
-export async function restoreTabs(links: Link[]): Promise<void> {
+export async function restoreTabs(links: Link[]): Promise<Link[]> {
+    const failedLinks: Link[] = []
+
     for (const link of links) {
         if (isForbiddenUrl(link.url)) {
-            showToast({
-                text: trans('browser_cannot_open_tab', link.url),
-                type: 'error',
-            })
+            failedLinks.push(link)
             continue
         }
 
@@ -24,6 +23,17 @@ export async function restoreTabs(links: Link[]): Promise<void> {
     }
 
     await closeEmptyTab()
+
+    if (failedLinks.length > 0) {
+        const urls = failedLinks.map(l => l.url).join(', ')
+
+        showToast({
+            text: trans('browser_cannot_open_these_tabs', urls),
+            type: 'error',
+        })
+    }
+
+    return failedLinks
 }
 
 async function closeEmptyTab(): Promise<void> {

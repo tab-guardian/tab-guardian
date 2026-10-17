@@ -124,7 +124,7 @@ export const useGroupStore = defineStore('group', () => {
     }
 
     function success(group: Group, message: string): GroupOperationResult {
-        return { failed: false, group, message }
+        return { failed: false, group: group, message }
     }
 
     async function removeBindUrl(

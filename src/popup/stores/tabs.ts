@@ -3,7 +3,9 @@ import { defineStore } from 'pinia'
 import { useGroupStore } from '@/stores/group'
 import { trans } from '@common/modules'
 import { useSettingsStore } from '@/stores/settings'
+import { useModalStore } from '@/stores/modal'
 import { filterForbiddenLinks } from '@common/modules/group'
+import { validatePassword } from '@common/modules/validation/group'
 import { showToast } from '@common/modules/toast'
 import { getCurrentLinks } from '@common/modules/tabs/getCurrentLinks'
 import { restoreTabs } from '@common/modules/tabs/restoreTabs'
@@ -13,6 +15,7 @@ import { passwordStorage } from '@common/modules/storage/password'
 export const useTabsStore = defineStore('tabs', () => {
     const groupStore = useGroupStore()
     const settingsStore = useSettingsStore()
+    const modalStore = useModalStore()
 
     async function openTabs(group: Group, userPass?: string): Promise<boolean> {
         if (group.links.length === 0) {
@@ -24,9 +27,16 @@ export const useTabsStore = defineStore('tabs', () => {
             return true
         }
 
-        const pass = userPass || (await passwordStorage.get(group.id))
+        const pass = await getPassword(group, userPass)
 
         if (!pass) {
+            return false
+        }
+
+        const validationError = validatePassword(pass)
+
+        if (validationError) {
+            showToast({ text: validationError, type: 'error' })
             return false
         }
 
@@ -49,6 +59,27 @@ export const useTabsStore = defineStore('tabs', () => {
         return true
     }
 
+    // Re-locking the group needs a password. When remembering is off there is
+    // nothing cached, so ask for one before opening any tab.
+    async function getPassword(
+        group: Group,
+        userPass?: string,
+    ): Promise<string | null> {
+        const pass = userPass || (await passwordStorage.get(group.id))
+
+        if (pass) {
+            return pass
+        }
+
+        showToast({ text: trans('enter_your_password'), duration: 4000 })
+
+        const resp = await modalStore.show('newPassword', {
+            title: trans('enter_new_pass'),
+        })
+
+        return resp?.newPass || null
+    }
+
     async function restore(group: Group): Promise<void> {
         group.updatedAt = Date.now()
 
@@ -59,7 +90,6 @@ export const useTabsStore = defineStore('tabs', () => {
         }
 
         await groupStore.updateFields(group.id, { openedTimes })
-
         await restoreTabs(group.links)
     }
 
@@ -68,8 +98,19 @@ export const useTabsStore = defineStore('tabs', () => {
             await passwordStorage.delete(group.id)
         }
 
-        await groupStore.deleteGroup(group.id)
-        await restoreTabs(group.links)
+        const failedLinks = await restoreTabs(group.links)
+
+        if (failedLinks.length === 0) {
+            await groupStore.deleteGroup(group.id)
+            return
+        }
+
+        await groupStore.updateFields(group.id, { links: failedLinks })
+
+        const actual = (group.links.length - failedLinks.length).toString()
+        const total = group.links.length.toString()
+
+        showToast({ text: trans('only_some_tabs_restored', actual, total) })
     }
 
     async function stashTabs(group: Group, closeAllTabs: boolean): Promise<void> {

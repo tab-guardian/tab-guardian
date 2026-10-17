@@ -60,7 +60,7 @@ describe('group codec', () => {
         })
 
         it('round-trips a group through encode and decode', () => {
-            const group = fakeGroup({ links: fakeLinks() })
+            const group = fakeGroup({ links: fakeLinks(2) })
             expect(decodeGroup(encodeGroup(group))).toEqual(group)
         })
 
