@@ -29,8 +29,14 @@ export function fakeFolder(fields?: Partial<Folder>): Folder {
     }
 }
 
-export function fakeLinks(): Link[] {
-    return [fakeLink(), fakeLink()]
+export function fakeLinks(linksCount: number): Link[] {
+    const links: Link[] = []
+
+    for (let i = 0; i < linksCount; i++) {
+        links.push(fakeLink())
+    }
+
+    return links
 }
 
 // A default public group with 1 link
