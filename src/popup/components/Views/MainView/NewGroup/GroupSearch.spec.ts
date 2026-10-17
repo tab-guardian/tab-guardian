@@ -50,6 +50,7 @@ describe('GroupSearch', () => {
         await waitUntil(() => {
             expect(folderStore.folders).toHaveLength(0)
         })
+
         ;(input.element as HTMLInputElement).focus()
 
         expect(document.activeElement).toBe(input.element)
@@ -58,6 +59,36 @@ describe('GroupSearch', () => {
 
         await waitUntil(() => {
             expect(folderStore.folders).toHaveLength(1)
+        })
+
+        wrapper.unmount()
+    })
+
+    it('restores full list of groups after opening a group with Enter', async () => {
+        const groupStore = useGroupStore()
+
+        await groupStore.createMany([
+            fakeGroup({ name: 'nice' }),
+            fakeGroup({ name: 'other' }),
+        ])
+
+        expect(groupStore.rootGroups).toHaveLength(2)
+
+        const wrapper = mount(GroupSearch, { attachTo: document.body })
+        const input = wrapper.find('input')
+
+        await input.setValue('nice')
+
+        await waitUntil(() => {
+            expect(groupStore.rootGroups).toHaveLength(1)
+        })
+
+        ;(input.element as HTMLInputElement).focus()
+
+        document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }))
+
+        await waitUntil(() => {
+            expect(groupStore.rootGroups).toHaveLength(2)
         })
 
         wrapper.unmount()
