@@ -68,7 +68,7 @@ export function isComponentIcon(str: string): boolean {
 export function printForbiddenLinks(links: Link[]): void {
     for (const link of links) {
         showToast({
-            text: trans('browser_cannot_open_tab', link.url),
+            text: trans('browser_cannot_open_these_tabs', link.url),
             type: 'error',
         })
     }
