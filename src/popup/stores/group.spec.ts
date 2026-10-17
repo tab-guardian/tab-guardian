@@ -286,8 +286,8 @@ describe('group store', () => {
             const encryption = await groupStore.lock(group, 'amyadams')
 
             expect(encryption.failed).toBeFalsy()
-            expect(encryption.data?.isPrivate).toBeTruthy()
-            expect(encryption.data?.isEncrypted).toBeTruthy()
+            expect(encryption.group?.isPrivate).toBeTruthy()
+            expect(encryption.group?.isEncrypted).toBeTruthy()
         })
 
         it('encrypts private group', async () => {
@@ -299,8 +299,8 @@ describe('group store', () => {
             const encryption = await groupStore.lock(group, 'amyadams')
 
             expect(encryption.failed).toBeFalsy()
-            expect(encryption.data?.isPrivate).toBeTruthy()
-            expect(encryption.data?.isEncrypted).toBeTruthy()
+            expect(encryption.group?.isPrivate).toBeTruthy()
+            expect(encryption.group?.isEncrypted).toBeTruthy()
         })
 
         it('encrypts link fields', async () => {
@@ -317,9 +317,9 @@ describe('group store', () => {
             const encryption = await groupStore.lock(group, 'amyadams')
 
             expect(encryption.failed).toBeFalsy()
-            expect(encryption.data?.links).toHaveLength(1)
+            expect(encryption.group?.links).toHaveLength(1)
 
-            const encryptedLink = encryption.data?.links[0]!
+            const encryptedLink = encryption.group?.links[0]!
 
             expect(encryptedLink).not.toBeUndefined()
             expect(encryptedLink.url).not.equal(link.url)
@@ -335,7 +335,7 @@ describe('group store', () => {
 
             expect(encryption.failed).toBeTruthy()
             expect(encryption.message).equal(trans('passwords_not_match'))
-            expect(encryption.data).toBeNull()
+            expect(encryption.group).toBeNull()
         })
 
         it('denies encryption when password is empty', async () => {
@@ -346,7 +346,7 @@ describe('group store', () => {
 
             expect(encryption.failed).toBeTruthy()
             expect(encryption.message).equal(trans('pass_empty'))
-            expect(encryption.data).toBeNull()
+            expect(encryption.group).toBeNull()
         })
 
         it('denies encryption when password is too short', async () => {
@@ -362,7 +362,7 @@ describe('group store', () => {
 
             expect(encryption.failed).toBeTruthy()
             expect(encryption.message).equal(trans(msg))
-            expect(encryption.data).toBeNull()
+            expect(encryption.group).toBeNull()
         })
     })
 

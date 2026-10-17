@@ -44,7 +44,7 @@ export const useTabsStore = defineStore('tabs', () => {
             return false
         }
 
-        await groupStore.update(encryption.data)
+        await groupStore.update(encryption.group)
 
         return true
     }
@@ -68,8 +68,12 @@ export const useTabsStore = defineStore('tabs', () => {
             await passwordStorage.delete(group.id)
         }
 
-        await groupStore.deleteGroup(group.id)
-        await restoreTabs(group.links)
+        const failedLinks = await restoreTabs(group.links)
+
+        if (failedLinks.length === 0) {
+            await groupStore.deleteGroup(group.id)
+            return
+        }
     }
 
     async function stashTabs(group: Group, closeAllTabs: boolean): Promise<void> {
