@@ -1,4 +1,11 @@
 {
+    "only_some_tabs_restored": {
+        "message": "已恢复 $total$ 个标签页中的 $actual$ 个。对于恢复失败的标签页，将其保留在该组中",
+        "placeholders": {
+            "actual": { "content": "$1" },
+            "total": { "content": "$2" }
+        }
+    },
     "groups_imported": {
         "message": "成功导入 $n$ 个组",
         "placeholders": { "n": { "content": "$1" } }

@@ -59,7 +59,6 @@ export const useTabsStore = defineStore('tabs', () => {
         }
 
         await groupStore.updateFields(group.id, { openedTimes })
-
         await restoreTabs(group.links)
     }
 
@@ -74,6 +73,13 @@ export const useTabsStore = defineStore('tabs', () => {
             await groupStore.deleteGroup(group.id)
             return
         }
+
+        await groupStore.updateFields(group.id, { links: failedLinks })
+
+        const actual = (group.links.length - failedLinks.length).toString()
+        const total = group.links.length.toString()
+
+        showToast({ text: trans('only_some_tabs_restored', actual, total) })
     }
 
     async function stashTabs(group: Group, closeAllTabs: boolean): Promise<void> {

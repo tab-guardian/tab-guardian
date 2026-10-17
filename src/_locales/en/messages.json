@@ -1,4 +1,11 @@
 {
+    "only_some_tabs_restored": {
+        "message": "$actual$ of $total$ tabs restored. The group kept for the ones that failed",
+        "placeholders": {
+            "actual": { "content": "$1" },
+            "total": { "content": "$2" }
+        }
+    },
     "groups_imported": {
         "message": "$n$ groups imported successfully",
         "placeholders": { "n": { "content": "$1" } }
