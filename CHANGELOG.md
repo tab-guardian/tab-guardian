@@ -1,5 +1,9 @@
 # Release Notes
 
+## v1.19.7 (2026-10-17)
+
+- 
+
 ## v1.19.6 (2026-10-16)
 
 - 🎨 Fixed styles for toast popup being too wide on the settings page.
