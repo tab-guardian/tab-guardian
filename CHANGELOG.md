@@ -2,7 +2,7 @@
 
 ## 1.19.9 (2026-10-18)
 
-- 
+- 🐛 Creating a new group or folder can no longer reuse the id of an existing one, which could silently overwrite it. Closes [#112](https://codeberg.org/tab-guardian/tab-guardian/issues/112).
 
 ## 1.19.8 (2026-10-17)
 
