@@ -3,6 +3,7 @@
 ## 1.19.9 (2026-10-18)
 
 - 🐛 Creating a new group or folder can no longer reuse the id of an existing one, which could silently overwrite it. Closes [#112](https://codeberg.org/tab-guardian/tab-guardian/issues/112).
+- 🐛 Groups hidden by the "show private groups only in incognito" setting no longer show up in search results, so pressing Enter can't open a group you cannot see. Closes [#113](https://codeberg.org/tab-guardian/tab-guardian/issues/113).
 
 ## 1.19.8 (2026-10-17)
 

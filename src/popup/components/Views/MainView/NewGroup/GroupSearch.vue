@@ -79,6 +79,11 @@ async function filterGroups(): Promise<void> {
     folderStore.folders = []
 
     groupStore.rootGroups = groupStore.allGroups.filter(group => {
+        // Hidden groups are not drawn, so they should not be searchable either
+        if (group.hide) {
+            return false
+        }
+
         const nameMatch = group.name
             .toLowerCase()
             .includes(query.value.toLowerCase())

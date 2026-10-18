@@ -8,6 +8,8 @@ import { restoreTabs } from '@common/modules/tabs/restoreTabs'
 import { waitUntil } from '@common/modules/testUtils'
 import { useFolderStore } from '@/stores/folder'
 import { useGroupStore } from '@/stores/group'
+import { useSettingsStore } from '@/stores/settings'
+import { runtime } from '@common/modules/runtime'
 import GroupSearch from '@/components/Views/MainView/NewGroup/GroupSearch.vue'
 
 vi.mock('vue-router', () => ({
@@ -88,6 +90,53 @@ describe('GroupSearch', () => {
         await waitUntil(() => {
             expect(groupStore.rootGroups).toHaveLength(2)
         })
+
+        wrapper.unmount()
+    })
+
+    it('hides private groups from search when private groups are incognito only', async () => {
+        vi.spyOn(runtime.windows, 'getCurrent').mockResolvedValue(null)
+
+        const groupStore = useGroupStore()
+        const settingsStore = useSettingsStore()
+
+        settingsStore.settings.showPrivateGroupsOnlyInIncognito = true
+
+        await groupStore.create(fakeGroup({ name: 'secret', isPrivate: true }))
+
+        expect(groupStore.rootGroups[0]?.hide).toBe(true)
+
+        const wrapper = mount(GroupSearch, { attachTo: document.body })
+        const input = wrapper.find('input')
+
+        await input.setValue('secret')
+
+        expect(groupStore.rootGroups).toHaveLength(0)
+
+        wrapper.unmount()
+    })
+
+    it('shows private groups in search inside an incognito window', async () => {
+        vi.spyOn(runtime.windows, 'getCurrent').mockResolvedValue({
+            incognito: true,
+        } as any)
+
+        const groupStore = useGroupStore()
+        const settingsStore = useSettingsStore()
+
+        settingsStore.settings.showPrivateGroupsOnlyInIncognito = true
+
+        await groupStore.create(fakeGroup({ name: 'secret', isPrivate: true }))
+
+        expect(groupStore.rootGroups).toHaveLength(1)
+
+        const wrapper = mount(GroupSearch, { attachTo: document.body })
+        const input = wrapper.find('input')
+
+        await input.setValue('secret')
+
+        expect(groupStore.rootGroups).toHaveLength(1)
+        expect(groupStore.rootGroups[0]?.name).equal('secret')
 
         wrapper.unmount()
     })
