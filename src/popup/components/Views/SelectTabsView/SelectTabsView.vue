@@ -25,7 +25,7 @@ const router = useRouter()
 const route = useRoute()
 
 const loading = ref<boolean>(false)
-const saving = ref<boolean>(false)
+const processing = ref<boolean>(false)
 const closeAllTabs = ref<boolean>(false)
 const links = ref<Link[]>([])
 const selectedLinks = ref<Link[]>([])
@@ -42,9 +42,19 @@ onMounted(async () => {
 })
 
 async function saveTabsAfterEnter(e: Event): Promise<void> {
-    if (e instanceof KeyboardEvent && e.key === 'Enter') {
+    if (!isEnterKey(e) || processing.value) {
+        return
+    }
+
+    if (operation.value === 'adding') {
+        await handleSaveGroup()
+    } else if (operation.value === 'creating') {
         await handleCreateGroup()
     }
+}
+
+function isEnterKey(e: Event): boolean {
+    return e instanceof KeyboardEvent && e.key === 'Enter'
 }
 
 async function fetchLinks(): Promise<void> {
@@ -67,7 +77,7 @@ async function handleCreateGroup(): Promise<void> {
         return
     }
 
-    saving.value = true
+    processing.value = true
 
     groupStore.rootGroups.push(group)
 
@@ -81,7 +91,7 @@ async function handleCreateGroup(): Promise<void> {
 
     showToastMessage()
 
-    saving.value = false
+    processing.value = false
 
     await toGroupView(group.id)
 }
@@ -104,7 +114,7 @@ async function handleSaveGroup(): Promise<void> {
         return
     }
 
-    saving.value = true
+    processing.value = true
 
     const filtered = filterForbiddenLinks(selectedLinks.value)
     await groupStore.insertLinksInto(group.id, filtered.allowed)
@@ -116,7 +126,7 @@ async function handleSaveGroup(): Promise<void> {
         await closeTabs(selectedLinks.value.map(l => l.tabId))
     }
 
-    saving.value = false
+    processing.value = false
 
     await toGroupView(group.id)
 }
@@ -246,7 +256,7 @@ function toggleSelect(link: Link): void {
             <Button
                 v-if="operation === 'creating'"
                 @clicked="handleCreateGroup"
-                :loading="saving"
+                :loading="processing"
                 :icon="PlusIcon"
                 shortcut="Enter"
             >
@@ -256,7 +266,7 @@ function toggleSelect(link: Link): void {
             <Button
                 v-else-if="operation === 'adding'"
                 @clicked="handleSaveGroup"
-                :loading="saving"
+                :loading="processing"
                 :icon="PlusIcon"
                 shortcut="Enter"
             >

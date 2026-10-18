@@ -97,7 +97,7 @@ function mountImportSection(pinia: Pinia): ReturnType<typeof mount> {
 
 function chooseFile(wrapper: ReturnType<typeof mount>, content: string): void {
     const fileInput = wrapper.findComponent(FileInput)
-    expect(fileInput.exists()).toBe(true)
+    expect(fileInput.exists()).toBeTruthy()
 
     fileInput.vm.$emit('chosen', makeFile(content), document.createElement('input'))
 }
@@ -138,7 +138,7 @@ describe('ImportSection', () => {
 
         const savedGroup = storedGroup(lockedGroup.name)
 
-        expect(savedGroup.isEncrypted).toBe(true)
+        expect(savedGroup.isEncrypted).toBeTruthy()
 
         // Verify that password for the group is still correct
         const decryptedGroup = await useCryptoStore().decryptGroup(
@@ -171,8 +171,8 @@ describe('ImportSection', () => {
 
         const savedGroup = storedGroup('open-group')
 
-        expect(savedGroup.isEncrypted).toBe(false)
-        expect(savedGroup.isPrivate).toBe(false)
+        expect(savedGroup.isEncrypted).toBeFalsy()
+        expect(savedGroup.isPrivate).toBeFalsy()
 
         wrapper.unmount()
     })

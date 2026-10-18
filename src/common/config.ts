@@ -24,6 +24,7 @@ export const config = {
         'chrome://newtab/',
     ],
     GROUP_MISSING_FOLDER: -1,
+    WEB_LINKS_AMOUNT: 2,
 }
 
 function toStr(inpKey: string): string {

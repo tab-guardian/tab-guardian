@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Folder } from '@common/types'
 import { useModalStore } from '@/stores/modal'
-import { getDefaultName, trans } from '@common/modules'
+import { trans } from '@common/modules'
 import { folderStorage } from '@common/modules/storage/folder'
 import { useFolderStore } from '@/stores/folder'
 import PencilSquareIcon from '@common/components/Icons/PencilSquareIcon.vue'
@@ -26,7 +26,7 @@ async function startRenaming(): Promise<void> {
         return
     }
 
-    const folderName = res.name || getDefaultName('Folder')
+    const folderName = res.name || 'Folder'
     await folderStorage.rename(props.folder.id, folderName)
 
     await folderStore.load()

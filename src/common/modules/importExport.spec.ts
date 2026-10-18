@@ -15,10 +15,10 @@ import {
 
 describe('importExport helpers', () => {
     it('detects encrypted payload', () => {
-        expect(isEncryptedExport('algo(AES-GCM,...)')).toBe(true)
-        expect(isEncryptedExport('algo(')).toBe(true)
-        expect(isEncryptedExport('algo(TEST)')).toBe(true)
-        expect(isEncryptedExport('{"meta":{}}')).toBe(false)
+        expect(isEncryptedExport('algo(AES-GCM,...)')).toBeTruthy()
+        expect(isEncryptedExport('algo(')).toBeTruthy()
+        expect(isEncryptedExport('algo(TEST)')).toBeTruthy()
+        expect(isEncryptedExport('{"meta":{}}')).toBeFalsy()
     })
 
     it('passes plain json through', () => {

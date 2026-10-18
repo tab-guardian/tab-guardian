@@ -5,8 +5,8 @@ import { folderStorage } from '@common/modules/storage/folder'
 import { useNotificationStore } from '@/stores/notification'
 import { forceUniqueName } from '@common/modules/group'
 import { useGroupStore } from '@/stores/group'
-import { getDefaultName, logger } from '@common/modules'
-import { generateId } from '@common/modules/group'
+import { logger } from '@common/modules'
+import { generateUniqueId } from '@common/modules/group'
 
 export const useFolderStore = defineStore('folder', () => {
     const notificationStore = useNotificationStore()
@@ -78,20 +78,21 @@ export const useFolderStore = defineStore('folder', () => {
         folderOrName: string | Folder,
         loadFolders = true,
     ): Promise<void> {
+        const folders = await folderStorage.getAll()
+
         const folder =
             typeof folderOrName === 'object'
                 ? folderOrName
-                : _generateEmptyFolder(folderOrName)
+                : generateEmptyFolder(folderOrName, new Set(folders.map(f => f.id)))
 
         // Same id means same folder, it is already stored
-        const existingFolder = await folderStorage.get(folder.id)
+        const existingFolder = folders.find(f => f.id === folder.id)
 
         if (!existingFolder) {
             if (folder.name === '') {
-                folder.name = getDefaultName('Folder')
+                folder.name = 'Folder'
             }
 
-            const folders = await folderStorage.getAll()
             const takenNames = new Set(folders.map(f => f.name))
 
             folder.name = forceUniqueName(folder.name, takenNames)
@@ -105,9 +106,12 @@ export const useFolderStore = defineStore('folder', () => {
         }
     }
 
-    function _generateEmptyFolder(name: string): Folder {
+    function generateEmptyFolder(
+        name: string,
+        takenIds: ReadonlySet<number>,
+    ): Folder {
         return {
-            id: generateId(),
+            id: generateUniqueId(takenIds),
             name,
             updatedAt: Date.now(),
         }

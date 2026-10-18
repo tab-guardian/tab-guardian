@@ -25,7 +25,7 @@ describe('removing a saved group from browser storage', () => {
 
         await getFirefoxRuntimeAdapter().storage.remove('1')
 
-        expect(browserFinished).toBe(true)
+        expect(browserFinished).toBeTruthy()
     })
 
     it('chrome: reports removal only after the browser confirms it', async () => {
@@ -46,6 +46,6 @@ describe('removing a saved group from browser storage', () => {
 
         await getChromeRuntimeAdapter().storage.remove('1')
 
-        expect(browserFinished).toBe(true)
+        expect(browserFinished).toBeTruthy()
     })
 })

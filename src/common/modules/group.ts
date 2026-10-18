@@ -15,6 +15,17 @@ export function generateId(): number {
     return high * 0x100000000 + buffer[1]
 }
 
+// Returns a random id that is not in takenIds
+export function generateUniqueId(takenIds: ReadonlySet<number>): number {
+    let id = generateId()
+
+    while (takenIds.has(id)) {
+        id = generateId()
+    }
+
+    return id
+}
+
 // Returns a new name for given folder or group name in format
 // `<name> (Copy <number>)`
 export function forceUniqueName(oldName: string, takenNames: Set<string>): string {

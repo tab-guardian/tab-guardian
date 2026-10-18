@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Group } from '@common/types'
 import { useModalStore } from '@/stores/modal'
-import { getDefaultName, trans } from '@common/modules'
+import { trans } from '@common/modules'
 import { showToast } from '@common/modules/toast'
 import { useGroupStore } from '@/stores/group'
 import PencilSquareIcon from '@common/components/Icons/PencilSquareIcon.vue'
@@ -26,7 +26,7 @@ async function startRenaming(): Promise<void> {
         return
     }
 
-    const name = resp.name ?? getDefaultName('Group')
+    const name = resp.name ?? 'Group'
 
     await groupStore.updateFields(props.group.id, { name })
 

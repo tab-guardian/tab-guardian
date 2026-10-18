@@ -2,14 +2,15 @@ import type { Group, UserChoices, Link, SelectTabsOperation } from '@common/type
 import type { Router } from 'vue-router'
 import { reactive, computed } from 'vue'
 import { defineStore } from 'pinia'
-import { generateId } from '@common/modules/group'
-import { getDefaultName } from '@common/modules'
+import { generateUniqueId } from '@common/modules/group'
 import { logger, trans } from '@common/modules'
 import { useModalStore } from '@/stores/modal'
+import { useGroupStore } from '@/stores/group'
 import ChevronRightIcon from '@common/components/Icons/ChevronRightIcon.vue'
 
 export const useNewGroupStore = defineStore('newGroup', () => {
     const modalStore = useModalStore()
+    const groupStore = useGroupStore()
 
     // null suggest that there was no choice yet
     const choices = reactive<UserChoices>({
@@ -29,9 +30,11 @@ export const useNewGroupStore = defineStore('newGroup', () => {
     })
 
     function createGroupFromChoices(links: Link[]): Group {
+        const takenIds = new Set(groupStore.allGroups.map(g => g.id))
+
         const group: Group = {
-            id: generateId(),
-            name: choices.name || getDefaultName('Group'),
+            id: generateUniqueId(takenIds),
+            name: choices.name || 'Group',
             isPrivate: choices.isPrivate || false,
             isEncrypted: false,
             updatedAt: Date.now(),

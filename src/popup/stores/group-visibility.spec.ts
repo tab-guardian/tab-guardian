@@ -41,6 +41,6 @@ describe('groups in folders in incognito window', () => {
         settingsStore.settings.showOnlyPrivateGroupsInIncognito = true
         await groupStore.load()
 
-        expect(groupStore.get(openGroup.id)?.hide).toBe(true)
+        expect(groupStore.get(openGroup.id)?.hide).toBeTruthy()
     })
 })

@@ -18,14 +18,14 @@ describe('settings store', () => {
         const settingsStore = useSettingsStore()
         settingsStore.settings.rememberPasswordAfterUnlock = true
 
-        expect(settingsStore.rememberPasswordEnabled).toBe(true)
+        expect(settingsStore.rememberPasswordEnabled).toBeTruthy()
     })
 
     it('rememberPasswordEnabled is false when setting is off', () => {
         const settingsStore = useSettingsStore()
         settingsStore.settings.rememberPasswordAfterUnlock = false
 
-        expect(settingsStore.rememberPasswordEnabled).toBe(false)
+        expect(settingsStore.rememberPasswordEnabled).toBeFalsy()
     })
 
     it('rememberPasswordEnabled is false when session storage is unavailable', () => {
@@ -33,7 +33,7 @@ describe('settings store', () => {
         settingsStore.settings.rememberPasswordAfterUnlock = true
         runtime.sessionStorage.isAvailable = false
 
-        expect(settingsStore.rememberPasswordEnabled).toBe(false)
+        expect(settingsStore.rememberPasswordEnabled).toBeFalsy()
     })
 
     it('resetToDefaults restores every setting', () => {

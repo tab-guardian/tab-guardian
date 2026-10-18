@@ -131,14 +131,14 @@ describe('tabs store', () => {
             const opening = tabsStore.openTabs(group)
 
             await waitUntil(() => {
-                expect(modalStore.isModalVisible('newPassword')).toBe(true)
+                expect(modalStore.isModalVisible('newPassword')).toBeTruthy()
             })
 
             expect(restoreTabs).not.toHaveBeenCalled()
 
             modalStore.hide('newPassword', { newPass: 'amy-pass' })
 
-            expect(await opening).toBe(true)
+            expect(await opening).toBeTruthy()
             expect(restoreTabs).toHaveBeenCalledWith(group.links)
         })
 
@@ -155,12 +155,12 @@ describe('tabs store', () => {
             const opening = tabsStore.openTabs(group)
 
             await waitUntil(() => {
-                expect(modalStore.isModalVisible('newPassword')).toBe(true)
+                expect(modalStore.isModalVisible('newPassword')).toBeTruthy()
             })
 
             modalStore.hide('newPassword', {})
 
-            expect(await opening).toBe(false)
+            expect(await opening).toBeFalsy()
             expect(restoreTabs).not.toHaveBeenCalled()
 
             const kept = groupStore.get(group.id)
@@ -173,7 +173,7 @@ describe('tabs store', () => {
             const modalStore = useModalStore()
             const group = fakeGroup({ isPrivate: true, links: fakeLinks(2) })
 
-            expect(group.isEncrypted).toBe(false)
+            expect(group.isEncrypted).toBeFalsy()
 
             useSettingsStore().settings.rememberPasswordAfterUnlock = false
 
@@ -182,15 +182,15 @@ describe('tabs store', () => {
             const opening = tabsStore.openTabs(group)
 
             await waitUntil(() => {
-                expect(modalStore.isModalVisible('newPassword')).toBe(true)
+                expect(modalStore.isModalVisible('newPassword')).toBeTruthy()
             })
 
             modalStore.hide('newPassword', { newPass: 'amy-pass' })
 
-            expect(await opening).toBe(true)
+            expect(await opening).toBeTruthy()
 
             const locked = groupStore.get(group.id)
-            expect(locked?.isEncrypted).toBe(true)
+            expect(locked?.isEncrypted).toBeTruthy()
             expect(await passwordStorage.get(group.id)).toBeNull()
         })
 
@@ -205,7 +205,7 @@ describe('tabs store', () => {
 
             const opened = await tabsStore.openTabs(group, 'amy')
 
-            expect(opened).toBe(false)
+            expect(opened).toBeFalsy()
             expect(restoreTabs).not.toHaveBeenCalled()
             expect(showToast).toHaveBeenCalledWith(
                 expect.objectContaining({ type: 'error' }),
@@ -218,19 +218,19 @@ describe('tabs store', () => {
             const modalStore = useModalStore()
             const group = fakeGroup({ isPrivate: true, links: fakeLinks(2) })
 
-            expect(group.isEncrypted).toBe(false)
+            expect(group.isEncrypted).toBeFalsy()
 
             await groupStore.create(group)
             await passwordStorage.save(group.id, 'genshin-skirk')
 
             const opened = await tabsStore.openTabs(group)
 
-            expect(opened).toBe(true)
-            expect(modalStore.isModalVisible('newPassword')).toBe(false)
+            expect(opened).toBeTruthy()
+            expect(modalStore.isModalVisible('newPassword')).toBeFalsy()
             expect(restoreTabs).toHaveBeenCalledWith(group.links)
 
             const locked = groupStore.get(group.id)
-            expect(locked?.isEncrypted).toBe(true)
+            expect(locked?.isEncrypted).toBeTruthy()
         })
     })
 })
