@@ -172,6 +172,7 @@ Here are some words that you need to know in order to understand the context of 
 - types and classes - PascalCase
 - local constants - camelCase
 - global constants, env variables - SCREAMING_SNAKE_CASE
+- in tests, use `toBeTruthy()` and `toBeFalsy()` for boolean assertions instead of `toBe(true)` and `toBe(false)`
 
 ## Technologies
 
