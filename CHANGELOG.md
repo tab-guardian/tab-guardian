@@ -4,6 +4,7 @@
 
 - 🐛 Creating a new group or folder can no longer reuse the id of an existing one, which could silently overwrite it. Closes [#112](https://codeberg.org/tab-guardian/tab-guardian/issues/112).
 - 🐛 Groups hidden by the "show private groups only in incognito" setting no longer show up in search results, so pressing Enter can't open a group you cannot see. Closes [#113](https://codeberg.org/tab-guardian/tab-guardian/issues/113).
+- 🐛 Pressing Enter after "Add more tabs" no longer creates a brand new group. It now adds the selected tabs to the group you came from, matching the Add button. Closes [#114](https://codeberg.org/tab-guardian/tab-guardian/issues/114).
 
 ## 1.19.8 (2026-10-17)
 
