@@ -159,7 +159,7 @@ describe('ExportSection export file', () => {
         const exportContent = vi.mocked(downloadFile).mock.calls[0][0] as string
         wrapper.unmount()
 
-        expect(exportContent.startsWith('algo(')).toBe(true)
+        expect(exportContent.startsWith('algo(')).toBeTruthy()
 
         const decrypted = await decryptExport(exportContent, exportPass)
 

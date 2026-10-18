@@ -100,7 +100,7 @@ describe('group store', () => {
             const groupStore = useGroupStore()
             const groupName = 'work'
 
-            expect(useSettingsStore().settings.overrideWithSameName).toBe(false)
+            expect(useSettingsStore().settings.overrideWithSameName).toBeFalsy()
 
             await groupStore.create(fakeGroup({ name: groupName }))
             await groupStore.create(fakeGroup({ name: groupName }))

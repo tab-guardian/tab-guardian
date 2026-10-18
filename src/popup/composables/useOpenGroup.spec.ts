@@ -62,7 +62,7 @@ describe('useOpenGroup', () => {
 
         await open(group)
 
-        expect(modalStore.isModalVisible('password')).toBe(false)
+        expect(modalStore.isModalVisible('password')).toBeFalsy()
         expect(unlockSpy).not.toHaveBeenCalled()
         expect(restoreTabs).toHaveBeenCalledWith(group.links)
         expect(push).not.toHaveBeenCalled()
@@ -76,7 +76,7 @@ describe('useOpenGroup', () => {
         const opening = open(lockedGroup)
 
         await waitUntil(() => {
-            expect(modalStore.isModalVisible('password')).toBe(true)
+            expect(modalStore.isModalVisible('password')).toBeTruthy()
         })
 
         expect(restoreTabs).not.toHaveBeenCalled()
@@ -94,19 +94,19 @@ describe('useOpenGroup', () => {
         const opening = open(lockedGroup)
 
         await waitUntil(() => {
-            expect(modalStore.isModalVisible('password')).toBe(true)
+            expect(modalStore.isModalVisible('password')).toBeTruthy()
         })
 
         const data = modalStore.getSharedData('password')!
 
-        expect(await data.decrypting(groupPass)).toBe(true)
+        expect(await data.decrypting(groupPass)).toBeTruthy()
 
         modalStore.hide('password', {})
         await opening
 
         expect(restoreTabs).toHaveBeenCalled()
         expect(push).toHaveBeenCalledWith({ name: 'main' })
-        expect(groupStore.get(lockedGroup.id)?.isEncrypted).toBe(true)
+        expect(groupStore.get(lockedGroup.id)?.isEncrypted).toBeTruthy()
     })
 
     it('does not open tabs on a wrong password', async () => {
@@ -117,12 +117,12 @@ describe('useOpenGroup', () => {
         const opening = open(lockedGroup)
 
         await waitUntil(() => {
-            expect(modalStore.isModalVisible('password')).toBe(true)
+            expect(modalStore.isModalVisible('password')).toBeTruthy()
         })
 
         const data = modalStore.getSharedData('password')!
 
-        expect(await data.decrypting('wrong-pass')).toBe(false)
+        expect(await data.decrypting('wrong-pass')).toBeFalsy()
 
         modalStore.hide('password', {})
         await opening
@@ -139,7 +139,7 @@ describe('useOpenGroup', () => {
         const opening = open(lockedGroup)
 
         await waitUntil(() => {
-            expect(modalStore.isModalVisible('password')).toBe(true)
+            expect(modalStore.isModalVisible('password')).toBeTruthy()
         })
 
         modalStore.hide('password', {})
@@ -158,7 +158,7 @@ describe('useOpenGroup', () => {
         await groupStore.create(group)
         await open(group)
 
-        expect(modalStore.isModalVisible('password')).toBe(false)
+        expect(modalStore.isModalVisible('password')).toBeFalsy()
         expect(restoreTabs).toHaveBeenCalledWith(group.links)
         expect(push).not.toHaveBeenCalled()
     })

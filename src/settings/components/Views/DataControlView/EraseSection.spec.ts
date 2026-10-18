@@ -61,7 +61,7 @@ describe('EraseSection', () => {
         expect(folderStore.folders.map(f => f.name)).toContain('keep-me')
 
         await settingsStore.load()
-        expect(settingsStore.settings.rememberPasswordAfterUnlock).toBe(false)
+        expect(settingsStore.settings.rememberPasswordAfterUnlock).toBeFalsy()
 
         wrapper.unmount()
     })

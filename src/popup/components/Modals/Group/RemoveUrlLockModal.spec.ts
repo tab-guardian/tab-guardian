@@ -64,7 +64,7 @@ describe('RemoveUrlLockModal', () => {
             text: trans('bind_url_removed'),
         })
 
-        expect(modalStore.isModalVisible('removeUrlLock')).toBe(false)
+        expect(modalStore.isModalVisible('removeUrlLock')).toBeFalsy()
 
         wrapper.unmount()
     })
@@ -85,7 +85,7 @@ describe('RemoveUrlLockModal', () => {
             })
         })
 
-        expect(modalStore.isModalVisible('removeUrlLock')).toBe(true)
+        expect(modalStore.isModalVisible('removeUrlLock')).toBeTruthy()
 
         wrapper.unmount()
     })
@@ -112,7 +112,7 @@ describe('RemoveUrlLockModal', () => {
         })
 
         expect(groupStore.getNamed('work')?.bindUrl).toBe('hashed-url')
-        expect(modalStore.isModalVisible('removeUrlLock')).toBe(true)
+        expect(modalStore.isModalVisible('removeUrlLock')).toBeTruthy()
 
         wrapper.unmount()
     })

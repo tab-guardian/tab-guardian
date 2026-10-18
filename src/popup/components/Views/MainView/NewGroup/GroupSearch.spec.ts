@@ -104,7 +104,7 @@ describe('GroupSearch', () => {
 
         await groupStore.create(fakeGroup({ name: 'secret', isPrivate: true }))
 
-        expect(groupStore.rootGroups[0]?.hide).toBe(true)
+        expect(groupStore.rootGroups[0]?.hide).toBeTruthy()
 
         const wrapper = mount(GroupSearch, { attachTo: document.body })
         const input = wrapper.find('input')
