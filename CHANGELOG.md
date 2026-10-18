@@ -1,5 +1,9 @@
 # Release Notes
 
+## 1.19.9 (2026-10-18)
+
+- 
+
 ## 1.19.8 (2026-10-17)
 
 - 🐛 Creating a private group with an unused name no longer adds an unnecessary `(Copy 1)` suffix. Genuine name collisions still get the normal copy suffix. Closes [#155](https://codeberg.org/tab-guardian/tab-guardian/issues/155).
