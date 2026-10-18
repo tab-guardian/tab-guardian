@@ -7,11 +7,13 @@ import { describe, it, expect, suite, beforeEach, vi } from 'vitest'
 import { createPinia, setActivePinia } from 'pinia'
 import {
     generateId,
+    generateUniqueId,
     isComponentIcon,
     filterForbiddenLinks,
     forceUniqueName,
 } from '@common/modules/group'
 import { fakeLink } from '@common/modules/fake'
+import { stubGenerateId } from '@common/modules/testUtils'
 import * as RuntimeUtils from '@common/modules/runtime/utils'
 
 describe('group utils module', () => {
@@ -33,6 +35,22 @@ describe('group utils module', () => {
             expect(num1).toBeTypeOf('number')
             expect(num2).toBeTypeOf('number')
             expect(num1).not.equal(num2)
+        })
+    })
+
+    suite('generateUniqueId()', () => {
+        it('returns an id that is not taken', () => {
+            const takenIds = new Set([1, 2, 3])
+            const id = generateUniqueId(takenIds)
+
+            expect(takenIds.has(id)).toBeFalsy()
+        })
+
+        it('generates another id when the first one is taken', () => {
+            const takenIds = new Set([5])
+            stubGenerateId([5, 9])
+
+            expect(generateUniqueId(takenIds)).equal(9)
         })
     })
 

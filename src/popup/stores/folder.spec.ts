@@ -5,6 +5,7 @@ import { describe, it, expect, beforeEach, suite } from 'vitest'
 import { createPinia, setActivePinia } from 'pinia'
 import { useFolderStore } from '@/stores/folder'
 import { folderStorage } from '@common/modules/storage/folder'
+import { stubGenerateId } from '@common/modules/testUtils'
 
 describe('folder store', () => {
     beforeEach(() => {
@@ -54,6 +55,22 @@ describe('folder store', () => {
 
             expect(folderNames).toContain(folderName)
             expect(folderNames).toContain(`${folderName} (Copy 1)`)
+        })
+
+        it('generates another id when it is taken', async () => {
+            const folderStore = useFolderStore()
+
+            await folderStore.create('Work')
+
+            const existingFolder = folderStore.get('Work')!
+            const freshId = 777
+
+            stubGenerateId([existingFolder.id, freshId])
+
+            await folderStore.create('Personal')
+
+            expect(folderStore.get('Personal')!.id).equal(freshId)
+            expect(folderStore.get('Work')!.id).equal(existingFolder.id)
         })
     })
 

@@ -30,3 +30,21 @@ export function storedInitialGroup(name: string): Group {
     expect(group).toBeDefined()
     return group!
 }
+
+// Makes generateId() return the given ids in order and only then
+// fallback to real randomness. Handy to force an id collision in tests.
+export function stubGenerateId(ids: number[]): void {
+    const spy = vi.spyOn(crypto, 'getRandomValues')
+
+    for (const id of ids) {
+        spy.mockImplementationOnce((buffer: ArrayBufferView) => {
+            const values = buffer as Uint32Array
+
+            // Same 21/32 bits split that generateId() packs back together
+            values[0] = Math.floor(id / 0x100000000) % 0x200000
+            values[1] = id % 0x100000000
+
+            return buffer
+        })
+    }
+}

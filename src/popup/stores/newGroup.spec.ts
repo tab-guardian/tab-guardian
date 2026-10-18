@@ -4,7 +4,9 @@ import type { UserChoices } from '@common/types'
 import { describe, it, expect, suite, beforeEach } from 'vitest'
 import { createPinia, setActivePinia } from 'pinia'
 import { useNewGroupStore } from '@/stores/newGroup'
-import { fakeLink } from '@common/modules/fake'
+import { useGroupStore } from '@/stores/group'
+import { fakeGroup, fakeLink } from '@common/modules/fake'
+import { stubGenerateId } from '@common/modules/testUtils'
 
 describe('newGroup store', () => {
     beforeEach(() => {
@@ -77,6 +79,24 @@ describe('newGroup store', () => {
             expect(group.name).equal(name)
             expect(group.isPrivate).toBeTruthy()
             expect(group.bindUrl).toBeUndefined()
+        })
+
+        it('generates another id when it is taken', async () => {
+            const newGroupStore = useNewGroupStore()
+            const groupStore = useGroupStore()
+
+            await groupStore.create(fakeGroup({ id: 5, name: 'Work' }))
+
+            const link = fakeLink()
+            const freshId = 777
+
+            stubGenerateId([5, freshId])
+
+            newGroupStore.choices.name = 'Personal'
+
+            const group = newGroupStore.createGroupFromChoices([link])
+
+            expect(group.id).equal(freshId)
         })
     })
 
