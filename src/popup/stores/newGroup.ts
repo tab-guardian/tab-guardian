@@ -3,7 +3,6 @@ import type { Router } from 'vue-router'
 import { reactive, computed } from 'vue'
 import { defineStore } from 'pinia'
 import { generateUniqueId } from '@common/modules/group'
-import { getDefaultName } from '@common/modules'
 import { logger, trans } from '@common/modules'
 import { useModalStore } from '@/stores/modal'
 import { useGroupStore } from '@/stores/group'
@@ -35,7 +34,7 @@ export const useNewGroupStore = defineStore('newGroup', () => {
 
         const group: Group = {
             id: generateUniqueId(takenIds),
-            name: choices.name || getDefaultName('Group'),
+            name: choices.name || 'Group',
             isPrivate: choices.isPrivate || false,
             isEncrypted: false,
             updatedAt: Date.now(),

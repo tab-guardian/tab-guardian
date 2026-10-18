@@ -41,7 +41,7 @@ describe('folder store', () => {
             await folderStore.create('')
 
             expect(folderStore.folders).toHaveLength(1)
-            expect(folderStore.folders[0]?.name).toMatch(/^Folder /)
+            expect(folderStore.folders[0]?.name).equal('Folder')
         })
 
         it('saves duplicate name with copy suffix', async () => {

@@ -5,7 +5,7 @@ import { folderStorage } from '@common/modules/storage/folder'
 import { useNotificationStore } from '@/stores/notification'
 import { forceUniqueName } from '@common/modules/group'
 import { useGroupStore } from '@/stores/group'
-import { getDefaultName, logger } from '@common/modules'
+import { logger } from '@common/modules'
 import { generateUniqueId } from '@common/modules/group'
 
 export const useFolderStore = defineStore('folder', () => {
@@ -90,7 +90,7 @@ export const useFolderStore = defineStore('folder', () => {
 
         if (!existingFolder) {
             if (folder.name === '') {
-                folder.name = getDefaultName('Folder')
+                folder.name = 'Folder'
             }
 
             const takenNames = new Set(folders.map(f => f.name))
