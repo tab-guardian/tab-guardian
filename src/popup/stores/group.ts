@@ -345,7 +345,7 @@ export const useGroupStore = defineStore('group', () => {
         loading.value = true
 
         try {
-            if (settingsStore.settings.overrideWithSameName) {
+            if (shouldReplaceExistingGroup(group)) {
                 await deleteGroupNamed(group.name)
             }
 
@@ -361,6 +361,16 @@ export const useGroupStore = defineStore('group', () => {
         } finally {
             loading.value = false
         }
+    }
+
+    function shouldReplaceExistingGroup(group: Group): boolean {
+        if (!settingsStore.settings.overrideWithSameName || group.isPrivate) {
+            return false
+        }
+
+        const existing = getNamed(group.name)
+
+        return !!existing && !existing.isPrivate
     }
 
     function uniqueGroupName(group: Group): string {

@@ -844,6 +844,18 @@ describe('group store', () => {
             expect(groupStore.rootGroups.map(g => g.name)).toEqual(['other'])
         })
 
+        it('deletes private group with matching name', async () => {
+            const groupStore = useGroupStore()
+            const privateGroup = await createLockedGroup({ name: 'work' })
+
+            expect(privateGroup.isPrivate).toBeTruthy()
+
+            await groupStore.deleteGroupNamed('work')
+
+            expect(groupStore.get(privateGroup.id)).toBeNull()
+            expect(groupStore.rootGroups).toHaveLength(0)
+        })
+
         it('does nothing when name matches nothing', async () => {
             const groupStore = useGroupStore()
 
