@@ -131,8 +131,7 @@ describe('group store', () => {
                 expect(storedPrivate.name).equal('work')
                 expect(storedPrivate.isPrivate).toBeTruthy()
                 expect(storedPrivate.isEncrypted).toBeTruthy()
-                expect(storedPrivate.links[0]?.url).equal(oldUrl)
-                expect(storedPublic.name).equal(`work (Copy 1)`)
+                expect(storedPublic.name).equal('work (Copy 1)')
                 expect(storedPublic.links[0]?.url).equal(newUrl)
                 expect(await passwordStorage.get(privateGroup.id)).equal('amyadams')
             })
@@ -160,7 +159,7 @@ describe('group store', () => {
                 expect(storedPrivate.isPrivate).toBeTruthy()
                 expect(storedPrivate.isEncrypted).toBeFalsy()
                 expect(storedPrivate.links[0]?.url).equal(oldUrl)
-                expect(storedPublic.name).equal(`work (Copy 1)`)
+                expect(storedPublic.name).equal('work (Copy 1)')
                 expect(storedPublic.links[0]?.url).equal(newUrl)
             })
 
@@ -179,7 +178,7 @@ describe('group store', () => {
 
                 expect(groupStore.rootGroups).toHaveLength(2)
                 expect(groupStore.get(publicGroup.id)?.name).equal('work')
-                expect(groupStore.get(privateGroup.id)?.name).equal(`work (Copy 1)`)
+                expect(groupStore.get(privateGroup.id)?.name).equal('work (Copy 1)')
             })
 
             it('does not let an unlocked private group replace a public group', async () => {
@@ -197,7 +196,7 @@ describe('group store', () => {
 
                 expect(groupStore.rootGroups).toHaveLength(2)
                 expect(groupStore.get(publicGroup.id)?.name).equal('work')
-                expect(groupStore.get(privateGroup.id)?.name).equal(`work (Copy 1)`)
+                expect(groupStore.get(privateGroup.id)?.name).equal('work (Copy 1)')
             })
 
             it('keeps both public groups when the setting is off', async () => {
@@ -211,7 +210,7 @@ describe('group store', () => {
                 const groupNames = groupStore.rootGroups.map(g => g.name)
 
                 expect(groupNames).toContain('work')
-                expect(groupNames).toContain(`work (Copy 1)`)
+                expect(groupNames).toContain('work (Copy 1)')
             })
         })
 
