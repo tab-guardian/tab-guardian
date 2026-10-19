@@ -6,6 +6,7 @@ import { mount } from '@vue/test-utils'
 import { trans } from '@common/modules'
 import { showToast } from '@common/modules/toast'
 import { fakeGroup } from '@common/modules/fake'
+import { passwordStorage } from '@common/modules/storage/password'
 import { useFreshPinia, waitUntil } from '@common/modules/testUtils'
 import { useGroupStore } from '@/stores/group'
 import { useModalStore } from '@/stores/modal'
@@ -34,6 +35,7 @@ async function submitCredentials(
 describe('RemoveUrlLockModal', () => {
     beforeEach(() => {
         localStorage.clear()
+        sessionStorage.clear()
         vi.clearAllMocks()
     })
 
@@ -65,6 +67,68 @@ describe('RemoveUrlLockModal', () => {
         })
 
         expect(modalStore.isModalVisible('removeUrlLock')).toBeFalsy()
+
+        wrapper.unmount()
+    })
+
+    it('removes url lock from an unlocked group without encrypting it', async () => {
+        const pinia = useFreshPinia()
+        const groupStore = useGroupStore()
+        const modalStore = useModalStore()
+
+        await groupStore.create(
+            fakeGroup({ name: 'work', isPrivate: true, bindUrl: 'hashed-url' }),
+        )
+
+        void modalStore.show('removeUrlLock', {})
+
+        const wrapper = mountModal(pinia)
+        await waitUntil(() => expect(groupStore.loading).toBeFalsy())
+        await submitCredentials(wrapper, 'work', '')
+
+        await waitUntil(() => {
+            expect(groupStore.getNamed('work')?.bindUrl).toBeUndefined()
+            expect(showToast).toHaveBeenCalledWith({
+                text: trans('bind_url_removed'),
+            })
+        })
+
+        const group = groupStore.getNamed('work')
+
+        expect(group!.bindUrl).toBeUndefined()
+        expect(group!.isEncrypted).toBeFalsy()
+        expect(modalStore.isModalVisible('removeUrlLock')).toBeFalsy()
+
+        wrapper.unmount()
+    })
+
+    it('rejects a password that does not match the remembered one', async () => {
+        const pinia = useFreshPinia()
+        const groupStore = useGroupStore()
+        const modalStore = useModalStore()
+
+        await groupStore.create(
+            fakeGroup({ name: 'work', isPrivate: true, bindUrl: 'hashed-url' }),
+        )
+
+        const group = groupStore.getNamed('work')!
+        await passwordStorage.save(group.id, 'remembered-password')
+
+        void modalStore.show('removeUrlLock', {})
+
+        const wrapper = mountModal(pinia)
+        await waitUntil(() => expect(groupStore.loading).toBeFalsy())
+        await submitCredentials(wrapper, 'work', 'wrong-password')
+
+        await waitUntil(() => {
+            expect(showToast).toHaveBeenCalledWith({
+                text: trans('group_with_credentials_not_found'),
+                type: 'error',
+            })
+        })
+
+        expect(groupStore.getNamed('work')?.bindUrl).toEqual('hashed-url')
+        expect(modalStore.isModalVisible('removeUrlLock')).toBeTruthy()
 
         wrapper.unmount()
     })

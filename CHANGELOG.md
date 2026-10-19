@@ -1,5 +1,9 @@
 # Release Notes
 
+## 1.19.10 (2026-10-19)
+
+- 🐛 Removing a URL lock from an already unlocked private group no longer re-encrypts it with whatever password was typed. If a password is remembered, it must match, otherwise the lock is removed and the group stays unlocked, so a typo or a stray password can't silently re-lock the group under an unknown password.
+
 ## 1.19.9 (2026-10-18)
 
 - 🐛 Creating a new group or folder can no longer reuse the id of an existing one, which could silently overwrite it. Closes [#112](https://codeberg.org/tab-guardian/tab-guardian/issues/112).
