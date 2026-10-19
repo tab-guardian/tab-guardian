@@ -4,6 +4,7 @@
 
 - 🧑‍💻 Added description to "Lock the group back after restoring the tabs" setting to make it more clear.
 - 🐛 Setting `If the new group name matches an existing one, override it` now only applies to public groups. Private groups are never replaced, and creating a private group with a matching name no longer removes the public one.
+- 🐛 Wrong passwords for groups still using the old CryptoJS encryption format are now rejected instead of unlocking the group with junk data and overwriting its links.
 
 ## 1.19.11 (2026-10-19)
 
