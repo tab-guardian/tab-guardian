@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-read -p "Enter a new version name: " new_version
+read -rp "Enter a new version name: 1." new_version
+new_version="1.$new_version"
 
 curr_version=$(git branch --show-current)
 
