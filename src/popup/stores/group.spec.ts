@@ -11,6 +11,10 @@ import { useSettingsStore } from '@/stores/settings'
 import { groupStorage } from '@common/modules/storage/group'
 import { fakeGroup, fakeLink } from '@common/modules/fake'
 import { passwordStorage } from '@common/modules/storage/password'
+import {
+    createLockedGroup,
+    createUnlockedPrivateGroup,
+} from '@common/modules/testUtils'
 
 describe('group store', () => {
     beforeEach(() => {
@@ -117,12 +121,7 @@ describe('group store', () => {
             const groupStore = useGroupStore()
             const groupName = 'unique-private-group'
 
-            const group = fakeGroup({ name: groupName })
-            const encryption = await groupStore.lock(group, 'amyadams')
-
-            expect(encryption.failed).toBeFalsy()
-
-            await groupStore.create(encryption.group!)
+            await createLockedGroup({ name: groupName })
 
             const groupNames = groupStore.rootGroups.map(g => g.name)
 
@@ -135,13 +134,7 @@ describe('group store', () => {
             const groupName = 'work'
 
             await groupStore.create(fakeGroup({ name: groupName }))
-
-            const group = fakeGroup({ name: groupName })
-            const encryption = await groupStore.lock(group, 'amyadams')
-
-            expect(encryption.failed).toBeFalsy()
-
-            await groupStore.create(encryption.group!)
+            await createLockedGroup({ name: groupName })
 
             const groupNames = groupStore.rootGroups.map(g => g.name)
 
@@ -489,16 +482,15 @@ describe('group store', () => {
             const cryptoStore = useCryptoStore()
             const link = fakeLink({ url: 'https://original.example/page' })
 
-            await groupStore.create(
-                fakeGroup({
+            await createLockedGroup(
+                {
                     name: 'work',
                     isPrivate: true,
                     bindUrl: 'hashed-url',
                     links: [link],
-                }),
+                },
+                'correct-password',
             )
-
-            await groupStore.lock(groupStore.getNamed('work')!, 'correct-password')
 
             const result = await groupStore.removeBindUrl('work', 'correct-password')
             const group = groupStore.getNamed('work')
@@ -519,8 +511,9 @@ describe('group store', () => {
         it('keeps bindUrl when password is wrong', async () => {
             const groupStore = useGroupStore()
 
-            await groupStore.create(
-                fakeGroup({ name: 'work', isPrivate: true, bindUrl: 'hashed-url' }),
+            await createLockedGroup(
+                { name: 'work', isPrivate: true, bindUrl: 'hashed-url' },
+                'correct-password',
             )
 
             await groupStore.lock(groupStore.getNamed('work')!, 'correct-password')
