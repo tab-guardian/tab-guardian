@@ -52,7 +52,7 @@ build_zip_archive () {
     MANIFEST_PATH="./public/$2"
 
     if [[ ! -f "$MANIFEST_PATH" ]]; then
-        echo "❌ FAILURE: `$MANIFEST_PATH` file not found for $PLATFORM_NAME"
+        echo "❌ FAILURE: $MANIFEST_PATH file not found for $PLATFORM_NAME"
         exit 1
     fi
 
