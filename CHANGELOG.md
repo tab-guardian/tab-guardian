@@ -1,5 +1,9 @@
 # Release Notes
 
+## 1.19.13 (2026-10-19)
+
+- 
+
 ## 1.19.12 (2026-10-19)
 
 - 🧑‍💻 Added description to "Lock the group back after restoring the tabs" setting to make it more clear.
