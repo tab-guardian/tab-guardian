@@ -639,7 +639,10 @@ describe('group store', () => {
             await passwordStorage.save(1, 'amy-pass')
 
             const replaceDuplicates = true
-            await groupStore.importMany([fakeGroup({ id: 1, name: 'work' })], replaceDuplicates)
+            await groupStore.importMany(
+                [fakeGroup({ id: 1, name: 'work' })],
+                replaceDuplicates,
+            )
 
             expect(await passwordStorage.get(1)).toEqual('amy-pass')
         })
