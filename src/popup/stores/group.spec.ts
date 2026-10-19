@@ -638,9 +638,94 @@ describe('group store', () => {
             await groupStore.create(fakeGroup({ id: 1, name: 'work' }))
             await passwordStorage.save(1, 'amy-pass')
 
-            await groupStore.importMany([fakeGroup({ id: 1, name: 'work' })], true)
+            const replaceDuplicates = true
+            await groupStore.importMany([fakeGroup({ id: 1, name: 'work' })], replaceDuplicates)
 
             expect(await passwordStorage.get(1)).toEqual('amy-pass')
+        })
+
+        it('does not replace a locked private group when importing a public group', async () => {
+            const groupStore = useGroupStore()
+            const privateGroup = await createLockedGroup({ name: 'work' })
+            const incoming = fakeGroup({ name: 'work' })
+
+            useSettingsStore().settings.overrideWithSameName = true
+
+            await groupStore.importMany([incoming])
+
+            const storedPrivate = groupStore.get(privateGroup.id)!
+            const storedIncoming = groupStore.get(incoming.id)!
+
+            expect(groupStore.rootGroups).toHaveLength(2)
+            expect(storedPrivate.name).equal('work')
+            expect(storedPrivate.isPrivate).toBeTruthy()
+            expect(storedPrivate.isEncrypted).toBeTruthy()
+            expect(storedIncoming.name).equal('work (Copy 1)')
+        })
+
+        it('does not replace an unlocked private group when importing a public group', async () => {
+            const groupStore = useGroupStore()
+            const privateGroup = await createUnlockedPrivateGroup({ name: 'work' })
+            const incoming = fakeGroup({ name: 'work' })
+
+            useSettingsStore().settings.overrideWithSameName = true
+
+            await groupStore.importMany([incoming])
+
+            const storedPrivate = groupStore.get(privateGroup.id)!
+            const storedIncoming = groupStore.get(incoming.id)!
+
+            expect(groupStore.rootGroups).toHaveLength(2)
+            expect(storedPrivate.name).equal('work')
+            expect(storedPrivate.isPrivate).toBeTruthy()
+            expect(storedPrivate.isEncrypted).toBeFalsy()
+            expect(storedIncoming.name).equal('work (Copy 1)')
+        })
+
+        it('does not replace a public group when importing a private group', async () => {
+            const groupStore = useGroupStore()
+            const publicGroup = fakeGroup({ name: 'work' })
+            const incoming = fakeGroup({
+                name: 'work',
+                isPrivate: true,
+                isEncrypted: true,
+            })
+
+            await groupStore.create(publicGroup)
+
+            useSettingsStore().settings.overrideWithSameName = true
+
+            await groupStore.importMany([incoming])
+
+            const storedPublic = groupStore.get(publicGroup.id)!
+            const storedIncoming = groupStore.get(incoming.id)!
+
+            expect(groupStore.rootGroups).toHaveLength(2)
+            expect(storedPublic.name).equal('work')
+            expect(storedIncoming.name).equal('work (Copy 1)')
+        })
+
+        it('replaces a private group when importing a group with the same id', async () => {
+            const groupStore = useGroupStore()
+            const privateGroup = await createLockedGroup({ id: 1, name: 'work' })
+            const incomingUrl = 'https://incoming.example/page'
+
+            const incoming = fakeGroup({
+                id: privateGroup.id,
+                name: 'incoming',
+                links: [fakeLink({ url: incomingUrl })],
+            })
+
+            const replaceDuplicates = true
+            await groupStore.importMany([incoming], replaceDuplicates)
+
+            const stored = groupStore.get(privateGroup.id)!
+
+            expect(groupStore.rootGroups).toHaveLength(1)
+            expect(stored.name).equal('incoming')
+            expect(stored.isPrivate).toBeFalsy()
+            expect(stored.isEncrypted).toBeFalsy()
+            expect(stored.links[0]?.url).equal(incomingUrl)
         })
 
         it('keeps original group when create fails during replace', async () => {
@@ -660,8 +745,11 @@ describe('group store', () => {
                 new Error('quota exceeded'),
             )
 
+            const replaceDuplicates = true
+            const importGroups = [fakeGroup({ id: 1, name: groupName })]
+
             await expect(
-                groupStore.importMany([fakeGroup({ id: 1, name: groupName })], true),
+                groupStore.importMany(importGroups, replaceDuplicates),
             ).rejects.toThrowError()
 
             const stored = groupStore.get(1)
