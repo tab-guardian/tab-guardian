@@ -12,6 +12,8 @@ import { groupStorage } from '@common/modules/storage/group'
 import { fakeGroup, fakeLink } from '@common/modules/fake'
 import { passwordStorage } from '@common/modules/storage/password'
 import {
+    LEGACY_WRONG_PASSWORD,
+    createLegacyCryptoJsGroup,
     createLockedGroup,
     createUnlockedPrivateGroup,
 } from '@common/modules/testUtils'
@@ -490,6 +492,29 @@ describe('group store', () => {
             expect(encryption.failed).toBeTruthy()
             expect(encryption.message).equal(trans(msg))
             expect(encryption.group).toBeNull()
+        })
+    })
+
+    suite('unlock()', () => {
+        it('keeps a legacy CryptoJS group encrypted when password is wrong', async () => {
+            const groupStore = useGroupStore()
+            const legacyGroup = createLegacyCryptoJsGroup({ name: 'work' })
+            const originalLink = legacyGroup.links[0]
+
+            await groupStore.create(legacyGroup)
+
+            const result = await groupStore.unlock(
+                legacyGroup,
+                LEGACY_WRONG_PASSWORD,
+            )
+
+            const stored = groupStore.get(legacyGroup.id)!
+
+            expect(result.failed).toBeTruthy()
+            expect(stored.isEncrypted).toBeTruthy()
+            expect(stored.links[0]?.url).equal(originalLink.url)
+            expect(stored.links[0]?.title).equal(originalLink.title)
+            expect(stored.links[0]?.favIconUrl).equal(originalLink.favIconUrl)
         })
     })
 
