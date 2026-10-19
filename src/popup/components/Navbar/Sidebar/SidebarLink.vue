@@ -3,7 +3,7 @@ import type { Component } from 'vue'
 
 type Props = {
     label: string
-    href: string
+    href: string | undefined
     icon: Component
 }
 
@@ -14,7 +14,7 @@ defineProps<Props>()
     <a
         :href
         target="_blank"
-        class="flex items-center gap-3 bg-page hover:bg-page-hover transition-colors px-4 py-2"
+        class="flex items-center gap-3 bg-page hover:bg-page-hover transition-colors px-4 py-2 cursor-pointer"
     >
         <component :is="icon" class="size-5" />
         <span class="text-sm">{{ label }}</span>
