@@ -161,6 +161,9 @@
         "message": "进入扩展设置，启用 “允许在隐身状态下”、“允许在私人状态下 ”或 “在私人窗口中运行 ”选项"
     },
     "override_existing_match": { "message": "如果新组名与现有组名匹配，则覆盖" },
+    "override_existing_match_desc": {
+        "message": "此规则仅适用于公开群组。如果你有一个同名的私人群组，该规则将不会被覆盖。"
+    },
     "only_private_groups_incognito": {
         "message": "在浏览器隐身模式（私密模式）中隐藏已打开的群组"
     },
