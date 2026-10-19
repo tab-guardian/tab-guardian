@@ -5,6 +5,7 @@ import { trans } from '@common/modules'
 import { describe, it, expect, beforeEach, afterEach, suite, vi } from 'vitest'
 import { createPinia, setActivePinia } from 'pinia'
 import { useGroupStore } from '@/stores/group'
+import { useCryptoStore } from '@/stores/crypto'
 import { useFolderStore } from '@/stores/folder'
 import { useSettingsStore } from '@/stores/settings'
 import { groupStorage } from '@common/modules/storage/group'
@@ -403,22 +404,102 @@ describe('group store', () => {
     })
 
     suite('removeBindUrl()', () => {
-        it('does not encrypt an unlocked group with the typed password', async () => {
+        it('removes bindUrl from an unlocked group without encrypting it', async () => {
             const groupStore = useGroupStore()
+            const link = fakeLink({ url: 'https://original.example/page' })
 
             await groupStore.create(
                 fakeGroup({
                     name: 'work',
                     isPrivate: true,
                     bindUrl: 'hashed-url',
+                    links: [link],
                 }),
             )
 
             expect(groupStore.getNamed('work')?.isEncrypted).toBeFalsy()
 
-            await groupStore.removeBindUrl('work', 'random-password')
+            const result = await groupStore.removeBindUrl('work', 'random-password')
+            const group = groupStore.getNamed('work')
 
-            expect(groupStore.getNamed('work')?.isEncrypted).toBeFalsy()
+            expect(result.failed).toBeFalsy()
+            expect(result.message).equal(trans('bind_url_removed'))
+            expect(group?.bindUrl).toBeUndefined()
+            expect(group?.isEncrypted).toBeFalsy()
+            expect(group?.links[0]?.url).equal(link.url)
+        })
+
+        it('removes bindUrl from an unlocked group without a password', async () => {
+            const groupStore = useGroupStore()
+
+            await groupStore.create(
+                fakeGroup({ name: 'work', isPrivate: true, bindUrl: 'hashed-url' }),
+            )
+
+            const result = await groupStore.removeBindUrl('work', '')
+
+            expect(result.failed).toBeFalsy()
+            expect(groupStore.getNamed('work')?.bindUrl).toBeUndefined()
+        })
+
+        it('removes bindUrl from an encrypted group and keeps it decryptable', async () => {
+            const groupStore = useGroupStore()
+            const cryptoStore = useCryptoStore()
+            const link = fakeLink({ url: 'https://original.example/page' })
+
+            await groupStore.create(
+                fakeGroup({
+                    name: 'work',
+                    isPrivate: true,
+                    bindUrl: 'hashed-url',
+                    links: [link],
+                }),
+            )
+
+            await groupStore.lock(groupStore.getNamed('work')!, 'correct-password')
+
+            const result = await groupStore.removeBindUrl('work', 'correct-password')
+            const group = groupStore.getNamed('work')
+
+            expect(result.failed).toBeFalsy()
+            expect(group!.bindUrl).toBeUndefined()
+            expect(group!.isEncrypted).toBeTruthy()
+
+            const decrypted = await cryptoStore.decryptGroup(
+                group!,
+                'correct-password',
+            )
+
+            expect(decrypted.links[0]?.url).equal(link.url)
+            expect(decrypted.isEncrypted).toBeFalsy()
+        })
+
+        it('keeps bindUrl when password is wrong', async () => {
+            const groupStore = useGroupStore()
+
+            await groupStore.create(
+                fakeGroup({ name: 'work', isPrivate: true, bindUrl: 'hashed-url' }),
+            )
+
+            await groupStore.lock(groupStore.getNamed('work')!, 'correct-password')
+
+            const result = await groupStore.removeBindUrl('work', 'wrong-password')
+            const group = groupStore.getNamed('work')
+
+            expect(result.failed).toBeTruthy()
+            expect(result.message).equal(trans('group_with_credentials_not_found'))
+            expect(group?.bindUrl).equal('hashed-url')
+            expect(group?.isEncrypted).toBeTruthy()
+        })
+
+        it('fails when group is not found', async () => {
+            const groupStore = useGroupStore()
+
+            const result = await groupStore.removeBindUrl('missing', 'some-password')
+
+            expect(result.failed).toBeTruthy()
+            expect(result.message).equal(trans('group_with_credentials_not_found'))
+            expect(result.group).toBeNull()
         })
     })
 

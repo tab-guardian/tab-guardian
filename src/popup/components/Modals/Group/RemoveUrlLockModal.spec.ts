@@ -69,6 +69,37 @@ describe('RemoveUrlLockModal', () => {
         wrapper.unmount()
     })
 
+    it('removes url lock from an unlocked group without encrypting it', async () => {
+        const pinia = useFreshPinia()
+        const groupStore = useGroupStore()
+        const modalStore = useModalStore()
+
+        await groupStore.create(
+            fakeGroup({ name: 'work', isPrivate: true, bindUrl: 'hashed-url' }),
+        )
+
+        void modalStore.show('removeUrlLock', {})
+
+        const wrapper = mountModal(pinia)
+        await waitUntil(() => expect(groupStore.loading).toBeFalsy())
+        await submitCredentials(wrapper, 'work', '')
+
+        await waitUntil(() => {
+            expect(groupStore.getNamed('work')?.bindUrl).toBeUndefined()
+            expect(showToast).toHaveBeenCalledWith({
+                text: trans('bind_url_removed'),
+            })
+        })
+
+        const group = groupStore.getNamed('work')
+
+        expect(group!.bindUrl).toBeUndefined()
+        expect(group!.isEncrypted).toBeFalsy()
+        expect(modalStore.isModalVisible('removeUrlLock')).toBeFalsy()
+
+        wrapper.unmount()
+    })
+
     it('shows an error when group is not found', async () => {
         const pinia = useFreshPinia()
         const modalStore = useModalStore()

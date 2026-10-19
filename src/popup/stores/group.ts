@@ -138,10 +138,19 @@ export const useGroupStore = defineStore('group', () => {
         }
 
         try {
+            // An unlocked group has no password to check, so we must not
+            // encrypt it with whatever was typed. Just remove the lock and
+            // keep the group unencrypted.
+            if (!group.isEncrypted) {
+                const { bindUrl, ...withoutBindUrl } = group
+
+                await update(withoutBindUrl)
+
+                return success(withoutBindUrl, trans('bind_url_removed'))
+            }
+
             // Decrypting also proves the password is correct
-            const decrypted = group.isEncrypted
-                ? await cryptoStore.decryptGroup(group, pass)
-                : group
+            const decrypted = await cryptoStore.decryptGroup(group, pass)
 
             const { bindUrl, ...withoutBindUrl } = decrypted
             const encrypted = await cryptoStore.encryptGroup(withoutBindUrl, pass)
