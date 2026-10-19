@@ -1,5 +1,9 @@
 # Release Notes
 
+## 1.19.12 (2026-10-19)
+
+- 
+
 ## 1.19.11 (2026-10-19)
 
 - 🐛 Fixed issue where Firefox was opening empty tabs in addition to settings page when you hit the Settings button in the sidebar, not in navbar. Closes [#169](https://codeberg.org/tab-guardian/tab-guardian/issues/169)
