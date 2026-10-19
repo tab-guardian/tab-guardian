@@ -37,7 +37,7 @@ const links = [
         icon: StarIcon,
     },
     {
-        href: 'javascript:',
+        href: undefined,
         label: trans('settings'),
         icon: CogIcon,
         callback: openSettingsPage,
@@ -66,7 +66,7 @@ const links = [
 
                     <SidebarLink
                         v-for="link in links"
-                        :key="link.href"
+                        :key="link.label"
                         :href="link.href"
                         :label="link.label"
                         :icon="link.icon"
