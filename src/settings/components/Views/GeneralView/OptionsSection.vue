@@ -45,6 +45,7 @@ function save(): void {
             <SlideSwitch
                 @changed="save"
                 v-model="settingsStore.settings.overrideWithSameName"
+                :description="trans('override_existing_match_desc')"
             >
                 {{ trans('override_existing_match') }}
             </SlideSwitch>

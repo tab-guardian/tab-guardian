@@ -11,6 +11,12 @@ import { useSettingsStore } from '@/stores/settings'
 import { groupStorage } from '@common/modules/storage/group'
 import { fakeGroup, fakeLink } from '@common/modules/fake'
 import { passwordStorage } from '@common/modules/storage/password'
+import {
+    LEGACY_WRONG_PASSWORD,
+    createLegacyCryptoJsGroup,
+    createLockedGroup,
+    createUnlockedPrivateGroup,
+} from '@common/modules/testUtils'
 
 describe('group store', () => {
     beforeEach(() => {
@@ -61,68 +67,160 @@ describe('group store', () => {
             expect(obj.id).equal(group.id)
         })
 
-        it('replaces group with same name when override setting is on', async () => {
-            const groupStore = useGroupStore()
-            const settingsStore = useSettingsStore()
+        suite('overrideWithSameName', () => {
+            const oldUrl = 'https://old.example/page'
             const newUrl = 'https://new.example/page'
 
-            settingsStore.settings.overrideWithSameName = true
+            beforeEach(() => {
+                useSettingsStore().settings.overrideWithSameName = true
+            })
 
-            await groupStore.create(
-                fakeGroup({
+            it('replaces an existing public group', async () => {
+                const groupStore = useGroupStore()
+
+                const oldGroup = fakeGroup({
                     name: 'work',
-                    links: [fakeLink({ url: 'https://old.example/page' })],
-                }),
-            )
+                    links: [fakeLink({ url: oldUrl })],
+                })
 
-            await groupStore.create(
-                fakeGroup({ name: 'work', links: [fakeLink({ url: newUrl })] }),
-            )
+                const newGroup = fakeGroup({
+                    name: 'work',
+                    links: [fakeLink({ url: newUrl })],
+                })
 
-            expect(groupStore.rootGroups).toHaveLength(1)
+                await groupStore.create(oldGroup)
+                await groupStore.create(newGroup)
 
-            const group = groupStore.rootGroups[0]!
-            expect(group.name).equal('work')
-            expect(group.links[0]?.url).toEqual(newUrl)
-        })
+                expect(groupStore.rootGroups).toHaveLength(1)
+                expect(groupStore.get(oldGroup.id)).toBeNull()
 
-        it('creates unique group normally when override setting is on', async () => {
-            const groupStore = useGroupStore()
-            const settingsStore = useSettingsStore()
+                const stored = groupStore.get(newGroup.id)!
 
-            settingsStore.settings.overrideWithSameName = true
+                expect(stored.name).equal('work')
+                expect(stored.links[0]?.url).equal(newUrl)
+            })
 
-            await groupStore.create(fakeGroup({ name: 'work' }))
+            it('creates a public group normally when its name is unused', async () => {
+                const groupStore = useGroupStore()
+                const group = fakeGroup({ name: 'work' })
 
-            expect(groupStore.rootGroups).toHaveLength(1)
-            expect(groupStore.rootGroups[0]?.name).equal('work')
-        })
+                await groupStore.create(group)
 
-        it('copies group with same name when override setting is off', async () => {
-            const groupStore = useGroupStore()
-            const groupName = 'work'
+                expect(groupStore.rootGroups).toHaveLength(1)
+                expect(groupStore.rootGroups[0]?.name).equal('work')
+            })
 
-            expect(useSettingsStore().settings.overrideWithSameName).toBeFalsy()
+            it('does not replace a locked private group', async () => {
+                const groupStore = useGroupStore()
 
-            await groupStore.create(fakeGroup({ name: groupName }))
-            await groupStore.create(fakeGroup({ name: groupName }))
+                const privateGroup = await createLockedGroup({
+                    name: 'work',
+                    links: [fakeLink({ url: oldUrl })],
+                })
 
-            const groupNames = groupStore.rootGroups.map(g => g.name)
+                const publicGroup = fakeGroup({
+                    name: 'work',
+                    links: [fakeLink({ url: newUrl })],
+                })
 
-            expect(groupNames).toContain(groupName)
-            expect(groupNames).toContain(`${groupName} (Copy 1)`)
+                await passwordStorage.save(privateGroup.id, 'amyadams')
+                await groupStore.create(publicGroup)
+
+                const storedPrivate = groupStore.get(privateGroup.id)!
+                const storedPublic = groupStore.get(publicGroup.id)!
+
+                expect(groupStore.rootGroups).toHaveLength(2)
+                expect(storedPrivate.name).equal('work')
+                expect(storedPrivate.isPrivate).toBeTruthy()
+                expect(storedPrivate.isEncrypted).toBeTruthy()
+                expect(storedPublic.name).equal('work (Copy 1)')
+                expect(storedPublic.links[0]?.url).equal(newUrl)
+                expect(await passwordStorage.get(privateGroup.id)).equal('amyadams')
+            })
+
+            it('does not replace an unlocked private group', async () => {
+                const groupStore = useGroupStore()
+
+                const privateGroup = await createUnlockedPrivateGroup({
+                    name: 'work',
+                    links: [fakeLink({ url: oldUrl })],
+                })
+
+                const publicGroup = fakeGroup({
+                    name: 'work',
+                    links: [fakeLink({ url: newUrl })],
+                })
+
+                await groupStore.create(publicGroup)
+
+                const storedPrivate = groupStore.get(privateGroup.id)!
+                const storedPublic = groupStore.get(publicGroup.id)!
+
+                expect(groupStore.rootGroups).toHaveLength(2)
+                expect(storedPrivate.name).equal('work')
+                expect(storedPrivate.isPrivate).toBeTruthy()
+                expect(storedPrivate.isEncrypted).toBeFalsy()
+                expect(storedPrivate.links[0]?.url).equal(oldUrl)
+                expect(storedPublic.name).equal('work (Copy 1)')
+                expect(storedPublic.links[0]?.url).equal(newUrl)
+            })
+
+            it('does not let a locked private group replace a public group', async () => {
+                const groupStore = useGroupStore()
+                const publicGroup = fakeGroup({ name: 'work' })
+
+                const privateGroup = fakeGroup({
+                    name: 'work',
+                    isPrivate: true,
+                    isEncrypted: true,
+                })
+
+                await groupStore.create(publicGroup)
+                await groupStore.create(privateGroup)
+
+                expect(groupStore.rootGroups).toHaveLength(2)
+                expect(groupStore.get(publicGroup.id)?.name).equal('work')
+                expect(groupStore.get(privateGroup.id)?.name).equal('work (Copy 1)')
+            })
+
+            it('does not let an unlocked private group replace a public group', async () => {
+                const groupStore = useGroupStore()
+                const publicGroup = fakeGroup({ name: 'work' })
+
+                const privateGroup = fakeGroup({
+                    name: 'work',
+                    isPrivate: true,
+                    isEncrypted: false,
+                })
+
+                await groupStore.create(publicGroup)
+                await groupStore.create(privateGroup)
+
+                expect(groupStore.rootGroups).toHaveLength(2)
+                expect(groupStore.get(publicGroup.id)?.name).equal('work')
+                expect(groupStore.get(privateGroup.id)?.name).equal('work (Copy 1)')
+            })
+
+            it('keeps both public groups when the setting is off', async () => {
+                const groupStore = useGroupStore()
+
+                useSettingsStore().settings.overrideWithSameName = false
+
+                await groupStore.create(fakeGroup({ name: 'work' }))
+                await groupStore.create(fakeGroup({ name: 'work' }))
+
+                const groupNames = groupStore.rootGroups.map(g => g.name)
+
+                expect(groupNames).toContain('work')
+                expect(groupNames).toContain('work (Copy 1)')
+            })
         })
 
         it('does not suffix a locked group when its name is unused', async () => {
             const groupStore = useGroupStore()
             const groupName = 'unique-private-group'
 
-            const group = fakeGroup({ name: groupName })
-            const encryption = await groupStore.lock(group, 'amyadams')
-
-            expect(encryption.failed).toBeFalsy()
-
-            await groupStore.create(encryption.group!)
+            await createLockedGroup({ name: groupName })
 
             const groupNames = groupStore.rootGroups.map(g => g.name)
 
@@ -132,21 +230,14 @@ describe('group store', () => {
 
         it('suffixes a locked group when its name is already taken', async () => {
             const groupStore = useGroupStore()
-            const groupName = 'work'
 
-            await groupStore.create(fakeGroup({ name: groupName }))
-
-            const group = fakeGroup({ name: groupName })
-            const encryption = await groupStore.lock(group, 'amyadams')
-
-            expect(encryption.failed).toBeFalsy()
-
-            await groupStore.create(encryption.group!)
+            await groupStore.create(fakeGroup({ name: 'work' }))
+            await createLockedGroup({ name: 'work' })
 
             const groupNames = groupStore.rootGroups.map(g => g.name)
 
-            expect(groupNames).toContain(groupName)
-            expect(groupNames).toContain(`${groupName} (Copy 1)`)
+            expect(groupNames).toContain('work')
+            expect(groupNames).toContain(`work (Copy 1)`)
         })
 
         it('create does not touch updatedAt timestamp', async () => {
@@ -404,6 +495,29 @@ describe('group store', () => {
         })
     })
 
+    suite('unlock()', () => {
+        it('keeps a legacy CryptoJS group encrypted when password is wrong', async () => {
+            const groupStore = useGroupStore()
+            const legacyGroup = createLegacyCryptoJsGroup({ name: 'work' })
+            const originalLink = legacyGroup.links[0]
+
+            await groupStore.create(legacyGroup)
+
+            const result = await groupStore.unlock(
+                legacyGroup,
+                LEGACY_WRONG_PASSWORD,
+            )
+
+            const stored = groupStore.get(legacyGroup.id)!
+
+            expect(result.failed).toBeTruthy()
+            expect(stored.isEncrypted).toBeTruthy()
+            expect(stored.links[0]?.url).equal(originalLink.url)
+            expect(stored.links[0]?.title).equal(originalLink.title)
+            expect(stored.links[0]?.favIconUrl).equal(originalLink.favIconUrl)
+        })
+    })
+
     suite('removeBindUrl()', () => {
         it('removes bindUrl from an unlocked group without encrypting it', async () => {
             const groupStore = useGroupStore()
@@ -489,16 +603,15 @@ describe('group store', () => {
             const cryptoStore = useCryptoStore()
             const link = fakeLink({ url: 'https://original.example/page' })
 
-            await groupStore.create(
-                fakeGroup({
+            await createLockedGroup(
+                {
                     name: 'work',
                     isPrivate: true,
                     bindUrl: 'hashed-url',
                     links: [link],
-                }),
+                },
+                'correct-password',
             )
-
-            await groupStore.lock(groupStore.getNamed('work')!, 'correct-password')
 
             const result = await groupStore.removeBindUrl('work', 'correct-password')
             const group = groupStore.getNamed('work')
@@ -519,11 +632,10 @@ describe('group store', () => {
         it('keeps bindUrl when password is wrong', async () => {
             const groupStore = useGroupStore()
 
-            await groupStore.create(
-                fakeGroup({ name: 'work', isPrivate: true, bindUrl: 'hashed-url' }),
+            await createLockedGroup(
+                { name: 'work', isPrivate: true, bindUrl: 'hashed-url' },
+                'correct-password',
             )
-
-            await groupStore.lock(groupStore.getNamed('work')!, 'correct-password')
 
             const result = await groupStore.removeBindUrl('work', 'wrong-password')
             const group = groupStore.getNamed('work')
@@ -551,9 +663,97 @@ describe('group store', () => {
             await groupStore.create(fakeGroup({ id: 1, name: 'work' }))
             await passwordStorage.save(1, 'amy-pass')
 
-            await groupStore.importMany([fakeGroup({ id: 1, name: 'work' })], true)
+            const replaceDuplicates = true
+            await groupStore.importMany(
+                [fakeGroup({ id: 1, name: 'work' })],
+                replaceDuplicates,
+            )
 
             expect(await passwordStorage.get(1)).toEqual('amy-pass')
+        })
+
+        it('does not replace a locked private group when importing a public group', async () => {
+            const groupStore = useGroupStore()
+            const privateGroup = await createLockedGroup({ name: 'work' })
+            const incoming = fakeGroup({ name: 'work' })
+
+            useSettingsStore().settings.overrideWithSameName = true
+
+            await groupStore.importMany([incoming])
+
+            const storedPrivate = groupStore.get(privateGroup.id)!
+            const storedIncoming = groupStore.get(incoming.id)!
+
+            expect(groupStore.rootGroups).toHaveLength(2)
+            expect(storedPrivate.name).equal('work')
+            expect(storedPrivate.isPrivate).toBeTruthy()
+            expect(storedPrivate.isEncrypted).toBeTruthy()
+            expect(storedIncoming.name).equal('work (Copy 1)')
+        })
+
+        it('does not replace an unlocked private group when importing a public group', async () => {
+            const groupStore = useGroupStore()
+            const privateGroup = await createUnlockedPrivateGroup({ name: 'work' })
+            const incoming = fakeGroup({ name: 'work' })
+
+            useSettingsStore().settings.overrideWithSameName = true
+
+            await groupStore.importMany([incoming])
+
+            const storedPrivate = groupStore.get(privateGroup.id)!
+            const storedIncoming = groupStore.get(incoming.id)!
+
+            expect(groupStore.rootGroups).toHaveLength(2)
+            expect(storedPrivate.name).equal('work')
+            expect(storedPrivate.isPrivate).toBeTruthy()
+            expect(storedPrivate.isEncrypted).toBeFalsy()
+            expect(storedIncoming.name).equal('work (Copy 1)')
+        })
+
+        it('does not replace a public group when importing a private group', async () => {
+            const groupStore = useGroupStore()
+            const publicGroup = fakeGroup({ name: 'work' })
+            const incoming = fakeGroup({
+                name: 'work',
+                isPrivate: true,
+                isEncrypted: true,
+            })
+
+            await groupStore.create(publicGroup)
+
+            useSettingsStore().settings.overrideWithSameName = true
+
+            await groupStore.importMany([incoming])
+
+            const storedPublic = groupStore.get(publicGroup.id)!
+            const storedIncoming = groupStore.get(incoming.id)!
+
+            expect(groupStore.rootGroups).toHaveLength(2)
+            expect(storedPublic.name).equal('work')
+            expect(storedIncoming.name).equal('work (Copy 1)')
+        })
+
+        it('replaces a private group when importing a group with the same id', async () => {
+            const groupStore = useGroupStore()
+            const privateGroup = await createLockedGroup({ id: 1, name: 'work' })
+            const incomingUrl = 'https://incoming.example/page'
+
+            const incoming = fakeGroup({
+                id: privateGroup.id,
+                name: 'incoming',
+                links: [fakeLink({ url: incomingUrl })],
+            })
+
+            const replaceDuplicates = true
+            await groupStore.importMany([incoming], replaceDuplicates)
+
+            const stored = groupStore.get(privateGroup.id)!
+
+            expect(groupStore.rootGroups).toHaveLength(1)
+            expect(stored.name).equal('incoming')
+            expect(stored.isPrivate).toBeFalsy()
+            expect(stored.isEncrypted).toBeFalsy()
+            expect(stored.links[0]?.url).equal(incomingUrl)
         })
 
         it('keeps original group when create fails during replace', async () => {
@@ -573,8 +773,11 @@ describe('group store', () => {
                 new Error('quota exceeded'),
             )
 
+            const replaceDuplicates = true
+            const importGroups = [fakeGroup({ id: 1, name: groupName })]
+
             await expect(
-                groupStore.importMany([fakeGroup({ id: 1, name: groupName })], true),
+                groupStore.importMany(importGroups, replaceDuplicates),
             ).rejects.toThrowError()
 
             const stored = groupStore.get(1)
@@ -755,6 +958,18 @@ describe('group store', () => {
             await groupStore.deleteGroupNamed('work')
 
             expect(groupStore.rootGroups.map(g => g.name)).toEqual(['other'])
+        })
+
+        it('deletes private group with matching name', async () => {
+            const groupStore = useGroupStore()
+            const privateGroup = await createLockedGroup({ name: 'work' })
+
+            expect(privateGroup.isPrivate).toBeTruthy()
+
+            await groupStore.deleteGroupNamed('work')
+
+            expect(groupStore.get(privateGroup.id)).toBeNull()
+            expect(groupStore.rootGroups).toHaveLength(0)
         })
 
         it('does nothing when name matches nothing', async () => {

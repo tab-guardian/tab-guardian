@@ -7,7 +7,11 @@ import { trans } from '@common/modules'
 import { showToast } from '@common/modules/toast'
 import { fakeGroup } from '@common/modules/fake'
 import { passwordStorage } from '@common/modules/storage/password'
-import { useFreshPinia, waitUntil } from '@common/modules/testUtils'
+import {
+    createLockedGroup,
+    useFreshPinia,
+    waitUntil,
+} from '@common/modules/testUtils'
 import { useGroupStore } from '@/stores/group'
 import { useModalStore } from '@/stores/modal'
 import RemoveUrlLockModal from '@/components/Modals/Group/RemoveUrlLockModal.vue'
@@ -44,13 +48,10 @@ describe('RemoveUrlLockModal', () => {
         const groupStore = useGroupStore()
         const modalStore = useModalStore()
 
-        const group = fakeGroup({
-            name: 'work',
-            bindUrl: 'hashed-url',
-        })
-
-        await groupStore.create(group)
-        await groupStore.lock(group, 'correct-password')
+        await createLockedGroup(
+            { name: 'work', bindUrl: 'hashed-url' },
+            'correct-password',
+        )
 
         void modalStore.show('removeUrlLock', {})
 
@@ -159,9 +160,10 @@ describe('RemoveUrlLockModal', () => {
         const groupStore = useGroupStore()
         const modalStore = useModalStore()
 
-        const group = fakeGroup({ name: 'work', bindUrl: 'hashed-url' })
-        await groupStore.create(group)
-        await groupStore.lock(group, 'correct-password')
+        await createLockedGroup(
+            { name: 'work', bindUrl: 'hashed-url' },
+            'correct-password',
+        )
 
         void modalStore.show('removeUrlLock', {})
 

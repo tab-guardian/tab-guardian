@@ -186,6 +186,9 @@
     "override_existing_match": {
         "message": "If the new group name matches an existing one, override it"
     },
+    "override_existing_match_desc": {
+        "message": "This rule only works for public groups. If you have a private group with the same name, it won't be overridden."
+    },
     "only_private_groups_incognito": {
         "message": "Hide open groups from browser incognito (private mode)"
     },

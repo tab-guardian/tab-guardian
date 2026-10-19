@@ -1,12 +1,11 @@
 // @vitest-environment happy-dom
 
-import type { Group } from '@common/types'
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
 import { createPinia, setActivePinia } from 'pinia'
 import { fakeGroup, fakeLinks } from '@common/modules/fake'
 import { restoreTabs } from '@common/modules/tabs/restoreTabs'
 import { passwordStorage } from '@common/modules/storage/password'
-import { waitUntil } from '@common/modules/testUtils'
+import { createLockedGroup, waitUntil } from '@common/modules/testUtils'
 import { useGroupStore } from '@/stores/group'
 import { useModalStore } from '@/stores/modal'
 import { useSettingsStore } from '@/stores/settings'
@@ -27,15 +26,6 @@ vi.mock('@common/modules/toast', () => ({
 }))
 
 const groupPass = 'amy-pass'
-
-async function createLockedGroup(): Promise<Group> {
-    const result = await useGroupStore().lock(
-        fakeGroup({ isPrivate: true, links: fakeLinks(2) }),
-        groupPass,
-    )
-
-    return result.group!
-}
 
 describe('useOpenGroup', () => {
     beforeEach(() => {
@@ -71,7 +61,11 @@ describe('useOpenGroup', () => {
     it('asks for the password before opening tabs of a locked group', async () => {
         const modalStore = useModalStore()
         const { open } = useOpenGroup()
-        const lockedGroup = await createLockedGroup()
+
+        const lockedGroup = await createLockedGroup(
+            { isPrivate: true, links: fakeLinks(2) },
+            groupPass,
+        )
 
         const opening = open(lockedGroup)
 
@@ -89,7 +83,11 @@ describe('useOpenGroup', () => {
         const groupStore = useGroupStore()
         const modalStore = useModalStore()
         const { open } = useOpenGroup()
-        const lockedGroup = await createLockedGroup()
+
+        const lockedGroup = await createLockedGroup(
+            { isPrivate: true, links: fakeLinks(2) },
+            groupPass,
+        )
 
         const opening = open(lockedGroup)
 
@@ -112,7 +110,10 @@ describe('useOpenGroup', () => {
     it('does not open tabs on a wrong password', async () => {
         const modalStore = useModalStore()
         const { open } = useOpenGroup()
-        const lockedGroup = await createLockedGroup()
+        const lockedGroup = await createLockedGroup(
+            { isPrivate: true, links: fakeLinks(2) },
+            groupPass,
+        )
 
         const opening = open(lockedGroup)
 
@@ -134,7 +135,10 @@ describe('useOpenGroup', () => {
     it('does not open tabs when the password prompt is cancelled', async () => {
         const modalStore = useModalStore()
         const { open } = useOpenGroup()
-        const lockedGroup = await createLockedGroup()
+        const lockedGroup = await createLockedGroup(
+            { isPrivate: true, links: fakeLinks(2) },
+            groupPass,
+        )
 
         const opening = open(lockedGroup)
 

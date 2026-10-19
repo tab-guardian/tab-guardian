@@ -5,6 +5,10 @@ import { createPinia, setActivePinia } from 'pinia'
 import { useCryptoStore } from '@/stores/crypto'
 import { fakeGroup, fakeLink } from '@common/modules/fake'
 import { config } from '@common/config'
+import {
+    LEGACY_WRONG_PASSWORD,
+    createLegacyCryptoJsGroup,
+} from '@common/modules/testUtils'
 
 describe('crypto store', () => {
     beforeEach(() => {
@@ -73,6 +77,14 @@ describe('crypto store', () => {
             expect(link.url).equal(initialLink.url)
             expect(link.favIconUrl).equal(initialLink.favIconUrl)
             expect(link.title).equal(initialLink.title)
+        })
+
+        it('rejects a wrong password for a legacy CryptoJS group', async () => {
+            const cryptoStore = useCryptoStore()
+            const group = createLegacyCryptoJsGroup()
+
+            const unlocked = cryptoStore.decryptGroup(group, LEGACY_WRONG_PASSWORD)
+            await expect(unlocked).rejects.toThrowError()
         })
 
         it('throws error with non-existent salt', async () => {

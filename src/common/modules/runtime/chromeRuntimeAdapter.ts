@@ -152,6 +152,7 @@ export function getChromeRuntimeAdapter(): PlatformRuntime {
                     })
                 })
             },
+
             async create(createProperties) {
                 const chromeTab = await chrome.tabs.create(createProperties)
                 return mapToTab(chromeTab)

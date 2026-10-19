@@ -172,11 +172,20 @@ export const useCryptoStore = defineStore('crypto', () => {
         const title = decryptCryptoJS(link.title, pass)
         const favIconUrl = decryptCryptoJS(link.favIconUrl, pass)
 
-        if (url + title + favIconUrl === '') {
+        if (!isValidUrl(url)) {
             throw new Error('Malformed UTF-8 data')
         }
 
         return { ...link, url, title, favIconUrl }
+    }
+
+    function isValidUrl(url: string): boolean {
+        try {
+            new URL(url)
+            return true
+        } catch {
+            return false
+        }
     }
 
     function decryptCryptoJS(text: string, pass: string): string {
