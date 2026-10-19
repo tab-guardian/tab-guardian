@@ -15,6 +15,7 @@ import { passwordStorage } from '@common/modules/storage/password'
 describe('group store', () => {
     beforeEach(() => {
         localStorage.clear()
+        sessionStorage.clear()
         setActivePinia(createPinia())
     })
 
@@ -440,6 +441,47 @@ describe('group store', () => {
 
             expect(result.failed).toBeFalsy()
             expect(groupStore.getNamed('work')?.bindUrl).toBeUndefined()
+        })
+
+        it('removes bindUrl from an unlocked group when the remembered password matches', async () => {
+            const groupStore = useGroupStore()
+
+            await groupStore.create(
+                fakeGroup({ name: 'work', isPrivate: true, bindUrl: 'hashed-url' }),
+            )
+
+            const group = groupStore.getNamed('work')!
+            await passwordStorage.save(group.id, 'remembered-password')
+
+            const result = await groupStore.removeBindUrl(
+                'work',
+                'remembered-password',
+            )
+
+            const stored = groupStore.getNamed('work')
+
+            expect(result.failed).toBeFalsy()
+            expect(stored!.bindUrl).toBeUndefined()
+            expect(stored!.isEncrypted).toBeFalsy()
+        })
+
+        it('keeps bindUrl when the remembered password does not match', async () => {
+            const groupStore = useGroupStore()
+
+            await groupStore.create(
+                fakeGroup({ name: 'work', isPrivate: true, bindUrl: 'hashed-url' }),
+            )
+
+            const group = groupStore.getNamed('work')!
+            await passwordStorage.save(group.id, 'remembered-password')
+
+            const result = await groupStore.removeBindUrl('work', 'wrong-password')
+            const stored = groupStore.getNamed('work')
+
+            expect(result.failed).toBeTruthy()
+            expect(result.message).equal(trans('group_with_credentials_not_found'))
+            expect(stored?.bindUrl).equal('hashed-url')
+            expect(stored?.isEncrypted).toBeFalsy()
         })
 
         it('removes bindUrl from an encrypted group and keeps it decryptable', async () => {

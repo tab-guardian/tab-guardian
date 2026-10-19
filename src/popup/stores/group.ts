@@ -138,15 +138,8 @@ export const useGroupStore = defineStore('group', () => {
         }
 
         try {
-            // An unlocked group has no password to check, so we must not
-            // encrypt it with whatever was typed. Just remove the lock and
-            // keep the group unencrypted.
             if (!group.isEncrypted) {
-                const { bindUrl, ...withoutBindUrl } = group
-
-                await update(withoutBindUrl)
-
-                return success(withoutBindUrl, trans('bind_url_removed'))
+                return await removeBindUrlFromUnlocked(group, pass)
             }
 
             // Decrypting also proves the password is correct
@@ -164,6 +157,26 @@ export const useGroupStore = defineStore('group', () => {
             // A wrong password is reported the same as a missing group
             return failure(trans('group_with_credentials_not_found'))
         }
+    }
+
+    // An unlocked group has no encrypted data to check the password against.
+    // If we still remember its password, use it as confirmation.
+    // Otherwise just remove the lock.
+    async function removeBindUrlFromUnlocked(
+        group: Group,
+        pass: string,
+    ): Promise<GroupOperationResult> {
+        const rememberedPassword = await passwordStorage.get(group.id)
+
+        if (rememberedPassword && rememberedPassword !== pass) {
+            return failure(trans('group_with_credentials_not_found'))
+        }
+
+        const { bindUrl, ...withoutBindUrl } = group
+
+        await update(withoutBindUrl)
+
+        return success(withoutBindUrl, trans('bind_url_removed'))
     }
 
     // Add groups to memory and save them to storage
