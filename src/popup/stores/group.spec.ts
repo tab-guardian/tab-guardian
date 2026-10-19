@@ -402,6 +402,26 @@ describe('group store', () => {
         })
     })
 
+    suite('removeBindUrl()', () => {
+        it('does not encrypt an unlocked group with the typed password', async () => {
+            const groupStore = useGroupStore()
+
+            await groupStore.create(
+                fakeGroup({
+                    name: 'work',
+                    isPrivate: true,
+                    bindUrl: 'hashed-url',
+                }),
+            )
+
+            expect(groupStore.getNamed('work')?.isEncrypted).toBeFalsy()
+
+            await groupStore.removeBindUrl('work', 'random-password')
+
+            expect(groupStore.getNamed('work')?.isEncrypted).toBeFalsy()
+        })
+    })
+
     suite('importMany()', () => {
         it('keeps saved password when replacing group', async () => {
             const groupStore = useGroupStore()
