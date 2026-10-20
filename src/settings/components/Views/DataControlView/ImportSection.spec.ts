@@ -407,7 +407,7 @@ describe('ImportSection', () => {
 
         const wrapper = mountImportSection(pinia)
 
-        const confirmDuplicates = false 
+        const confirmDuplicates = false
         mockModals(modalStore, confirmDuplicates)
 
         chooseFile(
