@@ -1,5 +1,9 @@
 # Release Notes
 
+## 1.19.14 (2026-10-20)
+
+- 
+
 ## 1.19.13 (2026-10-20)
 
 - 🐛 New password form can no longer be submitted with mismatched passwords after a paste, autofill, or drag-and-drop.
