@@ -3,7 +3,7 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
 import { createPinia, setActivePinia } from 'pinia'
 import { mount } from '@vue/test-utils'
-import { fakeGroup } from '@common/modules/fake'
+import { fakeGroup, fakeLink } from '@common/modules/fake'
 import { restoreTabs } from '@common/modules/tabs/restoreTabs'
 import { waitUntil } from '@common/modules/testUtils'
 import { useFolderStore } from '@/stores/folder'
@@ -90,6 +90,101 @@ describe('GroupSearch', () => {
         await waitUntil(() => {
             expect(groupStore.rootGroups).toHaveLength(2)
         })
+
+        wrapper.unmount()
+    })
+
+    it('matches encrypted group by its name', async () => {
+        const groupStore = useGroupStore()
+
+        await groupStore.create(
+            fakeGroup({
+                name: 'secret',
+                isPrivate: true,
+                isEncrypted: true,
+                links: [fakeLink({ title: 'c2VjcmV0IGxpbmsgdGl0bGU=' })],
+            }),
+        )
+
+        const wrapper = mount(GroupSearch, { attachTo: document.body })
+        const input = wrapper.find('input')
+
+        await input.setValue('secret')
+
+        expect(groupStore.rootGroups).toHaveLength(1)
+        expect(groupStore.rootGroups[0]?.name).equal('secret')
+
+        wrapper.unmount()
+    })
+
+    it('does not match encrypted group by its link title when locked', async () => {
+        const groupStore = useGroupStore()
+
+        await groupStore.create(
+            fakeGroup({
+                name: 'secret',
+                isPrivate: true,
+                isEncrypted: true,
+                links: [fakeLink({ title: 'c2VjcmV0IGxpbmsgdGl0bGU=' })],
+            }),
+        )
+
+        const wrapper = mount(GroupSearch, { attachTo: document.body })
+        const input = wrapper.find('input')
+
+        await input.setValue('c2Vj')
+
+        expect(groupStore.rootGroups).toHaveLength(0)
+
+        wrapper.unmount()
+    })
+
+    it('matches unlocked private group by its link title', async () => {
+        const groupStore = useGroupStore()
+
+        await groupStore.create(
+            fakeGroup({
+                name: 'secret',
+                isPrivate: true,
+                isEncrypted: false,
+                links: [fakeLink({ title: 'Decrypted link title' })],
+            }),
+        )
+
+        const wrapper = mount(GroupSearch, { attachTo: document.body })
+        const input = wrapper.find('input')
+
+        await input.setValue('decrypted')
+
+        expect(groupStore.rootGroups).toHaveLength(1)
+        expect(groupStore.rootGroups[0]?.name).equal('secret')
+
+        wrapper.unmount()
+    })
+
+    it('skips encrypted groups but still matches public link titles', async () => {
+        const groupStore = useGroupStore()
+
+        await groupStore.createMany([
+            fakeGroup({
+                name: 'public group',
+                links: [fakeLink({ title: 'Read about apples' })],
+            }),
+            fakeGroup({
+                name: 'encrypted group',
+                isPrivate: true,
+                isEncrypted: true,
+                links: [fakeLink({ title: 'YXBwbGU=' })],
+            }),
+        ])
+
+        const wrapper = mount(GroupSearch, { attachTo: document.body })
+        const input = wrapper.find('input')
+
+        await input.setValue('appl')
+
+        expect(groupStore.rootGroups).toHaveLength(1)
+        expect(groupStore.rootGroups[0]?.name).equal('public group')
 
         wrapper.unmount()
     })

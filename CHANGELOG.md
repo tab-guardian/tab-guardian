@@ -4,6 +4,7 @@
 
 - 🐛 New password form can no longer be submitted with mismatched passwords after a paste, autofill, or drag-and-drop.
 - 🐛 Renaming a folder to an already taken name now adds a `(Copy n)` suffix instead of creating a duplicate folder. Closes [#176](https://codeberg.org/tab-guardian/tab-guardian/issues/176).
+- 🐛 Search no longer matches the encrypted contents of locked groups, so typing random letters can't surface an unrelated locked group and open its password prompt. Locked groups now match by name only. Closes [#178](https://codeberg.org/tab-guardian/tab-guardian/issues/178).
 
 ## 1.19.12 (2026-10-19)
 
