@@ -1,5 +1,13 @@
 # Release Notes
 
+## 1.19.13 (2026-10-20)
+
+- 🐛 New password form can no longer be submitted with mismatched passwords after a paste, autofill, or drag-and-drop.
+- 🐛 Renaming a folder to an already taken name now adds a `(Copy n)` suffix instead of creating a duplicate folder. Closes [#176](https://codeberg.org/tab-guardian/tab-guardian/issues/176).
+- 🐛 Search no longer matches the encrypted contents of locked groups, so typing random letters can't surface an unrelated locked group and open its password prompt. Locked groups now match by name only. Closes [#178](https://codeberg.org/tab-guardian/tab-guardian/issues/178).
+- 🐛 The import success message now shows how many groups were actually imported or replaced, instead of counting duplicates that were skipped. Closes [#175](https://codeberg.org/tab-guardian/tab-guardian/issues/175).
+- 🐛 Opening a private group with `encrypt after restore` on now keeps the updated `open count`, instead of re-locking it with the old count from memory. Closes [#177](https://codeberg.org/tab-guardian/tab-guardian/issues/177).
+
 ## 1.19.12 (2026-10-19)
 
 - 🧑‍💻 Added description to "Lock the group back after restoring the tabs" setting to make it more clear.

@@ -118,6 +118,44 @@ describe('tabs store', () => {
     suite('openTabs()', () => {
         beforeEach(() => useSettingsStore().resetToDefaults())
 
+        it('increments openedTimes when opening tabs', async () => {
+            const groupStore = useGroupStore()
+            const tabsStore = useTabsStore()
+            const group = fakeGroup({ openedTimes: 3 })
+
+            await groupStore.create(group)
+            await tabsStore.openTabs(group)
+
+            expect(groupStore.get(group.id)?.openedTimes).equal(4)
+        })
+
+        it('keeps the incremented openedTimes after re-locking', async () => {
+            const groupStore = useGroupStore()
+            const tabsStore = useTabsStore()
+
+            const group = fakeGroup({ isPrivate: true, openedTimes: 3 })
+            await groupStore.create(group)
+
+            await tabsStore.openTabs(group, 'amy-pass')
+
+            const locked = groupStore.get(group.id)
+
+            expect(locked?.isEncrypted).toBeTruthy()
+            expect(locked?.openedTimes).equal(4)
+        })
+
+        it('starts openedTimes at 1 when re-locking a group opened first time', async () => {
+            const groupStore = useGroupStore()
+            const tabsStore = useTabsStore()
+
+            const group = fakeGroup({ isPrivate: true })
+            await groupStore.create(group)
+
+            await tabsStore.openTabs(group, 'genshin-skirk')
+
+            expect(groupStore.get(group.id)?.openedTimes).equal(1)
+        })
+
         it('asks for a password before opening any tab when none is cached', async () => {
             const groupStore = useGroupStore()
             const tabsStore = useTabsStore()

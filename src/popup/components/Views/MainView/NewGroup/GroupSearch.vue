@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { Group } from '@common/types'
 import { useGroupStore } from '@/stores/group'
 import { useFolderStore } from '@/stores/folder'
 import { useOpenGroup } from '@/composables/useOpenGroup'
@@ -78,24 +79,32 @@ async function filterGroups(): Promise<void> {
 
     folderStore.folders = []
 
-    groupStore.rootGroups = groupStore.allGroups.filter(group => {
-        // Hidden groups are not drawn, so they should not be searchable either
-        if (group.hide) {
-            return false
-        }
+    groupStore.rootGroups = groupStore.allGroups.filter(group =>
+        matchesSearchQuery(group, query.value),
+    )
+}
 
-        const nameMatch = group.name
-            .toLowerCase()
-            .includes(query.value.toLowerCase())
+function matchesSearchQuery(group: Group, query: string): boolean {
+    // Hidden groups are not visible, so they should not be searchable either
+    if (group.hide) {
+        return false
+    }
 
-        if (nameMatch) {
-            return true
-        }
+    const normalizedQuery = query.toLowerCase()
 
-        return group.links.some(link =>
-            link.title.toLowerCase().includes(query.value.toLowerCase()),
-        )
-    })
+    if (group.name.toLowerCase().includes(normalizedQuery)) {
+        return true
+    }
+
+    // Encrypted links hold ciphertext in their titles,
+    // so matching them would give random results
+    if (group.isEncrypted) {
+        return false
+    }
+
+    return group.links.some(link =>
+        link.title.toLowerCase().includes(normalizedQuery),
+    )
 }
 
 async function resetSearch(): Promise<void> {

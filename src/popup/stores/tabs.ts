@@ -89,6 +89,8 @@ export const useTabsStore = defineStore('tabs', () => {
             openedTimes = group.openedTimes + 1
         }
 
+        group.openedTimes = openedTimes
+
         await groupStore.updateFields(group.id, { openedTimes })
         await restoreTabs(group.links)
     }

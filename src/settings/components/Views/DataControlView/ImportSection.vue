@@ -99,9 +99,9 @@ async function importNormalizedFile(exportFile: ExportSchema) {
     const groups = dropMissingFolderIds(exportFile.groups, folderStore.folders)
 
     const shouldReplaceDuplicates = await shouldReplaceDuplicateGroups(groups)
-    await groupStore.importMany(groups, shouldReplaceDuplicates)
+    const imported = await groupStore.importMany(groups, shouldReplaceDuplicates)
 
-    showSuccessMessage(groups)
+    showSuccessMessage(imported)
 }
 
 async function shouldReplaceDuplicateGroups(groups: Group[]): Promise<boolean> {
@@ -118,9 +118,9 @@ async function shouldReplaceDuplicateGroups(groups: Group[]): Promise<boolean> {
     return resp ? resp.isConfirmed : false
 }
 
-function showSuccessMessage(groups: Group[]): void {
+function showSuccessMessage(imported: number): void {
     showToast({
-        text: trans('groups_imported', groups.length.toString()),
+        text: trans('groups_imported', imported.toString()),
     })
 }
 

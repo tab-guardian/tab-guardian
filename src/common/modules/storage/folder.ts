@@ -1,6 +1,7 @@
 import type { Folder } from '@common/types'
 import { runtime } from '@common/modules/runtime'
 import { logger } from '@common/modules'
+import { forceUniqueName } from '@common/modules/group'
 
 export const folderStorage = {
     async save(folder: Folder): Promise<Folder | null> {
@@ -32,7 +33,9 @@ export const folderStorage = {
             return
         }
 
-        folder.name = newName
+        const takenNames = new Set(folders.filter(f => f.id !== id).map(f => f.name))
+
+        folder.name = forceUniqueName(newName, takenNames)
         folder.updatedAt = Date.now()
 
         await runtime.storage.set<Folder[]>('folders', folders)

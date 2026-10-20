@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { config } from '@common/config'
-import { computed, onMounted } from 'vue'
+import { computed, onMounted, watch } from 'vue'
 import { trans } from '@common/modules'
 import Input from '@common/components/Form/Input.vue'
 
@@ -27,6 +27,7 @@ const props = withDefaults(defineProps<Props>(), {
 const pass = defineModel<string | null>()
 
 onMounted(() => emit('has-error', isTooShort()))
+watch(pass, () => emit('has-error', isTooShort()))
 
 const passErr = computed<string>(() => {
     return pass.value && isTooShort()
@@ -47,7 +48,6 @@ function isTooShort(): boolean {
     <Input
         v-model="pass"
         @loaded="emit('loaded', $event)"
-        @keyup="emit('has-error', isTooShort())"
         type="password"
         :error="passErr || error"
         :with-button="withButton"
