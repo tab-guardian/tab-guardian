@@ -3,6 +3,7 @@
 ## 1.19.13 (2026-10-20)
 
 - 🐛 New password form can no longer be submitted with mismatched passwords after a paste, autofill, or drag-and-drop.
+- 🐛 Renaming a folder to an already taken name now adds a `(Copy n)` suffix instead of creating a duplicate folder. Closes [#176](https://codeberg.org/tab-guardian/tab-guardian/issues/176).
 
 ## 1.19.12 (2026-10-19)
 

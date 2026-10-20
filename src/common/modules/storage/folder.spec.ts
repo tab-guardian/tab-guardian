@@ -129,6 +129,16 @@ describe('folder storage module', () => {
             expect(await folderStorage.getAll()).toHaveLength(1)
         })
 
+        it('keeps the name when renamed to its own name', async () => {
+            const folder = await folderStorage.save(fakeFolder({ name: 'Anna' }))
+
+            await folderStorage.rename(folder!.id, 'Anna')
+            const renamedFolder = await folderStorage.get(folder!.id)
+
+            expect(renamedFolder?.name).equal('Anna')
+            expect(await folderStorage.getAll()).toHaveLength(1)
+        })
+
         it('does not rename folder for wrong id', async () => {
             const folder = await folderStorage.save(fakeFolder({ name: 'Anna' }))
 
@@ -152,15 +162,27 @@ describe('folder storage module', () => {
             expect(renamedFolder!.updatedAt).toBeGreaterThan(originalUpdatedAt)
         })
 
-        it('allows renaming to an existing folder name', async () => {
+        it('appends copy suffix when renamed to a taken name', async () => {
             await folderStorage.save(fakeFolder({ name: 'Anna' }))
             const folder = await folderStorage.save(fakeFolder({ name: 'Serhii' }))
 
             await folderStorage.rename(folder!.id, 'Anna')
             const renamedFolder = await folderStorage.get(folder!.id)
 
-            expect(renamedFolder?.name).equal('Anna')
+            expect(renamedFolder?.name).equal('Anna (Copy 1)')
             expect(await folderStorage.getAll()).toHaveLength(2)
+        })
+
+        it('numbers from the base name when a copy already exists', async () => {
+            await folderStorage.save(fakeFolder({ name: 'Anna' }))
+            await folderStorage.save(fakeFolder({ name: 'Anna (Copy 1)' }))
+            const folder = await folderStorage.save(fakeFolder({ name: 'Serhii' }))
+
+            await folderStorage.rename(folder!.id, 'Anna')
+            const renamedFolder = await folderStorage.get(folder!.id)
+
+            expect(renamedFolder?.name).equal('Anna (Copy 2)')
+            expect(await folderStorage.getAll()).toHaveLength(3)
         })
     })
 })
