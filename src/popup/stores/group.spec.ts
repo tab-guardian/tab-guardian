@@ -658,6 +658,49 @@ describe('group store', () => {
     })
 
     suite('importMany()', () => {
+        it('imports a new group', async () => {
+            const groupStore = useGroupStore()
+
+            await groupStore.importMany([fakeGroup({ name: 'work' })])
+
+            expect(groupStore.rootGroups).toHaveLength(1)
+            expect(groupStore.rootGroups[0]?.name).equal('work')
+        })
+
+        it('returns the number of imported groups', async () => {
+            const groupStore = useGroupStore()
+
+            const imported = await groupStore.importMany([
+                fakeGroup({ name: 'work' }),
+                fakeGroup({ name: 'personal' }),
+            ])
+
+            expect(imported).equal(2)
+        })
+
+        it('does not count skipped duplicates', async () => {
+            const groupStore = useGroupStore()
+            await groupStore.create(fakeGroup({ id: 1, name: 'work' }))
+
+            const imported = await groupStore.importMany([
+                fakeGroup({ id: 1, name: 'incoming' }),
+            ])
+
+            expect(imported).equal(0)
+        })
+
+        it('counts replaced groups', async () => {
+            const groupStore = useGroupStore()
+            await groupStore.create(fakeGroup({ id: 1, name: 'work' }))
+
+            const imported = await groupStore.importMany(
+                [fakeGroup({ id: 1, name: 'incoming' })],
+                true,
+            )
+
+            expect(imported).equal(1)
+        })
+
         it('keeps saved password when replacing group', async () => {
             const groupStore = useGroupStore()
             await groupStore.create(fakeGroup({ id: 1, name: 'work' }))

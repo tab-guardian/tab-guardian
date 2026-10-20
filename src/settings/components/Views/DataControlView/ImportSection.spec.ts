@@ -9,6 +9,8 @@ import {
     storedGroup,
     storedInitialGroup,
 } from '@common/modules/testUtils'
+import { trans } from '@common/modules'
+import { showToast } from '@common/modules/toast'
 import { generateExportSchema } from '@common/modules/importExport'
 import { toBase64 } from '@common/modules/base64'
 import { encryptExport } from '@common/modules/webCrypto'
@@ -20,6 +22,10 @@ import { useModalStore } from '@/stores/modal'
 import ImportSection from '@settings/components/Views/DataControlView/ImportSection.vue'
 import FileInput from '@common/components/Form/FileInput.vue'
 import pako from 'pako'
+
+vi.mock('@common/modules/toast', () => ({
+    showToast: vi.fn(),
+}))
 
 const FILE_PASS = 'export-password-123'
 const GROUP_PASS = 'original-password-123'
@@ -105,6 +111,7 @@ function chooseFile(wrapper: ReturnType<typeof mount>, content: string): void {
 describe('ImportSection', () => {
     beforeEach(() => {
         localStorage.clear()
+        vi.mocked(showToast).mockClear()
         mockFileReader()
     })
 
@@ -386,6 +393,67 @@ describe('ImportSection', () => {
 
         const storedNames = groupStore.rootGroups.map(g => g.name)
         expect(storedNames).not.toContain(`${declinedGroup.name} (Copy 1)`)
+
+        wrapper.unmount()
+    })
+
+    it('reports only imported groups in the success toast', async () => {
+        const pinia = useFreshPinia()
+        const modalStore = useModalStore()
+        const groupStore = useGroupStore()
+
+        const existingGroup = fakeGroup({ name: 'existing-group' })
+        await groupStore.create(existingGroup)
+
+        const wrapper = mountImportSection(pinia)
+
+        const confirmDuplicates = false 
+        mockModals(modalStore, confirmDuplicates)
+
+        chooseFile(
+            wrapper,
+            buildPlainFile([
+                fakeGroup({ id: existingGroup.id, name: 'incoming' }),
+                fakeGroup({ name: 'fresh-group' }),
+            ]),
+        )
+
+        await waitUntil(() => {
+            expect(showToast).toHaveBeenCalled()
+        })
+
+        expect(showToast).toHaveBeenCalledWith({
+            text: trans('groups_imported', '1'),
+        })
+
+        wrapper.unmount()
+    })
+
+    it('reports replaced groups in the success toast', async () => {
+        const pinia = useFreshPinia()
+        const modalStore = useModalStore()
+        const groupStore = useGroupStore()
+
+        const originalGroup = fakeGroup({ name: 'original-group' })
+        await groupStore.create(originalGroup)
+
+        const wrapper = mountImportSection(pinia)
+
+        const confirmDuplicates = true
+        mockModals(modalStore, confirmDuplicates)
+
+        chooseFile(
+            wrapper,
+            buildPlainFile([fakeGroup({ id: originalGroup.id, name: 'incoming' })]),
+        )
+
+        await waitUntil(() => {
+            expect(showToast).toHaveBeenCalled()
+        })
+
+        expect(showToast).toHaveBeenCalledWith({
+            text: trans('groups_imported', '1'),
+        })
 
         wrapper.unmount()
     })

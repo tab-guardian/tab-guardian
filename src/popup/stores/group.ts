@@ -196,24 +196,22 @@ export const useGroupStore = defineStore('group', () => {
 
     async function importMany(
         groups: Group[],
-        shouldReplaceDuplicates = false,
-    ): Promise<void> {
+        mustReplaceDuplicates = false,
+    ): Promise<number> {
         progressStore.start(groups.length)
 
         const storedIds = new Set((await groupStorage.getAll()).map(g => g.id))
+        let imported = 0
 
         for (const group of groups) {
-            const hasDuplicate = storedIds.has(group.id)
+            const wasImported = await importGroup(
+                group,
+                storedIds,
+                mustReplaceDuplicates,
+            )
 
-            if (!hasDuplicate) {
-                storedIds.add(group.id)
-                await create(group)
-                progressStore.advance()
-                continue
-            }
-
-            if (shouldReplaceDuplicates) {
-                await replace(group)
+            if (wasImported) {
+                imported++
             }
 
             progressStore.advance()
@@ -222,6 +220,25 @@ export const useGroupStore = defineStore('group', () => {
         await load()
 
         progressStore.finish()
+
+        return imported
+    }
+
+    async function importGroup(
+        group: Group,
+        storedIds: Set<number>,
+        mustReplaceDuplicates: boolean,
+    ): Promise<boolean> {
+        if (!storedIds.has(group.id)) {
+            storedIds.add(group.id)
+            return await create(group)
+        }
+
+        if (!mustReplaceDuplicates) {
+            return false
+        }
+
+        return await replace(group)
     }
 
     async function updateFields(
@@ -335,11 +352,11 @@ export const useGroupStore = defineStore('group', () => {
         return true
     }
 
-    async function create(group: Group, loadGroups = true): Promise<void> {
+    async function create(group: Group, loadGroups = true): Promise<boolean> {
         if (loading.value) {
             const msg = `Cannot create group ${group.name}. The loading is still active`
             logger().info(msg)
-            return
+            return false
         }
 
         loading.value = true
@@ -358,6 +375,8 @@ export const useGroupStore = defineStore('group', () => {
             if (loadGroups) {
                 await reloadGroupsAndNotifications()
             }
+
+            return true
         } finally {
             loading.value = false
         }
@@ -441,12 +460,14 @@ export const useGroupStore = defineStore('group', () => {
         return false
     }
 
-    async function replace(group: Group): Promise<void> {
+    async function replace(group: Group): Promise<boolean> {
         const existing = get(group.id)
 
-        if (existing) {
-            await updateFields(group.id, group)
+        if (!existing) {
+            return false
         }
+
+        return await updateFields(group.id, group)
     }
 
     function groupNotFoundLog(id: number, operation: string): void {
