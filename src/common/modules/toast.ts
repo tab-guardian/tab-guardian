@@ -4,7 +4,24 @@ type Params = Toastify.Options & {
     type?: 'error' | 'info'
 }
 
+const DEDUPE_WINDOW_MS = 1_000
+
+let lastToast: { key: string; shownAt: number } | null = null
+
 export function showToast(params: Params): void {
+    const key = `${params.type || 'info'}:${params.text}`
+    const now = Date.now()
+
+    if (
+        lastToast &&
+        lastToast.key === key &&
+        now - lastToast.shownAt < DEDUPE_WINDOW_MS
+    ) {
+        return
+    }
+
+    lastToast = { key, shownAt: now }
+
     Toastify({
         text: params.text,
         duration: params.duration || 5000,
