@@ -44,7 +44,7 @@ describe('EraseSection', () => {
         await useGroupStore().create(fakeGroup())
 
         settingsStore.settings.rememberPasswordAfterUnlock = false
-        settingsStore.save()
+        await settingsStore.save()
 
         vi.spyOn(modalStore, 'show').mockImplementation((async () => ({
             isConfirmed: true,
