@@ -1,5 +1,9 @@
 # Release Notes
 
+## 1.19.15 (2026-10-21)
+
+- 
+
 ## 1.19.14 (2026-10-21)
 
 - 🐛 Firefox no longer stops halfway when opening groups with `file:`, `data:`, `javascript:`, `view-source:` or `resource:` tabs. These URLs are treated as forbidden, and any tab that still fails is skipped and reported, so the rest open and private groups still get re-locked.
