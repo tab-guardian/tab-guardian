@@ -11,8 +11,10 @@ import { fakeGroup } from '@common/modules/fake'
 import { waitUntil } from '@common/modules/testUtils'
 import { showToast } from '@common/modules/toast'
 import { useGroupStore } from '@/stores/group'
+import { useNewGroupStore } from '@/stores/newGroup'
 import { config } from '@common/config'
 import router from '@/router'
+import Button from '@common/components/Form/Button.vue'
 import ControlButton from '@/components/Views/SelectTabsView/ControlButton.vue'
 import TabItem from '@/components/Views/SelectTabsView/TabItem.vue'
 import SelectTabsView from '@/components/Views/SelectTabsView/SelectTabsView.vue'
@@ -201,6 +203,60 @@ describe('SelectTabsView', () => {
         const savedOrder = groupStore.rootGroups[0]!.links.map(link => link.id)
 
         expect(savedOrder).toEqual(expectedOrder)
+
+        wrapper.unmount()
+    })
+
+    it('creates a private group when Enter is pressed in creating mode', async () => {
+        const groupStore = useGroupStore()
+        const newGroupStore = useNewGroupStore()
+
+        newGroupStore.choices.isPrivate = true
+        newGroupStore.choices.password = 'amy-pass'
+        newGroupStore.choices.confirmPassword = 'amy-pass'
+
+        const wrapper = await mountView('creating')
+
+        selectAllTabs(wrapper)
+        pressEnter()
+
+        await waitUntil(() => {
+            expect(groupStore.rootGroups).toHaveLength(1)
+        })
+
+        expect(groupStore.rootGroups[0]?.isEncrypted).toBeTruthy()
+
+        wrapper.unmount()
+    })
+
+    it('ignores Create button clicks and Enter presses while a private group is still encrypting', async () => {
+        const groupStore = useGroupStore()
+        const newGroupStore = useNewGroupStore()
+
+        newGroupStore.choices.isPrivate = true
+        newGroupStore.choices.password = 'amy-pass'
+        newGroupStore.choices.confirmPassword = 'amy-pass'
+
+        const lock = vi.spyOn(groupStore, 'lock')
+        lock.mockImplementation(() => new Promise(() => {}))
+
+        const wrapper = await mountView('creating')
+
+        selectAllTabs(wrapper)
+
+        const createButton = wrapper.findComponent(Button)
+
+        createButton.vm.$emit('clicked')
+        pressEnter()
+        pressEnter()
+
+        await waitUntil(() => {
+            expect(lock).toHaveBeenCalled()
+        })
+
+        await nextTick()
+
+        expect(lock).toHaveBeenCalledTimes(1)
 
         wrapper.unmount()
     })

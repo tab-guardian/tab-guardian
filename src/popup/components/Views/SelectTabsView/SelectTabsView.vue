@@ -74,30 +74,36 @@ async function fetchLinks(): Promise<void> {
 }
 
 async function handleCreateGroup(): Promise<void> {
-    const group = await createGroup()
-
-    if (!group) {
-        logger().warn(`Can't save group because it wasn't created`)
+    if (processing.value) {
         return
     }
 
     processing.value = true
 
-    groupStore.rootGroups.push(group)
+    try {
+        const group = await createGroup()
 
-    await groupStore.create(group)
+        if (!group) {
+            logger().warn(`Can't save group because it wasn't created`)
+            return
+        }
 
-    if (closeAllTabs.value) {
-        await closeTabs(selectedLinks.value.map(l => l.tabId))
+        groupStore.rootGroups.push(group)
+
+        await groupStore.create(group)
+
+        if (closeAllTabs.value) {
+            await closeTabs(selectedLinks.value.map(l => l.tabId))
+        }
+
+        newGroupStore.resetChoices()
+
+        showToastMessage()
+
+        await toGroupView(group.id)
+    } finally {
+        processing.value = false
     }
-
-    newGroupStore.resetChoices()
-
-    showToastMessage()
-
-    processing.value = false
-
-    await toGroupView(group.id)
 }
 
 async function toGroupView(id: number): Promise<void> {

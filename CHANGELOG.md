@@ -2,6 +2,7 @@
 
 ## 1.19.14 (2026-10-21)
 
+- 🐛 Creating a private group now ignores extra "Create" button clicks and "Enter" key presses while it is still encrypting, so only one group is saved.
 - 🐛 The select tabs screen now saves tabs in the order you see after dragging them, instead of the original order. Deselecting and reselecting a tab no longer moves it to the end.
 
 ## 1.19.13 (2026-10-20)
