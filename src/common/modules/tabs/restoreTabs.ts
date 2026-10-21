@@ -15,11 +15,15 @@ export async function restoreTabs(links: Link[]): Promise<Link[]> {
             continue
         }
 
-        await runtime.tabs.create({
-            url: link.url,
-            active: false,
-            pinned: link.isPinned,
-        })
+        try {
+            await runtime.tabs.create({
+                url: link.url,
+                active: false,
+                pinned: link.isPinned,
+            })
+        } catch {
+            failedLinks.push(link)
+        }
     }
 
     await closeEmptyTab()

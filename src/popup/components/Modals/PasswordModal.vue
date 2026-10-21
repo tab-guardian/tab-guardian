@@ -46,20 +46,24 @@ async function submitPassword(): Promise<void> {
 
     processing.value = true
 
-    const isSuccess = await sharedData.value.decrypting(pass.value)
+    try {
+        const isSuccess = await sharedData.value.decrypting(pass.value)
 
-    if (isSuccess) {
-        await attemptsStore.unlock()
-        modalStore.hide('password', {})
-    } else if (attemptsStore.isLocked) {
-        showToast({
-            text: attemptsStore.isLockedErrorMessage(),
-            type: 'error',
-        })
+        if (isSuccess) {
+            await attemptsStore.unlock()
+            modalStore.hide('password', {})
+        } else if (attemptsStore.isLocked) {
+            showToast({
+                text: attemptsStore.isLockedErrorMessage(),
+                type: 'error',
+            })
+        }
+    } catch {
+        showToast({ text: trans('error_occurred'), type: 'error' })
+    } finally {
+        processing.value = false
+        pass.value = ''
     }
-
-    processing.value = false
-    pass.value = ''
 }
 </script>
 

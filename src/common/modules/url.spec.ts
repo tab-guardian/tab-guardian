@@ -101,12 +101,17 @@ describe('url utilities module', () => {
             // Firefox runtime
             isRuntimeSpy.mockImplementation((arg: RuntimeType) => arg === 'firefox')
 
-            const urls = ['about:config', 'chrome://extensions']
+            const urls = [
+                'about:config',
+                'chrome://extensions',
+                'file:///home/user/document.pdf',
+                'data:text/html,hello',
+                'javascript:alert(1)',
+                'view-source:https://example.com',
+                'resource://gre/modules/commonjs',
+            ]
 
-            urls.forEach(url => {
-                const res = isForbiddenUrl(url)
-                expect(res).toBeTruthy()
-            })
+            urls.forEach(url => expect(isForbiddenUrl(url)).toBeTruthy())
         })
 
         it('approve non-forbidden URLs in firefox runtime', () => {

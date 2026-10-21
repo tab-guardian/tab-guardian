@@ -2,6 +2,8 @@
 
 ## 1.19.14 (2026-10-21)
 
+- 🐛 Firefox no longer stops halfway when opening groups with `file:`, `data:`, `javascript:`, `view-source:` or `resource:` tabs. These URLs are treated as forbidden, and any tab that still fails is skipped and reported, so the rest open and private groups still get re-locked.
+- 🐛 The password prompt no longer keeps spinning if opening tabs fails.
 - 🐛 Creating a private group now ignores extra "Create" button clicks and "Enter" key presses while it is still encrypting, so only one group is saved.
 - 🐛 The select tabs screen now saves tabs in the order you see after dragging them, instead of the original order. Deselecting and reselecting a tab no longer moves it to the end.
 

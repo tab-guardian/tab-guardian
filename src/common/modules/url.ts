@@ -48,14 +48,28 @@ export function isImageUrl(url: string | null | undefined): boolean {
     return url ? validateImageUrl(url) === null : false
 }
 
-export function isForbiddenUrl(url: string): boolean {
-    const isFirefox = isRuntime('firefox')
+const FIREFOX_FORBIDDEN_SCHEMES = [
+    'about:',
+    'chrome:',
+    'file:',
+    'data:',
+    'javascript:',
+    'view-source:',
+    'resource:',
+]
 
-    if (!isFirefox || url === 'about:blank') {
+export function isForbiddenUrl(url: string): boolean {
+    if (!isRuntime('firefox')) {
         return false
     }
 
-    // It's a limitation of Firefox, you cannot open about: and chrome: pages.
+    const normalized = url.toLowerCase()
+
+    // It's a limitation of Firefox, you cannot open these pages.
     // The only exception is `about:blank` which can be open.
-    return url.startsWith('about:') || url.startsWith('chrome:')
+    if (normalized === 'about:blank') {
+        return false
+    }
+
+    return FIREFOX_FORBIDDEN_SCHEMES.some(scheme => normalized.startsWith(scheme))
 }
