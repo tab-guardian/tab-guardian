@@ -1,8 +1,8 @@
 # Release Notes
 
-## 1.19.14 (2026-10-20)
+## 1.19.14 (2026-10-21)
 
-- 
+- 🐛 The select tabs screen now saves tabs in the order you see after dragging them, instead of the original order. Deselecting and reselecting a tab no longer moves it to the end.
 
 ## 1.19.13 (2026-10-20)
 

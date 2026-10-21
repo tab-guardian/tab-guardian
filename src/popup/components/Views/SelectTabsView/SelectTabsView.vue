@@ -28,7 +28,11 @@ const loading = ref<boolean>(false)
 const processing = ref<boolean>(false)
 const closeAllTabs = ref<boolean>(false)
 const links = ref<Link[]>([])
-const selectedLinks = ref<Link[]>([])
+const selectedIds = ref<Set<number>>(new Set())
+
+const selectedLinks = computed<Link[]>(() => {
+    return links.value.filter(link => selectedIds.value.has(link.id))
+})
 
 const operation = computed<SelectTabsOperation>(() => {
     return (route.params.operation as SelectTabsOperation) || 'creating'
@@ -175,7 +179,7 @@ async function createPrivateGroup(group: Group): Promise<Group | null> {
 }
 
 function showToastMessage(): void {
-    const length = selectedLinks.value.length
+    const length = selectedIds.value.size
 
     if (operation.value === 'adding' && length === 0) {
         showToast({ text: trans('you_not_selected_tabs') })
@@ -189,23 +193,23 @@ function showToastMessage(): void {
 }
 
 function selectAllLinks(): void {
-    selectedLinks.value = links.value
+    selectedIds.value = new Set(links.value.map(link => link.id))
 }
 
 function deselectAllLinks(): void {
-    selectedLinks.value = []
+    selectedIds.value = new Set()
 }
 
 function toggleSelect(link: Link): void {
-    const contains = selectedLinks.value.some(l => l.id === link.id)
+    const nextIds = new Set(selectedIds.value)
 
-    // Remove the link ID from selected if contains
-    if (contains) {
-        selectedLinks.value = selectedLinks.value.filter(l => l.id !== link.id)
-        return
+    if (nextIds.has(link.id)) {
+        nextIds.delete(link.id)
+    } else {
+        nextIds.add(link.id)
     }
 
-    selectedLinks.value.push(link)
+    selectedIds.value = nextIds
 }
 </script>
 
@@ -235,7 +239,7 @@ function toggleSelect(link: Link): void {
                     v-for="link in links"
                     :key="link.id"
                     :link
-                    :is-selected="selectedLinks.some(l => l.id === link.id)"
+                    :is-selected="selectedIds.has(link.id)"
                     @toggle="toggleSelect(link)"
                 />
             </VueDraggableNext>
