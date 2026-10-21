@@ -106,6 +106,7 @@
     "group_unlocked": { "message": "组已解锁" },
     "group_locked": { "message": "组已锁定" },
     "error_occurred": { "message": "发生意外错误" },
+    "save_failed": { "message": "无法保存更改。之前的数据已保留" },
     "open_tabs": { "message": "打开标签页" },
     "open_tabs_delete_group": { "message": "打开标签页并删除该组" },
     "copy_tabs_into_group": { "message": "用当前标签页替换“组”" },

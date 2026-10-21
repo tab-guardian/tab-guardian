@@ -1,6 +1,6 @@
 import type { PlatformRuntime } from '@common/types/runtime'
 import type { Locale, LocaleMessageItem } from '@common/types'
-import { throwIfQuotaExceeds } from '@common/modules/runtime/utils'
+import { toStorageSaveError } from '@common/modules/runtime/storageSave'
 import { isRuntime } from '@common/modules/runtime/utils'
 import { config } from '@common/config'
 import enMessages from '@locales/en/messages.json'
@@ -146,9 +146,11 @@ export function getWebRuntimeAdapter(): PlatformRuntime {
                 const jsonStr = JSON.stringify(value)
                 const usedBytes = await this.getBytesInUse()
 
-                throwIfQuotaExceeds(jsonStr, usedBytes, this.MAX_BYTES_QUOTA)
-
-                localStorage.setItem(key, jsonStr)
+                try {
+                    localStorage.setItem(key, jsonStr)
+                } catch (err) {
+                    throw toStorageSaveError(err, this.MAX_BYTES_QUOTA, usedBytes)
+                }
             },
 
             async remove(key) {

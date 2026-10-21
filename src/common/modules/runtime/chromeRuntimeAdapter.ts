@@ -1,10 +1,8 @@
 import type { PlatformRuntime } from '@common/types/runtime'
 import { mapToTab, mapToWindow } from '@common/modules/runtime/maps'
 import { logger } from '@common/modules'
-import {
-    decodeStorageEntries,
-    throwIfQuotaExceeds,
-} from '@common/modules/runtime/utils'
+import { decodeStorageEntries } from '@common/modules/runtime/utils'
+import { toStorageSaveError } from '@common/modules/runtime/storageSave'
 
 export function getChromeRuntimeAdapter(): PlatformRuntime {
     const nativeSession = chrome.storage.session ?? null
@@ -84,9 +82,11 @@ export function getChromeRuntimeAdapter(): PlatformRuntime {
 
                 const usedBytes = await this.getBytesInUse()
 
-                throwIfQuotaExceeds(jsonStr, usedBytes, this.MAX_BYTES_QUOTA)
-
-                await chrome.storage.local.set({ [key]: jsonStr })
+                try {
+                    await chrome.storage.local.set({ [key]: jsonStr })
+                } catch (err) {
+                    throw toStorageSaveError(err, this.MAX_BYTES_QUOTA, usedBytes)
+                }
             },
 
             async remove(key) {
