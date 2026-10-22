@@ -1,5 +1,5 @@
 import type { Component } from 'vue'
-import type { Link } from '@common/types'
+import type { Link, ToastMessage } from '@common/types'
 
 type ModalItem<SHOW = any, HIDE = any> = {
     shown: boolean
@@ -8,8 +8,13 @@ type ModalItem<SHOW = any, HIDE = any> = {
     onClose: ((data: HIDE) => void) | null
 }
 
+export type PasswordAttemptResult = {
+    success: boolean
+    toastMsg: ToastMessage | null
+}
+
 type PasswordData = {
-    decrypting: (password: string) => Promise<boolean>
+    decrypting: (password: string) => Promise<PasswordAttemptResult>
     text: string
 }
 

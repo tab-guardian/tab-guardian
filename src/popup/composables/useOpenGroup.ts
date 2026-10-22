@@ -1,7 +1,7 @@
 import type { Group, ToastMessage } from '@common/types'
+import type { PasswordAttemptResult } from '@common/types/modal'
 import { useRouter } from 'vue-router'
 import { trans } from '@common/modules'
-import { showToast } from '@common/modules/toast'
 import { useGroupStore } from '@/stores/group'
 import { useModalStore } from '@/stores/modal'
 import { useTabsStore } from '@/stores/tabs'
@@ -34,16 +34,16 @@ export function useOpenGroup() {
 
         return toastMsgs
 
-        async function unlockGroup(pass: string): Promise<boolean> {
+        async function unlockGroup(pass: string): Promise<PasswordAttemptResult> {
             const unlocking = await groupStore.unlock(group, pass)
 
-            showToast({
+            const toastMsg: ToastMessage = {
                 text: unlocking.message,
                 type: unlocking.failed ? 'error' : 'info',
-            })
+            }
 
             if (unlocking.failed) {
-                return false
+                return { success: false, toastMsg }
             }
 
             const result = await tabsStore.openTabs(unlocking.group, pass)
@@ -52,7 +52,7 @@ export function useOpenGroup() {
 
             await router.push({ name: 'main' })
 
-            return true
+            return { success: true, toastMsg }
         }
     }
 

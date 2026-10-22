@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import type { Group } from '@common/types'
+import type { Group, ToastMessage } from '@common/types'
+import type { PasswordAttemptResult } from '@common/types/modal'
 import { ref } from 'vue'
 import { trans } from '@common/modules'
 import { useModalStore } from '@/stores/modal'
 import { useGroupStore } from '@/stores/group'
 import { useRouter } from 'vue-router'
-import { showToast } from '@common/modules/toast'
 import LockOpenIcon from '@common/components/Icons/LockOpenIcon.vue'
 import WarningBox from '@common/components/WarningBox.vue'
 import Button from '@common/components/Form/Button.vue'
@@ -24,16 +24,16 @@ async function promptEnterPassword(): Promise<void> {
     })
 }
 
-async function unlockCallback(pass: string): Promise<boolean> {
+async function unlockCallback(pass: string): Promise<PasswordAttemptResult> {
     const unlocking = await groupStore.unlock(props.group, pass)
 
-    showToast({
+    const toastMsg: ToastMessage = {
         text: unlocking.message,
         type: unlocking.failed ? 'error' : 'info',
-    })
+    }
 
     if (unlocking.failed) {
-        return false
+        return { success: false, toastMsg }
     }
 
     await router.push({
@@ -41,7 +41,7 @@ async function unlockCallback(pass: string): Promise<boolean> {
         params: { id: props.group.id },
     })
 
-    return true
+    return { success: true, toastMsg }
 }
 </script>
 

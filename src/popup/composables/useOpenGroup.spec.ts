@@ -21,11 +21,7 @@ vi.mock('@common/modules/tabs/restoreTabs', () => ({
     restoreTabs: vi.fn(),
 }))
 
-vi.mock('@common/modules/toast', () => ({
-    showToast: vi.fn(),
-}))
-
-const groupPass = 'amy-pass'
+const groupPass = 'i-love-linux'
 
 describe('useOpenGroup', () => {
     beforeEach(() => {
@@ -96,8 +92,10 @@ describe('useOpenGroup', () => {
         })
 
         const data = modalStore.getSharedData('password')!
+        const result = await data.decrypting(groupPass)
 
-        expect(await data.decrypting(groupPass)).toBeTruthy()
+        expect(result.success).toBeTruthy()
+        expect(result.toastMsg).toEqual(expect.objectContaining({ type: 'info' }))
 
         modalStore.hide('password', {})
         await opening
@@ -122,8 +120,10 @@ describe('useOpenGroup', () => {
         })
 
         const data = modalStore.getSharedData('password')!
+        const result = await data.decrypting('wrong-pass')
 
-        expect(await data.decrypting('wrong-pass')).toBeFalsy()
+        expect(result.success).toBeFalsy()
+        expect(result.toastMsg).toEqual(expect.objectContaining({ type: 'error' }))
 
         modalStore.hide('password', {})
         await opening
