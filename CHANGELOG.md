@@ -4,6 +4,7 @@
 
 - 🧑‍💻 Improve functionality around saving data to the storage and hitting quota errors. Now, system is more smarter at quota error detection and prevents data loss.
 - 🧑‍💻 Improve toast functionality. If 2 identical message appear within 1 second, only 1 is shown.
+- 🧑‍💻 Refactored toast notification system. Nothing changes for users. It's internal only change.
 
 ## 1.19.14 (2026-10-21)
 
@@ -184,7 +185,7 @@
 - 🐛 Fixed bug where tabs would not open for private locked groups when you try to do it on the main screen with all the groups listed.
 - 🧑‍💻 The "Bound URL" can now be modified when you create a new private group.
 - 🧑‍💻 The `about:home` Firefox's page will be also closed when you restore tabs from a group.
-- 🧑‍💻 Refactoring of the codebase;
+- 🧑‍💻 Refactoring of the codebase.
 - 🧑‍💻 Added a shield icon to private groups when you open them. It's on the left of the group name.
 
 ## 1.14.1 (2025-10-16)
