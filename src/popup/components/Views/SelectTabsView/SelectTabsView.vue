@@ -186,10 +186,7 @@ async function createPrivateGroup(group: Group): Promise<Group | null> {
 
 function showForbiddenLinksMessage(links: Link[]): void {
     const toastMsg = forbiddenLinksToastMsg(links)
-
-    if (toastMsg) {
-        showToast(toastMsg)
-    }
+    showToast(toastMsg)
 }
 
 function showToastMessage(): void {

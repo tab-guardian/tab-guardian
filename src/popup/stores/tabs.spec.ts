@@ -5,6 +5,7 @@ import { createPinia, setActivePinia } from 'pinia'
 import { trans } from '@common/modules'
 import { fakeGroup, fakeLink, fakeLinks } from '@common/modules/fake'
 import { restoreTabs } from '@common/modules/tabs/restoreTabs'
+import { getCurrentLinks } from '@common/modules/tabs/getCurrentLinks'
 import { showToast } from '@common/modules/toast'
 import { passwordStorage } from '@common/modules/storage/password'
 import { waitUntil } from '@common/modules/testUtils'
@@ -17,6 +18,10 @@ vi.mock('@common/modules/tabs/restoreTabs', () => ({
     restoreTabs: vi.fn(),
 }))
 
+vi.mock('@common/modules/tabs/getCurrentLinks', () => ({
+    getCurrentLinks: vi.fn(),
+}))
+
 vi.mock('@common/modules/toast', () => ({
     showToast: vi.fn(),
 }))
@@ -27,6 +32,7 @@ describe('tabs store', () => {
         sessionStorage.clear()
         setActivePinia(createPinia())
         vi.mocked(restoreTabs).mockResolvedValue([])
+        vi.mocked(getCurrentLinks).mockResolvedValue(fakeLinks(2))
     })
 
     afterEach(() => {
@@ -112,6 +118,42 @@ describe('tabs store', () => {
 
             expect(groupStore.get(group.id)).not.toBeNull()
             expect(await passwordStorage.get(group.id)).toBeNull()
+        })
+    })
+
+    suite('stashTabs()', () => {
+        it('returns an error when there are no tabs to save', async () => {
+            const tabsStore = useTabsStore()
+            const group = fakeGroup()
+
+            vi.mocked(getCurrentLinks).mockResolvedValue([])
+
+            const toastMsg = await tabsStore.stashTabs(group, false)
+
+            expect(toastMsg).toEqual({
+                text: trans('no_tabs_to_save'),
+                type: 'error',
+            })
+        })
+
+        it('saves the current tabs and returns a success message', async () => {
+            const groupStore = useGroupStore()
+            const tabsStore = useTabsStore()
+
+            const group = fakeGroup({ links: [] })
+            const links = fakeLinks(2)
+
+            await groupStore.create(group)
+
+            vi.mocked(getCurrentLinks).mockResolvedValue(links)
+
+            const toastMsg = await tabsStore.stashTabs(group, false)
+
+            expect(groupStore.get(group.id)?.links).toHaveLength(2)
+            expect(toastMsg).toEqual({
+                text: trans('tabs_now_saved'),
+                type: 'info',
+            })
         })
     })
 

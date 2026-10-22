@@ -18,10 +18,7 @@ async function openAndDeleteTabs(): Promise<void> {
     }
 
     const toastMsg = await tabsStore.openAndDeleteTabs(props.group)
-
-    if (toastMsg) {
-        showToast(toastMsg)
-    }
+    showToast(toastMsg)
 
     await router.push({ name: 'main' })
 }

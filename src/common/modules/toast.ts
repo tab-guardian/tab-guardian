@@ -9,7 +9,11 @@ const DEDUPE_WINDOW_MS = 1_000
 
 let lastToast: { key: string; shownAt: number } | null = null
 
-export function showToast(params: Params | ToastMessage): void {
+export function showToast(params: Params | ToastMessage | null): void {
+    if (!params) {
+        return
+    }
+
     const options: Params = params
     const key = `${options.type || 'info'}:${options.text}`
     const now = Date.now()

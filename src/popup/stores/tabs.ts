@@ -4,7 +4,7 @@ import { useGroupStore } from '@/stores/group'
 import { trans } from '@common/modules'
 import { useSettingsStore } from '@/stores/settings'
 import { useModalStore } from '@/stores/modal'
-import { filterForbiddenLinks } from '@common/modules/group'
+import { filterForbiddenLinks, forbiddenLinksToastMsg } from '@common/modules/group'
 import { validatePassword } from '@common/modules/validation/group'
 import { showToast } from '@common/modules/toast'
 import { getCurrentLinks } from '@common/modules/tabs/getCurrentLinks'
@@ -23,7 +23,12 @@ export const useTabsStore = defineStore('tabs', () => {
         }
 
         if (!settingsStore.settings.encryptAfterRestore || !group.isPrivate) {
-            await restore(group)
+            const toastMsg = await restore(group)
+
+            if (toastMsg) {
+                showToast(toastMsg)
+            }
+
             return true
         }
 
@@ -40,10 +45,14 @@ export const useTabsStore = defineStore('tabs', () => {
             return false
         }
 
-        await restore(group)
+        const restoreToastMsg = await restore(group)
         const encryption = await groupStore.lock(group, pass)
 
         await passwordStorage.delete(group.id)
+
+        if (restoreToastMsg) {
+            showToast(restoreToastMsg)
+        }
 
         showToast({
             text: encryption.message,
@@ -80,7 +89,7 @@ export const useTabsStore = defineStore('tabs', () => {
         return resp?.newPass || null
     }
 
-    async function restore(group: Group): Promise<void> {
+    async function restore(group: Group): Promise<ToastMessage | null> {
         group.updatedAt = Date.now()
 
         let openedTimes = 1
@@ -92,7 +101,10 @@ export const useTabsStore = defineStore('tabs', () => {
         group.openedTimes = openedTimes
 
         await groupStore.updateFields(group.id, { openedTimes })
-        await restoreTabs(group.links)
+
+        const failedLinks = await restoreTabs(group.links)
+
+        return forbiddenLinksToastMsg(failedLinks)
     }
 
     async function openAndDeleteTabs(group: Group): Promise<ToastMessage | null> {
@@ -118,15 +130,17 @@ export const useTabsStore = defineStore('tabs', () => {
         }
     }
 
-    async function stashTabs(group: Group, closeAllTabs: boolean): Promise<void> {
+    async function stashTabs(
+        group: Group,
+        closeAllTabs: boolean,
+    ): Promise<ToastMessage> {
         const links = await getCurrentLinks()
 
         if (!links.length) {
-            showToast({
+            return {
                 text: trans('no_tabs_to_save'),
                 type: 'error',
-            })
-            return
+            }
         }
 
         const filteredLinks = filterForbiddenLinks(links)
@@ -140,7 +154,10 @@ export const useTabsStore = defineStore('tabs', () => {
             await closeTabs(filteredLinks.allowed.map(l => l.tabId))
         }
 
-        showToast({ text: trans('tabs_now_saved') })
+        return {
+            text: trans('tabs_now_saved'),
+            type: 'info',
+        }
     }
 
     return {
