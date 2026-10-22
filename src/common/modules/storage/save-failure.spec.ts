@@ -6,17 +6,13 @@ import { config } from '@common/config'
 import { runtime } from '@common/modules/runtime'
 import { getChromeRuntimeAdapter } from '@common/modules/runtime/chromeRuntimeAdapter'
 import { getFirefoxRuntimeAdapter } from '@common/modules/runtime/firefoxRuntimeAdapter'
-import { showToast } from '@common/modules/toast'
 import { groupStorage } from '@common/modules/storage/group'
 import { groupIdsStorage } from '@common/modules/storage/groupIds'
 import { fakeGroup } from '@common/modules/fake'
 
-vi.mock('@common/modules/toast', () => ({ showToast: vi.fn() }))
-
 describe('saving to storage when the write fails', () => {
     beforeEach(() => {
         localStorage.clear()
-        vi.mocked(showToast).mockClear()
     })
 
     afterEach(() => {
@@ -24,26 +20,20 @@ describe('saving to storage when the write fails', () => {
         vi.restoreAllMocks()
     })
 
-    it('tells the user that the change was not saved', async () => {
+    it('throws a save error', async () => {
         failAllWrites(new Error('disk is on fire'))
 
-        await expect(runtime.storage.set('notes', 'hello')).rejects.toThrow()
-
-        expect(showToast).toHaveBeenCalledWith({
-            text: trans('save_failed'),
-            type: 'error',
-        })
+        await expect(runtime.storage.set('notes', 'hello')).rejects.toThrow(
+            trans('save_failed'),
+        )
     })
 
-    it('explains that storage is full when the browser reports a quota error', async () => {
+    it('reports storage is full', async () => {
         failAllWrites(new Error('QUOTA_BYTES quota exceeded'))
 
-        await expect(runtime.storage.set('notes', 'hello')).rejects.toThrow()
-
-        expect(showToast).toHaveBeenCalledWith({
-            text: await storageFullMessage(),
-            type: 'error',
-        })
+        await expect(runtime.storage.set('notes', 'hello')).rejects.toThrow(
+            await storageFullMessage(),
+        )
     })
 
     it('keeps the previous data when the new data cannot be saved', async () => {
@@ -60,7 +50,6 @@ describe('saving to storage when the write fails', () => {
 describe('saving a group when the write fails', () => {
     beforeEach(() => {
         localStorage.clear()
-        vi.mocked(showToast).mockClear()
     })
 
     afterEach(() => {
@@ -110,45 +99,31 @@ describe.each([
 ])(
     '$name storage when the browser rejects the write',
     ({ getAdapter, stubStorage }) => {
-        beforeEach(() => {
-            vi.mocked(showToast).mockClear()
-        })
-
         afterEach(() => {
             vi.unstubAllGlobals()
             vi.restoreAllMocks()
         })
 
-        it('explains that storage is full on a quota error', async () => {
+        it('reports storage is full', async () => {
             const setFunc = vi
                 .fn()
                 .mockRejectedValue(new Error('QUOTA_BYTES quota exceeded'))
 
             stubStorage(setFunc)
 
-            await expect(
-                getAdapter().storage.set('notes', 'hello'),
-            ).rejects.toThrow()
-
-            expect(showToast).toHaveBeenCalledWith({
-                text: await storageFullMessage(),
-                type: 'error',
-            })
+            await expect(getAdapter().storage.set('notes', 'hello')).rejects.toThrow(
+                await storageFullMessage(),
+            )
         })
 
-        it('reports a general save failure on any other error', async () => {
+        it('reports a general save failure', async () => {
             const setFunc = vi.fn().mockRejectedValue(new Error('disk is on fire'))
 
             stubStorage(setFunc)
 
-            await expect(
-                getAdapter().storage.set('notes', 'hello'),
-            ).rejects.toThrow()
-
-            expect(showToast).toHaveBeenCalledWith({
-                text: trans('save_failed'),
-                type: 'error',
-            })
+            await expect(getAdapter().storage.set('notes', 'hello')).rejects.toThrow(
+                trans('save_failed'),
+            )
         })
     },
 )

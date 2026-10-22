@@ -6,7 +6,6 @@ import { useSettingsStore } from '@/stores/settings'
 import { useModalStore } from '@/stores/modal'
 import { filterForbiddenLinks, forbiddenLinksToastMsg } from '@common/modules/group'
 import { validatePassword } from '@common/modules/validation/group'
-import { showToast } from '@common/modules/toast'
 import { getCurrentLinks } from '@common/modules/tabs/getCurrentLinks'
 import { restoreTabs } from '@common/modules/tabs/restoreTabs'
 import { closeTabs } from '@common/modules/tabs/closeTabs'
@@ -90,8 +89,6 @@ export const useTabsStore = defineStore('tabs', () => {
         if (pass) {
             return pass
         }
-
-        showToast({ text: trans('enter_your_password'), duration: 4000 })
 
         const resp = await modalStore.show('newPassword', {
             title: trans('enter_new_pass'),

@@ -1,5 +1,4 @@
 import { formatNumber, logger, trans } from '@common/modules'
-import { showToast } from '@common/modules/toast'
 
 // Best-effort detection. Browsers use different messages for the same
 // "storage is full" condition, so we fall back to a general save error.
@@ -32,7 +31,7 @@ export function quotaMessage(bytesQuota: number, usedBytes: number): string {
     )
 }
 
-// Reports a failed write and converts it into an error callers can check.
+// Converts a failed write into an error callers can check.
 export function toStorageSaveError(
     err: unknown,
     bytesQuota: number,
@@ -43,8 +42,6 @@ export function toStorageSaveError(
     const msg = isQuotaError(err)
         ? quotaMessage(bytesQuota, usedBytes)
         : trans('save_failed')
-
-    showToast({ text: msg, type: 'error' })
 
     return new StorageSaveError(msg)
 }
