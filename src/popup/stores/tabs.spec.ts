@@ -51,10 +51,10 @@ describe('tabs store', () => {
             const group = fakeGroup({ links: fakeLinks(2) })
 
             await groupStore.create(group)
-            const message = await tabsStore.openAndDeleteTabs(group)
+            const toastMsg = await tabsStore.openAndDeleteTabs(group)
 
             expect(groupStore.get(group.id)).toBeNull()
-            expect(message).toBeNull()
+            expect(toastMsg).toBeNull()
         })
 
         it('keeps group with only the failed links when some tabs fail', async () => {
@@ -66,12 +66,15 @@ describe('tabs store', () => {
             await groupStore.create(group)
             vi.mocked(restoreTabs).mockResolvedValue([failedLink])
 
-            const message = await tabsStore.openAndDeleteTabs(group)
+            const toastMsg = await tabsStore.openAndDeleteTabs(group)
             const kept = groupStore.get(group.id)
 
             expect(kept).not.toBeNull()
             expect(kept?.links).toEqual([failedLink])
-            expect(message).toBe(trans('only_some_tabs_restored', '1', '2'))
+            expect(toastMsg).toEqual({
+                text: trans('only_some_tabs_restored', '1', '2'),
+                type: 'info',
+            })
         })
 
         it('keeps the whole group when every tab fails', async () => {
@@ -82,11 +85,14 @@ describe('tabs store', () => {
             await groupStore.create(group)
             vi.mocked(restoreTabs).mockResolvedValue(group.links)
 
-            const message = await tabsStore.openAndDeleteTabs(group)
+            const toastMsg = await tabsStore.openAndDeleteTabs(group)
             const kept = groupStore.get(group.id)
 
             expect(kept?.links).toHaveLength(2)
-            expect(message).toBe(trans('only_some_tabs_restored', '0', '2'))
+            expect(toastMsg).toEqual({
+                text: trans('only_some_tabs_restored', '0', '2'),
+                type: 'info',
+            })
         })
 
         it('deletes cached password of a private group even when some tabs fail', async () => {

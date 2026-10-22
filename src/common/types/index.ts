@@ -1,5 +1,10 @@
 export type Locale = 'ru' | 'zh_CN' | 'en'
 
+export type ToastMessage = {
+    text: string
+    type: 'error' | 'info'
+}
+
 export type LinkBuffer = {
     action: 'copy' | 'cut'
     initialGroupId: number

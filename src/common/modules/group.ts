@@ -1,4 +1,4 @@
-import type { Group, GroupVisibility, Link } from '@common/types'
+import type { Group, GroupVisibility, Link, ToastMessage } from '@common/types'
 import { toRaw } from 'vue'
 import { isForbiddenUrl } from '@common/modules/url'
 import { trans } from '@common/modules'
@@ -75,14 +75,17 @@ export function isComponentIcon(str: string): boolean {
     return str.slice(-4) === 'Icon'
 }
 
-export function forbiddenLinksMessage(links: Link[]): string | null {
+export function forbiddenLinksToastMsg(links: Link[]): ToastMessage | null {
     if (links.length === 0) {
         return null
     }
 
     const urls = links.map(link => link.url).join(', ')
 
-    return trans('browser_cannot_open_these_tabs', urls)
+    return {
+        text: trans('browser_cannot_open_these_tabs', urls),
+        type: 'error',
+    }
 }
 
 export function filterForbiddenLinks(links: Link[]): {

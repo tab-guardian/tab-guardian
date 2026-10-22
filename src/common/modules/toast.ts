@@ -1,15 +1,17 @@
 import Toastify from 'toastify-js'
+import type { ToastMessage } from '@common/types'
 
 type Params = Toastify.Options & {
-    type?: 'error' | 'info'
+    type?: ToastMessage['type']
 }
 
 const DEDUPE_WINDOW_MS = 1_000
 
 let lastToast: { key: string; shownAt: number } | null = null
 
-export function showToast(params: Params): void {
-    const key = `${params.type || 'info'}:${params.text}`
+export function showToast(params: Params | ToastMessage): void {
+    const options: Params = params
+    const key = `${options.type || 'info'}:${options.text}`
     const now = Date.now()
 
     if (
@@ -23,13 +25,13 @@ export function showToast(params: Params): void {
     lastToast = { key, shownAt: now }
 
     Toastify({
-        text: params.text,
-        duration: params.duration || 5000,
-        close: params.close || false,
-        gravity: params.gravity || 'bottom',
-        position: params.position || 'center',
-        stopOnFocus: params.stopOnFocus || true,
-        style: getStyles(params.type || 'info'),
+        text: options.text,
+        duration: options.duration || 5000,
+        close: options.close || false,
+        gravity: options.gravity || 'bottom',
+        position: options.position || 'center',
+        stopOnFocus: options.stopOnFocus || true,
+        style: getStyles(options.type || 'info'),
     }).showToast()
 }
 

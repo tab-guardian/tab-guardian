@@ -10,7 +10,7 @@ import {
     generateUniqueId,
     isComponentIcon,
     filterForbiddenLinks,
-    forbiddenLinksMessage,
+    forbiddenLinksToastMsg,
     forceUniqueName,
 } from '@common/modules/group'
 import { trans } from '@common/modules'
@@ -105,9 +105,9 @@ describe('group utils module', () => {
         })
     })
 
-    suite('forbiddenLinksMessage()', () => {
+    suite('forbiddenLinksToastMsg()', () => {
         it('returns null when there are no forbidden links', () => {
-            expect(forbiddenLinksMessage([])).toBeNull()
+            expect(forbiddenLinksToastMsg([])).toBeNull()
         })
 
         it('returns one message for all forbidden links', () => {
@@ -116,12 +116,13 @@ describe('group utils module', () => {
                 fakeLink({ url: 'chrome://extensions' }),
             ]
 
-            expect(forbiddenLinksMessage(links)).toBe(
-                trans(
+            expect(forbiddenLinksToastMsg(links)).toEqual({
+                text: trans(
                     'browser_cannot_open_these_tabs',
                     'about:config, chrome://extensions',
                 ),
-            )
+                type: 'error',
+            })
         })
     })
 

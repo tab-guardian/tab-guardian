@@ -1,4 +1,4 @@
-import type { Group } from '@common/types'
+import type { Group, ToastMessage } from '@common/types'
 import { defineStore } from 'pinia'
 import { useGroupStore } from '@/stores/group'
 import { trans } from '@common/modules'
@@ -95,7 +95,7 @@ export const useTabsStore = defineStore('tabs', () => {
         await restoreTabs(group.links)
     }
 
-    async function openAndDeleteTabs(group: Group): Promise<string | null> {
+    async function openAndDeleteTabs(group: Group): Promise<ToastMessage | null> {
         if (group.isPrivate) {
             await passwordStorage.delete(group.id)
         }
@@ -112,7 +112,10 @@ export const useTabsStore = defineStore('tabs', () => {
         const actual = (group.links.length - failedLinks.length).toString()
         const total = group.links.length.toString()
 
-        return trans('only_some_tabs_restored', actual, total)
+        return {
+            text: trans('only_some_tabs_restored', actual, total),
+            type: 'info',
+        }
     }
 
     async function stashTabs(group: Group, closeAllTabs: boolean): Promise<void> {
