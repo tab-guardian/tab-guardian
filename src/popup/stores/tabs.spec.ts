@@ -6,7 +6,6 @@ import { trans } from '@common/modules'
 import { fakeGroup, fakeLink, fakeLinks } from '@common/modules/fake'
 import { restoreTabs } from '@common/modules/tabs/restoreTabs'
 import { getCurrentLinks } from '@common/modules/tabs/getCurrentLinks'
-import { showToast } from '@common/modules/toast'
 import { passwordStorage } from '@common/modules/storage/password'
 import { waitUntil } from '@common/modules/testUtils'
 import { useGroupStore } from '@/stores/group'
@@ -20,10 +19,6 @@ vi.mock('@common/modules/tabs/restoreTabs', () => ({
 
 vi.mock('@common/modules/tabs/getCurrentLinks', () => ({
     getCurrentLinks: vi.fn(),
-}))
-
-vi.mock('@common/modules/toast', () => ({
-    showToast: vi.fn(),
 }))
 
 describe('tabs store', () => {
@@ -218,7 +213,7 @@ describe('tabs store', () => {
 
             modalStore.hide('newPassword', { newPass: 'amy-pass' })
 
-            expect(await opening).toBeTruthy()
+            expect((await opening).opened).toBeTruthy()
             expect(restoreTabs).toHaveBeenCalledWith(group.links)
         })
 
@@ -240,7 +235,10 @@ describe('tabs store', () => {
 
             modalStore.hide('newPassword', {})
 
-            expect(await opening).toBeFalsy()
+            const result = await opening
+
+            expect(result.opened).toBeFalsy()
+            expect(result.toastMsgs).toHaveLength(0)
             expect(restoreTabs).not.toHaveBeenCalled()
 
             const kept = groupStore.get(group.id)
@@ -267,7 +265,7 @@ describe('tabs store', () => {
 
             modalStore.hide('newPassword', { newPass: 'amy-pass' })
 
-            expect(await opening).toBeTruthy()
+            expect((await opening).opened).toBeTruthy()
 
             const locked = groupStore.get(group.id)
             expect(locked?.isEncrypted).toBeTruthy()
@@ -283,13 +281,14 @@ describe('tabs store', () => {
 
             await groupStore.create(group)
 
-            const opened = await tabsStore.openTabs(group, 'amy')
+            const result = await tabsStore.openTabs(group, 'amy')
 
-            expect(opened).toBeFalsy()
-            expect(restoreTabs).not.toHaveBeenCalled()
-            expect(showToast).toHaveBeenCalledWith(
+            expect(result.opened).toBeFalsy()
+            expect(result.toastMsgs).toHaveLength(1)
+            expect(result.toastMsgs[0]).toEqual(
                 expect.objectContaining({ type: 'error' }),
             )
+            expect(restoreTabs).not.toHaveBeenCalled()
         })
 
         it('uses the cached password without prompting', async () => {
@@ -303,9 +302,9 @@ describe('tabs store', () => {
             await groupStore.create(group)
             await passwordStorage.save(group.id, 'genshin-skirk')
 
-            const opened = await tabsStore.openTabs(group)
+            const result = await tabsStore.openTabs(group)
 
-            expect(opened).toBeTruthy()
+            expect(result.opened).toBeTruthy()
             expect(modalStore.isModalVisible('newPassword')).toBeFalsy()
             expect(restoreTabs).toHaveBeenCalledWith(group.links)
 

@@ -1,4 +1,4 @@
-import type { Group } from '@common/types'
+import type { Group, ToastMessage } from '@common/types'
 import { useRouter } from 'vue-router'
 import { trans } from '@common/modules'
 import { showToast } from '@common/modules/toast'
@@ -12,15 +12,18 @@ export function useOpenGroup() {
     const modalStore = useModalStore()
     const tabsStore = useTabsStore()
 
-    async function open(group: Group): Promise<void> {
+    async function open(group: Group): Promise<ToastMessage[]> {
         if (group.links.length === 0) {
-            return
+            return []
         }
 
         if (!group.isPrivate || !group.isEncrypted) {
-            await tabsStore.openTabs(group)
-            return
+            const result = await tabsStore.openTabs(group)
+
+            return result.toastMsgs
         }
+
+        let toastMsgs: ToastMessage[] = []
 
         // A locked group needs its password first. Unlocking already
         // decrypted groups would fail, so they are handled above.
@@ -28,6 +31,8 @@ export function useOpenGroup() {
             text: trans('enter_pass_unlock_content'),
             decrypting: unlockGroup,
         })
+
+        return toastMsgs
 
         async function unlockGroup(pass: string): Promise<boolean> {
             const unlocking = await groupStore.unlock(group, pass)
@@ -41,7 +46,10 @@ export function useOpenGroup() {
                 return false
             }
 
-            await tabsStore.openTabs(unlocking.group, pass)
+            const result = await tabsStore.openTabs(unlocking.group, pass)
+
+            toastMsgs = result.toastMsgs
+
             await router.push({ name: 'main' })
 
             return true

@@ -12,37 +12,46 @@ import { restoreTabs } from '@common/modules/tabs/restoreTabs'
 import { closeTabs } from '@common/modules/tabs/closeTabs'
 import { passwordStorage } from '@common/modules/storage/password'
 
+type OpenTabsResult = {
+    opened: boolean
+    toastMsgs: ToastMessage[]
+}
+
 export const useTabsStore = defineStore('tabs', () => {
     const groupStore = useGroupStore()
     const settingsStore = useSettingsStore()
     const modalStore = useModalStore()
 
-    async function openTabs(group: Group, userPass?: string): Promise<boolean> {
+    async function openTabs(
+        group: Group,
+        userPass?: string,
+    ): Promise<OpenTabsResult> {
         if (group.links.length === 0) {
-            return false
+            return { opened: false, toastMsgs: [] }
         }
 
         if (!settingsStore.settings.encryptAfterRestore || !group.isPrivate) {
             const toastMsg = await restore(group)
 
-            if (toastMsg) {
-                showToast(toastMsg)
+            return {
+                opened: true,
+                toastMsgs: toastMsg ? [toastMsg] : [],
             }
-
-            return true
         }
 
         const pass = await getPassword(group, userPass)
 
         if (!pass) {
-            return false
+            return { opened: false, toastMsgs: [] }
         }
 
         const validationError = validatePassword(pass)
 
         if (validationError) {
-            showToast({ text: validationError, type: 'error' })
-            return false
+            return {
+                opened: false,
+                toastMsgs: [{ text: validationError, type: 'error' }],
+            }
         }
 
         const restoreToastMsg = await restore(group)
@@ -50,22 +59,24 @@ export const useTabsStore = defineStore('tabs', () => {
 
         await passwordStorage.delete(group.id)
 
+        const toastMsgs: ToastMessage[] = []
+
         if (restoreToastMsg) {
-            showToast(restoreToastMsg)
+            toastMsgs.push(restoreToastMsg)
         }
 
-        showToast({
+        toastMsgs.push({
             text: encryption.message,
             type: encryption.failed ? 'error' : 'info',
         })
 
         if (encryption.failed) {
-            return false
+            return { opened: false, toastMsgs }
         }
 
         await groupStore.update(encryption.group)
 
-        return true
+        return { opened: true, toastMsgs }
     }
 
     // Re-locking the group needs a password. When remembering is off there is
