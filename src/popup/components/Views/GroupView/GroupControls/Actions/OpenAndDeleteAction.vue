@@ -4,6 +4,7 @@ import { useTabsStore } from '@/stores/tabs'
 import { useRouter } from 'vue-router'
 import { runtime } from '@common/modules/runtime'
 import { trans } from '@common/modules'
+import { showToast } from '@common/modules/toast'
 import Control from '@/components/Control.vue'
 
 const props = defineProps<{ group: Group }>()
@@ -16,7 +17,12 @@ async function openAndDeleteTabs(): Promise<void> {
         return
     }
 
-    await tabsStore.openAndDeleteTabs(props.group)
+    const message = await tabsStore.openAndDeleteTabs(props.group)
+
+    if (message) {
+        showToast({ text: message })
+    }
+
     await router.push({ name: 'main' })
 }
 </script>

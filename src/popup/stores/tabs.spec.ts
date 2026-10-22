@@ -51,10 +51,10 @@ describe('tabs store', () => {
             const group = fakeGroup({ links: fakeLinks(2) })
 
             await groupStore.create(group)
-            await tabsStore.openAndDeleteTabs(group)
+            const message = await tabsStore.openAndDeleteTabs(group)
 
             expect(groupStore.get(group.id)).toBeNull()
-            expect(showToast).not.toHaveBeenCalled()
+            expect(message).toBeNull()
         })
 
         it('keeps group with only the failed links when some tabs fail', async () => {
@@ -66,15 +66,12 @@ describe('tabs store', () => {
             await groupStore.create(group)
             vi.mocked(restoreTabs).mockResolvedValue([failedLink])
 
-            await tabsStore.openAndDeleteTabs(group)
-
+            const message = await tabsStore.openAndDeleteTabs(group)
             const kept = groupStore.get(group.id)
 
             expect(kept).not.toBeNull()
             expect(kept?.links).toEqual([failedLink])
-            expect(showToast).toHaveBeenCalledWith({
-                text: trans('only_some_tabs_restored', '1', '2'),
-            })
+            expect(message).toBe(trans('only_some_tabs_restored', '1', '2'))
         })
 
         it('keeps the whole group when every tab fails', async () => {
@@ -85,14 +82,11 @@ describe('tabs store', () => {
             await groupStore.create(group)
             vi.mocked(restoreTabs).mockResolvedValue(group.links)
 
-            await tabsStore.openAndDeleteTabs(group)
-
+            const message = await tabsStore.openAndDeleteTabs(group)
             const kept = groupStore.get(group.id)
 
             expect(kept?.links).toHaveLength(2)
-            expect(showToast).toHaveBeenCalledWith({
-                text: trans('only_some_tabs_restored', '0', '2'),
-            })
+            expect(message).toBe(trans('only_some_tabs_restored', '0', '2'))
         })
 
         it('deletes cached password of a private group even when some tabs fail', async () => {

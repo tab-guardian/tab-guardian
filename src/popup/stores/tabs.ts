@@ -95,7 +95,7 @@ export const useTabsStore = defineStore('tabs', () => {
         await restoreTabs(group.links)
     }
 
-    async function openAndDeleteTabs(group: Group): Promise<void> {
+    async function openAndDeleteTabs(group: Group): Promise<string | null> {
         if (group.isPrivate) {
             await passwordStorage.delete(group.id)
         }
@@ -104,7 +104,7 @@ export const useTabsStore = defineStore('tabs', () => {
 
         if (failedLinks.length === 0) {
             await groupStore.deleteGroup(group.id)
-            return
+            return null
         }
 
         await groupStore.updateFields(group.id, { links: failedLinks })
@@ -112,7 +112,7 @@ export const useTabsStore = defineStore('tabs', () => {
         const actual = (group.links.length - failedLinks.length).toString()
         const total = group.links.length.toString()
 
-        showToast({ text: trans('only_some_tabs_restored', actual, total) })
+        return trans('only_some_tabs_restored', actual, total)
     }
 
     async function stashTabs(group: Group, closeAllTabs: boolean): Promise<void> {

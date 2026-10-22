@@ -1,7 +1,6 @@
 import type { Group, GroupVisibility, Link } from '@common/types'
 import { toRaw } from 'vue'
 import { isForbiddenUrl } from '@common/modules/url'
-import { showToast } from '@common/modules/toast'
 import { trans } from '@common/modules'
 
 // 53 bits of cryptographic randomness packed into a number:
@@ -76,13 +75,14 @@ export function isComponentIcon(str: string): boolean {
     return str.slice(-4) === 'Icon'
 }
 
-export function printForbiddenLinks(links: Link[]): void {
-    for (const link of links) {
-        showToast({
-            text: trans('browser_cannot_open_these_tabs', link.url),
-            type: 'error',
-        })
+export function forbiddenLinksMessage(links: Link[]): string | null {
+    if (links.length === 0) {
+        return null
     }
+
+    const urls = links.map(link => link.url).join(', ')
+
+    return trans('browser_cannot_open_these_tabs', urls)
 }
 
 export function filterForbiddenLinks(links: Link[]): {

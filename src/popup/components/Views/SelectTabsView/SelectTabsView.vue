@@ -8,7 +8,7 @@ import { useGroupStore } from '@/stores/group'
 import { getCurrentLinks } from '@common/modules/tabs/getCurrentLinks'
 import { showToast } from '@common/modules/toast'
 import { closeTabs } from '@common/modules/tabs/closeTabs'
-import { filterForbiddenLinks, printForbiddenLinks } from '@common/modules/group'
+import { filterForbiddenLinks, forbiddenLinksMessage } from '@common/modules/group'
 import { VueDraggableNext } from 'vue-draggable-next'
 import View from '@/components/Views/View.vue'
 import TabItem from '@/components/Views/SelectTabsView/TabItem.vue'
@@ -129,7 +129,7 @@ async function handleSaveGroup(): Promise<void> {
     const filtered = filterForbiddenLinks(selectedLinks.value)
     await groupStore.insertLinksInto(group.id, filtered.allowed)
 
-    printForbiddenLinks(filtered.forbidden)
+    showForbiddenLinksMessage(filtered.forbidden)
     showToastMessage()
 
     if (closeAllTabs.value) {
@@ -145,7 +145,7 @@ async function createGroup(): Promise<Group | null> {
     const filtered = filterForbiddenLinks(selectedLinks.value)
     const group = newGroupStore.createGroupFromChoices(filtered.allowed)
 
-    printForbiddenLinks(filtered.forbidden)
+    showForbiddenLinksMessage(filtered.forbidden)
 
     if (!newGroupStore.choices.isPrivate) {
         return group
@@ -182,6 +182,14 @@ async function createPrivateGroup(group: Group): Promise<Group | null> {
     }
 
     return locking.group
+}
+
+function showForbiddenLinksMessage(links: Link[]): void {
+    const message = forbiddenLinksMessage(links)
+
+    if (message) {
+        showToast({ text: message, type: 'error' })
+    }
 }
 
 function showToastMessage(): void {
