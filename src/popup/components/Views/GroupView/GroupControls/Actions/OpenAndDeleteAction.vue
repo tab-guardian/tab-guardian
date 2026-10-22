@@ -33,7 +33,7 @@ async function openAndDeleteTabs(): Promise<void> {
         @click="openAndDeleteTabs"
         class="bg-orange-300 dark:bg-orange-700"
         :class="{
-            'cursor-not-allowed !opacity-40': group.links.length === 0,
+            'cursor-not-allowed opacity-40!': group.links.length === 0,
         }"
     >
         <img
