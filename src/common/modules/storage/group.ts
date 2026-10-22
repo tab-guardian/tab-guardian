@@ -32,17 +32,17 @@ export const groupStorage = {
         const newGroup = encodeGroup(group)
         const ids = await groupIdsStorage.getAll()
 
+        // Save the group before registering its id, so a failed write
+        // cannot leave an id pointing to data that was never stored.
+        await runtime.storage.set<Group>(newGroup.id.toString(), newGroup)
+
         if (ids.includes(newGroup.id)) {
-            await runtime.storage.set<Group>(newGroup.id.toString(), newGroup)
             return
         }
 
         ids.push(newGroup.id)
 
-        await groupIdsStorage.save(ids) // save new group id
-
-        // save new group
-        await runtime.storage.set<Group>(newGroup.id.toString(), newGroup)
+        await groupIdsStorage.save(ids)
     },
 
     async countUnlocked(): Promise<number> {

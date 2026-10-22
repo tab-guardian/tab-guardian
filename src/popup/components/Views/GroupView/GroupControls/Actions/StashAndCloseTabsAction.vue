@@ -2,6 +2,7 @@
 import type { Group } from '@common/types'
 import { useTabsStore } from '@/stores/tabs'
 import { trans } from '@common/modules'
+import { showToast } from '@common/modules/toast'
 import { runtime } from '@common/modules/runtime'
 import Control from '@/components/Control.vue'
 
@@ -9,7 +10,8 @@ const props = defineProps<{ group: Group }>()
 const tabsStore = useTabsStore()
 
 async function stashTabs(): Promise<void> {
-    await tabsStore.stashTabs(props.group, true)
+    const toastMsg = await tabsStore.stashTabs(props.group, true)
+    showToast(toastMsg)
 }
 </script>
 

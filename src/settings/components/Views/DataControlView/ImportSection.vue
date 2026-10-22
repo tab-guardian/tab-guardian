@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Group, Folder, LegacyExportSchema, ExportSchema } from '@common/types'
+import type { PasswordAttemptResult } from '@common/types/modal'
 import { ref } from 'vue'
 import { cloneDeep } from 'lodash'
 import { logger, trans } from '@common/modules'
@@ -60,19 +61,24 @@ async function importGroups(reader: FileReader): Promise<void> {
     resetState()
 }
 
-async function decryptFile(encrypted: string, pass: string): Promise<boolean> {
+async function decryptFile(
+    encrypted: string,
+    pass: string,
+): Promise<PasswordAttemptResult> {
     try {
         const decrypted = await decryptExport(encrypted, pass)
         await importFile(decrypted)
         attemptsStore.unlock()
     } catch (err) {
-        showToast({ text: getDecryptionError(err), type: 'error' })
-        return false
+        return {
+            success: false,
+            toastMsg: { text: getDecryptionError(err), type: 'error' },
+        }
     }
 
     resetState()
 
-    return true
+    return { success: true, toastMsg: null }
 }
 
 async function importFile(rawData: string): Promise<void> {

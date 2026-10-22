@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import type { Group } from '@common/types'
+import type { Group, ToastMessage } from '@common/types'
+import type { PasswordAttemptResult } from '@common/types/modal'
 import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { trans } from '@common/modules'
 import { useModalStore } from '@/stores/modal'
 import { useGroupStore } from '@/stores/group'
-import { showToast } from '@common/modules/toast'
 import ChevronRightIcon from '@common/components/Icons/ChevronRightIcon.vue'
 import OpenTabsButton from '@/components/Views/MainView/ListItems/OpenTabsButton.vue'
 import GroupIcon from '@/components/Views/MainView/ListItems/GroupIcon.vue'
@@ -52,16 +52,16 @@ async function navigateToGroupView(): Promise<void> {
     await router.push({ name: 'group', params: { id: props.group.id } })
 }
 
-async function unlockCallback(pass: string): Promise<boolean> {
+async function unlockCallback(pass: string): Promise<PasswordAttemptResult> {
     const unlocking = await groupStore.unlock(props.group, pass)
 
-    showToast({
+    const toastMsg: ToastMessage = {
         text: unlocking.message,
         type: unlocking.failed ? 'error' : 'info',
-    })
+    }
 
     if (unlocking.failed) {
-        return false
+        return { success: false, toastMsg }
     }
 
     await router.push({
@@ -69,7 +69,7 @@ async function unlockCallback(pass: string): Promise<boolean> {
         params: { id: props.group.id },
     })
 
-    return true
+    return { success: true, toastMsg }
 }
 </script>
 

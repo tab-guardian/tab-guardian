@@ -4,12 +4,14 @@ import Control from '@/components/Control.vue'
 import { runtime } from '@common/modules/runtime'
 import { useTabsStore } from '@/stores/tabs'
 import { trans } from '@common/modules'
+import { showToast } from '@common/modules/toast'
 
 const props = defineProps<{ group: Group }>()
 const tabsStore = useTabsStore()
 
 async function stashTabs(): Promise<void> {
-    await tabsStore.stashTabs(props.group, false)
+    const toastMsg = await tabsStore.stashTabs(props.group, false)
+    showToast(toastMsg)
 }
 </script>
 

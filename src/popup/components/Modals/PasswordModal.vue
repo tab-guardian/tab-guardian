@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
+import type { PasswordAttemptResult } from '@common/types/modal'
 import { useModalStore } from '@/stores/modal'
 import { useAttemptsStore } from '@/stores/attempts'
 import { trans } from '@common/modules'
@@ -46,15 +47,14 @@ async function submitPassword(): Promise<void> {
 
     processing.value = true
 
-    const isSuccess = await decryptPassword()
+    const result = await sharedData.value
+        .decrypting(pass.value)
         .catch(showDecryptError)
         .finally(finishProcessing)
 
-    if (isSuccess === null) {
-        return
-    }
+    showToast(result.toastMsg)
 
-    if (isSuccess) {
+    if (result.success) {
         await attemptsStore.unlock()
         modalStore.hide('password', {})
         return
@@ -68,13 +68,11 @@ async function submitPassword(): Promise<void> {
     }
 }
 
-async function decryptPassword(): Promise<boolean> {
-    return sharedData.value.decrypting(pass.value)
-}
-
-function showDecryptError(): null {
-    showToast({ text: trans('error_occurred'), type: 'error' })
-    return null
+function showDecryptError(): PasswordAttemptResult {
+    return {
+        success: false,
+        toastMsg: { text: trans('error_occurred'), type: 'error' },
+    }
 }
 
 function finishProcessing(): void {

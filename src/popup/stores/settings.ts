@@ -46,8 +46,8 @@ export const useSettingsStore = defineStore('settings', () => {
         loading.value = false
     }
 
-    function save(): void {
-        runtime.storage.set<Settings>('settings', settings.value)
+    async function save(): Promise<void> {
+        await runtime.storage.set<Settings>('settings', settings.value)
     }
 
     function resetToDefaults(): void {

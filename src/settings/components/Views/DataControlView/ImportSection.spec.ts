@@ -81,8 +81,8 @@ function mockModals(
         data: any,
     ) => {
         if (key === 'password') {
-            await data.decrypting(FILE_PASS)
-            return true
+            const result = await data.decrypting(FILE_PASS)
+            return result.success
         }
 
         return { isConfirmed: confirmDuplicates }

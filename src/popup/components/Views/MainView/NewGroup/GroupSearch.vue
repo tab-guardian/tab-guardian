@@ -5,6 +5,7 @@ import { useFolderStore } from '@/stores/folder'
 import { useOpenGroup } from '@/composables/useOpenGroup'
 import { ref, onMounted, onUnmounted } from 'vue'
 import { logger, trans } from '@common/modules'
+import { showToast } from '@common/modules/toast'
 import MagnifyingGlassIcon from '@common/components/Icons/MagnifyingGlassIcon.vue'
 
 const groupStore = useGroupStore()
@@ -40,7 +41,11 @@ async function openFirstGroup(e: KeyboardEvent): Promise<void> {
     // Clear the search after Enter so the full list comes back
     await resetSearch()
 
-    await open(group)
+    const toastMsgs = await open(group)
+
+    for (const toastMsg of toastMsgs) {
+        showToast(toastMsg)
+    }
 }
 
 function focusOnSearch(e: KeyboardEvent): void {

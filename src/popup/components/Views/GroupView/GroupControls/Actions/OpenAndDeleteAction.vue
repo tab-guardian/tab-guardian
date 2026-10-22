@@ -4,6 +4,7 @@ import { useTabsStore } from '@/stores/tabs'
 import { useRouter } from 'vue-router'
 import { runtime } from '@common/modules/runtime'
 import { trans } from '@common/modules'
+import { showToast } from '@common/modules/toast'
 import Control from '@/components/Control.vue'
 
 const props = defineProps<{ group: Group }>()
@@ -16,7 +17,9 @@ async function openAndDeleteTabs(): Promise<void> {
         return
     }
 
-    await tabsStore.openAndDeleteTabs(props.group)
+    const toastMsg = await tabsStore.openAndDeleteTabs(props.group)
+    showToast(toastMsg)
+
     await router.push({ name: 'main' })
 }
 </script>
@@ -27,7 +30,7 @@ async function openAndDeleteTabs(): Promise<void> {
         @click="openAndDeleteTabs"
         class="bg-orange-300 dark:bg-orange-700"
         :class="{
-            'cursor-not-allowed !opacity-40': group.links.length === 0,
+            'cursor-not-allowed opacity-40!': group.links.length === 0,
         }"
     >
         <img

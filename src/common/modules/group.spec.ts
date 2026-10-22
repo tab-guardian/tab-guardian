@@ -10,8 +10,10 @@ import {
     generateUniqueId,
     isComponentIcon,
     filterForbiddenLinks,
+    forbiddenLinksToastMsg,
     forceUniqueName,
 } from '@common/modules/group'
+import { trans } from '@common/modules'
 import { fakeLink } from '@common/modules/fake'
 import { stubGenerateId } from '@common/modules/testUtils'
 import * as RuntimeUtils from '@common/modules/runtime/utils'
@@ -100,6 +102,27 @@ describe('group utils module', () => {
             const takenNames = new Set(['Work', 'Work (Copy 1)'])
 
             expect(forceUniqueName('Work', takenNames)).toBe('Work (Copy 2)')
+        })
+    })
+
+    suite('forbiddenLinksToastMsg()', () => {
+        it('returns null when there are no forbidden links', () => {
+            expect(forbiddenLinksToastMsg([])).toBeNull()
+        })
+
+        it('returns one message for all forbidden links', () => {
+            const links = [
+                fakeLink({ url: 'about:config' }),
+                fakeLink({ url: 'chrome://extensions' }),
+            ]
+
+            expect(forbiddenLinksToastMsg(links)).toEqual({
+                text: trans(
+                    'browser_cannot_open_these_tabs',
+                    'about:config, chrome://extensions',
+                ),
+                type: 'error',
+            })
         })
     })
 

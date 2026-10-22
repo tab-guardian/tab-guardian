@@ -8,7 +8,7 @@ import { useNotificationStore } from '@/stores/notification'
 import { useCryptoStore } from '@/stores/crypto'
 import { useProgressStore } from '@/stores/progress'
 import { forceUniqueName, isGroupHidden } from '@common/modules/group'
-import { getDecryptionError } from '@/errors'
+import { getDecryptionError, getSaveErrorMessage } from '@/errors'
 import { getHashedCurrentUrl } from '@common/modules/url'
 import { validatePassword } from '@common/modules/validation/group'
 import { passwordStorage } from '@common/modules/storage/password'
@@ -85,38 +85,50 @@ export const useGroupStore = defineStore('group', () => {
             return failure(validationError)
         }
 
+        let encrypted: Group
+
         try {
-            const encrypted = await cryptoStore.encryptGroup(group, pass)
-
-            encrypted.isEncrypted = true
-            encrypted.isPrivate = true
-
-            await update(encrypted)
-
-            return success(encrypted, trans('group_locked'))
+            encrypted = await cryptoStore.encryptGroup(group, pass)
         } catch (err) {
             logger().error('Encryption:', err)
+            return failure(trans('error_occurred'))
         }
 
-        return failure(trans('error_occurred'))
+        encrypted.isEncrypted = true
+        encrypted.isPrivate = true
+
+        try {
+            await update(encrypted)
+        } catch (err) {
+            return failure(getSaveErrorMessage(err))
+        }
+
+        return success(encrypted, trans('group_locked'))
     }
 
     async function unlock(
         group: Group,
         password: string,
     ): Promise<GroupOperationResult> {
+        let decryptedGroup: Group
+
         try {
-            const decryptedGroup = await cryptoStore.decryptGroup(group, password)
+            decryptedGroup = await cryptoStore.decryptGroup(group, password)
+        } catch (err) {
+            return failure(getDecryptionError(err))
+        }
+
+        try {
             await update(decryptedGroup)
 
             if (settingsStore.rememberPasswordEnabled) {
                 await passwordStorage.save(group.id, password)
             }
-
-            return success(decryptedGroup, trans('group_unlocked'))
-        } catch (err: any) {
-            return failure(getDecryptionError(err))
+        } catch (err) {
+            return failure(getSaveErrorMessage(err))
         }
+
+        return success(decryptedGroup, trans('group_unlocked'))
     }
 
     function failure(message: string): GroupOperationResult {
@@ -137,26 +149,36 @@ export const useGroupStore = defineStore('group', () => {
             return failure(trans('group_with_credentials_not_found'))
         }
 
-        try {
-            if (!group.isEncrypted) {
+        if (!group.isEncrypted) {
+            try {
                 return await removeBindUrlFromUnlocked(group, pass)
+            } catch (err) {
+                return failure(getSaveErrorMessage(err))
             }
+        }
 
+        let encrypted: Group
+
+        try {
             // Decrypting also proves the password is correct
             const decrypted = await cryptoStore.decryptGroup(group, pass)
 
             const { bindUrl, ...withoutBindUrl } = decrypted
-            const encrypted = await cryptoStore.encryptGroup(withoutBindUrl, pass)
-
-            await update(encrypted)
-
-            return success(encrypted, trans('bind_url_removed'))
+            encrypted = await cryptoStore.encryptGroup(withoutBindUrl, pass)
         } catch (err) {
             logger().error('Remove bind URL:', err)
 
             // A wrong password is reported the same as a missing group
             return failure(trans('group_with_credentials_not_found'))
         }
+
+        try {
+            await update(encrypted)
+        } catch (err) {
+            return failure(getSaveErrorMessage(err))
+        }
+
+        return success(encrypted, trans('bind_url_removed'))
     }
 
     // An unlocked group has no encrypted data to check the password against.
@@ -362,15 +384,19 @@ export const useGroupStore = defineStore('group', () => {
         loading.value = true
 
         try {
-            if (shouldReplaceExistingGroup(group)) {
-                await deleteGroupNamed(group.name)
-            }
+            const replacedGroup = shouldReplaceExistingGroup(group)
+                ? getNamed(group.name)
+                : null
 
-            // Must run after the delete above,
-            // otherwise the old name still counts as taken
-            const name = uniqueGroupName(group)
+            // The old group is deleted only after the new one is stored,
+            // so a failed save keeps the existing data.
+            const name = uniqueGroupName(group, replacedGroup?.id)
 
             await groupStorage.save({ ...group, name })
+
+            if (replacedGroup) {
+                await deleteGroup(replacedGroup.id)
+            }
 
             if (loadGroups) {
                 await reloadGroupsAndNotifications()
@@ -392,8 +418,11 @@ export const useGroupStore = defineStore('group', () => {
         return !!existing && !existing.isPrivate
     }
 
-    function uniqueGroupName(group: Group): string {
-        const uniqueGroups = allGroups.value.filter(g => g.id !== group.id)
+    function uniqueGroupName(group: Group, ignoredId?: number): string {
+        const uniqueGroups = allGroups.value.filter(
+            g => g.id !== group.id && g.id !== ignoredId,
+        )
+
         const takenNames = new Set(uniqueGroups.map(g => g.name))
 
         return forceUniqueName(group.name, takenNames)

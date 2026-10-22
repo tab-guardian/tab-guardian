@@ -2,14 +2,8 @@
 
 import { describe, it, expect, afterEach, vi } from 'vitest'
 import { fakeLink } from '@common/modules/fake'
-import { trans } from '@common/modules'
-import { showToast } from '@common/modules/toast'
 import { runtime } from '@common/modules/runtime'
 import { restoreTabs } from '@common/modules/tabs/restoreTabs'
-
-vi.mock('@common/modules/toast', () => ({
-    showToast: vi.fn(),
-}))
 
 describe('restoreTabs()', () => {
     afterEach(() => {
@@ -41,10 +35,5 @@ describe('restoreTabs()', () => {
 
         expect(runtime.tabs.create).toHaveBeenCalledTimes(2)
         expect(failedLinks).toEqual([failedLink])
-
-        expect(showToast).toHaveBeenCalledWith({
-            text: trans('browser_cannot_open_these_tabs', failedLink.url),
-            type: 'error',
-        })
     })
 })

@@ -5,7 +5,7 @@ import { createPinia, setActivePinia } from 'pinia'
 import { trans } from '@common/modules'
 import { fakeGroup, fakeLink, fakeLinks } from '@common/modules/fake'
 import { restoreTabs } from '@common/modules/tabs/restoreTabs'
-import { showToast } from '@common/modules/toast'
+import { getCurrentLinks } from '@common/modules/tabs/getCurrentLinks'
 import { passwordStorage } from '@common/modules/storage/password'
 import { waitUntil } from '@common/modules/testUtils'
 import { useGroupStore } from '@/stores/group'
@@ -17,8 +17,8 @@ vi.mock('@common/modules/tabs/restoreTabs', () => ({
     restoreTabs: vi.fn(),
 }))
 
-vi.mock('@common/modules/toast', () => ({
-    showToast: vi.fn(),
+vi.mock('@common/modules/tabs/getCurrentLinks', () => ({
+    getCurrentLinks: vi.fn(),
 }))
 
 describe('tabs store', () => {
@@ -27,6 +27,7 @@ describe('tabs store', () => {
         sessionStorage.clear()
         setActivePinia(createPinia())
         vi.mocked(restoreTabs).mockResolvedValue([])
+        vi.mocked(getCurrentLinks).mockResolvedValue(fakeLinks(2))
     })
 
     afterEach(() => {
@@ -51,10 +52,10 @@ describe('tabs store', () => {
             const group = fakeGroup({ links: fakeLinks(2) })
 
             await groupStore.create(group)
-            await tabsStore.openAndDeleteTabs(group)
+            const toastMsg = await tabsStore.openAndDeleteTabs(group)
 
             expect(groupStore.get(group.id)).toBeNull()
-            expect(showToast).not.toHaveBeenCalled()
+            expect(toastMsg).toBeNull()
         })
 
         it('keeps group with only the failed links when some tabs fail', async () => {
@@ -66,14 +67,14 @@ describe('tabs store', () => {
             await groupStore.create(group)
             vi.mocked(restoreTabs).mockResolvedValue([failedLink])
 
-            await tabsStore.openAndDeleteTabs(group)
-
+            const toastMsg = await tabsStore.openAndDeleteTabs(group)
             const kept = groupStore.get(group.id)
 
             expect(kept).not.toBeNull()
             expect(kept?.links).toEqual([failedLink])
-            expect(showToast).toHaveBeenCalledWith({
+            expect(toastMsg).toEqual({
                 text: trans('only_some_tabs_restored', '1', '2'),
+                type: 'info',
             })
         })
 
@@ -85,13 +86,13 @@ describe('tabs store', () => {
             await groupStore.create(group)
             vi.mocked(restoreTabs).mockResolvedValue(group.links)
 
-            await tabsStore.openAndDeleteTabs(group)
-
+            const toastMsg = await tabsStore.openAndDeleteTabs(group)
             const kept = groupStore.get(group.id)
 
             expect(kept?.links).toHaveLength(2)
-            expect(showToast).toHaveBeenCalledWith({
+            expect(toastMsg).toEqual({
                 text: trans('only_some_tabs_restored', '0', '2'),
+                type: 'info',
             })
         })
 
@@ -112,6 +113,42 @@ describe('tabs store', () => {
 
             expect(groupStore.get(group.id)).not.toBeNull()
             expect(await passwordStorage.get(group.id)).toBeNull()
+        })
+    })
+
+    suite('stashTabs()', () => {
+        it('returns an error when there are no tabs to save', async () => {
+            const tabsStore = useTabsStore()
+            const group = fakeGroup()
+
+            vi.mocked(getCurrentLinks).mockResolvedValue([])
+
+            const toastMsg = await tabsStore.stashTabs(group, false)
+
+            expect(toastMsg).toEqual({
+                text: trans('no_tabs_to_save'),
+                type: 'error',
+            })
+        })
+
+        it('saves the current tabs and returns a success message', async () => {
+            const groupStore = useGroupStore()
+            const tabsStore = useTabsStore()
+
+            const group = fakeGroup({ links: [] })
+            const links = fakeLinks(2)
+
+            await groupStore.create(group)
+
+            vi.mocked(getCurrentLinks).mockResolvedValue(links)
+
+            const toastMsg = await tabsStore.stashTabs(group, false)
+
+            expect(groupStore.get(group.id)?.links).toHaveLength(2)
+            expect(toastMsg).toEqual({
+                text: trans('tabs_now_saved'),
+                type: 'info',
+            })
         })
     })
 
@@ -176,7 +213,7 @@ describe('tabs store', () => {
 
             modalStore.hide('newPassword', { newPass: 'amy-pass' })
 
-            expect(await opening).toBeTruthy()
+            expect((await opening).opened).toBeTruthy()
             expect(restoreTabs).toHaveBeenCalledWith(group.links)
         })
 
@@ -198,7 +235,10 @@ describe('tabs store', () => {
 
             modalStore.hide('newPassword', {})
 
-            expect(await opening).toBeFalsy()
+            const result = await opening
+
+            expect(result.opened).toBeFalsy()
+            expect(result.toastMsgs).toHaveLength(0)
             expect(restoreTabs).not.toHaveBeenCalled()
 
             const kept = groupStore.get(group.id)
@@ -225,7 +265,7 @@ describe('tabs store', () => {
 
             modalStore.hide('newPassword', { newPass: 'amy-pass' })
 
-            expect(await opening).toBeTruthy()
+            expect((await opening).opened).toBeTruthy()
 
             const locked = groupStore.get(group.id)
             expect(locked?.isEncrypted).toBeTruthy()
@@ -241,13 +281,14 @@ describe('tabs store', () => {
 
             await groupStore.create(group)
 
-            const opened = await tabsStore.openTabs(group, 'amy')
+            const result = await tabsStore.openTabs(group, 'amy')
 
-            expect(opened).toBeFalsy()
-            expect(restoreTabs).not.toHaveBeenCalled()
-            expect(showToast).toHaveBeenCalledWith(
+            expect(result.opened).toBeFalsy()
+            expect(result.toastMsgs).toHaveLength(1)
+            expect(result.toastMsgs[0]).toEqual(
                 expect.objectContaining({ type: 'error' }),
             )
+            expect(restoreTabs).not.toHaveBeenCalled()
         })
 
         it('uses the cached password without prompting', async () => {
@@ -261,9 +302,9 @@ describe('tabs store', () => {
             await groupStore.create(group)
             await passwordStorage.save(group.id, 'genshin-skirk')
 
-            const opened = await tabsStore.openTabs(group)
+            const result = await tabsStore.openTabs(group)
 
-            expect(opened).toBeTruthy()
+            expect(result.opened).toBeTruthy()
             expect(modalStore.isModalVisible('newPassword')).toBeFalsy()
             expect(restoreTabs).toHaveBeenCalledWith(group.links)
 

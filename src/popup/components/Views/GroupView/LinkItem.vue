@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import type { Link } from '@common/types'
 import { useGroupStore } from '@/stores/group'
+import { forbiddenLinksToastMsg } from '@common/modules/group'
 import { restoreTabs } from '@common/modules/tabs/restoreTabs'
+import { showToast } from '@common/modules/toast'
 import { useModalStore } from '@/stores/modal'
 import { useLinkStore } from '@/stores/link'
 import { logger } from '@common/modules'
@@ -26,7 +28,10 @@ async function openTab(): Promise<void> {
         )
     }
 
-    await restoreTabs([props.link])
+    const failedLinks = await restoreTabs([props.link])
+    const toastMsg = forbiddenLinksToastMsg(failedLinks)
+
+    showToast(toastMsg)
 }
 
 async function showTabLinkModal(): Promise<void> {
