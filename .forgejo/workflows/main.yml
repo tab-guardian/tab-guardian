@@ -16,6 +16,8 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
 
       # - name: Create .env File
@@ -38,7 +40,10 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
+          git fetch --unshallow --tags origin || git fetch --tags origin
           git config --global credential.helper store
           printf 'https://x-access-token:%s@github.com\n' "$GH_TOKEN" > ~/.git-credentials
           git remote add github https://github.com/tab-guardian/tab-guardian.git
-          git push github --mirror
+          git push --prune --force github \
+            'refs/heads/*:refs/heads/*' \
+            'refs/tags/*:refs/tags/*'
