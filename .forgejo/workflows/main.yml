@@ -37,7 +37,7 @@ jobs:
 
       - name: Push changes to GitHub
         if: github.event_name == 'push' && github.ref == 'refs/heads/master'
-        uses: https://codeberg.org/act/remote-mirror-sync
+        uses: https://codeberg.org/act/remote-mirror-sync@v1
         with:
           remote: https://github.com/tab-guardian/tab-guardian.git
           token: ${{ secrets.GH_TOKEN }}
