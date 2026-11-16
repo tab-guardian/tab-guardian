@@ -31,3 +31,13 @@ jobs:
 
       - name: Run Prettier Check
         run: npm run prettier-check
+
+      - name: Push changes to GitHub
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: |
+          git config --global credential.helper store
+          printf 'https://x-access-token:%s@github.com\n' "$GH_TOKEN" > ~/.git-credentials
+          git remote add github https://github.com/tab-guardian/tab-guardian.git
+          git push github --mirror
