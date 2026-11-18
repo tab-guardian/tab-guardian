@@ -1,5 +1,9 @@
 # Release Notes
 
+## 1.19.16 (2026-11-18)
+
+- 🧑‍💻 Moved project from Codeberg back to GitHub. Codeberg was unreliable and slow.
+
 ## 1.19.15 (2026-10-22)
 
 - 🧑‍💻 Improve functionality around saving data to the storage and hitting quota errors. Now, system is more smarter at quota error detection and prevents data loss.

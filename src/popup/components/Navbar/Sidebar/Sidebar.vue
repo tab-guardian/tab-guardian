@@ -12,7 +12,7 @@ import CogIcon from '@common/components/Icons/CogIcon.vue'
 import MenuIcon from '@common/components/Icons/MenuIcon.vue'
 import SidebarLink from '@/components/Navbar/Sidebar/SidebarLink.vue'
 import Heading from '@/components/Navbar/Sidebar/Heading.vue'
-import CodebergIcon from '@common/components/Icons/CodebergIcon.vue'
+import GitHubIcon from '@common/components/Icons/GitHubIcon.vue'
 import DocumentIcon from '@common/components/Icons/DocumentIcon.vue'
 
 const sidebarStore = useSidebarStore()
@@ -22,12 +22,12 @@ const rateUsLink = isRuntime('firefox')
 
 const links = [
     {
-        href: 'https://codeberg.org/tab-guardian/tab-guardian',
+        href: 'https://github.com/tab-guardian/tab-guardian',
         label: trans('contribute'),
-        icon: CodebergIcon,
+        icon: GitHubIcon,
     },
     {
-        href: 'https://codeberg.org/tab-guardian/tab-guardian/src/branch/master/CHANGELOG.md',
+        href: 'https://github.com/tab-guardian/tab-guardian/blob/master/CHANGELOG.md',
         label: trans('release_notes'),
         icon: DocumentIcon,
     },

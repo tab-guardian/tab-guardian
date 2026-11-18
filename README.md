@@ -4,9 +4,6 @@ Tab Guardian is a browser extension designed to help you save and restore your b
 
 For those who prioritize security, Tab Guardian offers the added feature of encrypting your saved tabs with a password. This ensures that your browsing data remains private and secure.
 
-- [Issues](https://codeberg.org/tab-guardian/tab-guardian/issues)
-- [Pull Requests](https://codeberg.org/tab-guardian/tab-guardian/pulls)
-
 ## Features
 
 Here is what makes Tab Guardian a great tool for managing your tabs:
@@ -54,7 +51,7 @@ All necessary scripts are in package.json file. You need to have [npm](https://w
 **Clone the repo**
 
 ```bash
-git clone https://codeberg.org/tab-guardian/tab-guardian.git && cd tab-guardian
+git clone https://github.com/tab-guardian/tab-guardian.git && cd tab-guardian
 ```
 
 **Install all dependencies**

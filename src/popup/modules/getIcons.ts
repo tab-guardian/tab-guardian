@@ -55,7 +55,6 @@ import PlusIcon from '@common/components/Icons/PlusIcon.vue'
 import CircleStackIcon from '@common/components/Icons/CircleStackIcon.vue'
 import LockOpenIcon from '@common/components/Icons/LockOpenIcon.vue'
 import PinIcon from '@common/components/Icons/PinIcon.vue'
-import CodebergIcon from '@common/components/Icons/CodebergIcon.vue'
 
 type IconsComponent = {
     [key: string]: Component
@@ -119,7 +118,6 @@ export function getIcons(icon?: string): IconsComponent | Component {
         PasteIcon,
         CircleStackIcon,
         PinIcon,
-        CodebergIcon,
     }
 
     if (icon) {

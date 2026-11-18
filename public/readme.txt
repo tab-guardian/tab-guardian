@@ -1,1 +1,1 @@
-Each version has its own release and tag here https://codeberg.org/tab-guardian/tab-guardian/releases
+Each version has its own release and tag here https://github.com/tab-guardian/tab-guardian/releases
