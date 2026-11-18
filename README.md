@@ -1,5 +1,8 @@
 # Tab Guardian
 
+[![Quality checks](https://github.com/tab-guardian/tab-guardian/actions/workflows/main.yml/badge.svg)](https://github.com/tab-guardian/tab-guardian/actions/workflows/main.yml)
+[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
+
 Tab Guardian is a browser extension designed to help you save and restore your browser tabs. Perfect for professionals, students, and casual users alike, this tool allows you to organize your digital workspace with a few clicks. Save individual tabs and restore them later, ensuring you never lose track of important information.
 
 For those who prioritize security, Tab Guardian offers the added feature of encrypting your saved tabs with a password. This ensures that your browsing data remains private and secure.
