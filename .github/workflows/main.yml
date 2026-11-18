@@ -1,5 +1,4 @@
 name: Run quality checks
-enable-email-notifications: true
 
 on:
   push:
@@ -33,10 +32,3 @@ jobs:
 
       - name: Run Prettier Check
         run: npm run prettier-check
-
-      - name: Push changes to GitHub
-        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
-        uses: https://codeberg.org/act/remote-mirror-sync@v1
-        with:
-          remote: https://github.com/tab-guardian/tab-guardian.git
-          token: ${{ secrets.GH_TOKEN }}
